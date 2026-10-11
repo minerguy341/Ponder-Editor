@@ -15,7 +15,7 @@ import { harvesterBladeMatrix, rollerFrameMatrix, rollerWheelMatrix } from '../.
 import { armTargetAngles, ARM_NO_TARGET } from '../../../src/render/create/visuals/process-arm';
 import { CHEST_PARTS, CHEST_HINGE } from '../../../src/render/create/visuals/process-vanilla-chest';
 import { cubesGeometry } from '../../../src/render/create/vanilla/entityModel';
-import { crafterPointingX } from '../../../src/render/create/visuals/process-crafter';
+import { crafterBeltValid, crafterInitialSlot0, crafterPointingX, crafterSlot0At, crafterTargetDirection } from '../../../src/render/create/visuals/process-crafter';
 import { TickSim, type BEvent } from '../../../src/render/create/vanilla/processBase';
 
 const near = (a: number, b: number, eps = 1e-6) => expect(Math.abs(a - b)).toBeLessThan(eps);
@@ -185,6 +185,49 @@ describe('Catnip Pointing.getXRotation (Ponder repo, dev/common/.../catnip/math/
     expect(crafterPointingX('left')).toBe(270);
     expect(crafterPointingX('down')).toBe(180);
     expect(crafterPointingX('right')).toBe(90);
+  });
+});
+
+describe('MechanicalCrafterBlock.getTargetDirection / isValidTarget (Create 6.0.10, MechanicalCrafterBlock.java L250-275)', () => {
+  it('up and down pointing target UP and DOWN; left and right follow VecHelper.rotate (Z by -xRot, then Y by horizontalAngle)', () => {
+    expect(crafterTargetDirection('north', 'up')).toBe('up');
+    expect(crafterTargetDirection('north', 'down')).toBe('down');
+    // facing north: horizontalAngle 180; right (xRot 90) gives (1,0,0) then rotY(180) gives west
+    expect(crafterTargetDirection('north', 'right')).toBe('west');
+    expect(crafterTargetDirection('north', 'left')).toBe('east');
+  });
+
+  it('a valid target is a crafter with the same facing and a pointing that is not opposite', () => {
+    const crafter = (facing: string, pointing: string): BlockState => ({ name: 'create:mechanical_crafter', props: { facing, pointing } });
+    const at = (st: BlockState | undefined) => () => st;
+    expect(crafterBeltValid(at(crafter('north', 'up')), [0, 0, 0], 'north', 'up')).toBe(true);
+    expect(crafterBeltValid(at(crafter('south', 'up')), [0, 0, 0], 'north', 'up')).toBe(false);
+    expect(crafterBeltValid(at(crafter('north', 'down')), [0, 0, 0], 'north', 'up')).toBe(false);
+    expect(crafterBeltValid(at({ name: 'minecraft:stone', props: {} }), [0, 0, 0], 'north', 'up')).toBe(false);
+  });
+
+  it('slot 0 follows insertItem / setItem / ejectWholeGrid at their scene ticks; simulated inserts are ignored', () => {
+    const calls = [
+      { t: 5, path: [{ m: 'getInventory', a: [] }, { m: 'insertItem', a: [0, { id: 'minecraft:oak_planks', count: 1 }, false] }] },
+      { t: 6, path: [{ m: 'getInventory', a: [] }, { m: 'insertItem', a: [0, { id: 'minecraft:stone', count: 1 }, true] }] },
+      { t: 10, path: [{ m: 'getInventory', a: [] }, { m: 'setItem', a: [0, { id: 'minecraft:stick', count: 1 }] }] },
+      { t: 12, path: [{ m: 'ejectWholeGrid', a: [] }] },
+    ];
+    expect(crafterSlot0At(undefined, calls, 4)).toBeUndefined();
+    expect(crafterSlot0At(undefined, calls, 5)?.id).toBe('minecraft:oak_planks');
+    expect(crafterSlot0At(undefined, calls, 9)?.id).toBe('minecraft:oak_planks');
+    expect(crafterSlot0At(undefined, calls, 10)?.id).toBe('minecraft:stick');
+    expect(crafterSlot0At(undefined, calls, 12)).toBeUndefined();
+  });
+
+  it('a second insertItem of the same item adds to slot 0 (up to 64); the initial inventory comes from nbt Inventory slot 0', () => {
+    const calls = [
+      { t: 1, path: [{ m: 'getInventory', a: [] }, { m: 'insertItem', a: [0, { id: 'minecraft:iron_ingot', count: 2 }, false] }] },
+      { t: 2, path: [{ m: 'getInventory', a: [] }, { m: 'insertItem', a: [0, { id: 'minecraft:iron_ingot', count: 3 }, false] }] },
+    ];
+    expect(crafterSlot0At(undefined, calls, 2)?.count).toBe(5);
+    expect(crafterInitialSlot0({ Items: [{ Slot: 1, id: 'minecraft:stone', count: 1 }, { Slot: 0, id: 'minecraft:gold_ingot', count: 4 }] })).toEqual({ id: 'minecraft:gold_ingot', count: 4 });
+    expect(crafterInitialSlot0(undefined)).toBeUndefined();
   });
 });
 
