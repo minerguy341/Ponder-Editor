@@ -32,8 +32,12 @@ shape, and the Ponder/Create source it mirrors (Ponder = `Creators-of-Create/Pon
   C2 should still accept all contract variants.
 * `Box` (AABB) = `{ "min": [x,y,z], "max": [x,y,z] }`.
 * `src` is `"File.java:line"` of the scene-builder call that produced the instruction (the scene file, not the helper that ran).
-* Scene ids: `create:<schematic path>`; if several registrations share one schematic, the id gets a `~<methodName>` suffix
-  (`create:gauges~speedometer`, `create:sail~sailFrame`) so ids are unique, and the JSON file is named after the id (`gauges~speedometer.json`).
+* Scene ids: a scene is one story board = one (schematic path, scene function) pair; registrations of the same pair (other items
+  only) are one scene. The id is `create:<schematic path>` when that path has a single scene function, and
+  `create:<schematic path>~<functionName>` when several scene functions share the path (Ponder keys scenes by component, not by path,
+  and the real game lists such scenes separately): `create:gauges~speedometer`, `create:gauges~stressometer`, `create:sail~sail`,
+  `create:sail~sailFrame`, `create:gantry/intro~introForShaft`, `create:gantry/intro~introForPinion`, ... The JSON file is named after
+  the id (`gauges~speedometer.json`). Verified by `tools/verify/coverage.mjs --scenes` (SCENES_OK: 169 scenes, 179 registrations).
   `SceneJson.schematic` is always the plain schematic path (`gauges`), never with the suffix.
 * Blocks in the schematic palette whose id is not a block in Create 6.0.10 / vanilla 1.21.1 are loaded as air (Catnip/Ponder do the same).
 * Extra optional fields beyond `src/contract.ts` (all additive): `SceneIndexEntry.titleId` (the `create.ponder.<titleId>.header` lang id the scene's
@@ -252,3 +256,4 @@ Keys are exactly the NBT keys Create's `write`/`read` use; C2's `setData(nbt)` r
   Removed the never-emitted `world.flapFunnel` (funnel flaps are `world.modifyBlockEntity` with `FunnelBlockEntity`/`flap(bool)`) and `world.modifyEntitiesInside`
   (no scene uses it). No emitted op was renamed.
 * v1.1: `special.createBirb` and `special.createCart` gained `fadeFrom` (the `Direction` Ponder's `FadeIntoSceneInstruction` slides the element in from; `"down"` for every emitted birb and cart, `null` = no slide). Found by the C1 fidelity audit: the chain-conveyor `CreateParrotInstruction` direction was dropped. Additive; no op renamed.
+* v1.2: scene id rule made exact (one scene = one (path, scene function) pair; `~functionName` only for paths with several scene functions). The ids were already emitted this way; the change is documentation plus E's coverage.mjs counting rule (`foldScenes`). No scene file changed.
