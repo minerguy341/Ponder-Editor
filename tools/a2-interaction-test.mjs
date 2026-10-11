@@ -40,6 +40,18 @@ try {
     const cx = box.x + box.w / 2;
     const cy = box.y + box.h / 2;
 
+    // ---------------------------------------------------------------- required API surface (gates/A2-viewer-shell.md)
+    const api = await page.evaluate(async () => {
+      const v = window.__a2.viewer;
+      const missing = ['setBounds', 'setBasePlate', 'setCamera', 'getCamera', 'rotateCameraTo', 'resetCamera', 'onFrame', 'start', 'stop', 'dispose', 'screenshot', 'setOrbitEnabled', 'projectToScreen', 'pick'].filter((m) => typeof v[m] !== 'function');
+      const sceneOk = v.scene && v.scene.isScene && v.world && v.world.isGroup && v.scene.children.includes(v.world);
+      const blob = await v.screenshot();
+      const head = new Uint8Array(await blob.slice(0, 8).arrayBuffer());
+      return { missing, sceneOk, type: blob.type, size: blob.size, png: [...head].join(',') === '137,80,78,71,13,10,26,10' };
+    });
+    check('PonderViewer exposes every required method + scene/world', api.missing.length === 0 && api.sceneOk, JSON.stringify(api.missing));
+    check('screenshot() resolves a PNG Blob', api.type === 'image/png' && api.png && api.size > 5000, `${api.type} ${api.size} bytes`);
+
     // ---------------------------------------------------------------- defaults
     const c0 = await cam();
     check('default yaw is Ponder 145', near(c0.yaw, 145, 1e-6), String(c0.yaw));
@@ -335,9 +347,14 @@ try {
         return t0;
       };
       const compare = (cxp, cyp, stats) => {
-        const ray = v.rayFromClient(cxp, cyp);
+        // pick() retries with sub-pixel jitter before reporting a miss (rays landing on a triangle diagonal), so the
+        // reference does the same, in the same order
         let bt = Infinity, any = false;
-        for (const b of boxes) { const t = slab(ray, b.bb); if (t !== null && t < bt) { bt = t; any = true; } }
+        for (const [jx, jy] of [[0, 0], [0.3, 0.1], [-0.2, 0.3], [0.1, -0.3]]) {
+          const ray = v.rayFromClient(cxp + jx, cyp + jy);
+          for (const b of boxes) { const t = slab(ray, b.bb); if (t !== null && t < bt) { bt = t; any = true; } }
+          if (any) break;
+        }
         const hit = v.pickHit(cxp, cyp);
         stats.n++;
         if (hit) stats.hits++;

@@ -123,16 +123,27 @@ export class PonderLighting {
     return this.patched.has(m);
   }
 
+  /**
+   * Section fade-in light (AnimatedSceneElementBase.lightCoordsFromFade): per-material, so each Ponder section can fade
+   * independently.  fade 1 = fully lit (default).  Works before or after the material is patched.
+   */
+  setFade(material: THREE.Material, fade: number): void {
+    const ud = (material.userData ??= {}) as { ponderFade?: { value: number } };
+    (ud.ponderFade ??= { value: 1 }).value = ponderFadeBrightness(fade);
+  }
+
   patch<M extends THREE.Material>(material: M, opts: PatchOptions = {}): M {
     if (this.patched.has(material)) return material;
     this.patched.add(material);
     const uniforms = this.uniforms;
     const prev = material.onBeforeCompile;
+    const fadeUniform = ((material.userData ??= {}).ponderFade ??= { value: 1 }) as { value: number };
     const unshaded = !!opts.unshaded;
     const diffuseOn = opts.diffuse !== false;
     material.onBeforeCompile = (shader, renderer) => {
       prev?.call(material, shader, renderer);
       Object.assign(shader.uniforms, uniforms);
+      shader.uniforms.uPonderFade = fadeUniform;
       shader.vertexShader = shader.vertexShader
         .replace('#include <common>', `#include <common>\nvarying float vPonderDiffuse;\n${GLSL_DIFFUSE}`)
         .replace(
@@ -142,10 +153,10 @@ export class PonderLighting {
           };`,
         );
       shader.fragmentShader = shader.fragmentShader
-        .replace('#include <common>', `#include <common>\nvarying float vPonderDiffuse;\nuniform float uPonderBrightness;\n`)
+        .replace('#include <common>', `#include <common>\nvarying float vPonderDiffuse;\nuniform float uPonderBrightness;\nuniform float uPonderFade;\n`)
         .replace(
           '#include <opaque_fragment>',
-          `outgoingLight = sRGBTransferEOTF(vec4(sRGBTransferOETF(vec4(outgoingLight, 1.0)).rgb * vPonderDiffuse * uPonderBrightness, 1.0)).rgb;\n#include <opaque_fragment>`,
+          `outgoingLight = sRGBTransferEOTF(vec4(sRGBTransferOETF(vec4(outgoingLight, 1.0)).rgb * vPonderDiffuse * uPonderBrightness * uPonderFade, 1.0)).rgb;\n#include <opaque_fragment>`,
         );
     };
     const key = material.customProgramCacheKey?.bind(material);

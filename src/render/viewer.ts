@@ -24,6 +24,10 @@ import {
 } from './camera';
 import { PlateShadow, PonderLighting, createSkyTexture } from './environment';
 
+export { DEFAULT_CAMERA, PONDER_DEFAULT_YAW, PONDER_DEFAULT_PITCH, guiScaleFor, mcAutoGuiScale } from './camera';
+export type { CameraState, BasePlate, UserCamera } from './camera';
+export { PonderLighting, PONDER_GLSL, ponderDiffuse, ponderFadeBrightness, ponderUnshadedDiffuse } from './environment';
+
 export interface ViewerOptions {
   antialias?: boolean;
   /** force a gui scale (css px per GUI unit); default: Minecraft's auto scale (see guiScaleFor) */
@@ -34,7 +38,7 @@ export interface ViewerOptions {
   inertia?: boolean;
   /** double click / double tap on the canvas resets to the Ponder camera (default true) */
   doubleClickReset?: boolean;
-  /** device pixel ratio cap (default 3) */
+  /** device pixel ratio cap (default 2; phones report 3 and the fill cost is not worth it) */
   maxPixelRatio?: number;
   /** degrees of rotation per css pixel dragged */
   rotateSpeed?: number;
@@ -110,12 +114,12 @@ export class PonderViewer {
   constructor(container: HTMLElement, options: ViewerOptions = {}) {
     this.container = container;
     this.options = {
-      antialias: options.antialias ?? true,
+      antialias: options.antialias ?? (window.devicePixelRatio || 1) < 2, // MSAA only on 1x screens: hi-dpi phones do not need it and it costs fill rate
       guiScale: options.guiScale ?? 0,
       keyboard: options.keyboard ?? 'window',
       inertia: options.inertia ?? false,
       doubleClickReset: options.doubleClickReset ?? true,
-      maxPixelRatio: options.maxPixelRatio ?? 3,
+      maxPixelRatio: options.maxPixelRatio ?? 2,
       rotateSpeed: options.rotateSpeed ?? 0.4,
     };
 
@@ -287,6 +291,27 @@ export class PonderViewer {
   /** css px per GUI unit currently in use (Ponder UI positions are in GUI units). */
   get guiScale(): number {
     return this.guiScaleValue;
+  }
+
+  /**
+   * A gui scale (css px per GUI unit) at which the scene bounds box (setBounds) fits the viewport with `margin`
+   * (default 92%) at the SCRIPTED camera, never below the Ponder auto scale.  Useful on phones where Minecraft's
+   * 320x240 auto scale leaves the scene small: `viewer.setGuiScale(viewer.suggestGuiScale())`.
+   */
+  suggestGuiScale(margin = 0.92): number {
+    const cam = this.cameraCtl;
+    const eff = cam.scripted(this.partial);
+    const p = ponderViewMatrix({ guiW: 0, guiH: 0, xRot: eff.pitch, yRot: eff.yaw, scale: eff.zoom, yOffset: eff.offsetY, plate: cam.plate });
+    let ex = 1e-6;
+    let ey = 1e-6;
+    const [bx, by, bz] = this.bounds;
+    for (const x of [0, bx]) for (const y of [0, by]) for (const z of [0, bz]) {
+      const q = new THREE.Vector3(x, y, z).applyMatrix4(p); // GUI units relative to the (0,0) pivot
+      ex = Math.max(ex, Math.abs(q.x));
+      ey = Math.max(ey, Math.abs(q.y));
+    }
+    const fit = Math.min((this.cssW * margin) / 2 / ex, (this.cssH * margin) / 2 / ey);
+    return Math.max(guiScaleFor(this.cssW, this.cssH), fit);
   }
 
   setGuiScale(s: number | undefined): void {

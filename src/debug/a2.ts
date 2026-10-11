@@ -6,7 +6,8 @@ import * as THREE from 'three';
 import { PonderViewer } from '../render/viewer';
 
 const stage = document.getElementById('stage')!;
-const viewer = new PonderViewer(stage, { guiScale: Number(new URLSearchParams(location.search).get('gui')) || undefined });
+const qs = new URLSearchParams(location.search);
+const viewer = new PonderViewer(stage, { guiScale: Number(qs.get('gui')) || undefined, antialias: qs.has("aa") ? qs.get("aa") !== "0" : undefined });
 
 function pixelTexture(base: [number, number, number], variation: number, seed: number, kind: 'noise' | 'planks' = 'noise'): THREE.CanvasTexture {
   const c = document.createElement('canvas');
@@ -75,6 +76,17 @@ viewer.onFrame((t) => {
   hud.textContent = `yaw ${c.yaw.toFixed(1)}  pitch ${c.pitch.toFixed(1)}  zoom ${c.zoom.toFixed(2)}  gui ${c.guiScale}\n` + `user yaw ${c.user.yaw.toFixed(1)} pitch ${c.user.pitch.toFixed(1)}  ${s.fps.toFixed(0)} fps`;
 });
 document.getElementById('reset')!.addEventListener('click', () => viewer.resetCamera());
+if (new URLSearchParams(location.search).has('nohud')) {
+  hud.style.display = 'none';
+  document.getElementById('reset')!.style.display = 'none';
+}
+
+if (qs.has('flash')) viewer.setFinishingFlash(Number(qs.get('flash'))); // PonderUI.finishingFlash 0..1
+const orbit =new URLSearchParams(location.search).get('orbit'); // e.g. ?orbit=40,-20 (user yaw, pitch offsets)
+if (orbit) {
+  const [y, p] = orbit.split(',').map(Number);
+  viewer.cameraCtl.orbit(y || 0, p || 0);
+}
 
 viewer.start();
 (window as unknown as Record<string, unknown>).__a2 = { viewer, THREE, box, cogs, materials: { concrete, snow, wood, stone, dark } };
