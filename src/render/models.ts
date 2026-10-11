@@ -486,8 +486,8 @@ function bakeFace(
       x = r[0] + 0.5; y = r[1] + 0.5; z = r[2] + 0.5;
     }
     pos[i * 3] = x; pos[i * 3 + 1] = y; pos[i * 3 + 2] = z;
-    uvOut[i * 2] = sprite.getU(uvU(suv, i) / 16);
-    uvOut[i * 2 + 1] = sprite.getV(uvV(suv, i) / 16);
+    uvOut[i * 2] = sprite.getU(uvU(suv, i)); // getU takes 0..16 model-uv units (= TextureAtlasSprite.getU(u / 16))
+    uvOut[i * 2 + 1] = sprite.getV(uvV(suv, i));
   }
   const qdir = calculateFacing(pos);
   if (!er) recalculateWinding(pos, uvOut, qdir);
