@@ -25,9 +25,16 @@ export function grid(rows: SheetCell[][], gap = 2): Sheet {
 const bogeyNbt = (): Record<string, unknown> => ({ BogeyData: { BogeyStyle: 'create:standard' } });
 
 export const SHEETS: Record<string, () => Sheet> = {
+  packager: () => grid([
+    [{ state: st('create:packager', { powered: 'false', facing: 'west', linked: 'false' }), nbt: { AnimationTicks: 0, AnimationInward: 1, HeldBox: { id: 'minecraft:air', Count: 0 }, InsertedBox: { id: 'minecraft:air', Count: 0 } } },
+      { state: st('create:packager', { powered: 'false', facing: 'west', linked: 'false' }), nbt: { AnimationTicks: 15, AnimationInward: 1, HeldBox: { id: 'minecraft:air', Count: 0 }, InsertedBox: { id: 'create:cardboard_package_12x12', Count: 1 } } },
+      { state: st('create:packager', { powered: 'false', facing: 'west', linked: 'false' }), nbt: { AnimationTicks: 12, AnimationInward: 0, HeldBox: { id: 'create:cardboard_package_12x12', Count: 1 }, InsertedBox: { id: 'minecraft:air', Count: 0 } } }],
+    [{ state: st('create:repackager', { powered: 'false', facing: 'east' }), nbt: { AnimationTicks: 0, AnimationInward: 1, HeldBox: { id: 'minecraft:air', Count: 0 }, InsertedBox: { id: 'minecraft:air', Count: 0 } } },
+      { state: st('create:repackager', { powered: 'true', facing: 'south' }), nbt: { AnimationTicks: 9, AnimationInward: 0, HeldBox: { id: 'create:cardboard_package_12x12', Count: 1 }, InsertedBox: { id: 'minecraft:air', Count: 0 } } }],
+  ], 3),
   postbox: () => grid([
     [{ state: st('create:white_postbox', { waterlogged: 'false', facing: 'north', open: 'false' }), nbt: { AcceptsPackages: 0, AddressFilter: '', Inventory: { Size: 18, Items: [] } } },
-      { state: st('create:light_blue_postbox', { waterlogged: 'false', facing: 'east', open: 'false' }), nbt: { AcceptsPackages: 1, AddressFilter: '', Inventory: { Size: 18, Items: [{ Slot: 0, id: 'create:package', count: 1 }] } } }],
+      { state: st('create:light_blue_postbox', { waterlogged: 'false', facing: 'east', open: 'false' }), nbt: { AcceptsPackages: 1, AddressFilter: '', Inventory: { Size: 18, Items: [{ Slot: 0, id: 'create:cardboard_package_12x12', count: 1 }] } } }],
     [{ state: st('create:placard', { face: 'wall', waterlogged: 'false', powered: 'false', facing: 'west' }), nbt: { Item: { id: 'minecraft:golden_apple', Count: 1 }, PoweredTicks: 0 } },
       { state: st('create:placard', { face: 'floor', waterlogged: 'false', powered: 'false', facing: 'south' }), nbt: { Item: { id: 'minecraft:copper_ingot', Count: 1 }, PoweredTicks: 0 } }],
   ], 3),
