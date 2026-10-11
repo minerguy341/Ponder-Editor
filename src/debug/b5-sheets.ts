@@ -25,6 +25,11 @@ export function grid(rows: SheetCell[][], gap = 2): Sheet {
 const bogeyNbt = (): Record<string, unknown> => ({ BogeyData: { BogeyStyle: 'create:standard' } });
 
 export const SHEETS: Record<string, () => Sheet> = {
+  nixie: () => grid([
+    [{ state: st('create:nixie_tube', { waterlogged: 'false', double_face: 'floor', facing: 'west' }), nbt: { RedstoneStrength: 7 } },
+      { state: st('create:nixie_tube', { waterlogged: 'false', double_face: 'wall', facing: 'north' }), nbt: { RedstoneStrength: 12 } },
+      { state: st('create:nixie_tube', { waterlogged: 'false', double_face: 'ceiling', facing: 'east' }), nbt: { RedstoneStrength: 3 } }],
+  ], 3),
   gauge: () => grid([
     [{ state: st('create:factory_gauge', { face: 'wall', waterlogged: 'false', powered: 'false', facing: 'north' }),
       nbt: { Owner: [1, 2, 3, 4], top_left: { FilterAmount: 5, RedstonePowered: 0, Satisfied: 1, RecipeAddress: 'x', Filter: { id: 'create:andesite_alloy', Count: 1 } }, Restocker: 0 } },
