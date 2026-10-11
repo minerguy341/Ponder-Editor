@@ -32,8 +32,9 @@ export function format(text, params) {
 function populateRegistry(env, log) {
   const { rt, registry } = env;
   const fails = [];
-  for (const cn of ['AllBlocks', 'AllItems', 'AllBlockEntityTypes']) {
-    const cls = rt.sourceClass(`com.simibubi.create.${cn}`);
+  for (const fq of ['com.simibubi.create.AllBlocks', 'com.simibubi.create.AllItems', 'com.simibubi.create.AllFluids', 'com.simibubi.create.content.decoration.palettes.AllPaletteBlocks', 'com.simibubi.create.AllBlockEntityTypes']) {
+    const cn = fq.slice(fq.lastIndexOf('.') + 1);
+    const cls = rt.sourceClass(fq);
     for (const [name] of cls.statics) {
       try {
         rt.getStatic(cls, name);
@@ -98,8 +99,9 @@ export function compileScene(env, group, lang) {
   const warnings = [];
   const world = new World(rt, registry);
   world.loadSchematic(group.schematic);
-  for (const w of world.warnings) warnings.push(w);
+  const notes = [...new Set(world.notes)];
   ctx.world = world;
+  ctx.pkgRandom = null;
   const rec = new Recorder(ctx);
   const host = new SceneHost(rec);
   const util = rec.util();
@@ -108,11 +110,14 @@ export function compileScene(env, group, lang) {
   try {
     rt.callFn(group.fn, [host, util]);
   } catch (e) {
+    if (process.env.SCENEGEN_TRACE) console.error(e.stack);
     if (e instanceof Unsupported || e instanceof JavaThrow) warnings.push(`scene aborted: ${e.message}`);
     else throw e;
   }
   for (const n of rec.notes) warnings.push(n);
-  return finalize(env, group, rec, world, lang, warnings);
+  const res = finalize(env, group, rec, world, lang, warnings);
+  res.notes = notes;
+  return res;
 }
 
 function finalize(env, group, rec, world, lang, warnings) {

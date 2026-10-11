@@ -6,6 +6,7 @@ import { HEnum, hostEnum, DIRECTION, AXIS, enumNameOf } from './mc.mjs';
 import { JList, JSet, JOptional, mkList } from './lang.mjs';
 import { readCached } from '../fetch.mjs';
 import { STUB } from '../interp.mjs';
+import { JTagKey, tagContains } from './tags.mjs';
 
 // ------------------------------------------------------------------------------------------ properties
 
@@ -217,6 +218,21 @@ export function vanillaEnumClasses() {
   return out;
 }
 
+let SHARED_INDEX = null;
+/** the BlockStateProperties constant (shared JProp instance) that matches a minecraft-data state description, if any */
+function sharedVanillaProp(st) {
+  if (!SHARED_INDEX) {
+    SHARED_INDEX = new Map();
+    for (const c of Object.keys(VANILLA_PROPS)) {
+      const p = vanillaProperty(c);
+      const key = `${p.name}|${p.values.map((v) => p.ser(v)).join(',')}`;
+      if (!SHARED_INDEX.has(key)) SHARED_INDEX.set(key, p);
+    }
+  }
+  const vals = st.type === 'bool' ? ['true', 'false'] : st.values.map(String);
+  return SHARED_INDEX.get(`${st.name}|${vals.join(',')}`) || null;
+}
+
 export const BLOCKSTATEPROPERTIES = hc('BlockStateProperties', {
   statics: {},
   staticGet(rt, name) {
@@ -285,7 +301,16 @@ export class JState {
   getBlock() {
     return this.block;
   }
+  getShape(...args) {
+    const inst = this.block.inst;
+    if (!inst) return getRT().hostClass('Shapes').statics.block();
+    return getRT().invoke(inst, 'getShape', [this, ...args, ...(args.length === 2 ? [null] : [])]);
+  }
+  getCollisionShape(...args) {
+    return this.getShape(...args);
+  }
   is(x) {
+    if (x instanceof JTagKey) return tagContains('block', x.id, this.block.id);
     if (x instanceof JBlock) return this.block === x;
     if (x && x.$isBlockLike) return x.blockOf() === this.block;
     return false;
@@ -372,6 +397,9 @@ export class JBlock {
   asItem() {
     return itemLike(this.id);
   }
+  builtInRegistryHolder() {
+    return { $class: 'Holder', is: (t) => t instanceof JTagKey && tagContains('block', t.id, this.id), value: () => this };
+  }
   getDescriptionId() {
     return 'block.' + this.id.replace(':', '.');
   }
@@ -401,6 +429,9 @@ export class HItem {
   }
   asItem() {
     return this;
+  }
+  builtInRegistryHolder() {
+    return { $class: 'Holder', is: (t) => t instanceof JTagKey && tagContains('item', t.id, this.id), value: () => this };
   }
   $key() {
     return 'item:' + this.id;
@@ -465,13 +496,17 @@ export class JItemStack {
     return itemLike(this.id);
   }
   is(x) {
+    if (x instanceof JTagKey) return tagContains('item', x.id, this.id);
     return x && (x.$isItemLike || x.$itemId || x instanceof JBlock) ? itemIdOf(x) === this.id : false;
   }
   getMaxStackSize() {
     return 64;
   }
+  getCapability() {
+    return null;
+  }
   getHoverName() {
-    return this.id;
+    return this.id; // replaced by host/names.mjs
   }
   saveOptional(provider) {
     return JItemStack.mkNbt(this.toNbt());
@@ -492,8 +527,14 @@ export class JItemStack {
   }
   set(k, v) {
     if (!this.comps) this.comps = {};
-    this.comps[typeof k === 'string' ? k : k.id] = v;
+    this.comps[typeof k === 'string' ? k : k.id] = JItemStack.serValue ? JItemStack.serValue(v) : v;
     return null;
+  }
+  get(k) {
+    return this.comps && this.comps[typeof k === 'string' ? k : k.id] !== undefined ? this.comps[typeof k === 'string' ? k : k.id] : null;
+  }
+  has(k) {
+    return !!this.comps && (typeof k === 'string' ? k : k.id) in this.comps;
   }
   getComponents() {
     return null;
@@ -544,10 +585,12 @@ export function vanillaBlock(id) {
   b = new JBlock(full);
   const props = [];
   for (const st of data.states) {
-    let p;
-    if (st.type === 'bool') p = boolProp(st.name);
-    else if (st.type === 'int') p = new JProp(st.name, 'int', st.values.map(Number));
-    else p = enumPropFromData(st);
+    let p = sharedVanillaProp(st);
+    if (!p) {
+      if (st.type === 'bool') p = boolProp(st.name);
+      else if (st.type === 'int') p = new JProp(st.name, 'int', st.values.map(Number));
+      else p = enumPropFromData(st);
+    }
     props.push(p);
   }
   b.props = props;
@@ -657,7 +700,7 @@ export function buildBlocks(R, { vanillaEnumNames = true } = {}) {
   // Block base for source classes
   const blockBase = hc('Block', {
     is: (v) => v instanceof JBlock,
-    statics: { box: () => STUB() },
+    statics: { box: (...a) => getRT().hostClass('Shapes').statics.box16(...a) },
     construct(rt2, args) {
       const jb = new JBlock(null);
       jb.buildDefault(null);

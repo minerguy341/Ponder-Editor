@@ -4,7 +4,7 @@ import { Lambda, MethodRef, ClassRef } from '../values.mjs';
 import { Vec3i, BlockPos, Vec3, AABB, HEnum, hostEnum, DIRECTION } from './mc.mjs';
 import { JItemStack, itemLike, vanillaBlock, JState } from './blocks.mjs';
 import { JCompound } from './nbtobj.mjs';
-import { Entry } from './registry.mjs';
+import { Entry, JFluid } from './registry.mjs';
 import { ser, HOOKS } from '../serialize.mjs';
 import { JList } from './lang.mjs';
 import {
@@ -116,23 +116,6 @@ class BehaviourTypeRef {
   }
 }
 
-class JFluid {
-  constructor(id) {
-    this.id = id;
-  }
-  get $class() {
-    return 'Fluid';
-  }
-  getSource() {
-    return this;
-  }
-  toJSON() {
-    return { fluid: this.id };
-  }
-  $key() {
-    return 'fluid:' + this.id;
-  }
-}
 
 class JFluidStack {
   constructor(id, amount) {
@@ -180,7 +163,7 @@ export function buildPonderHost(R, ctx) {
       initInstance(r, obj) {
         const outer = obj.outerThis;
         if (!outer || !outer.hostBase) throw new Unsupported(`${name} created outside of a scene builder`);
-        obj.hostBase = { rec: outer.hostBase.rec };
+        obj.hostBase = { rec: outer.hostBase.rec, scene: outer.hostBase.scene, $exposed: ['scene'] };
       },
       methods: mkMethods(table),
     });
@@ -201,7 +184,7 @@ export function buildPonderHost(R, ctx) {
     initInstance(r, obj, args) {
       const sc = args[0];
       if (!(sc instanceof PonderSceneHost)) throw new Unsupported('PonderSceneBuilder needs a scene');
-      obj.hostBase = { rec: sc.rec };
+      obj.hostBase = { rec: sc.rec, scene: sc, $exposed: ['scene'] };
     },
     methods: baseMethods,
     is: (v) => v instanceof SceneHost,
@@ -220,6 +203,7 @@ export function buildPonderHost(R, ctx) {
   for (const n of ['WorldSectionElement', 'EntityElement', 'ParrotElement', 'MinecartElement', 'BeltItemElement', 'PonderElement', 'AnimatedSceneElement', 'ExpandedParrotElement', 'TrackedElement', 'PonderSceneElement']) R.add(hc(n, { preferHost: true, nested: { MinecartConstructor: hc('MinecartConstructor', { functional: true, isInterface: true }) } }));
   R.add(hc('MinecartConstructor', { functional: true, isInterface: true }));
   PALETTE.preferHost = true;
+  // all net.createmod.ponder API names are host implemented (the Ponder sources are only used for documentation / semantics)
   R.add(PALETTE);
   R.add(hc('TextElementBuilder', { isInterface: true }));
   R.add(hc('InputElementBuilder', { isInterface: true }));
@@ -295,6 +279,13 @@ export function buildPonderHost(R, ctx) {
   R.add(hc('Entity', { is: (v) => v instanceof JEntity || (v && v.$recproxy), isInterface: false }));
   R.add(hc('ItemEntity', { construct: (r, a) => { const e = new JEntity('minecraft:item'); e.ctor = { pos: [num(a[1]), num(a[2]), num(a[3])], item: a[4].toJSONStack() }; return e; }, is: (v) => v instanceof JEntity && v.type === 'minecraft:item' || (v && v.$recproxy), extends: ['Entity'] }));
   for (const [n, id] of [['Sheep', 'minecraft:sheep'], ['Minecart', 'minecraft:minecart'], ['MinecartChest', 'minecraft:chest_minecart'], ['MinecartFurnace', 'minecraft:furnace_minecart'], ['Blaze', 'minecraft:blaze'], ['Parrot', 'minecraft:parrot'], ['ArmorStand', 'minecraft:armor_stand'], ['Villager', 'minecraft:villager'], ['Player', 'minecraft:player'], ['SuperGlueEntity', 'create:super_glue'], ['PackageEntity', 'create:package']]) R.add(entityClass(n, id));
+  // Create entity classes that scenes construct directly are recorded rather than interpreted
+  for (const [fq, id] of [['com.simibubi.create.content.logistics.box.PackageEntity', 'create:package'], ['com.simibubi.create.content.contraptions.glue.SuperGlueEntity', 'create:super_glue']]) {
+    R.map.set(fq, { ...entityClass(fq.slice(fq.lastIndexOf('.') + 1), id), preferHost: true });
+  }
+  const wifi = hc('WiFiParticle', { preferHost: true, statics: {}, nested: { Data: hc('Data', { construct: () => new JParticle('create:wifi'), preferHost: true }) } });
+  R.map.set('com.simibubi.create.content.logistics.packagerLink.WiFiParticle', wifi);
+  R.map.set('com.simibubi.create.content.logistics.packagerLink.WiFiParticle.Data', wifi.nested.Data);
   R.add(hc('Level', { isInterface: true }));
   R.add(hc('ServerLevel', { isInterface: true }));
   R.add(hc('PonderLevel', { is: (v) => v instanceof LevelRecorder }));
@@ -326,22 +317,26 @@ export function buildPonderHost(R, ctx) {
   R.map.get('IFluidHandler').nested.FluidAction = R.map.get('FluidAction');
   R.add(hc('IItemHandler', { isInterface: true }));
   R.add(hc('IFluidHandlerItem', { isInterface: true }));
-  R.add(hc('ItemHandlerHelper', { statics: { copyStackWithSize: (s, n) => s.copyWithCount(n) } }));
+  R.add(hc('ItemHandlerHelper', { statics: { copyStackWithSize: (s, n) => s.copyWithCount(n), insertItemStacked: (h, stack, sim) => { if (h && h.$recproxy) return h.$invoke(getRT(), 'insertItemStacked', [stack, sim]); throw new Unsupported('ItemHandlerHelper.insertItemStacked on a concrete handler'); } } }));
   const cap = (n) => ({ $class: 'Capability', toJSON: () => ({ cap: n }) });
+  R.map.set('net.neoforged.neoforge.capabilities.Capabilities.ItemHandler', hc('ItemHandler', { statics: { BLOCK: cap('ItemHandler.BLOCK'), ITEM: cap('ItemHandler.ITEM'), ENTITY: cap('ItemHandler.ENTITY') } }));
+  R.map.set('net.neoforged.neoforge.capabilities.Capabilities.FluidHandler', hc('FluidHandler', { statics: { BLOCK: cap('FluidHandler.BLOCK'), ITEM: cap('FluidHandler.ITEM'), ENTITY: cap('FluidHandler.ENTITY') } }));
   R.add(hc('Capabilities', { statics: { FluidHandler: { BLOCK: cap('FluidHandler.BLOCK'), ITEM: cap('FluidHandler.ITEM') }, ItemHandler: { BLOCK: cap('ItemHandler.BLOCK'), ITEM: cap('ItemHandler.ITEM') } }, nested: {} }));
   R.add(hc('FluidHelper', { statics: { convertToStill: (f) => f, copyStackWithAmount: (s, n) => new JFluidStack(s.id, num(n)), convertToFlowing: (f) => f } }));
-  R.add(hc('NeoForgeMod', { statics: { WATER_TYPE: { value: () => ({}) } } }));
+
   R.add(hc('AllIcons', {
     statics: {},
     staticGet: (r, name) => ({ $icon: name, $class: 'AllIcons', toString: () => name }),
   }));
   R.add(hc('ItemDisplayContext', { statics: {}, staticGet: (r, n) => ({ $class: 'ItemDisplayContext', name: n }) }));
-  R.add(hc('AllFluids', { statics: {}, staticGet: (r, name) => fluidEntry(name) }));
-  const fluidEntry = (name) => {
-    const id = 'create:' + name.toLowerCase();
-    return { $class: 'FluidEntry', get: () => new JFluid(id), getSource: () => new JFluid(id), getId: () => id, toString: () => id, $key: () => 'fluidentry:' + id, getType: () => ({}) };
-  };
-  void fluidEntry;
+
+}
+
+export function markPonderApi(R) {
+  for (const n of ['SceneBuilder', 'SceneBuildingUtil', 'SelectionUtil', 'VectorUtil', 'PositionUtil', 'OverlayInstructions', 'WorldInstructions', 'EffectInstructions', 'SpecialInstructions', 'DebugInstructions', 'TextElementBuilder', 'InputElementBuilder', 'PonderPlugin', 'PonderScene', 'MinecartConstructor']) {
+    const c = R.map.get(n);
+    if (c) c.preferHost = true;
+  }
 }
 
 export { Group, JParticle, BehaviourTypeRef, JFluid, JFluidStack, JEntityType };

@@ -195,6 +195,6 @@ export function buildRegistration(R, reg) {
   R.add(hc('PonderTagRegistrationHelper', { isInterface: true }));
   R.add(hc('RegisteredObjectsHelper', { statics: { getKeyOrThrow: (item) => new ResourceLocation(...itemIdOf(item).split(':')) } }));
   // Create's `Mods` enum: no optional mod is "installed" for the converter
-  R.add(hc('Mods', { preferHost: true, statics: {}, staticGet: () => ({ $class: 'Mods', executeIfInstalled: () => undefined, isLoaded: () => false, rl: (p) => new ResourceLocation('mod', p), id: 'x' }) }));
+  R.map.set('com.simibubi.create.compat.Mods', hc('Mods', { preferHost: true, statics: {}, staticGet: () => ({ $class: 'Mods', executeIfInstalled: () => undefined, isLoaded: () => false, rl: (p) => new ResourceLocation('mod', p), id: 'x' }) }));
   return { sceneHelper: new SceneHelper(reg), tagHelper: new TagHelper(reg) };
 }

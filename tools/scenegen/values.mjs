@@ -96,10 +96,12 @@ export class JavaThrow extends Error {
 /** Thrown when the converter meets something it cannot interpret faithfully. */
 export class Unsupported extends Error {
   constructor(msg, where) {
+    if (!where && Unsupported.whereProvider) where = Unsupported.whereProvider();
     super(where ? `${msg} (${where})` : msg);
     this.where = where;
   }
 }
+Unsupported.whereProvider = null;
 
 export const num = (v) => {
   if (typeof v === 'number') return v;

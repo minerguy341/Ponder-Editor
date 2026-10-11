@@ -1,6 +1,6 @@
 // Vanilla block base classes that Create's block classes extend. Their blockstate definition is derived from the matching vanilla block in
 // minecraft-data (property set and the default state set by the vanilla constructor); abstract bases that add nothing have no properties.
-import { hc, Unsupported } from './base.mjs';
+import { hc, Unsupported, getRT } from './base.mjs';
 import { JBlock, vanillaBlock, vanillaProperty } from './blocks.mjs';
 
 /**
@@ -18,8 +18,9 @@ const BASES = [
   ['LadderBlock', { ref: 'ladder', statics: { FACING: 'HORIZONTAL_FACING', WATERLOGGED: 'WATERLOGGED' } }],
   ['ScaffoldingBlock', { ref: 'scaffolding', statics: { WATERLOGGED: 'WATERLOGGED', DISTANCE: 'STABILITY_DISTANCE', BOTTOM: 'BOTTOM' } }],
   ['BaseRailBlock', { props: [], statics: { WATERLOGGED: 'WATERLOGGED' } }],
+  ['TransparentBlock', { props: [], statics: {} }],
   ['BellBlock', { ref: 'bell', statics: { FACING: 'HORIZONTAL_FACING', ATTACHMENT: 'BELL_ATTACHMENT', POWERED: 'POWERED' } }],
-  ['PipeBlock', { props: [], statics: { NORTH: 'NORTH', EAST: 'EAST', SOUTH: 'SOUTH', WEST: 'WEST', UP: 'UP', DOWN: 'DOWN' } }],
+  ['PipeBlock', { props: [], statics: { NORTH: 'NORTH', EAST: 'EAST', SOUTH: 'SOUTH', WEST: 'WEST', UP: 'UP', DOWN: 'DOWN' }, extra: 'PROPERTY_BY_DIRECTION' }],
   ['LecternBlock', { ref: 'lectern', statics: { FACING: 'HORIZONTAL_FACING', POWERED: 'POWERED', HAS_BOOK: 'HAS_BOOK' } }],
   ['IronBarsBlock', { ref: 'iron_bars', statics: { NORTH: 'NORTH', EAST: 'EAST', SOUTH: 'SOUTH', WEST: 'WEST', WATERLOGGED: 'WATERLOGGED' } }],
   ['CrossCollisionBlock', { props: [], statics: { NORTH: 'NORTH', EAST: 'EAST', SOUTH: 'SOUTH', WEST: 'WEST', WATERLOGGED: 'WATERLOGGED' } }],
@@ -31,8 +32,8 @@ const BASES = [
   ['RedStoneWireBlock', { ref: 'redstone_wire', statics: { POWER: 'POWER' } }],
   ['RedstoneTorchBlock', { ref: 'redstone_torch', statics: { LIT: 'LIT' } }],
   ['DoublePlantBlock', { ref: 'tall_grass', statics: { HALF: 'DOUBLE_BLOCK_HALF' } }],
-  ['CropBlock', { props: [], statics: {} }],
-  ['BeehiveBlock', { ref: 'beehive', statics: { FACING: 'HORIZONTAL_FACING' } }],
+  ['CropBlock', { props: [], statics: { AGE: 'AGE_7' } }],
+  ['BeehiveBlock', { ref: 'beehive', statics: { FACING: 'HORIZONTAL_FACING', HONEY_LEVEL: 'LEVEL_HONEY' } }],
   ['HopperBlock', { ref: 'hopper', statics: { FACING: 'FACING_HOPPER', ENABLED: 'ENABLED' } }],
   ['ChestBlock', { ref: 'chest', statics: { FACING: 'HORIZONTAL_FACING', WATERLOGGED: 'WATERLOGGED' } }],
   ['BaseEntityBlock', { props: [], extends: 'Block', statics: {} }],
@@ -68,6 +69,17 @@ export function buildVanillaBlocks(R, blockBase) {
       }
       return cachedProps;
     };
+    if (spec.extra === 'PROPERTY_BY_DIRECTION') {
+      const f = () => {
+        const rt = getRT();
+        const m = rt.hostClass('Map').construct(rt, []);
+        const D = rt.hostClass('Direction').statics;
+        for (const [d, c] of [['NORTH', 'NORTH'], ['EAST', 'EAST'], ['SOUTH', 'SOUTH'], ['WEST', 'WEST'], ['UP', 'UP'], ['DOWN', 'DOWN']]) m.put(D[d], vanillaProperty(c));
+        return m;
+      };
+      f.$lazy = true;
+      statics.PROPERTY_BY_DIRECTION = f;
+    }
     const cls = hc(name, {
       extends: [spec.extends || 'Block'],
       statics,

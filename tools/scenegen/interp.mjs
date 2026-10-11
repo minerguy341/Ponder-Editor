@@ -108,10 +108,12 @@ export class Interp {
     this.hooks = opts.hooks || {};
     this.idCounter = 0;
     CURRENT = this;
+    Unsupported.whereProvider = () => this.where();
   }
 
   activate() {
     CURRENT = this;
+    Unsupported.whereProvider = () => this.where();
   }
 
   where() {
@@ -271,6 +273,7 @@ export class Interp {
       if (!cur) return null;
     }
     for (; i < parts.length; i++) {
+      if (cur.stubAll) continue;
       if (cur.isSource) {
         const n = this.findNested(cur, parts[i], new Set());
         if (!n) return null;
@@ -359,7 +362,7 @@ export class Interp {
 
   instanceOf(v, cls) {
     if (v === null || v === undefined) return false;
-    if (v.$stub) return true;
+    if (v.$stub || v.$recproxy) return true;
     if (!cls) return false;
     if (cls.name === 'Object' && !cls.isSource) return true;
     if (cls.isHost && cls.is) {
@@ -376,11 +379,21 @@ export class Interp {
   // ---------------------------------------------------------------- class init / statics
 
   initClass(cls) {
-    if (!cls.isSource || cls.initState !== 0) return;
+    if (!cls.isSource) return;
+    if (cls.initState === 3) throw cls.initError;
+    if (cls.initState !== 0) return;
     cls.initState = 1;
     const sup = this.superOf(cls);
     if (sup && sup.isSource) this.initClass(sup);
-    if (cls.kind === 'enum') this.makeEnumConstants(cls);
+    if (cls.kind === 'enum') {
+      try {
+        this.makeEnumConstants(cls);
+      } catch (e) {
+        cls.initState = 3;
+        cls.initError = e;
+        throw e;
+      }
+    }
     // static initializer blocks: best effort, failures are noted not fatal
     for (const si of cls.staticInits) {
       const fr = this.staticFrame(cls);
@@ -635,7 +648,7 @@ export class Interp {
     if (n === 'Float' || n === 'Double') return v instanceof Dbl ? 2.9 : v === null ? 2 : 0;
     if (n === 'Object') return 1;
     if (v === null) return 2;
-    if (v && v.$stub) return 2;
+    if (v && (v.$stub || v.$recproxy)) return 2;
     // reference type: check instance if resolvable (type parameters resolve to null => accept)
     return 1.5;
   }
@@ -747,6 +760,12 @@ export class Interp {
       this.curFile = cls.cu.file;
       const ctors = cls.ctors;
       let ctor = null;
+      if (cls.kind === 'record' && args.length === cls.decl.comps.length && !ctors.some((c) => c.params.length === args.length)) {
+        // canonical record constructor
+        cls.decl.comps.forEach((c, i) => obj.fields.set(c.name, this.coerce(args[i], c.type)));
+        for (const m of cls.decl.members) if (m.k === 'field' && !m.static) obj.fields.set(m.name, m.init ? this.evalInit(m.init, m.type, new Frame(cls.cu, cls, obj, new Env())) : this.defaultValue(m.type));
+        return;
+      }
       if (ctors.length) {
         ctor = this.pickMethod(ctors, args, cls);
         if (!ctor) throw this.fail(`no constructor ${cls.name}(${args.map(describe).join(', ')})`);
@@ -1090,7 +1109,12 @@ export class Interp {
         return null;
       }
       case 'if': {
-        if (this.truthy(this.evalExpr(s.c, fr))) return this.exec(s.a, fr.child());
+        const cv = this.evalExpr(s.c, fr);
+        if (cv && (cv.$sym || cv.$recproxy) && this.hooks.symIf) {
+          this.hooks.symIf(cv, () => this.exec(s.a, fr.child()), s.b ? () => this.exec(s.b, fr.child()) : null);
+          return null;
+        }
+        if (this.truthy(cv)) return this.exec(s.a, fr.child());
         if (s.b) return this.exec(s.b, fr.child());
         return null;
       }
@@ -1649,17 +1673,19 @@ export class Interp {
         if (!im.static) continue;
         if (im.wildcard || im.name.endsWith('.' + n.name)) {
           const cls = this.resolveFqn(im.wildcard ? im.name : im.name.slice(0, im.name.lastIndexOf('.')));
-          if (cls) {
-            try {
-              return this.invokeStatic(cls, n.name, args);
-            } catch (e) {
-              if (!(e instanceof Unsupported) || !/no static method|unknown class/.test(e.message)) throw e;
-            }
-          }
+          if (cls && this.hasStaticMethod(cls, n.name)) return this.invokeStatic(cls, n.name, args);
         }
       }
     }
     throw this.fail(`cannot resolve method ${n.name}(${args.length}) in ${fr.cls ? fr.cls.name : '?'}`);
+  }
+
+  hasStaticMethod(cls, name) {
+    if (cls.isSource) {
+      for (let c = cls; c && c.isSource; c = this.superOf(c)) if (c.methods.has(name)) return true;
+      return false;
+    }
+    return !!(cls.stubAll || (cls.statics && typeof cls.statics[name] === 'function') || cls.staticCall);
   }
 
   tryUnqualifiedIn(fr, name, args) {
@@ -1756,7 +1782,9 @@ export class Interp {
     if (n.op === '++' || n.op === '--') return this.evalIncDec(n.e, n.op, false, fr);
     const v = this.evalExpr(n.e, fr);
     switch (n.op) {
-      case '!': return !this.truthy(v);
+      case '!':
+        if (v && (v.$sym || v.$recproxy) && this.hooks.symUn) return this.hooks.symUn('!', v);
+        return !this.truthy(v);
       case '-': return v instanceof Dbl ? new Dbl(-v.v, v.f) : -num(v);
       case '+': return v instanceof JChar ? v.c : v;
       case '~': return ~num(v);
@@ -1869,12 +1897,17 @@ export class Interp {
 
   evalBin(n, fr) {
     this.curLine = n.line || this.curLine;
-    if (n.op === '&&') return this.truthy(this.evalExpr(n.a, fr)) && this.truthy(this.evalExpr(n.b, fr));
-    if (n.op === '||') return this.truthy(this.evalExpr(n.a, fr)) || this.truthy(this.evalExpr(n.b, fr));
+    if (n.op === '&&' || n.op === '||') {
+      const a = this.evalExpr(n.a, fr);
+      if (a && (a.$sym || a.$recproxy) && this.hooks.symBin) return this.hooks.symBin(n.op, a, this.evalExpr(n.b, fr));
+      if (n.op === '&&') return this.truthy(a) && this.truthy(this.evalExpr(n.b, fr));
+      return this.truthy(a) || this.truthy(this.evalExpr(n.b, fr));
+    }
     return this.binop(n.op, this.evalExpr(n.a, fr), this.evalExpr(n.b, fr));
   }
 
   binop(op, a, b) {
+    if (this.hooks.symBin && ((a && (a.$sym || a.$recproxy)) || (b && (b.$sym || b.$recproxy))) && !((op === '==' || op === '!=') && (a === null || b === null))) return this.hooks.symBin(op, a, b);
     if (op === '+' && (typeof a === 'string' || typeof b === 'string')) return this.toStr(a) + this.toStr(b);
     if (op === '==' || op === '!=') {
       let eq;

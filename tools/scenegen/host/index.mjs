@@ -3,6 +3,8 @@ import { buildLang } from './lang.mjs';
 import { buildMc } from './mc.mjs';
 import { buildBlocks } from './blocks.mjs';
 import { buildVanillaBlocks } from './vanilla-blocks.mjs';
+import { buildShapes } from './shapes.mjs';
+import { buildTags } from './tags.mjs';
 import { buildRegistry, RegistryModel } from './registry.mjs';
 
 export function buildHost() {
@@ -11,6 +13,8 @@ export function buildHost() {
   buildMc(R);
   const blockBase = buildBlocks(R);
   buildVanillaBlocks(R, blockBase);
+  buildShapes(R);
+  buildTags(R);
   const registry = new RegistryModel();
   buildRegistry(R, registry);
   return { R, registry };

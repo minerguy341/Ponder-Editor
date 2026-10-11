@@ -7,7 +7,7 @@ import { CACHE, REPOS, getIndex, getRepoIndex, getText, pool, cachePath } from '
 import { parseJava } from './javaast.mjs';
 
 const AST_DIR = path.join(CACHE, 'ast');
-const AST_VERSION = 'v2'; // bump when javaast.mjs output changes
+const AST_VERSION = 'v3'; // bump when javaast.mjs output changes
 
 /** Fetch everything the converter may need so that the run itself is offline (warm cache). */
 export async function ensureCache({ log = () => {} } = {}) {
@@ -19,7 +19,10 @@ export async function ensureCache({ log = () => {} } = {}) {
     log(`fetching ${need.length} Create files...`);
     await pool(need, 24, (n) => getText('create', n, { binary: n.endsWith('.nbt') }));
   }
+  const tagFiles = idx.filter((n) => /^\/src\/(generated|main)\/resources\/data\/[^/]+\/tags\/(item|block|fluid)\/.+\.json$/.test(n)).filter((n) => !fs.existsSync(cachePath('create', n)));
+  if (tagFiles.length) await pool(tagFiles, 24, (n) => getText('create', n));
   for (const f of ['blocks.json', 'items.json']) await getText('mcdata', f);
+  await getText('mcassets', 'assets/minecraft/lang/en_us.json');
   const pidx = await getRepoIndex('ponder');
   const pj = pidx.filter((n) => n.startsWith('/common/') && n.endsWith('.java') && !n.includes('/mixin/'));
   const pneed = pj.filter((n) => !fs.existsSync(cachePath('ponder', n)));
@@ -64,7 +67,15 @@ export class SourceStore {
   }
 
   has(fqn) {
-    return this.files.has(fqn);
+    return this.files.has(fqn) || this.cus.has(fqn);
+  }
+
+  /** register an in-memory compilation unit (tests) */
+  addSource(fqn, src) {
+    const ast = parseJava(src);
+    const cu = { fqn, repo: 'mem', file: fqn.slice(fqn.lastIndexOf('.') + 1) + '.java', pkg: ast.pkg, imports: ast.imports, types: ast.types, classes: new Map() };
+    this.cus.set(fqn, cu);
+    return cu;
   }
 
   /** the fqns that share a simple name */
