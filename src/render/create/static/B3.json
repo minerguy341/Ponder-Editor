@@ -1,0 +1,8 @@
+{
+  "create:crushing_wheel_controller": "static: CrushingWheelControllerBlockEntity has no renderer (AllBlockEntityTypes.CRUSHING_WHEEL_CONTROLLER .renderer commented out) and no visual; the blockstate model is the whole look",
+  "create:mechanical_plough": "static: PloughBlock extends AttachedActorBlock without IBE/block entity, so no BER or visual; the blockstate model is drawn by the chunk mesh",
+  "minecraft:barrel": "static: vanilla barrel has no BlockEntityRenderer (render shape MODEL); the open/closed blockstate model is the complete look",
+  "minecraft:hopper": "static: vanilla hopper has no BlockEntityRenderer (render shape MODEL); the blockstate model is the complete look",
+  "minecraft:furnace": "static: vanilla furnace has no BlockEntityRenderer; lit/unlit look is the blockstate model variant (lit=true/false)",
+  "minecraft:comparator": "static: vanilla comparator has no BlockEntityRenderer; mode/powered variants are blockstate model variants"
+}

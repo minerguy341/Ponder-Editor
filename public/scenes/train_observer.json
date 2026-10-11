@@ -730,6 +730,19 @@
       "pos": [
        5,
        1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_lamp",
+       "props": {
+        "lit": "true"
+       }
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
        3
       ],
       "state": {
@@ -812,6 +825,19 @@
    "op": "world.modifyBlocks",
    "args": {
     "changes": [
+     {
+      "pos": [
+       5,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_lamp",
+       "props": {
+        "lit": "false"
+       }
+      }
+     },
      {
       "pos": [
        5,
@@ -1370,6 +1396,19 @@
       "pos": [
        5,
        1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_lamp",
+       "props": {
+        "lit": "true"
+       }
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
        3
       ],
       "state": {
@@ -1452,6 +1491,19 @@
    "op": "world.modifyBlocks",
    "args": {
     "changes": [
+     {
+      "pos": [
+       5,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_lamp",
+       "props": {
+        "lit": "false"
+       }
+      }
+     },
      {
       "pos": [
        5,

@@ -470,6 +470,32 @@
         "receiver": "true"
        }
       }
+     },
+     {
+      "pos": [
+       1,
+       2,
+       3
+      ],
+      "state": {
+       "name": "minecraft:redstone_lamp",
+       "props": {
+        "lit": "true"
+       }
+      }
+     },
+     {
+      "pos": [
+       3,
+       2,
+       3
+      ],
+      "state": {
+       "name": "minecraft:redstone_lamp",
+       "props": {
+        "lit": "true"
+       }
+      }
      }
     ],
     "particles": false
@@ -627,6 +653,32 @@
         "facing": "north",
         "powered": "false",
         "receiver": "true"
+       }
+      }
+     },
+     {
+      "pos": [
+       1,
+       2,
+       3
+      ],
+      "state": {
+       "name": "minecraft:redstone_lamp",
+       "props": {
+        "lit": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       3,
+       2,
+       3
+      ],
+      "state": {
+       "name": "minecraft:redstone_lamp",
+       "props": {
+        "lit": "false"
        }
       }
      }
@@ -1123,6 +1175,19 @@
         "receiver": "true"
        }
       }
+     },
+     {
+      "pos": [
+       1,
+       2,
+       3
+      ],
+      "state": {
+       "name": "minecraft:redstone_lamp",
+       "props": {
+        "lit": "true"
+       }
+      }
      }
     ],
     "particles": false
@@ -1234,6 +1299,19 @@
         "receiver": "true"
        }
       }
+     },
+     {
+      "pos": [
+       1,
+       2,
+       3
+      ],
+      "state": {
+       "name": "minecraft:redstone_lamp",
+       "props": {
+        "lit": "false"
+       }
+      }
      }
     ],
     "particles": false
@@ -1339,6 +1417,19 @@
         "facing": "north",
         "powered": "true",
         "receiver": "true"
+       }
+      }
+     },
+     {
+      "pos": [
+       1,
+       2,
+       3
+      ],
+      "state": {
+       "name": "minecraft:redstone_lamp",
+       "props": {
+        "lit": "true"
        }
       }
      }
@@ -1435,6 +1526,19 @@
         "receiver": "true"
        }
       }
+     },
+     {
+      "pos": [
+       1,
+       2,
+       3
+      ],
+      "state": {
+       "name": "minecraft:redstone_lamp",
+       "props": {
+        "lit": "false"
+       }
+      }
      }
     ],
     "particles": false
@@ -1540,6 +1644,19 @@
         "facing": "north",
         "powered": "true",
         "receiver": "true"
+       }
+      }
+     },
+     {
+      "pos": [
+       1,
+       2,
+       3
+      ],
+      "state": {
+       "name": "minecraft:redstone_lamp",
+       "props": {
+        "lit": "true"
        }
       }
      }

@@ -10,7 +10,9 @@ import { missingResources, fetchStats } from '../assets/resources';
 import { getBlockRenderer } from '../render/blockRenderer';
 import { PonderViewer } from '../render/viewer';
 import { PoseStack, createItemEntityObject, createItemObjectSync, prepareItem } from '../render/create/items';
-import type { ItemStackJson } from '../contract';
+import type { ItemStackJson, BlockVisual } from '../contract';
+import { createVisual, isEntityRendered } from '../render/create';
+import { getLogisticsWorld, logisticsEventsOf } from '../render/create/items/logisticsSim';
 
 const qs = new URLSearchParams(location.search);
 const stage = document.getElementById('stage')!;
@@ -73,9 +75,65 @@ async function itemsMode() {
   viewer.setBasePlate({ x: 0, z: 0, size });
 }
 
+const visuals: { v: BlockVisual; b: BlockInstance }[] = [];
+function setTicks(t: number) {
+  for (const e of visuals) e.v.update(t);
+  renderer.tick(performance.now());
+  viewer.renderFrame();
+}
+
+async function sceneMode() {
+  // ?scene=belt/transport loads public/scenes/<file>.json: its schematic and its logistics ops (B2 events)
+  const sceneId = qs.get('scene');
+  const scene = sceneId ? await (await fetch(`/scenes/${sceneId}.json`)).json() as { schematic: string; instructions: { op: string; args?: Record<string, unknown>; out?: string }[] } : null;
+  const path = qs.get('path') ?? scene?.schematic ?? 'belt/transport';
+  const st = await loadStructure('create', path);
+  renderer.setEntityBlockPredicate(isEntityRendered);
+  const lookup = makeLookup(st.blocks);
+  if (scene) for (const ev of logisticsEventsOf(scene.instructions)) getLogisticsWorld(lookup).apply(ev);
+  // textures used by block-model processors (belt casing retexture) must be in the atlas before the section is built
+  await renderer.ensureTextures(['create:block/belt/brass_belt_casing', 'create:block/belt/andesite_belt_casing']);
+  await renderer.prepare(st.blocks.map((b) => b.state));
+  const group = renderer.buildSection(st.blocks, { lookup });
+  viewer.world.add(group);
+  const ctx = { renderer, lookup };
+  const only = qs.get('only');
+  for (const b of st.blocks) {
+    if (only && !only.split(',').includes(b.state.name)) continue;
+    const v = await createVisual(b, ctx);
+    if (!v) continue;
+    v.object.position.set(b.pos[0], b.pos[1], b.pos[2]);
+    viewer.world.add(v.object);
+    visuals.push({ v, b });
+  }
+  viewer.setBounds(st.size[0], st.size[1], st.size[2]);
+  const ent = qs.get('plate');
+  void ent;
+  setTicks(Number(qs.get('t') ?? 0));
+  Object.assign(w.__b2 as object, { visuals, setTicks, structure: st, lookup, ctx });
+  // probe(ticks): simulated logistics state (belt items, depot held items, basin slots) for verification
+  (w.__b2 as Record<string, unknown>).rawNbt = (name: string) => st.blocks.filter((b) => b.state.name === name).map((b) => ({ pos: b.pos, props: b.state.props, nbt: b.nbt }));
+  (w.__b2 as Record<string, unknown>).probe = (t: number) => {
+    const lw = getLogisticsWorld(lookup);
+    const belts = st.blocks.filter((b) => b.state.name === 'create:belt').map((b) => b.pos);
+    const chains = new Map<string, unknown>();
+    for (const p of belts) {
+      const ch = lw.chainAt(p);
+      if (!ch || chains.has(ch.key)) continue;
+      chains.set(ch.key, { controller: ch.controller, length: ch.segments.length, speed: lw.speedOf(ch), items: lw.itemsOf(ch, t).map((x) => ({ id: x.stack.id, n: x.stack.count, pos: +x.offset.toFixed(3), side: +x.sideOffset.toFixed(3), locked: x.locked })) });
+    }
+    const depots = st.blocks.filter((b) => b.state.name === 'create:depot').map((b) => { lw.advance(t); const v = lw.depotView(b.pos); return { pos: b.pos, held: v.held && { id: v.held.stack.id, pos: +v.held.beltPosition.toFixed(3) }, output: v.output.filter(Boolean) }; });
+    const basins = st.blocks.filter((b) => b.state.name === 'create:basin').map((b) => { lw.advance(t); return { pos: b.pos, slots: lw.basinView(b.pos).filter(Boolean) }; });
+    const chutes = st.blocks.filter((b) => b.state.name === 'create:chute' || b.state.name === 'create:smart_chute').map((b) => { lw.advance(t); const c = lw.chuteAt(b.pos); return { pos: b.pos, item: c.item && c.item.id, cur: +c.cur.toFixed(3), bottomPull: c.bottomPull, pull: c.pull, push: c.push }; });
+    lw.advance(t);
+    return { t, chains: [...chains.values()], depots, basins, chutes };
+  };
+}
+
 async function main() {
   const mode = qs.get('mode') ?? 'items';
   if (mode === 'items') await itemsMode();
+  if (mode === 'scene') await sceneMode();
   viewer.start();
   info.done = true;
 }
