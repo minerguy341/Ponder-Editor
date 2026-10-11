@@ -8,10 +8,12 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const base = process.argv[2] ?? 'http://localhost:5191';
+const base = process.argv.slice(2).find((a) => a.startsWith('http')) ?? 'http://localhost:5191';
 const groups = JSON.parse(fs.readFileSync(path.join(root, 'tools/b-groups.json'), 'utf8'));
-const ids = groups.B6;
 const inv = JSON.parse(fs.readFileSync(path.join(root, 'tools/.cache/b6/inventory.json'), 'utf8'));
+// --all: every block of every schematic (resource-level audit of the whole ponder set, incl. vanilla ids); default: the B6 group
+const all = process.argv.includes('--all');
+const ids = all ? inv.map((e) => e.name) : groups.B6;
 const scenes = new Set();
 for (const e of inv) if (ids.includes(e.name)) for (const s of e.scenes) scenes.add(s);
 const exe = process.env.CHROMIUM ?? '/opt/pw-browsers/chromium-1194/chrome-linux/chrome';
@@ -43,6 +45,6 @@ const bad = {
   errors: [...(info.errors ?? []), ...errors],
 };
 const count = Object.values(bad).reduce((n, v) => n + v.length, 0);
-console.log(JSON.stringify({ scenes: list.length, b6Ids: ids.length, visualCount: info.visualCount, partials: info.partials, bad }, null, 1));
+console.log(JSON.stringify({ mode: all ? 'all' : 'B6', scenes: list.length, ids: ids.length, visualCount: info.visualCount, partials: info.partials, bad }, null, 1));
 console.log(count === 0 ? 'B_AUDIT_OK' : `B_AUDIT_FAIL ${count}`);
 process.exit(count === 0 ? 0 : 1);
