@@ -12,7 +12,7 @@
 import * as THREE from 'three';
 import type { BlockInstance, VisualContext } from '../../../contract';
 import type { VisualModule } from '../registry';
-import { PARTIAL, getPartial, stateAxis } from '../common';
+import { PARTIAL, getPartial, markOwned, stateAxis } from '../common';
 import { PoseStack } from '../items/pose';
 import { bogeyAngleAt, type BogeyAnim } from '../trains/timeline';
 import { SceneVisual, type SceneDataKeys, setMatrix, withMatrix } from '../trains/util';
@@ -41,6 +41,8 @@ class BogeyVisual extends SceneVisual {
   private readonly shaftX = shaftVariant('x');
   /** one entry per placed part; its matrix is written in onUpdate. */
   private parts: { g: THREE.Group; draw: (ps: PoseStack, angleDeg: number) => void }[] = [];
+  /** the drive belt with its own UV buffer (StandardBogeyRenderer.Large: shiftUVScrolling(BOGEY_BELT, scroll)) */
+  private belt: { geom: THREE.BufferGeometry; base: Float32Array; attr: THREE.BufferAttribute; src: { v0: number; v1: number }; dst: { v0: number; v1: number } } | null = null;
 
   constructor(block: BlockInstance, ctx: VisualContext) {
     super(block, ctx);
@@ -66,6 +68,7 @@ class BogeyVisual extends SceneVisual {
       const g = withMatrix(await getPartial(this.ctx, id));
       this.object.add(g);
       this.parts.push({ g, draw });
+      return g;
     };
     // StandardBogeyRenderer.render (both sizes): two Z-axis shafts
     for (let i = 0; i < 2; i++) {
@@ -81,7 +84,8 @@ class BogeyVisual extends SceneVisual {
         });
       }
       await add(ids.drive!, (ps) => { this.base(ps).scale(SHRINK); });
-      await add(ids.belt!, (ps) => { this.base(ps).scale(SHRINK); });
+      const beltGroup = await add(ids.belt!, (ps) => { this.base(ps).scale(SHRINK); });
+      this.setupBelt(beltGroup);
       await add(ids.piston!, (ps, a) => { this.base(ps).translate(0, 0, (1 / 4) * Math.sin(a * DEG)); });
       await add(ids.wheels!, (ps, a) => { this.base(ps).translate(0, 1, 0).rotateXDegrees(a); });
       await add(ids.pin!, (ps, a) => { this.base(ps).translate(0, 1, 0).rotateXDegrees(a).translate(0, 1 / 4, 0).rotateXDegrees(-a); });
@@ -94,6 +98,45 @@ class BogeyVisual extends SceneVisual {
     }
   }
 
+  /** Own geometry for the belt so its UVs can scroll; the source and scroll sprites are the BOGEY_BELT shift entry. */
+  private setupBelt(group: THREE.Group): void {
+    // BlockRendererImpl exposes its atlas (src/render/blockRenderer.ts); the frozen contract interface does not
+    const atlas = (this.ctx.renderer as unknown as { atlas: { get(id: string): { v0: number; v1: number } | null | undefined } }).atlas;
+    const src = atlas.get('create:block/bogey/belt');
+    const dst = atlas.get('create:block/bogey/belt_scroll');
+    if (!src || !dst) return;
+    group.traverse((o) => {
+      const m = o as THREE.Mesh;
+      if (!m.isMesh || this.belt) return;
+      const geom = m.geometry.clone();
+      markOwned(geom);
+      m.geometry = geom;
+      const attr = geom.getAttribute('uv') as THREE.BufferAttribute;
+      this.belt = { geom, base: Float32Array.from(attr.array as Float32Array), attr, src: { v0: src.v0, v1: src.v1 }, dst: { v0: dst.v0, v1: dst.v1 } };
+    });
+  }
+
+  /**
+   * StandardBogeyRenderer.Large: scroll = frac(BELT_RADIUS_IN_UV_SPACE * DEG_TO_RAD * wheelAngle) * spriteSize * 0.5 (sprite = the
+   * BOGEY_BELT target), applied by SuperByteBuffer.shiftUVScrolling. The per-vertex mapping is approximated as a wrap of the
+   * source sprite's v-range shifted by that scroll (see the residual list).
+   */
+  private scrollBelt(angleDeg: number): void {
+    const b = this.belt;
+    if (!b) return;
+    const spriteSize = b.dst.v1 - b.dst.v0;
+    let scroll = (5 / 16) * DEG * angleDeg;
+    scroll -= Math.floor(scroll);
+    const shift = (scroll * spriteSize * 0.5) / (b.src.v1 - b.src.v0);
+    const arr = b.attr.array as Float32Array;
+    const span = b.src.v1 - b.src.v0;
+    for (let i = 1; i < arr.length; i += 2) {
+      const rel = (b.base[i] - b.src.v0) / span + shift;
+      arr[i] = b.src.v0 + (rel - Math.floor(rel)) * span;
+    }
+    b.attr.needsUpdate = true;
+  }
+
   protected override onScene(tick: number, keys: SceneDataKeys): void {
     if (keys.__anim && keys.__anim.kind === 'bogey') {
       // a re-applied animation at `tick` replaces every later one (BaseVisual timeline rule)
@@ -104,6 +147,7 @@ class BogeyVisual extends SceneVisual {
 
   protected onUpdate(ticks: number): void {
     const angle = bogeyAngleAt(this.anims, this.radius, ticks);
+    if (this.large) this.scrollBelt(angle);
     for (const p of this.parts) {
       p.draw(this.ps, angle);
       setMatrix(p.g, this.ps.matrix);

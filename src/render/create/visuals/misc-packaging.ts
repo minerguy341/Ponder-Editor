@@ -10,11 +10,12 @@ import * as THREE from 'three';
 import type { BlockInstance, ItemStackJson, VisualContext } from '../../../contract';
 import type { VisualModule } from '../registry';
 import {
-  BaseVisual, DIR_STEP, PARTIAL, getBool, getItemStack, getNumber, getPartial, horizontalAngle, stateDirection, toYRot, verticalAngle, opposite, type Nbt,
+  BaseVisual, DIR_STEP, PARTIAL, chaseValueAt, getBool, getCompound, getItemStack, getList, getNumber, getPartial, getString, horizontalAngle, stateDirection, toYRot, verticalAngle, opposite, type Nbt,
 } from '../common';
 import { PoseStack } from '../items/pose';
 import { createItemObject, prepareItem } from '../items';
 import { SceneVisual, type SceneDataKeys, setMatrix, setVisible, withMatrix } from '../trains/util';
+import { rotateVec } from '../trains/vec';
 
 /** PackagerBlockEntity.CYCLE */
 export const PACKAGER_CYCLE = 20;
@@ -168,29 +169,192 @@ const packagerModule = (blocks: string[], repackager: boolean): VisualModule => 
 });
 
 
-// ------------------------------------------------------------------------------------------------ frogport (rest pose)
+// ------------------------------------------------------------------------------------------------ frogport
 //
-// Java: content/logistics/packagePort/frogport/{FrogportRenderer.renderSafe (rest branch), FrogportBlockEntity.getYaw/passiveYaw}.
-// At rest (no target, no animation, no anticipation) the head pitch and the tongue length are 0 and the body turns by the placed
-// yaw. The package hand-off animation (startAnimation: tongue, rigging and package models) is not reproduced yet (see the report).
+// Java: content/logistics/packagePort/frogport/{FrogportRenderer.renderSafe / renderPackage, FrogportBlockEntity (getYaw, tick,
+//       startAnimation: animationProgress.startWithValue(0).chase(1, 0.1, LINEAR), currentlyDepositing, animatedPackage)},
+//       content/logistics/packagePort/PackagePortTarget.ChainConveyor.getExactTargetLocation,
+//       content/logistics/packagePort/... ChainConveyorBlockEntity.calculateConnectionStats / getPackagePosition,
+//       AllPartialModels.PACKAGES / PACKAGE_RIGGING (style item models).
+// startAnimation is a method call: it arrives as PonderCalls [{t, path:[{m:'startAnimation', a:[stack, deposit]}]}].
+// Residuals: the manual open / anticipation chases (scene does not use them), the Target types other than the chain conveyor
+// (the centre of the relative position is used), the goggles flag is read from nbt Goggles (default false).
+
+const FROG_ANIM_SPEED = 0.1;
+
+interface FrogAnim { t: number; stack: ItemStackJson | undefined; deposit: boolean }
+
+/** ChainConveyorBlockEntity.calculateConnectionStats + getPackagePosition(chainPos, connection), in world space. */
+export function chainPackagePosition(chainPos: [number, number, number], connection: [number, number, number], speed: number, chainPosition: number): [number, number, number] {
+  const reversed = speed < 0;
+  const offBranch = 35;
+  const wrap = (a: number) => ((((a + 180) % 360) + 360) % 360) - 180;
+  const direction = (180 / Math.PI) * Math.atan2(connection[0], connection[2]);
+  const angle = wrap(direction - offBranch * (reversed ? -1 : 1));
+  const opposite = wrap(angle + 180 + 2 * offBranch * (reversed ? -1 : 1));
+  const rot = (deg: number) => rotateVec(new THREE.Vector3(0, 0, 1.25), deg, 'y');
+  const a = rot(angle);
+  const start = new THREE.Vector3(chainPos[0] + 0.5 + a.x, chainPos[1] + 6 / 16 + a.y, chainPos[2] + 0.5 + a.z);
+  const b = rot(opposite);
+  const endBase = [chainPos[0] + connection[0], chainPos[1] + connection[1], chainPos[2] + connection[2]];
+  const end = new THREE.Vector3(endBase[0] + 0.5 + b.x, endBase[1] + 6 / 16 + b.y, endBase[2] + 0.5 + b.z);
+  const length = start.distanceTo(end);
+  const diff = end.clone().sub(start).normalize();
+  const p = start.clone().add(diff.multiplyScalar(Math.min(length, chainPosition)));
+  return [p.x, p.y, p.z];
+}
+
+/** The exact target of the frogport (PackagePortTarget.getExactTargetLocation), in the frogport's block-local space. */
+export function frogTargetLocal(data: Nbt, ctx: VisualContext, pos: [number, number, number]): THREE.Vector3 | null {
+  const t = getCompound(data, 'Target');
+  if (!t) return null;
+  const rel = getList(t, 'relative_pos').map((x) => Number(x)) as number[];
+  const port: [number, number, number] = [pos[0] + (rel[0] ?? 0), pos[1] + (rel[1] ?? 0), pos[2] + (rel[2] ?? 0)];
+  if (getString(t, 'type', '') === 'create:chain_conveyor') {
+    const conn = (getList(t, 'connection').map((x) => Number(x)) as number[]);
+    const chain = ctx.lookup.getBlockEntity(port);
+    const speed = chain?.nbt ? getNumber(chain.nbt as Nbt, 'Speed', 0) : 0;
+    const p = chainPackagePosition(port, [conn[0] ?? 0, conn[1] ?? 0, conn[2] ?? 0], speed, getNumber(t, 'chain_pos', 0));
+    return new THREE.Vector3(p[0] - pos[0], p[1] - pos[1], p[2] - pos[2]);
+  }
+  return new THREE.Vector3(rel[0] + 0.5, rel[1] + 0.5, rel[2] + 0.5);
+}
 
 class FrogportVisual extends BaseVisual {
+  private anims: FrogAnim[] = [];
+  private head!: THREE.Group;
+  private tongue!: THREE.Group;
+  private boxes = new Map<string, { g: THREE.Group; rig: THREE.Group | null }>();
+  private yaw = 0;
+  private target: THREE.Vector3 | null = null;
+  private readonly ps = new PoseStack();
+  private readonly pivot: [number, number, number] = [8 / 16, 10 / 16, 11 / 16];
+
   protected async build(): Promise<void> {
-    const yaw = getNumber(this.data, 'PlacedYaw', 0);
+    const pos: [number, number, number] = [this.block.pos[0], this.block.pos[1], this.block.pos[2]];
+    this.target = frogTargetLocal(this.data, this.ctx, pos);
+    // FrogportBlockEntity.getYaw: towards the target (atan2 + 180), else the placed yaw
+    if (this.target) {
+      const d = this.target.clone().sub(new THREE.Vector3(0.5, 0.5, 0.5));
+      this.yaw = (Math.atan2(d.x, d.z) * 180) / Math.PI + 180;
+    } else {
+      this.yaw = getNumber(this.data, 'PlacedYaw', 0);
+    }
+    this.anims = this.readAnims();
     const goggles = getBool(this.data, 'Goggles', false);
-    const [body, head] = await Promise.all([
+    const [body, head, tongue] = await Promise.all([
       getPartial(this.ctx, PARTIAL.FROGPORT_BODY),
       getPartial(this.ctx, goggles ? PARTIAL.FROGPORT_HEAD_GOGGLES : PARTIAL.FROGPORT_HEAD),
+      getPartial(this.ctx, PARTIAL.FROGPORT_TONGUE),
     ]);
     // body.center().rotateYDegrees(yaw).uncenter()
-    const bodyM = new PoseStack().translate(0.5, 0.5, 0.5).rotateYDegrees(yaw).translate(-0.5, -0.5, -0.5).matrix.clone();
-    this.object.add(withMatrix(body, bodyM));
-    // head: center().rotateYDegrees(yaw).uncenter().translate(8/16, 10/16, 11/16).rotateXDegrees(0).translateBack(...)
-    const headM = new PoseStack().translate(0.5, 0.5, 0.5).rotateYDegrees(yaw).translate(-0.5, -0.5, -0.5)
-      .translate(8 / 16, 10 / 16, 11 / 16).translate(-8 / 16, -10 / 16, -11 / 16).matrix.clone();
-    this.object.add(withMatrix(head, headM));
+    this.object.add(withMatrix(body, new PoseStack().translate(0.5, 0.5, 0.5).rotateYDegrees(this.yaw).translate(-0.5, -0.5, -0.5).matrix.clone()));
+    this.head = withMatrix(head);
+    this.tongue = withMatrix(tongue);
+    this.object.add(this.head, this.tongue);
+    // the box models of every package the scene starts (PACKAGES / PACKAGE_RIGGING by item id)
+    const seen = new Set<string>();
+    for (const a of this.anims) {
+      if (!a.stack) continue;
+      const key = stackKey2(a.stack);
+      if (seen.has(key)) continue;
+      seen.add(key);
+      const boxP = await getPartial(this.ctx, `create:item/${a.stack.id.replace(/^[^:]*:/, '')}`);
+      const rigP = await getPartial(this.ctx, `create:item/package/rigging_${styleSize(a.stack.id)}`);
+      const box = withMatrix(boxP);
+      const rig = withMatrix(rigP);
+      box.visible = false;
+      rig.visible = false;
+      this.object.add(box, rig);
+      this.boxes.set(key, { g: box, rig });
+    }
   }
-  protected onUpdate(): void { /* rest pose: nothing moves until the package animation is modelled */ }
+
+  private readAnims(): FrogAnim[] {
+    const out: FrogAnim[] = [];
+    const calls = ((this.block.nbt as { PonderCalls?: unknown[] } | undefined)?.PonderCalls ?? []) as { t: number; path: { m?: string; a?: unknown[] }[] }[];
+    for (const c of calls) {
+      const p = c.path?.[0];
+      if (!p || p.m !== 'startAnimation') continue;
+      out.push({ t: c.t, stack: p.a?.[0] as ItemStackJson | undefined, deposit: Boolean(p.a?.[1]) });
+    }
+    return out.sort((a, b) => a.t - b.t);
+  }
+
+  protected onUpdate(ticks: number): void {
+    // the last animation started at or before `ticks`; progress = LerpedFloat.linear chase 0 -> 1 at 0.1 per tick
+    let cur: FrogAnim | null = null;
+    for (const a of this.anims) if (a.t <= ticks) cur = a;
+    const progress = cur ? Math.min(1, chaseValueAt('linear', 0, 1, FROG_ANIM_SPEED, ticks, cur.t)) : 1;
+    const animating = !!cur && progress < 1;
+    const depositing = animating && !!cur?.deposit;
+    // FrogportRenderer.renderSafe
+    let headPitch = 80, tonguePitch = 0, tongueLength = 0, headPitchModifier = 1;
+    let itemDistance = 0, scale = 1;
+    const t = this.target;
+    if (t) {
+      const diff = t.clone().sub(new THREE.Vector3(0, animating && depositing ? 0 : 0.75, 0)).sub(new THREE.Vector3(0.5, 0.5, 0.5));
+      const flat = Math.hypot(diff.x, diff.z) + 3 / 16;
+      tonguePitch = (Math.atan2(diff.y, flat) * 180) / Math.PI;
+      tongueLength = Math.max(diff.length(), 1);
+      headPitch = Math.min(Math.max(tonguePitch * 2, 60), 100);
+      this.lastDiff = diff;
+    }
+    if (animating) {
+      if (depositing) {
+        const modifier = Math.max(0, 1 - Math.pow((progress - 0.25) * 4 - 1, 4));
+        itemDistance = Math.max(tongueLength * Math.min(1, (progress - 0.25) * 3), tongueLength * modifier);
+        tongueLength *= Math.max(0, 1 - Math.pow((progress * 1.25 - 0.25) * 4 - 1, 4));
+        headPitchModifier = Math.max(0, 1 - Math.pow(progress * 1.25 * 2 - 1, 4));
+        scale = 0.25 + (progress * 3) / 4;
+      } else {
+        tongueLength *= Math.pow(Math.max(0, 1 - progress * 1.25), 5);
+        headPitchModifier = 1 - Math.min(1, Math.max(0, (Math.pow(progress * 1.5, 2) - 0.5) * 2));
+        scale = Math.max(0.5, 1 - progress * 1.25);
+        itemDistance = tongueLength;
+      }
+    } else {
+      tongueLength = 0;
+      headPitchModifier = 0; // no anticipation in the scenes
+    }
+    headPitch *= headPitchModifier;
+    // head: center().rotateYDegrees(yaw).uncenter().translate(p).rotateXDegrees(pitch).translateBack(p)
+    const pv = this.pivot;
+    const headM = this.ps.reset().translate(0.5, 0.5, 0.5).rotateYDegrees(this.yaw).translate(-0.5, -0.5, -0.5)
+      .translate(pv[0], pv[1], pv[2]).rotateXDegrees(headPitch).translate(-pv[0], -pv[1], -pv[2]).matrix.clone();
+    setMatrix(this.head, headM);
+    // tongue: ... .translate(p).rotateXDegrees(tonguePitch).scale(1, 1, tongueLength / (7/16)).translateBack(p)
+    const tongueM = this.ps.reset().translate(0.5, 0.5, 0.5).rotateYDegrees(this.yaw).translate(-0.5, -0.5, -0.5)
+      .translate(pv[0], pv[1], pv[2]).rotateXDegrees(tonguePitch).scale(1, 1, tongueLength / (7 / 16)).translate(-pv[0], -pv[1], -pv[2]).matrix.clone();
+    setMatrix(this.tongue, tongueM);
+    // renderPackage: only while animating and the package is still held (scale >= 0.45)
+    for (const [, b] of this.boxes) { setVisible(b.g, false); if (b.rig) setVisible(b.rig, false); }
+    if (animating && cur?.stack && scale >= 0.45) {
+      const entry = this.boxes.get(stackKey2(cur.stack));
+      if (entry) {
+        const d = (this.lastDiff ?? new THREE.Vector3()).clone().normalize().multiplyScalar(itemDistance);
+        const off = depositing ? 0.75 : 0;
+        const chain = (g: THREE.Group) => {
+          const m = this.ps.reset().translate(0, 3 / 16, 0).translate(d.x, d.y - off, d.z)
+            .translate(0.5, 0.5, 0.5).scale(scale, scale, scale).translate(-0.5, -0.5, -0.5).matrix.clone();
+          setMatrix(g, m);
+          setVisible(g, true);
+        };
+        chain(entry.g);
+        if (depositing && entry.rig) chain(entry.rig);
+      }
+    }
+  }
+
+  private lastDiff: THREE.Vector3 | null = null;
+}
+
+function stackKey2(st: ItemStackJson): string { return `${st.id}|${JSON.stringify(st.nbt ?? null)}`; }
+
+/** "create:cardboard_package_12x12" -> "12x12" (the rigging model size; rare styles have no size and use 12x12 rigging). */
+function styleSize(id: string): string {
+  const m = /_(\d+x\d+)$/.exec(id);
+  return m ? m[1] : '12x12';
 }
 
 const frogportModule: VisualModule = {
