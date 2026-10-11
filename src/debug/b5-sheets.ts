@@ -25,6 +25,20 @@ export function grid(rows: SheetCell[][], gap = 2): Sheet {
 const bogeyNbt = (): Record<string, unknown> => ({ BogeyData: { BogeyStyle: 'create:standard' } });
 
 export const SHEETS: Record<string, () => Sheet> = {
+  link1: () => grid([[{ state: st('create:display_link', { powered: 'false', facing: 'north' }) }]], 2),
+  links: () => grid([
+    [{ state: st('create:display_link', { powered: 'false', facing: 'north' }) },
+      { state: st('create:display_link', { powered: 'false', facing: 'west' }) },
+      { state: st('create:display_link', { powered: 'false', facing: 'up' }) }],
+    [{ state: st('create:stock_link', { face: 'floor', waterlogged: 'false', powered: 'false', facing: 'north' }) },
+      { state: st('create:stock_link', { face: 'wall', waterlogged: 'false', powered: 'false', facing: 'west' }) },
+      { state: st('create:stock_link', { face: 'ceiling', waterlogged: 'false', powered: 'false', facing: 'south' }) }],
+  ], 2),
+  diodes: () => grid([
+    [{ state: st('create:pulse_repeater', { facing: 'north', powered: 'false', powering: 'false' }), nbt: { State: 0, ScrollValue: 4 } },
+      { state: st('create:pulse_timer', { facing: 'north', powered: 'false', powering: 'true' }), nbt: { State: 3, ScrollValue: 20 } },
+      { state: st('create:pulse_extender', { facing: 'north', powered: 'true', powering: 'true' }), nbt: { State: 2, ScrollValue: 6 } }],
+  ], 2),
   lever: () => grid([
     [{ state: st('create:analog_lever', { face: 'floor', facing: 'east' }), nbt: { State: 0, ChangeTimer: 0 } },
       { state: st('create:analog_lever', { face: 'floor', facing: 'east' }), nbt: { State: 15, ChangeTimer: 0 } },
