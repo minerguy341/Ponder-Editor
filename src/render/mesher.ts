@@ -363,6 +363,19 @@ export function layerFor(model: BakedModel, state: BlockState, q: BakedQuad): Re
   return l;
 }
 
+/**
+ * Only a quad lying flat on the block boundary of its cullface can be hidden by the neighbour across that boundary: the
+ * game culls against the block's own shape on that boundary, which a quad inside the block (a slab top at half height,
+ * an inset panel) does not reach. Without this check its footprint would be compared with the neighbour's face although
+ * there is air between them.
+ */
+function onCullBoundary(q: BakedQuad, d: Dir): boolean {
+  const axis = d === 'west' || d === 'east' ? 0 : d === 'down' || d === 'up' ? 1 : 2;
+  const target = d === 'west' || d === 'down' || d === 'north' ? 0 : 1;
+  for (let i = 0; i < 4; i++) if (Math.abs(q.pos[i * 3 + axis] - target) > 1e-4) return false;
+  return true;
+}
+
 function emitModel(
   gb: GeometryBuilder, model: BakedModel, state: BlockState, pos: Vec3, offset: Vec3,
   stateAt: (x: number, y: number, z: number) => BlockState | undefined,
@@ -370,7 +383,7 @@ function emitModel(
   _env: MeshEnv,
 ) {
   for (const q of model.quads) {
-    if (q.cull) {
+    if (q.cull && onCullBoundary(q, q.cull)) {
       const n = DIR_NORMAL[q.cull];
       const nx = pos[0] + n[0], ny = pos[1] + n[1], nz = pos[2] + n[2];
       const adj = stateAt(nx, ny, nz);
