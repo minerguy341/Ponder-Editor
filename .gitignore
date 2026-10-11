@@ -1,6 +1,12 @@
 node_modules
 dist
 *.log
+<<<<<<< HEAD
 .claude/worktrees
 tools/.cache
 tools/verify/out
+=======
+tools/.cache
+tools/verify/out
+tools/a1-out
+>>>>>>> worktree-agent-a976a1841a4caaceb
