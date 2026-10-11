@@ -11,6 +11,7 @@ import { createBlockRenderer } from '../render/blockRenderer';
 import { PonderViewer } from '../render/viewer';
 import { createVisual, isEntityRendered, moduleFor, preloadVisuals } from '../render/create';
 import { SHEETS } from './b5-sheets';
+import { missingResources as missing } from '../assets/resources';
 
 const q = new URLSearchParams(location.search);
 const stage = document.getElementById('stage')!;
@@ -70,8 +71,27 @@ async function show(blocks: BlockInstance[], size: Vec3) {
   if (q.get('noplate')) viewer.setShadowHidden(true);
 }
 
+/** tools/b-audit-B5.mjs: builds every partial the B5 visuals load and reports the resources that did not resolve. */
+async function audit() {
+  const ids: string[] = await (await fetch('/tools/.cache/b5-audit-ids.json')).json();
+  const failed: { id: string; why: string }[] = [];
+  for (const id of ids) {
+    const before = new Set(missing);
+    try {
+      await renderer.buildPartial(id);
+    } catch (e) {
+      failed.push({ id, why: String((e as Error)?.message ?? e) });
+      continue;
+    }
+    const added = [...missing].filter((x) => !before.has(x));
+    if (added.length) failed.push({ id, why: 'missing ' + added.join(', ') });
+  }
+  info.audit = { checked: ids.length, failed };
+}
+
 async function main() {
   viewer.setCameraClock('manual');
+  if (q.get('audit')) { await audit(); info.done = true; return; }
   const sheet = q.get('sheet');
   if (sheet) {
     const s = SHEETS[sheet];
