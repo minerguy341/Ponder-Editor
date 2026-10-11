@@ -10,6 +10,7 @@ import { Recorder } from './host/ponder.mjs';
 import { SceneHost } from './host/ponder-classes.mjs';
 import { Unsupported, JavaThrow, MethodRef } from './values.mjs';
 import { Interp } from './interp.mjs';
+import { AUDIT, auditScene } from './drops.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 export const ROOT = path.resolve(here, '..', '..');
@@ -96,6 +97,8 @@ export function groupScenes(regs) {
 
 export function compileScene(env, group, lang) {
   const { rt, registry, ctx } = env;
+  AUDIT.where = () => rt.userWhere(['CreateSceneBuilder.java']);
+  auditScene(group.id);
   const warnings = [];
   const world = new World(rt, registry);
   world.loadSchematic(group.schematic);
@@ -115,6 +118,7 @@ export function compileScene(env, group, lang) {
     else throw e;
   }
   for (const n of rec.notes) warnings.push(n);
+  auditScene(null);
   const res = finalize(env, group, rec, world, lang, warnings);
   res.notes = notes;
   res.titleId = res.scene.titleId;
