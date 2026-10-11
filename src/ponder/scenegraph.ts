@@ -44,6 +44,8 @@ interface VisualNode {
   rev: number;
   /** key of the section element this visual is attached to */
   section: string | null;
+  /** JSON of the block state properties last seen (a change is sent to the visual as a `__stateProps` event) */
+  propsKey?: string;
 }
 
 interface EntityNode {
@@ -185,6 +187,9 @@ export class SceneGraph {
     },
   };
 
+  /** the lookup the block entity visuals receive (their VisualContext.lookup); logistics scenes are bound to it */
+  get worldLookup(): WorldLookup { return this.lookup; }
+
   /** resolves once every block entity visual requested so far has been created (or failed) */
   idle(): Promise<void> {
     if (this.pendingCount === 0) return Promise.resolve();
@@ -295,6 +300,10 @@ export class SceneGraph {
       const sid = owner.get(k) ?? null;
       if (node.section !== sid || (node.visual && !node.parent)) this.attach(node, sid, k);
       if (node.visual && beChanged) node.visual.setData((block.nbt ?? {}) as Record<string, unknown>);
+      // block state property changes (e.g. a sticker's `extended`, scene modifyBlocks) reach the visual at the scene tick
+      const pk = JSON.stringify(block.state.props);
+      if (node.visual && node.propsKey !== undefined && pk !== node.propsKey) node.visual.setData({ __tick: st.tick - 1, __stateProps: block.state.props });
+      node.propsKey = pk;
     }
   }
 
