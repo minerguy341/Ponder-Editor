@@ -1420,7 +1420,8 @@
     ],
     "pose": {
      "type": "face_poi"
-    }
+    },
+    "fadeFrom": "down"
    },
    "src": "RequesterAndShopScenes.java:245",
    "out": "e5"

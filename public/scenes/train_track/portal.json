@@ -374,7 +374,8 @@
     ],
     "pose": {
      "type": "face_poi"
-    }
+    },
+    "fadeFrom": "down"
    },
    "src": "TrackScenes.java:295",
    "out": "e4"
