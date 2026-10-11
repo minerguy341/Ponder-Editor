@@ -27,20 +27,22 @@ export class World {
     this.original = null;
     this.entities = [];
     this.palette = [];
-    this.warnings = [];
+    this.notes = [];
     this.validIds = new Map(); // BE Entry -> Set of block ids
   }
 
   // ---- registry lookups
   resolveBlock(name) {
+    // NbtUtils.readBlockState: a block missing from the registry becomes air
     if (name.startsWith('create:')) {
       const e = this.registry.blocks.get(name);
-      if (!e) throw new Unsupported(`schematic references unregistered block ${name}`);
-      return e.block();
+      if (e) return e.block();
+    } else {
+      const b = vanillaBlock(name);
+      if (b) return b;
     }
-    const b = vanillaBlock(name);
-    if (!b) throw new Unsupported(`schematic references unknown block ${name}`);
-    return b;
+    this.notes.push(`palette: unknown block ${name} is loaded as air (as in the game)`);
+    return vanillaBlock('minecraft:air');
   }
 
   stateFromPalette(p) {
@@ -49,12 +51,12 @@ export class World {
     for (const [k, v] of Object.entries(p.Properties || {})) {
       const prop = block.props.find((q) => q.name === k);
       if (!prop) {
-        this.warnings.push(`palette: ${p.Name} has no property ${k}`);
+        this.notes.push(`palette: ${p.Name} has no property ${k} (ignored, as in the game)`);
         continue;
       }
       const val = prop.parse(String(v));
       if (val === undefined) {
-        this.warnings.push(`palette: ${p.Name}[${k}=${v}] not an allowed value`);
+        this.notes.push(`palette: ${p.Name}[${k}=${v}] is not an allowed value (ignored, as in the game)`);
         continue;
       }
       st = st.setValue(prop, val);

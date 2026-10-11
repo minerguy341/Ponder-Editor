@@ -4,7 +4,7 @@ import { Lambda, MethodRef, ClassRef } from '../values.mjs';
 import { Vec3i, BlockPos, Vec3, AABB, HEnum, hostEnum, DIRECTION } from './mc.mjs';
 import { JItemStack, itemLike, vanillaBlock, JState } from './blocks.mjs';
 import { JCompound } from './nbtobj.mjs';
-import { Entry } from './registry.mjs';
+import { Entry, JFluid } from './registry.mjs';
 import { ser, HOOKS } from '../serialize.mjs';
 import { JList } from './lang.mjs';
 import {
@@ -116,23 +116,6 @@ class BehaviourTypeRef {
   }
 }
 
-class JFluid {
-  constructor(id) {
-    this.id = id;
-  }
-  get $class() {
-    return 'Fluid';
-  }
-  getSource() {
-    return this;
-  }
-  toJSON() {
-    return { fluid: this.id };
-  }
-  $key() {
-    return 'fluid:' + this.id;
-  }
-}
 
 class JFluidStack {
   constructor(id, amount) {
@@ -180,7 +163,7 @@ export function buildPonderHost(R, ctx) {
       initInstance(r, obj) {
         const outer = obj.outerThis;
         if (!outer || !outer.hostBase) throw new Unsupported(`${name} created outside of a scene builder`);
-        obj.hostBase = { rec: outer.hostBase.rec };
+        obj.hostBase = { rec: outer.hostBase.rec, scene: outer.hostBase.scene, $exposed: ['scene'] };
       },
       methods: mkMethods(table),
     });
@@ -201,7 +184,7 @@ export function buildPonderHost(R, ctx) {
     initInstance(r, obj, args) {
       const sc = args[0];
       if (!(sc instanceof PonderSceneHost)) throw new Unsupported('PonderSceneBuilder needs a scene');
-      obj.hostBase = { rec: sc.rec };
+      obj.hostBase = { rec: sc.rec, scene: sc, $exposed: ['scene'] };
     },
     methods: baseMethods,
     is: (v) => v instanceof SceneHost,
@@ -336,12 +319,7 @@ export function buildPonderHost(R, ctx) {
     staticGet: (r, name) => ({ $icon: name, $class: 'AllIcons', toString: () => name }),
   }));
   R.add(hc('ItemDisplayContext', { statics: {}, staticGet: (r, n) => ({ $class: 'ItemDisplayContext', name: n }) }));
-  R.add(hc('AllFluids', { statics: {}, staticGet: (r, name) => fluidEntry(name) }));
-  const fluidEntry = (name) => {
-    const id = 'create:' + name.toLowerCase();
-    return { $class: 'FluidEntry', get: () => new JFluid(id), getSource: () => new JFluid(id), getId: () => id, toString: () => id, $key: () => 'fluidentry:' + id, getType: () => ({}) };
-  };
-  void fluidEntry;
+
 }
 
 export { Group, JParticle, BehaviourTypeRef, JFluid, JFluidStack, JEntityType };

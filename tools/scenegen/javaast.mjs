@@ -106,63 +106,51 @@ export function lowerExpression(n) {
 }
 
 function lowerBinary(n) {
-  const items = kids(n);
-  // first item is always a unaryExpression
-  const operands = [lowerExpression(items[0])];
+  // children carry their grammar key (token *types* are categories: '=' has type Equals but key AssignmentOperator)
+  const items = [];
+  for (const [k, arr] of Object.entries(n.children)) for (const c of arr) items.push({ k, c });
+  items.sort((x, y) => off(x.c) - off(y.c));
+  const operands = [lowerExpression(items[0].c)];
   const ops = [];
   let i = 1;
   let assign = null;
   while (i < items.length) {
-    const it = items[i];
-    if (isTok(it)) {
-      const nm = it.tokenType.name;
-      if (nm === 'AssignmentOperator') {
-        // rhs is a full expression
-        const rhs = lowerExpression(items[i + 1]);
-        assign = { op: it.image, rhs, line: it.startLine };
-        i += 2;
-        continue;
-      }
-      if (nm === 'Instanceof') {
-        const t = items[i + 1];
-        let type;
-        let bind = null;
-        if (t.name === 'pattern') {
-          // typePattern -> localVariableDeclaration
-          if (t.children.recordPattern) {
-            type = lowerType(one(t.children.recordPattern[0], 'referenceType'));
-          } else {
-            const lv = tokens(t);
-            const idents = lv.filter((x) => isIdent(x));
-            bind = idents[idents.length - 1].image;
-            type = lowerType(t.children.typePattern[0].children.localVariableDeclaration[0].children.localVariableType[0]);
-          }
-        } else type = lowerType(t);
-        operands.push({ k: 'typeref', type, bind });
-        ops.push('instanceof');
-        i += 2;
-        continue;
-      }
-      if (nm === 'Less' || nm === 'Greater') {
-        // shift operators: consecutive tokens
-        let op = it.image;
-        let j = i + 1;
-        while (j < items.length && isTok(items[j]) && (items[j].tokenType.name === 'Less' || items[j].tokenType.name === 'Greater') && items[j].startOffset === items[j - 1].startOffset + 1 && (items[j].image === it.image)) {
-          op += items[j].image;
-          j++;
-        }
-        ops.push(op);
-        operands.push(lowerExpression(items[j]));
-        i = j + 1;
-        continue;
-      }
-      // BinaryOperator
-      ops.push(it.image);
-      operands.push(lowerExpression(items[i + 1]));
+    const { k, c: it } = items[i];
+    if (k === 'AssignmentOperator') {
+      assign = { op: it.image, rhs: lowerExpression(items[i + 1].c), line: it.startLine };
       i += 2;
-      continue;
-    }
-    throw new Error('lowerBinary: unexpected node ' + it.name);
+    } else if (k === 'Instanceof') {
+      const t = items[i + 1].c;
+      let type;
+      let bind = null;
+      if (t.name === 'pattern') {
+        if (t.children.recordPattern) {
+          type = lowerType(one(t.children.recordPattern[0], 'referenceType'));
+        } else {
+          const idents = tokens(t).filter((x) => isIdent(x));
+          bind = idents[idents.length - 1].image;
+          type = lowerType(t.children.typePattern[0].children.localVariableDeclaration[0].children.localVariableType[0]);
+        }
+      } else type = lowerType(t);
+      operands.push({ k: 'typeref', type, bind });
+      ops.push('instanceof');
+      i += 2;
+    } else if (k === 'Less' || k === 'Greater') {
+      // shift operators: consecutive Less/Greater tokens followed by the right operand
+      let op = it.image;
+      let j = i + 1;
+      while (j < items.length && (items[j].k === 'Less' || items[j].k === 'Greater') && items[j].c.image === it.image) {
+        op += items[j].c.image;
+        j++;
+      }
+      ops.push(op);
+      operands.push(lowerExpression(items[j].c));
+      i = j + 1;
+    } else if (k === 'BinaryOperator') {
+      ops.push(it.image);
+      operands.push(lowerExpression(items[i + 1].c));
+      i += 2;
+    } else throw new Error('lowerBinary: unexpected ' + k);
   }
   // precedence climbing (all left assoc); operands[i+1] is the right operand of ops[i]
   const lineNo = line(n);

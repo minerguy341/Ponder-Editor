@@ -2,7 +2,7 @@
 // sources; their `REGISTRATE.block("name", Factory)...register()` chains run against this recorder, which keeps only what is semantically
 // needed (registry name, factory, valid blocks of block entity types) and ignores model/loot/recipe/tag plumbing.
 import { hc, Dbl, D, F, JChar, JArray, JObject, JavaThrow, Unsupported, num, isNum, describe, getRT, keyOf, jeq, throwJava } from './base.mjs';
-import { JBlock, HItem, JItemStack, itemLike, itemIdOf, Chain, JState } from './blocks.mjs';
+import { JBlock, HItem, JItemStack, itemLike, itemIdOf, Chain, JState, JProp } from './blocks.mjs';
 import { mkList } from './lang.mjs';
 import { Lambda, MethodRef } from '../values.mjs';
 
@@ -52,6 +52,33 @@ const rlParse = (s) => {
 
 // ------------------------------------------------------------------------------------------ entries
 
+export class JFluid {
+  constructor(id) {
+    this.id = id;
+  }
+  get $class() {
+    return 'Fluid';
+  }
+  getSource() {
+    return this;
+  }
+  getFlowing() {
+    return this;
+  }
+  isSource() {
+    return true;
+  }
+  toJSON() {
+    return { fluid: this.id };
+  }
+  $key() {
+    return 'fluid:' + this.id;
+  }
+  toString() {
+    return this.id;
+  }
+}
+
 export class Entry {
   constructor(registry, kind, name, factory) {
     this.registry = registry;
@@ -87,6 +114,14 @@ export class Entry {
   /** instantiate lazily */
   block() {
     if (this.kind !== 'block') throw new Unsupported('not a block entry: ' + this.id);
+    if (!this.inst && this.liquid) {
+      // fluid source block (LiquidBlock): a single `level` property
+      const jb = new JBlock(this.id);
+      const lvl = new JProp('level', 'int', Array.from({ length: 16 }, (_, i) => i));
+      jb.props = [lvl];
+      jb.buildDefault(null);
+      this.inst = jb;
+    }
     if (!this.inst) {
       const rt = getRT();
       const v = rt.callFn(this.factory, [new Chain()]);
@@ -100,7 +135,17 @@ export class Entry {
   get() {
     if (this.kind === 'block') return this.block();
     if (this.kind === 'item') return itemLike(this.id);
+    if (this.kind === 'fluid') return new JFluid(this.id);
     return this;
+  }
+  getSource() {
+    return new JFluid(this.id);
+  }
+  getFlowing() {
+    return new JFluid(this.id);
+  }
+  getType() {
+    return { $class: 'FluidType' };
   }
   asItem() {
     return itemLike(this.id);
@@ -164,6 +209,11 @@ class Builder {
       }
       case 'register': {
         const e = new Entry(this.registry, this.kind, this.name, this.factory);
+        if (this.kind === 'fluid') {
+          const blk = new Entry(this.registry, 'block', this.name, null);
+          blk.liquid = true;
+          this.registry.add(blk);
+        }
         if (this.kind === 'be') {
           e.validBlocks = this.validBlocks;
           const f = this.factory;
@@ -196,7 +246,12 @@ export class Registrate {
         const kind = method === 'blockEntity' ? 'be' : method;
         return new Builder(this.registry, kind, args[0], args[1] ?? null);
       }
-      case 'fluid': case 'entity': case 'tag': case 'setCreativeTab': case 'defaultCreativeTab': case 'creativeModeTab': case 'addRawLang': case 'addDataGenerator': case 'setTooltipModifierFactory': case 'object':
+      case 'fluid':
+      case 'standardFluid': {
+        const args = argNodes.map((n) => rt.evalExpr(n, fr));
+        return new Builder(this.registry, 'fluid', args[0], null);
+      }
+      case 'entity': case 'tag': case 'setCreativeTab': case 'defaultCreativeTab': case 'creativeModeTab': case 'addRawLang': case 'addDataGenerator': case 'setTooltipModifierFactory': case 'object':
         return new Builder(this.registry, 'other', 'ignored', null);
       case 'asResource':
         return new ResourceLocation('create', rt.evalExpr(argNodes[0], fr));
@@ -209,11 +264,13 @@ export class RegistryModel {
   constructor() {
     this.blocks = new Map(); // id -> Entry
     this.items = new Map();
+    this.fluids = new Map();
     this.bes = []; // Entry[]
     this.blockToBe = new Map(); // block id -> Entry
   }
   add(e) {
-    if (e.kind === 'block') this.blocks.set(e.id, e);
+    if (e.kind === 'fluid') this.fluids.set(e.id, e);
+    else if (e.kind === 'block') this.blocks.set(e.id, e);
     else if (e.kind === 'item') this.items.set(e.id, e);
     else if (e.kind === 'be') this.bes.push(e);
   }
@@ -249,13 +306,36 @@ export function buildRegistry(R, registry) {
     },
     is: (v) => v instanceof ResourceLocation,
   }));
-  for (const n of ['BlockEntry', 'ItemEntry', 'BlockEntityEntry', 'ItemProviderEntry', 'RegistryEntry', 'FluidEntry']) R.add(hc(n, { is: (v) => v instanceof Entry }));
+  for (const n of ['ItemEntry', 'BlockEntityEntry', 'ItemProviderEntry', 'RegistryEntry', 'FluidEntry']) R.add(hc(n, { is: (v) => v instanceof Entry }));
   for (const n of ['CreateRegistrate', 'AbstractRegistrate']) R.add(hc(n, { is: (v) => v instanceof Registrate }));
-  for (const n of ['MapColor', 'Tags', 'ItemTags', 'BlockTags', 'EntityTypeTags', 'Ingredient', 'DataIngredient', 'SoundType', 'NoteBlockInstrument', 'PushReaction', 'RecipeCategory', 'TagKey', 'BlockBehaviour', 'CreativeModeTab', 'SoundEvents', 'DeferredSoundType', 'FluidType', 'BlockSetType', 'WoodType', 'StatType', 'Rarity', 'Shapes', 'VoxelShape', 'CollisionContext', 'BooleanOp']) R.add(hc(n, { stubAll: true }));
-  R.add(hc('AllShapes', { stubAll: true, preferHost: true }));
+  for (const n of ['MapColor', 'Tags', 'ItemTags', 'BlockTags', 'EntityTypeTags', 'Ingredient', 'DataIngredient', 'SoundType', 'NoteBlockInstrument', 'PushReaction', 'RecipeCategory', 'TagKey', 'BlockBehaviour', 'CreativeModeTab', 'SoundEvents', 'DeferredSoundType', 'FluidType', 'BlockSetType', 'WoodType', 'StatType', 'Rarity', ]) R.add(hc(n, { stubAll: true }));
+  R.map.set('net.createmod.catnip.platform.CatnipServices', hc('CatnipServices', { preferHost: true, statics: { PLATFORM: { $class: 'Platform', getEnv: () => ({ $class: 'Env', isClient: () => false, isDedicatedServer: () => false }), isDevelopmentEnvironment: () => false, executeOnClientOnly: () => undefined, executeOnDedicatedServerOnly: () => undefined, isModLoaded: () => false }, HOOKS: { $class: 'Hooks' } } }));
+  // datagen-only Create classes: ids/tags are irrelevant for scene conversion, any access yields an inert stub
+  for (const fq of ['com.simibubi.create.AllTags', 'com.simibubi.create.AllTags.AllItemTags', 'com.simibubi.create.AllTags.AllBlockTags', 'com.simibubi.create.AllTags.AllFluidTags', 'com.simibubi.create.AllTags.AllEntityTags', 'com.simibubi.create.foundation.data.recipe.CommonMetal']) {
+    R.map.set(fq, hc(fq.slice(fq.lastIndexOf('.') + 1), { stubAll: true, preferHost: true }));
+  }
   R.map.set('net.neoforged.neoforge.common.Tags.Items', hc('Items', { stubAll: true }));
   R.map.set('net.neoforged.neoforge.common.Tags.Blocks', hc('Blocks', { stubAll: true }));
   R.map.set('net.neoforged.neoforge.common.Tags.Fluids', hc('Fluids', { stubAll: true }));
-  R.add(hc('DeferredHolder', { statics: { create: () => null } }));
+  R.add(hc('Registries', { statics: { BLOCK: { $class: 'ResourceKey', kind: 'block' }, ITEM: { $class: 'ResourceKey', kind: 'item' }, BLOCK_ENTITY_TYPE: { $class: 'ResourceKey' }, FLUID: { $class: 'ResourceKey' } } }));
+  const regObj = (kind) => ({
+    $class: 'Registry',
+    getKey: (v) => rlParse(kind === 'block' ? (v instanceof JBlock ? v.id : itemIdOf(v)) : itemIdOf(v)),
+    get: (rl) => (kind === 'block' ? (rl.ns === 'create' ? registry.blocks.get(rl.toString())?.block() : null) : itemLike(rl.toString())),
+  });
+  R.add(hc('BuiltInRegistries', { statics: { BLOCK: regObj('block'), ITEM: regObj('item') } }));
+  R.add(hc('DeferredHolder', { statics: { create: (key, rl) => ({ $class: 'DeferredHolder', rl }) } }));
+  // new BlockEntry<>(registrate, holder): an entry that only knows its id (used for the train track items)
+  R.add(hc('BlockEntry', {
+    construct: (rt, a) => {
+      const id = a[1].rl.toString();
+      const known = registry.blocks.get(id);
+      if (known) return known;
+      const e = new Entry(registry, 'block', id.replace(/^create:/, ''), null);
+      e.id = id;
+      return e;
+    },
+    is: (v) => v instanceof Entry,
+  }));
   return reg;
 }

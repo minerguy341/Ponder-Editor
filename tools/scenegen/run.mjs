@@ -31,11 +31,12 @@ for (const g of groups) {
     console.error(`FAILED ${g.id}: ${e.stack || e.message}`);
     continue;
   }
-  const { scene, warnings } = res;
+  const { scene, warnings, notes } = res;
   const file = path.join(outDir, g.file);
   fs.mkdirSync(path.dirname(file), { recursive: true });
   fs.writeFileSync(file, JSON.stringify(scene, null, 1) + '\n');
   const entry = { id: scene.id, title: scene.title, items: scene.items, tags: scene.tags, file: g.file };
+  if (notes && notes.length) entry.notes = notes;
   if (warnings.length) {
     entry.warnings = warnings;
     nWarn += warnings.length;

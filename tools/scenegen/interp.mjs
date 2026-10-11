@@ -271,6 +271,7 @@ export class Interp {
       if (!cur) return null;
     }
     for (; i < parts.length; i++) {
+      if (cur.stubAll) continue;
       if (cur.isSource) {
         const n = this.findNested(cur, parts[i], new Set());
         if (!n) return null;
@@ -376,11 +377,21 @@ export class Interp {
   // ---------------------------------------------------------------- class init / statics
 
   initClass(cls) {
-    if (!cls.isSource || cls.initState !== 0) return;
+    if (!cls.isSource) return;
+    if (cls.initState === 3) throw cls.initError;
+    if (cls.initState !== 0) return;
     cls.initState = 1;
     const sup = this.superOf(cls);
     if (sup && sup.isSource) this.initClass(sup);
-    if (cls.kind === 'enum') this.makeEnumConstants(cls);
+    if (cls.kind === 'enum') {
+      try {
+        this.makeEnumConstants(cls);
+      } catch (e) {
+        cls.initState = 3;
+        cls.initError = e;
+        throw e;
+      }
+    }
     // static initializer blocks: best effort, failures are noted not fatal
     for (const si of cls.staticInits) {
       const fr = this.staticFrame(cls);
@@ -1649,17 +1660,19 @@ export class Interp {
         if (!im.static) continue;
         if (im.wildcard || im.name.endsWith('.' + n.name)) {
           const cls = this.resolveFqn(im.wildcard ? im.name : im.name.slice(0, im.name.lastIndexOf('.')));
-          if (cls) {
-            try {
-              return this.invokeStatic(cls, n.name, args);
-            } catch (e) {
-              if (!(e instanceof Unsupported) || !/no static method|unknown class/.test(e.message)) throw e;
-            }
-          }
+          if (cls && this.hasStaticMethod(cls, n.name)) return this.invokeStatic(cls, n.name, args);
         }
       }
     }
     throw this.fail(`cannot resolve method ${n.name}(${args.length}) in ${fr.cls ? fr.cls.name : '?'}`);
+  }
+
+  hasStaticMethod(cls, name) {
+    if (cls.isSource) {
+      for (let c = cls; c && c.isSource; c = this.superOf(c)) if (c.methods.has(name)) return true;
+      return false;
+    }
+    return !!(cls.stubAll || (cls.statics && typeof cls.statics[name] === 'function') || cls.staticCall);
   }
 
   tryUnqualifiedIn(fr, name, args) {

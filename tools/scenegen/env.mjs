@@ -7,6 +7,7 @@ import { buildPonderHost, BehaviourTypeRef } from './host/ponder-classes.mjs';
 import { buildRegistration, Registrations } from './host/registration.mjs';
 import { JRandom } from './host/lang.mjs';
 import { installOverrides } from './overrides.mjs';
+import { buildConfig } from './host/config.mjs';
 
 export function createEnv() {
   const store = new SourceStore();
@@ -14,6 +15,7 @@ export function createEnv() {
   buildNbt(R);
   const ctx = { registry, levelStub: null, world: null };
   buildPonderHost(R, ctx);
+  buildConfig(R, store);
   const regs = new Registrations();
   const helpers = buildRegistration(R, regs);
   const rt = new Interp(store, R.map, { hooks: { behaviourType: (name) => new BehaviourTypeRef(name) } });

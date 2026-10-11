@@ -3,6 +3,8 @@
 import { Unsupported, num } from './values.mjs';
 import { HOOKS } from './serialize.mjs';
 import { SPECIAL } from './host/ponder.mjs';
+import { mkList } from './host/lang.mjs';
+import { STUB } from './interp.mjs';
 
 const CSB = 'com.simibubi.create.foundation.ponder.CreateSceneBuilder';
 const bp = (p) => [p.x, p.y, p.z];
@@ -17,6 +19,24 @@ export function installOverrides(rt, ctxOf) {
     return !!cls && !!be.entry.cls && rt.isSubclass(be.entry.cls, cls);
   };
   const note = (r, msg) => r.notes.push(`${r.src()}: ${msg}`);
+
+  // ---- train tracks: TrackMaterial.ALL only ever holds Create's own andesite material (addon materials register themselves);
+  // evaluating the real TrackMaterial builders drags in the whole recipe datagen layer, so allBlocks() is answered directly.
+  rt.nativeOverrides.set('com.simibubi.create.content.trains.track.TrackMaterial#allBlocks', () => {
+    const entry = rt.getStatic(rt.sourceClass('com.simibubi.create.AllBlocks'), 'TRACK');
+    return mkList([{ $class: 'Supplier', get: () => entry }]);
+  });
+
+  // the material object itself is irrelevant for scene conversion (only the block's state definition matters)
+  rt.nativeOverrides.set('com.simibubi.create.content.trains.track.TrackMaterialFactory#build', () => ({
+    $class: 'TrackMaterial',
+    $stub: true,
+    $invoke(rt2, name, args) {
+      if (name === 'createBlock') return rt2.newObject(rt2.sourceClass('com.simibubi.create.content.trains.track.TrackBlock'), [args[0], this], null);
+      return STUB();
+    },
+    $getField: () => STUB(),
+  }));
 
   // ---- WorldInstructions
   const animate = (kind, extraTicks = 0) => (rt2, self, [pos, dist, dur]) => {

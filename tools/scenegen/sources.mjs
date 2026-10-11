@@ -7,7 +7,7 @@ import { CACHE, REPOS, getIndex, getRepoIndex, getText, pool, cachePath } from '
 import { parseJava } from './javaast.mjs';
 
 const AST_DIR = path.join(CACHE, 'ast');
-const AST_VERSION = 'v2'; // bump when javaast.mjs output changes
+const AST_VERSION = 'v3'; // bump when javaast.mjs output changes
 
 /** Fetch everything the converter may need so that the run itself is offline (warm cache). */
 export async function ensureCache({ log = () => {} } = {}) {
@@ -64,7 +64,15 @@ export class SourceStore {
   }
 
   has(fqn) {
-    return this.files.has(fqn);
+    return this.files.has(fqn) || this.cus.has(fqn);
+  }
+
+  /** register an in-memory compilation unit (tests) */
+  addSource(fqn, src) {
+    const ast = parseJava(src);
+    const cu = { fqn, repo: 'mem', file: fqn.slice(fqn.lastIndexOf('.') + 1) + '.java', pkg: ast.pkg, imports: ast.imports, types: ast.types, classes: new Map() };
+    this.cus.set(fqn, cu);
+    return cu;
   }
 
   /** the fqns that share a simple name */

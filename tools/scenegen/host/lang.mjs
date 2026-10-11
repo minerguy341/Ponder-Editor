@@ -449,6 +449,7 @@ function numResult(args, v) {
 
 export function buildLang(R) {
   const rt = () => getRT();
+  const enumVals = (cls) => (cls.isSource ? rt().enumValues(cls).slice() : cls.values_ ? cls.values_.slice() : []);
 
   R.add(hc('Object', { construct: () => ({ $class: 'Object' }), is: () => true }));
   R.add(hc('String', {
@@ -596,7 +597,7 @@ export function buildLang(R) {
   }
 
   for (const fi of ['Runnable', 'Supplier', 'Consumer', 'BiConsumer', 'Function', 'BiFunction', 'UnaryOperator', 'BinaryOperator', 'Predicate', 'BiPredicate', 'Callable', 'Comparator', 'IntFunction', 'IntSupplier', 'IntConsumer', 'IntPredicate', 'IntUnaryOperator', 'DoubleSupplier', 'DoubleFunction', 'BooleanSupplier', 'ToIntFunction', 'ToDoubleFunction', 'Iterable', 'Comparable', 'Cloneable', 'Serializable', 'Iterator', 'Collection']) {
-    R.add(hc(fi, { isInterface: true, functional: true, is: fi === 'Iterable' || fi === 'Collection' ? (v) => v instanceof JList || v instanceof JSet : undefined }));
+    R.add(hc(fi, { isInterface: true, functional: true, is: fi === 'Iterable' || fi === 'Collection' ? (v) => !!v && typeof v.$iter === 'function' : undefined }));
   }
   R.map.get('Comparator').statics = {
     comparingInt: (f) => new HostCmp((x, y) => cmpNum(rt().callFn(f, [x]), rt().callFn(f, [y]))),
@@ -642,10 +643,24 @@ export function buildLang(R) {
       addAll: (c, ...items) => { for (const x of items.length === 1 && items[0] instanceof JArray ? items[0].a : items) c.add(x); return true; },
       emptyMap: () => new JMap(),
       emptySet: () => new JSet(),
+      unmodifiableSet: (c) => c,
+      unmodifiableMap: (c) => c,
+      unmodifiableCollection: (c) => c,
+      synchronizedList: (c) => c,
+      singleton: (x) => new JSet([x]),
+      nCopies: (n, x) => mkImmList(Array.from({ length: num(n) }, () => x)),
+      frequency: (c, x) => rt().iterate(c).filter((y) => jeq(x, y)).length,
     },
   }));
   R.add(hc('Set', { statics: { of: (...a) => new JSet(a.length === 1 && a[0] instanceof JArray ? a[0].a : a), copyOf: (c) => new JSet(rt().iterate(c)) }, construct: (r, args) => new JSet(args.length && typeof args[0] === 'object' ? rt().iterate(args[0]) : []), is: (v) => v instanceof JSet }));
-  for (const n of ['HashSet', 'LinkedHashSet', 'TreeSet', 'EnumSet']) R.add({ ...R.map.get('Set'), name: n, statics: n === 'EnumSet' ? { noneOf: () => new JSet(), of: (...a) => new JSet(a), allOf: (c) => new JSet(rt().enumValues(c.cls)) } : {} });
+  for (const n of ['HashSet', 'LinkedHashSet', 'TreeSet', 'EnumSet']) R.add({ ...R.map.get('Set'), name: n, statics: n === 'EnumSet' ? { noneOf: () => new JSet(), of: (...a) => new JSet(a.length === 2 && a[1] instanceof JArray ? [a[0], ...a[1].a] : a), allOf: (c) => new JSet(enumVals(c.cls)), copyOf: (c) => new JSet(rt().iterate(c)), range: (a, b) => new JSet(enumVals(a.cls).filter((x) => x.ordinal_ >= a.ordinal_ && x.ordinal_ <= b.ordinal_)), complementOf: (s) => new JSet([]) } : {} });
+  const lazySupplier = (fn) => { let v; let done = false; return { $class: 'NonNullSupplier', get: () => (done ? v : ((done = true), (v = rt().callFn(fn, [])))) }; };
+  R.add(hc('NonNullSupplier', { isInterface: true, functional: true, statics: { lazy: lazySupplier } }));
+  R.add(hc('NonNullBiConsumer', { isInterface: true, functional: true, statics: { noop: () => ({ $call: () => undefined }) } }));
+  R.add(hc('NonNullConsumer', { isInterface: true, functional: true, statics: { noop: () => ({ $call: () => undefined }) } }));
+  R.add(hc('NonNullFunction', { isInterface: true, functional: true }));
+  R.add(hc('NonNullUnaryOperator', { isInterface: true, functional: true }));
+  R.add(hc('Util', { statics: { make: (a, b) => (b === undefined ? rt().callFn(a, []) : (rt().callFn(b, [a]), a)) } }));
   R.add(hc('Map', {
     statics: {
       of: (...a) => { const m = new JMap(); for (let i = 0; i < a.length; i += 2) m.put(a[i], a[i + 1]); return m; },
@@ -655,6 +670,9 @@ export function buildLang(R) {
     is: (v) => v instanceof JMap,
   }));
   for (const n of ['HashMap', 'LinkedHashMap', 'TreeMap', 'EnumMap', 'IdentityHashMap', 'ConcurrentHashMap']) R.add({ ...R.map.get('Map'), name: n, statics: {} });
+  for (const n of ['Object2BooleanOpenHashMap', 'Object2ObjectOpenHashMap', 'Object2IntOpenHashMap', 'Int2ObjectOpenHashMap', 'Object2FloatOpenHashMap', 'Long2ObjectOpenHashMap', 'Object2LongOpenHashMap', 'Int2IntOpenHashMap']) {
+    R.add(hc(n, { construct: () => { const m = new JMap(); m.getBoolean = (k) => m.get(k) === true; m.getInt = (k) => (m.get(k) === null ? 0 : m.get(k)); m.defaultReturnValue = () => undefined; return m; }, is: (v) => v instanceof JMap }));
+  }
   R.add(hc('Optional', { statics: { of: (v) => new JOptional(v), ofNullable: (v) => new JOptional(v), empty: () => new JOptional(null) } }));
   R.add(hc('Random', { construct: (r, a) => new JRandom(a.length ? num(a[0]) : 0) }));
   R.add(hc('RandomSource', { statics: { create: (seed) => new JRandom(seed === undefined ? 0 : num(seed)), createNewThreadLocalInstance: () => new JRandom(0) } }));
