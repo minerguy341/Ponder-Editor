@@ -29,9 +29,17 @@ await page.goto(`${base}/`);
 await page.waitForFunction(() => !!window.__ponder, null, { timeout: 120000 });
 await page.evaluate(() => window.__ponder.ready);
 const rows = [];
+// scene ids must exist in the scene index: the app shows "Unknown scene" (no console error) for anything else
+const indexIds = new Set((JSON.parse(fs.readFileSync(path.join(root, 'public/scenes/index.json'), 'utf8')).map((e) => e.id)));
 for (const scene of [...scenes].sort().filter((s) => s.includes(only))) {
   const id = `create:${scene}`;
   const row = { scene, errors: [] };
+  if (!indexIds.has(id)) {
+    row.errors.push(`not in scene index: ${id} (app shows "Unknown scene")`);
+    rows.push(row);
+    console.log(`${scene} total=0 errors=1 missing=0 (NOT IN INDEX)`);
+    continue;
+  }
   try {
     await page.evaluate((i) => window.__ponder.loadScene(i), id);
     const st = await page.evaluate(() => window.__ponder.getState());
