@@ -7,7 +7,7 @@ import { CACHE, REPOS, getIndex, getRepoIndex, getText, pool, cachePath } from '
 import { parseJava } from './javaast.mjs';
 
 const AST_DIR = path.join(CACHE, 'ast');
-const AST_VERSION = 'v3'; // bump when javaast.mjs output changes
+const AST_VERSION = 'v5'; // bump when javaast.mjs output changes
 
 /** Fetch everything the converter may need so that the run itself is offline (warm cache). */
 export async function ensureCache({ log = () => {} } = {}) {

@@ -90,9 +90,13 @@ export class JList {
     for (let i = this.a.length - 1; i >= 0; i--) if (jeq(this.a[i], o)) return i;
     return -1;
   }
+  /** remove(int index) for primitive int arguments; the interpreter routes reference-typed arguments to removeObject */
   remove(x) {
     this.chk();
-    if (typeof x === 'number' && !this.boxedRemove) return this.a.splice(x, 1)[0];
+    return this.a.splice(num(x), 1)[0];
+  }
+  removeObject(x) {
+    this.chk();
     const i = this.indexOf(x);
     if (i >= 0) this.a.splice(i, 1);
     return i >= 0;

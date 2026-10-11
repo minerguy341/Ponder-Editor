@@ -469,6 +469,8 @@ function lowerLocal(n) {
     const init = one(d, 'variableInitializer');
     decls.push({ name: idt.image, dims, init: init ? lowerVarInit(init) : null });
   }
+  // `yield y;` parses as a declaration of a variable y of type `yield` (contextual keyword): it is a yield statement
+  if (type.name === 'yield' && type.dims === 0 && decls.length === 1 && !decls[0].init && !decls[0].dims) return { k: 'yield', e: { k: 'name', parts: [decls[0].name], line: line(n) }, line: line(n) };
   return { k: 'local', type, decls, line: line(n) };
 }
 
@@ -752,7 +754,8 @@ function lowerClassDecl(n) {
     const members = [];
     const ebd = one(eb, 'enumBodyDeclarations');
     if (ebd) for (const d of all(ebd, 'classBodyDeclaration')) lowerClassBodyDecl(d, members);
-    return { kind: 'enum', name: one(one(ed, 'typeIdentifier'), 'Identifier').image, superName: null, interfaces: [], static: true, consts, members };
+    const eimpl = one(ed, 'classImplements');
+    return { kind: 'enum', name: one(one(ed, 'typeIdentifier'), 'Identifier').image, superName: null, interfaces: eimpl ? all(one(eimpl, 'interfaceTypeList'), 'interfaceType').map((t) => lowerType(t).name) : [], static: true, consts, members };
   }
   const rd = one(n, 'recordDeclaration');
   if (rd) {
@@ -769,7 +772,8 @@ function lowerClassDecl(n) {
       const cd = one(d, 'classBodyDeclaration');
       if (cd) lowerClassBodyDecl(cd, members);
     }
-    return { kind: 'record', name: one(one(rd, 'typeIdentifier'), 'Identifier').image, superName: null, interfaces: [], static: true, comps, members };
+    const rimpl = one(rd, 'classImplements');
+    return { kind: 'record', name: one(one(rd, 'typeIdentifier'), 'Identifier').image, superName: null, interfaces: rimpl ? all(one(rimpl, 'interfaceTypeList'), 'interfaceType').map((t) => lowerType(t).name) : [], static: true, comps, members };
   }
   throw new Error('classDeclaration');
 }
