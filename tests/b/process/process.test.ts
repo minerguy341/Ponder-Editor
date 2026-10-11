@@ -13,6 +13,7 @@ import { blazeModelFor, burnerOffsets } from '../../../src/render/create/visuals
 import { stickerHeadMatrix } from '../../../src/render/create/visuals/process-sticker';
 import { harvesterBladeMatrix, rollerFrameMatrix, rollerWheelMatrix } from '../../../src/render/create/visuals/process-harvester-roller';
 import { armPointGeometry, armTargetAngles, ARM_NO_TARGET } from '../../../src/render/create/visuals/process-arm';
+import { signLineText, signMessages } from '../../../src/render/create/visuals/process-signs';
 import { CHEST_PARTS, CHEST_HINGE } from '../../../src/render/create/visuals/process-vanilla-chest';
 import { cubesGeometry } from '../../../src/render/create/vanilla/entityModel';
 import { crafterBeltValid, crafterInitialSlot0, crafterPointingX, crafterSlot0At, crafterTargetDirection } from '../../../src/render/create/visuals/process-crafter';
@@ -307,5 +308,30 @@ describe('ArmInteractionPoint geometry by point type (AllArmInteractionPointType
   it('crafter: centre + normal(dir) * .5 with dir = facing.opposite; deployer: * .65', () => {
     expect(armPointGeometry(st('create:mechanical_crafter', { facing: 'north' }), [0, 0, 0])).toEqual({ p: [0.5, 0.5, 1], dir: 'south' });
     expect(armPointGeometry(st('create:deployer', { facing: 'east' }), [0, 0, 0])).toEqual({ p: [0.5 - 0.65, 0.5, 0.5], dir: 'west' });
+  });
+});
+
+describe('Sign text (SignBlockEntity; legacy Text1..Text4 upgraded like the data fixer does)', () => {
+  it('1.20+ front_text.messages are used as they are', () => {
+    const m = signMessages({ front_text: { messages: ['{"text":"A"}', '{"text":"B"}', '{"text":""}', '{"text":""}'] } });
+    expect(m).toHaveLength(4);
+    expect(signLineText(m[1])).toBe('B');
+  });
+  it('legacy oak_sign from display_link.nbt (Text2 = "6:00 PM") gives four lines, the second is 6:00 PM', () => {
+    const m = signMessages({ Text1: '{"text":""}', Text2: '{"text":"6:00 PM"}', Text3: '{"text":""}', Text4: '{"text":""}', GlowingText: 0, Color: 'black' });
+    expect(m).toHaveLength(4);
+    expect(signLineText(m[0])).toBe('');
+    expect(signLineText(m[1])).toBe('6:00 PM');
+  });
+  it('no text keys give no lines', () => {
+    expect(signMessages({ id: 'minecraft:sign' })).toEqual([]);
+  });
+});
+
+describe('Sign text components as stored in the scenes (wall and hanging signs)', () => {
+  it('a JSON string literal line ("Warehouse") and a text component line ({"text":"Storage"}) both read as plain text', () => {
+    expect(signLineText('"Warehouse"')).toBe('Warehouse');
+    expect(signLineText('{"text":"Storage"}')).toBe('Storage');
+    expect(signLineText('{"text":""}')).toBe('');
   });
 });
