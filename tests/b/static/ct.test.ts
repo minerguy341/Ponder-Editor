@@ -5,7 +5,7 @@ import { AllCTTypes, CTContext, emptyContext } from '../../../src/render/create/
 import { shiftQuad } from '../../../src/render/create/ct/ctEngine';
 import { cropAndMove, cropPanel, cropStep, canConnectTexturesToward, canFaceBeOccluded, shouldFaceAlwaysRender, parseMaterial, panelIsOccluded, stepIsOccluded, copycatQuads, isIgnoredConnectivitySide } from '../../../src/render/create/ct/copycat';
 import { pillarConnectionProp, RotatedPillarCTBehaviour, createBehaviourTable } from '../../../src/render/create/ct/behaviours';
-import { girderIsConnected } from '../../../src/render/create/ct/girder';
+import { girderIsConnected, nixieConnectedDirection } from '../../../src/render/create/ct/girder';
 import { getCT, AllSpriteShifts, woodenWindow, paletteCT } from '../../../src/render/create/ct/spriteShifts';
 import { fakeSprite } from '../../a1/helpers';
 import { cubeQuads, faceQuad, mapWorld, st } from './quads';
@@ -185,6 +185,14 @@ describe('pillar (ConnectedPillarBlock.java connection l.140, RotatedPillarCTBeh
   it('GirderBlock.isConnected: a full solid neighbour on the side connects', () => {
     const world = { ...mapWorld({ '0,0,-1': st('minecraft:stone') }), faceFull: () => true, isSolid: () => true };
     expect(girderIsConnected(world, [0, 0, 0], st('create:metal_girder', { x: 'false', z: 'true' }), 'north')).toBe(true);
+  });
+  it('GirderBlock.isConnected: a wall nixie tube facing the girder side connects; a floor nixie does not', () => {
+    const g = st('create:metal_girder', { x: 'true', z: 'false' });
+    const wall = mapWorld({ '1,0,0': st('create:nixie_tube', { double_face: 'wall', facing: 'east' }) });
+    expect(girderIsConnected(wall, [0, 0, 0], g, 'east')).toBe(true);
+    const floor = mapWorld({ '1,0,0': st('create:nixie_tube', { double_face: 'floor', facing: 'east' }) });
+    expect(girderIsConnected(floor, [0, 0, 0], g, 'east')).toBe(false);
+    expect(nixieConnectedDirection(st('create:nixie_tube', { double_face: 'floor' }))).toBe('up');
   });
   it('the B6 table covers exactly the connected blocks of the group', () => {
     const keys = [...createBehaviourTable().keys()].sort();

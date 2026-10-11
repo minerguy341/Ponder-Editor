@@ -9,16 +9,26 @@ import type { CTWorld } from './world';
 export const METAL_GIRDER = 'create:metal_girder';
 
 /** GirderBlock.isConnected(world, pos, state, side) */
-// Nixie tubes, placards and chutes (other GirderBlock.isConnected branches) are not ported: no ponder scene places them next to a girder (see tools/b-audit-B6.mjs).
+// Placard and chute branches of GirderBlock.isConnected are not ported: tools/b-girder-adjacency.mjs finds no placard or chute next to any girder in the 178 schematics.
 export function girderIsConnected(world: CTWorld, pos: Vec3, state: BlockState, side: Dir): boolean {
   const axis = axisOf(side);
   if (state.name === METAL_GIRDER && !(state.props[axis === 'x' ? 'x' : 'z'] === 'true')) return false;
   const rel = relative(pos, side);
   const other = world.state(rel);
   if (!other || other.name === 'minecraft:air' || other.name === 'minecraft:cave_air' || other.name === 'minecraft:void_air') return false;
+  // NixieTubeBlock.getFacing(sideState) == side (l.325-326): DoubleFaceAttachedBlock.getConnectedDirection (l.78-87)
+  if (other.name === 'create:nixie_tube' && nixieConnectedDirection(other) === side) return true;
   if (isFacingBracket(world, pos, side)) return true;
   if (world.faceFull(rel, OPPOSITE[side]) && world.isSolid(rel)) return true;
   return false;
+}
+
+/** DoubleFaceAttachedBlock.getConnectedDirection: FLOOR -> up, CEILING -> down, wall -> facing (`double_face` property). */
+export function nixieConnectedDirection(s: BlockState): Dir {
+  const face = s.props.double_face;
+  if (face === 'ceiling') return 'down';
+  if (face === 'floor') return 'up';
+  return (s.props.facing as Dir) ?? 'north';
 }
 
 /**
