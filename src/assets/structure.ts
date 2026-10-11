@@ -19,6 +19,17 @@ export interface LoadedStructure {
 
 const NON_BLOCKS = new Set(['minecraft:air', 'minecraft:cave_air', 'minecraft:void_air', 'minecraft:structure_void']);
 
+/**
+ * Old schematics are upgraded by the game's DataFixer when loaded (StructureTemplate.load). The only block renames that
+ * occur in Create's ponder schematics (checked by tools/a1-audit.mjs) are listed here.
+ */
+export const LEGACY_BLOCK_RENAMES: Record<string, string> = {
+  'minecraft:grass': 'minecraft:short_grass', // 1.20.3
+  'minecraft:grass_path': 'minecraft:dirt_path', // 1.17
+};
+/** Blocks that no longer exist in Create 6.0.10: an unknown block id loads as air. */
+export const REMOVED_BLOCKS = new Set(['create:furnace_engine']);
+
 function asNums(v: NbtValue | undefined, n: number): number[] {
   const out: number[] = [];
   if (Array.isArray(v)) for (const x of v) out.push(Number(x));
@@ -31,7 +42,8 @@ function stateFromPalette(entry: NbtCompound): BlockState {
   const props: Record<string, string> = {};
   const p = entry.Properties as NbtCompound | undefined;
   if (p) for (const k of Object.keys(p)) props[k] = String(p[k]);
-  return { name: String(entry.Name), props };
+  const raw = String(entry.Name);
+  return { name: LEGACY_BLOCK_RENAMES[raw] ?? raw, props };
 }
 
 /** Parse vanilla structure NBT bytes (gzip or raw) into blocks/entities. */
@@ -46,7 +58,7 @@ export async function parseStructure(buf: ArrayBuffer): Promise<LoadedStructure>
   const blocks: BlockInstance[] = [];
   for (const b of (root.blocks as NbtCompound[] | undefined) ?? []) {
     const state = palette[Number(b.state)];
-    if (!state || NON_BLOCKS.has(state.name)) continue;
+    if (!state || NON_BLOCKS.has(state.name) || REMOVED_BLOCKS.has(state.name)) continue;
     const inst: BlockInstance = { pos: asNums(b.pos, 3) as Vec3, state: { name: state.name, props: { ...state.props } } };
     if (b.nbt) inst.nbt = nbtToPlain(b.nbt as NbtValue) as Record<string, unknown>;
     blocks.push(inst);

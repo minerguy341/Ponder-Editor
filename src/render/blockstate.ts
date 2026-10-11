@@ -115,19 +115,24 @@ export function selectModels(def: BlockstateDef, state: BlockState): Selection |
   const strict = def.entries.filter((e) => e.pairs.every(([k, v]) => props[k] === v));
   if (strict.length === 1) return { parts: [strict[0].options] };
   if (strict.length > 1) return null; // "Overlapping definition": the game logs and uses the missing model
-  // Sparse props (callers may omit defaults): accept the entry with no contradicting pair and the most matches.
+  // Sparse props: NbtUtils.readBlockState gives missing properties their default value, which only the Java block
+  // registration knows. Best effort: accept the entry with no contradicting pair and the most matching pairs
+  // (ties keep file order, which for datagen output starts with the `false` / lowest values).
+  const known = new Set<string>();
+  for (const e of def.entries) for (const [k] of e.pairs) known.add(k);
   let best: VariantEntry | null = null;
-  let bestScore = -1;
+  let bestScore = -1e9;
   for (const e of def.entries) {
     let ok = true, score = 0;
     for (const [k, v] of e.pairs) {
-      if (props[k] === undefined) continue;
+      if (props[k] === undefined) { if (v !== 'false') score -= 0.01; continue; } // absent property: assume its usual default `false`
       if (props[k] !== v) { ok = false; break; }
       score++;
     }
     if (ok && score > bestScore) { best = e; bestScore = score; }
   }
-  if (best && Object.keys(props).length < Math.max(...def.entries.map((e) => e.pairs.length), 0)) return { parts: [best.options], note: 'lenient' };
+  const present = [...known].filter((k) => props[k] !== undefined).length;
+  if (best && present < known.size) return { parts: [best.options], note: 'lenient' };
   return null;
 }
 
