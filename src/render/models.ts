@@ -118,6 +118,8 @@ export interface UnbakedModel {
   obj?: { data: ObjData; settings: ObjSettings; visibility: Record<string, boolean> };
   composite?: { name: string; model: UnbakedModel }[];
   unsupportedLoader?: string;
+  /** result of a loader registered with registerCustomModelLoader */
+  custom?: CustomLoaderResult;
 }
 
 function normModelId(s: string): string {
@@ -146,6 +148,37 @@ function xform(raw: RawTransform): ItemTransform {
     scale: [clamp(s[0], 4), clamp(s[1], 4), clamp(s[2], 4)],
   };
 }
+
+// ------------------------------------------------------------------------------------------------ custom loaders
+
+export interface CustomLoaderContext {
+  /** Location of the model being loaded ("create:block/foo") */
+  id: string;
+  /** The model JSON nodes, child first; the one carrying `loader` is `chain.find(m => m.loader === loaderId)` */
+  chain: RawModel[];
+  /** BlockModel.getMaterial: resolve a `#ref` / texture name against the whole chain ("minecraft:missingno" when unresolved) */
+  resolveTexture(ref: string): string;
+  provider: ModelProvider;
+  /** Load another model of the same store (for loaders that compose models) */
+  loadModel(id: string): Promise<UnbakedModel>;
+}
+export interface CustomLoaderResult {
+  /** Every texture id the baked geometry will ask the SpriteSource for (loaded into the atlas before bake) */
+  textureIds(): string[];
+  /** Synchronous bake for a blockstate rotation; sprites are in the atlas. May be called many times. */
+  bake(rot: ModelRot, sprites: SpriteSource): BakedQuad[];
+}
+export type CustomModelLoader = (model: RawModel, ctx: CustomLoaderContext) => CustomLoaderResult | Promise<CustomLoaderResult>;
+const customLoaders = new Map<string, CustomModelLoader>();
+/**
+ * Register a geometry loader for model JSONs that carry `"loader": "<loaderId>"` (e.g. "create:copycat", "flywheel:model").
+ * Registered loaders take precedence over the built-in "neoforge:obj" / "neoforge:composite" support. The loader is
+ * inherited by child models exactly like in NeoForge (nearest ancestor with a `loader` wins).
+ */
+export function registerCustomModelLoader(loaderId: string, loader: CustomModelLoader) {
+  customLoaders.set(loaderId, loader);
+}
+export function unregisterCustomModelLoader(loaderId: string) { customLoaders.delete(loaderId); }
 
 export class ModelStore {
   private cache = new Map<string, Promise<UnbakedModel>>();
@@ -207,7 +240,16 @@ export class ModelStore {
     const loaderModel = chain.find((m) => typeof m.loader === 'string');
     if (loaderModel) {
       const loader = loaderModel.loader as string;
-      if (loader === 'neoforge:obj') {
+      const registered = customLoaders.get(loader);
+      if (registered) {
+        try {
+          model.custom = await registered(loaderModel, {
+            id, chain, provider: this.provider,
+            resolveTexture: (ref) => resolveTexture(model, ref),
+            loadModel: (other) => this.load(other),
+          });
+        } catch (e) { this.problem(`custom loader ${loader} failed for ${id}: ${(e as Error).message}`); model.broken = true; }
+      } else if (loader === 'neoforge:obj') {
         const settings: ObjSettings = {
           automaticCulling: loaderModel.automatic_culling ?? true,
           shadeQuads: loaderModel.shade_quads ?? true,
@@ -314,6 +356,7 @@ export function modelTextureIds(model: UnbakedModel): Set<string> {
     for (const mesh of model.obj.data.meshes) if (mesh.mat?.diffuseColorMap) add(mesh.mat.diffuseColorMap);
   }
   if (model.composite) for (const c of model.composite) for (const t of modelTextureIds(c.model)) out.add(t);
+  if (model.custom) for (const t of model.custom.textureIds()) out.add(t);
   return out;
 }
 
@@ -649,6 +692,29 @@ function generatedElements(layer: number, texKey: string, sprite: SpriteLike): R
 
 // ---- model baking entry point
 
+/** Deep copy of a quad (arrays included) so processors can edit freely without touching the cached bake. */
+export function cloneQuad(q: BakedQuad): BakedQuad {
+  return { ...q, pos: q.pos.slice(), uv: q.uv.slice(), normal: q.normal ? q.normal.slice() : null, color: q.color ? [...q.color] : null };
+}
+
+/**
+ * Move a quad onto another sprite keeping its position inside the sprite rect (what Create's connected textures do when they
+ * swap `#texture` for a neighbouring variant). `shift` additionally offsets the uv in 0..16 sprite units (CT sheets).
+ * The target sprite must already be in the atlas (see BlockRendererImpl.ensureTextures).
+ */
+export function retextureQuad(q: BakedQuad, to: SpriteLike, shift: [number, number] = [0, 0]): BakedQuad {
+  const from = q.sprite;
+  const out = cloneQuad(q);
+  for (let i = 0; i < 4; i++) {
+    const fu = (q.uv[i * 2] - from.u0) / (from.u1 - from.u0);
+    const fv = (q.uv[i * 2 + 1] - from.v0) / (from.v1 - from.v0);
+    out.uv[i * 2] = to.getU(fu * 16 + shift[0]);
+    out.uv[i * 2 + 1] = to.getV(fv * 16 + shift[1]);
+  }
+  out.sprite = to;
+  return out;
+}
+
 /** Deterministic key for caching baked variants. */
 export function rotKey(r: ModelRot): string {
   return `${((r.x % 360) + 360) % 360},${((r.y % 360) + 360) % 360},${r.uvlock ? 1 : 0}`;
@@ -749,6 +815,10 @@ export function bakeModel(model: UnbakedModel, rot: ModelRot, sprites: SpriteSou
   });
   if (model.root === 'entity') return base();
 
+  if (model.custom) {
+    quads.push(...model.custom.bake(rot, sprites));
+    return base();
+  }
   if (model.composite) {
     for (const child of model.composite) {
       const cm = bakeModel(child.model, rot, sprites);
