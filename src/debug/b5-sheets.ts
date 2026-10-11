@@ -25,6 +25,12 @@ export function grid(rows: SheetCell[][], gap = 2): Sheet {
 const bogeyNbt = (): Record<string, unknown> => ({ BogeyData: { BogeyStyle: 'create:standard' } });
 
 export const SHEETS: Record<string, () => Sheet> = {
+  postbox: () => grid([
+    [{ state: st('create:white_postbox', { waterlogged: 'false', facing: 'north', open: 'false' }), nbt: { AcceptsPackages: 0, AddressFilter: '', Inventory: { Size: 18, Items: [] } } },
+      { state: st('create:light_blue_postbox', { waterlogged: 'false', facing: 'east', open: 'false' }), nbt: { AcceptsPackages: 1, AddressFilter: '', Inventory: { Size: 18, Items: [{ Slot: 0, id: 'create:package', count: 1 }] } } }],
+    [{ state: st('create:placard', { face: 'wall', waterlogged: 'false', powered: 'false', facing: 'west' }), nbt: { Item: { id: 'minecraft:golden_apple', Count: 1 }, PoweredTicks: 0 } },
+      { state: st('create:placard', { face: 'floor', waterlogged: 'false', powered: 'false', facing: 'south' }), nbt: { Item: { id: 'minecraft:copper_ingot', Count: 1 }, PoweredTicks: 0 } }],
+  ], 3),
   items: () => grid([
     [{ state: st('create:content_observer', { powered: 'false', facing: 'north', target: 'wall' }), nbt: { Filter: { id: 'minecraft:stone', count: 1 }, FilterAmount: 1, TurnOff: 0, UpTo: 0 } },
       { state: st('create:stockpile_switch', { level: '0', facing: 'east', target: 'wall' }), nbt: { Filter: { id: 'minecraft:iron_ingot', count: 1 } } }],
