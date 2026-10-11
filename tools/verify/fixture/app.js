@@ -3,11 +3,13 @@
 // over HTTP, real buttons and real pointer handling. It is NOT part of the product; the harness selftests run against it.
 //
 // URL parameters (fixture only):  ?index=index-bad.json   use another scene index
+//                                 ?break=<feature>        disable one feature (negative control for interaction.mjs)
 //                                 ?abs=1                  fetch scene files with root-absolute URLs (breaks under a sub-path: negative control)
 
 const BASE = (import.meta.env && import.meta.env.BASE_URL) || './';
 const params = new URLSearchParams(location.search);
 const ABS = params.has('abs');
+const BREAK = params.get('break') || ''; // drag | pinch | wheel | replay | search | bar | next : disables that feature (negative controls)
 const INDEX_FILE = params.get('index') || 'index.json';
 const sceneUrl = (name) => (ABS ? '/scenes/' + name : new URL(BASE + 'scenes/' + name, document.baseURI).toString());
 
@@ -244,9 +246,10 @@ async function go(delta) {
   const n = S.index[i + delta];
   if (n) await ponderApi.loadScene(n.id);
 }
-q('btn-next').addEventListener('click', () => go(1));
+q('btn-next').addEventListener('click', () => { if (BREAK !== 'next') go(1); });
 q('btn-prev').addEventListener('click', () => go(-1));
 q('btn-replay').addEventListener('click', async () => {
+  if (BREAK === 'replay') return;
   await ponderApi.seek(0);
   play();
 });
@@ -263,7 +266,7 @@ function fillResults(term) {
   ul.textContent = '';
   for (const e of S.index) {
     const hay = [e.id, e.title, ...(e.items || []), ...(e.tags || [])].join(' ').toLowerCase();
-    if (t && !hay.includes(t)) continue;
+    if (t && !hay.includes(t) && BREAK !== 'search') continue;
     const li = document.createElement('li');
     li.dataset.testid = 'scene-result';
     li.setAttribute('data-testid', 'scene-result');
@@ -276,7 +279,7 @@ function fillResults(term) {
 
 // progress bar: Ponder's PonderProgressBar.getHoveredKeyframeIndex rule
 $('bar').addEventListener('click', async (ev) => {
-  if (!S.scene) return;
+  if (!S.scene || BREAK === 'bar') return;
   const r = $('bar').getBoundingClientRect();
   const at = Math.floor(((ev.clientX - r.left) / r.width) * S.total);
   const kfs = S.scene.keyframes;
@@ -309,8 +312,8 @@ canvas.addEventListener('pointermove', (e) => {
   const dy = e.clientY - p.y;
   p.x = e.clientX;
   p.y = e.clientY;
-  if (ptrs.size === 1) ponderApi.setCamera({ yaw: S.camera.yaw + dx * 0.5, pitch: S.camera.pitch + dy * 0.3 });
-  else if (ptrs.size === 2 && pinch0) {
+  if (ptrs.size === 1 && BREAK !== 'drag') ponderApi.setCamera({ yaw: S.camera.yaw + dx * 0.5, pitch: S.camera.pitch + dy * 0.3 });
+  else if (ptrs.size === 2 && pinch0 && BREAK !== 'pinch') {
     const [a, b] = [...ptrs.values()];
     ponderApi.setCamera({ zoom: pinch0.zoom * (Math.hypot(a.x - b.x, a.y - b.y) / pinch0.d) });
   }
@@ -318,7 +321,7 @@ canvas.addEventListener('pointermove', (e) => {
 const up = (e) => { ptrs.delete(e.pointerId); if (ptrs.size < 2) pinch0 = null; };
 canvas.addEventListener('pointerup', up);
 canvas.addEventListener('pointercancel', up);
-canvas.addEventListener('wheel', (e) => { e.preventDefault(); ponderApi.setCamera({ zoom: S.camera.zoom * Math.exp(-e.deltaY * 0.001) }); }, { passive: false });
+canvas.addEventListener('wheel', (e) => { e.preventDefault(); if (BREAK === 'wheel') return; ponderApi.setCamera({ zoom: S.camera.zoom * Math.exp(-e.deltaY * 0.001) }); }, { passive: false });
 addEventListener('resize', render);
 
 ponderApi.ready = (async () => {

@@ -479,9 +479,13 @@ export const ponder = {
 
 // ------------------------------------------------------------------ canvas pixel statistics
 
-/** Screenshot of an element (default: the scene canvas) as a PNG Buffer. */
-export async function shotElement(page, selector = '[data-testid="scene-canvas"]') {
-  return page.locator(selector).first().screenshot({ animations: 'allow' });
+/** CSS that hides every piece of Ponder UI chrome (contract: data-testid values, see README) so a canvas shot shows only the 3D view. */
+export const HIDE_UI_CSS =
+  '[data-testid="ponder-ui"],[data-testid="ponder-title"],[data-testid="ponder-text"],[data-testid="progress-bar"],[data-testid^="btn-"],[data-testid="scene-browser"],[data-hide-in-canvas-check]{visibility:hidden !important}';
+
+/** Screenshot of an element (default: the scene canvas) as a PNG Buffer. `canvasOnly` hides the UI chrome first. */
+export async function shotElement(page, selector = '[data-testid="scene-canvas"]', { canvasOnly = false } = {}) {
+  return page.locator(selector).first().screenshot({ animations: 'allow', ...(canvasOnly ? { style: HIDE_UI_CSS } : {}) });
 }
 
 // ------------------------------------------------------------------ network fetch with disk cache (Node side)
