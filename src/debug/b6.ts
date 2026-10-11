@@ -4,7 +4,7 @@
 //   ?mode=audit&paths=a,b,c   (every block of the listed schematics: missing models / textures / unprepared states)
 // common: &yaw=145 &pitch=35 &zoom=1 &w=960 &h=540 &tick=0
 import * as THREE from 'three';
-import type { BlockInstance, BlockState, Vec3, VisualContext, WorldLookup } from '../contract';
+import type { BlockInstance, Vec3, VisualContext, WorldLookup } from '../contract';
 import { loadStructure } from '../assets/structure';
 import { missingResources } from '../assets/resources';
 import { createBlockRenderer } from '../render/blockRenderer';
