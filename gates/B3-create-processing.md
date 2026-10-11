@@ -33,3 +33,6 @@ Common rules for all B leaves: implement `VisualModule`s per `src/render/create/
   CHECK: npx vitest run tests/b -t seek 2>&1 | tail -6
   EXPECT: /passed/
   EVIDENCE: Start at  22:16:37 | Duration  3.13s (transform 2.11s, setup 0ms, collect 4.94s, tests 69ms, environment 0ms, prepare 516ms)
+
+ABANDON: B3-saw-top-items saw top-slot items (SawBlockEntity.inventory via handleInsertion) are not drawn: Ponder client skips applyRecipe (SawBlockEntity.tick returns when level.isClientSide && !isVirtual()), so the outputs are only the scene's createItemEntity/createItemOnBelt ops (B2/C2 paths) and the top items are a belt-fed processing state owned by B2's sim; evidence tools/verify/out/b3-g6-review.md
+ABANDON: B3-crafter-connected-grid crafter grouped grid (INSERTING/CRAFTING/EXPORTING phases), setScriptedResult and connectCrafterInvs shared inventories are not drawn: ctx.lookup.getBlockEntity returns the scene world at build time (src/ponder/scenegraph.ts lookup), so the connection topology and shared slot 0 cannot be a pure function of scene ticks; evidence factory_gauge_crafting frames in tools/verify/out/b3-g6-review.md
