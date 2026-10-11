@@ -177,7 +177,8 @@
     ],
     "pose": {
      "type": "face_poi"
-    }
+    },
+    "fadeFrom": "down"
    },
    "src": "StockTickerScenes.java:450",
    "out": "e1"

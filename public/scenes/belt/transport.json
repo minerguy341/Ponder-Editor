@@ -344,7 +344,8 @@
     ],
     "pose": {
      "type": "face_poi"
-    }
+    },
+    "fadeFrom": "down"
    },
    "src": "BeltScenes.java:349",
    "out": "e3"

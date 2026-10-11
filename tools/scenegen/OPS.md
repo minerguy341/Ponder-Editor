@@ -32,8 +32,12 @@ shape, and the Ponder/Create source it mirrors (Ponder = `Creators-of-Create/Pon
   C2 should still accept all contract variants.
 * `Box` (AABB) = `{ "min": [x,y,z], "max": [x,y,z] }`.
 * `src` is `"File.java:line"` of the scene-builder call that produced the instruction (the scene file, not the helper that ran).
-* Scene ids: `create:<schematic path>`; if several registrations share one schematic, the id gets a `~<methodName>` suffix
-  (`create:gauges~speedometer`, `create:sail~sailFrame`) so ids are unique, and the JSON file is named after the id (`gauges~speedometer.json`).
+* Scene ids: a scene is one story board = one (schematic path, scene function) pair; registrations of the same pair (other items
+  only) are one scene. The id is `create:<schematic path>` when that path has a single scene function, and
+  `create:<schematic path>~<functionName>` when several scene functions share the path (Ponder keys scenes by component, not by path,
+  and the real game lists such scenes separately): `create:gauges~speedometer`, `create:gauges~stressometer`, `create:sail~sail`,
+  `create:sail~sailFrame`, `create:gantry/intro~introForShaft`, `create:gantry/intro~introForPinion`, ... The JSON file is named after
+  the id (`gauges~speedometer.json`). Verified by `tools/verify/coverage.mjs --scenes` (SCENES_OK: 169 scenes, 179 registrations).
   `SceneJson.schematic` is always the plain schematic path (`gauges`), never with the suffix.
 * Blocks in the schematic palette whose id is not a block in Create 6.0.10 / vanilla 1.21.1 are loaded as air (Catnip/Ponder do the same).
 * Extra optional fields beyond `src/contract.ts` (all additive): `SceneIndexEntry.titleId` (the `create.ponder.<titleId>.header` lang id the scene's
@@ -188,12 +192,12 @@ Kinetic speed helpers are lowered by the converter to `world.modifyBlockEntityNB
 | op | args | out | mirrors |
 |---|---|---|---|
 | `special.movePointOfInterest` | `{location:Vec3}` | - | `MovePoiInstruction` (camera look-at chases, lerp .25/tick) |
-| `special.createBirb` | `{location:Vec3, pose:Pose, duration?:int, variant?:string}` | `link` | `createBirb` (fade-in 10 ticks); `duration` (fade ticks) and `variant:"ChainConveyorParrotElement"` only when the scene adds a `CreateParrotInstruction` with Create's chain-conveyor parrot (`duration:0`, parrot hangs on the chain conveyor) |
+| `special.createBirb` | `{location:Vec3, pose:Pose, fadeFrom:Direction\|null, duration?:int, variant?:string}` | `link` | `createBirb` = Create's `SpecialInstructions.createBirb` (an `ExpandedParrotElement`, conductor off) which adds `CreateParrotInstruction(10, DOWN)`: fade-in 10 ticks, `fadeFrom` = `"down"`. `duration` (fade ticks) and `variant:"ChainConveyorParrotElement"` are present only when the scene adds a `CreateParrotInstruction` itself with Create's chain-conveyor parrot (`duration:0`, `fadeFrom` = the direction the scene passed, parrot hangs on the chain conveyor) |
 | `special.changeBirbPose` | `{link, pose:Pose}` | - | `ChangeParrotPose` |
 | `special.conductorBirb` | `{link, conductor:boolean}` | - | `ExpandedParrotElement.setConductor` (train conductor hat) |
 | `special.rotateParrot` | `{link, rotation:[x,y,z], duration}` | - | `AnimateParrotInstruction.rotate` |
 | `special.moveParrot` | `{link, offset:Vec3, duration}` | - | `AnimateParrotInstruction.move` |
-| `special.createCart` | `{location:Vec3, angle:number, cartType:string}` | `link` | `createCart` (fade-in 10 ticks); `cartType` = Java class name of the factory (`"Minecart"`, `"MinecartChest"`, ...) |
+| `special.createCart` | `{location:Vec3, angle:number, cartType:string, fadeFrom:"down"}` | `link` | `createCart` = `CreateMinecartInstruction(10, Direction.DOWN, cart)`: fade-in 10 ticks from DOWN; `cartType` = Java class name of the factory (`"Minecart"`, `"MinecartChest"`, ...) |
 | `special.rotateCart` | `{link, yRotation:number, duration}` | - | `AnimateMinecartInstruction.rotate` |
 | `special.moveCart` | `{link, offset:Vec3, duration}` | - | `AnimateMinecartInstruction.move` |
 | `special.hideElement` | `{link, direction}` | - | `FadeOutOfSceneInstruction(15, dir, link)` for parrots/carts |
@@ -251,3 +255,5 @@ Keys are exactly the NBT keys Create's `write`/`read` use; C2's `setData(nbt)` r
   `{f}`/`{set,v}`/`{if,then,else}` Call forms, `ctor` on `createEntity`, `variant`/`duration` on `special.createBirb`, `~method` scene id suffix, tables 8.1/8.2.
   Removed the never-emitted `world.flapFunnel` (funnel flaps are `world.modifyBlockEntity` with `FunnelBlockEntity`/`flap(bool)`) and `world.modifyEntitiesInside`
   (no scene uses it). No emitted op was renamed.
+* v1.1: `special.createBirb` and `special.createCart` gained `fadeFrom` (the `Direction` Ponder's `FadeIntoSceneInstruction` slides the element in from; `"down"` for every emitted birb and cart, `null` = no slide). Found by the C1 fidelity audit: the chain-conveyor `CreateParrotInstruction` direction was dropped. Additive; no op renamed.
+* v1.2: scene id rule made exact (one scene = one (path, scene function) pair; `~functionName` only for paths with several scene functions). The ids were already emitted this way; the change is documentation plus E's coverage.mjs counting rule (`foldScenes`). No scene file changed.

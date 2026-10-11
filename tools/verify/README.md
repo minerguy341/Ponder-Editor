@@ -159,10 +159,14 @@ Ignored noise: swiftshader "GPU stall" / "Automatic fallback to software WebGL" 
 
 Independent of `tools/scenegen`: fetch `AllCreatePonderScenes.java` (+ `AllCreatePonderTags.java`, `AllBlocks.java`, `AllItems.java` to
 resolve constants), strip comments, take the body of `register`, split statements at top-level `;`, walk `.forComponents(...)` /
-`.addStoryBoard(...)` method chains (string-aware, parenthesis-aware). Each `addStoryBoard` call is a registration; scene id =
-`create:` + path. Structural count must equal the textual count of `addStoryBoard(` tokens (parse sanity), currently 179
-registrations -> 166 unique scenes (also confirmed by `grep`). Rules (hard failures): **T1** id sets equal (one scene may be
-registered for several items); **T2** each entry's file exists, same id, `totalTicks > 0`, has instructions; **T3** the entry's `items`
+`.addStoryBoard(...)` method chains (string-aware, parenthesis-aware). Each `addStoryBoard` call is a registration. **Scene
+identity** = one story board = one (schematic path, scene function) pair: registrations of the same pair (different items, e.g.
+`mechanical_press/compacting` for press and basin) are ONE scene. Scene id = `create:` + path when the path has a single scene
+function; when one path has several scene functions (Ponder allows that, e.g. `gauges` with `speedometer` and `stressometer`,
+`sail`, `gantry/intro`) each id is `create:<path>~<functionName>` (`create:gauges~speedometer`). This matches C1's ids and OPS.md
+section 0 (`foldScenes` in coverage.mjs; selftest covers it). Structural count must equal the textual count of `addStoryBoard(`
+tokens (parse sanity): currently 179 registrations -> 169 scenes (also confirmed by `grep`). Rules (hard failures): **T1** id sets
+equal (one scene may be registered for several items); **T2** each entry's file exists, same id, `totalTicks > 0`, has instructions; **T3** the entry's `items`
 contain every statically known item (`create:` prefix optional; extra items allowed for dyed/track variants); **T4** scenes registered
 for a dynamic component list need non-empty `items`; **T5** entry `tags` contain every registered tag; **T6** no duplicate ids, index
 is an array. Warnings (reported, not failing here): entries with `warnings`.

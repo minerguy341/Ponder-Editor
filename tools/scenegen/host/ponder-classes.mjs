@@ -249,7 +249,8 @@ export function buildPonderHost(R, ctx) {
         element.$elementId = id;
         const hb = element.hostBase;
         const variant = element.cls.name === 'ParrotElementImpl' ? undefined : element.cls.name;
-        const args = { location: [hb.location.x, hb.location.y, hb.location.z], pose: poseJson(rec, hb.pose), duration: num(fade) };
+        // fadeFrom: Ponder FadeIntoSceneInstruction slides the parrot in from this direction (null = no slide)
+        const args = { location: [hb.location.x, hb.location.y, hb.location.z], pose: poseJson(rec, hb.pose), duration: num(fade), fadeFrom: dir ? dir.name_.toLowerCase() : null };
         if (variant) args.variant = variant;
         rec.emit('special.createBirb', args, id);
       },

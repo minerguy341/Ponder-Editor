@@ -710,7 +710,8 @@
     ],
     "pose": {
      "type": "face_poi"
-    }
+    },
+    "fadeFrom": "down"
    },
    "src": "StockLinkScenes.java:188",
    "out": "e2"

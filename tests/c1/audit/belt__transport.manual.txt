@@ -1,0 +1,54 @@
+# belt/transport: BeltScenes.java:323-398 (transport). Hand derivation. <startTick> is the program tick at which the instruction starts
+# (only idle advances time). showBasePlate = box [0,0,0]..[4,0,4]. Schematic BEs carry Speed 32, the large cogwheel -16:
+# modifyKineticSpeed(everywhere, -.6f*f) gives -19.2 and 9.6 (float). setKineticSpeed(everywhere, 0f) later sets 0 everywhere.
+0 BeltScenes.java:326 configureBasePlate {"xOffset":0,"zOffset":0,"size":5}
+0 BeltScenes.java:327 setSceneOffsetY {"yOffset":-1}
+0 BeltScenes.java:328 world.modifyBlockEntityNBT {"beType":"KineticBlockEntity","redraw":false,"targets":[{"pos":[0,1,2],"nbt":{"Speed":-19.2}},{"pos":[1,1,2],"nbt":{"Speed":-19.2}},{"pos":[2,1,2],"nbt":{"Speed":-19.2}},{"pos":[3,2,2],"nbt":{"Speed":-19.2}},{"pos":[4,3,2],"nbt":{"Speed":-19.2}},{"pos":[1,1,3],"nbt":{"Speed":-19.2}},{"pos":[2,1,3],"nbt":{"Speed":-19.2}},{"pos":[2,1,4],"nbt":{"Speed":-19.2}},{"pos":[3,0,5],"nbt":{"Speed":9.6}},{"pos":[2,1,5],"nbt":{"Speed":-19.2}}]}
+0 BeltScenes.java:329 world.showSection {"selection":{"t":"box","from":[0,0,0],"to":[4,0,4]},"direction":"up"}
+0 BeltScenes.java:330 idle {"ticks":5}
+5 BeltScenes.java:331 world.showSection {"selection":{"t":"box","from":[1,1,3],"to":[2,1,5]},"direction":"down"}
+5 BeltScenes.java:332 idle {"ticks":20}
+25 BeltScenes.java:333 world.showSection {"selection":{"t":"box","from":[2,1,2],"to":[4,3,2]},"direction":"south"}
+25 BeltScenes.java:334 idle {"ticks":5}
+30 BeltScenes.java:335 world.showSection {"selection":{"t":"box","from":[0,1,2],"to":[1,1,2]},"direction":"south"}
+30 BeltScenes.java:336 idle {"ticks":10}
+40 BeltScenes.java:337 special.movePointOfInterest {"location":[2.5,2.5,0.5]}
+40 BeltScenes.java:341 world.createItemEntity {"$out":"e1","location":[0.5,4.5,2.5],"motion":[0,0,0],"item":{"id":"minecraft:copper_block","count":1}}
+40 BeltScenes.java:342 idle {"ticks":13}
+53 BeltScenes.java:343 world.modifyEntity {"link":{"link":"e1"},"calls":[{"path":[{"m":"discard","a":[]}]}]}
+53 BeltScenes.java:345 world.createItemOnBelt {"$out":"e2","pos":[0,1,2],"insertionSide":"down","item":{"id":"minecraft:copper_block","count":1}}
+53 BeltScenes.java:347 idle {"ticks":20}
+73 BeltScenes.java:349 special.createBirb {"$out":"e3","location":[0.5,1.8125,2.5],"pose":{"type":"face_poi"},"fadeFrom":"down"}
+73 BeltScenes.java:351 special.moveParrot {"link":{"link":"e3"},"offset":[1.78,0,0],"duration":40}
+73 BeltScenes.java:352 special.movePointOfInterest {"location":[1.5,1.5,3.5]}
+73 BeltScenes.java:354 overlay.showText {"duration":60,"color":"white","placeNearTarget":true,"keyframe":false,"pointAt":[0.5,2,2.5],"key":"text_1","text":"Moving belts will transport Items and other Entities"}
+73 BeltScenes.java:359 idle {"ticks":20}
+93 BeltScenes.java:360 world.createItemEntity {"$out":"e4","location":[0.5,4.5,2.5],"motion":[0,0,0],"item":{"id":"minecraft:copper_block","count":1}}
+93 BeltScenes.java:361 special.movePointOfInterest {"location":[0.5,3.5,2.5]}
+93 BeltScenes.java:362 idle {"ticks":10}
+103 BeltScenes.java:363 special.movePointOfInterest {"location":[0.5,1.5,2.5]}
+103 BeltScenes.java:364 idle {"ticks":3}
+106 BeltScenes.java:365 world.modifyEntity {"link":{"link":"e4"},"calls":[{"path":[{"m":"discard","a":[]}]}]}
+106 BeltScenes.java:366 world.createItemOnBelt {"$out":"e5","pos":[0,1,2],"insertionSide":"down","item":{"id":"minecraft:copper_block","count":1}}
+106 BeltScenes.java:367 idle {"ticks":8}
+114 BeltScenes.java:369 special.movePointOfInterest {"location":[3.5,2.5,1.5]}
+114 BeltScenes.java:370 special.moveParrot {"link":{"link":"e3"},"offset":[2.1,2.1,0],"duration":60}
+114 BeltScenes.java:371 idle {"ticks":20}
+134 BeltScenes.java:372 special.movePointOfInterest {"location":[5.5,5.5,2.5]}
+134 BeltScenes.java:373 idle {"ticks":30}
+164 BeltScenes.java:374 special.movePointOfInterest {"location":[2.5,1.5,5.5]}
+164 BeltScenes.java:375 idle {"ticks":10}
+174 BeltScenes.java:376 special.moveParrot {"link":{"link":"e3"},"offset":[0.23,0,0],"duration":5}
+174 BeltScenes.java:377 idle {"ticks":5}
+179 BeltScenes.java:378 world.modifyBlockEntityNBT {"beType":"KineticBlockEntity","redraw":false,"targets":[{"pos":[0,1,2],"nbt":{"Speed":0}},{"pos":[1,1,2],"nbt":{"Speed":0}},{"pos":[2,1,2],"nbt":{"Speed":0}},{"pos":[3,2,2],"nbt":{"Speed":0}},{"pos":[4,3,2],"nbt":{"Speed":0}},{"pos":[1,1,3],"nbt":{"Speed":0}},{"pos":[2,1,3],"nbt":{"Speed":0}},{"pos":[2,1,4],"nbt":{"Speed":0}},{"pos":[3,0,5],"nbt":{"Speed":0}},{"pos":[2,1,5],"nbt":{"Speed":0}}]}
+179 BeltScenes.java:379 idle {"ticks":10}
+189 BeltScenes.java:380 world.modifyEntities {"entityType":"ItemEntity","calls":[{"path":[{"m":"discard","a":[]}]}]}
+189 BeltScenes.java:381 special.movePointOfInterest {"location":[2.5,5.5,4.5]}
+189 BeltScenes.java:385 overlay.showControls {"location":[3.4,3.3,2.5],"direction":"down","duration":60,"sneak":false,"ctrl":false,"icon":"rmb"}
+189 BeltScenes.java:386 idle {"ticks":10}
+199 BeltScenes.java:387 overlay.showText {"duration":60,"color":"white","placeNearTarget":true,"keyframe":true,"pointAt":[3.4,3.1999999999999997,2.5],"key":"text_2","text":"Right-Click with an empty hand to take items off a belt"}
+199 BeltScenes.java:392 idle {"ticks":20}
+219 BeltScenes.java:393 world.removeItemsFromBelt {"pos":[3,2,2]}
+219 BeltScenes.java:394 effects.createRedstoneParticles {"pos":[3,2,2],"color":8454058,"amount":10}
+219 BeltScenes.java:395 idle {"ticks":20}
+239 BeltScenes.java:397 special.changeBirbPose {"link":{"link":"e3"},"pose":{"type":"face_cursor"}}

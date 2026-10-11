@@ -626,7 +626,8 @@
     ],
     "pose": {
      "type": "face_poi"
-    }
+    },
+    "fadeFrom": "down"
    },
    "src": "TrainSignalScenes.java:90",
    "out": "e3"
