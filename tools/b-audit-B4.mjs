@@ -49,7 +49,7 @@ for (const f of DIRS) {
   }
   for (const part of ['start', 'middle', 'end', 'single']) for (const pw of [false, true]) add('create:gantry_shaft', { facing: f, part, powered: bool(pw) });
 }
-for (const a of ['x', 'y', 'z']) add('create:rope_pulley', { axis: a }, { ...nbtStd, Running: 1 });
+for (const a of ['x', 'z']) add('create:rope_pulley', { axis: a }, { ...nbtStd, Running: 1 });
 for (const f of HOR) {
   add('create:elevator_pulley', { facing: f }, { ...nbtStd, Running: 1 });
   add('create:contraption_controls', { facing: f, open: 'false', waterlogged: 'false', virtual: 'false' }, { ...nbtStd, Disabled: 1 });

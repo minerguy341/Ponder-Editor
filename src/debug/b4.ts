@@ -104,11 +104,53 @@ async function auditMode() {
   info.audit = { partials: partials.length, states: states.length, visuals, failed, missing };
 }
 
+/**
+ * Contact sheet (G5): every state of the audit list whose block id contains `sheet` is placed on its own 3x3 cell (a plate per
+ * cell) and the visuals are driven to scene tick `t`. Cells are labelled by their order in the sheet's `index` (window.__b4.cells).
+ */
+async function sheetMode(filter: string, ticks: number) {
+  const states = (await (await fetch('/tools/.cache/b4-states.json')).json()) as { name: string; props: Record<string, string>; nbt: Record<string, unknown> }[];
+  const list = states.filter((s) => s.name.includes(filter));
+  const cols = Math.max(1, Math.ceil(Math.sqrt(list.length)));
+  const rows = Math.ceil(list.length / cols);
+  const cells: string[] = [];
+  const visuals: BlockVisual[] = [];
+  const all: BlockInstance[] = [];
+  for (let i = 0; i < list.length; i++) {
+    const st = list[i];
+    const ox = (i % cols) * 4, oz = Math.floor(i / cols) * 4;
+    cells.push(`${i}: ${st.name} ${JSON.stringify(st.props)}`);
+    const plate: BlockInstance[] = [];
+    for (let x = 0; x < 3; x++) for (let z = 0; z < 3; z++) plate.push({ pos: [ox + x, 0, oz + z], state: { name: (x + z) % 2 === 0 ? 'minecraft:white_concrete' : 'minecraft:snow_block', props: {} } });
+    const block: BlockInstance = { pos: [ox + 1, 1, oz + 1], state: { name: st.name, props: st.props }, nbt: st.nbt };
+    all.push(...plate, block);
+  }
+  const lookup = makeLookup(all);
+  await renderer.prepare(all.map((b) => b.state));
+  viewer.world.add(renderer.buildSection(all, { lookup }));
+  for (let i = 0; i < list.length; i++) {
+    const block = all.filter((b) => b.state.name === list[i].name && b.pos[0] === (i % cols) * 4 + 1 && b.pos[2] === Math.floor(i / cols) * 4 + 1)[0];
+    const v = await createVisual(block, { renderer, lookup });
+    if (!v) continue;
+    v.object.position.set(block.pos[0], block.pos[1], block.pos[2]);
+    viewer.world.add(v.object);
+    visuals.push(v);
+  }
+  for (const v of visuals) v.update(ticks);
+  viewer.onFrame(() => { for (const v of visuals) v.update(ticks); });
+  viewer.setBounds(cols * 4, 3, rows * 4);
+  viewer.setBasePlate({ x: 0, z: 0, size: Math.max(cols, rows) * 4 });
+  (window as unknown as { __b4cells: string[] }).__b4cells = cells;
+  info.cells = cells.length;
+  info.visuals = visuals.length;
+}
+
 async function main() {
   const mode = qs.get('mode') ?? 'scene';
   const ticks = Number(qs.get('t') ?? 0);
   if (mode === 'scene') await sceneMode(qs.get('path') ?? 'high_logistics/chain_conveyor', ticks);
   if (mode === 'audit') await auditMode();
+  if (mode === 'sheet') await sheetMode(qs.get('sheet') ?? 'bearing', ticks);
   if (mode === 'single') {
     const props = JSON.parse(qs.get('props') ?? '{}') as Record<string, string>;
     const nbt = JSON.parse(qs.get('nbt') ?? '{}') as Record<string, unknown>;
