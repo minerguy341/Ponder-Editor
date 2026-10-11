@@ -21,7 +21,7 @@ type V = THREE.Vector3;
 const voxel = (x: number, y: number, z: number): V => new THREE.Vector3(x / 16, y / 16, z / 16);
 
 /** ValueBoxTransform.transform: translate(offset), rotate, scale(scale), then the item (renderItemIntoValueBox). */
-interface Slot {
+export interface Slot {
   offset: V | null;
   scale: number;
   /** ValueBoxTransform.rotate */
@@ -92,7 +92,7 @@ function linkSlot(state: BlockState, first: boolean): Slot {
 }
 
 /** Matrix of one slot with the item drawn as ValueBoxRenderer.renderItemIntoValueBox does (scale and z offset depend on blockItem). */
-function slotMatrix(slot: Slot, blockItem: boolean, ps: PoseStack): THREE.Matrix4 {
+export function slotMatrix(slot: Slot, blockItem: boolean, ps: PoseStack): THREE.Matrix4 {
   ps.reset();
   if (slot.offset) ps.translate(slot.offset.x, slot.offset.y, slot.offset.z);
   slot.rotate(ps);

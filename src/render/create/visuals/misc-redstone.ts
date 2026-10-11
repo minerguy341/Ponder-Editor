@@ -24,20 +24,25 @@ export function mixColor(a: number, b: number, t: number): number {
 }
 
 /**
- * Analog lever state as a pure function of the state events: each BlockEntity load / NBT change restarts the EXP chase from
- * the value it had at that moment (AnalogLeverBlockEntity.loadAdditional calls clientState.chase(state, 0.2, EXP)).
+ * An EXP chase whose target is re-set by events: each event restarts the chase from the value the chaser had at that tick
+ * (a BlockEntity loadAdditional / NBT change calls chase(target, speed, EXP)). Pure function of (events, ticks).
  */
-export function analogLeverValueAt(events: readonly { tick: number; state: number }[], ticks: number): number {
+export function expChaseEventsAt(events: readonly { tick: number; state: number }[], ticks: number, speed: number): number {
   let c0 = 0, start = -Infinity, target = 0;
   for (let i = 0; i < events.length; i++) {
     const e = events[i];
     if (e.tick > ticks) break;
-    if (i > 0) c0 = chaseValueAt('exp', c0, target, LEVER_CHASE_SPEED, e.tick, start);
+    if (i > 0) c0 = chaseValueAt('exp', c0, target, speed, e.tick, start);
     start = e.tick;
     target = e.state;
   }
   if (start === -Infinity) return 0;
-  return chaseValueAt('exp', c0, target, LEVER_CHASE_SPEED, ticks, start);
+  return chaseValueAt('exp', c0, target, speed, ticks, start);
+}
+
+/** Analog lever state (AnalogLeverBlockEntity: chase(state, 0.2, EXP) on every load / change). */
+export function analogLeverValueAt(events: readonly { tick: number; state: number }[], ticks: number): number {
+  return expChaseEventsAt(events, ticks, LEVER_CHASE_SPEED);
 }
 
 class AnalogLeverVisual extends SceneVisual {

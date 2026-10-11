@@ -6,7 +6,7 @@
 import * as THREE from 'three';
 import type { ItemStackJson } from '../../../contract';
 import type { VisualModule } from '../registry';
-import { BaseVisual, PARTIAL, getBool, getCompound, getItemStack, getList, getPartial, horizontalAngle, stateDirection, toYRot, type Nbt } from '../common';
+import { BaseVisual, PARTIAL, getBool, getCompound, getItemStack, getItemList, getList, getPartial, horizontalAngle, stateDirection, toYRot, type Nbt } from '../common';
 import { PoseStack } from '../items/pose';
 import { createItemObject, prepareItem } from '../items';
 import { GatedChase } from '../trains/timeline';
@@ -95,7 +95,49 @@ const postboxModule = (blocks: string[]): VisualModule => ({
   async preload(ctx) { await getPartial(ctx, PARTIAL.POSTBOX_FLAG); },
 });
 
+
+// ------------------------------------------------------------------------------------------------ table cloth (manual items)
+//
+// Java: content/logistics/tableCloth/TableClothRenderer.renderSafe (manual item branch), DepotRenderer.renderItem (alwaysUpright).
+// Items are placed on the cloth: rotateCentered(DEG(180 - facing.toYRot())), then per item translate(.5, 3/16, .5) and, for several
+// items, a ring at 360/n degrees with radius 5/16. Non-block items are turned by (-rotation + PI). Residuals: the camera billboard that
+// DepotRenderer applies to upright items (it depends on the view, not on ticks) and the shop price tags (RequestData shop branch).
+
+class TableClothVisual extends BaseVisual {
+  protected async build(): Promise<void> {
+    const nbt = this.block.nbt as Nbt | undefined;
+    const stacks = getItemList(nbt, 'Items');
+    if (!stacks.length) return;
+    const facing = stateDirection(this.block.state, 'facing') ?? 'north';
+    const rotDeg = 180 - toYRot(facing); // rotationInRadians (degrees here)
+    const base = new PoseStack().translate(0.5, 0.5, 0.5).rotateYDegrees(rotDeg).translate(-0.5, -0.5, -0.5);
+    const ps = new PoseStack();
+    for (let i = 0; i < stacks.length; i++) {
+      const stack = stacks[i];
+      const info = await prepareItem(stack);
+      const obj = await createItemObject(stack, { context: 'fixed' });
+      ps.reset().mulMatrix(base.matrix).translate(0.5, 3 / 16, 0.5);
+      if (stacks.length > 1) {
+        const a = (i * 360) / stacks.length + 45;
+        ps.rotateYDegrees(a).translate(0, i % 2 === 0 ? -0.005 : 0, 5 / 16).rotateYDegrees(-(i * 360) / stacks.length - 45);
+      }
+      if (!info.blockItem) ps.rotateYDegrees(-rotDeg + 180);
+      // DepotRenderer.renderItem: non-block items with alwaysUpright are drawn upright (billboard omitted, see the header)
+      if (!info.blockItem) ps.translate(0, 3 / 32, -1 / 16);
+      this.object.add(withMatrix(obj, ps.matrix.clone()));
+    }
+  }
+  protected onUpdate(): void { /* static */ }
+}
+
+const tableClothModule: VisualModule = {
+  blocks: ['create:light_gray_table_cloth'],
+  entityRendered: () => false, // the cloth is the static block model; the items on it are drawn here
+  create: (block, ctx) => new TableClothVisual(block, ctx).init(),
+};
+
 export default [
   placardModule,
   postboxModule(['create:white_postbox', 'create:light_blue_postbox']),
+  tableClothModule,
 ] as VisualModule[];

@@ -25,6 +25,12 @@ export function grid(rows: SheetCell[][], gap = 2): Sheet {
 const bogeyNbt = (): Record<string, unknown> => ({ BogeyData: { BogeyStyle: 'create:standard' } });
 
 export const SHEETS: Record<string, () => Sheet> = {
+  gauge: () => grid([
+    [{ state: st('create:factory_gauge', { face: 'wall', waterlogged: 'false', powered: 'false', facing: 'north' }),
+      nbt: { Owner: [1, 2, 3, 4], top_left: { FilterAmount: 5, RedstonePowered: 0, Satisfied: 1, RecipeAddress: 'x', Filter: { id: 'create:andesite_alloy', Count: 1 } }, Restocker: 0 } },
+      { state: st('create:factory_gauge', { face: 'floor', waterlogged: 'false', powered: 'false', facing: 'east' }),
+        nbt: { Owner: [1, 2, 3, 4], top_left: { FilterAmount: 1, RedstonePowered: 1, Satisfied: 0, RecipeAddress: '', Filter: { id: 'create:cogwheel', Count: 1 } }, bottom_right: { FilterAmount: 1, RedstonePowered: 0, Satisfied: 0, RecipeAddress: 't', Filter: { id: 'create:cogwheel', Count: 1 } }, Restocker: 0 } }],
+  ], 3),
   frogport: () => grid([
     [{ state: st('create:package_frogport'), nbt: { PlacedYaw: 0, AcceptsPackages: 0, AddressFilter: '' } },
       { state: st('create:package_frogport'), nbt: { PlacedYaw: 90, AcceptsPackages: 0, AddressFilter: '' } },
