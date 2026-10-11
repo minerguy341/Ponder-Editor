@@ -8,6 +8,7 @@ import {
 import { linkGlowAt } from '../../../src/render/create/visuals/misc-display';
 import { filterSideActive, targetDirectionOf } from '../../../src/render/create/visuals/misc-items';
 import { displayedStrings, flattenComponent } from '../../../src/render/create/visuals/misc-nixie';
+import { FlapRandom, colourKey, parseCalls, refreshSection, tickSection, type Section } from '../../../src/render/create/visuals/misc-flap';
 
 // Java sources: tools/.cache/create/src/main/java/com/simibubi/create/... (Create tag mc1.21.1-6.0.10), cited per describe.
 
@@ -200,5 +201,41 @@ describe('seek (update purity across the whole misc group)', () => {
     const forward = [2, 10, 25].map(sample);
     const back = [25, 10, 2].map(sample).reverse();
     expect(back).toEqual(forward);
+  });
+});
+
+describe('FlapDisplaySection / FlapDisplayBlockEntity (content/trains/display, LegacyRandomSource)', () => {
+  it('FlapRandom is java.util.Random: new Random(42).nextInt() = -1170105035, nextInt(10) = 0', () => {
+    expect(new FlapRandom(42n).next(32)).toBe(-1170105035);
+    expect(new FlapRandom(42n).nextInt(10)).toBe(0);
+  });
+
+  it('refresh with transition marks only the characters that change (uppercased, padded to the section)', () => {
+    const sec: Section = { text: ' '.repeat(4), spinning: [false, false, false, false], spinningTicks: 0, width: 28 };
+    refreshSection(sec, 'ab', false);
+    expect(sec.text).toBe('AB  ');
+    expect(sec.spinning).toEqual([false, false, false, false]);
+    refreshSection(sec, 'ax', true);
+    expect(sec.text).toBe('AX  ');
+    expect(sec.spinning).toEqual([false, true, false, false]); // only 'B'->'X' changes
+  });
+
+  it('spinning flaps settle: after max = 45 ticks every character has stopped (FlapDisplaySection.tick)', () => {
+    const sec: Section = { text: 'OK', spinning: [true, true], spinningTicks: 0, width: 14 };
+    const rng = new FlapRandom(7n);
+    for (let k = 0; k < 60; k++) tickSection(sec, false, rng);
+    expect(sec.spinning).toEqual([false, false]);
+  });
+
+  it('colour and call parsing: DyeColor enum forms map to the DYE_TABLE key, WHITE is the default colour', () => {
+    expect(colourKey({ enum: 'DyeColor.PINK' })).toBe('pink');
+    expect(colourKey('LIME')).toBe('lime');
+    expect(colourKey({ enum: 'DyeColor.WHITE' })).toBeNull();
+    const calls = parseCalls([
+      { t: 9, path: [{ m: 'applyTextManually', a: [1, 'Blaze Cake'] }] },
+      { t: 3, path: [{ m: 'setColour', a: [0, { enum: 'DyeColor.PINK' }] }] },
+    ]);
+    expect(calls.map((c) => [c.t, c.kind, c.line])).toEqual([[3, 'colour', 0], [9, 'text', 1]]);
+    expect(calls[1].text).toBe('Blaze Cake');
   });
 });
