@@ -109,9 +109,34 @@ export interface FlapState { key: string; pos: Vec3; side?: Direction; prev: num
 const FLAP_START = 0.25;
 const FLAP_SPEED = 0.05;
 
+/** ChuteBlockEntity: one item moving along the chute (itemPosition linear, item motion from pull/push). */
+export interface ChuteState {
+  key: string;
+  pos: Vec3;
+  item: ItemStackJson | null;
+  prev: number;
+  cur: number;
+  pull: number;
+  push: number;
+  /** BottomAirFlowDistance (ChuteBlockEntity.bottomPullDistance) */
+  bottomPull: number;
+}
+
 const DEPOT_SLOTS = 8;
 const BASIN_SLOTS = 9;
 const STACK_LIMIT = 64;
+
+/** ChuteBlockEntity.tick (no outputs): the item moves by getItemMotion() and rests at the middle when it cannot leave. */
+function stepChute(c: ChuteState): void {
+  if (!c.item) return;
+  const motion0 = (c.push + c.pull) / 64;
+  const motion = (clamp(motion0, -20, 20) + (motion0 <= 0 ? -4 : 0)) / 20;
+  let next = c.cur + motion;
+  if (motion < 0 && next < 0.5) next = 0.5;
+  else if (motion > 0 && next > 0.5) next = 0.5;
+  c.prev = c.cur;
+  c.cur = next;
+}
 
 /** LerpedFloat.tickChaser with Chaser.EXP(speed): c + (t - c) * speed, snapping when equal (Mth.equal: |a-b| < 1e-5). */
 function stepFlap(fl: FlapState): void {
@@ -130,6 +155,7 @@ export class LogisticsWorld {
   private depots = new Map<string, DepotState>();
   private basins = new Map<string, BasinState>();
   private flaps = new Map<string, FlapState>();
+  private chutes = new Map<string, ChuteState>();
   private events: LogisticsEvent[] = [];
   private cursor = 0;
   /** scene tick the state corresponds to */
@@ -201,6 +227,7 @@ export class LogisticsWorld {
     this.depots.clear();
     this.basins.clear();
     this.flaps.clear();
+    this.chutes.clear();
     this.cursor = 0;
     this.now = 0;
     this.rng.setSeed(0x2f6f_3c1d);
@@ -220,6 +247,7 @@ export class LogisticsWorld {
       for (const st of this.states.values()) this.stepChain(st);
       for (const d of this.depots.values()) if (d.held) easeToCentre(d.held);
       for (const fl of this.flaps.values()) stepFlap(fl);
+      for (const c of this.chutes.values()) stepChute(c);
       this.now++;
     }
   }
@@ -266,7 +294,8 @@ export class LogisticsWorld {
       const nbt = this.lookup.getBlockEntity(pos)?.nbt;
       d = { key: k, pos, held: null, output: new Array(DEPOT_SLOTS).fill(null) };
       if (nbt) {
-        if (isStackLike(nbt.HeldItem)) d.held = this.newItem(stackOf(nbt.HeldItem), 0.5);
+        const held = nonEmptyStack(nbt.HeldItem);
+        if (held) d.held = this.newItem(held, 0.5);
         readSlots(nbt.OutputBuffer, d.output);
       }
       this.depots.set(k, d);
@@ -316,6 +345,20 @@ export class LogisticsWorld {
       if (e.op === 'nbt' && posKey(e.pos) === k && key in e.patch) v = e.patch[key];
     }
     return v;
+  }
+
+  /** Chute state (created from the block entity nbt on first use). */
+  chuteAt(pos: Vec3): ChuteState {
+    const k = posKey(pos);
+    let c = this.chutes.get(k);
+    if (!c) {
+      const nbt = this.lookup.getBlockEntity(pos)?.nbt ?? {};
+      const item = nonEmptyStack(nbt.Item);
+      const p = typeof nbt.ItemPosition === 'number' ? (nbt.ItemPosition as number) : item ? 0 : 0;
+      c = { key: k, pos, item, prev: p, cur: p, pull: Number(nbt.Pull ?? 0), push: Number(nbt.Push ?? 0), bottomPull: Number(nbt.BottomAirFlowDistance ?? 0) };
+      this.chutes.set(k, c);
+    }
+    return c;
   }
 
   /** Every item stack referenced by the event log (so renderers can prepare their models ahead of time). */
@@ -379,12 +422,24 @@ export class LogisticsWorld {
     const name = this.lookup.getState(pos)?.name;
     if (name === 'create:depot') {
       const d = this.depotAt(pos);
-      if ('HeldItem' in patch) d.held = isStackLike(patch.HeldItem) ? this.newItem(stackOf(patch.HeldItem), 0.5) : null;
+      if ('HeldItem' in patch) { const held = nonEmptyStack(patch.HeldItem); d.held = held ? this.newItem(held, 0.5) : null; }
       if ('OutputBuffer' in patch) readSlots(patch.OutputBuffer, d.output, true);
     } else if (name === 'create:basin') {
       const b = this.basinAt(pos);
       if ('InputItems' in patch) readSlots(patch.InputItems, b.inputs, true);
       if ('OutputItems' in patch) readSlots(patch.OutputItems, b.outputs, true);
+    } else if (name === 'create:chute' || name === 'create:smart_chute') {
+      const c = this.chuteAt(pos);
+      if ('Item' in patch) {
+        const had = c.item !== null;
+        c.item = nonEmptyStack(patch.Item);
+        // ChuteBlockEntity.setItem(stack): insertion point 1 when falling, else 0
+        if (c.item && !had && !('ItemPosition' in patch)) c.prev = c.cur = c.pull + c.push < 0 ? 1 : 0;
+      }
+      if (typeof patch.ItemPosition === 'number') c.prev = c.cur = patch.ItemPosition as number;
+      if (typeof patch.Pull === 'number') c.pull = patch.Pull as number;
+      if (typeof patch.Push === 'number') c.push = patch.Push as number;
+      if (typeof patch.BottomAirFlowDistance === 'number') c.bottomPull = patch.BottomAirFlowDistance as number;
     }
   }
 
@@ -425,6 +480,7 @@ export class LogisticsWorld {
       const name = this.lookup.getState(pos)?.name;
       if (name === 'create:depot') this.depotInsert(this.depotAt(pos), stack, side);
       else if (name === 'create:basin') this.basinInsert(this.basinAt(pos), stack);
+      else if (name === 'create:chute' || name === 'create:smart_chute') this.chuteInsert(this.chuteAt(pos), stack);
       return;
     }
     const belt = this.lookup.getState(pos)!;
@@ -633,6 +689,16 @@ export class LogisticsWorld {
     return count > 0 ? { ...stack, count } : null;
   }
 
+  /** ChuteBlockEntity.setItem(stack) via the chute's DirectBeltInput: only into an empty chute; falling chutes insert at the top. */
+  private chuteInsert(c: ChuteState, stack: ItemStackJson): ItemStackJson | null {
+    if (c.item) return stack;
+    c.item = stack;
+    const p = c.pull + c.push <= 0 ? 1 : 0;
+    c.prev = p;
+    c.cur = p;
+    return null;
+  }
+
   /** Items of a basin in CombinedInvWrapper order (inputs, then outputs). */
   basinView(pos: Vec3): (ItemStackJson | null)[] {
     const b = this.basinAt(pos);
@@ -682,6 +748,14 @@ function easeToCentre(t: SimItem): boolean {
 
 function clamp(v: number, lo: number, hi: number): number { return v < lo ? lo : v > hi ? hi : v; }
 
+/** A stack from NBT, or null for an empty one (air or count 0 - the empty ItemStack serialises as minecraft:air). */
+function nonEmptyStack(v: unknown): ItemStackJson | null {
+  if (!isStackLike(v)) return null;
+  const st = stackOf(v);
+  if (st.id === 'minecraft:air' || (st.count ?? 1) <= 0) return null;
+  return st;
+}
+
 function isStackLike(v: unknown): boolean {
   if (!v || typeof v !== 'object') return false;
   const o = v as { id?: unknown; Item?: unknown };
@@ -700,9 +774,10 @@ function readSlots(v: unknown, slots: (ItemStackJson | null)[], reset = false): 
   if (reset) slots.fill(null);
   const list = Array.isArray(v) ? v : v && typeof v === 'object' && Array.isArray((v as { Items?: unknown }).Items) ? (v as { Items: unknown[] }).Items : [];
   list.forEach((e, i) => {
-    if (!isStackLike(e)) return;
+    const st = nonEmptyStack(e);
+    if (!st) return;
     const slot = Number((e as { Slot?: number }).Slot ?? i);
-    if (slot >= 0 && slot < slots.length) slots[slot] = stackOf(e);
+    if (slot >= 0 && slot < slots.length) slots[slot] = st;
   });
 }
 

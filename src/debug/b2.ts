@@ -123,8 +123,9 @@ async function sceneMode() {
     }
     const depots = st.blocks.filter((b) => b.state.name === 'create:depot').map((b) => { lw.advance(t); const v = lw.depotView(b.pos); return { pos: b.pos, held: v.held && { id: v.held.stack.id, pos: +v.held.beltPosition.toFixed(3) }, output: v.output.filter(Boolean) }; });
     const basins = st.blocks.filter((b) => b.state.name === 'create:basin').map((b) => { lw.advance(t); return { pos: b.pos, slots: lw.basinView(b.pos).filter(Boolean) }; });
+    const chutes = st.blocks.filter((b) => b.state.name === 'create:chute' || b.state.name === 'create:smart_chute').map((b) => { lw.advance(t); const c = lw.chuteAt(b.pos); return { pos: b.pos, item: c.item && c.item.id, cur: +c.cur.toFixed(3), bottomPull: c.bottomPull, pull: c.pull, push: c.push }; });
     lw.advance(t);
-    return { t, chains: [...chains.values()], depots, basins };
+    return { t, chains: [...chains.values()], depots, basins, chutes };
   };
 }
 
