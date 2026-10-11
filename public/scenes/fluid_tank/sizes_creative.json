@@ -1,0 +1,1510 @@
+{
+ "id": "create:fluid_tank/sizes_creative",
+ "schematic": "fluid_tank/sizes_creative",
+ "schematicNamespace": "create",
+ "title": "Dimensions of a Fluid tank",
+ "texts": {
+  "text_1": "Fluid Tanks can be combined to increase the total capacity",
+  "text_2": "Their base square can be up to 3 blocks wide...",
+  "text_3": "...and grow in height by more than 30 additional layers",
+  "text_4": "Using a Wrench, a tanks' window can be toggled"
+ },
+ "tags": [],
+ "items": [
+  "create:creative_fluid_tank"
+ ],
+ "keyframes": [
+  21,
+  106,
+  223,
+  330
+ ],
+ "totalTicks": 374,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 6
+   },
+   "src": "FluidTankScenes.java:221"
+  },
+  {
+   "op": "scaleSceneView",
+   "args": {
+    "factor": 0.9
+   },
+   "src": "FluidTankScenes.java:222"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      5,
+      0,
+      5
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "FluidTankScenes.java:223"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "FluidTankScenes.java:224"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      3,
+      0
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "FluidTankScenes.java:230",
+   "out": "e1"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     2,
+     -2,
+     2
+    ],
+    "duration": 0
+   },
+   "src": "FluidTankScenes.java:231"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "FluidTankScenes.java:232"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_1",
+    "pointAt": [
+     2.5,
+     2,
+     2.5
+    ],
+    "text": "Fluid Tanks can be combined to increase the total capacity"
+   },
+   "src": "FluidTankScenes.java:234"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "FluidTankScenes.java:239"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      3,
+      0
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "FluidTankScenes.java:241",
+   "out": "e2"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     2,
+     -2,
+     3
+    ],
+    "duration": 0
+   },
+   "src": "FluidTankScenes.java:242"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "FluidTankScenes.java:243"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      3,
+      0
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "FluidTankScenes.java:244",
+   "out": "e3"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "offset": [
+     3,
+     -2,
+     3
+    ],
+    "duration": 0
+   },
+   "src": "FluidTankScenes.java:245"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "FluidTankScenes.java:246"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      3,
+      0
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "FluidTankScenes.java:247",
+   "out": "e4"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e4"
+    },
+    "offset": [
+     3,
+     -2,
+     2
+    ],
+    "duration": 0
+   },
+   "src": "FluidTankScenes.java:248"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "FluidTankScenes.java:249"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     -100,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "FluidTankScenes.java:251"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     0,
+     -100,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "FluidTankScenes.java:252"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "offset": [
+     0,
+     -100,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "FluidTankScenes.java:253"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e4"
+    },
+    "offset": [
+     0,
+     -100,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "FluidTankScenes.java:254"
+  },
+  {
+   "op": "world.showIndependentSectionImmediately",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      2,
+      0
+     ],
+     "to": [
+      1,
+      2,
+      1
+     ]
+    }
+   },
+   "src": "FluidTankScenes.java:256",
+   "out": "e5"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e5"
+    },
+    "offset": [
+     2,
+     -1,
+     2
+    ],
+    "duration": 0
+   },
+   "src": "FluidTankScenes.java:257"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "FluidTankScenes.java:258"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "FluidTankScenes.java:259"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     2,
+     1,
+     3
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "FluidTankScenes.java:260"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     3,
+     1,
+     3
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "FluidTankScenes.java:261"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "direction": "down"
+   },
+   "src": "FluidTankScenes.java:262"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "direction": "down"
+   },
+   "src": "FluidTankScenes.java:263"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "direction": "down"
+   },
+   "src": "FluidTankScenes.java:264"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e4"
+    },
+    "direction": "down"
+   },
+   "src": "FluidTankScenes.java:265"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 25
+   },
+   "src": "FluidTankScenes.java:266"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_2",
+    "pointAt": [
+     2.5,
+     2,
+     2.5
+    ],
+    "text": "Their base square can be up to 3 blocks wide..."
+   },
+   "src": "FluidTankScenes.java:268"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "FluidTankScenes.java:273"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      3,
+      0
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "FluidTankScenes.java:275",
+   "out": "e6"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e6"
+    },
+    "offset": [
+     2,
+     -2,
+     4
+    ],
+    "duration": 0
+   },
+   "src": "FluidTankScenes.java:276"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "FluidTankScenes.java:277"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      3,
+      0
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "FluidTankScenes.java:278",
+   "out": "e7"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e7"
+    },
+    "offset": [
+     3,
+     -2,
+     4
+    ],
+    "duration": 0
+   },
+   "src": "FluidTankScenes.java:279"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "FluidTankScenes.java:280"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      3,
+      0
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "FluidTankScenes.java:281",
+   "out": "e8"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e8"
+    },
+    "offset": [
+     4,
+     -2,
+     4
+    ],
+    "duration": 0
+   },
+   "src": "FluidTankScenes.java:282"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "FluidTankScenes.java:283"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      3,
+      0
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "FluidTankScenes.java:284",
+   "out": "e9"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e9"
+    },
+    "offset": [
+     4,
+     -2,
+     3
+    ],
+    "duration": 0
+   },
+   "src": "FluidTankScenes.java:285"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "FluidTankScenes.java:286"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      3,
+      0
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "FluidTankScenes.java:287",
+   "out": "e10"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e10"
+    },
+    "offset": [
+     4,
+     -2,
+     2
+    ],
+    "duration": 0
+   },
+   "src": "FluidTankScenes.java:288"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "FluidTankScenes.java:289"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e5"
+    },
+    "offset": [
+     0,
+     -100,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "FluidTankScenes.java:291"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e6"
+    },
+    "offset": [
+     0,
+     -100,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "FluidTankScenes.java:292"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e7"
+    },
+    "offset": [
+     0,
+     -100,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "FluidTankScenes.java:293"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e8"
+    },
+    "offset": [
+     0,
+     -100,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "FluidTankScenes.java:294"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e9"
+    },
+    "offset": [
+     0,
+     -100,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "FluidTankScenes.java:295"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e10"
+    },
+    "offset": [
+     0,
+     -100,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "FluidTankScenes.java:296"
+  },
+  {
+   "op": "world.showIndependentSectionImmediately",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      1,
+      0
+     ],
+     "to": [
+      2,
+      1,
+      2
+     ]
+    }
+   },
+   "src": "FluidTankScenes.java:298",
+   "out": "e11"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e11"
+    },
+    "offset": [
+     2,
+     0,
+     2
+    ],
+    "duration": 0
+   },
+   "src": "FluidTankScenes.java:299"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "FluidTankScenes.java:303"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     2,
+     1,
+     3
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "FluidTankScenes.java:303"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     2,
+     1,
+     4
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "FluidTankScenes.java:303"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "FluidTankScenes.java:303"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     3,
+     1,
+     3
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "FluidTankScenes.java:303"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     3,
+     1,
+     4
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "FluidTankScenes.java:303"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     4,
+     1,
+     2
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "FluidTankScenes.java:303"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     4,
+     1,
+     3
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "FluidTankScenes.java:303"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     4,
+     1,
+     4
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "FluidTankScenes.java:303"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e5"
+    },
+    "direction": "down"
+   },
+   "src": "FluidTankScenes.java:305"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e6"
+    },
+    "direction": "down"
+   },
+   "src": "FluidTankScenes.java:306"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e7"
+    },
+    "direction": "down"
+   },
+   "src": "FluidTankScenes.java:307"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e8"
+    },
+    "direction": "down"
+   },
+   "src": "FluidTankScenes.java:308"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e9"
+    },
+    "direction": "down"
+   },
+   "src": "FluidTankScenes.java:309"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e10"
+    },
+    "direction": "down"
+   },
+   "src": "FluidTankScenes.java:310"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 25
+   },
+   "src": "FluidTankScenes.java:311"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e11"
+    },
+    "direction": "down"
+   },
+   "src": "FluidTankScenes.java:313"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "FluidTankScenes.java:314"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      5,
+      1,
+      0
+     ],
+     "to": [
+      5,
+      6,
+      0
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "FluidTankScenes.java:320"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "FluidTankScenes.java:321"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      1,
+      1
+     ],
+     "to": [
+      4,
+      6,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "FluidTankScenes.java:322"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "FluidTankScenes.java:323"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      1,
+      3
+     ],
+     "to": [
+      2,
+      6,
+      5
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "FluidTankScenes.java:324"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "FluidTankScenes.java:325"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_3",
+    "pointAt": [
+     3,
+     3.5,
+     1.5
+    ],
+    "text": "...and grow in height by more than 30 additional layers"
+   },
+   "src": "FluidTankScenes.java:328"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "FluidTankScenes.java:333"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3.5,
+     3.5,
+     1
+    ],
+    "direction": "right",
+    "duration": 60,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:wrench",
+     "count": 1
+    }
+   },
+   "src": "FluidTankScenes.java:335"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "FluidTankScenes.java:338"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       1,
+       1
+      ],
+      "state": {
+       "name": "create:creative_fluid_tank",
+       "props": {
+        "bottom": "true",
+        "shape": "plain",
+        "top": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       1
+      ],
+      "state": {
+       "name": "create:creative_fluid_tank",
+       "props": {
+        "bottom": "true",
+        "shape": "plain",
+        "top": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       3,
+       2,
+       1
+      ],
+      "state": {
+       "name": "create:creative_fluid_tank",
+       "props": {
+        "bottom": "false",
+        "shape": "plain",
+        "top": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       4,
+       2,
+       1
+      ],
+      "state": {
+       "name": "create:creative_fluid_tank",
+       "props": {
+        "bottom": "false",
+        "shape": "plain",
+        "top": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       3,
+       3,
+       1
+      ],
+      "state": {
+       "name": "create:creative_fluid_tank",
+       "props": {
+        "bottom": "false",
+        "shape": "plain",
+        "top": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       4,
+       3,
+       1
+      ],
+      "state": {
+       "name": "create:creative_fluid_tank",
+       "props": {
+        "bottom": "false",
+        "shape": "plain",
+        "top": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       3,
+       4,
+       1
+      ],
+      "state": {
+       "name": "create:creative_fluid_tank",
+       "props": {
+        "bottom": "false",
+        "shape": "plain",
+        "top": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       4,
+       4,
+       1
+      ],
+      "state": {
+       "name": "create:creative_fluid_tank",
+       "props": {
+        "bottom": "false",
+        "shape": "plain",
+        "top": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       3,
+       5,
+       1
+      ],
+      "state": {
+       "name": "create:creative_fluid_tank",
+       "props": {
+        "bottom": "false",
+        "shape": "plain",
+        "top": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       4,
+       5,
+       1
+      ],
+      "state": {
+       "name": "create:creative_fluid_tank",
+       "props": {
+        "bottom": "false",
+        "shape": "plain",
+        "top": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       3,
+       6,
+       1
+      ],
+      "state": {
+       "name": "create:creative_fluid_tank",
+       "props": {
+        "bottom": "false",
+        "shape": "plain",
+        "top": "true"
+       }
+      }
+     },
+     {
+      "pos": [
+       4,
+       6,
+       1
+      ],
+      "state": {
+       "name": "create:creative_fluid_tank",
+       "props": {
+        "bottom": "false",
+        "shape": "plain",
+        "top": "true"
+       }
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "state": {
+       "name": "create:creative_fluid_tank",
+       "props": {
+        "bottom": "true",
+        "shape": "plain",
+        "top": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       2
+      ],
+      "state": {
+       "name": "create:creative_fluid_tank",
+       "props": {
+        "bottom": "true",
+        "shape": "plain",
+        "top": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       3,
+       2,
+       2
+      ],
+      "state": {
+       "name": "create:creative_fluid_tank",
+       "props": {
+        "bottom": "false",
+        "shape": "plain",
+        "top": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       4,
+       2,
+       2
+      ],
+      "state": {
+       "name": "create:creative_fluid_tank",
+       "props": {
+        "bottom": "false",
+        "shape": "plain",
+        "top": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       3,
+       3,
+       2
+      ],
+      "state": {
+       "name": "create:creative_fluid_tank",
+       "props": {
+        "bottom": "false",
+        "shape": "plain",
+        "top": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       4,
+       3,
+       2
+      ],
+      "state": {
+       "name": "create:creative_fluid_tank",
+       "props": {
+        "bottom": "false",
+        "shape": "plain",
+        "top": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       3,
+       4,
+       2
+      ],
+      "state": {
+       "name": "create:creative_fluid_tank",
+       "props": {
+        "bottom": "false",
+        "shape": "plain",
+        "top": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       4,
+       4,
+       2
+      ],
+      "state": {
+       "name": "create:creative_fluid_tank",
+       "props": {
+        "bottom": "false",
+        "shape": "plain",
+        "top": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       3,
+       5,
+       2
+      ],
+      "state": {
+       "name": "create:creative_fluid_tank",
+       "props": {
+        "bottom": "false",
+        "shape": "plain",
+        "top": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       4,
+       5,
+       2
+      ],
+      "state": {
+       "name": "create:creative_fluid_tank",
+       "props": {
+        "bottom": "false",
+        "shape": "plain",
+        "top": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       3,
+       6,
+       2
+      ],
+      "state": {
+       "name": "create:creative_fluid_tank",
+       "props": {
+        "bottom": "false",
+        "shape": "plain",
+        "top": "true"
+       }
+      }
+     },
+     {
+      "pos": [
+       4,
+       6,
+       2
+      ],
+      "state": {
+       "name": "create:creative_fluid_tank",
+       "props": {
+        "bottom": "false",
+        "shape": "plain",
+        "top": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "FluidTankScenes.java:339"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "FluidTankScenes.java:340"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_4",
+    "pointAt": [
+     3,
+     3.5,
+     1.5
+    ],
+    "text": "Using a Wrench, a tanks' window can be toggled"
+   },
+   "src": "FluidTankScenes.java:342"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "FluidTankScenes.java:347"
+  }
+ ]
+}

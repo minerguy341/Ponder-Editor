@@ -1,0 +1,700 @@
+{
+ "id": "create:mechanical_press/compacting",
+ "schematic": "mechanical_press/compacting",
+ "schematicNamespace": "create",
+ "title": "Compacting items with the Mechanical Press",
+ "texts": {
+  "text_1": "Pressing items held in a Basin will cause them to be Compacted",
+  "text_2": "Compacting includes any filled 2x2 or 3x3 Crafting Recipe, plus a couple extra ones",
+  "text_3": "Some of those recipes may require the heat of a Blaze Burner",
+  "text_4": "The filter slot can be used in case two recipes are conflicting."
+ },
+ "tags": [],
+ "items": [
+  "create:mechanical_press",
+  "create:basin"
+ ],
+ "keyframes": [
+  51,
+  185,
+  429
+ ],
+ "totalTicks": 503,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "ProcessingScenes.java:467"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      2
+     ]
+    },
+    "state": {
+     "name": "create:andesite_casing",
+     "props": {}
+    },
+    "particles": false
+   },
+   "src": "ProcessingScenes.java:468"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      4,
+      0,
+      5
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "ProcessingScenes.java:469"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ProcessingScenes.java:470"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      1,
+      3
+     ],
+     "to": [
+      1,
+      4,
+      5
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ProcessingScenes.java:471"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ProcessingScenes.java:472"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ProcessingScenes.java:473"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ProcessingScenes.java:474"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      2,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ProcessingScenes.java:475"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ProcessingScenes.java:476"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      4,
+      2
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "ProcessingScenes.java:477"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ProcessingScenes.java:478"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      1,
+      1
+     ],
+     "to": [
+      3,
+      1,
+      1
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "ProcessingScenes.java:479"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      1,
+      2
+     ],
+     "to": [
+      3,
+      1,
+      5
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "ProcessingScenes.java:480"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "ProcessingScenes.java:481"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     1,
+     2.5,
+     2.5
+    ],
+    "key": "text_1",
+    "text": "Pressing items held in a Basin will cause them to be Compacted"
+   },
+   "src": "ProcessingScenes.java:490"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "ProcessingScenes.java:495"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     1.5,
+     3,
+     2.5
+    ],
+    "direction": "down",
+    "duration": 30,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "minecraft:copper_ingot",
+     "count": 1
+    }
+   },
+   "src": "ProcessingScenes.java:497"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "ProcessingScenes.java:498"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     4,
+     2
+    ],
+    "beType": "MechanicalPressBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getPressingBehaviour",
+        "a": []
+       },
+       {
+        "m": "start",
+        "a": [
+         {
+          "enum": "Mode.BASIN"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ProcessingScenes.java:500"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "ProcessingScenes.java:502"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     4,
+     2
+    ],
+    "beType": "MechanicalPressBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getPressingBehaviour",
+        "a": []
+       },
+       {
+        "m": "makeCompactingParticleEffect",
+        "a": [
+         [
+          1.5,
+          2.5,
+          2.5
+         ],
+         {
+          "id": "minecraft:copper_ingot",
+          "count": 1
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ProcessingScenes.java:503"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "BasinBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       2,
+       2
+      ],
+      "nbt": {
+       "VisualizedItems": [
+        {
+         "id": "minecraft:copper_block",
+         "count": 1
+        }
+       ]
+      }
+     }
+    ]
+   },
+   "src": "ProcessingScenes.java:505"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "ProcessingScenes.java:509"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     1
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:copper_block",
+     "count": 1
+    }
+   },
+   "src": "ProcessingScenes.java:510",
+   "out": "e1"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "ProcessingScenes.java:511"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     1,
+     2.5,
+     2.5
+    ],
+    "key": "text_2",
+    "text": "Compacting includes any filled 2x2 or 3x3 Crafting Recipe, plus a couple extra ones"
+   },
+   "src": "ProcessingScenes.java:513"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "ProcessingScenes.java:519"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     1.5,
+     3,
+     2.5
+    ],
+    "direction": "down",
+    "duration": 30,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "minecraft:oak_log",
+     "count": 1
+    }
+   },
+   "src": "ProcessingScenes.java:523"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "ProcessingScenes.java:524"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     4,
+     2
+    ],
+    "beType": "MechanicalPressBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getPressingBehaviour",
+        "a": []
+       },
+       {
+        "m": "start",
+        "a": [
+         {
+          "enum": "Mode.BASIN"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ProcessingScenes.java:525"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "ProcessingScenes.java:527"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     4,
+     2
+    ],
+    "beType": "MechanicalPressBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getPressingBehaviour",
+        "a": []
+       },
+       {
+        "m": "makeCompactingParticleEffect",
+        "a": [
+         [
+          1.5,
+          2.5,
+          2.5
+         ],
+         {
+          "id": "minecraft:oak_log",
+          "count": 1
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ProcessingScenes.java:528"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "BasinBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       2,
+       2
+      ],
+      "nbt": {
+       "VisualizedItems": [
+        {
+         "id": "minecraft:oak_wood",
+         "count": 1
+        }
+       ]
+      }
+     }
+    ]
+   },
+   "src": "ProcessingScenes.java:530"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "ProcessingScenes.java:534"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     1
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:oak_wood",
+     "count": 1
+    }
+   },
+   "src": "ProcessingScenes.java:535",
+   "out": "e2"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "ProcessingScenes.java:536"
+  },
+  {
+   "op": "rotateCameraY",
+   "args": {
+    "degrees": -30
+   },
+   "src": "ProcessingScenes.java:538"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ProcessingScenes.java:539"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      2
+     ]
+    },
+    "state": {
+     "name": "create:blaze_burner",
+     "props": {
+      "blaze": "kindled",
+      "facing": "north"
+     }
+    },
+    "particles": true
+   },
+   "src": "ProcessingScenes.java:540"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ProcessingScenes.java:542"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     1,
+     1.5,
+     2.5
+    ],
+    "key": "text_3",
+    "text": "Some of those recipes may require the heat of a Blaze Burner"
+   },
+   "src": "ProcessingScenes.java:544"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "ProcessingScenes.java:548"
+  },
+  {
+   "op": "rotateCameraY",
+   "args": {
+    "degrees": 30
+   },
+   "src": "ProcessingScenes.java:550"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "ProcessingScenes.java:552"
+  },
+  {
+   "op": "overlay.highlightValueBox",
+   "args": {
+    "location": [
+     1.0234375,
+     2.75,
+     2.5
+    ],
+    "expands": [
+     0,
+     0.0859375,
+     0.0859375
+    ],
+    "duration": 100
+   },
+   "src": "ProcessingScenes.java:554"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 100,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     1,
+     2.75,
+     2.5
+    ],
+    "key": "text_4",
+    "text": "The filter slot can be used in case two recipes are conflicting."
+   },
+   "src": "ProcessingScenes.java:555"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "ProcessingScenes.java:560"
+  }
+ ]
+}

@@ -1,0 +1,482 @@
+{
+ "id": "create:fluid_pipe/encasing",
+ "schematic": "fluid_pipe/encasing",
+ "schematicNamespace": "create",
+ "title": "Encasing Fluid Pipes",
+ "texts": {
+  "text_1": "Copper Casing can be used to decorate Fluid Pipes",
+  "text_2": "Aside from being concealed, Encased Pipes are locked into their connectivity state",
+  "text_3": "It will no longer react to any neighbouring blocks being added or removed"
+ },
+ "tags": [],
+ "items": [
+  "create:fluid_pipe",
+  "create:copper_casing"
+ ],
+ "keyframes": [
+  48,
+  122,
+  253
+ ],
+ "totalTicks": 267,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "PipeScenes.java:313"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      4,
+      0,
+      4
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "PipeScenes.java:314"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "PipeScenes.java:315"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      0,
+      5
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "PipeScenes.java:316"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "PipeScenes.java:317"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      1,
+      0
+     ],
+     "to": [
+      4,
+      1,
+      5
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "PipeScenes.java:318"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "PipeScenes.java:319"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3.5,
+     2,
+     1.5
+    ],
+    "direction": "down",
+    "duration": 60,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:copper_casing",
+     "count": 1
+    }
+   },
+   "src": "PipeScenes.java:326"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "PipeScenes.java:328"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      1
+     ]
+    },
+    "state": {
+     "name": "create:encased_fluid_pipe",
+     "props": {
+      "down": "false",
+      "east": "false",
+      "north": "false",
+      "south": "true",
+      "up": "false",
+      "west": "true"
+     }
+    },
+    "particles": true
+   },
+   "src": "PipeScenes.java:329"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "PipeScenes.java:330"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_1",
+    "pointAt": [
+     3.5,
+     2,
+     1.5
+    ],
+    "text": "Copper Casing can be used to decorate Fluid Pipes"
+   },
+   "src": "PipeScenes.java:332"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "PipeScenes.java:338"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      1
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "PipeScenes.java:339"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       1
+      ],
+      "state": {
+       "name": "create:fluid_pipe",
+       "props": {
+        "down": "false",
+        "east": "false",
+        "north": "true",
+        "south": "true",
+        "up": "false",
+        "waterlogged": "false",
+        "west": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "PipeScenes.java:340"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "PipeScenes.java:342"
+  },
+  {
+   "op": "overlay.showLine",
+   "args": {
+    "color": "red",
+    "start": [
+     1.5,
+     1.75,
+     1
+    ],
+    "end": [
+     1.5,
+     1.75,
+     2
+    ],
+    "duration": 80,
+    "big": false
+   },
+   "src": "PipeScenes.java:344"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "PipeScenes.java:345"
+  },
+  {
+   "op": "overlay.showLine",
+   "args": {
+    "color": "green",
+    "start": [
+     3.5,
+     2,
+     1.5
+    ],
+    "end": [
+     3.5,
+     2,
+     2
+    ],
+    "duration": 80,
+    "big": false
+   },
+   "src": "PipeScenes.java:347"
+  },
+  {
+   "op": "overlay.showLine",
+   "args": {
+    "color": "green",
+    "start": [
+     3,
+     2,
+     1.5
+    ],
+    "end": [
+     3.5,
+     2,
+     1.5
+    ],
+    "duration": 80,
+    "big": false
+   },
+   "src": "PipeScenes.java:348"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 25
+   },
+   "src": "PipeScenes.java:350"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_2",
+    "pointAt": [
+     3,
+     1.5,
+     1.5
+    ],
+    "text": "Aside from being concealed, Encased Pipes are locked into their connectivity state"
+   },
+   "src": "PipeScenes.java:351"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "PipeScenes.java:356"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      2,
+      1
+     ]
+    },
+    "state": {
+     "name": "create:fluid_pipe",
+     "props": {
+      "down": "false",
+      "east": "true",
+      "north": "false",
+      "south": "false",
+      "up": "false",
+      "waterlogged": "false",
+      "west": "true"
+     }
+    },
+    "particles": false
+   },
+   "src": "PipeScenes.java:361"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      2,
+      1
+     ]
+    },
+    "state": {
+     "name": "create:fluid_pipe",
+     "props": {
+      "down": "true",
+      "east": "false",
+      "north": "false",
+      "south": "false",
+      "up": "true",
+      "waterlogged": "false",
+      "west": "false"
+     }
+    },
+    "particles": false
+   },
+   "src": "PipeScenes.java:363"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      2,
+      0
+     ],
+     "to": [
+      4,
+      2,
+      5
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "PipeScenes.java:365"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "PipeScenes.java:366"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       1
+      ],
+      "state": {
+       "name": "create:fluid_pipe",
+       "props": {
+        "down": "false",
+        "east": "false",
+        "north": "false",
+        "south": "true",
+        "up": "true",
+        "waterlogged": "false",
+        "west": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "PipeScenes.java:367"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "PipeScenes.java:369"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "red",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_3",
+    "pointAt": [
+     3.5,
+     2.5,
+     1.5
+    ],
+    "text": "It will no longer react to any neighbouring blocks being added or removed"
+   },
+   "src": "PipeScenes.java:371"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "PipeScenes.java:377"
+  }
+ ]
+}

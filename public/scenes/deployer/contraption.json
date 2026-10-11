@@ -1,0 +1,1189 @@
+{
+ "id": "create:deployer/contraption",
+ "schematic": "deployer/contraption",
+ "schematicNamespace": "create",
+ "title": "Using Deployers on Contraptions",
+ "texts": {
+  "text_1": "Whenever Deployers are moved as part of an animated Contraption...",
+  "text_2": "They activate at each visited location, using items from inventories anywhere on the contraption",
+  "text_3": "The Filter slot can be used to specify which items to pull"
+ },
+ "tags": [
+  "create:contraption_actor"
+ ],
+ "items": [
+  "create:deployer"
+ ],
+ "keyframes": [
+  21,
+  203,
+  318
+ ],
+ "totalTicks": 526,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 6
+   },
+   "src": "DeployerScenes.java:504"
+  },
+  {
+   "op": "scaleSceneView",
+   "args": {
+    "factor": 0.9
+   },
+   "src": "DeployerScenes.java:505"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "DeployerScenes.java:507"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       4,
+       1,
+       3
+      ],
+      "state": {
+       "name": "create:deployer",
+       "props": {
+        "axis_along_first": "false",
+        "facing": "north"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "DeployerScenes.java:513"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        0,
+        0,
+        0
+       ],
+       "to": [
+        8,
+        0,
+        6
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        1,
+        1,
+        1
+       ],
+       "to": [
+        4,
+        1,
+        1
+       ]
+      }
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "DeployerScenes.java:515"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "DeployerScenes.java:517"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      5,
+      1,
+      2
+     ],
+     "to": [
+      8,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "DeployerScenes.java:520",
+   "out": "e1"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     0,
+     1
+    ],
+    "duration": 0
+   },
+   "src": "DeployerScenes.java:521"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      5,
+      1,
+      3
+     ],
+     "to": [
+      5,
+      1,
+      6
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "DeployerScenes.java:522"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "DeployerScenes.java:523"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      1,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "DeployerScenes.java:526",
+   "out": "e2"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "DeployerScenes.java:527"
+  },
+  {
+   "op": "world.glueBlockOnto",
+   "args": {
+    "pos": [
+     4,
+     2,
+     3
+    ],
+    "direction": "down",
+    "link": {
+     "link": "e2"
+    }
+   },
+   "src": "DeployerScenes.java:528"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     4,
+     1.5,
+     3.5
+    ],
+    "key": "text_1",
+    "text": "Whenever Deployers are moved as part of an animated Contraption..."
+   },
+   "src": "DeployerScenes.java:530"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "DeployerScenes.java:535"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       0,
+       6
+      ],
+      "nbt": {
+       "Speed": -8
+      }
+     }
+    ]
+   },
+   "src": "DeployerScenes.java:537"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       5,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       6
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     }
+    ]
+   },
+   "src": "DeployerScenes.java:538"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     -3,
+     0,
+     0
+    ],
+    "duration": 100
+   },
+   "src": "DeployerScenes.java:539"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     -3,
+     0,
+     0
+    ],
+    "duration": 100
+   },
+   "src": "DeployerScenes.java:540"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "deployer",
+    "pos": [
+     4,
+     1,
+     3
+    ],
+    "distance": 1,
+    "duration": 9
+   },
+   "src": "DeployerScenes.java:543"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "DeployerScenes.java:544"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "deployer",
+    "pos": [
+     4,
+     1,
+     3
+    ],
+    "distance": -1,
+    "duration": 9
+   },
+   "src": "DeployerScenes.java:545"
+  },
+  {
+   "op": "world.restoreBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      1,
+      1
+     ]
+    }
+   },
+   "src": "DeployerScenes.java:546"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 18
+   },
+   "src": "DeployerScenes.java:547"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "deployer",
+    "pos": [
+     4,
+     1,
+     3
+    ],
+    "distance": 1,
+    "duration": 9
+   },
+   "src": "DeployerScenes.java:543"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "DeployerScenes.java:544"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "deployer",
+    "pos": [
+     4,
+     1,
+     3
+    ],
+    "distance": -1,
+    "duration": 9
+   },
+   "src": "DeployerScenes.java:545"
+  },
+  {
+   "op": "world.restoreBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      1
+     ]
+    }
+   },
+   "src": "DeployerScenes.java:546"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 18
+   },
+   "src": "DeployerScenes.java:547"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "deployer",
+    "pos": [
+     4,
+     1,
+     3
+    ],
+    "distance": 1,
+    "duration": 9
+   },
+   "src": "DeployerScenes.java:543"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "DeployerScenes.java:544"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "deployer",
+    "pos": [
+     4,
+     1,
+     3
+    ],
+    "distance": -1,
+    "duration": 9
+   },
+   "src": "DeployerScenes.java:545"
+  },
+  {
+   "op": "world.restoreBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      1
+     ]
+    }
+   },
+   "src": "DeployerScenes.java:546"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 18
+   },
+   "src": "DeployerScenes.java:547"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "deployer",
+    "pos": [
+     4,
+     1,
+     3
+    ],
+    "distance": 1,
+    "duration": 9
+   },
+   "src": "DeployerScenes.java:543"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "DeployerScenes.java:544"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "deployer",
+    "pos": [
+     4,
+     1,
+     3
+    ],
+    "distance": -1,
+    "duration": 9
+   },
+   "src": "DeployerScenes.java:545"
+  },
+  {
+   "op": "world.restoreBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      1
+     ]
+    }
+   },
+   "src": "DeployerScenes.java:546"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 18
+   },
+   "src": "DeployerScenes.java:547"
+  },
+  {
+   "op": "overlay.showOutlineWithText",
+   "args": {
+    "duration": 90,
+    "color": "green",
+    "placeNearTarget": false,
+    "keyframe": true,
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      1,
+      1
+     ],
+     "to": [
+      4,
+      1,
+      1
+     ]
+    },
+    "pointAt": [
+     3,
+     1.5,
+     1.5
+    ],
+    "key": "text_2",
+    "text": "They activate at each visited location, using items from inventories anywhere on the contraption"
+   },
+   "src": "DeployerScenes.java:550"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 100
+   },
+   "src": "DeployerScenes.java:554"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      1,
+      1
+     ],
+     "to": [
+      4,
+      1,
+      1
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "DeployerScenes.java:556"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "DeployerScenes.java:557"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "DeployerScenes.java:558"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      1,
+      1
+     ],
+     "to": [
+      4,
+      1,
+      1
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "DeployerScenes.java:559"
+  },
+  {
+   "op": "overlay.highlightValueBox",
+   "args": {
+    "location": [
+     1.0234375,
+     1.5,
+     3.625
+    ],
+    "expands": [
+     0,
+     0.0859375,
+     0.0859375
+    ],
+    "duration": 80
+   },
+   "src": "DeployerScenes.java:563"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     1,
+     1.5,
+     3.625
+    ],
+    "key": "text_3",
+    "text": "The Filter slot can be used to specify which items to pull"
+   },
+   "src": "DeployerScenes.java:564"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "DeployerScenes.java:569"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     1,
+     1.5,
+     3.625
+    ],
+    "direction": "down",
+    "duration": 30,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "minecraft:poppy",
+     "count": 1
+    }
+   },
+   "src": "DeployerScenes.java:572"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "DeployerScenes.java:573"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "DeployerBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       3
+      ],
+      "nbt": {
+       "Filter": {
+        "id": "minecraft:poppy",
+        "count": 1
+       }
+      }
+     }
+    ]
+   },
+   "src": "DeployerScenes.java:574"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 25
+   },
+   "src": "DeployerScenes.java:575"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       0,
+       6
+      ],
+      "nbt": {
+       "Speed": 8
+      }
+     }
+    ]
+   },
+   "src": "DeployerScenes.java:577"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       5,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       6
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     }
+    ]
+   },
+   "src": "DeployerScenes.java:578"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     3,
+     0,
+     0
+    ],
+    "duration": 100
+   },
+   "src": "DeployerScenes.java:579"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     3,
+     0,
+     0
+    ],
+    "duration": 100
+   },
+   "src": "DeployerScenes.java:580"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "deployer",
+    "pos": [
+     4,
+     1,
+     3
+    ],
+    "distance": 1,
+    "duration": 9
+   },
+   "src": "DeployerScenes.java:583"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "DeployerScenes.java:584"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "deployer",
+    "pos": [
+     4,
+     1,
+     3
+    ],
+    "distance": -1,
+    "duration": 9
+   },
+   "src": "DeployerScenes.java:585"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      1
+     ]
+    },
+    "state": {
+     "name": "minecraft:poppy",
+     "props": {}
+    },
+    "particles": false
+   },
+   "src": "DeployerScenes.java:586"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 18
+   },
+   "src": "DeployerScenes.java:587"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "deployer",
+    "pos": [
+     4,
+     1,
+     3
+    ],
+    "distance": 1,
+    "duration": 9
+   },
+   "src": "DeployerScenes.java:583"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "DeployerScenes.java:584"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "deployer",
+    "pos": [
+     4,
+     1,
+     3
+    ],
+    "distance": -1,
+    "duration": 9
+   },
+   "src": "DeployerScenes.java:585"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      1
+     ]
+    },
+    "state": {
+     "name": "minecraft:poppy",
+     "props": {}
+    },
+    "particles": false
+   },
+   "src": "DeployerScenes.java:586"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 18
+   },
+   "src": "DeployerScenes.java:587"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "deployer",
+    "pos": [
+     4,
+     1,
+     3
+    ],
+    "distance": 1,
+    "duration": 9
+   },
+   "src": "DeployerScenes.java:583"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "DeployerScenes.java:584"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "deployer",
+    "pos": [
+     4,
+     1,
+     3
+    ],
+    "distance": -1,
+    "duration": 9
+   },
+   "src": "DeployerScenes.java:585"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      1
+     ]
+    },
+    "state": {
+     "name": "minecraft:poppy",
+     "props": {}
+    },
+    "particles": false
+   },
+   "src": "DeployerScenes.java:586"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 18
+   },
+   "src": "DeployerScenes.java:587"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "deployer",
+    "pos": [
+     4,
+     1,
+     3
+    ],
+    "distance": 1,
+    "duration": 9
+   },
+   "src": "DeployerScenes.java:583"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "DeployerScenes.java:584"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "deployer",
+    "pos": [
+     4,
+     1,
+     3
+    ],
+    "distance": -1,
+    "duration": 9
+   },
+   "src": "DeployerScenes.java:585"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      1,
+      1
+     ]
+    },
+    "state": {
+     "name": "minecraft:poppy",
+     "props": {}
+    },
+    "particles": false
+   },
+   "src": "DeployerScenes.java:586"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 18
+   },
+   "src": "DeployerScenes.java:587"
+  }
+ ]
+}

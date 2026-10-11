@@ -1,0 +1,698 @@
+{
+ "id": "create:fan/direction",
+ "schematic": "fan/direction",
+ "schematicNamespace": "create",
+ "title": "Air flow of Encased Fans",
+ "texts": {
+  "text_1": "Encased Fans use Rotational Force to create an Air Current",
+  "text_2": "Strength and Direction of Flow depends on the Rotational Input"
+ },
+ "tags": [
+  "create:kinetic_appliances"
+ ],
+ "items": [
+  "create:encased_fan"
+ ],
+ "keyframes": [
+  83,
+  167
+ ],
+ "totalTicks": 198,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 1,
+    "size": 5
+   },
+   "src": "FanScenes.java:34"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      5,
+      0,
+      5
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "FanScenes.java:35"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "FanScenes.java:36"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        3,
+        1,
+        0
+       ],
+       "to": [
+        3,
+        1,
+        5
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        3,
+        2,
+        4
+       ]
+      }
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "FanScenes.java:37"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      1,
+      5
+     ],
+     "to": [
+      2,
+      1,
+      5
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "FanScenes.java:39"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "FanScenes.java:40"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      4
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "FanScenes.java:43"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "FanScenes.java:45"
+  },
+  {
+   "op": "effects.rotationIndicator",
+   "args": {
+    "pos": [
+     1,
+     1,
+     5
+    ],
+    "direction": true
+   },
+   "src": "FanScenes.java:46"
+  },
+  {
+   "op": "special.createBirb",
+   "args": {
+    "location": [
+     1.5,
+     1,
+     3.5
+    ],
+    "pose": {
+     "type": "flappy"
+    }
+   },
+   "src": "FanScenes.java:48",
+   "out": "e1"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "FanScenes.java:49"
+  },
+  {
+   "op": "special.rotateParrot",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "rotation": [
+     0,
+     235,
+     0
+    ],
+    "duration": 30
+   },
+   "src": "FanScenes.java:50"
+  },
+  {
+   "op": "special.moveParrot",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     0,
+     -2.5
+    ],
+    "duration": 30
+   },
+   "src": "FanScenes.java:51"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "FanScenes.java:52"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_1",
+    "pointAt": [
+     1.5,
+     2,
+     4.5
+    ],
+    "text": "Encased Fans use Rotational Force to create an Air Current"
+   },
+   "src": "FanScenes.java:54"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "FanScenes.java:59"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "state": {
+       "name": "create:gearshift",
+       "props": {
+        "axis": "z",
+        "powered": "true"
+       }
+      }
+     },
+     {
+      "pos": [
+       3,
+       2,
+       4
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "floor",
+        "facing": "east",
+        "powered": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "FanScenes.java:63"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     3,
+     2,
+     4
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "FanScenes.java:64"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     }
+    ]
+   },
+   "src": "FanScenes.java:66"
+  },
+  {
+   "op": "effects.rotationIndicator",
+   "args": {
+    "pos": [
+     1,
+     1,
+     5
+    ],
+    "direction": true
+   },
+   "src": "FanScenes.java:67"
+  },
+  {
+   "op": "special.rotateParrot",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "rotation": [
+     0,
+     430,
+     0
+    ],
+    "duration": 30
+   },
+   "src": "FanScenes.java:68"
+  },
+  {
+   "op": "special.moveParrot",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     0,
+     2.5
+    ],
+    "duration": 30
+   },
+   "src": "FanScenes.java:69"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 31
+   },
+   "src": "FanScenes.java:70"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_2",
+    "pointAt": [
+     1.5,
+     2,
+     4.5
+    ],
+    "text": "Strength and Direction of Flow depends on the Rotational Input"
+   },
+   "src": "FanScenes.java:72"
+  },
+  {
+   "op": "markAsFinished",
+   "args": {},
+   "src": "FanScenes.java:76"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "FanScenes.java:77"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "state": {
+       "name": "create:gearshift",
+       "props": {
+        "axis": "z",
+        "powered": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       3,
+       2,
+       4
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "floor",
+        "facing": "east",
+        "powered": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "FanScenes.java:79"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     3,
+     2,
+     4
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "FanScenes.java:80"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     }
+    ]
+   },
+   "src": "FanScenes.java:81"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       0,
+       0
+      ],
+      "nbt": {
+       "Speed": 64
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       0
+      ],
+      "nbt": {
+       "Speed": -128
+      }
+     },
+     {
+      "pos": [
+       5,
+       0,
+       1
+      ],
+      "nbt": {
+       "Speed": 64
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       1
+      ],
+      "nbt": {
+       "Speed": -128
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -128
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": -128
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": -128
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": -128
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": -128
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": 128
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": -128
+      }
+     }
+    ]
+   },
+   "src": "FanScenes.java:82"
+  },
+  {
+   "op": "effects.rotationIndicator",
+   "args": {
+    "pos": [
+     1,
+     1,
+     5
+    ],
+    "direction": false
+   },
+   "src": "FanScenes.java:83"
+  },
+  {
+   "op": "special.rotateParrot",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "rotation": [
+     0,
+     980,
+     0
+    ],
+    "duration": 30
+   },
+   "src": "FanScenes.java:84"
+  },
+  {
+   "op": "special.moveParrot",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     0,
+     -20
+    ],
+    "duration": 30
+   },
+   "src": "FanScenes.java:85"
+  }
+ ]
+}

@@ -1,0 +1,1956 @@
+{
+ "id": "create:mechanical_pump/speed",
+ "schematic": "mechanical_pump/speed",
+ "schematicNamespace": "create",
+ "title": "Throughput of Mechanical Pumps",
+ "texts": {
+  "text_1": "Regardless of speed, Mechanical Pumps affect pipes connected up to 16 blocks away",
+  "text_2": "Speeding up the input rotation changes the speed of flow propagation...",
+  "text_3": "...and the speed at which fluids are transferred",
+  "text_4": "Pumps can combine their throughputs within shared pipe networks",
+  "text_5": "Ensure that all of them are facing in the same direction"
+ },
+ "tags": [],
+ "items": [
+  "create:mechanical_pump"
+ ],
+ "keyframes": [
+  41,
+  220,
+  384,
+  521
+ ],
+ "totalTicks": 655,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "PumpScenes.java:169"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      4,
+      0,
+      4
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "PumpScenes.java:170"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "PumpScenes.java:171"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "state": {
+       "name": "create:mechanical_pump",
+       "props": {
+        "facing": "west",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "PumpScenes.java:184"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getTankInventory",
+        "a": []
+       },
+       {
+        "m": "drain",
+        "a": [
+         3000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "PumpScenes.java:185"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       1,
+       1
+      ],
+      "nbt": {
+       "Speed": 4
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -4
+      }
+     },
+     {
+      "pos": [
+       5,
+       0,
+       3
+      ],
+      "nbt": {
+       "Speed": 2
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": 4
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": -4
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": -4
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": -4
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": -4
+      }
+     }
+    ]
+   },
+   "src": "PumpScenes.java:187"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": false
+   },
+   "src": "PumpScenes.java:190"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      2
+     ]
+    },
+    "state": {
+     "name": "create:glass_fluid_pipe",
+     "props": {
+      "alt": "false",
+      "axis": "x",
+      "waterlogged": "false"
+     }
+    },
+    "particles": false
+   },
+   "src": "PumpScenes.java:191"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      3
+     ]
+    },
+    "state": {
+     "name": "create:cogwheel",
+     "props": {
+      "axis": "x",
+      "waterlogged": "false"
+     }
+    },
+    "particles": false
+   },
+   "src": "PumpScenes.java:194"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": 4
+      }
+     }
+    ]
+   },
+   "src": "PumpScenes.java:197"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     }
+    ]
+   },
+   "src": "PumpScenes.java:199"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "PumpScenes.java:200"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "PumpScenes.java:201"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      3,
+      2
+     ],
+     "to": [
+      1,
+      4,
+      5
+     ]
+    },
+    "direction": "east"
+   },
+   "src": "PumpScenes.java:202",
+   "out": "e1"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     -3,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "PumpScenes.java:203"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "PumpScenes.java:204"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      3,
+      1
+     ],
+     "to": [
+      5,
+      6,
+      2
+     ]
+    },
+    "direction": "west"
+   },
+   "src": "PumpScenes.java:205",
+   "out": "e2"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     0,
+     -3,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "PumpScenes.java:206"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "PumpScenes.java:207"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     2.5,
+     2,
+     2.5
+    ],
+    "key": "text_1",
+    "text": "Regardless of speed, Mechanical Pumps affect pipes connected up to 16 blocks away"
+   },
+   "src": "PumpScenes.java:209"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 75
+   },
+   "src": "PumpScenes.java:214"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "direction": "west"
+   },
+   "src": "PumpScenes.java:216"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "PumpScenes.java:217"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "direction": "east"
+   },
+   "src": "PumpScenes.java:218"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "PumpScenes.java:219"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      1,
+      2
+     ],
+     "to": [
+      4,
+      2,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "PumpScenes.java:221"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "PumpScenes.java:222"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "PumpScenes.java:223"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "PumpScenes.java:224"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "PumpScenes.java:226"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "PumpScenes.java:227"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      1,
+      2
+     ],
+     "to": [
+      0,
+      2,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "PumpScenes.java:228"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "PumpScenes.java:229"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      5,
+      0,
+      3
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "PumpScenes.java:231"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "pos",
+       "pos": [
+        2,
+        1,
+        3
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        2,
+        1,
+        4
+       ],
+       "to": [
+        5,
+        1,
+        4
+       ]
+      }
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "PumpScenes.java:232"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "PumpScenes.java:233"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -4
+      }
+     }
+    ]
+   },
+   "src": "PumpScenes.java:234"
+  },
+  {
+   "op": "effects.rotationIndicator",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ],
+    "direction": false
+   },
+   "src": "PumpScenes.java:235"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ],
+    "beType": "PumpBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "onSpeedChanged",
+        "a": [
+         0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "PumpScenes.java:236"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "PumpScenes.java:237"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       1,
+       1
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       5,
+       0,
+       3
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     }
+    ]
+   },
+   "src": "PumpScenes.java:239"
+  },
+  {
+   "op": "effects.rotationIndicator",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ],
+    "direction": false
+   },
+   "src": "PumpScenes.java:240"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ],
+    "beType": "PumpBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "onSpeedChanged",
+        "a": [
+         0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "PumpScenes.java:241"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "PumpScenes.java:242"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     2.5,
+     2,
+     2.5
+    ],
+    "key": "text_2",
+    "text": "Speeding up the input rotation changes the speed of flow propagation..."
+   },
+   "src": "PumpScenes.java:244"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "PumpScenes.java:249"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 50,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     0,
+     1.5,
+     2.5
+    ],
+    "key": "text_3",
+    "text": "...and the speed at which fluids are transferred"
+   },
+   "src": "PumpScenes.java:251"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "PumpScenes.java:255"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       1,
+       1
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       5,
+       0,
+       3
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     }
+    ]
+   },
+   "src": "PumpScenes.java:260"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "PumpScenes.java:261"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      2
+     ]
+    },
+    "state": {
+     "name": "create:fluid_pipe",
+     "props": {
+      "down": "false",
+      "east": "true",
+      "north": "true",
+      "south": "true",
+      "up": "false",
+      "waterlogged": "false",
+      "west": "true"
+     }
+    },
+    "particles": true
+   },
+   "src": "PumpScenes.java:263"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      2
+     ]
+    },
+    "state": {
+     "name": "create:fluid_pipe",
+     "props": {
+      "down": "false",
+      "east": "true",
+      "north": "true",
+      "south": "true",
+      "up": "false",
+      "waterlogged": "false",
+      "west": "true"
+     }
+    },
+    "particles": true
+   },
+   "src": "PumpScenes.java:264"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      1
+     ]
+    },
+    "state": {
+     "name": "create:fluid_pipe",
+     "props": {
+      "down": "false",
+      "east": "false",
+      "north": "false",
+      "south": "true",
+      "up": "false",
+      "waterlogged": "false",
+      "west": "true"
+     }
+    },
+    "particles": false
+   },
+   "src": "PumpScenes.java:266"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      3
+     ]
+    },
+    "state": {
+     "name": "create:fluid_pipe",
+     "props": {
+      "down": "false",
+      "east": "false",
+      "north": "true",
+      "south": "false",
+      "up": "false",
+      "waterlogged": "false",
+      "west": "true"
+     }
+    },
+    "particles": false
+   },
+   "src": "PumpScenes.java:268"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      1
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "PumpScenes.java:270"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "PumpScenes.java:271"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      1
+     ]
+    },
+    "state": {
+     "name": "create:fluid_pipe",
+     "props": {
+      "down": "false",
+      "east": "true",
+      "north": "false",
+      "south": "true",
+      "up": "false",
+      "waterlogged": "false",
+      "west": "false"
+     }
+    },
+    "particles": false
+   },
+   "src": "PumpScenes.java:274"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      3
+     ]
+    },
+    "state": {
+     "name": "create:fluid_pipe",
+     "props": {
+      "down": "false",
+      "east": "true",
+      "north": "true",
+      "south": "false",
+      "up": "false",
+      "waterlogged": "false",
+      "west": "false"
+     }
+    },
+    "particles": false
+   },
+   "src": "PumpScenes.java:276"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      1
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "PumpScenes.java:278"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "PumpScenes.java:279"
+  },
+  {
+   "op": "world.restoreBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      3
+     ]
+    }
+   },
+   "src": "PumpScenes.java:281"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     }
+    ]
+   },
+   "src": "PumpScenes.java:283"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      1
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "PumpScenes.java:284"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       1,
+       1
+      ],
+      "state": {
+       "name": "create:mechanical_pump",
+       "props": {
+        "facing": "east",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "PumpScenes.java:285"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "PumpScenes.java:286"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       1,
+       1
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     },
+     {
+      "pos": [
+       5,
+       0,
+       3
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     }
+    ]
+   },
+   "src": "PumpScenes.java:288"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       1,
+       1
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     }
+    ]
+   },
+   "src": "PumpScenes.java:289"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     }
+    ]
+   },
+   "src": "PumpScenes.java:290"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       5,
+       0,
+       3
+      ],
+      "nbt": {
+       "Speed": 8
+      }
+     }
+    ]
+   },
+   "src": "PumpScenes.java:291"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "PumpScenes.java:292"
+  },
+  {
+   "op": "overlay.showOutlineWithText",
+   "args": {
+    "duration": 60,
+    "color": "green",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      1,
+      1
+     ],
+     "to": [
+      2,
+      1,
+      3
+     ]
+    },
+    "pointAt": [
+     2.5,
+     2,
+     2.5
+    ],
+    "key": "text_4",
+    "text": "Pumps can combine their throughputs within shared pipe networks"
+   },
+   "src": "PumpScenes.java:294"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "PumpScenes.java:300"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "PumpScenes.java:302"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     2,
+     1.5
+    ],
+    "direction": "down",
+    "duration": 30,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:wrench",
+     "count": 1
+    }
+   },
+   "src": "PumpScenes.java:303"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "PumpScenes.java:305"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       1,
+       1
+      ],
+      "state": {
+       "name": "create:mechanical_pump",
+       "props": {
+        "facing": "west",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": true
+   },
+   "src": "PumpScenes.java:306"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "PumpScenes.java:307"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     2,
+     1.875,
+     1.5
+    ],
+    "key": "text_5",
+    "text": "Ensure that all of them are facing in the same direction"
+   },
+   "src": "PumpScenes.java:309"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "PumpScenes.java:315"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       1,
+       1
+      ],
+      "nbt": {
+       "Speed": 64
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -64
+      }
+     },
+     {
+      "pos": [
+       5,
+       0,
+       3
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": 64
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": -64
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": -64
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": -64
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": -64
+      }
+     }
+    ]
+   },
+   "src": "PumpScenes.java:317"
+  },
+  {
+   "op": "effects.rotationIndicator",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ],
+    "direction": false
+   },
+   "src": "PumpScenes.java:318"
+  },
+  {
+   "op": "effects.rotationIndicator",
+   "args": {
+    "pos": [
+     2,
+     1,
+     1
+    ],
+    "direction": false
+   },
+   "src": "PumpScenes.java:319"
+  },
+  {
+   "op": "effects.rotationIndicator",
+   "args": {
+    "pos": [
+     2,
+     1,
+     3
+    ],
+    "direction": false
+   },
+   "src": "PumpScenes.java:320"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ],
+    "beType": "PumpBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "onSpeedChanged",
+        "a": [
+         0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "PumpScenes.java:321"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     2,
+     1,
+     1
+    ],
+    "beType": "PumpBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "onSpeedChanged",
+        "a": [
+         0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "PumpScenes.java:322"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     2,
+     1,
+     3
+    ],
+    "beType": "PumpBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "onSpeedChanged",
+        "a": [
+         0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "PumpScenes.java:323"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 100
+   },
+   "src": "PumpScenes.java:324"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       1,
+       1
+      ],
+      "nbt": {
+       "Speed": -64
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 64
+      }
+     },
+     {
+      "pos": [
+       5,
+       0,
+       3
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": -64
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 64
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 64
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 64
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 64
+      }
+     }
+    ]
+   },
+   "src": "PumpScenes.java:326"
+  },
+  {
+   "op": "effects.rotationIndicator",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ],
+    "direction": false
+   },
+   "src": "PumpScenes.java:327"
+  },
+  {
+   "op": "effects.rotationIndicator",
+   "args": {
+    "pos": [
+     2,
+     1,
+     1
+    ],
+    "direction": false
+   },
+   "src": "PumpScenes.java:328"
+  },
+  {
+   "op": "effects.rotationIndicator",
+   "args": {
+    "pos": [
+     2,
+     1,
+     3
+    ],
+    "direction": false
+   },
+   "src": "PumpScenes.java:329"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ],
+    "beType": "PumpBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "onSpeedChanged",
+        "a": [
+         0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "PumpScenes.java:330"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     2,
+     1,
+     1
+    ],
+    "beType": "PumpBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "onSpeedChanged",
+        "a": [
+         0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "PumpScenes.java:331"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     2,
+     1,
+     3
+    ],
+    "beType": "PumpBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "onSpeedChanged",
+        "a": [
+         0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "PumpScenes.java:332"
+  }
+ ]
+}

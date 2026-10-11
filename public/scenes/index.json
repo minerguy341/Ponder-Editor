@@ -1,0 +1,1991 @@
+[
+ {
+  "id": "create:shaft/relay",
+  "title": "Relaying rotational force using Shafts",
+  "items": [
+   "create:shaft"
+  ],
+  "tags": [
+   "create:kinetic_relays"
+  ],
+  "file": "shaft/relay.json",
+  "titleId": "shaft"
+ },
+ {
+  "id": "create:shaft/encasing",
+  "title": "Encasing Shafts",
+  "items": [
+   "create:shaft",
+   "create:andesite_encased_shaft",
+   "create:brass_encased_shaft",
+   "create:andesite_casing",
+   "create:brass_casing"
+  ],
+  "tags": [],
+  "file": "shaft/encasing.json",
+  "titleId": "shaft_casing"
+ },
+ {
+  "id": "create:cog/small",
+  "title": "Relaying rotational force using Cogwheels",
+  "items": [
+   "create:cogwheel"
+  ],
+  "tags": [
+   "create:kinetic_relays"
+  ],
+  "file": "cog/small.json",
+  "titleId": "cogwheel"
+ },
+ {
+  "id": "create:cog/speedup",
+  "title": "Gearshifting with Cogs",
+  "items": [
+   "create:cogwheel",
+   "create:large_cogwheel"
+  ],
+  "tags": [],
+  "file": "cog/speedup.json",
+  "titleId": "cog_speedup"
+ },
+ {
+  "id": "create:cog/encasing",
+  "title": "Encasing Cogwheels",
+  "items": [
+   "create:cogwheel",
+   "create:large_cogwheel"
+  ],
+  "tags": [],
+  "file": "cog/encasing.json",
+  "titleId": "cogwheel_casing"
+ },
+ {
+  "id": "create:cog/large",
+  "title": "Relaying rotational force using Large Cogwheels",
+  "items": [
+   "create:large_cogwheel"
+  ],
+  "tags": [
+   "create:kinetic_relays"
+  ],
+  "file": "cog/large.json",
+  "titleId": "large_cogwheel"
+ },
+ {
+  "id": "create:belt/connect",
+  "title": "Using Mechanical Belts",
+  "items": [
+   "create:belt_connector"
+  ],
+  "tags": [
+   "create:kinetic_relays"
+  ],
+  "file": "belt/connect.json",
+  "titleId": "belt_connector"
+ },
+ {
+  "id": "create:belt/directions",
+  "title": "Valid Orientations for Mechanical Belts",
+  "items": [
+   "create:belt_connector"
+  ],
+  "tags": [],
+  "file": "belt/directions.json",
+  "titleId": "belt_directions"
+ },
+ {
+  "id": "create:belt/transport",
+  "title": "Using Mechanical Belts for Logistics",
+  "items": [
+   "create:belt_connector"
+  ],
+  "tags": [
+   "create:logistics"
+  ],
+  "file": "belt/transport.json",
+  "titleId": "belt_transport"
+ },
+ {
+  "id": "create:belt/encasing",
+  "title": "Encasing Belts",
+  "items": [
+   "create:belt_connector",
+   "create:andesite_casing",
+   "create:brass_casing"
+  ],
+  "tags": [],
+  "file": "belt/encasing.json",
+  "titleId": "belt_casing"
+ },
+ {
+  "id": "create:gearbox",
+  "title": "Relaying rotational force using Gearboxes",
+  "items": [
+   "create:gearbox",
+   "create:vertical_gearbox"
+  ],
+  "tags": [
+   "create:kinetic_relays"
+  ],
+  "file": "gearbox.json",
+  "titleId": "gearbox"
+ },
+ {
+  "id": "create:clutch",
+  "title": "Controlling rotational force using a Clutch",
+  "items": [
+   "create:clutch"
+  ],
+  "tags": [
+   "create:kinetic_relays"
+  ],
+  "file": "clutch.json",
+  "titleId": "clutch"
+ },
+ {
+  "id": "create:gearshift",
+  "title": "Controlling rotational force using a Gearshift",
+  "items": [
+   "create:gearshift"
+  ],
+  "tags": [
+   "create:kinetic_relays"
+  ],
+  "file": "gearshift.json",
+  "titleId": "gearshift"
+ },
+ {
+  "id": "create:sequenced_gearshift",
+  "title": "Controlling Rotational Speed using Sequenced Gearshifts",
+  "items": [
+   "create:sequenced_gearshift"
+  ],
+  "tags": [],
+  "file": "sequenced_gearshift.json",
+  "titleId": "sequenced_gearshift",
+  "notes": [
+   "palette: create:nixie_tube has no property ceiling (ignored, as in the game)"
+  ]
+ },
+ {
+  "id": "create:fan/direction",
+  "title": "Air flow of Encased Fans",
+  "items": [
+   "create:encased_fan"
+  ],
+  "tags": [
+   "create:kinetic_appliances"
+  ],
+  "file": "fan/direction.json",
+  "titleId": "fan_direction"
+ },
+ {
+  "id": "create:fan/processing",
+  "title": "Processing Items using Encased Fans",
+  "items": [
+   "create:encased_fan"
+  ],
+  "tags": [],
+  "file": "fan/processing.json",
+  "titleId": "fan_processing"
+ },
+ {
+  "id": "create:creative_motor",
+  "title": "Generating Rotational Force using Creative Motors",
+  "items": [
+   "create:creative_motor"
+  ],
+  "tags": [
+   "create:kinetic_sources"
+  ],
+  "file": "creative_motor.json",
+  "titleId": "creative_motor"
+ },
+ {
+  "id": "create:creative_motor_mojang",
+  "title": "Mojang's Enigma",
+  "items": [
+   "create:creative_motor"
+  ],
+  "tags": [],
+  "file": "creative_motor_mojang.json",
+  "titleId": "creative_motor_mojang",
+  "notes": [
+   "palette: unknown block create:oak_window_pane is loaded as air (as in the game)",
+   "palette: create:oak_window_pane has no property east (ignored, as in the game)",
+   "palette: create:oak_window_pane has no property waterlogged (ignored, as in the game)",
+   "palette: create:oak_window_pane has no property south (ignored, as in the game)",
+   "palette: create:oak_window_pane has no property north (ignored, as in the game)",
+   "palette: create:oak_window_pane has no property west (ignored, as in the game)"
+  ]
+ },
+ {
+  "id": "create:water_wheel",
+  "title": "Generating Rotational Force using Water Wheels",
+  "items": [
+   "create:water_wheel"
+  ],
+  "tags": [
+   "create:kinetic_sources"
+  ],
+  "file": "water_wheel.json",
+  "titleId": "water_wheel"
+ },
+ {
+  "id": "create:large_water_wheel",
+  "title": "Generating Rotational Force using Large Water Wheels",
+  "items": [
+   "create:large_water_wheel"
+  ],
+  "tags": [
+   "create:kinetic_sources"
+  ],
+  "file": "large_water_wheel.json",
+  "titleId": "large_water_wheel"
+ },
+ {
+  "id": "create:hand_crank",
+  "title": "Generating Rotational Force using Hand Cranks",
+  "items": [
+   "create:hand_crank"
+  ],
+  "tags": [
+   "create:kinetic_sources"
+  ],
+  "file": "hand_crank.json",
+  "titleId": "hand_crank"
+ },
+ {
+  "id": "create:valve_handle",
+  "title": "Precise rotation using Valve Handles",
+  "items": [
+   "create:copper_valve_handle",
+   "create:white_valve_handle",
+   "create:orange_valve_handle",
+   "create:magenta_valve_handle",
+   "create:light_blue_valve_handle",
+   "create:yellow_valve_handle",
+   "create:lime_valve_handle",
+   "create:pink_valve_handle",
+   "create:gray_valve_handle",
+   "create:light_gray_valve_handle",
+   "create:cyan_valve_handle",
+   "create:purple_valve_handle",
+   "create:blue_valve_handle",
+   "create:brown_valve_handle",
+   "create:green_valve_handle",
+   "create:red_valve_handle",
+   "create:black_valve_handle"
+  ],
+  "tags": [
+   "create:kinetic_sources"
+  ],
+  "file": "valve_handle.json",
+  "titleId": "valve_handle"
+ },
+ {
+  "id": "create:chain_drive/relay",
+  "title": "Relaying rotational force with Chain Drives",
+  "items": [
+   "create:encased_chain_drive"
+  ],
+  "tags": [
+   "create:kinetic_relays"
+  ],
+  "file": "chain_drive/relay.json",
+  "titleId": "chain_drive"
+ },
+ {
+  "id": "create:chain_drive/gearshift",
+  "title": "Controlling rotational speed with Chain Gearshifts",
+  "items": [
+   "create:encased_chain_drive",
+   "create:adjustable_chain_gearshift"
+  ],
+  "tags": [],
+  "file": "chain_drive/gearshift.json",
+  "titleId": "chain_gearshift"
+ },
+ {
+  "id": "create:speed_controller",
+  "title": "Using the Rotational Speed Controller",
+  "items": [
+   "create:rotation_speed_controller"
+  ],
+  "tags": [],
+  "file": "speed_controller.json",
+  "titleId": "rotation_speed_controller"
+ },
+ {
+  "id": "create:gauges~speedometer",
+  "title": "Monitoring Kinetic information using the Speedometer",
+  "items": [
+   "create:speedometer"
+  ],
+  "tags": [],
+  "file": "gauges~speedometer.json",
+  "titleId": "speedometer"
+ },
+ {
+  "id": "create:gauges~stressometer",
+  "title": "Monitoring Kinetic information using the Stressometer",
+  "items": [
+   "create:stressometer"
+  ],
+  "tags": [],
+  "file": "gauges~stressometer.json",
+  "titleId": "stressometer"
+ },
+ {
+  "id": "create:millstone",
+  "title": "Processing Items in the Millstone",
+  "items": [
+   "create:millstone"
+  ],
+  "tags": [],
+  "file": "millstone.json",
+  "titleId": "millstone"
+ },
+ {
+  "id": "create:crushing_wheel",
+  "title": "Processing Items with Crushing Wheels",
+  "items": [
+   "create:crushing_wheel"
+  ],
+  "tags": [],
+  "file": "crushing_wheel.json",
+  "titleId": "crushing_wheels"
+ },
+ {
+  "id": "create:mechanical_mixer/mixing",
+  "title": "Processing Items with the Mechanical Mixer",
+  "items": [
+   "create:mechanical_mixer",
+   "create:basin"
+  ],
+  "tags": [],
+  "file": "mechanical_mixer/mixing.json",
+  "titleId": "mechanical_mixer"
+ },
+ {
+  "id": "create:mechanical_press/pressing",
+  "title": "Processing Items with the Mechanical Press",
+  "items": [
+   "create:mechanical_press"
+  ],
+  "tags": [],
+  "file": "mechanical_press/pressing.json",
+  "titleId": "mechanical_press"
+ },
+ {
+  "id": "create:mechanical_press/compacting",
+  "title": "Compacting items with the Mechanical Press",
+  "items": [
+   "create:mechanical_press",
+   "create:basin"
+  ],
+  "tags": [],
+  "file": "mechanical_press/compacting.json",
+  "titleId": "mechanical_press_compacting"
+ },
+ {
+  "id": "create:basin",
+  "title": "Processing Items in the Basin",
+  "items": [
+   "create:basin"
+  ],
+  "tags": [],
+  "file": "basin.json",
+  "titleId": "basin"
+ },
+ {
+  "id": "create:empty_blaze_burner",
+  "title": "Using Empty Blaze Burners",
+  "items": [
+   "create:empty_blaze_burner"
+  ],
+  "tags": [],
+  "file": "empty_blaze_burner.json",
+  "titleId": "empty_blaze_burner"
+ },
+ {
+  "id": "create:blaze_burner",
+  "title": "Feeding Blaze Burners",
+  "items": [
+   "create:blaze_burner"
+  ],
+  "tags": [],
+  "file": "blaze_burner.json",
+  "titleId": "blaze_burner"
+ },
+ {
+  "id": "create:depot",
+  "title": "Using Depots",
+  "items": [
+   "create:depot"
+  ],
+  "tags": [],
+  "file": "depot.json",
+  "titleId": "depot"
+ },
+ {
+  "id": "create:weighted_ejector/eject",
+  "title": "Using Weighted Ejectors",
+  "items": [
+   "create:weighted_ejector"
+  ],
+  "tags": [],
+  "file": "weighted_ejector/eject.json",
+  "titleId": "weighted_ejector"
+ },
+ {
+  "id": "create:weighted_ejector/split",
+  "title": "Splitting item stacks using Weighted Ejectors",
+  "items": [
+   "create:weighted_ejector"
+  ],
+  "tags": [],
+  "file": "weighted_ejector/split.json",
+  "titleId": "weighted_ejector_tunnel"
+ },
+ {
+  "id": "create:weighted_ejector/redstone",
+  "title": "Controlling Weighted Ejectors with Redstone",
+  "items": [
+   "create:weighted_ejector"
+  ],
+  "tags": [],
+  "file": "weighted_ejector/redstone.json",
+  "titleId": "weighted_ejector_redstone"
+ },
+ {
+  "id": "create:mechanical_crafter/setup",
+  "title": "Setting up Mechanical Crafters",
+  "items": [
+   "create:mechanical_crafter"
+  ],
+  "tags": [],
+  "file": "mechanical_crafter/setup.json",
+  "titleId": "mechanical_crafter"
+ },
+ {
+  "id": "create:mechanical_crafter/connect",
+  "title": "Connecting Inventories of Crafters",
+  "items": [
+   "create:mechanical_crafter"
+  ],
+  "tags": [],
+  "file": "mechanical_crafter/connect.json",
+  "titleId": "mechanical_crafter_connect"
+ },
+ {
+  "id": "create:mechanical_crafter/covers",
+  "title": "Covering slots of Mechanical Crafters",
+  "items": [
+   "create:mechanical_crafter",
+   "create:crafter_slot_cover"
+  ],
+  "tags": [],
+  "file": "mechanical_crafter/covers.json",
+  "titleId": "mechanical_crafter_covers"
+ },
+ {
+  "id": "create:item_vault/storage",
+  "title": "Storing Items in Vaults",
+  "items": [
+   "create:item_vault"
+  ],
+  "tags": [
+   "create:logistics"
+  ],
+  "file": "item_vault/storage.json",
+  "titleId": "item_vault_storage"
+ },
+ {
+  "id": "create:item_vault/sizes",
+  "title": "Dimensions of an Item Vault",
+  "items": [
+   "create:item_vault"
+  ],
+  "tags": [],
+  "file": "item_vault/sizes.json",
+  "titleId": "item_vault_sizes"
+ },
+ {
+  "id": "create:chute/downward",
+  "title": "Transporting Items downward via Chutes",
+  "items": [
+   "create:chute"
+  ],
+  "tags": [
+   "create:logistics"
+  ],
+  "file": "chute/downward.json",
+  "titleId": "chute"
+ },
+ {
+  "id": "create:chute/upward",
+  "title": "Transporting Items upward via Chutes",
+  "items": [
+   "create:chute"
+  ],
+  "tags": [],
+  "file": "chute/upward.json",
+  "titleId": "chute_upward"
+ },
+ {
+  "id": "create:chute/smart",
+  "title": "Filtering Items using Smart Chutes",
+  "items": [
+   "create:chute",
+   "create:smart_chute"
+  ],
+  "tags": [],
+  "file": "chute/smart.json",
+  "titleId": "smart_chute"
+ },
+ {
+  "id": "create:funnels/brass",
+  "title": "The Brass Funnel",
+  "items": [
+   "create:brass_funnel",
+   "create:andesite_funnel"
+  ],
+  "tags": [],
+  "file": "funnels/brass.json",
+  "titleId": "brass_funnel"
+ },
+ {
+  "id": "create:funnels/intro",
+  "title": "Using funnels",
+  "items": [
+   "create:andesite_funnel",
+   "create:brass_funnel"
+  ],
+  "tags": [
+   "create:logistics"
+  ],
+  "file": "funnels/intro.json",
+  "titleId": "funnel_intro"
+ },
+ {
+  "id": "create:funnels/direction",
+  "title": "Direction of Transfer",
+  "items": [
+   "create:andesite_funnel",
+   "create:brass_funnel"
+  ],
+  "tags": [],
+  "file": "funnels/direction.json",
+  "titleId": "funnel_direction"
+ },
+ {
+  "id": "create:funnels/compat",
+  "title": "Funnel compatibility",
+  "items": [
+   "create:andesite_funnel",
+   "create:brass_funnel"
+  ],
+  "tags": [],
+  "file": "funnels/compat.json",
+  "titleId": "funnel_compat"
+ },
+ {
+  "id": "create:funnels/redstone",
+  "title": "Redstone control",
+  "items": [
+   "create:andesite_funnel",
+   "create:brass_funnel"
+  ],
+  "tags": [],
+  "file": "funnels/redstone.json",
+  "titleId": "funnel_redstone"
+ },
+ {
+  "id": "create:funnels/transposer",
+  "title": "Direct transfer",
+  "items": [
+   "create:andesite_funnel",
+   "create:brass_funnel"
+  ],
+  "tags": [],
+  "file": "funnels/transposer.json",
+  "titleId": "funnel_transfer"
+ },
+ {
+  "id": "create:tunnels/andesite",
+  "title": "Using Andesite Tunnels",
+  "items": [
+   "create:andesite_tunnel"
+  ],
+  "tags": [],
+  "file": "tunnels/andesite.json",
+  "titleId": "andesite_tunnel"
+ },
+ {
+  "id": "create:tunnels/brass",
+  "title": "Using Brass Tunnels",
+  "items": [
+   "create:brass_tunnel"
+  ],
+  "tags": [],
+  "file": "tunnels/brass.json",
+  "titleId": "brass_tunnel"
+ },
+ {
+  "id": "create:tunnels/brass_modes",
+  "title": "Distribution Modes of the Brass Tunnel",
+  "items": [
+   "create:brass_tunnel"
+  ],
+  "tags": [],
+  "file": "tunnels/brass_modes.json",
+  "titleId": "brass_tunnel_modes"
+ },
+ {
+  "id": "create:chassis/linear_group",
+  "title": "Moving Linear Chassis in groups",
+  "items": [
+   "create:linear_chassis",
+   "create:secondary_linear_chassis"
+  ],
+  "tags": [
+   "create:contraption_assembly"
+  ],
+  "file": "chassis/linear_group.json",
+  "titleId": "linear_chassis_group"
+ },
+ {
+  "id": "create:chassis/linear_attachment",
+  "title": "Attaching blocks using Linear Chassis",
+  "items": [
+   "create:linear_chassis",
+   "create:secondary_linear_chassis"
+  ],
+  "tags": [],
+  "file": "chassis/linear_attachment.json",
+  "titleId": "linear_chassis_attachment"
+ },
+ {
+  "id": "create:chassis/radial",
+  "title": "Attaching blocks using Radial Chassis",
+  "items": [
+   "create:radial_chassis"
+  ],
+  "tags": [
+   "create:contraption_assembly"
+  ],
+  "file": "chassis/radial.json",
+  "titleId": "radial_chassis"
+ },
+ {
+  "id": "create:super_glue",
+  "title": "Attaching blocks using Super Glue",
+  "items": [
+   "create:super_glue"
+  ],
+  "tags": [
+   "create:contraption_assembly"
+  ],
+  "file": "super_glue.json",
+  "titleId": "super_glue"
+ },
+ {
+  "id": "create:sticker",
+  "title": "Attaching blocks using the Sticker",
+  "items": [
+   "create:sticker"
+  ],
+  "tags": [
+   "create:contraption_assembly"
+  ],
+  "file": "sticker.json",
+  "titleId": "sticker"
+ },
+ {
+  "id": "create:mechanical_arm/setup",
+  "title": "Setting up Mechanical Arms",
+  "items": [
+   "create:mechanical_arm"
+  ],
+  "tags": [
+   "create:arm_targets"
+  ],
+  "file": "mechanical_arm/setup.json",
+  "titleId": "mechanical_arm"
+ },
+ {
+  "id": "create:mechanical_arm/filter",
+  "title": "Filtering Outputs of the Mechanical Arm",
+  "items": [
+   "create:mechanical_arm"
+  ],
+  "tags": [],
+  "file": "mechanical_arm/filter.json",
+  "titleId": "mechanical_arm_filtering"
+ },
+ {
+  "id": "create:mechanical_arm/modes",
+  "title": "Distribution modes of the Mechanical Arm",
+  "items": [
+   "create:mechanical_arm"
+  ],
+  "tags": [],
+  "file": "mechanical_arm/modes.json",
+  "titleId": "mechanical_arm_modes"
+ },
+ {
+  "id": "create:mechanical_arm/redstone",
+  "title": "Controlling Mechanical Arms with Redstone",
+  "items": [
+   "create:mechanical_arm"
+  ],
+  "tags": [],
+  "file": "mechanical_arm/redstone.json",
+  "titleId": "mechanical_arm_redstone"
+ },
+ {
+  "id": "create:mechanical_piston/anchor",
+  "title": "Moving Structures using Mechanical Pistons",
+  "items": [
+   "create:mechanical_piston",
+   "create:sticky_mechanical_piston"
+  ],
+  "tags": [
+   "create:kinetic_appliances",
+   "create:movement_anchor"
+  ],
+  "file": "mechanical_piston/anchor.json",
+  "titleId": "mechanical_piston"
+ },
+ {
+  "id": "create:mechanical_piston/piston_pole",
+  "title": "Piston Extension Poles",
+  "items": [
+   "create:mechanical_piston",
+   "create:sticky_mechanical_piston",
+   "create:piston_extension_pole"
+  ],
+  "tags": [],
+  "file": "mechanical_piston/piston_pole.json",
+  "titleId": "piston_pole"
+ },
+ {
+  "id": "create:mechanical_piston/modes",
+  "title": "Movement Modes of the Mechanical Piston",
+  "items": [
+   "create:mechanical_piston",
+   "create:sticky_mechanical_piston"
+  ],
+  "tags": [],
+  "file": "mechanical_piston/modes.json",
+  "titleId": "mechanical_piston_modes"
+ },
+ {
+  "id": "create:rope_pulley/anchor",
+  "title": "Moving Structures using Rope Pulleys",
+  "items": [
+   "create:rope_pulley"
+  ],
+  "tags": [
+   "create:kinetic_appliances",
+   "create:movement_anchor"
+  ],
+  "file": "rope_pulley/anchor.json",
+  "titleId": "rope_pulley"
+ },
+ {
+  "id": "create:rope_pulley/modes",
+  "title": "Movement Modes of the Rope Pulley",
+  "items": [
+   "create:rope_pulley"
+  ],
+  "tags": [],
+  "file": "rope_pulley/modes.json",
+  "titleId": "rope_pulley_modes"
+ },
+ {
+  "id": "create:rope_pulley/multi_rope",
+  "title": "Synchronised Pulley Movement",
+  "items": [
+   "create:rope_pulley"
+  ],
+  "tags": [],
+  "file": "rope_pulley/multi_rope.json",
+  "titleId": "rope_pulley_multi_rope"
+ },
+ {
+  "id": "create:rope_pulley/attachment",
+  "title": "Moving Pulleys as part of a Contraption",
+  "items": [
+   "create:rope_pulley"
+  ],
+  "tags": [],
+  "file": "rope_pulley/attachment.json",
+  "titleId": "rope_pulley_attachment"
+ },
+ {
+  "id": "create:elevator_pulley/elevator",
+  "title": "Using the Elevator Pulley",
+  "items": [
+   "create:elevator_pulley"
+  ],
+  "tags": [],
+  "file": "elevator_pulley/elevator.json",
+  "titleId": "elevator_pulley"
+ },
+ {
+  "id": "create:elevator_pulley/multi_rope",
+  "title": "Synchronised Pulley Movement",
+  "items": [
+   "create:elevator_pulley"
+  ],
+  "tags": [],
+  "file": "elevator_pulley/multi_rope.json",
+  "titleId": "elevator_pulley_multi_rope"
+ },
+ {
+  "id": "create:windmill_bearing/source",
+  "title": "Generating Rotational Force using Windmill Bearings",
+  "items": [
+   "create:windmill_bearing"
+  ],
+  "tags": [
+   "create:kinetic_sources"
+  ],
+  "file": "windmill_bearing/source.json",
+  "titleId": "windmill_source"
+ },
+ {
+  "id": "create:windmill_bearing/structure",
+  "title": "Windmill Contraptions",
+  "items": [
+   "create:windmill_bearing"
+  ],
+  "tags": [
+   "create:movement_anchor"
+  ],
+  "file": "windmill_bearing/structure.json",
+  "titleId": "windmill_structure"
+ },
+ {
+  "id": "create:sail~sail",
+  "title": "Assembling Windmills using Sails",
+  "items": [
+   "create:white_sail"
+  ],
+  "tags": [],
+  "file": "sail~sail.json",
+  "titleId": "sail"
+ },
+ {
+  "id": "create:sail~sailFrame",
+  "title": "Assembling Windmills using Sail Frames",
+  "items": [
+   "create:sail_frame"
+  ],
+  "tags": [],
+  "file": "sail~sailFrame.json",
+  "titleId": "sail_frame"
+ },
+ {
+  "id": "create:mechanical_bearing/anchor",
+  "title": "Moving Structures using the Mechanical Bearing",
+  "items": [
+   "create:mechanical_bearing"
+  ],
+  "tags": [
+   "create:kinetic_appliances",
+   "create:movement_anchor"
+  ],
+  "file": "mechanical_bearing/anchor.json",
+  "titleId": "mechanical_bearing"
+ },
+ {
+  "id": "create:mechanical_bearing/modes",
+  "title": "Movement Modes of the Mechanical Bearing",
+  "items": [
+   "create:mechanical_bearing"
+  ],
+  "tags": [],
+  "file": "mechanical_bearing/modes.json",
+  "titleId": "bearing_modes"
+ },
+ {
+  "id": "create:mechanical_bearing/stabilized",
+  "title": "Stabilized Contraptions",
+  "items": [
+   "create:mechanical_bearing"
+  ],
+  "tags": [
+   "create:contraption_actor"
+  ],
+  "file": "mechanical_bearing/stabilized.json",
+  "titleId": "stabilized_bearings"
+ },
+ {
+  "id": "create:clockwork_bearing",
+  "title": "Animating Structures using Clockwork Bearings",
+  "items": [
+   "create:clockwork_bearing"
+  ],
+  "tags": [
+   "create:kinetic_appliances",
+   "create:movement_anchor"
+  ],
+  "file": "clockwork_bearing.json",
+  "titleId": "clockwork_bearing",
+  "notes": [
+   "palette: minecraft:stone_brick_wall[east=false] is not an allowed value (ignored, as in the game)",
+   "palette: minecraft:stone_brick_wall[south=true] is not an allowed value (ignored, as in the game)",
+   "palette: minecraft:stone_brick_wall[north=false] is not an allowed value (ignored, as in the game)",
+   "palette: minecraft:stone_brick_wall[west=false] is not an allowed value (ignored, as in the game)",
+   "palette: minecraft:stone_brick_wall[south=false] is not an allowed value (ignored, as in the game)"
+  ]
+ },
+ {
+  "id": "create:gantry/intro~introForShaft",
+  "title": "Using Gantry Shafts",
+  "items": [
+   "create:gantry_shaft"
+  ],
+  "tags": [
+   "create:kinetic_appliances",
+   "create:movement_anchor"
+  ],
+  "file": "gantry/intro~introForShaft.json",
+  "titleId": "gantry_shaft"
+ },
+ {
+  "id": "create:gantry/intro~introForPinion",
+  "title": "Using Gantry Carriages",
+  "items": [
+   "create:gantry_carriage"
+  ],
+  "tags": [
+   "create:kinetic_appliances",
+   "create:movement_anchor"
+  ],
+  "file": "gantry/intro~introForPinion.json",
+  "titleId": "gantry_carriage"
+ },
+ {
+  "id": "create:gantry/redstone",
+  "title": "Gantry Power Propagation",
+  "items": [
+   "create:gantry_shaft",
+   "create:gantry_carriage"
+  ],
+  "tags": [],
+  "file": "gantry/redstone.json",
+  "titleId": "gantry_redstone"
+ },
+ {
+  "id": "create:gantry/direction",
+  "title": "Gantry Movement Direction",
+  "items": [
+   "create:gantry_shaft",
+   "create:gantry_carriage"
+  ],
+  "tags": [],
+  "file": "gantry/direction.json",
+  "titleId": "gantry_direction"
+ },
+ {
+  "id": "create:gantry/subgantry",
+  "title": "Cascaded Gantries",
+  "items": [
+   "create:gantry_shaft",
+   "create:gantry_carriage"
+  ],
+  "tags": [],
+  "file": "gantry/subgantry.json",
+  "titleId": "gantry_cascaded"
+ },
+ {
+  "id": "create:cart_assembler/anchor",
+  "title": "Moving Structures using Cart Assemblers",
+  "items": [
+   "create:cart_assembler"
+  ],
+  "tags": [
+   "create:movement_anchor"
+  ],
+  "file": "cart_assembler/anchor.json",
+  "titleId": "cart_assembler"
+ },
+ {
+  "id": "create:cart_assembler/modes",
+  "title": "Orientation Settings for Minecart Contraptions",
+  "items": [
+   "create:cart_assembler"
+  ],
+  "tags": [],
+  "file": "cart_assembler/modes.json",
+  "titleId": "cart_assembler_modes"
+ },
+ {
+  "id": "create:cart_assembler/dual",
+  "title": "Assembling Carriage Contraptions",
+  "items": [
+   "create:cart_assembler"
+  ],
+  "tags": [],
+  "file": "cart_assembler/dual.json",
+  "titleId": "cart_assembler_dual"
+ },
+ {
+  "id": "create:cart_assembler/rails",
+  "title": "Other types of Minecarts and Rails",
+  "items": [
+   "create:cart_assembler"
+  ],
+  "tags": [],
+  "file": "cart_assembler/rails.json",
+  "titleId": "cart_assembler_rails"
+ },
+ {
+  "id": "create:portable_interface/transfer",
+  "title": "Contraption Storage Exchange",
+  "items": [
+   "create:portable_storage_interface"
+  ],
+  "tags": [
+   "create:contraption_actor"
+  ],
+  "file": "portable_interface/transfer.json",
+  "titleId": "portable_storage_interface"
+ },
+ {
+  "id": "create:portable_interface/redstone",
+  "title": "Redstone Control",
+  "items": [
+   "create:portable_storage_interface"
+  ],
+  "tags": [],
+  "file": "portable_interface/redstone.json",
+  "titleId": "portable_storage_interface_redstone"
+ },
+ {
+  "id": "create:redstone_contact",
+  "title": "Redstone Contacts",
+  "items": [
+   "create:redstone_contact"
+  ],
+  "tags": [],
+  "file": "redstone_contact.json",
+  "titleId": "redstone_contact"
+ },
+ {
+  "id": "create:mechanical_saw/processing",
+  "title": "Processing Items on the Mechanical Saw",
+  "items": [
+   "create:mechanical_saw"
+  ],
+  "tags": [
+   "create:kinetic_appliances"
+  ],
+  "file": "mechanical_saw/processing.json",
+  "titleId": "mechanical_saw_processing"
+ },
+ {
+  "id": "create:mechanical_saw/breaker",
+  "title": "Cutting Trees with the Mechanical Saw",
+  "items": [
+   "create:mechanical_saw"
+  ],
+  "tags": [],
+  "file": "mechanical_saw/breaker.json",
+  "titleId": "mechanical_saw_breaker",
+  "notes": [
+   "palette: unknown block minecraft:grass is loaded as air (as in the game)"
+  ]
+ },
+ {
+  "id": "create:mechanical_saw/contraption",
+  "title": "Using Mechanical Saws on Contraptions",
+  "items": [
+   "create:mechanical_saw"
+  ],
+  "tags": [
+   "create:contraption_actor"
+  ],
+  "file": "mechanical_saw/contraption.json",
+  "titleId": "mechanical_saw_contraption",
+  "notes": [
+   "palette: unknown block minecraft:grass is loaded as air (as in the game)"
+  ]
+ },
+ {
+  "id": "create:mechanical_drill/breaker",
+  "title": "Breaking Blocks with the Mechanical Drill",
+  "items": [
+   "create:mechanical_drill"
+  ],
+  "tags": [
+   "create:kinetic_appliances"
+  ],
+  "file": "mechanical_drill/breaker.json",
+  "titleId": "mechanical_drill"
+ },
+ {
+  "id": "create:mechanical_drill/contraption",
+  "title": "Using Mechanical Drills on Contraptions",
+  "items": [
+   "create:mechanical_drill"
+  ],
+  "tags": [
+   "create:contraption_actor"
+  ],
+  "file": "mechanical_drill/contraption.json",
+  "titleId": "mechanical_drill_contraption"
+ },
+ {
+  "id": "create:deployer/filter",
+  "title": "Using the Deployer",
+  "items": [
+   "create:deployer"
+  ],
+  "tags": [
+   "create:kinetic_appliances"
+  ],
+  "file": "deployer/filter.json",
+  "titleId": "deployer"
+ },
+ {
+  "id": "create:deployer/modes",
+  "title": "Modes of the Deployer",
+  "items": [
+   "create:deployer"
+  ],
+  "tags": [],
+  "file": "deployer/modes.json",
+  "titleId": "deployer_modes"
+ },
+ {
+  "id": "create:deployer/processing",
+  "title": "Processing Items using Deployers",
+  "items": [
+   "create:deployer"
+  ],
+  "tags": [],
+  "file": "deployer/processing.json",
+  "titleId": "deployer_processing"
+ },
+ {
+  "id": "create:deployer/redstone",
+  "title": "Controlling Deployers with Redstone",
+  "items": [
+   "create:deployer"
+  ],
+  "tags": [],
+  "file": "deployer/redstone.json",
+  "titleId": "deployer_redstone"
+ },
+ {
+  "id": "create:deployer/contraption",
+  "title": "Using Deployers on Contraptions",
+  "items": [
+   "create:deployer"
+  ],
+  "tags": [
+   "create:contraption_actor"
+  ],
+  "file": "deployer/contraption.json",
+  "titleId": "deployer_contraption"
+ },
+ {
+  "id": "create:harvester",
+  "title": "Using Mechanical Harvesters on Contraptions",
+  "items": [
+   "create:mechanical_harvester"
+  ],
+  "tags": [],
+  "file": "harvester.json",
+  "titleId": "mechanical_harvester"
+ },
+ {
+  "id": "create:plough",
+  "title": "Using Mechanical Ploughs on Contraptions",
+  "items": [
+   "create:mechanical_plough"
+  ],
+  "tags": [],
+  "file": "plough.json",
+  "titleId": "mechanical_plough"
+ },
+ {
+  "id": "create:contraption_controls",
+  "title": "Using Contraption Controls",
+  "items": [
+   "create:contraption_controls"
+  ],
+  "tags": [],
+  "file": "contraption_controls.json",
+  "titleId": "contraption_controls"
+ },
+ {
+  "id": "create:mechanical_roller/clear_and_pave",
+  "title": "Clearing and Paving with the Roller",
+  "items": [
+   "create:mechanical_roller"
+  ],
+  "tags": [],
+  "file": "mechanical_roller/clear_and_pave.json",
+  "titleId": "mechanical_roller_pave"
+ },
+ {
+  "id": "create:mechanical_roller/fill",
+  "title": "Filling terrain with the Roller",
+  "items": [
+   "create:mechanical_roller"
+  ],
+  "tags": [],
+  "file": "mechanical_roller/fill.json",
+  "titleId": "mechanical_roller_fill"
+ },
+ {
+  "id": "create:fluid_pipe/flow",
+  "title": "Moving Fluids using Copper Pipes",
+  "items": [
+   "create:fluid_pipe"
+  ],
+  "tags": [
+   "create:fluids"
+  ],
+  "file": "fluid_pipe/flow.json",
+  "titleId": "fluid_pipe_flow"
+ },
+ {
+  "id": "create:fluid_pipe/interaction",
+  "title": "Draining and Filling fluid containers",
+  "items": [
+   "create:fluid_pipe"
+  ],
+  "tags": [],
+  "file": "fluid_pipe/interaction.json",
+  "titleId": "fluid_pipe_interaction"
+ },
+ {
+  "id": "create:fluid_pipe/encasing",
+  "title": "Encasing Fluid Pipes",
+  "items": [
+   "create:fluid_pipe",
+   "create:copper_casing"
+  ],
+  "tags": [],
+  "file": "fluid_pipe/encasing.json",
+  "titleId": "encased_fluid_pipe"
+ },
+ {
+  "id": "create:mechanical_pump/flow",
+  "title": "Fluid Transportation using Mechanical Pumps",
+  "items": [
+   "create:mechanical_pump"
+  ],
+  "tags": [
+   "create:fluids",
+   "create:kinetic_appliances"
+  ],
+  "file": "mechanical_pump/flow.json",
+  "titleId": "mechanical_pump_flow"
+ },
+ {
+  "id": "create:mechanical_pump/speed",
+  "title": "Throughput of Mechanical Pumps",
+  "items": [
+   "create:mechanical_pump"
+  ],
+  "tags": [],
+  "file": "mechanical_pump/speed.json",
+  "titleId": "mechanical_pump_speed"
+ },
+ {
+  "id": "create:fluid_valve",
+  "title": "Controlling Fluid flow using Valves",
+  "items": [
+   "create:fluid_valve"
+  ],
+  "tags": [
+   "create:fluids",
+   "create:kinetic_appliances"
+  ],
+  "file": "fluid_valve.json",
+  "titleId": "valve_pipe"
+ },
+ {
+  "id": "create:smart_pipe",
+  "title": "Controlling Fluid flow using Smart Pipes",
+  "items": [
+   "create:smart_fluid_pipe"
+  ],
+  "tags": [
+   "create:fluids"
+  ],
+  "file": "smart_pipe.json",
+  "titleId": "smart_pipe"
+ },
+ {
+  "id": "create:fluid_tank/storage",
+  "title": "Storing Fluids in Fluid Tanks",
+  "items": [
+   "create:fluid_tank"
+  ],
+  "tags": [
+   "create:fluids"
+  ],
+  "file": "fluid_tank/storage.json",
+  "titleId": "fluid_tank_storage"
+ },
+ {
+  "id": "create:fluid_tank/sizes",
+  "title": "Dimensions of a Fluid tank",
+  "items": [
+   "create:fluid_tank"
+  ],
+  "tags": [],
+  "file": "fluid_tank/sizes.json",
+  "titleId": "fluid_tank_sizes"
+ },
+ {
+  "id": "create:fluid_tank/storage_creative",
+  "title": "Creative Fluid Tanks",
+  "items": [
+   "create:creative_fluid_tank"
+  ],
+  "tags": [
+   "create:fluids",
+   "create:creative"
+  ],
+  "file": "fluid_tank/storage_creative.json",
+  "titleId": "creative_fluid_tank"
+ },
+ {
+  "id": "create:fluid_tank/sizes_creative",
+  "title": "Dimensions of a Fluid tank",
+  "items": [
+   "create:creative_fluid_tank"
+  ],
+  "tags": [],
+  "file": "fluid_tank/sizes_creative.json",
+  "titleId": "fluid_tank_sizes"
+ },
+ {
+  "id": "create:hose_pulley/intro",
+  "title": "Source Filling and Draining using Hose Pulleys",
+  "items": [
+   "create:hose_pulley"
+  ],
+  "tags": [
+   "create:fluids",
+   "create:kinetic_appliances"
+  ],
+  "file": "hose_pulley/intro.json",
+  "titleId": "hose_pulley"
+ },
+ {
+  "id": "create:hose_pulley/level",
+  "title": "Fill and Drain level of Hose Pulleys",
+  "items": [
+   "create:hose_pulley"
+  ],
+  "tags": [],
+  "file": "hose_pulley/level.json",
+  "titleId": "hose_pulley_level"
+ },
+ {
+  "id": "create:hose_pulley/infinite",
+  "title": "Passively Filling and Draining large bodies of Fluid",
+  "items": [
+   "create:hose_pulley"
+  ],
+  "tags": [],
+  "file": "hose_pulley/infinite.json",
+  "titleId": "hose_pulley_infinite"
+ },
+ {
+  "id": "create:spout",
+  "title": "Filling Items using a Spout",
+  "items": [
+   "create:spout"
+  ],
+  "tags": [
+   "create:fluids"
+  ],
+  "file": "spout.json",
+  "titleId": "spout_filling"
+ },
+ {
+  "id": "create:item_drain",
+  "title": "Emptying Fluid Containers using Item Drains",
+  "items": [
+   "create:item_drain"
+  ],
+  "tags": [
+   "create:fluids"
+  ],
+  "file": "item_drain.json",
+  "titleId": "item_drain"
+ },
+ {
+  "id": "create:portable_interface/transfer_fluid",
+  "title": "Contraption Fluid Exchange",
+  "items": [
+   "create:portable_fluid_interface"
+  ],
+  "tags": [
+   "create:fluids",
+   "create:contraption_actor"
+  ],
+  "file": "portable_interface/transfer_fluid.json",
+  "titleId": "portable_fluid_interface"
+ },
+ {
+  "id": "create:portable_interface/redstone_fluid",
+  "title": "Redstone Control",
+  "items": [
+   "create:portable_fluid_interface"
+  ],
+  "tags": [],
+  "file": "portable_interface/redstone_fluid.json",
+  "titleId": "portable_storage_interface_redstone"
+ },
+ {
+  "id": "create:pulse_extender",
+  "title": "Controlling signals using Pulse Extenders",
+  "items": [
+   "create:pulse_extender"
+  ],
+  "tags": [],
+  "file": "pulse_extender.json",
+  "titleId": "pulse_extender"
+ },
+ {
+  "id": "create:pulse_repeater",
+  "title": "Controlling signals using Pulse Repeaters",
+  "items": [
+   "create:pulse_repeater"
+  ],
+  "tags": [],
+  "file": "pulse_repeater.json",
+  "titleId": "pulse_repeater"
+ },
+ {
+  "id": "create:powered_latch",
+  "title": "Controlling signals using the Powered Latch",
+  "items": [
+   "create:powered_latch"
+  ],
+  "tags": [],
+  "file": "powered_latch.json",
+  "titleId": "powered_latch"
+ },
+ {
+  "id": "create:powered_toggle_latch",
+  "title": "Controlling signals using the Powered Toggle Latch",
+  "items": [
+   "create:powered_toggle_latch"
+  ],
+  "tags": [],
+  "file": "powered_toggle_latch.json",
+  "titleId": "powered_toggle_latch"
+ },
+ {
+  "id": "create:analog_lever",
+  "title": "Controlling signals using the Analog Lever",
+  "items": [
+   "create:analog_lever"
+  ],
+  "tags": [],
+  "file": "analog_lever.json",
+  "titleId": "analog_lever"
+ },
+ {
+  "id": "create:nixie_tube",
+  "title": "Using Nixie Tubes",
+  "items": [
+   "create:nixie_tube"
+  ],
+  "tags": [],
+  "file": "nixie_tube.json",
+  "titleId": "nixie_tube",
+  "notes": [
+   "palette: create:nixie_tube has no property ceiling (ignored, as in the game)"
+  ]
+ },
+ {
+  "id": "create:redstone_link",
+  "title": "Using Redstone Links",
+  "items": [
+   "create:redstone_link"
+  ],
+  "tags": [],
+  "file": "redstone_link.json",
+  "titleId": "redstone_link"
+ },
+ {
+  "id": "create:rose_quartz_lamp",
+  "title": "Rose Quartz Lamps",
+  "items": [
+   "create:rose_quartz_lamp"
+  ],
+  "tags": [],
+  "file": "rose_quartz_lamp.json",
+  "titleId": "rose_quartz_lamp"
+ },
+ {
+  "id": "create:pulse_timer",
+  "title": "Redstone output of the Pulse Timer",
+  "items": [
+   "create:pulse_timer"
+  ],
+  "tags": [],
+  "file": "pulse_timer.json",
+  "titleId": "pulse_timer"
+ },
+ {
+  "id": "create:smart_observer",
+  "title": "Advanced detection with Smart Observers",
+  "items": [
+   "create:content_observer"
+  ],
+  "tags": [],
+  "file": "smart_observer.json",
+  "titleId": "smart_observer"
+ },
+ {
+  "id": "create:threshold_switch",
+  "title": "Monitoring with the Threshold Switch",
+  "items": [
+   "create:stockpile_switch"
+  ],
+  "tags": [],
+  "file": "threshold_switch.json",
+  "titleId": "threshold_switch"
+ },
+ {
+  "id": "create:high_logistics/chain_conveyor",
+  "title": "Relaying rotational force using Chain Conveyors",
+  "items": [
+   "create:chain_conveyor"
+  ],
+  "tags": [],
+  "file": "high_logistics/chain_conveyor.json",
+  "titleId": "chain_conveyor"
+ },
+ {
+  "id": "create:high_logistics/package_frogport",
+  "title": "Transporting packages between Frogports",
+  "items": [
+   "create:package_frogport"
+  ],
+  "tags": [],
+  "file": "high_logistics/package_frogport.json",
+  "titleId": "package_frogport"
+ },
+ {
+  "id": "create:high_logistics/package_postbox",
+  "title": "Transporting packages between Postboxes",
+  "items": [
+   "create:white_postbox",
+   "create:orange_postbox",
+   "create:magenta_postbox",
+   "create:light_blue_postbox",
+   "create:yellow_postbox",
+   "create:lime_postbox",
+   "create:pink_postbox",
+   "create:gray_postbox",
+   "create:light_gray_postbox",
+   "create:cyan_postbox",
+   "create:purple_postbox",
+   "create:blue_postbox",
+   "create:brown_postbox",
+   "create:green_postbox",
+   "create:red_postbox",
+   "create:black_postbox"
+  ],
+  "tags": [],
+  "file": "high_logistics/package_postbox.json",
+  "titleId": "postbox"
+ },
+ {
+  "id": "create:high_logistics/packager",
+  "title": "Creating and unwrapping packages",
+  "items": [
+   "create:packager"
+  ],
+  "tags": [],
+  "file": "high_logistics/packager.json",
+  "titleId": "packager"
+ },
+ {
+  "id": "create:high_logistics/packager_address",
+  "title": "Routing packages with an address",
+  "items": [
+   "create:packager"
+  ],
+  "tags": [],
+  "file": "high_logistics/packager_address.json",
+  "titleId": "packager_address"
+ },
+ {
+  "id": "create:high_logistics/stock_link",
+  "title": "Logistics Networks and the Stock Link",
+  "items": [
+   "create:stock_link"
+  ],
+  "tags": [],
+  "file": "high_logistics/stock_link.json",
+  "titleId": "stock_link"
+ },
+ {
+  "id": "create:high_logistics/stock_ticker",
+  "title": "Ordering items with Stock tickers",
+  "items": [
+   "create:stock_ticker"
+  ],
+  "tags": [],
+  "file": "high_logistics/stock_ticker.json",
+  "titleId": "stock_ticker"
+ },
+ {
+  "id": "create:high_logistics/stock_ticker_address",
+  "title": "Addressing a Stock ticker order",
+  "items": [
+   "create:stock_ticker"
+  ],
+  "tags": [],
+  "file": "high_logistics/stock_ticker_address.json",
+  "titleId": "stock_ticker_address"
+ },
+ {
+  "id": "create:high_logistics/redstone_requester",
+  "title": "Automated orders with Redstone Requesters",
+  "items": [
+   "create:redstone_requester"
+  ],
+  "tags": [],
+  "file": "high_logistics/redstone_requester.json",
+  "titleId": "redstone_requester"
+ },
+ {
+  "id": "create:high_logistics/repackager",
+  "title": "Merging packages from a request",
+  "items": [
+   "create:repackager"
+  ],
+  "tags": [],
+  "file": "high_logistics/repackager.json",
+  "titleId": "repackager"
+ },
+ {
+  "id": "create:high_logistics/table_cloth",
+  "title": "Selling items with Table Cloths",
+  "items": [
+   "create:white_table_cloth",
+   "create:orange_table_cloth",
+   "create:magenta_table_cloth",
+   "create:light_blue_table_cloth",
+   "create:yellow_table_cloth",
+   "create:lime_table_cloth",
+   "create:pink_table_cloth",
+   "create:gray_table_cloth",
+   "create:light_gray_table_cloth",
+   "create:cyan_table_cloth",
+   "create:purple_table_cloth",
+   "create:blue_table_cloth",
+   "create:brown_table_cloth",
+   "create:green_table_cloth",
+   "create:red_table_cloth",
+   "create:black_table_cloth",
+   "create:andesite_table_cloth",
+   "create:brass_table_cloth",
+   "create:copper_table_cloth"
+  ],
+  "tags": [],
+  "file": "high_logistics/table_cloth.json",
+  "titleId": "table_cloth"
+ },
+ {
+  "id": "create:high_logistics/factory_gauge_restocker",
+  "title": "Restocking with Factory Gauges",
+  "items": [
+   "create:factory_gauge"
+  ],
+  "tags": [],
+  "file": "high_logistics/factory_gauge_restocker.json",
+  "titleId": "factory_gauge_restocker"
+ },
+ {
+  "id": "create:high_logistics/factory_gauge_recipe",
+  "title": "Automated Recipes with Factory Gauges",
+  "items": [
+   "create:factory_gauge"
+  ],
+  "tags": [],
+  "file": "high_logistics/factory_gauge_recipe.json",
+  "titleId": "factory_gauge_recipe"
+ },
+ {
+  "id": "create:high_logistics/factory_gauge_crafting",
+  "title": "Automatic Crafting with Factory Gauges",
+  "items": [
+   "create:factory_gauge"
+  ],
+  "tags": [],
+  "file": "high_logistics/factory_gauge_crafting.json",
+  "titleId": "factory_gauge_crafting"
+ },
+ {
+  "id": "create:high_logistics/factory_gauge_links",
+  "title": "Connecting Gauges to other Blocks",
+  "items": [
+   "create:factory_gauge"
+  ],
+  "tags": [],
+  "file": "high_logistics/factory_gauge_links.json",
+  "titleId": "factory_gauge_links"
+ },
+ {
+  "id": "create:train_track/placement",
+  "title": "Placing Train Tracks",
+  "items": [
+   "create:track"
+  ],
+  "tags": [],
+  "file": "train_track/placement.json",
+  "titleId": "track_placement"
+ },
+ {
+  "id": "create:train_track/portal",
+  "title": "Tracks and the Nether",
+  "items": [
+   "create:track"
+  ],
+  "tags": [],
+  "file": "train_track/portal.json",
+  "titleId": "track_portal",
+  "notes": [
+   "palette: unknown block create:polished_cut_scorchia_stairs is loaded as air (as in the game)",
+   "palette: create:polished_cut_scorchia_stairs has no property half (ignored, as in the game)",
+   "palette: create:polished_cut_scorchia_stairs has no property waterlogged (ignored, as in the game)",
+   "palette: create:polished_cut_scorchia_stairs has no property shape (ignored, as in the game)",
+   "palette: create:polished_cut_scorchia_stairs has no property facing (ignored, as in the game)"
+  ]
+ },
+ {
+  "id": "create:train_track/chunks",
+  "title": "Traversing unloaded Chunks",
+  "items": [
+   "create:track"
+  ],
+  "tags": [],
+  "file": "train_track/chunks.json",
+  "titleId": "track_chunks",
+  "notes": [
+   "palette: unknown block create:veridium_pillar is loaded as air (as in the game)",
+   "palette: create:veridium_pillar has no property east (ignored, as in the game)",
+   "palette: create:veridium_pillar has no property south (ignored, as in the game)",
+   "palette: create:veridium_pillar has no property north (ignored, as in the game)",
+   "palette: create:veridium_pillar has no property west (ignored, as in the game)",
+   "palette: create:veridium_pillar has no property axis (ignored, as in the game)",
+   "palette: unknown block create:polished_cut_scorchia_stairs is loaded as air (as in the game)",
+   "palette: create:polished_cut_scorchia_stairs has no property half (ignored, as in the game)",
+   "palette: create:polished_cut_scorchia_stairs has no property waterlogged (ignored, as in the game)",
+   "palette: create:polished_cut_scorchia_stairs has no property shape (ignored, as in the game)",
+   "palette: create:polished_cut_scorchia_stairs has no property facing (ignored, as in the game)"
+  ]
+ },
+ {
+  "id": "create:train_station/assembly",
+  "title": "Assembling Trains",
+  "items": [
+   "create:track_station"
+  ],
+  "tags": [],
+  "file": "train_station/assembly.json",
+  "titleId": "train_assembly",
+  "notes": [
+   "palette: unknown block create:scorchia_pillar is loaded as air (as in the game)",
+   "palette: create:scorchia_pillar has no property east (ignored, as in the game)",
+   "palette: create:scorchia_pillar has no property south (ignored, as in the game)",
+   "palette: create:scorchia_pillar has no property north (ignored, as in the game)",
+   "palette: create:scorchia_pillar has no property west (ignored, as in the game)",
+   "palette: create:scorchia_pillar has no property axis (ignored, as in the game)",
+   "palette: unknown block create:polished_cut_scorchia_stairs is loaded as air (as in the game)",
+   "palette: create:polished_cut_scorchia_stairs has no property half (ignored, as in the game)",
+   "palette: create:polished_cut_scorchia_stairs has no property waterlogged (ignored, as in the game)",
+   "palette: create:polished_cut_scorchia_stairs has no property shape (ignored, as in the game)",
+   "palette: create:polished_cut_scorchia_stairs has no property facing (ignored, as in the game)"
+  ]
+ },
+ {
+  "id": "create:train_station/schedule",
+  "title": "Stations & Scheduling",
+  "items": [
+   "create:track_station"
+  ],
+  "tags": [],
+  "file": "train_station/schedule.json",
+  "titleId": "auto_schedule",
+  "notes": [
+   "palette: unknown block create:polished_cut_scorchia_stairs is loaded as air (as in the game)",
+   "palette: create:polished_cut_scorchia_stairs has no property half (ignored, as in the game)",
+   "palette: create:polished_cut_scorchia_stairs has no property waterlogged (ignored, as in the game)",
+   "palette: create:polished_cut_scorchia_stairs has no property shape (ignored, as in the game)",
+   "palette: create:polished_cut_scorchia_stairs has no property facing (ignored, as in the game)"
+  ]
+ },
+ {
+  "id": "create:train_signal/placement",
+  "title": "Placing Train Signals",
+  "items": [
+   "create:track_signal"
+  ],
+  "tags": [],
+  "file": "train_signal/placement.json",
+  "titleId": "train_signal_placement",
+  "notes": [
+   "palette: unknown block create:polished_cut_scorchia_stairs is loaded as air (as in the game)",
+   "palette: create:polished_cut_scorchia_stairs has no property half (ignored, as in the game)",
+   "palette: create:polished_cut_scorchia_stairs has no property waterlogged (ignored, as in the game)",
+   "palette: create:polished_cut_scorchia_stairs has no property shape (ignored, as in the game)",
+   "palette: create:polished_cut_scorchia_stairs has no property facing (ignored, as in the game)"
+  ]
+ },
+ {
+  "id": "create:train_signal/signaling",
+  "title": "Collision Prevention with Signals",
+  "items": [
+   "create:track_signal"
+  ],
+  "tags": [],
+  "file": "train_signal/signaling.json",
+  "titleId": "train_signal_signaling",
+  "notes": [
+   "palette: unknown block create:polished_cut_scorchia_stairs is loaded as air (as in the game)",
+   "palette: create:polished_cut_scorchia_stairs has no property half (ignored, as in the game)",
+   "palette: create:polished_cut_scorchia_stairs has no property waterlogged (ignored, as in the game)",
+   "palette: create:polished_cut_scorchia_stairs has no property shape (ignored, as in the game)",
+   "palette: create:polished_cut_scorchia_stairs has no property facing (ignored, as in the game)"
+  ]
+ },
+ {
+  "id": "create:train_signal/redstone",
+  "title": "Signals & Redstone",
+  "items": [
+   "create:track_signal"
+  ],
+  "tags": [],
+  "file": "train_signal/redstone.json",
+  "titleId": "train_signal_redstone",
+  "notes": [
+   "palette: unknown block create:polished_cut_scorchia_stairs is loaded as air (as in the game)",
+   "palette: create:polished_cut_scorchia_stairs has no property half (ignored, as in the game)",
+   "palette: create:polished_cut_scorchia_stairs has no property waterlogged (ignored, as in the game)",
+   "palette: create:polished_cut_scorchia_stairs has no property shape (ignored, as in the game)",
+   "palette: create:polished_cut_scorchia_stairs has no property facing (ignored, as in the game)"
+  ]
+ },
+ {
+  "id": "create:train_schedule",
+  "title": "Using Train Schedules",
+  "items": [
+   "create:schedule"
+  ],
+  "tags": [],
+  "file": "train_schedule.json",
+  "titleId": "train_schedule",
+  "notes": [
+   "palette: unknown block create:polished_cut_scorchia_stairs is loaded as air (as in the game)",
+   "palette: create:polished_cut_scorchia_stairs has no property half (ignored, as in the game)",
+   "palette: create:polished_cut_scorchia_stairs has no property waterlogged (ignored, as in the game)",
+   "palette: create:polished_cut_scorchia_stairs has no property shape (ignored, as in the game)",
+   "palette: create:polished_cut_scorchia_stairs has no property facing (ignored, as in the game)"
+  ]
+ },
+ {
+  "id": "create:train_controls",
+  "title": "Controlling Trains",
+  "items": [
+   "create:controls"
+  ],
+  "tags": [],
+  "file": "train_controls.json",
+  "titleId": "train_controls",
+  "notes": [
+   "palette: unknown block create:polished_cut_scorchia_stairs is loaded as air (as in the game)",
+   "palette: create:polished_cut_scorchia_stairs has no property half (ignored, as in the game)",
+   "palette: create:polished_cut_scorchia_stairs has no property waterlogged (ignored, as in the game)",
+   "palette: create:polished_cut_scorchia_stairs has no property shape (ignored, as in the game)",
+   "palette: create:polished_cut_scorchia_stairs has no property facing (ignored, as in the game)"
+  ]
+ },
+ {
+  "id": "create:train_observer",
+  "title": "Detecting Trains",
+  "items": [
+   "create:track_observer"
+  ],
+  "tags": [],
+  "file": "train_observer.json",
+  "titleId": "track_observer",
+  "notes": [
+   "palette: unknown block create:polished_cut_scorchia_stairs is loaded as air (as in the game)",
+   "palette: create:polished_cut_scorchia_stairs has no property half (ignored, as in the game)",
+   "palette: create:polished_cut_scorchia_stairs has no property waterlogged (ignored, as in the game)",
+   "palette: create:polished_cut_scorchia_stairs has no property shape (ignored, as in the game)",
+   "palette: create:polished_cut_scorchia_stairs has no property facing (ignored, as in the game)"
+  ]
+ },
+ {
+  "id": "create:display_link",
+  "title": "Setting up Display Links",
+  "items": [
+   "create:display_link"
+  ],
+  "tags": [],
+  "file": "display_link.json",
+  "titleId": "display_link"
+ },
+ {
+  "id": "create:display_link_redstone",
+  "title": "Redstone Control",
+  "items": [
+   "create:display_link"
+  ],
+  "tags": [],
+  "file": "display_link_redstone.json",
+  "titleId": "display_link_redstone"
+ },
+ {
+  "id": "create:display_board",
+  "title": "Using Display Boards",
+  "items": [
+   "create:display_board"
+  ],
+  "tags": [],
+  "file": "display_board.json",
+  "titleId": "display_board"
+ },
+ {
+  "id": "create:steam_whistle",
+  "title": "Setting up Steam Whistles",
+  "items": [
+   "create:steam_whistle"
+  ],
+  "tags": [],
+  "file": "steam_whistle.json",
+  "titleId": "steam_whistle"
+ },
+ {
+  "id": "create:steam_engine",
+  "title": "Setting up Steam Engines",
+  "items": [
+   "create:steam_engine"
+  ],
+  "tags": [],
+  "file": "steam_engine.json",
+  "titleId": "steam_engine"
+ }
+]

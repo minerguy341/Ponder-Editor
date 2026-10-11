@@ -1,0 +1,2023 @@
+{
+ "id": "create:fluid_tank/storage",
+ "schematic": "fluid_tank/storage",
+ "schematicNamespace": "create",
+ "title": "Storing Fluids in Fluid Tanks",
+ "texts": {
+  "text_1": "Fluid Tanks can be used to store large amounts of fluid",
+  "text_2": "Pipe networks can push and pull fluids from any side",
+  "text_3": "The contained fluid can be measured by a Comparator",
+  "text_4": "However, in Survival Mode Fluids cannot be added or taken manually",
+  "text_5": "You can use Basins, Item Drains and Spouts to drain or fill fluid containing items"
+ },
+ "tags": [
+  "create:fluids"
+ ],
+ "items": [
+  "create:fluid_tank"
+ ],
+ "keyframes": [
+  46,
+  196,
+  321,
+  398,
+  515
+ ],
+ "totalTicks": 659,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "FluidTankScenes.java:45"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      4,
+      0,
+      4
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "FluidTankScenes.java:46"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "FluidTankScenes.java:47"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      1,
+      2
+     ],
+     "to": [
+      3,
+      2,
+      2
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "FluidTankScenes.java:65",
+   "out": "e1"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     0,
+     -1
+    ],
+    "duration": 0
+   },
+   "src": "FluidTankScenes.java:66"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "FluidTankScenes.java:67"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      5,
+      0
+     ],
+     "to": [
+      1,
+      8,
+      1
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "FluidTankScenes.java:68",
+   "out": "e2"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     2,
+     -4,
+     3
+    ],
+    "duration": 0
+   },
+   "src": "FluidTankScenes.java:69"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "FluidTankScenes.java:70"
+  },
+  {
+   "op": "overlay.showOutline",
+   "args": {
+    "color": "green",
+    "slot": "obj:1",
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      1,
+      3
+     ],
+     "to": [
+      3,
+      4,
+      4
+     ]
+    },
+    "duration": 40
+   },
+   "src": "FluidTankScenes.java:72"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "FluidTankScenes.java:73"
+  },
+  {
+   "op": "overlay.showLine",
+   "args": {
+    "color": "green",
+    "start": [
+     3,
+     1,
+     2
+    ],
+    "end": [
+     2,
+     1,
+     3
+    ],
+    "duration": 30,
+    "big": false
+   },
+   "src": "FluidTankScenes.java:74"
+  },
+  {
+   "op": "overlay.showLine",
+   "args": {
+    "color": "green",
+    "start": [
+     3,
+     3,
+     2
+    ],
+    "end": [
+     2,
+     5,
+     3
+    ],
+    "duration": 30,
+    "big": false
+   },
+   "src": "FluidTankScenes.java:75"
+  },
+  {
+   "op": "overlay.showLine",
+   "args": {
+    "color": "green",
+    "start": [
+     4,
+     3,
+     2
+    ],
+    "end": [
+     4,
+     5,
+     3
+    ],
+    "duration": 30,
+    "big": false
+   },
+   "src": "FluidTankScenes.java:76"
+  },
+  {
+   "op": "overlay.showOutline",
+   "args": {
+    "color": "green",
+    "slot": "obj:2",
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      1,
+      1
+     ],
+     "to": [
+      3,
+      2,
+      1
+     ]
+    },
+    "duration": 40
+   },
+   "src": "FluidTankScenes.java:77"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "FluidTankScenes.java:78"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 40,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_1",
+    "pointAt": [
+     3,
+     2.5,
+     1.5
+    ],
+    "text": "Fluid Tanks can be used to store large amounts of fluid"
+   },
+   "src": "FluidTankScenes.java:80"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "FluidTankScenes.java:85"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "direction": "down"
+   },
+   "src": "FluidTankScenes.java:87"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "FluidTankScenes.java:88"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getTankInventory",
+        "a": []
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 16000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidTankScenes.java:91"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 25
+   },
+   "src": "FluidTankScenes.java:93"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     0,
+     1
+    ],
+    "duration": 10
+   },
+   "src": "FluidTankScenes.java:95"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "FluidTankScenes.java:96"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     }
+    ]
+   },
+   "src": "FluidTankScenes.java:97"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "pos",
+       "pos": [
+        1,
+        0,
+        5
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        1,
+        1,
+        2
+       ],
+       "to": [
+        2,
+        1,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        1,
+        1,
+        3
+       ],
+       "to": [
+        1,
+        1,
+        5
+       ]
+      }
+     ]
+    },
+    "direction": "east"
+   },
+   "src": "FluidTankScenes.java:98"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       3
+      ],
+      "state": {
+       "name": "create:mechanical_pump",
+       "props": {
+        "facing": "south",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "FluidTankScenes.java:99"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "FluidTankScenes.java:100"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      0,
+      5
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "FluidTankScenes.java:101"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        2,
+        1,
+        3
+       ],
+       "to": [
+        2,
+        1,
+        5
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        2,
+        2,
+        4
+       ]
+      }
+     ]
+    },
+    "direction": "west"
+   },
+   "src": "FluidTankScenes.java:102"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "FluidTankScenes.java:103"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      -1,
+      5
+     ]
+    },
+    "state": {
+     "name": "create:fluid_tank",
+     "props": {
+      "bottom": "true",
+      "shape": "window",
+      "top": "true"
+     }
+    },
+    "particles": false
+   },
+   "src": "FluidTankScenes.java:104"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     }
+    ]
+   },
+   "src": "FluidTankScenes.java:105"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "FluidTankScenes.java:107"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     1,
+     3
+    ],
+    "beType": "PumpBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "onSpeedChanged",
+        "a": [
+         0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidTankScenes.java:108"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     2,
+     0,
+     5
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getTankInventory",
+        "a": []
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 16000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidTankScenes.java:109"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "FluidTankScenes.java:111"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getTankInventory",
+        "a": []
+       },
+       {
+        "m": "drain",
+        "a": [
+         2000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidTankScenes.java:114"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "FluidTankScenes.java:116"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getTankInventory",
+        "a": []
+       },
+       {
+        "m": "drain",
+        "a": [
+         2000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidTankScenes.java:114"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "FluidTankScenes.java:116"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getTankInventory",
+        "a": []
+       },
+       {
+        "m": "drain",
+        "a": [
+         2000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidTankScenes.java:114"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "FluidTankScenes.java:116"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getTankInventory",
+        "a": []
+       },
+       {
+        "m": "drain",
+        "a": [
+         2000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidTankScenes.java:114"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "FluidTankScenes.java:116"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_2",
+    "pointAt": [
+     1.5,
+     1.5,
+     2.5
+    ],
+    "text": "Pipe networks can push and pull fluids from any side"
+   },
+   "src": "FluidTankScenes.java:119"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "FluidTankScenes.java:124"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       3
+      ],
+      "state": {
+       "name": "create:mechanical_pump",
+       "props": {
+        "facing": "north",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": true
+   },
+   "src": "FluidTankScenes.java:126"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     1,
+     3
+    ],
+    "beType": "PumpBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "onSpeedChanged",
+        "a": [
+         0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidTankScenes.java:127"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getTankInventory",
+        "a": []
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 2000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidTankScenes.java:129"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "FluidTankScenes.java:131"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getTankInventory",
+        "a": []
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 2000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidTankScenes.java:129"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "FluidTankScenes.java:131"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getTankInventory",
+        "a": []
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 2000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidTankScenes.java:129"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "FluidTankScenes.java:131"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getTankInventory",
+        "a": []
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 2000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidTankScenes.java:129"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "FluidTankScenes.java:131"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "FluidTankScenes.java:133"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      0,
+      5
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "FluidTankScenes.java:135"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        2,
+        1,
+        3
+       ],
+       "to": [
+        2,
+        1,
+        5
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        2,
+        2,
+        4
+       ]
+      }
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "FluidTankScenes.java:136"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "pos",
+       "pos": [
+        1,
+        0,
+        5
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        1,
+        1,
+        2
+       ],
+       "to": [
+        2,
+        1,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        1,
+        1,
+        3
+       ],
+       "to": [
+        1,
+        1,
+        5
+       ]
+      }
+     ]
+    },
+    "direction": "west"
+   },
+   "src": "FluidTankScenes.java:137"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "FluidTankScenes.java:138"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      1,
+      0
+     ],
+     "to": [
+      2,
+      1,
+      1
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "FluidTankScenes.java:139"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "FluidTankScenes.java:140"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     -1,
+     0,
+     0
+    ],
+    "duration": 10
+   },
+   "src": "FluidTankScenes.java:141"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "FluidTankScenes.java:142"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:comparator",
+       "props": {
+        "facing": "south",
+        "mode": "compare",
+        "powered": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "FluidTankScenes.java:143"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "NixieTubeBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       1,
+       0
+      ],
+      "nbt": {
+       "RedstoneStrength": 15
+      }
+     }
+    ]
+   },
+   "src": "FluidTankScenes.java:144"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 50,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_3",
+    "pointAt": [
+     2.5,
+     1.125,
+     1.5
+    ],
+    "text": "The contained fluid can be measured by a Comparator"
+   },
+   "src": "FluidTankScenes.java:147"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "FluidTankScenes.java:153"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      1,
+      0
+     ],
+     "to": [
+      2,
+      1,
+      1
+     ]
+    },
+    "direction": "east"
+   },
+   "src": "FluidTankScenes.java:155"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "FluidTankScenes.java:156"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     2.5,
+     2
+    ],
+    "direction": "right",
+    "duration": 40,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "[object Object]",
+    "item": {
+     "id": "minecraft:bucket",
+     "count": 1
+    }
+   },
+   "src": "FluidTankScenes.java:159"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "FluidTankScenes.java:162"
+  },
+  {
+   "op": "overlay.showOutlineWithText",
+   "args": {
+    "duration": 70,
+    "color": "red",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      1,
+      2
+     ],
+     "to": [
+      2,
+      2,
+      2
+     ]
+    },
+    "pointAt": [
+     2,
+     2.5,
+     2.5
+    ],
+    "key": "text_4",
+    "text": "However, in Survival Mode Fluids cannot be added or taken manually"
+   },
+   "src": "FluidTankScenes.java:163"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "FluidTankScenes.java:169"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     4,
+     3,
+     0
+    ],
+    "beType": "SpoutBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          4,
+          3,
+          0
+         ],
+         null
+        ]
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 16000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidTankScenes.java:170"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     0,
+     1
+    ],
+    "duration": 7
+   },
+   "src": "FluidTankScenes.java:177"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       1
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       1
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       1
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     },
+     {
+      "pos": [
+       4,
+       2,
+       1
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     },
+     {
+      "pos": [
+       4,
+       3,
+       1
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     }
+    ]
+   },
+   "src": "FluidTankScenes.java:178"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       6,
+       0,
+       1
+      ],
+      "nbt": {
+       "Speed": 8
+      }
+     }
+    ]
+   },
+   "src": "FluidTankScenes.java:179"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "FluidTankScenes.java:180"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        3,
+        1,
+        0
+       ],
+       "to": [
+        5,
+        2,
+        1
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        4,
+        1,
+        2
+       ],
+       "to": [
+        5,
+        2,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        3,
+        3,
+        0
+       ],
+       "to": [
+        5,
+        3,
+        2
+       ]
+      }
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "FluidTankScenes.java:181",
+   "out": "e3"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      6,
+      0,
+      1
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "FluidTankScenes.java:182",
+   "out": "e4"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "offset": [
+     -1,
+     0,
+     1
+    ],
+    "duration": 0
+   },
+   "src": "FluidTankScenes.java:183"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e4"
+    },
+    "offset": [
+     -1,
+     0,
+     1
+    ],
+    "duration": 0
+   },
+   "src": "FluidTankScenes.java:184"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "FluidTankScenes.java:185"
+  },
+  {
+   "op": "overlay.showOutline",
+   "args": {
+    "color": "green",
+    "slot": "obj:3",
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      1
+     ]
+    },
+    "duration": 50
+   },
+   "src": "FluidTankScenes.java:186"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "FluidTankScenes.java:187"
+  },
+  {
+   "op": "overlay.showOutline",
+   "args": {
+    "color": "green",
+    "slot": "obj:4",
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      3,
+      1
+     ]
+    },
+    "duration": 50
+   },
+   "src": "FluidTankScenes.java:188"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "FluidTankScenes.java:189"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "green",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_5",
+    "pointAt": [
+     2.5,
+     2,
+     1.5
+    ],
+    "text": "You can use Basins, Item Drains and Spouts to drain or fill fluid containing items"
+   },
+   "src": "FluidTankScenes.java:191"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "FluidTankScenes.java:197"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     3,
+     1,
+     0
+    ],
+    "insertionSide": "west",
+    "item": {
+     "id": "create:chocolate_bucket",
+     "count": 1
+    }
+   },
+   "src": "FluidTankScenes.java:202"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "FluidTankScenes.java:203"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "SpoutBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       3,
+       0
+      ],
+      "nbt": {
+       "ProcessingTicks": 20
+      }
+     }
+    ]
+   },
+   "src": "FluidTankScenes.java:204"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "FluidTankScenes.java:206"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     4,
+     1,
+     0
+    ]
+   },
+   "src": "FluidTankScenes.java:207"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     4,
+     1,
+     0
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "create:chocolate_bucket",
+     "count": 1
+    }
+   },
+   "src": "FluidTankScenes.java:208"
+  },
+  {
+   "op": "effects.emitParticles",
+   "args": {
+    "location": [
+     3.5,
+     2.0625,
+     1.5
+    ],
+    "emitter": {
+     "kind": "simple",
+     "particle": {
+      "type": "create:fluid_particle",
+      "fluid": {
+       "fluid": "create:chocolate",
+       "amount": 16000
+      }
+     },
+     "motion": [
+      0.046193551272153854,
+      0.06628819555044174,
+      -0.0518927238881588
+     ]
+    },
+    "amountPerCycle": 1,
+    "cycles": 1
+   },
+   "src": "FluidTankScenes.java:210"
+  },
+  {
+   "op": "effects.emitParticles",
+   "args": {
+    "location": [
+     3.5,
+     2.0625,
+     1.5
+    ],
+    "emitter": {
+     "kind": "simple",
+     "particle": {
+      "type": "create:fluid_particle",
+      "fluid": {
+       "fluid": "create:chocolate",
+       "amount": 16000
+      }
+     },
+     "motion": [
+      0.02126903645694256,
+      0.02748347632586956,
+      -0.03818988800048828
+     ]
+    },
+    "amountPerCycle": 1,
+    "cycles": 1
+   },
+   "src": "FluidTankScenes.java:210"
+  },
+  {
+   "op": "effects.emitParticles",
+   "args": {
+    "location": [
+     3.5,
+     2.0625,
+     1.5
+    ],
+    "emitter": {
+     "kind": "simple",
+     "particle": {
+      "type": "create:fluid_particle",
+      "fluid": {
+       "fluid": "create:chocolate",
+       "amount": 16000
+      }
+     },
+     "motion": [
+      0.010087395086884499,
+      -0.07659868150949478,
+      0.019509052857756615
+     ]
+    },
+    "amountPerCycle": 1,
+    "cycles": 1
+   },
+   "src": "FluidTankScenes.java:210"
+  },
+  {
+   "op": "effects.emitParticles",
+   "args": {
+    "location": [
+     3.5,
+     2.0625,
+     1.5
+    ],
+    "emitter": {
+     "kind": "simple",
+     "particle": {
+      "type": "create:fluid_particle",
+      "fluid": {
+       "fluid": "create:chocolate",
+       "amount": 16000
+      }
+     },
+     "motion": [
+      0.05630692467093468,
+      -0.03335632011294365,
+      -0.0494447723031044
+     ]
+    },
+    "amountPerCycle": 1,
+    "cycles": 1
+   },
+   "src": "FluidTankScenes.java:210"
+  },
+  {
+   "op": "effects.emitParticles",
+   "args": {
+    "location": [
+     3.5,
+     2.0625,
+     1.5
+    ],
+    "emitter": {
+     "kind": "simple",
+     "particle": {
+      "type": "create:fluid_particle",
+      "fluid": {
+       "fluid": "create:chocolate",
+       "amount": 16000
+      }
+     },
+     "motion": [
+      -0.022962165996432304,
+      0.022607147693634033,
+      0.09696830809116364
+     ]
+    },
+    "amountPerCycle": 1,
+    "cycles": 1
+   },
+   "src": "FluidTankScenes.java:210"
+  },
+  {
+   "op": "effects.emitParticles",
+   "args": {
+    "location": [
+     3.5,
+     2.0625,
+     1.5
+    ],
+    "emitter": {
+     "kind": "simple",
+     "particle": {
+      "type": "create:fluid_particle",
+      "fluid": {
+       "fluid": "create:chocolate",
+       "amount": 16000
+      }
+     },
+     "motion": [
+      0.0965638980269432,
+      0.07583650201559067,
+      -0.09538363665342331
+     ]
+    },
+    "amountPerCycle": 1,
+    "cycles": 1
+   },
+   "src": "FluidTankScenes.java:210"
+  },
+  {
+   "op": "effects.emitParticles",
+   "args": {
+    "location": [
+     3.5,
+     2.0625,
+     1.5
+    ],
+    "emitter": {
+     "kind": "simple",
+     "particle": {
+      "type": "create:fluid_particle",
+      "fluid": {
+       "fluid": "create:chocolate",
+       "amount": 16000
+      }
+     },
+     "motion": [
+      0.0882498249411583,
+      -0.06480465084314346,
+      -0.04500920698046684
+     ]
+    },
+    "amountPerCycle": 1,
+    "cycles": 1
+   },
+   "src": "FluidTankScenes.java:210"
+  },
+  {
+   "op": "effects.emitParticles",
+   "args": {
+    "location": [
+     3.5,
+     2.0625,
+     1.5
+    ],
+    "emitter": {
+     "kind": "simple",
+     "particle": {
+      "type": "create:fluid_particle",
+      "fluid": {
+       "fluid": "create:chocolate",
+       "amount": 16000
+      }
+     },
+     "motion": [
+      -0.03741281107068062,
+      -0.07422057539224625,
+      -0.026404857635498047
+     ]
+    },
+    "amountPerCycle": 1,
+    "cycles": 1
+   },
+   "src": "FluidTankScenes.java:210"
+  },
+  {
+   "op": "effects.emitParticles",
+   "args": {
+    "location": [
+     3.5,
+     2.0625,
+     1.5
+    ],
+    "emitter": {
+     "kind": "simple",
+     "particle": {
+      "type": "create:fluid_particle",
+      "fluid": {
+       "fluid": "create:chocolate",
+       "amount": 16000
+      }
+     },
+     "motion": [
+      -0.0706796795129776,
+      0.04103494808077812,
+      -0.09535237401723862
+     ]
+    },
+    "amountPerCycle": 1,
+    "cycles": 1
+   },
+   "src": "FluidTankScenes.java:210"
+  },
+  {
+   "op": "effects.emitParticles",
+   "args": {
+    "location": [
+     3.5,
+     2.0625,
+     1.5
+    ],
+    "emitter": {
+     "kind": "simple",
+     "particle": {
+      "type": "create:fluid_particle",
+      "fluid": {
+       "fluid": "create:chocolate",
+       "amount": 16000
+      }
+     },
+     "motion": [
+      -0.09972267597913742,
+      0.009347951970994473,
+      -0.09815503656864166
+     ]
+    },
+    "amountPerCycle": 1,
+    "cycles": 1
+   },
+   "src": "FluidTankScenes.java:210"
+  }
+ ]
+}

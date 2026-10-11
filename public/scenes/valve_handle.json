@@ -1,0 +1,902 @@
+{
+ "id": "create:valve_handle",
+ "schematic": "valve_handle",
+ "schematicNamespace": "create",
+ "title": "Precise rotation using Valve Handles",
+ "texts": {
+  "text_1": "Valve handles can be used to rotate components by a precise angle",
+  "text_2": "The angle can be configured on the input panel",
+  "text_3": "Right-Click to activate one rotation",
+  "text_4": "Sneak-Right-Click to activate it in the opposite direction",
+  "text_5": "Mind that Bearings have to be specifically told not to disassemble",
+  "text_6": "Valve handles can be dyed for aesthetic purposes"
+ },
+ "tags": [
+  "create:kinetic_sources"
+ ],
+ "items": [
+  "create:copper_valve_handle",
+  "create:white_valve_handle",
+  "create:orange_valve_handle",
+  "create:magenta_valve_handle",
+  "create:light_blue_valve_handle",
+  "create:yellow_valve_handle",
+  "create:lime_valve_handle",
+  "create:pink_valve_handle",
+  "create:gray_valve_handle",
+  "create:light_gray_valve_handle",
+  "create:cyan_valve_handle",
+  "create:purple_valve_handle",
+  "create:blue_valve_handle",
+  "create:brown_valve_handle",
+  "create:green_valve_handle",
+  "create:red_valve_handle",
+  "create:black_valve_handle"
+ ],
+ "keyframes": [
+  143,
+  230,
+  442
+ ],
+ "totalTicks": 519,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "KineticsScenes.java:932"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      4,
+      0,
+      4
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "KineticsScenes.java:933"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "KineticsScenes.java:934"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      1,
+      2
+     ],
+     "to": [
+      2,
+      2,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "KineticsScenes.java:943"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "KineticsScenes.java:944"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      2,
+      3
+     ],
+     "to": [
+      3,
+      2,
+      3
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "KineticsScenes.java:945",
+   "out": "e1"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "KineticsScenes.java:946"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      2,
+      1
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "KineticsScenes.java:948",
+   "out": "e2"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "rotation": [
+     0,
+     0,
+     45
+    ],
+    "duration": 0
+   },
+   "src": "KineticsScenes.java:949"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "KineticsScenes.java:950"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_1",
+    "pointAt": [
+     2,
+     2.5,
+     1.5
+    ],
+    "text": "Valve handles can be used to rotate components by a precise angle"
+   },
+   "src": "KineticsScenes.java:952"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "KineticsScenes.java:957"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "rotation": [
+     0,
+     0,
+     45
+    ],
+    "duration": 15
+   },
+   "src": "KineticsScenes.java:958"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "rotation": [
+     0,
+     0,
+     45
+    ],
+    "duration": 15
+   },
+   "src": "KineticsScenes.java:959"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bearing",
+    "pos": [
+     2,
+     2,
+     2
+    ],
+    "distance": 45,
+    "duration": 15
+   },
+   "src": "KineticsScenes.java:960"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       2,
+       1
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       2,
+       2,
+       2
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     }
+    ]
+   },
+   "src": "KineticsScenes.java:961"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "KineticsScenes.java:962"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       2,
+       1
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       2,
+       2,
+       2
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     }
+    ]
+   },
+   "src": "KineticsScenes.java:963"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "KineticsScenes.java:964"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "white",
+    "slot": "vec:2.5,2.5,1.75",
+    "box": {
+     "min": [
+      2.5,
+      2.5,
+      1.75
+     ],
+     "max": [
+      2.5,
+      2.5,
+      1.75
+     ]
+    },
+    "duration": 1
+   },
+   "src": "KineticsScenes.java:971"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "KineticsScenes.java:972"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "white",
+    "slot": "vec:2.5,2.5,1.75",
+    "box": {
+     "min": [
+      2.375,
+      2.375,
+      1.6875
+     ],
+     "max": [
+      2.625,
+      2.625,
+      1.8125
+     ]
+    },
+    "duration": 80
+   },
+   "src": "KineticsScenes.java:973"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     2.5,
+     1.75
+    ],
+    "direction": "down",
+    "duration": 60,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb"
+   },
+   "src": "KineticsScenes.java:974"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "KineticsScenes.java:975"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_2",
+    "pointAt": [
+     2.5,
+     2.5,
+     1.75
+    ],
+    "text": "The angle can be configured on the input panel"
+   },
+   "src": "KineticsScenes.java:977"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "KineticsScenes.java:983"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     3,
+     1.5
+    ],
+    "direction": "down",
+    "duration": 40,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb"
+   },
+   "src": "KineticsScenes.java:984"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "KineticsScenes.java:985"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "rotation": [
+     0,
+     0,
+     90
+    ],
+    "duration": 30
+   },
+   "src": "KineticsScenes.java:986"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "rotation": [
+     0,
+     0,
+     90
+    ],
+    "duration": 30
+   },
+   "src": "KineticsScenes.java:987"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bearing",
+    "pos": [
+     2,
+     2,
+     2
+    ],
+    "distance": 90,
+    "duration": 30
+   },
+   "src": "KineticsScenes.java:988"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       2,
+       1
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       2,
+       2,
+       2
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     }
+    ]
+   },
+   "src": "KineticsScenes.java:989"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "KineticsScenes.java:991"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 40,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_3",
+    "pointAt": [
+     2,
+     2.5,
+     1.5
+    ],
+    "text": "Right-Click to activate one rotation"
+   },
+   "src": "KineticsScenes.java:992"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "KineticsScenes.java:998"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       2,
+       1
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       2,
+       2,
+       2
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     }
+    ]
+   },
+   "src": "KineticsScenes.java:999"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 25
+   },
+   "src": "KineticsScenes.java:1001"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     3,
+     1.5
+    ],
+    "direction": "down",
+    "duration": 40,
+    "sneak": true,
+    "ctrl": false,
+    "icon": "rmb"
+   },
+   "src": "KineticsScenes.java:1002"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "KineticsScenes.java:1004"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "rotation": [
+     0,
+     0,
+     -90
+    ],
+    "duration": 30
+   },
+   "src": "KineticsScenes.java:1005"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "rotation": [
+     0,
+     0,
+     -90
+    ],
+    "duration": 30
+   },
+   "src": "KineticsScenes.java:1006"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bearing",
+    "pos": [
+     2,
+     2,
+     2
+    ],
+    "distance": -90,
+    "duration": 30
+   },
+   "src": "KineticsScenes.java:1007"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       2,
+       1
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     },
+     {
+      "pos": [
+       2,
+       2,
+       2
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     }
+    ]
+   },
+   "src": "KineticsScenes.java:1008"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "KineticsScenes.java:1010"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 50,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_4",
+    "pointAt": [
+     2,
+     2.5,
+     1.5
+    ],
+    "text": "Sneak-Right-Click to activate it in the opposite direction"
+   },
+   "src": "KineticsScenes.java:1011"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "KineticsScenes.java:1016"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       2,
+       1
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       2,
+       2,
+       2
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     }
+    ]
+   },
+   "src": "KineticsScenes.java:1017"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "KineticsScenes.java:1018"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "white",
+    "slot": "vec:2.5,3,2.375",
+    "box": {
+     "min": [
+      2.5,
+      3,
+      2.375
+     ],
+     "max": [
+      2.5,
+      3,
+      2.375
+     ]
+    },
+    "duration": 1
+   },
+   "src": "KineticsScenes.java:1025"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "KineticsScenes.java:1026"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "white",
+    "slot": "vec:2.5,3,2.375",
+    "box": {
+     "min": [
+      2.375,
+      3,
+      2.25
+     ],
+     "max": [
+      2.625,
+      3,
+      2.5
+     ]
+    },
+    "duration": 80
+   },
+   "src": "KineticsScenes.java:1027"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "KineticsScenes.java:1028"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_5",
+    "pointAt": [
+     2.5,
+     3,
+     2.375
+    ],
+    "text": "Mind that Bearings have to be specifically told not to disassemble"
+   },
+   "src": "KineticsScenes.java:1029"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "KineticsScenes.java:1034"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     3,
+     1.5
+    ],
+    "direction": "down",
+    "duration": 40,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "minecraft:blue_dye",
+     "count": 1
+    }
+   },
+   "src": "KineticsScenes.java:1037"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "KineticsScenes.java:1039"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       2,
+       1
+      ],
+      "state": {
+       "name": "create:blue_valve_handle",
+       "props": {
+        "facing": "north",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": true
+   },
+   "src": "KineticsScenes.java:1040"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "KineticsScenes.java:1043"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "blue",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_6",
+    "pointAt": [
+     2,
+     2.5,
+     1.5
+    ],
+    "text": "Valve handles can be dyed for aesthetic purposes"
+   },
+   "src": "KineticsScenes.java:1044"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "KineticsScenes.java:1049"
+  }
+ ]
+}

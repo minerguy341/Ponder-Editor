@@ -1,0 +1,741 @@
+{
+ "id": "create:weighted_ejector/split",
+ "schematic": "weighted_ejector/split",
+ "schematicNamespace": "create",
+ "title": "Splitting item stacks using Weighted Ejectors",
+ "texts": {
+  "text_1": "Combined with Brass Tunnels, Ejectors can split item stacks by specific amounts",
+  "text_2": "First, configure the Brass Tunnel to 'Prefer Nearest', in order to prioritize its side output",
+  "text_3": "The Stack Size set on the Ejector now determines the amount to be split off",
+  "text_4": "While a new stack of the configured size exits the side output...",
+  "text_5": "...the remainder will continue on its path"
+ },
+ "tags": [],
+ "items": [
+  "create:weighted_ejector"
+ ],
+ "keyframes": [
+  41,
+  151,
+  271,
+  408
+ ],
+ "totalTicks": 582,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "EjectorScenes.java:221"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      4,
+      0,
+      5
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "EjectorScenes.java:222"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "EjectorScenes.java:223"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      1,
+      3
+     ],
+     "to": [
+      4,
+      1,
+      5
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "EjectorScenes.java:224"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "EjectorScenes.java:225"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      2,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "EjectorScenes.java:226"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "EjectorScenes.java:227"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      2
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "EjectorScenes.java:228"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "EjectorScenes.java:229"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      1,
+      2
+     ],
+     "to": [
+      4,
+      1,
+      2
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "EjectorScenes.java:230"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "EjectorScenes.java:231"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_1",
+    "pointAt": [
+     2.5,
+     2,
+     2.5
+    ],
+    "text": "Combined with Brass Tunnels, Ejectors can split item stacks by specific amounts"
+   },
+   "src": "EjectorScenes.java:235"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "EjectorScenes.java:240"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     3,
+     3.5
+    ],
+    "direction": "down",
+    "duration": 80,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "[object Object]"
+   },
+   "src": "EjectorScenes.java:243"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "EjectorScenes.java:244"
+  },
+  {
+   "op": "overlay.highlightValueBox",
+   "args": {
+    "location": [
+     2.5,
+     3,
+     3.5
+    ],
+    "expands": [
+     0.25,
+     0.0625,
+     0.25
+    ],
+    "duration": 100
+   },
+   "src": "EjectorScenes.java:245"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "EjectorScenes.java:246"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 100,
+    "color": "blue",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_2",
+    "pointAt": [
+     2.5,
+     3,
+     3.5
+    ],
+    "text": "First, configure the Brass Tunnel to 'Prefer Nearest', in order to prioritize its side output"
+   },
+   "src": "EjectorScenes.java:247"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 110
+   },
+   "src": "EjectorScenes.java:253"
+  },
+  {
+   "op": "overlay.highlightValueBox",
+   "args": {
+    "location": [
+     2.5,
+     1.375,
+     2.0234375
+    ],
+    "expands": [
+     0.0859375,
+     0.0859375,
+     0
+    ],
+    "duration": 80
+   },
+   "src": "EjectorScenes.java:258"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "EjectorScenes.java:259"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_3",
+    "pointAt": [
+     2.5,
+     1.5,
+     2
+    ],
+    "text": "The Stack Size set on the Ejector now determines the amount to be split off"
+   },
+   "src": "EjectorScenes.java:260"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "EjectorBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "nbt": {
+       "ScrollValue": 10
+      }
+     }
+    ]
+   },
+   "src": "EjectorScenes.java:265"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "EjectorScenes.java:268"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     4.5,
+     2,
+     3.5
+    ],
+    "direction": "down",
+    "duration": 20,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "minecraft:copper_ingot",
+     "count": 1
+    }
+   },
+   "src": "EjectorScenes.java:270"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      1,
+      0
+     ],
+     "to": [
+      3,
+      1,
+      1
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "EjectorScenes.java:272"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "EjectorScenes.java:273"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     4,
+     1,
+     3
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:copper_ingot",
+     "count": 64
+    }
+   },
+   "src": "EjectorScenes.java:274",
+   "out": "e1"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "EjectorScenes.java:275"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       1,
+       0
+      ],
+      "nbt": {
+       "Speed": -2
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       1
+      ],
+      "nbt": {
+       "Speed": -2
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       1
+      ],
+      "nbt": {
+       "Speed": -2
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 2
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 2
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 2
+      }
+     },
+     {
+      "pos": [
+       0,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": 2
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": 2
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": 2
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": 2
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": 2
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 2
+      }
+     },
+     {
+      "pos": [
+       3,
+       0,
+       5
+      ],
+      "nbt": {
+       "Speed": -1
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": 2
+      }
+     }
+    ]
+   },
+   "src": "EjectorScenes.java:276"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_4",
+    "pointAt": [
+     2,
+     1.5,
+     1.5
+    ],
+    "text": "While a new stack of the configured size exits the side output..."
+   },
+   "src": "EjectorScenes.java:277"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "EjectorScenes.java:282"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_5",
+    "pointAt": [
+     0.5,
+     2,
+     3.5
+    ],
+    "text": "...the remainder will continue on its path"
+   },
+   "src": "EjectorScenes.java:283"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "EjectorScenes.java:287"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       1,
+       0
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       1
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       1
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       0,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       3,
+       0,
+       5
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     }
+    ]
+   },
+   "src": "EjectorScenes.java:288"
+  }
+ ]
+}

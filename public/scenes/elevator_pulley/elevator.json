@@ -1,0 +1,3739 @@
+{
+ "id": "create:elevator_pulley/elevator",
+ "schematic": "elevator_pulley/elevator",
+ "schematicNamespace": "create",
+ "title": "Using the Elevator Pulley",
+ "texts": {
+  "text_1": "Elevator Pulleys can move structures vertically between marked locations",
+  "text_2": "Start by constructing a cabin",
+  "text_3": "Place a pair of Redstone Contacts facing each other...",
+  "text_4": "...and glue one of them to your moving structure",
+  "text_5": "Contraption Controls can be attached to make floor selection easier",
+  "text_6": "Ensure that the pulley is supplied with Rotational Power",
+  "text_7": "Right-Clicking the pulley assembles the elevator",
+  "text_8": "The stationary contact now turns into an Elevator Contact",
+  "text_9": "Elevator Contacts represent a 'floor' and can be configured",
+  "text_10": "Any redstone contact sharing this column will be converted",
+  "text_11": "Supply a redstone pulse to call the elevator to the contact",
+  "text_12": "The movement speed depends on the rotation input on the pulley",
+  "text_13": "Scroll and click on the controls block to choose a floor while on-board",
+  "text_14": "Right-Clicking the assembled pulley will turn the cabin back into blocks",
+  "text_15": "Sliding doors attached to the cabin will open and close automatically",
+  "text_16": "Elevator Contacts emit a signal while the cabin is on their floor",
+  "text_17": "This can be useful to trigger doors or special effects upon arrival",
+  "text_18": "Display Links on any of the contacts can show the current floor of the elevator"
+ },
+ "tags": [],
+ "items": [
+  "create:elevator_pulley"
+ ],
+ "keyframes": [
+  117,
+  337,
+  504,
+  726,
+  1027,
+  1226,
+  1343,
+  1548,
+  1788
+ ],
+ "totalTicks": 1957,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 1,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "ElevatorScenes.java:31"
+  },
+  {
+   "op": "scaleSceneView",
+   "args": {
+    "factor": 0.85
+   },
+   "src": "ElevatorScenes.java:32"
+  },
+  {
+   "op": "removeShadow",
+   "args": {},
+   "src": "ElevatorScenes.java:33"
+  },
+  {
+   "op": "setSceneOffsetY",
+   "args": {
+    "yOffset": -1.5
+   },
+   "src": "ElevatorScenes.java:34"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      12,
+      0
+     ],
+     "to": [
+      5,
+      12,
+      4
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "ElevatorScenes.java:58",
+   "out": "e1"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     -12,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "ElevatorScenes.java:59"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       18,
+       2
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     }
+    ]
+   },
+   "src": "ElevatorScenes.java:60"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ElevatorScenes.java:61"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      18,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ElevatorScenes.java:63",
+   "out": "e2"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     0,
+     -16,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "ElevatorScenes.java:64"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "ElevatorScenes.java:65"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     3,
+     2.5,
+     2.5
+    ],
+    "key": "text_1",
+    "text": "Elevator Pulleys can move structures vertically between marked locations"
+   },
+   "src": "ElevatorScenes.java:67"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "ElevatorScenes.java:71"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     0,
+     4,
+     0
+    ],
+    "duration": 20
+   },
+   "src": "ElevatorScenes.java:72"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      12,
+      1
+     ],
+     "to": [
+      4,
+      12,
+      3
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": false
+   },
+   "src": "ElevatorScenes.java:73"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ElevatorScenes.java:74"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      13,
+      1
+     ],
+     "to": [
+      4,
+      13,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ElevatorScenes.java:77",
+   "out": "e3"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "offset": [
+     0,
+     -13,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "ElevatorScenes.java:78"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ElevatorScenes.java:79"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      14,
+      1
+     ],
+     "to": [
+      4,
+      16,
+      1
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e3"
+    }
+   },
+   "src": "ElevatorScenes.java:80"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "ElevatorScenes.java:81"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      14,
+      1
+     ],
+     "to": [
+      2,
+      16,
+      1
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e3"
+    }
+   },
+   "src": "ElevatorScenes.java:82"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "ElevatorScenes.java:83"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      14,
+      3
+     ],
+     "to": [
+      4,
+      16,
+      3
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e3"
+    }
+   },
+   "src": "ElevatorScenes.java:84"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "ElevatorScenes.java:85"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      14,
+      3
+     ],
+     "to": [
+      2,
+      16,
+      3
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e3"
+    }
+   },
+   "src": "ElevatorScenes.java:86"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ElevatorScenes.java:87"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      17,
+      1
+     ],
+     "to": [
+      4,
+      17,
+      3
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e3"
+    }
+   },
+   "src": "ElevatorScenes.java:88"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 40,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     2.5,
+     3,
+     1.5
+    ],
+    "key": "text_2",
+    "text": "Start by constructing a cabin"
+   },
+   "src": "ElevatorScenes.java:90"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "ElevatorScenes.java:95"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      14,
+      2
+     ]
+    },
+    "direction": "west",
+    "link": {
+     "link": "e3"
+    }
+   },
+   "src": "ElevatorScenes.java:97"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "ElevatorScenes.java:98"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      13,
+      2
+     ]
+    },
+    "direction": "east",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "ElevatorScenes.java:99"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "ElevatorScenes.java:100"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       13,
+       2
+      ],
+      "state": {
+       "name": "create:redstone_contact",
+       "props": {
+        "facing": "east",
+        "powered": "true"
+       }
+      }
+     },
+     {
+      "pos": [
+       1,
+       14,
+       2
+      ],
+      "state": {
+       "name": "create:display_link",
+       "props": {
+        "facing": "up",
+        "powered": "true"
+       }
+      }
+     },
+     {
+      "pos": [
+       2,
+       14,
+       2
+      ],
+      "state": {
+       "name": "create:redstone_contact",
+       "props": {
+        "facing": "west",
+        "powered": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ElevatorScenes.java:101"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "ElevatorScenes.java:102"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     1.5,
+     3,
+     1.5
+    ],
+    "key": "text_3",
+    "text": "Place a pair of Redstone Contacts facing each other..."
+   },
+   "src": "ElevatorScenes.java:104"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 55
+   },
+   "src": "ElevatorScenes.java:108"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     4.5,
+     3.5,
+     1.5
+    ],
+    "direction": "right",
+    "duration": 60,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "create:super_glue",
+     "count": 1
+    }
+   },
+   "src": "ElevatorScenes.java:114"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "ElevatorScenes.java:116"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "green",
+    "slot": "obj:1",
+    "box": {
+     "min": [
+      3,
+      4,
+      2
+     ],
+     "max": [
+      4,
+      5,
+      3
+     ]
+    },
+    "duration": 5
+   },
+   "src": "ElevatorScenes.java:117"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "ElevatorScenes.java:118"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "green",
+    "slot": "obj:1",
+    "box": {
+     "min": [
+      2,
+      0,
+      1
+     ],
+     "max": [
+      5,
+      5,
+      4
+     ]
+    },
+    "duration": 90
+   },
+   "src": "ElevatorScenes.java:119"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ElevatorScenes.java:120"
+  },
+  {
+   "op": "overlay.showOutlineWithText",
+   "args": {
+    "duration": 80,
+    "color": "green",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      2
+     ]
+    },
+    "pointAt": [
+     1.5,
+     3,
+     1.5
+    ],
+    "key": "text_4",
+    "text": "...and glue one of them to your moving structure"
+   },
+   "src": "ElevatorScenes.java:122"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "ElevatorScenes.java:127"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      14,
+      2
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e3"
+    }
+   },
+   "src": "ElevatorScenes.java:129"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "ElevatorScenes.java:130"
+  },
+  {
+   "op": "effects.superGlue",
+   "args": {
+    "pos": [
+     4,
+     1,
+     2
+    ],
+    "side": "down",
+    "fullBlock": true
+   },
+   "src": "ElevatorScenes.java:131"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     4.5,
+     2,
+     2.5
+    ],
+    "key": "text_5",
+    "text": "Contraption Controls can be attached to make floor selection easier"
+   },
+   "src": "ElevatorScenes.java:133"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "ElevatorScenes.java:138"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      18,
+      2
+     ],
+     "to": [
+      5,
+      18,
+      2
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "ElevatorScenes.java:140"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        6,
+        0,
+        3
+       ],
+       "to": [
+        6,
+        16,
+        3
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        5,
+        17,
+        3
+       ],
+       "to": [
+        6,
+        17,
+        3
+       ]
+      }
+     ]
+    },
+    "direction": "up",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "ElevatorScenes.java:141"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ElevatorScenes.java:142"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       18,
+       2
+      ],
+      "nbt": {
+       "Speed": 64
+      }
+     }
+    ]
+   },
+   "src": "ElevatorScenes.java:143"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ElevatorScenes.java:144"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     3,
+     6.5,
+     2.5
+    ],
+    "key": "text_6",
+    "text": "Ensure that the pulley is supplied with Rotational Power"
+   },
+   "src": "ElevatorScenes.java:146"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 75
+   },
+   "src": "ElevatorScenes.java:150"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3.5,
+     6.5,
+     2
+    ],
+    "direction": "right",
+    "duration": 60,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb"
+   },
+   "src": "ElevatorScenes.java:152"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "ElevatorScenes.java:154"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     3,
+     6,
+     2
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "ElevatorScenes.java:155"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       13,
+       2
+      ],
+      "state": {
+       "name": "create:redstone_contact",
+       "props": {
+        "facing": "east",
+        "powered": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ElevatorScenes.java:156"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      13,
+      2
+     ]
+    },
+    "state": {
+     "name": "create:elevator_contact",
+     "props": {
+      "calling": "false",
+      "facing": "east",
+      "powered": "false",
+      "powering": "true"
+     }
+    },
+    "particles": false
+   },
+   "src": "ElevatorScenes.java:157"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "pulley",
+    "pos": [
+     3,
+     18,
+     2
+    ],
+    "distance": 1,
+    "duration": 0
+   },
+   "src": "ElevatorScenes.java:160"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 50,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     3,
+     6.5,
+     2.5
+    ],
+    "key": "text_7",
+    "text": "Right-Clicking the pulley assembles the elevator"
+   },
+   "src": "ElevatorScenes.java:162"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "ElevatorScenes.java:167"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     1.5,
+     2,
+     2.5
+    ],
+    "key": "text_8",
+    "text": "The stationary contact now turns into an Elevator Contact"
+   },
+   "src": "ElevatorScenes.java:169"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "ElevatorScenes.java:173"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     1.5,
+     2,
+     2.5
+    ],
+    "direction": "down",
+    "duration": 60,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb"
+   },
+   "src": "ElevatorScenes.java:175"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "ElevatorScenes.java:177"
+  },
+  {
+   "op": "overlay.showOutlineWithText",
+   "args": {
+    "duration": 60,
+    "color": "blue",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      2
+     ]
+    },
+    "pointAt": [
+     1.5,
+     2,
+     2.5
+    ],
+    "key": "text_9",
+    "text": "Elevator Contacts represent a 'floor' and can be configured"
+   },
+   "src": "ElevatorScenes.java:178"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 75
+   },
+   "src": "ElevatorScenes.java:183"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "offset": [
+     0,
+     7,
+     0
+    ],
+    "duration": 15
+   },
+   "src": "ElevatorScenes.java:185"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     7,
+     0
+    ],
+    "duration": 15
+   },
+   "src": "ElevatorScenes.java:186"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     0,
+     7,
+     0
+    ],
+    "duration": 15
+   },
+   "src": "ElevatorScenes.java:187"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      6,
+      1
+     ],
+     "to": [
+      4,
+      6,
+      3
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": false
+   },
+   "src": "ElevatorScenes.java:189"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "ElevatorScenes.java:190"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      6,
+      0
+     ],
+     "to": [
+      5,
+      6,
+      4
+     ]
+    },
+    "direction": "east",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "ElevatorScenes.java:191"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ElevatorScenes.java:192"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      7,
+      2
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "ElevatorScenes.java:193"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ElevatorScenes.java:194"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     1,
+     2,
+     2
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "ElevatorScenes.java:195"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      7,
+      2
+     ]
+    },
+    "state": {
+     "name": "create:elevator_contact",
+     "props": {
+      "calling": "false",
+      "facing": "east",
+      "powered": "false",
+      "powering": "false"
+     }
+    },
+    "particles": false
+   },
+   "src": "ElevatorScenes.java:196"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "ElevatorScenes.java:198"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "white",
+    "slot": "obj:2",
+    "box": {
+     "min": [
+      1,
+      8,
+      2
+     ],
+     "max": [
+      2,
+      9,
+      3
+     ]
+    },
+    "duration": 5
+   },
+   "src": "ElevatorScenes.java:201"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "ElevatorScenes.java:202"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "white",
+    "slot": "obj:2",
+    "box": {
+     "min": [
+      1,
+      2,
+      2
+     ],
+     "max": [
+      2,
+      9,
+      3
+     ]
+    },
+    "duration": 90
+   },
+   "src": "ElevatorScenes.java:203"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ElevatorScenes.java:204"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     1.5,
+     3,
+     2.5
+    ],
+    "key": "text_10",
+    "text": "Any redstone contact sharing this column will be converted"
+   },
+   "src": "ElevatorScenes.java:206"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "ElevatorScenes.java:210"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      7,
+      0
+     ],
+     "to": [
+      1,
+      7,
+      1
+     ]
+    },
+    "direction": "south",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "ElevatorScenes.java:211"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "ElevatorScenes.java:212"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       7,
+       0
+      ],
+      "state": {
+       "name": "minecraft:stone_button",
+       "props": {
+        "face": "floor",
+        "facing": "south",
+        "powered": "true"
+       }
+      }
+     },
+     {
+      "pos": [
+       1,
+       7,
+       1
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "15",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ElevatorScenes.java:214"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     1,
+     2,
+     0
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "ElevatorScenes.java:215"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       7,
+       2
+      ],
+      "state": {
+       "name": "create:elevator_contact",
+       "props": {
+        "calling": "true",
+        "facing": "east",
+        "powered": "false",
+        "powering": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ElevatorScenes.java:216"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       13,
+       2
+      ],
+      "state": {
+       "name": "create:elevator_contact",
+       "props": {
+        "calling": "false",
+        "facing": "east",
+        "powered": "false",
+        "powering": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ElevatorScenes.java:217"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "offset": [
+     0,
+     -6,
+     0
+    ],
+    "duration": 60
+   },
+   "src": "ElevatorScenes.java:218"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "pulley",
+    "pos": [
+     3,
+     18,
+     2
+    ],
+    "distance": 6,
+    "duration": 60
+   },
+   "src": "ElevatorScenes.java:219"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "ElevatorScenes.java:220"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       7,
+       0
+      ],
+      "state": {
+       "name": "minecraft:stone_button",
+       "props": {
+        "face": "floor",
+        "facing": "south",
+        "powered": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       1,
+       7,
+       1
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "0",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ElevatorScenes.java:221"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ElevatorScenes.java:222"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     1.5,
+     2,
+     0.5
+    ],
+    "key": "text_11",
+    "text": "Supply a redstone pulse to call the elevator to the contact"
+   },
+   "src": "ElevatorScenes.java:224"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "ElevatorScenes.java:229"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       7,
+       2
+      ],
+      "state": {
+       "name": "create:elevator_contact",
+       "props": {
+        "calling": "false",
+        "facing": "east",
+        "powered": "false",
+        "powering": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ElevatorScenes.java:230"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       7,
+       2
+      ],
+      "state": {
+       "name": "create:elevator_contact",
+       "props": {
+        "calling": "false",
+        "facing": "east",
+        "powered": "false",
+        "powering": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ElevatorScenes.java:231"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       7,
+       1
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "15",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ElevatorScenes.java:232"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "ElevatorScenes.java:233"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     2.5,
+     3.5,
+     3.5
+    ],
+    "key": "text_12",
+    "text": "The movement speed depends on the rotation input on the pulley"
+   },
+   "src": "ElevatorScenes.java:235"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "ElevatorScenes.java:239"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ElevatorScenes.java:241"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     4.5,
+     3,
+     2.5
+    ],
+    "direction": "down",
+    "duration": 60,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "scroll"
+   },
+   "src": "ElevatorScenes.java:243"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "ElevatorScenes.java:245"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 90,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     4.5,
+     3,
+     2.5
+    ],
+    "key": "text_13",
+    "text": "Scroll and click on the controls block to choose a floor while on-board"
+   },
+   "src": "ElevatorScenes.java:246"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 85
+   },
+   "src": "ElevatorScenes.java:250"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     4.5,
+     3,
+     2.5
+    ],
+    "direction": "down",
+    "duration": 10,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb"
+   },
+   "src": "ElevatorScenes.java:252"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "ElevatorScenes.java:254"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       7,
+       2
+      ],
+      "state": {
+       "name": "create:elevator_contact",
+       "props": {
+        "calling": "false",
+        "facing": "east",
+        "powered": "false",
+        "powering": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ElevatorScenes.java:255"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       13,
+       2
+      ],
+      "state": {
+       "name": "create:elevator_contact",
+       "props": {
+        "calling": "true",
+        "facing": "east",
+        "powered": "false",
+        "powering": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ElevatorScenes.java:256"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       7,
+       1
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "0",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ElevatorScenes.java:257"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     -7,
+     0
+    ],
+    "duration": 60
+   },
+   "src": "ElevatorScenes.java:258"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     0,
+     -7,
+     0
+    ],
+    "duration": 60
+   },
+   "src": "ElevatorScenes.java:259"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "offset": [
+     0,
+     -1,
+     0
+    ],
+    "duration": 60
+   },
+   "src": "ElevatorScenes.java:260"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "pulley",
+    "pos": [
+     3,
+     18,
+     2
+    ],
+    "distance": -6,
+    "duration": 60
+   },
+   "src": "ElevatorScenes.java:261"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "ElevatorScenes.java:262"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       13,
+       2
+      ],
+      "state": {
+       "name": "create:elevator_contact",
+       "props": {
+        "calling": "true",
+        "facing": "east",
+        "powered": "false",
+        "powering": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ElevatorScenes.java:264"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       13,
+       2
+      ],
+      "state": {
+       "name": "create:elevator_contact",
+       "props": {
+        "calling": "false",
+        "facing": "east",
+        "powered": "false",
+        "powering": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ElevatorScenes.java:265"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "ElevatorScenes.java:266"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3.5,
+     6.5,
+     2
+    ],
+    "direction": "right",
+    "duration": 60,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb"
+   },
+   "src": "ElevatorScenes.java:268"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "ElevatorScenes.java:270"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     3,
+     6,
+     2
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "ElevatorScenes.java:271"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "pulley",
+    "pos": [
+     3,
+     18,
+     2
+    ],
+    "distance": -1,
+    "duration": 0
+   },
+   "src": "ElevatorScenes.java:272"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     3,
+     6.5,
+     2.5
+    ],
+    "key": "text_14",
+    "text": "Right-Clicking the assembled pulley will turn the cabin back into blocks"
+   },
+   "src": "ElevatorScenes.java:274"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "ElevatorScenes.java:279"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      14,
+      1
+     ],
+     "to": [
+      3,
+      15,
+      1
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e3"
+    }
+   },
+   "src": "ElevatorScenes.java:281"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "ElevatorScenes.java:282"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3.5,
+     6.5,
+     2
+    ],
+    "direction": "right",
+    "duration": 60,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb"
+   },
+   "src": "ElevatorScenes.java:284"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "ElevatorScenes.java:286"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     3,
+     6,
+     2
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "ElevatorScenes.java:287"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "pulley",
+    "pos": [
+     3,
+     18,
+     2
+    ],
+    "distance": 1,
+    "duration": 0
+   },
+   "src": "ElevatorScenes.java:288"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       14,
+       1
+      ],
+      "state": {
+       "name": "create:train_door",
+       "props": {
+        "facing": "south",
+        "half": "lower",
+        "hinge": "left",
+        "open": "true",
+        "powered": "false",
+        "visible": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ElevatorScenes.java:289"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       14,
+       1
+      ],
+      "state": {
+       "name": "create:train_door",
+       "props": {
+        "facing": "south",
+        "half": "lower",
+        "hinge": "left",
+        "open": "true",
+        "powered": "false",
+        "visible": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ElevatorScenes.java:290"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       15,
+       1
+      ],
+      "state": {
+       "name": "create:train_door",
+       "props": {
+        "facing": "south",
+        "half": "upper",
+        "hinge": "left",
+        "open": "false",
+        "powered": "false",
+        "visible": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ElevatorScenes.java:291"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     3.5,
+     1.5,
+     1
+    ],
+    "key": "text_15",
+    "text": "Sliding doors attached to the cabin will open and close automatically"
+   },
+   "src": "ElevatorScenes.java:293"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "ElevatorScenes.java:298"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "offset": [
+     0,
+     13,
+     0
+    ],
+    "duration": 15
+   },
+   "src": "ElevatorScenes.java:300"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     13,
+     0
+    ],
+    "duration": 15
+   },
+   "src": "ElevatorScenes.java:301"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     0,
+     13,
+     0
+    ],
+    "duration": 15
+   },
+   "src": "ElevatorScenes.java:302"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      0,
+      1
+     ],
+     "to": [
+      4,
+      0,
+      3
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": false
+   },
+   "src": "ElevatorScenes.java:303"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "ElevatorScenes.java:304"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      0,
+      0
+     ],
+     "to": [
+      5,
+      0,
+      4
+     ]
+    },
+    "direction": "east",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "ElevatorScenes.java:305"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ElevatorScenes.java:306"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      2
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "ElevatorScenes.java:307"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ElevatorScenes.java:308"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     1,
+     2,
+     2
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "ElevatorScenes.java:309"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      2
+     ]
+    },
+    "state": {
+     "name": "create:elevator_contact",
+     "props": {
+      "calling": "false",
+      "facing": "east",
+      "powered": "false",
+      "powering": "false"
+     }
+    },
+    "particles": false
+   },
+   "src": "ElevatorScenes.java:310"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ElevatorScenes.java:312"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      1,
+      0
+     ],
+     "to": [
+      1,
+      1,
+      1
+     ]
+    },
+    "direction": "south",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "ElevatorScenes.java:313"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "ElevatorScenes.java:314"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       0
+      ],
+      "state": {
+       "name": "minecraft:stone_button",
+       "props": {
+        "face": "floor",
+        "facing": "south",
+        "powered": "true"
+       }
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "15",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ElevatorScenes.java:316"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     1,
+     2,
+     0
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "ElevatorScenes.java:317"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       2
+      ],
+      "state": {
+       "name": "create:elevator_contact",
+       "props": {
+        "calling": "true",
+        "facing": "east",
+        "powered": "false",
+        "powering": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ElevatorScenes.java:318"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       13,
+       2
+      ],
+      "state": {
+       "name": "create:elevator_contact",
+       "props": {
+        "calling": "false",
+        "facing": "east",
+        "powered": "false",
+        "powering": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ElevatorScenes.java:319"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "offset": [
+     0,
+     -12,
+     0
+    ],
+    "duration": 50
+   },
+   "src": "ElevatorScenes.java:320"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "pulley",
+    "pos": [
+     3,
+     18,
+     2
+    ],
+    "distance": 12,
+    "duration": 50
+   },
+   "src": "ElevatorScenes.java:321"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       14,
+       1
+      ],
+      "state": {
+       "name": "create:train_door",
+       "props": {
+        "facing": "south",
+        "half": "lower",
+        "hinge": "left",
+        "open": "false",
+        "powered": "false",
+        "visible": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ElevatorScenes.java:322"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       14,
+       1
+      ],
+      "state": {
+       "name": "create:train_door",
+       "props": {
+        "facing": "south",
+        "half": "lower",
+        "hinge": "left",
+        "open": "false",
+        "powered": "false",
+        "visible": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ElevatorScenes.java:323"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       15,
+       1
+      ],
+      "state": {
+       "name": "create:train_door",
+       "props": {
+        "facing": "south",
+        "half": "upper",
+        "hinge": "left",
+        "open": "false",
+        "powered": "false",
+        "visible": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ElevatorScenes.java:324"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "ElevatorScenes.java:325"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       0
+      ],
+      "state": {
+       "name": "minecraft:stone_button",
+       "props": {
+        "face": "floor",
+        "facing": "south",
+        "powered": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "0",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ElevatorScenes.java:327"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      2
+     ],
+     "to": [
+      0,
+      1,
+      2
+     ]
+    },
+    "direction": "east",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "ElevatorScenes.java:328"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "ElevatorScenes.java:329"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       2
+      ],
+      "state": {
+       "name": "create:elevator_contact",
+       "props": {
+        "calling": "false",
+        "facing": "east",
+        "powered": "false",
+        "powering": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ElevatorScenes.java:331"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       2
+      ],
+      "state": {
+       "name": "create:elevator_contact",
+       "props": {
+        "calling": "false",
+        "facing": "east",
+        "powered": "false",
+        "powering": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ElevatorScenes.java:332"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "15",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ElevatorScenes.java:333"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       0,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "side",
+        "north": "none",
+        "power": "15",
+        "south": "none",
+        "west": "side"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ElevatorScenes.java:334"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       14,
+       1
+      ],
+      "state": {
+       "name": "create:train_door",
+       "props": {
+        "facing": "south",
+        "half": "lower",
+        "hinge": "left",
+        "open": "true",
+        "powered": "false",
+        "visible": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ElevatorScenes.java:335"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       14,
+       1
+      ],
+      "state": {
+       "name": "create:train_door",
+       "props": {
+        "facing": "south",
+        "half": "lower",
+        "hinge": "left",
+        "open": "true",
+        "powered": "false",
+        "visible": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ElevatorScenes.java:336"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       15,
+       1
+      ],
+      "state": {
+       "name": "create:train_door",
+       "props": {
+        "facing": "south",
+        "half": "upper",
+        "hinge": "left",
+        "open": "false",
+        "powered": "false",
+        "visible": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ElevatorScenes.java:337"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "ElevatorScenes.java:338"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     0.5,
+     2,
+     2.5
+    ],
+    "key": "text_16",
+    "text": "Elevator Contacts emit a signal while the cabin is on their floor"
+   },
+   "src": "ElevatorScenes.java:340"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "ElevatorScenes.java:345"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     0.5,
+     2,
+     2.5
+    ],
+    "key": "text_17",
+    "text": "This can be useful to trigger doors or special effects upon arrival"
+   },
+   "src": "ElevatorScenes.java:347"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "ElevatorScenes.java:351"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      13,
+      0
+     ]
+    },
+    "state": {
+     "name": "create:green_nixie_tube",
+     "props": {
+      "double_face": "floor",
+      "facing": "west",
+      "waterlogged": "false"
+     }
+    },
+    "particles": false
+   },
+   "src": "ElevatorScenes.java:353"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     -13,
+     0
+    ],
+    "duration": 20
+   },
+   "src": "ElevatorScenes.java:357"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     0,
+     -13,
+     0
+    ],
+    "duration": 20
+   },
+   "src": "ElevatorScenes.java:358"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "offset": [
+     0,
+     -13,
+     0
+    ],
+    "duration": 20
+   },
+   "src": "ElevatorScenes.java:359"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "ElevatorScenes.java:360"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      13,
+      0
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "ElevatorScenes.java:361"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "ElevatorScenes.java:362"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     4.5,
+     2,
+     0.5
+    ],
+    "direction": "down",
+    "duration": 15,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:display_link",
+     "count": 1
+    }
+   },
+   "src": "ElevatorScenes.java:363"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       14,
+       2
+      ],
+      "state": {
+       "name": "create:display_link",
+       "props": {
+        "facing": "up",
+        "powered": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ElevatorScenes.java:366"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "ElevatorScenes.java:367"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      14,
+      2
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "ElevatorScenes.java:368"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     14,
+     2
+    ],
+    "beType": "LinkWithBulbBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "pulse",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ElevatorScenes.java:369"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "NixieTubeBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       13,
+       0
+      ],
+      "nbt": {
+       "RawCustomText": "0F",
+       "CustomText": null
+      }
+     }
+    ]
+   },
+   "src": "ElevatorScenes.java:370"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 90,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     1.5,
+     2.5,
+     2.5
+    ],
+    "key": "text_18",
+    "text": "Display Links on any of the contacts can show the current floor of the elevator"
+   },
+   "src": "ElevatorScenes.java:376"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "ElevatorScenes.java:381"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      13,
+      0
+     ],
+     "to": [
+      1,
+      13,
+      1
+     ]
+    },
+    "direction": "south",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "ElevatorScenes.java:383"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "ElevatorScenes.java:384"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       13,
+       0
+      ],
+      "state": {
+       "name": "minecraft:stone_button",
+       "props": {
+        "face": "floor",
+        "facing": "south",
+        "powered": "true"
+       }
+      }
+     },
+     {
+      "pos": [
+       1,
+       13,
+       1
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "15",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ElevatorScenes.java:386"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     1,
+     2,
+     0
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "ElevatorScenes.java:387"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       13,
+       2
+      ],
+      "state": {
+       "name": "create:elevator_contact",
+       "props": {
+        "calling": "true",
+        "facing": "east",
+        "powered": "false",
+        "powering": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ElevatorScenes.java:388"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       2
+      ],
+      "state": {
+       "name": "create:elevator_contact",
+       "props": {
+        "calling": "false",
+        "facing": "east",
+        "powered": "false",
+        "powering": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ElevatorScenes.java:389"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "offset": [
+     0,
+     12,
+     0
+    ],
+    "duration": 70
+   },
+   "src": "ElevatorScenes.java:390"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "pulley",
+    "pos": [
+     3,
+     18,
+     2
+    ],
+    "distance": -12,
+    "duration": 70
+   },
+   "src": "ElevatorScenes.java:391"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       14,
+       1
+      ],
+      "state": {
+       "name": "create:train_door",
+       "props": {
+        "facing": "south",
+        "half": "lower",
+        "hinge": "left",
+        "open": "false",
+        "powered": "false",
+        "visible": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ElevatorScenes.java:392"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       14,
+       1
+      ],
+      "state": {
+       "name": "create:train_door",
+       "props": {
+        "facing": "south",
+        "half": "lower",
+        "hinge": "left",
+        "open": "false",
+        "powered": "false",
+        "visible": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ElevatorScenes.java:393"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       15,
+       1
+      ],
+      "state": {
+       "name": "create:train_door",
+       "props": {
+        "facing": "south",
+        "half": "upper",
+        "hinge": "left",
+        "open": "false",
+        "powered": "false",
+        "visible": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ElevatorScenes.java:394"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "ElevatorScenes.java:395"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       13,
+       0
+      ],
+      "state": {
+       "name": "minecraft:stone_button",
+       "props": {
+        "face": "floor",
+        "facing": "south",
+        "powered": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       1,
+       13,
+       1
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "0",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ElevatorScenes.java:397"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ElevatorScenes.java:398"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     14,
+     2
+    ],
+    "beType": "LinkWithBulbBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "pulse",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ElevatorScenes.java:400"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "NixieTubeBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       13,
+       0
+      ],
+      "nbt": {
+       "RawCustomText": "1F"
+      }
+     }
+    ]
+   },
+   "src": "ElevatorScenes.java:401"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "ElevatorScenes.java:407"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       13,
+       2
+      ],
+      "state": {
+       "name": "create:elevator_contact",
+       "props": {
+        "calling": "false",
+        "facing": "east",
+        "powered": "false",
+        "powering": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ElevatorScenes.java:409"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       13,
+       2
+      ],
+      "state": {
+       "name": "create:elevator_contact",
+       "props": {
+        "calling": "false",
+        "facing": "east",
+        "powered": "false",
+        "powering": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ElevatorScenes.java:410"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       13,
+       1
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "15",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ElevatorScenes.java:411"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       14,
+       1
+      ],
+      "state": {
+       "name": "create:train_door",
+       "props": {
+        "facing": "south",
+        "half": "lower",
+        "hinge": "left",
+        "open": "true",
+        "powered": "false",
+        "visible": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ElevatorScenes.java:412"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       14,
+       1
+      ],
+      "state": {
+       "name": "create:train_door",
+       "props": {
+        "facing": "south",
+        "half": "lower",
+        "hinge": "left",
+        "open": "true",
+        "powered": "false",
+        "visible": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ElevatorScenes.java:413"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       15,
+       1
+      ],
+      "state": {
+       "name": "create:train_door",
+       "props": {
+        "facing": "south",
+        "half": "upper",
+        "hinge": "left",
+        "open": "false",
+        "powered": "false",
+        "visible": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ElevatorScenes.java:414"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     14,
+     2
+    ],
+    "beType": "LinkWithBulbBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "pulse",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ElevatorScenes.java:416"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "NixieTubeBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       13,
+       0
+      ],
+      "nbt": {
+       "RawCustomText": "2F"
+      }
+     }
+    ]
+   },
+   "src": "ElevatorScenes.java:417"
+  }
+ ]
+}

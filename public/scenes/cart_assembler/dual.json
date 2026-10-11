@@ -1,0 +1,1115 @@
+{
+ "id": "create:cart_assembler/dual",
+ "schematic": "cart_assembler/dual",
+ "schematicNamespace": "create",
+ "title": "Assembling Carriage Contraptions",
+ "texts": {
+  "text_1": "Whenever two Cart Assemblers share an attached structure...",
+  "text_2": "Powering either of them will create a Carriage Contraption",
+  "text_3": "The carts will behave like those connected via Minecart Coupling"
+ },
+ "tags": [],
+ "items": [
+  "create:cart_assembler"
+ ],
+ "keyframes": [
+  79,
+  268
+ ],
+ "totalTicks": 342,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 6
+   },
+   "src": "CartAssemblerScenes.java:307"
+  },
+  {
+   "op": "scaleSceneView",
+   "args": {
+    "factor": 0.9
+   },
+   "src": "CartAssemblerScenes.java:308"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      5,
+      0,
+      5
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "CartAssemblerScenes.java:309"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "CartAssemblerScenes.java:310"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      0
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "CartAssemblerScenes.java:313"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "CartAssemblerScenes.java:314"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      1
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "CartAssemblerScenes.java:313"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "CartAssemblerScenes.java:314"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "CartAssemblerScenes.java:313"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "CartAssemblerScenes.java:314"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "CartAssemblerScenes.java:313"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "CartAssemblerScenes.java:314"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      4
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "CartAssemblerScenes.java:313"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "CartAssemblerScenes.java:314"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      4
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "CartAssemblerScenes.java:317"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "CartAssemblerScenes.java:318"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      4
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "CartAssemblerScenes.java:317"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "CartAssemblerScenes.java:318"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      1,
+      4
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "CartAssemblerScenes.java:317"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "CartAssemblerScenes.java:318"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      5,
+      1,
+      4
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "CartAssemblerScenes.java:317"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "CartAssemblerScenes.java:318"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "CartAssemblerScenes.java:325"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      1,
+      2
+     ],
+     "to": [
+      2,
+      1,
+      3
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "CartAssemblerScenes.java:326"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "CartAssemblerScenes.java:327"
+  },
+  {
+   "op": "special.createCart",
+   "args": {
+    "location": [
+     2.5,
+     1,
+     4.5
+    ],
+    "angle": 0,
+    "cartType": "Minecart"
+   },
+   "src": "CartAssemblerScenes.java:329",
+   "out": "e1"
+  },
+  {
+   "op": "special.createCart",
+   "args": {
+    "location": [
+     5.5,
+     1,
+     4.5
+    ],
+    "angle": 0,
+    "cartType": "MinecartChest"
+   },
+   "src": "CartAssemblerScenes.java:331",
+   "out": "e2"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "CartAssemblerScenes.java:332"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      4
+     ]
+    },
+    "state": {
+     "name": "create:cart_assembler",
+     "props": {
+      "backwards": "false",
+      "powered": "false",
+      "rail_type": "controller_rail",
+      "shape": "east_west",
+      "waterlogged": "false"
+     }
+    },
+    "particles": true
+   },
+   "src": "CartAssemblerScenes.java:333"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "CartAssemblerScenes.java:336"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      5,
+      1,
+      4
+     ]
+    },
+    "state": {
+     "name": "create:cart_assembler",
+     "props": {
+      "backwards": "false",
+      "powered": "false",
+      "rail_type": "regular",
+      "shape": "east_west",
+      "waterlogged": "false"
+     }
+    },
+    "particles": true
+   },
+   "src": "CartAssemblerScenes.java:337"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "CartAssemblerScenes.java:340"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      2,
+      4
+     ],
+     "to": [
+      5,
+      2,
+      4
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "CartAssemblerScenes.java:342",
+   "out": "e3"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "CartAssemblerScenes.java:343"
+  },
+  {
+   "op": "overlay.showOutline",
+   "args": {
+    "color": "green",
+    "slot": "obj:1",
+    "selection": {
+     "t": "pos",
+     "pos": [
+      5,
+      1,
+      4
+     ]
+    },
+    "duration": 60
+   },
+   "src": "CartAssemblerScenes.java:344"
+  },
+  {
+   "op": "overlay.showOutlineWithText",
+   "args": {
+    "duration": 60,
+    "color": "green",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      4
+     ]
+    },
+    "pointAt": [
+     2.5,
+     2.5,
+     4
+    ],
+    "key": "text_1",
+    "text": "Whenever two Cart Assemblers share an attached structure..."
+   },
+   "src": "CartAssemblerScenes.java:345"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "CartAssemblerScenes.java:351"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     2.5,
+     1.5,
+     4
+    ],
+    "key": "text_2",
+    "text": "Powering either of them will create a Carriage Contraption"
+   },
+   "src": "CartAssemblerScenes.java:353"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "CartAssemblerScenes.java:357"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "CartAssemblerScenes.java:359"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "floor",
+        "facing": "east",
+        "powered": "true"
+       }
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       3
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "15",
+        "south": "none",
+        "west": "none"
+       }
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       4
+      ],
+      "state": {
+       "name": "create:cart_assembler",
+       "props": {
+        "backwards": "false",
+        "powered": "true",
+        "rail_type": "controller_rail",
+        "shape": "east_west",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "CartAssemblerScenes.java:360"
+  },
+  {
+   "op": "world.showIndependentSectionImmediately",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      1,
+      5
+     ],
+     "to": [
+      5,
+      1,
+      5
+     ]
+    }
+   },
+   "src": "CartAssemblerScenes.java:362",
+   "out": "e4"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e4"
+    },
+    "offset": [
+     0,
+     0,
+     -1
+    ],
+    "duration": 0
+   },
+   "src": "CartAssemblerScenes.java:363"
+  },
+  {
+   "op": "world.configureCenterOfRotation",
+   "args": {
+    "link": {
+     "link": "e4"
+    },
+    "anchor": [
+     2.5,
+     2.5,
+     5.5
+    ]
+   },
+   "src": "CartAssemblerScenes.java:364"
+  },
+  {
+   "op": "world.configureCenterOfRotation",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "anchor": [
+     2.5,
+     2.5,
+     4.5
+    ]
+   },
+   "src": "CartAssemblerScenes.java:365"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "CartAssemblerScenes.java:366"
+  },
+  {
+   "op": "special.moveCart",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     -0.5,
+     0,
+     0
+    ],
+    "duration": 5
+   },
+   "src": "CartAssemblerScenes.java:369"
+  },
+  {
+   "op": "special.moveCart",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     -0.5,
+     0,
+     0
+    ],
+    "duration": 5
+   },
+   "src": "CartAssemblerScenes.java:370"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "offset": [
+     -0.5,
+     0,
+     0
+    ],
+    "duration": 5
+   },
+   "src": "CartAssemblerScenes.java:371"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e4"
+    },
+    "offset": [
+     -0.5,
+     0,
+     0
+    ],
+    "duration": 5
+   },
+   "src": "CartAssemblerScenes.java:372"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "CartAssemblerScenes.java:373"
+  },
+  {
+   "op": "special.rotateCart",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "yRotation": -45,
+    "duration": 2
+   },
+   "src": "CartAssemblerScenes.java:374"
+  },
+  {
+   "op": "special.moveCart",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     -0.3,
+     0,
+     0
+    ],
+    "duration": 8
+   },
+   "src": "CartAssemblerScenes.java:375"
+  },
+  {
+   "op": "special.moveCart",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     -0.5,
+     0,
+     -0.5
+    ],
+    "duration": 8
+   },
+   "src": "CartAssemblerScenes.java:377"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e4"
+    },
+    "offset": [
+     -0.5,
+     0,
+     -0.5
+    ],
+    "duration": 8
+   },
+   "src": "CartAssemblerScenes.java:378"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "offset": [
+     -0.5,
+     0,
+     -0.5
+    ],
+    "duration": 8
+   },
+   "src": "CartAssemblerScenes.java:379"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e4"
+    },
+    "rotation": [
+     0,
+     -10,
+     0
+    ],
+    "duration": 8
+   },
+   "src": "CartAssemblerScenes.java:380"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "rotation": [
+     0,
+     -10,
+     0
+    ],
+    "duration": 8
+   },
+   "src": "CartAssemblerScenes.java:381"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 8
+   },
+   "src": "CartAssemblerScenes.java:382"
+  },
+  {
+   "op": "special.rotateCart",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "yRotation": -45,
+    "duration": 2
+   },
+   "src": "CartAssemblerScenes.java:383"
+  },
+  {
+   "op": "special.moveCart",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     -0.4,
+     0,
+     0
+    ],
+    "duration": 5
+   },
+   "src": "CartAssemblerScenes.java:384"
+  },
+  {
+   "op": "special.moveCart",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     0,
+     -3.5
+    ],
+    "duration": 25
+   },
+   "src": "CartAssemblerScenes.java:386"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e4"
+    },
+    "offset": [
+     0,
+     0,
+     -3.5
+    ],
+    "duration": 25
+   },
+   "src": "CartAssemblerScenes.java:387"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "offset": [
+     0,
+     0,
+     -3.5
+    ],
+    "duration": 25
+   },
+   "src": "CartAssemblerScenes.java:388"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e4"
+    },
+    "rotation": [
+     0,
+     -33,
+     0
+    ],
+    "duration": 10
+   },
+   "src": "CartAssemblerScenes.java:389"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "rotation": [
+     0,
+     -33,
+     0
+    ],
+    "duration": 10
+   },
+   "src": "CartAssemblerScenes.java:390"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "CartAssemblerScenes.java:391"
+  },
+  {
+   "op": "special.moveCart",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     -0.8,
+     0,
+     0
+    ],
+    "duration": 5
+   },
+   "src": "CartAssemblerScenes.java:392"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "CartAssemblerScenes.java:393"
+  },
+  {
+   "op": "special.moveCart",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     -1.5,
+     0,
+     0
+    ],
+    "duration": 9
+   },
+   "src": "CartAssemblerScenes.java:394"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e4"
+    },
+    "rotation": [
+     0,
+     -42,
+     0
+    ],
+    "duration": 9
+   },
+   "src": "CartAssemblerScenes.java:395"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "rotation": [
+     0,
+     -42,
+     0
+    ],
+    "duration": 9
+   },
+   "src": "CartAssemblerScenes.java:396"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 9
+   },
+   "src": "CartAssemblerScenes.java:397"
+  },
+  {
+   "op": "special.moveCart",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     -0.5,
+     0,
+     -0.5
+    ],
+    "duration": 2
+   },
+   "src": "CartAssemblerScenes.java:399"
+  },
+  {
+   "op": "special.rotateCart",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "yRotation": -45,
+    "duration": 2
+   },
+   "src": "CartAssemblerScenes.java:400"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e4"
+    },
+    "rotation": [
+     0,
+     -5,
+     0
+    ],
+    "duration": 5
+   },
+   "src": "CartAssemblerScenes.java:401"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "rotation": [
+     0,
+     -5,
+     0
+    ],
+    "duration": 5
+   },
+   "src": "CartAssemblerScenes.java:402"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "CartAssemblerScenes.java:403"
+  },
+  {
+   "op": "special.moveCart",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     0,
+     0,
+     -0.5
+    ],
+    "duration": 5
+   },
+   "src": "CartAssemblerScenes.java:404"
+  },
+  {
+   "op": "special.rotateCart",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "yRotation": -45,
+    "duration": 2
+   },
+   "src": "CartAssemblerScenes.java:405"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "CartAssemblerScenes.java:406"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     1,
+     1.5,
+     3.5
+    ],
+    "key": "text_3",
+    "text": "The carts will behave like those connected via Minecart Coupling"
+   },
+   "src": "CartAssemblerScenes.java:408"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "CartAssemblerScenes.java:413"
+  }
+ ]
+}

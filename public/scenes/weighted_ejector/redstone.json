@@ -1,0 +1,1734 @@
+{
+ "id": "create:weighted_ejector/redstone",
+ "schematic": "weighted_ejector/redstone",
+ "schematicNamespace": "create",
+ "title": "Controlling Weighted Ejectors with Redstone",
+ "texts": {
+  "text_1": "When powered by Redstone, Ejectors will not activate",
+  "text_2": "Observers can detect when Ejectors activate"
+ },
+ "tags": [],
+ "items": [
+  "create:weighted_ejector"
+ ],
+ "keyframes": [
+  137,
+  328
+ ],
+ "totalTicks": 386,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "EjectorScenes.java:294"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      4,
+      0,
+      5
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "EjectorScenes.java:295"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "EjectorScenes.java:296"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      1,
+      3
+     ],
+     "to": [
+      4,
+      1,
+      5
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "EjectorScenes.java:297"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "EjectorScenes.java:298"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      1,
+      2
+     ],
+     "to": [
+      0,
+      2,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "EjectorScenes.java:299"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "EjectorScenes.java:300"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      1,
+      2
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "EjectorScenes.java:301"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "EjectorScenes.java:302"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      1,
+      2
+     ],
+     "to": [
+      3,
+      1,
+      2
+     ]
+    },
+    "direction": "east"
+   },
+   "src": "EjectorScenes.java:304"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     4.5,
+     4,
+     2.5
+    ],
+    "motion": [
+     0,
+     0.1,
+     0
+    ],
+    "item": {
+     "id": "minecraft:copper_ingot",
+     "count": 1
+    }
+   },
+   "src": "EjectorScenes.java:311",
+   "out": "e1"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "EjectorScenes.java:312"
+  },
+  {
+   "op": "world.modifyEntities",
+   "args": {
+    "entityType": "ItemEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "discard",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "EjectorScenes.java:313"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     4,
+     1,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:copper_ingot",
+     "count": 1
+    }
+   },
+   "src": "EjectorScenes.java:314"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "EjectorScenes.java:315"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     4.5,
+     4,
+     2.5
+    ],
+    "motion": [
+     0,
+     0.1,
+     0
+    ],
+    "item": {
+     "id": "minecraft:copper_ingot",
+     "count": 1
+    }
+   },
+   "src": "EjectorScenes.java:311",
+   "out": "e2"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "EjectorScenes.java:312"
+  },
+  {
+   "op": "world.modifyEntities",
+   "args": {
+    "entityType": "ItemEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "discard",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "EjectorScenes.java:313"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     4,
+     1,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:copper_ingot",
+     "count": 1
+    }
+   },
+   "src": "EjectorScenes.java:314"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "EjectorScenes.java:315"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "floor",
+        "facing": "south",
+        "powered": "true"
+       }
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "none",
+        "power": "15",
+        "south": "none",
+        "west": "side"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "EjectorScenes.java:317"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "EjectorScenes.java:318"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "EjectorBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       2
+      ],
+      "nbt": {
+       "Powered": true
+      }
+     }
+    ]
+   },
+   "src": "EjectorScenes.java:319"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     4.5,
+     4,
+     2.5
+    ],
+    "motion": [
+     0,
+     0.1,
+     0
+    ],
+    "item": {
+     "id": "minecraft:copper_ingot",
+     "count": 1
+    }
+   },
+   "src": "EjectorScenes.java:311",
+   "out": "e3"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "EjectorScenes.java:312"
+  },
+  {
+   "op": "world.modifyEntities",
+   "args": {
+    "entityType": "ItemEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "discard",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "EjectorScenes.java:313"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     4,
+     1,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:copper_ingot",
+     "count": 1
+    }
+   },
+   "src": "EjectorScenes.java:314"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "EjectorScenes.java:315"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "EjectorScenes.java:324"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "red",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     4.5,
+     2,
+     2.5
+    ],
+    "key": "text_1",
+    "text": "When powered by Redstone, Ejectors will not activate"
+   },
+   "src": "EjectorScenes.java:325"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "EjectorScenes.java:331"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "floor",
+        "facing": "south",
+        "powered": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "none",
+        "power": "0",
+        "south": "none",
+        "west": "side"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "EjectorScenes.java:333"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "EjectorScenes.java:334"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "EjectorBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       2
+      ],
+      "nbt": {
+       "Powered": false
+      }
+     }
+    ]
+   },
+   "src": "EjectorScenes.java:335"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "EjectorScenes.java:337"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      1,
+      2
+     ],
+     "to": [
+      3,
+      1,
+      2
+     ]
+    },
+    "direction": "west"
+   },
+   "src": "EjectorScenes.java:338"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "EjectorScenes.java:339"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      1,
+      1
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "EjectorScenes.java:341",
+   "out": "e4"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e4"
+    },
+    "offset": [
+     0.5,
+     1.5,
+     -0.5
+    ],
+    "duration": 0
+   },
+   "src": "EjectorScenes.java:342"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e4"
+    },
+    "rotation": [
+     0,
+     -150,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "EjectorScenes.java:343"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "EjectorScenes.java:344"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e4"
+    },
+    "offset": [
+     -0.5,
+     -1.5,
+     0.5
+    ],
+    "duration": 10
+   },
+   "src": "EjectorScenes.java:345"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e4"
+    },
+    "rotation": [
+     0,
+     150,
+     0
+    ],
+    "duration": 10
+   },
+   "src": "EjectorScenes.java:346"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      1,
+      0
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "EjectorScenes.java:347"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     4.5,
+     4,
+     2.5
+    ],
+    "motion": [
+     0,
+     0.1,
+     0
+    ],
+    "item": {
+     "id": "minecraft:copper_ingot",
+     "count": 1
+    }
+   },
+   "src": "EjectorScenes.java:351",
+   "out": "e5"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "EjectorScenes.java:352"
+  },
+  {
+   "op": "world.modifyEntities",
+   "args": {
+    "entityType": "ItemEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "discard",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "EjectorScenes.java:353"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     4,
+     1,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:copper_ingot",
+     "count": 1
+    }
+   },
+   "src": "EjectorScenes.java:354"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "EjectorScenes.java:355"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       4,
+       1,
+       0
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "none",
+        "power": "15",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:observer",
+       "props": {
+        "facing": "south",
+        "powered": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "EjectorScenes.java:356"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     4,
+     1,
+     1
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "EjectorScenes.java:357"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "EjectorScenes.java:358"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       4,
+       1,
+       0
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "none",
+        "power": "0",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:observer",
+       "props": {
+        "facing": "south",
+        "powered": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "EjectorScenes.java:359"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 16
+   },
+   "src": "EjectorScenes.java:360"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     4.5,
+     4,
+     2.5
+    ],
+    "motion": [
+     0,
+     0.1,
+     0
+    ],
+    "item": {
+     "id": "minecraft:copper_ingot",
+     "count": 1
+    }
+   },
+   "src": "EjectorScenes.java:351",
+   "out": "e6"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "EjectorScenes.java:352"
+  },
+  {
+   "op": "world.modifyEntities",
+   "args": {
+    "entityType": "ItemEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "discard",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "EjectorScenes.java:353"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     4,
+     1,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:copper_ingot",
+     "count": 1
+    }
+   },
+   "src": "EjectorScenes.java:354"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "EjectorScenes.java:355"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       4,
+       1,
+       0
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "none",
+        "power": "15",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:observer",
+       "props": {
+        "facing": "south",
+        "powered": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "EjectorScenes.java:356"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     4,
+     1,
+     1
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "EjectorScenes.java:357"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "EjectorScenes.java:358"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       4,
+       1,
+       0
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "none",
+        "power": "0",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:observer",
+       "props": {
+        "facing": "south",
+        "powered": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "EjectorScenes.java:359"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 16
+   },
+   "src": "EjectorScenes.java:360"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     4.5,
+     1.5,
+     1
+    ],
+    "key": "text_2",
+    "text": "Observers can detect when Ejectors activate"
+   },
+   "src": "EjectorScenes.java:364"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     4.5,
+     4,
+     2.5
+    ],
+    "motion": [
+     0,
+     0.1,
+     0
+    ],
+    "item": {
+     "id": "minecraft:copper_ingot",
+     "count": 1
+    }
+   },
+   "src": "EjectorScenes.java:351",
+   "out": "e7"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "EjectorScenes.java:352"
+  },
+  {
+   "op": "world.modifyEntities",
+   "args": {
+    "entityType": "ItemEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "discard",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "EjectorScenes.java:353"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     4,
+     1,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:copper_ingot",
+     "count": 1
+    }
+   },
+   "src": "EjectorScenes.java:354"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "EjectorScenes.java:355"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       4,
+       1,
+       0
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "none",
+        "power": "15",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:observer",
+       "props": {
+        "facing": "south",
+        "powered": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "EjectorScenes.java:356"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     4,
+     1,
+     1
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "EjectorScenes.java:357"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "EjectorScenes.java:358"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       4,
+       1,
+       0
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "none",
+        "power": "0",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:observer",
+       "props": {
+        "facing": "south",
+        "powered": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "EjectorScenes.java:359"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 16
+   },
+   "src": "EjectorScenes.java:360"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     4.5,
+     4,
+     2.5
+    ],
+    "motion": [
+     0,
+     0.1,
+     0
+    ],
+    "item": {
+     "id": "minecraft:copper_ingot",
+     "count": 1
+    }
+   },
+   "src": "EjectorScenes.java:351",
+   "out": "e8"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "EjectorScenes.java:352"
+  },
+  {
+   "op": "world.modifyEntities",
+   "args": {
+    "entityType": "ItemEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "discard",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "EjectorScenes.java:353"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     4,
+     1,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:copper_ingot",
+     "count": 1
+    }
+   },
+   "src": "EjectorScenes.java:354"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "EjectorScenes.java:355"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       4,
+       1,
+       0
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "none",
+        "power": "15",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:observer",
+       "props": {
+        "facing": "south",
+        "powered": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "EjectorScenes.java:356"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     4,
+     1,
+     1
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "EjectorScenes.java:357"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "EjectorScenes.java:358"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       4,
+       1,
+       0
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "none",
+        "power": "0",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:observer",
+       "props": {
+        "facing": "south",
+        "powered": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "EjectorScenes.java:359"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 16
+   },
+   "src": "EjectorScenes.java:360"
+  },
+  {
+   "op": "markAsFinished",
+   "args": {},
+   "src": "EjectorScenes.java:362"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     4.5,
+     4,
+     2.5
+    ],
+    "motion": [
+     0,
+     0.1,
+     0
+    ],
+    "item": {
+     "id": "minecraft:copper_ingot",
+     "count": 1
+    }
+   },
+   "src": "EjectorScenes.java:351",
+   "out": "e9"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "EjectorScenes.java:352"
+  },
+  {
+   "op": "world.modifyEntities",
+   "args": {
+    "entityType": "ItemEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "discard",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "EjectorScenes.java:353"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     4,
+     1,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:copper_ingot",
+     "count": 1
+    }
+   },
+   "src": "EjectorScenes.java:354"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "EjectorScenes.java:355"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       4,
+       1,
+       0
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "none",
+        "power": "15",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:observer",
+       "props": {
+        "facing": "south",
+        "powered": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "EjectorScenes.java:356"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     4,
+     1,
+     1
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "EjectorScenes.java:357"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "EjectorScenes.java:358"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       4,
+       1,
+       0
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "none",
+        "power": "0",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:observer",
+       "props": {
+        "facing": "south",
+        "powered": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "EjectorScenes.java:359"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 16
+   },
+   "src": "EjectorScenes.java:360"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     4.5,
+     4,
+     2.5
+    ],
+    "motion": [
+     0,
+     0.1,
+     0
+    ],
+    "item": {
+     "id": "minecraft:copper_ingot",
+     "count": 1
+    }
+   },
+   "src": "EjectorScenes.java:351",
+   "out": "e10"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "EjectorScenes.java:352"
+  },
+  {
+   "op": "world.modifyEntities",
+   "args": {
+    "entityType": "ItemEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "discard",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "EjectorScenes.java:353"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     4,
+     1,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:copper_ingot",
+     "count": 1
+    }
+   },
+   "src": "EjectorScenes.java:354"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "EjectorScenes.java:355"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       4,
+       1,
+       0
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "none",
+        "power": "15",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:observer",
+       "props": {
+        "facing": "south",
+        "powered": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "EjectorScenes.java:356"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     4,
+     1,
+     1
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "EjectorScenes.java:357"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "EjectorScenes.java:358"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       4,
+       1,
+       0
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "none",
+        "power": "0",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:observer",
+       "props": {
+        "facing": "south",
+        "powered": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "EjectorScenes.java:359"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 16
+   },
+   "src": "EjectorScenes.java:360"
+  }
+ ]
+}
