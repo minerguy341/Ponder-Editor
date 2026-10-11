@@ -29,6 +29,9 @@ for (const f of files) {
     else console.error('no partial id for PARTIAL.' + m[1]);
   }
 }
+// atlas sprites (textures, loaded with atlas.ensure in misc-bogey.ts build), not models: they are not built as partials here
+const SPRITE_IDS = new Set(['create:block/bogey/belt', 'create:block/bogey/belt_scroll']);
+for (const id of SPRITE_IDS) ids.delete(id);
 // B5_AUDIT_PROBE=<id>: adds an id on purpose (checks that the audit can fail)
 if (process.env.B5_AUDIT_PROBE) ids.add(process.env.B5_AUDIT_PROBE);
 const ordered = [...ids].sort();

@@ -31,6 +31,13 @@ function shaftVariant(axis: 'x' | 'z'): THREE.Matrix4 {
   return c.multiply(ry).multiply(rx).multiply(u);
 }
 
+/** BlockRendererImpl exposes its atlas (src/render/blockRenderer.ts); the frozen contract interface does not. */
+const BELT_SPRITES = ['create:block/bogey/belt', 'create:block/bogey/belt_scroll'];
+type BeltAtlas = { get(id: string): { v0: number; v1: number } | null | undefined; ensure(ids: Iterable<string>): Promise<void> };
+function beltAtlas(ctx: VisualContext): BeltAtlas {
+  return (ctx.renderer as unknown as { atlas: BeltAtlas }).atlas;
+}
+
 class BogeyVisual extends SceneVisual {
   private readonly radius: number;
   private readonly large: boolean;
@@ -84,6 +91,8 @@ class BogeyVisual extends SceneVisual {
         });
       }
       await add(ids.drive!, (ps) => { this.base(ps).scale(SHRINK); });
+      // the BOGEY_BELT sprite shift: the source and scroll sprites must be in the atlas before the belt geometry is set up
+      await beltAtlas(this.ctx).ensure(BELT_SPRITES);
       const beltGroup = await add(ids.belt!, (ps) => { this.base(ps).scale(SHRINK); });
       this.setupBelt(beltGroup);
       await add(ids.piston!, (ps, a) => { this.base(ps).translate(0, 0, (1 / 4) * Math.sin(a * DEG)); });
@@ -101,9 +110,9 @@ class BogeyVisual extends SceneVisual {
   /** Own geometry for the belt so its UVs can scroll; the source and scroll sprites are the BOGEY_BELT shift entry. */
   private setupBelt(group: THREE.Group): void {
     // BlockRendererImpl exposes its atlas (src/render/blockRenderer.ts); the frozen contract interface does not
-    const atlas = (this.ctx.renderer as unknown as { atlas: { get(id: string): { v0: number; v1: number } | null | undefined } }).atlas;
-    const src = atlas.get('create:block/bogey/belt');
-    const dst = atlas.get('create:block/bogey/belt_scroll');
+    const atlas = beltAtlas(this.ctx);
+    const src = atlas.get(BELT_SPRITES[0]);
+    const dst = atlas.get(BELT_SPRITES[1]);
     if (!src || !dst) return;
     group.traverse((o) => {
       const m = o as THREE.Mesh;
