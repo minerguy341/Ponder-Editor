@@ -66,6 +66,12 @@ Ledger (N of N to be re-measured with gate-check --status):
   EXPECT: SCENES_OK
   EVIDENCE: index public/scenes/index.json: 169 scenes; expected 169 | SCENES_OK (169 scenes, 179 registrations)
 
+- [ ] U1-G11: scene end matches the reference with no hover: at the end of mechanical_press/pressing (tick 471 = total) the 'd' button is
+  flashed (PonderScene.isFinished via markAsFinished) and no Up Next box shows (Ponder starts the 50-tick warmup only when the UI tick sees
+  currentTime == totalTime-1; a seek to the total does not). Pointer parked on empty sky in compare.mjs (renderOurs, sweep).
+  CHECK: node tools/verify/compare.mjs --dev --only ref3 --refs $SCRATCH/refs 2>&1 | tail -3; then view tools/verify/out/ref3-side-by-side-small.png
+  EVIDENCE: pending
+
 - [ ] U1-G10: D and C1 regression gates stay green (icons, workflow, scenegen report variants)
   CHECK: node tools/d-icons-test.mjs 2>&1 | tail -1; node tools/d-workflow-check.mjs 2>&1 | tail -1; node tools/scenegen/report.mjs --texts 2>&1 | tail -1; node tools/scenegen/report.mjs --ops 2>&1 | tail -1; node tools/scenegen/report.mjs --schema 2>&1 | tail -1; node tools/scenegen/report.mjs --dropped 2>&1 | tail -1
   EXPECT: /ICONS_OK[\s\S]*WORKFLOW_OK[\s\S]*TEXTS_OK[\s\S]*OPS_OK[\s\S]*SCHEMA_OK[\s\S]*DROPPED_OK/

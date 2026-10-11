@@ -10,7 +10,7 @@ import {
   BACKGROUND_FLAT, BACKGROUND_TRANSPARENT, COLOR_NAV_ARROW, COLOR_TEXT, COLOR_TEXT_ACCENT, COLOR_TEXT_DARKER, COLOR_IDLE,
   COLOR_WINDOW_BORDER, argb, mix, rgb, scaleAlpha, scaleAlphaForText, withAlpha, type Color,
 } from './color';
-import { itemName, modName, type TagInfo, tagInfoOrDefault } from './data';
+import { itemName, modName, type TagInfo, tagsOfItem } from './data';
 import { type Gui } from './gui';
 import type { ItemIconRenderer } from './itemIcons';
 import { Chaser, LerpedFloat, TickClock } from './lerp';
@@ -157,6 +157,7 @@ export class PonderUI implements ProgressSource {
       const json = await this.o.loadScene(entry);
       if (seq !== this.loadSeq || this.disposed) return;
       this.scene = json;
+      this.prefetchNextUp(i);
       this.rebuildTags();
       await this.o.player.load(json);
       if (seq !== this.loadSeq || this.disposed) return;
@@ -247,7 +248,7 @@ export class PonderUI implements ProgressSource {
       }
     });
     on('overlayLines', (p) => applyOverlayPayload(this.lines, p, normalizeLine));
-    on('finished', () => { this.finishingFlashWarmup = Math.max(this.finishingFlashWarmup, 1); if (this.nextUpWarmup === 0) this.nextUpWarmup = 50; });
+    // 'finished' carries no UI effect: Ponder starts the warmups from the tick counter (see tick()), not from the schedule running out
   }
 
   // ------------------------------------------------------------------------------------------------ input
@@ -465,17 +466,16 @@ export class PonderUI implements ProgressSource {
     // remove old buttons
     for (const t of this.tagButtons) { t.b.el.remove(); t.streak.remove(); t.label.el.remove(); this.buttons = this.buttons.filter((b) => b !== t.b); }
     this.tagButtons = [];
-    const scene = this.scene;
-    if (!scene) return;
-    const tags = scene.tags.length ? scene.tags : [];
+    // PonderUI#init: the tags of the SUBJECT item (PonderTagRegistry.getTags(location)), not the scene's highlight tags
+    const tags = tagsOfItem(this.o.tags, this.o.subject);
     const compact = this.gui.compact;
-    tags.forEach((id, i) => {
-      const tag = tagInfoOrDefault(this.o.tags, id);
+    tags.forEach((tag, i) => {
+      const id = tag.id;
       const x = compact ? 12 : 31;
       const y = 81 + i * 30;
       const b = new PonderButton(this.chrome, x, y, 20, 20);
       this.buttons.push(b);
-      const iconId = tag.icon ?? scene.items[0] ?? this.o.subject;
+      const iconId = tag.icon ?? this.o.subject;
       // PonderTag#render: translate(-2,-2), scale 1.25 => a 20 px item
       const el = this.o.icons.element(iconId, 20);
       el.style.position = 'absolute';
@@ -511,12 +511,10 @@ export class PonderUI implements ProgressSource {
     for (const b of this.buttons) b.tick();
     this.bar.tick();
     for (const t of this.tagButtons) t.chase.tick();
-    // PonderUI#tick: scene finished warmups
+    // PonderUI#tick: the warmups start when the UI tick observes currentTime == totalTime - 1 (exact equality: a seek that lands on the
+    // total, or jumps over the last tick, does not start them)
     const total = this.total();
-    if (total > 0 && this.current() >= total - 1 && !this.identifyMode) {
-      if (this.finishingFlashWarmup === 0 && this.nextUpWarmup === 0 && !this.endHandled) { this.finishingFlashWarmup = 30; this.nextUpWarmup = 50; this.endHandled = true; }
-    }
-    if (total > 0 && this.current() < total - 1) this.endHandled = false;
+    if (total > 0 && this.current() === total - 1) { this.finishingFlashWarmup = 30; this.nextUpWarmup = 50; }
     if (this.finishingFlashWarmup > 0) this.finishingFlashWarmup--;
     if (this.nextUpWarmup > 0) {
       this.nextUpWarmup--;
@@ -528,14 +526,22 @@ export class PonderUI implements ProgressSource {
     if (speed !== this.lastSpeed) { this.lastSpeed = speed; this.o.player.setSpeed(speed); }
     if (!this.hintDismissed && this.uiTicks > 20 * 9) this.hintDismissed = true;
   }
-  private endHandled = false;
-
+  /** PonderScene#isFinished: set by markAsFinished, or when the schedule has run out (sim.ts); reaching the total alone is not enough */
   private isFinished(): boolean {
-    const total = this.total();
-    if (total === 0) return false;
+    if (this.total() === 0) return false;
     let st: any = null;
     try { st = this.o.player.getState(); } catch { /* ignore */ }
-    return Boolean(st?.finished) || this.current() >= total;
+    return Boolean(st?.finished);
+  }
+
+  /** PonderUI#renderNextUp checks nextScene.isNextUpEnabled(): a scene turns it off with setNextUpEnabled(false) (default on) */
+  private nextUpOff = new Set<string>();
+  private prefetchNextUp(i: number): void {
+    const next = this.o.entries[i + 1];
+    if (!next || this.nextUpOff.has(next.id)) return;
+    this.o.loadScene(next).then((j) => {
+      if (j.instructions.some((op) => op.op === 'setNextUpEnabled' && (op.args as { enabled?: boolean } | undefined)?.enabled === false)) this.nextUpOff.add(next.id);
+    }).catch(() => { /* the next scene's own load reports the error */ });
   }
 
   private render(partial: number): void {
@@ -561,14 +567,12 @@ export class PonderUI implements ProgressSource {
     for (const b of this.buttons) b.render(partial, this.uiTicks);
     this.bar.render(partial, fade);
 
-    // --- tags
+    // --- tags (PonderUI#renderWidgets): a button flashes when the scene itself is highlighted with it (or with Highlight.ALL)
     const sceneTags = this.scene?.tags ?? [];
+    const highlightAll = sceneTags.includes('_all');
     this.tagButtons.forEach((t) => {
       t.chase.updateChaseTarget(t.b.hovered ? 1 : 0);
-      // PonderUI flashes a tag button only when the *scene itself* carries that tag (PonderTag.Highlight.ALL aside); SceneJson.tags are
-      // the subject's tags, which the reference screenshots show un-highlighted, so the buttons stay dim.
-      void sceneTags;
-      t.b.dim();
+      if (highlightAll || sceneTags.includes(t.tag.id)) t.b.flash(); else t.b.dim();
       const w = 200 * t.chase.getValue(partial);
       const show = w > 0.5 && fade > 0.1;
       t.streak.style.display = show ? '' : 'none';
@@ -692,7 +696,7 @@ export class PonderUI implements ProgressSource {
 
   private renderNextUp(partial: number): void {
     const next = this.o.entries[this.index + 1];
-    const show = this.isFinished() && next && this.nextUp.getValue() > 1 / 16;
+    const show = this.isFinished() && next && !this.nextUpOff.has(next.id) && this.nextUp.getValue() > 1 / 16;
     this.nextUpBox.el.style.display = show ? '' : 'none';
     if (!show) return;
     const font = this.gui.font;

@@ -1,8 +1,7 @@
 // Runtime data the UI needs besides the scenes themselves: the scene index, scene files, item display names and the Ponder tags.
-// Everything originating from Mojang / Create (lang files, tag registrations) is fetched at runtime from jsDelivr.
+// Scene files and tags.json are produced by the converter (tools/scenegen) from Create's sources; lang files come from jsDelivr at runtime.
 
 import type { SceneIndexEntry, SceneJson } from '../contract';
-import { CREATE_TAG } from '../config';
 import { resources } from '../assets/resources';
 
 // ------------------------------------------------------------------------------------------------ scene files
@@ -63,6 +62,27 @@ export function loadLang(): Promise<LangMap> {
   return langPromise;
 }
 
+/** Ponder's UI strings (assets/ponder/lang/en_us.json, keys ponder.ui.*), with the English text as fallback. */
+export const PONDER_UI_FALLBACK: Record<string, string> = {
+  'ponder.ui.pondering': 'Pondering about...',
+  'ponder.ui.pondering_tag': 'Pondering about...',
+  'ponder.ui.close': 'Close',
+  'ponder.ui.next': 'Next Scene',
+  'ponder.ui.previous': 'Previous Scene',
+  'ponder.ui.replay': 'Replay',
+  'ponder.ui.slow_text': 'Comfy Reading',
+  'ponder.ui.identify': 'Identify',
+  'ponder.ui.exit': 'Exit',
+  'ponder.ui.next_up': 'Up Next:',
+  'ponder.ui.welcome': 'Welcome to Ponder',
+  'ponder.ui.index_title': 'Ponder Index',
+  'ponder.ui.index_description': 'Click one of the icons below to learn about its associated Items and Blocks',
+  'ponder.ui.categories': 'Available Categories for %1$s',
+  'ponder.ui.associated': 'Associated Entries',
+  'ponder.ui.think_back': 'Think Back',
+  'ponder.ui.subject': 'Subject of this scene',
+};
+
 export function titleCase(path: string): string {
   return path.split(/[/_]/).filter(Boolean).map((w) => w[0].toUpperCase() + w.slice(1)).join(' ');
 }
@@ -78,49 +98,77 @@ export const modName = (ns: string): string => (ns === 'minecraft' ? '' : ns ===
 
 // ------------------------------------------------------------------------------------------------ tags
 
-export interface TagInfo { id: string; title: string; description: string; icon: string | null; inIndex: boolean }
-
 /**
- * Create registers its Ponder tags in AllCreatePonderTags.java (title, description and icon item are literals there). The file is
- * fetched at runtime and the registrations are read from it; unknown tags fall back to a title-cased id.
+ * One Ponder tag (PonderTag + its registration). `tags.json` is written by the converter from AllCreatePonderTags (tools/scenegen,
+ * `report.mjs --tags`); `items` are the item ids added with `addToTag` in source order, `icon`/`mainItem` the item ids of `.item(...)`.
  */
-let tagPromise: Promise<Map<string, TagInfo>> | null = null;
-export function loadTags(): Promise<Map<string, TagInfo>> {
+export interface TagInfo {
+  id: string;
+  title: string;
+  description: string;
+  icon: string | null;
+  mainItem: string | null;
+  inIndex: boolean;
+  items: string[];
+}
+
+export type TagMap = Map<string, TagInfo>;
+
+/** tags.json (converter output) in registration order. */
+let tagPromise: Promise<TagMap> | null = null;
+export function loadTags(): Promise<TagMap> {
   if (!tagPromise) {
     tagPromise = (async () => {
-      const out = new Map<string, TagInfo>();
-      const url = `https://cdn.jsdelivr.net/gh/Creators-of-Create/Create@${CREATE_TAG}/src/main/java/com/simibubi/create/infrastructure/ponder/AllCreatePonderTags.java`;
-      const src = await resources.text(url);
-      if (!src) return out;
-      const consts = new Map<string, string>();
-      for (const m of src.matchAll(/([A-Z_]+)\s*=\s*loc\("([a-z_]+)"\)/g)) consts.set(m[1], m[2]);
-      const re = /helper\.registerTag\(([A-Z_]+)\)([\s\S]*?)\.register\(\)/g;
-      for (const m of src.matchAll(re)) {
-        const path = consts.get(m[1]);
-        if (!path) continue;
-        const body = m[2];
-        const title = /\.title\("((?:[^"\\]|\\.)*)"\)/.exec(body)?.[1];
-        const desc = /\.description\("((?:[^"\\]|\\.)*)"\)/.exec(body)?.[1];
-        let icon: string | null = null;
-        const item = /\.item\(\s*([A-Za-z]+)\.([A-Z0-9_]+)(?:\.get\(\))?/.exec(body);
-        if (item) {
-          const ns = item[1] === 'AllBlocks' || item[1] === 'AllItems' || item[1] === 'AllFluids' ? 'create' : 'minecraft';
-          icon = `${ns}:${item[2].toLowerCase()}`;
-        }
-        out.set(`create:${path}`, {
-          id: `create:${path}`,
-          title: title ?? titleCase(path),
-          description: desc ?? '',
-          icon,
-          inIndex: /\.addToIndex\(\)/.test(body),
+      const list = await fetchJson<Array<Record<string, unknown>>>(scenesBase() + 'tags.json');
+      const out: TagMap = new Map();
+      for (const t of list) {
+        const id = String(t.id);
+        out.set(id, {
+          id,
+          title: String(t.title ?? titleCase(id.replace(/^[^:]*:/, ''))),
+          description: String(t.description ?? ''),
+          icon: (t.icon as string | null) ?? null,
+          mainItem: (t.mainItem as string | null) ?? null,
+          inIndex: Boolean(t.index),
+          items: Array.isArray(t.items) ? (t.items as string[]) : [],
         });
       }
       return out;
-    })().catch((e) => { console.warn('[ui] tag registrations unavailable', e); return new Map<string, TagInfo>(); });
+    })().catch((e) => {
+      console.warn('[ui] tags.json unavailable', e);
+      tagPromise = null;
+      return new Map<string, TagInfo>();
+    });
   }
   return tagPromise;
 }
 
-export function tagInfoOrDefault(tags: Map<string, TagInfo>, id: string): TagInfo {
-  return tags.get(id) ?? { id, title: titleCase(id.replace(/^[^:]*:/, '')), description: '', icon: null, inIndex: true };
+export function tagInfoOrDefault(tags: TagMap, id: string): TagInfo {
+  return tags.get(id) ?? { id, title: titleCase(id.replace(/^[^:]*:/, '')), description: '', icon: null, mainItem: null, inIndex: true, items: [] };
+}
+
+const membershipCache = new WeakMap<TagMap, Map<string, string[]>>();
+/** item id -> tag ids (registration order) = PonderTagRegistry.getTags(item); the real Ponder order is a hash set, not reproducible. */
+export function tagIdsOfItem(tags: TagMap, item: string): string[] {
+  let inv = membershipCache.get(tags);
+  if (!inv) {
+    inv = new Map();
+    for (const t of tags.values()) for (const it of t.items) {
+      const list = inv.get(it) ?? [];
+      if (!list.includes(t.id)) list.push(t.id);
+      inv.set(it, list);
+    }
+    membershipCache.set(tags, inv);
+  }
+  return inv.get(item) ?? [];
+}
+
+/** PonderTag list of an item, in registration order */
+export function tagsOfItem(tags: TagMap, item: string): TagInfo[] {
+  return tagIdsOfItem(tags, item).map((id) => tagInfoOrDefault(tags, id));
+}
+
+/** PonderTagRegistry#getItems(tag) minus the main item, with a known item id (for the tag screen grid) */
+export function tagScreenItems(tag: TagInfo): string[] {
+  return tag.items.filter((it) => it !== tag.mainItem);
 }
