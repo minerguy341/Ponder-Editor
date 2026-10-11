@@ -70,6 +70,9 @@ describe('atlas: packing', () => {
     expect(classifyAlpha(mk([255, 255]))).toBe('solid');
     expect(classifyAlpha(mk([255, 0]))).toBe('cutout');
     expect(classifyAlpha(mk([0, 128]))).toBe('translucent');
+    // a few soft edge pixels in an otherwise cut-out sprite (Create's gauge) stay cutout
+    expect(classifyAlpha(mk([...new Array(90).fill(255), ...new Array(8).fill(0), 90, 200]))).toBe('cutout');
+    expect(classifyAlpha(mk([...new Array(40).fill(255), ...new Array(60).fill(128)]))).toBe('translucent');
   });
   it('frame size rules (AnimationMetadataSection.calculateFrameSize)', () => {
     expect(calculateFrameSize(16, 64)).toEqual([16, 16]);

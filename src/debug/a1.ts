@@ -65,6 +65,8 @@ function debugPatch(root: THREE.Object3D) {
 
 const info: Record<string, unknown> = { done: false, errors: [] as string[] };
 (window as any).__a1 = { renderer: block, three: renderer, info, THREE, tints: { colormapSample, PLAINS_GRASS, PLAINS_FOLIAGE }, resources, missingResources, fetchStats };
+(window as any).__a1.getCamera = () => camera;
+(window as any).__a1.scene = scene;
 window.addEventListener('error', (e) => (info.errors as string[]).push(String(e.message)));
 window.addEventListener('unhandledrejection', (e) => (info.errors as string[]).push(String(e.reason)));
 
@@ -97,6 +99,26 @@ function fitCamera(min: Vec3, max: Vec3) {
 }
 
 let camera: THREE.OrthographicCamera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 100);
+
+if (q.get('mat')) {
+  const over = JSON.parse(q.get('mat')!);
+  const orig = block.materials.forLayer.bind(block.materials);
+  block.materials.forLayer = (l, u) => { const m = orig(l, u); Object.assign(m, over); return m; };
+}
+
+function quadColors(root: THREE.Object3D) {
+  root.traverse((o) => {
+    const m = o as THREE.Mesh;
+    if (!m.isMesh) return;
+    const col = m.geometry.getAttribute('color') as THREE.BufferAttribute;
+    const c = new THREE.Color();
+    for (let i = 0; i < col.count; i++) { c.setHSL((Math.floor(i / 4) * 0.13) % 1, 1, 0.5); col.setXYZ(i, c.r, c.g, c.b); }
+    col.needsUpdate = true;
+    const mat = (m.material as THREE.MeshBasicMaterial).clone();
+    mat.map = null;
+    m.material = mat;
+  });
+}
 
 function frame() {
   block.tick(performance.now());
@@ -187,6 +209,7 @@ async function main() {
     info.size = st.size;
     info.blockCount = st.blocks.length;
     info.palette = [...new Set(st.blocks.map((b) => b.state.name))];
+    info.special = st.blocks.filter((b) => !/concrete|snow_block/.test(b.state.name)).map((b) => `${b.pos.join(',')} ${b.state.name} ${JSON.stringify(b.state.props)}`);
     if (q.get('base') !== '0') {
       // base plate like Ponder's white concrete / snow checker is part of the schematics already
     }
@@ -196,6 +219,7 @@ async function main() {
   } else if (mode === 'partial') {
     const id = q.get('id') ?? 'create:block/cogwheel';
     const g = await block.buildPartial(id);
+    if (q.get('quadcolors')) quadColors(g);
     world.add(g);
     debugPatch(g);
     info.quadCount = g.userData.quadCount;
@@ -230,6 +254,7 @@ async function main() {
   info.atlas = { packed: block.atlas.stats.packed, count: block.atlas.count };
   frame();
   frame();
+  { const gl = renderer.getContext(); info.depthBits = gl.getParameter(gl.DEPTH_BITS); info.depthAttr = gl.getContextAttributes()?.depth; info.near = camera.near; info.far = camera.far; }
   info.done = true;
 }
 

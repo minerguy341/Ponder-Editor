@@ -47,17 +47,24 @@ export function calculateFrameSize(imgW: number, imgH: number, mw?: number, mh?:
   return [m, m];
 }
 
-/** Classify by alpha: solid (all 255), cutout (only 0/255), translucent (anything in between). */
+/**
+ * Classify by alpha: solid (all 255), cutout (0/255, plus a few anti-aliased edge pixels), translucent (a large share of
+ * semi-transparent pixels: glass, ice, water, slime...). Vanilla chooses the layer per block, not per texture; sprites such as
+ * Create's gauge have a handful of soft edge pixels but are registered as cutout, so a small partial share must not make
+ * a block translucent.
+ */
 export function classifyAlpha(px: Uint8ClampedArray, offset = 0, count = px.length / 4): TexKind {
-  let kind: TexKind = 'solid';
+  let zero = 0, partial = 0;
   for (let i = offset + 3, e = offset + count * 4; i < e; i += 4) {
     const a = px[i];
     if (a === 255) continue;
-    if (a === 0) kind = 'cutout';
-    else return 'translucent';
+    if (a === 0) zero++; else partial++;
   }
-  return kind;
+  if (partial / count >= PARTIAL_ALPHA_SHARE) return 'translucent';
+  return zero > 0 || partial > 0 ? 'cutout' : 'solid';
 }
+/** Share of semi-transparent pixels from which a texture counts as translucent. */
+export const PARTIAL_ALPHA_SHARE = 0.25;
 
 export interface AtlasOptions {
   size?: number;
