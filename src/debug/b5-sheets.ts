@@ -25,6 +25,12 @@ export function grid(rows: SheetCell[][], gap = 2): Sheet {
 const bogeyNbt = (): Record<string, unknown> => ({ BogeyData: { BogeyStyle: 'create:standard' } });
 
 export const SHEETS: Record<string, () => Sheet> = {
+  items: () => grid([
+    [{ state: st('create:content_observer', { powered: 'false', facing: 'north', target: 'wall' }), nbt: { Filter: { id: 'minecraft:stone', count: 1 }, FilterAmount: 1, TurnOff: 0, UpTo: 0 } },
+      { state: st('create:stockpile_switch', { level: '0', facing: 'east', target: 'wall' }), nbt: { Filter: { id: 'minecraft:iron_ingot', count: 1 } } }],
+    [{ state: st('create:redstone_link', { powered: 'false', receiver: 'false', facing: 'north' }), nbt: { FrequencyFirst: { id: 'minecraft:redstone', count: 1 }, FrequencyLast: { id: 'minecraft:gold_ingot', count: 1 } } },
+      { state: st('create:redstone_link', { powered: 'false', receiver: 'true', facing: 'up' }), nbt: { FrequencyFirst: { id: 'minecraft:redstone', count: 1 }, FrequencyLast: { id: 'minecraft:gold_ingot', count: 1 } } }],
+  ], 3),
   link1: () => grid([[{ state: st('create:display_link', { powered: 'false', facing: 'north' }) }]], 2),
   links: () => grid([
     [{ state: st('create:display_link', { powered: 'false', facing: 'north' }) },
