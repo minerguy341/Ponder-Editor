@@ -16,8 +16,8 @@ import { getLogisticsWorld, type BeltChain, type ItemPose } from '../items/logis
 import { buildStateObject } from '../common';
 import { registerBlockModelProcessor } from '../../blockRenderer';
 import { retextureQuad } from '../../models';
-import { beltPartialId, beltSegmentMatrix, beltSprites, beltPulleyBase, beltPulleyDirection, beltRotationAxis, beltScroll, ScrollMesh, placeBeltItem, type ItemPlacement, type BeltSprites } from '../items/beltRender';
-import { loadBeltScrollTexture, beltScrollMaterial } from '../items/beltScroll';
+import { beltPartialId, beltSegmentMatrix, beltSprites, beltPulleyBase, beltPulleyDirection, beltRotationAxis, beltScroll, ScrollMesh, placeBeltItem, type ItemPlacement } from '../items/beltRender';
+import { BELT_DYE_NAMES, preloadBeltScroll, scrollMaterialOf } from '../items/beltScroll';
 import { createItemObjectSync, itemInfo, prepareItem } from '../items/itemObject';
 import { PoseStack } from '../items/pose';
 import { loadShadowMaterial, shadowGeometry, shadowMaterialReady } from '../items/shadow';
@@ -43,7 +43,7 @@ const BELT_SPRITE_IDS = [
 
 interface ScrollPart {
   sm: ScrollMesh;
-  sprites: BeltSprites;
+  diagonal: boolean;
   bottom: boolean;
   group: THREE.Group;
 }
@@ -100,7 +100,6 @@ class BeltBlockVisual extends BaseVisual {
   private placements: ItemPlacement[] = [];
   private shadowTmp = new THREE.Matrix4();
   private readonly renderer: BlockRendererImpl;
-  private dyed = false;
   private casingObj: THREE.Object3D | null = null;
   private coverObj: THREE.Object3D | null = null;
 
@@ -121,19 +120,18 @@ class BeltBlockVisual extends BaseVisual {
     const positive = shape.facing === 'east' || shape.facing === 'south' || shape.facing === 'up';
     let start = start0, end = end0;
     if (downward || (vertical && positive)) { const b = start; start = end; end = b; }
-    const dye = typeof this.data.Dye === 'string' ? (this.data.Dye as string) : undefined;
-    this.dyed = dye !== undefined;
     this.chain = getLogisticsWorld(this.ctx.lookup).chainAt(this.block.pos);
     this.isController = this.chain ? posKey(this.chain.controller) === posKey(this.block.pos) : false;
 
     await this.renderer.ensureTextures(BELT_SPRITE_IDS);
+    // every dye can arrive from a Dye patch during the scene: its scroll textures are loaded up front
+    await preloadBeltScroll(BELT_DYE_NAMES.flatMap((d) => ['create:block/belt/' + d + '_scroll', 'create:block/belt/' + d + '_diagonal_scroll']).concat(['create:block/belt_scroll', 'create:block/belt_diagonal_scroll']));
     await loadShadowMaterial();
     this.segment = beltSegmentMatrix(shape, new THREE.Matrix4());
 
     for (const bottom of diagonal ? [true] : [true, false]) {
-      const sprites = beltSprites(dye, diagonal, bottom);
       const partial = await getPartial(this.ctx, beltPartialId(diagonal, start, end, bottom));
-      const scrollMat = beltScrollMaterial(await loadBeltScrollTexture(sprites.target));
+      const scrollMat = scrollMaterialOf(beltSprites(undefined, diagonal, bottom).target)!;
       const group = new THREE.Group();
       group.matrixAutoUpdate = false;
       group.matrix.copy(this.segment);
@@ -142,7 +140,7 @@ class BeltBlockVisual extends BaseVisual {
         if (!m.isMesh) return;
         const sm = new ScrollMesh(m, scrollMat);
         group.add(sm.mesh);
-        this.parts.push({ sm, sprites, bottom, group });
+        this.parts.push({ sm, diagonal, bottom, group });
       });
       this.object.add(group);
     }
@@ -190,8 +188,13 @@ class BeltBlockVisual extends BaseVisual {
     const atlas = this.renderer.atlas;
 
     for (const part of this.parts) {
-      if (speed === 0 && !this.dyed) { part.sm.reset(); continue; }
-      const o = atlas.get(part.sprites.orig);
+      const dye = world.nbtValueAt(this.block.pos, 'Dye', ticks);
+      const dyeName = typeof dye === 'string' ? dye : undefined;
+      const sprites = beltSprites(dyeName, part.diagonal, part.bottom);
+      const scrolled = scrollMaterialOf(sprites.target);
+      if (scrolled) part.sm.setScrolled(scrolled);
+      if (speed === 0 && dyeName === undefined) { part.sm.reset(); continue; }
+      const o = atlas.get(sprites.orig);
       if (!o) { part.sm.reset(); continue; }
       const scroll = beltScroll({
         speed, ticks, facing: shape.facing, diagonal, sideways, downward, bottom: part.bottom,

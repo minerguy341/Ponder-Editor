@@ -15,7 +15,9 @@ import type { ItemPose } from './logisticsSim';
 /** Sprite of the belt texture (AllSpriteShifts.BELT & friends). `target` is the scrolling copy in the atlas. */
 export interface BeltSprites { orig: string; target: string }
 
-export function beltSprites(dye: string | undefined, diagonal: boolean, bottom: boolean): BeltSprites {
+export function beltSprites(dyeName: string | undefined, diagonal: boolean, bottom: boolean): BeltSprites {
+  // the DyeColor serialized name (Java enum BLUE -> blue) names the texture: belt/blue_scroll
+  const dye = dyeName?.toLowerCase();
   if (dye) {
     return diagonal
       ? { orig: 'create:block/belt_diagonal', target: `create:block/belt/${dye}_diagonal_scroll` }
@@ -103,6 +105,8 @@ export class ScrollMesh {
   private uv: THREE.BufferAttribute;
   private rest: THREE.Material;
   private scrolled: THREE.Material;
+  /** the scroll texture of the current dye (BeltRenderer: the sprite target follows the Dye patch of the block entity) */
+  setScrolled(material: THREE.Material): void { this.scrolled = material; }
 
   constructor(src: THREE.Mesh, scrolled: THREE.Material) {
     const geom = src.geometry.clone();

@@ -57,3 +57,16 @@ export function beltScrollMaterial(map: THREE.Texture): THREE.MeshBasicMaterial 
   materials.set(map, m);
   return m;
 }
+
+/** Every scroll texture a belt can show (undyed and the 16 dyes, straight and diagonal), loaded before the belt is drawn. */
+export const BELT_DYE_NAMES = ['white', 'orange', 'magenta', 'light_blue', 'yellow', 'lime', 'pink', 'gray',
+  'light_gray', 'cyan', 'purple', 'blue', 'brown', 'green', 'red', 'black'];
+const readyMaterials = new Map<string, THREE.MeshBasicMaterial>();
+export async function preloadBeltScroll(spriteIds: string[]): Promise<void> {
+  for (const id of spriteIds) {
+    if (readyMaterials.has(id)) continue;
+    readyMaterials.set(id, beltScrollMaterial(await loadBeltScrollTexture(id)));
+  }
+}
+/** The scroll material of a loaded sprite (preloadBeltScroll must have run for it). */
+export function scrollMaterialOf(spriteId: string): THREE.MeshBasicMaterial | undefined { return readyMaterials.get(spriteId); }
