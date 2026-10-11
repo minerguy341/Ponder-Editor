@@ -37,4 +37,5 @@ export type LogisticsEvent = { tick?: number } & (
   | { op: 'changeBeltItemTo'; link: string; item: ItemStackJson }
   | { op: 'nbt'; pos: Vec3; patch: Record<string, unknown> }
   | { op: 'flap'; pos: Vec3; inward: boolean }
+  | { op: 'flapTunnel'; pos: Vec3; side: Direction; inward: boolean }
 );

@@ -104,9 +104,21 @@ export interface BasinState {
   outputs: (ItemStackJson | null)[];
 }
 
+/** FunnelBlockEntity.flap: LerpedFloat startWithValue(.25).chase(0, .05, EXP) (FunnelBlockEntity.java:370) */
+export interface FlapState { key: string; pos: Vec3; side?: Direction; prev: number; cur: number; target: number }
+const FLAP_START = 0.25;
+const FLAP_SPEED = 0.05;
+
 const DEPOT_SLOTS = 8;
 const BASIN_SLOTS = 9;
 const STACK_LIMIT = 64;
+
+/** LerpedFloat.tickChaser with Chaser.EXP(speed): c + (t - c) * speed, snapping when equal (Mth.equal: |a-b| < 1e-5). */
+function stepFlap(fl: FlapState): void {
+  fl.prev = fl.cur;
+  if (Math.abs(fl.cur - fl.target) < 1e-5) fl.cur = fl.target;
+  else fl.cur += (fl.target - fl.cur) * FLAP_SPEED;
+}
 
 /** Scene belts, depots and basins, advanced one tick at a time. */
 export class LogisticsWorld {
@@ -117,6 +129,7 @@ export class LogisticsWorld {
   private initialSpeed = new Map<string, number>();
   private depots = new Map<string, DepotState>();
   private basins = new Map<string, BasinState>();
+  private flaps = new Map<string, FlapState>();
   private events: LogisticsEvent[] = [];
   private cursor = 0;
   /** scene tick the state corresponds to */
@@ -187,6 +200,7 @@ export class LogisticsWorld {
     this.linkOf.clear();
     this.depots.clear();
     this.basins.clear();
+    this.flaps.clear();
     this.cursor = 0;
     this.now = 0;
     this.rng.setSeed(0x2f6f_3c1d);
@@ -205,6 +219,7 @@ export class LogisticsWorld {
       if (this.now === target) break;
       for (const st of this.states.values()) this.stepChain(st);
       for (const d of this.depots.values()) if (d.held) easeToCentre(d.held);
+      for (const fl of this.flaps.values()) stepFlap(fl);
       this.now++;
     }
   }
@@ -273,6 +288,36 @@ export class LogisticsWorld {
     return b;
   }
 
+  /**
+   * Flap of a funnel (FunnelBlockEntity.flap). A funnel that no event has touched decays from its start value in closed form:
+   * value(t) = target + (start - target) * 0.95^t.
+   */
+  flapAt(pos: Vec3, side?: Direction): FlapState {
+    const k = side ? `${posKey(pos)}|${side}` : posKey(pos);
+    let fl = this.flaps.get(k);
+    if (!fl) {
+      const c = FLAP_START * Math.pow(1 - FLAP_SPEED, this.now);
+      const prev = this.now > 0 ? FLAP_START * Math.pow(1 - FLAP_SPEED, this.now - 1) : FLAP_START;
+      fl = { key: k, pos, side, prev, cur: c, target: 0 };
+      this.flaps.set(k, fl);
+    }
+    return fl;
+  }
+
+  /**
+   * Value of a block entity key at scene time `ticks`: the last scene patch (modifyBlockEntityNBT) at or before `ticks`, else the
+   * value the block was placed with. Used for state the scene changes on blocks drawn by visuals (Casing, Covered).
+   */
+  nbtValueAt(pos: Vec3, key: string, ticks: number): unknown {
+    const k = posKey(pos);
+    let v: unknown = this.lookup.getBlockEntity(pos)?.nbt?.[key];
+    for (const e of this.events) {
+      if ((e.tick ?? 0) > ticks) break;
+      if (e.op === 'nbt' && posKey(e.pos) === k && key in e.patch) v = e.patch[key];
+    }
+    return v;
+  }
+
   /** Every item stack referenced by the event log (so renderers can prepare their models ahead of time). */
   stacksInEvents(): ItemStackJson[] {
     const out: ItemStackJson[] = [];
@@ -317,6 +362,10 @@ export class LogisticsWorld {
         this.patchNbt(ev.pos, ev.patch);
         break;
       case 'flap':
+        this.flapAt(ev.pos).target = ev.inward ? -1 : 1;
+        break;
+      case 'flapTunnel':
+        this.flapAt(ev.pos, ev.side).target = ev.inward ? -1 : 1;
         break;
     }
   }
@@ -657,6 +706,12 @@ function readSlots(v: unknown, slots: (ItemStackJson | null)[], reset = false): 
   });
 }
 
+/** Enum arguments in scene JSON are {enum: "NAME"} or plain strings. */
+function enumName(v: unknown): string {
+  if (v && typeof v === 'object' && typeof (v as { enum?: unknown }).enum === 'string') return ((v as { enum: string }).enum).toLowerCase();
+  return String(v).toLowerCase();
+}
+
 const worlds = new WeakMap<WorldLookup, LogisticsWorld>();
 /** The logistics simulation of one scene (keyed by the lookup the visuals receive in their VisualContext). */
 export function getLogisticsWorld(lookup: WorldLookup): LogisticsWorld {
@@ -699,6 +754,15 @@ export function logisticsEventsOf(instructions: { op: string; args?: Record<stri
         break;
       case 'world.flapFunnel':
         out.push({ tick: t, op: 'flap', pos: a.pos as Vec3, inward: !a.outward });
+        break;
+      case 'world.modifyBlockEntity':
+        // FunnelBlockEntity.flap(inward) / BeltTunnelBlockEntity.flap(side, inward) as modifyBlockEntity calls
+        for (const call of (a.calls as { path?: { m: string; a: unknown[] }[] }[] | undefined) ?? []) {
+          const m = call.path?.[0];
+          if (!m || m.m !== 'flap') continue;
+          if (m.a.length >= 2) out.push({ tick: t, op: 'flapTunnel', pos: a.pos as Vec3, side: enumName(m.a[0]) as Direction, inward: !!m.a[1] });
+          else out.push({ tick: t, op: 'flap', pos: a.pos as Vec3, inward: !!m.a[0] });
+        }
         break;
     }
   }

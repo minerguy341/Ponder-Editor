@@ -12,14 +12,30 @@ import { PARTIAL } from '../common/partialModels';
 import type { BlockRendererImpl } from '../../blockRenderer';
 import { beltShape } from '../items/beltMath';
 import { getLogisticsWorld, type BeltChain, type ItemPose } from '../items/logisticsSim';
+import { buildStateObject } from '../common';
+import { registerBlockModelProcessor } from '../../blockRenderer';
+import { retextureQuad } from '../../models';
 import { beltPartialId, beltSegmentMatrix, beltSprites, beltPulleyBase, beltPulleyDirection, beltRotationAxis, beltScroll, ScrollMesh, placeBeltItem, type ItemPlacement, type BeltSprites } from '../items/beltRender';
 import { createItemObjectSync, itemInfo, prepareItem } from '../items/itemObject';
 import { PoseStack } from '../items/pose';
 import type { VisualModule } from '../registry';
 
+/** BeltModel (ANDESIDE_BELT_CASING): the casing model is textured with the brass casing; andesite casings retarget it. */
+const CASING_ORIG = 'create:block/belt/brass_belt_casing';
+const CASING_ANDESITE = 'create:block/belt/andesite_belt_casing';
+
+// Static casing belts (casing=true, MODEL shape): the casing sprite of andesite casings is retargeted from the brass sprite.
+registerBlockModelProcessor('create:belt', (quads, ctx) => {
+  if (ctx.state.props.casing !== 'true' || ctx.nbt?.Casing !== 'ANDESITE') return;
+  const to = ctx.renderer.atlas.get(CASING_ANDESITE);
+  if (!to) return;
+  return quads.map((q) => (q.sprite.id === CASING_ORIG ? retextureQuad(q, to) : q));
+});
+
 const BELT_SPRITE_IDS = [
   'create:block/belt', 'create:block/belt_offset', 'create:block/belt_diagonal',
   'create:block/belt_scroll', 'create:block/belt_diagonal_scroll',
+  CASING_ORIG, CASING_ANDESITE,
 ];
 
 interface ScrollPart {
@@ -69,6 +85,28 @@ function sharedShadow(): { material: THREE.MeshBasicMaterial; geometry: THREE.Bu
   return { material: shadowMaterial, geometry: shadowGeometry! };
 }
 
+/** Same retexture as the processor, applied to an already built casing object (uv inside the brass casing sprite). */
+function retargetCasing(root: THREE.Object3D, renderer: BlockRendererImpl): void {
+  const from = renderer.atlas.get(CASING_ORIG);
+  const to = renderer.atlas.get(CASING_ANDESITE);
+  if (!from || !to) return;
+  root.traverse((o) => {
+    const m = o as THREE.Mesh;
+    if (!m.isMesh) return;
+    const uv = m.geometry.getAttribute('uv') as THREE.BufferAttribute | undefined;
+    if (!uv) return;
+    const a = uv.array as Float32Array;
+    for (let i = 0; i < a.length; i += 2) {
+      const u = a[i], v = a[i + 1];
+      if (u < from.u0 || u > from.u1 || v < from.v0 || v > from.v1) continue;
+      const fu = (u - from.u0) / (from.u1 - from.u0), fv = (v - from.v0) / (from.v1 - from.v0);
+      a[i] = to.u0 + fu * (to.u1 - to.u0);
+      a[i + 1] = to.v0 + fv * (to.v1 - to.v0);
+    }
+    uv.needsUpdate = true;
+  });
+}
+
 class BeltBlockVisual extends BaseVisual {
   private parts: ScrollPart[] = [];
   private pulley: THREE.Group | null = null;
@@ -84,6 +122,8 @@ class BeltBlockVisual extends BaseVisual {
   private shadowTmp = new THREE.Matrix4();
   private readonly renderer: BlockRendererImpl;
   private dyed = false;
+  private casingObj: THREE.Object3D | null = null;
+  private coverObj: THREE.Object3D | null = null;
 
   constructor(block: BlockInstance, ctx: VisualContext) {
     super(block, ctx);
@@ -135,11 +175,24 @@ class BeltBlockVisual extends BaseVisual {
       this.pulley = g as THREE.Group;
       this.object.add(g);
     }
-    if (this.block.state.props.casing === 'true' && this.data.Covered === true) {
-      // BeltModel: the cover is part of the casing model only when the block above covers the belt
+    // Casing added by a scene patch (Casing: ANDESITE|BRASS) changes the block state in the game: the casing model is then
+    // drawn from the state with casing=true, shown from the tick of the patch on.
+    const world0 = getLogisticsWorld(this.ctx.lookup);
+    const casingAtEnd = world0.nbtValueAt(this.block.pos, 'Casing', Infinity);
+    if (casingAtEnd && casingAtEnd !== 'NONE' && p.casing !== 'true') {
+      const cs: BlockState = { name: this.block.state.name, props: { ...p, casing: 'true' } };
+      this.casingObj = await buildStateObject(this.ctx, cs);
+      if (casingAtEnd === 'ANDESITE') retargetCasing(this.casingObj, this.renderer);
+      this.object.add(this.casingObj);
+    }
+    // BeltModel cover (block above covers the belt): a cover model along the belt, drawn on casing belts
+    const coverAtEnd = world0.nbtValueAt(this.block.pos, 'Covered', Infinity);
+    if (coverAtEnd === true) {
       const alongX = shape.facing === 'east' || shape.facing === 'west';
-      const cover = await getPartial(this.ctx, alongX ? PARTIAL.ANDESITE_BELT_COVER_X : PARTIAL.ANDESITE_BELT_COVER_Z);
-      this.object.add(cover);
+      const brass = world0.nbtValueAt(this.block.pos, 'Casing', Infinity) === 'BRASS';
+      const id = brass ? (alongX ? PARTIAL.BRASS_BELT_COVER_X : PARTIAL.BRASS_BELT_COVER_Z) : (alongX ? PARTIAL.ANDESITE_BELT_COVER_X : PARTIAL.ANDESITE_BELT_COVER_Z);
+      this.coverObj = await getPartial(this.ctx, id);
+      this.object.add(this.coverObj);
     }
   }
 
@@ -165,6 +218,14 @@ class BeltBlockVisual extends BaseVisual {
         speed, ticks, facing: shape.facing, diagonal, sideways, downward, bottom: part.bottom, spriteSize,
       });
       part.sm.apply(o, t, scrollV);
+    }
+
+    if (this.casingObj || this.coverObj) {
+      const world2 = getLogisticsWorld(this.ctx.lookup);
+      const c = world2.nbtValueAt(this.block.pos, 'Casing', ticks);
+      const casingOn = !!c && c !== 'NONE';
+      if (this.casingObj) this.casingObj.visible = casingOn;
+      if (this.coverObj) this.coverObj.visible = casingOn && world2.nbtValueAt(this.block.pos, 'Covered', ticks) === true;
     }
 
     if (this.pulley) {

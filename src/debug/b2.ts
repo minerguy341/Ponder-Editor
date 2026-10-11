@@ -91,6 +91,8 @@ async function sceneMode() {
   renderer.setEntityBlockPredicate(isEntityRendered);
   const lookup = makeLookup(st.blocks);
   if (scene) for (const ev of logisticsEventsOf(scene.instructions)) getLogisticsWorld(lookup).apply(ev);
+  // textures used by block-model processors (belt casing retexture) must be in the atlas before the section is built
+  await renderer.ensureTextures(['create:block/belt/brass_belt_casing', 'create:block/belt/andesite_belt_casing']);
   await renderer.prepare(st.blocks.map((b) => b.state));
   const group = renderer.buildSection(st.blocks, { lookup });
   viewer.world.add(group);
