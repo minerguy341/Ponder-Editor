@@ -11,6 +11,8 @@ export const REPOS = {
   create: `https://cdn.jsdelivr.net/gh/Creators-of-Create/Create@${CREATE_TAG}`,
   // Ponder library (also contains catnip) - 1.21.1 branch
   ponder: 'https://cdn.jsdelivr.net/gh/Creators-of-Create/Ponder@mc1.21.1%2Fdev',
+  // vanilla block/state/item definitions (property names, value order, default state) - pinned tag
+  mcdata: 'https://cdn.jsdelivr.net/gh/PrismarineJS/minecraft-data@3.117.0/data/pc/1.21.1',
 };
 
 /** Flat file list of an extra repo (ponder). */
@@ -31,9 +33,9 @@ export function cachePath(repo, p) {
 }
 
 /** Cached read; fetches once if missing. */
-export async function getText(repo, p, { optional = false } = {}) {
+export async function getText(repo, p, { optional = false, binary = false } = {}) {
   const cp = cachePath(repo, p);
-  if (fs.existsSync(cp)) return fs.readFileSync(cp, 'utf8');
+  if (fs.existsSync(cp)) return binary ? fs.readFileSync(cp) : fs.readFileSync(cp, 'utf8');
   const base = REPOS[repo] ?? repo;
   const url = `${base}/${p.replace(/^\//, '')}`;
   let lastErr;
@@ -45,9 +47,10 @@ export async function getText(repo, p, { optional = false } = {}) {
         throw new Error(`404 ${url}`);
       }
       if (!r.ok) throw new Error(`HTTP ${r.status} ${url}`);
-      const t = await r.text();
+      const t = binary ? Buffer.from(await r.arrayBuffer()) : await r.text();
       fs.mkdirSync(path.dirname(cp), { recursive: true });
-      fs.writeFileSync(cp, t);
+      fs.writeFileSync(cp + '.tmp', t);
+      fs.renameSync(cp + '.tmp', cp);
       return t;
     } catch (e) {
       lastErr = e;
