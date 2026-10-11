@@ -16,7 +16,8 @@ import { armPointGeometry, armTargetAngles, ARM_NO_TARGET } from '../../../src/r
 import { signLineText, signMessages } from '../../../src/render/create/visuals/process-signs';
 import { CHEST_PARTS, CHEST_HINGE } from '../../../src/render/create/visuals/process-vanilla-chest';
 import { cubesGeometry } from '../../../src/render/create/vanilla/entityModel';
-import { crafterBeltValid, crafterGroupSlot0, crafterInitialSlot0, crafterLinksAt, crafterPointingX, crafterSlot0At, crafterTargetDirection } from '../../../src/render/create/visuals/process-crafter';
+import { crafterBeltValid, crafterPointingX, crafterTargetDirection } from '../../../src/render/create/visuals/process-crafter';
+import { chainSim, crafterInitialSlot0, type ChainTopology, type MemberInput, type CallEntry } from '../../../src/render/create/vanilla/crafterChain';
 import { TickSim, type BEvent } from '../../../src/render/create/vanilla/processBase';
 
 const near = (a: number, b: number, eps = 1e-6) => expect(Math.abs(a - b)).toBeLessThan(eps);
@@ -207,28 +208,9 @@ describe('MechanicalCrafterBlock.getTargetDirection / isValidTarget (Create 6.0.
     expect(crafterBeltValid(at({ name: 'minecraft:stone', props: {} }), [0, 0, 0], 'north', 'up')).toBe(false);
   });
 
-  it('slot 0 follows insertItem / setItem / ejectWholeGrid at their scene ticks; simulated inserts are ignored', () => {
-    const calls = [
-      { t: 5, path: [{ m: 'getInventory', a: [] }, { m: 'insertItem', a: [0, { id: 'minecraft:oak_planks', count: 1 }, false] }] },
-      { t: 6, path: [{ m: 'getInventory', a: [] }, { m: 'insertItem', a: [0, { id: 'minecraft:stone', count: 1 }, true] }] },
-      { t: 10, path: [{ m: 'getInventory', a: [] }, { m: 'setItem', a: [0, { id: 'minecraft:stick', count: 1 }] }] },
-      { t: 12, path: [{ m: 'ejectWholeGrid', a: [] }] },
-    ];
-    expect(crafterSlot0At(undefined, calls, 4)).toBeUndefined();
-    expect(crafterSlot0At(undefined, calls, 5)?.id).toBe('minecraft:oak_planks');
-    expect(crafterSlot0At(undefined, calls, 9)?.id).toBe('minecraft:oak_planks');
-    expect(crafterSlot0At(undefined, calls, 10)?.id).toBe('minecraft:stick');
-    expect(crafterSlot0At(undefined, calls, 12)).toBeUndefined();
-  });
-
-  it('a second insertItem of the same item adds to slot 0 (up to 64); the initial inventory comes from nbt Inventory slot 0', () => {
-    const calls = [
-      { t: 1, path: [{ m: 'getInventory', a: [] }, { m: 'insertItem', a: [0, { id: 'minecraft:iron_ingot', count: 2 }, false] }] },
-      { t: 2, path: [{ m: 'getInventory', a: [] }, { m: 'insertItem', a: [0, { id: 'minecraft:iron_ingot', count: 3 }, false] }] },
-    ];
-    expect(crafterSlot0At(undefined, calls, 2)?.count).toBe(5);
+  it('the initial inventory comes from nbt Inventory slot 0', () => {
     expect(crafterInitialSlot0({ Items: [{ Slot: 1, id: 'minecraft:stone', count: 1 }, { Slot: 0, id: 'minecraft:gold_ingot', count: 4 }] })).toEqual({ id: 'minecraft:gold_ingot', count: 4 });
-    expect(crafterInitialSlot0(undefined)).toBeUndefined();
+    expect(crafterInitialSlot0(undefined)).toBeNull();
   });
 });
 
@@ -336,22 +318,79 @@ describe('Sign text components as stored in the scenes (wall and hanging signs)'
   });
 });
 
-describe('Crafter connections and shared inventory (MechanicalCrafterBlockEntity; connectCrafterInvs is a toggle on both ends)', () => {
-  it('a connection is on after an odd number of toggles up to the tick, and off again after the second toggle', () => {
-    const calls = [
-      { t: 10, path: [{ m: 'toggleConnection', a: [[1, 2, 2]] }] },
-      { t: 20, path: [{ m: 'toggleConnection', a: [[1, 2, 2]] }] },
-    ];
-    expect(crafterLinksAt(calls, 9)).toEqual([]);
-    expect(crafterLinksAt(calls, 10)).toEqual([[1, 2, 2]]);
-    expect(crafterLinksAt(calls, 20)).toEqual([]);
+/** A replay of crafters: `links` = [member, target member] pairs (target index -1 = none), each with its own calls. */
+function replay(members: Array<Partial<MemberInput> & { calls?: CallEntry[] }>, targets: number[], preceding: number[][] = []) {
+  const topo: ChainTopology = {
+    positions: members.map((_, i) => [i, 0, 0]),
+    target: targets,
+    preceding: members.map((_, i) => preceding[i] ?? []),
+    cyclic: false,
+  };
+  const inputs: MemberInput[] = members.map((m, i) => ({
+    pos: [i, 0, 0],
+    pointing: m.pointing ?? 'down',
+    coveredAt: () => m.covered ?? false,
+    speedAt: () => m.speed ?? 32,
+    slot0: m.slot0 ?? null,
+    destination: m.destination ?? true,
+    calls: () => m.calls ?? [],
+  }));
+  return chainSim(topo, inputs);
+}
+const ins = (t: number, id: string, count = 1, extra: unknown[] = []): CallEntry => ({ t, path: [{ m: 'getInventory', a: [] }, { m: 'insertItem', a: [0, { id, count }, false, ...extra] }] });
+
+describe('MechanicalCrafterBlockEntity phase replay (tick, insertItem, begin, ASSEMBLING, CRAFTING, eject; RecipeGridHandler chains)', () => {
+  it('an insert is refused without speed (no begin) and kept in slot 0', () => {
+    const sim = replay([{ speed: 0, calls: [ins(5, 'minecraft:oak_planks')] }], [-1]);
+    const s = sim.sample(9).cur.m[0];
+    expect(s.phase).toBe('IDLE');
+    expect(s.slot0?.id).toBe('minecraft:oak_planks');
   });
-  it('a connected group shares slot 0: an insert on the partner shows on this crafter too, and eject clears the group', () => {
-    const own = { PonderCalls: [{ t: 0, path: [{ m: 'toggleConnection', a: [[1, 2, 2]] }] }] };
-    const partner = { PonderCalls: [{ t: 0, path: [{ m: 'toggleConnection', a: [[2, 2, 2]] }] }, { t: 5, path: [{ m: 'getInventory', a: [] }, { m: 'insertItem', a: [0, { id: 'minecraft:oak_planks', count: 1 }, false] }] }, { t: 9, path: [{ m: 'ejectWholeGrid', a: [] }] }] };
-    const members = [{ pos: [2, 2, 2], nbt: own }, { pos: [1, 2, 2], nbt: partner }];
-    expect(crafterGroupSlot0(members, 4)).toBeUndefined();
-    expect(crafterGroupSlot0(members, 5)?.id).toBe('minecraft:oak_planks');
-    expect(crafterGroupSlot0(members, 9)).toBeUndefined();
+
+  it('a single crafter: insert at 5 begins, crafts 2000 countdown units at speed 32 (63 ticks) and ejects at the end', () => {
+    // sample(T) is the state after the ticks 0..T-1 (StepSim); a call at tick 5 is applied in tick 5, so it shows from sample(6)
+    const sim = replay([{ speed: 32, calls: [ins(5, 'minecraft:oak_planks')] }], [-1]);
+    expect(sim.sample(5).cur.m[0].phase).toBe('IDLE');
+    expect(sim.sample(6).cur.m[0].phase).toBe('CRAFTING');
+    expect(sim.sample(68).cur.m[0].phase).toBe('CRAFTING');
+    const end = sim.sample(69).cur.m[0];
+    expect(end.phase).toBe('IDLE');
+    expect(end.slot0).toBeNull();
+  });
+
+  it('the scripted result is the grid item of the crafting phase (setCraftingResult -> setScriptedResult); default is EMPTY', () => {
+    const scripted: CallEntry = { t: 2, path: [{ m: 'setScriptedResult', a: [{ id: 'minecraft:piston', count: 1 }] }] };
+    const sim = replay([{ speed: 32, calls: [scripted, ins(5, 'minecraft:oak_planks')] }], [-1]);
+    const s = sim.sample(10).cur.m[0];
+    expect(s.phase).toBe('CRAFTING');
+    expect(s.grid.get('0,0')?.stack?.id).toBe('minecraft:piston');
+    expect(s.before.map((c) => c.stack?.id)).toEqual(['minecraft:oak_planks']);
+    const none = replay([{ speed: 32, calls: [ins(5, 'minecraft:oak_planks')] }], [-1]).sample(10).cur.m[0];
+    expect(none.grid.get('0,0')?.stack).toBeNull();
+  });
+
+  it('covered crafters refuse inserts; a second insert of the same item adds up to 64; another item is refused', () => {
+    const covered = replay([{ speed: 0, covered: true, calls: [ins(1, 'minecraft:iron_ingot')] }], [-1]).sample(3).cur.m[0];
+    expect(covered.slot0).toBeNull();
+    const sim = replay([{ speed: 0, calls: [ins(1, 'minecraft:iron_ingot', 2), ins(2, 'minecraft:iron_ingot', 3), ins(3, 'minecraft:stone')] }], [-1]);
+    expect(sim.sample(3).cur.m[0].slot0).toEqual({ id: 'minecraft:iron_ingot', count: 5 });
+  });
+
+  it('a chain A -> B: A exports its grid into B (offset from its pointing), B assembles and crafts after A is WAITING', () => {
+    const sim = replay([
+      { pointing: 'down', calls: [ins(0, 'minecraft:oak_planks')] },
+      { pointing: 'up', calls: [ins(1, 'minecraft:stick')] },
+    ], [1, -1], [[], [0]]);
+    expect(sim.sample(1).cur.m[0].phase).toBe('IDLE'); // B has no item yet: no begin
+    expect(sim.sample(2).cur.m[0].phase).toBe('EXPORTING'); // both hold items: A assembles (no preceding) and exports
+    expect(sim.sample(2).cur.m[1].phase).toBe('ACCEPTING'); // B waits for A
+    expect(sim.sample(20).cur.m[0].phase).toBe('EXPORTING');
+    // A exports at countdown < 0 (1000 at speed 32: step 33); B then assembles and crafts with A's items merged at (0, +1)
+    expect(sim.sample(33).cur.m[0].phase).toBe('EXPORTING');
+    const done = sim.sample(34).cur;
+    expect(done.m[0].phase).toBe('WAITING');
+    expect(done.m[1].phase).toBe('CRAFTING');
+    expect(done.m[1].before.find((c) => c.x === 0 && c.y === 1)?.stack?.id).toBe('minecraft:oak_planks'); // A pointing DOWN: offset (0, +1)
+    expect(done.m[1].before.find((c) => c.x === 0 && c.y === 0)?.stack?.id).toBe('minecraft:stick');
   });
 });

@@ -31,7 +31,8 @@ export class ItemSlot {
     if (this.loading.has(key)) return;
     this.loading.add(key);
     prepareItem(stack, { context: ctx }).then(
-      () => { this.loading.delete(key); this.key = ''; this.onReady(); },
+      // forget the last stack too: the owner re-runs set() with the same stack object, which must not hit the identity early-return
+      () => { this.loading.delete(key); this.key = ''; this.lastStack = undefined; this.lastCtx = undefined; this.onReady(); },
       (err) => { this.loading.delete(key); console.error('[create] held item failed to load', stack.id, err); },
     );
   }

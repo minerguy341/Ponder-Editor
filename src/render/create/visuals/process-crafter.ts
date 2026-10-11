@@ -1,53 +1,36 @@
 // Mechanical crafter (create:mechanical_crafter). MechanicalCrafterRenderer (Create 6.0.10):
-//   renderSafe     : translate(.5 + .58 * facingNormal), scale(1/2), rotY(horizontalAngle(facing)), then renderItems
-//   renderItems    : IDLE phase draws inventory slot 0 at (0,0,-1/256), rotY(180), FIXED item display
-//   cog            : SHAFTLESS_COGWHEEL, kinetic rotation about the facing axis (getRotationAxis = HORIZONTAL_FACING's axis), then
-//                    rotateCentered(90 UP) when the facing is on the X axis, then rotateCentered(90 EAST)
-//   lid            : MECHANICAL_CRAFTER_LID while `covered` (the block entity's boolean Cover nbt) and not CRAFTING/INSERTING
+//   renderSafe     : translate(vec) with vec = .5 + .58 * facingNormal (+ .75 * targetNormal * progress while EXPORTING), scale(1/2),
+//                    rotY(horizontalAngle(facing)), then renderItems
+//   renderItems    : IDLE draws inventory slot 0 at (0,0,-1/256), rotY(180), FIXED item display. Other phases draw the GroupedItems grid
+//                    (x * spacing, y * spacing) with rotY(180) and a depth offset; CRAFTING draws the ingredients shrinking into the
+//                    centre and then the result spinning in (rotZ, scale); the EXPORTING offset depends on the pointing
+//   cog            : SHAFTLESS_COGWHEEL, kinetic rotation about the facing axis, rotateCentered(90 UP) when the facing is on the X axis,
+//                    then rotateCentered(90 EAST)
+//   lid            : MECHANICAL_CRAFTER_LID while (covered or not IDLE) and not CRAFTING / INSERTING
 //   belt / arrow   : MechanicalCrafterBlock.isValidTarget(target) draws the belt, otherwise the arrow
 //   renderAndTransform: rotateCentered(yRot + 90, UP), rotateCentered(xRot, EAST); xRot = Pointing.getXRotation()
-// Items and cover are read from the scene timeline at the visual's tick: `insertItem` / `setItem` on slot 0 (PonderCalls
-// entries of the block entity, see scenegraph logCall) and the Cover flag. Not drawn: the grouped grid of the other phases
-// (INSERTING / ASSEMBLING / CRAFTING / EXPORTING), setScriptedResult, and the shared inventories of connected crafters
-// (connectCrafterInvs is a toggle recorded on both crafters; this visual sees only its own block entity).
+// Phases and grids come from the replay in vanilla/crafterChain.ts (MechanicalCrafterBlockEntity.tick / tryInsert / begin /
+// eject and RecipeGridHandler chains, virtual block entities as Ponder runs them). The replay reads each crafter's recorded calls
+// (insertItem / setItem / setScriptedResult), its Speed and Cover, and the live block states of the chain.
+// Each crafter draws its own inventory (renderItems reads getInventory().getItem(0)): a connected group only routes inserts from
+// outside through the group's combined handler, which the scene timeline does not record.
+// Not modelled: redstone power (wasPoweredBefore), belt / depot insertion success (any destination accepts), the EXPORTING belt
+// texture scroll (MechanicalCrafterBlock belt sprite), crafting-remainder items, and the particle effects.
 import * as THREE from 'three';
-import type { BlockInstance, BlockState, BlockVisual, Direction, ItemStackJson, Vec3, VisualContext } from '../../../contract';
+import type { BlockInstance, BlockState, BlockVisual, Direction, ItemStackJson, VisualContext } from '../../../contract';
 import type { VisualModule } from '../registry';
-import { AXIS, axisDegMatrix, centredMatrix, mulInto } from '../vanilla/scratch';
+import { AXIS, centredMatrix, mulInto } from '../vanilla/scratch';
 import { ItemSlot } from '../vanilla/itemSlot';
-import { type Axis, DIR_STEP, KineticVisual, PARTIAL, axisOf, getNearest, getPartial, horizontalAngle, rotationOffset, stateDirection } from '../common';
+import {
+  type CallEntry, type ChainState, type MemberInput, type Stack, CRAFTER, chainSim, chainTopology, countDownSpeed,
+  crafterInitialSlot0, crafterPointingX, crafterTargetDirection, gridSize, stackOf,
+} from '../vanilla/crafterChain';
+import { PoseStack } from '../items/pose';
+import { type Axis, DIR_STEP, KineticVisual, PARTIAL, axisOf, getPartial, horizontalAngle, readKinetic, rotationOffset, stateDirection } from '../common';
 import type { Nbt } from '../common';
+import { StepSim } from '../common/sim';
 
-// Catnip net.createmod.catnip.math.Pointing (Ponder repo, mc1.21.1 dev/common): UP(0), LEFT(270), DOWN(180), RIGHT(90)
-const POINTING_X: Record<string, number> = { up: 0, left: 270, down: 180, right: 90 };
-const CRAFTER = 'create:mechanical_crafter';
-
-/** Pointing.getXRotation (degrees) as used by renderAndTransform. */
-export function crafterPointingX(pointing: string | undefined): number {
-  return POINTING_X[pointing ?? 'up'] ?? 0;
-}
-
-/** renderAndTransform(model): rotateCentered(yRot + 90, UP) then rotateCentered(xRot, EAST). */
-export function crafterPartMatrix(facing: Direction, pointing: string | undefined): THREE.Matrix4 {
-  const yRot = horizontalAngle(facing);
-  const a = new THREE.Matrix4(), b = new THREE.Matrix4();
-  centredMatrix(a, AXIS.y, yRot + 90);
-  centredMatrix(b, AXIS.x, crafterPointingX(pointing));
-  return a.multiply(b);
-}
-
-/**
- * MechanicalCrafterBlock.getTargetDirection: (0,1,0) rotated by -xRot about Z, then by horizontalAngle(facing) about Y,
- * with the VecHelper.rotate conventions (Catnip VecHelper.rotate: Z: x'=x cos - y sin, y'=y cos + x sin;
- * Y: x'=x cos + z sin, z'=z cos - x sin), then Direction.getNearest.
- */
-export function crafterTargetDirection(facing: Direction, pointing: string | undefined): Direction {
-  const a = (-crafterPointingX(pointing) * Math.PI) / 180;
-  const x0 = -Math.sin(a), y0 = Math.cos(a);
-  const b = (horizontalAngle(facing) * Math.PI) / 180;
-  const x1 = x0 * Math.cos(b), z1 = -x0 * Math.sin(b);
-  return getNearest(x1, y0, z1);
-}
+export { crafterInitialSlot0, crafterPointingX, crafterTargetDirection, stackOf };
 
 /**
  * MechanicalCrafterBlock.isValidTarget: the block at the target position is a crafter with the same facing whose pointing
@@ -66,88 +49,16 @@ export function crafterBeltValid(
   return Math.abs(crafterPointingX(st.props.pointing) - crafterPointingX(pointing)) !== 180;
 }
 
-/** Stack of an insertItem / setItem argument (`{id, count}`); empty, air or zero count give undefined. */
-function stackOf(v: unknown): ItemStackJson | undefined {
-  if (!v || typeof v !== 'object') return undefined;
-  const o = v as { id?: unknown; count?: unknown };
-  if (typeof o.id !== 'string' || o.id === 'minecraft:air') return undefined;
-  const count = typeof o.count === 'number' ? o.count : 1;
-  return count > 0 ? { id: o.id, count } : undefined;
+/** Pointing.getXRotation as used by renderAndTransform, and the rotation of the part models. */
+export function crafterPartMatrix(facing: Direction, pointing: string | undefined): THREE.Matrix4 {
+  const yRot = horizontalAngle(facing);
+  const a = new THREE.Matrix4(), b = new THREE.Matrix4();
+  centredMatrix(a, AXIS.y, yRot + 90);
+  centredMatrix(b, AXIS.x, crafterPointingX(pointing));
+  return a.multiply(b);
 }
 
-/** Slot 0 of the block entity's ItemStackHandler at the start of the scene (nbt `Inventory.Items[Slot 0]`). */
-export function crafterInitialSlot0(inventory: unknown): ItemStackJson | undefined {
-  const items = (inventory as { Items?: unknown } | undefined)?.Items;
-  if (!Array.isArray(items)) return undefined;
-  for (const e of items) {
-    const slot = (e as { Slot?: unknown } | null)?.Slot;
-    if (slot === 0) return stackOf(e);
-  }
-  return undefined;
-}
-
-/**
- * Slot 0 after the recorded block-entity calls at or before `tick`: insertItem (not simulated, into an empty or matching
- * slot), setItem, and ejectWholeGrid (the chain's items leave the grid).
- */
-export function crafterSlot0At(initial: ItemStackJson | undefined, calls: unknown, tick: number): ItemStackJson | undefined {
-  let item = initial;
-  if (!Array.isArray(calls)) return item;
-  for (const c of calls as { t?: unknown; path?: { m?: unknown; a?: unknown[] }[] }[]) {
-    if (!c || typeof c.t !== 'number' || c.t > tick || !Array.isArray(c.path)) continue;
-    for (const step of c.path) {
-      const a = step.a ?? [];
-      if (step.m === 'insertItem' && a[0] === 0 && a[2] !== true) {
-        const s = stackOf(a[1]);
-        if (!s) continue;
-        if (!item) item = s;
-        else if (item.id === s.id) item = { id: item.id, count: Math.min(64, (item.count ?? 1) + (s.count ?? 1)) };
-      } else if (step.m === 'setItem' && a[0] === 0) {
-        item = stackOf(a[1]);
-      } else if (step.m === 'ejectWholeGrid') {
-        item = undefined;
-      }
-    }
-  }
-  return item;
-}
-
-/** A crafter in a connection group: its position and block entity nbt (PonderCalls drive the timeline). */
-export interface CrafterNode { pos: readonly number[]; nbt: Nbt }
-
-/**
- * The other crafters this crafter is connected to at `tick`: connectCrafterInvs toggles the connection on both ends
- * (logCall toggleConnection with the other position), so an odd number of toggles up to the tick means connected.
- */
-export function crafterLinksAt(calls: unknown, tick: number): number[][] {
-  if (!Array.isArray(calls)) return [];
-  const parity = new Map<string, { pos: number[]; on: boolean }>();
-  for (const c of calls as { t?: unknown; path?: { m?: unknown; a?: unknown[] }[] }[]) {
-    if (!c || typeof c.t !== 'number' || c.t > tick || !Array.isArray(c.path)) continue;
-    for (const step of c.path) {
-      const other = step.m === 'toggleConnection' ? step.a?.[0] : undefined;
-      if (!Array.isArray(other) || other.length !== 3) continue;
-      const k = other.join(',');
-      const e = parity.get(k) ?? { pos: other as number[], on: false };
-      e.on = !e.on;
-      parity.set(k, e);
-    }
-  }
-  return [...parity.values()].filter((e) => e.on).map((e) => e.pos);
-}
-
-/**
- * Slot 0 of a connected group at `tick`: the group shares one inventory, so every member's insertItem / setItem / eject calls
- * act on the same slot. Initial contents come from the first member that has an Inventory.
- */
-export function crafterGroupSlot0(members: readonly CrafterNode[], tick: number): ItemStackJson | undefined {
-  let initial: ItemStackJson | undefined;
-  for (const m of members) { initial = crafterInitialSlot0(m.nbt.Inventory); if (initial) break; }
-  const calls: unknown[] = [];
-  for (const m of members) if (Array.isArray(m.nbt.PonderCalls)) calls.push(...(m.nbt.PonderCalls as unknown[]));
-  calls.sort((a, b) => ((a as { t?: number })?.t ?? 0) - ((b as { t?: number })?.t ?? 0));
-  return crafterSlot0At(initial, calls, tick);
-}
+const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
 
 class CrafterVisual extends KineticVisual {
   private facing: Direction;
@@ -156,24 +67,40 @@ class CrafterVisual extends KineticVisual {
   private lidNode = new THREE.Group();
   private arrowNode = new THREE.Group();
   private beltNode = new THREE.Group();
-  private itemNode = new ItemSlot(() => this.onUpdate(this.lastTicks));
+  private cells: ItemSlot[] = [];
+  private used = 0;
+  private ps = new PoseStack();
   private m = Array.from({ length: 4 }, () => new THREE.Matrix4());
   private axis: Axis;
-  private placeY: number;
+  private placeY = 0;
   private cogOffset: number;
-  private lastData: Nbt | undefined;
-  private lastTick = Number.NaN;
-  private shownItem: ItemStackJson | undefined;
-  private targetBelt: boolean;
+  private targetBelt = false;
+  private ready = false;
+  private sim: StepSim<ChainState> | null = null;
+  private simKey = '';
 
   constructor(block: BlockInstance, ctx: VisualContext) {
     super(block, ctx);
     this.facing = stateDirection(block.state, 'facing') ?? 'north';
     this.pointing = block.state.props.pointing ?? 'up';
     this.axis = axisOf(this.facing);
-    this.placeY = this.axis === 'x' ? 90 : 0;
     this.cogOffset = rotationOffset(block.state, this.axis, block.pos);
-    this.targetBelt = crafterBeltValid((p) => ctx.lookup.getState(p), block.pos, this.facing, this.pointing);
+    this.setOrientation(block.state);
+  }
+
+  /** facing / pointing dependent state: the cog placement, the belt-or-arrow choice (live neighbours) */
+  private setOrientation(st: BlockState): void {
+    this.facing = stateDirection(st, 'facing') ?? 'north';
+    this.pointing = st.props.pointing ?? 'up';
+    this.axis = axisOf(this.facing);
+    this.placeY = this.axis === 'x' ? 90 : 0;
+    this.cogOffset = rotationOffset(st, this.axis, this.block.pos);
+    this.targetBelt = crafterBeltValid((p) => this.ctx.lookup.getState(p), this.block.pos, this.facing, this.pointing);
+    if (!this.ready) return;
+    const part = crafterPartMatrix(this.facing, this.pointing);
+    for (const n of [this.lidNode, this.arrowNode, this.beltNode]) { n.matrixAutoUpdate = false; n.matrix.copy(part); }
+    this.arrowNode.visible = !this.targetBelt;
+    this.beltNode.visible = this.targetBelt;
   }
 
   protected async build(): Promise<void> {
@@ -192,62 +119,164 @@ class CrafterVisual extends KineticVisual {
     this.object.add(this.arrowNode);
     this.beltNode.add(belt, beltFrame);
     this.object.add(this.beltNode);
-
-    const part = crafterPartMatrix(this.facing, this.pointing);
-    for (const n of [this.lidNode, this.arrowNode, this.beltNode]) { n.matrixAutoUpdate = false; n.matrix.copy(part); }
-    this.arrowNode.visible = !this.targetBelt;
-    this.beltNode.visible = this.targetBelt;
-
-    // renderSafe + renderItems (IDLE): translate(.5 + .58 n), scale(1/2), rotY(yRot), translate(0,0,-1/256), rotY(180)
-    const n = DIR_STEP[this.facing];
-    const yRot = horizontalAngle(this.facing);
-    // rotY is about the block origin (ms.mulPose in renderSafe is not centred), so it is an uncentred axis rotation
-    const item = new THREE.Matrix4().makeTranslation(0.5 + 0.58 * n[0], 0.5 + 0.58 * n[1], 0.5 + 0.58 * n[2]);
-    item.multiply(new THREE.Matrix4().makeScale(0.5, 0.5, 0.5));
-    item.multiply(axisDegMatrix(new THREE.Matrix4(), AXIS.y, yRot));
-    item.multiply(new THREE.Matrix4().makeTranslation(0, 0, -1 / 256));
-    item.multiply(axisDegMatrix(new THREE.Matrix4(), AXIS.y, 180));
-    this.itemNode.object.matrixAutoUpdate = false;
-    this.itemNode.object.matrix.copy(item);
-    this.object.add(this.itemNode.object);
+    this.ready = true;
+    this.setOrientation(this.block.state);
   }
 
   protected override onKinetic(): void {}
 
+  /** The crafter's own live state (block states change with cycleBlockProperty; the lookup is the scene world). */
+  private liveState(): BlockState {
+    return this.ctx.lookup.getState(this.block.pos) ?? this.block.state;
+  }
+
   /**
-   * The crafters connected to this one at `tick` (connectCrafterInvs is a toggle recorded on both crafters). Neighbours are
-   * read through ctx.lookup; their recorded calls are as current as the scene world the lookup sees.
+   * The replay of the chain this crafter belongs to. Topology and the static inputs (speed, cover, destination, initial items,
+   * pointings) pick the simulation; the recorded calls are read live each step, so new calls extend the replay without restarting.
    */
-  private connectedMembers(own: Nbt, tick: number): CrafterNode[] {
-    const key = (v: readonly number[]) => v.join(',');
-    const start: CrafterNode = { pos: this.block.pos, nbt: own };
-    const members: CrafterNode[] = [start];
-    const seen = new Set([key(start.pos)]);
-    for (let i = 0; i < members.length; i++) {
-      for (const q of crafterLinksAt(members[i].nbt.PonderCalls, tick)) {
-        const k = key(q);
-        if (seen.has(k)) continue;
-        seen.add(k);
-        const qv = [q[0], q[1], q[2]] as Vec3;
-        if (this.ctx.lookup.getState(qv)?.name !== CRAFTER) continue;
-        members.push({ pos: q, nbt: this.ctx.lookup.getBlockEntity(qv)?.nbt ?? {} });
+  private chainAt(ticks: number): { state: ChainState; pt: number; speedCd: number } {
+    const lookup = this.ctx.lookup;
+    const stateAt = (p: readonly number[]) => lookup.getState([p[0], p[1], p[2]] as [number, number, number]);
+    const topo = chainTopology(stateAt, this.block.pos);
+    // one kinetic network: every crafter of the chain turns with this crafter's speed timeline
+    const speedAt = (k: number) => readKinetic(this.dataAt(Math.floor(k))).speed;
+    const members: MemberInput[] = topo.positions.map((p, i) => {
+      const vec = [p[0], p[1], p[2]] as [number, number, number];
+      const nbt: Nbt = i === 0 ? this.dataAt(ticks) : (lookup.getBlockEntity(vec)?.nbt ?? {});
+      const st = stateAt(p);
+      const dir = st ? crafterTargetDirection(stateDirection(st, 'facing') ?? 'north', st.props.pointing) : 'down';
+      const d = DIR_STEP[dir];
+      const dest = stateAt([p[0] + d[0], p[1] + d[1], p[2] + d[2]]);
+      return {
+        pos: p,
+        pointing: st?.props.pointing ?? 'up',
+        coveredAt: i === 0 ? (k: number) => this.dataAt(Math.floor(k)).Cover === true : () => (lookup.getBlockEntity(vec)?.nbt ?? {}).Cover === true,
+        speedAt,
+        slot0: crafterInitialSlot0(nbt.Inventory),
+        destination: !!dest && dest.name !== 'minecraft:air',
+        calls: () => {
+          const c = lookup.getBlockEntity(vec)?.nbt?.PonderCalls;
+          return Array.isArray(c) ? (c as CallEntry[]) : [];
+        },
+      };
+    });
+    const key = topo.positions.map((p, i) => `${p.join(',')}|${members[i].pointing}|${members[i].destination}|${members[i].slot0?.id ?? ''}${members[i].slot0?.count ?? ''}`).join(';') + `|${topo.target}|${topo.preceding.map((x) => x.join(',')).join('/')}|${topo.cyclic}`;
+    if (!this.sim || key !== this.simKey) {
+      this.sim = chainSim(topo, members);
+      this.simKey = key;
+    }
+    const sample = this.sim.sample(ticks);
+    return { state: sample.cur, pt: sample.pt, speedCd: countDownSpeed(speedAt(ticks)) };
+  }
+
+  /** The item cell for the next drawn item (pool grows on demand). */
+  private nextCell(): ItemSlot {
+    if (this.used < this.cells.length) return this.cells[this.used++];
+    const cell = new ItemSlot(() => this.onUpdate(this.lastTicks));
+    cell.object.matrixAutoUpdate = false;
+    this.object.add(cell.object);
+    this.cells.push(cell);
+    this.used++;
+    return cell;
+  }
+
+  /** Draws `stack` at the current pose (PoseStack matrix = item origin pose, display transform applied by the item). */
+  private emit(stack: Stack): void {
+    if (!stack) return;
+    const cell = this.nextCell();
+    cell.set(stack as ItemStackJson, 'fixed');
+    cell.object.visible = true;
+    cell.object.matrix.copy(this.ps.matrix);
+  }
+
+  /** MechanicalCrafterRenderer.renderSafe + renderItems for the replayed state at `ticks`. */
+  private layoutItems(s: ChainState['m'][number], pt: number, speedCd: number): void {
+    const ps = this.ps;
+    const facing = this.facing;
+    const n = DIR_STEP[facing];
+    let vx = 0.5 + 0.58 * n[0], vy = 0.5 + 0.58 * n[1], vz = 0.5 + 0.58 * n[2];
+    if (s.phase === 'EXPORTING') {
+      const t = DIR_STEP[crafterTargetDirection(facing, this.pointing)];
+      const progress = clamp01((1000 - s.countDown + speedCd * pt) / 1000);
+      vx += t[0] * progress * 0.75; vy += t[1] * progress * 0.75; vz += t[2] * progress * 0.75;
+    }
+    ps.reset();
+    ps.translate(vx, vy, vz);
+    ps.scale(1 / 2, 1 / 2, 1 / 2);
+    ps.rotateYDegrees(horizontalAngle(facing));
+
+    if (s.phase === 'IDLE') {
+      if (s.slot0) {
+        ps.pushPose();
+        ps.translate(0, 0, -1 / 256);
+        ps.rotateYDegrees(180);
+        this.emit(s.slot0);
+        ps.popPose();
+      }
+      return;
+    }
+    // grouped items (renderItems else-branch)
+    let items: Iterable<{ x: number; y: number; stack: Stack }> = s.grid.values();
+    let distance = 0.5;
+    ps.pushPose();
+    if (s.phase === 'CRAFTING') {
+      const before = s.before;
+      const { minX, minY, width, height } = gridSize(before);
+      const progress = clamp01((2000 - s.countDown + speedCd * pt) / 1000);
+      const early = clamp01(progress * 2), late = clamp01(progress * 2 - 1);
+      ps.scale(1 - late, 1 - late, 1 - late);
+      const cx = (-minX + (-width + 1) / 2) * early, cy = (-minY + (-height + 1) / 2) * early;
+      ps.translate(cx * 0.5, cy * 0.5, 0);
+      distance += (-4 * (progress - 0.5) * (progress - 0.5) + 1) * 0.25;
+      items = before;
+    }
+    const onlyRenderFirst = s.phase === 'INSERTING' || (s.phase === 'CRAFTING' && s.countDown < 1000);
+    const spacing = distance;
+    const offset = s.phase === 'EXPORTING' ? (this.pointing === 'up' ? -1 : this.pointing === 'left' ? 2 : this.pointing === 'right' ? -2 : 1) : 0;
+    for (const c of items) {
+      if (onlyRenderFirst && (c.x !== 0 || c.y !== 0)) continue;
+      ps.pushPose();
+      ps.translate(c.x * spacing, c.y * spacing, 0);
+      ps.rotateYDegrees(180);
+      ps.translate(0, 0, (c.x + c.y * 3 + offset * 9) / 1024);
+      this.emit(c.stack);
+      ps.popPose();
+    }
+    ps.popPose();
+
+    if (s.phase === 'CRAFTING') {
+      const progress = clamp01((1000 - s.countDown + speedCd * pt) / 1000);
+      const early = clamp01(progress * 2), late = clamp01(progress * 2 - 1);
+      ps.rotateZDegrees(early * 2 * 360);
+      const up = early * 1.125;
+      const down = 1 + (1 - late) * 0.125;
+      ps.scale(up, up, up);
+      ps.scale(down, down, down);
+      for (const c of s.grid.values()) {
+        if (c.x !== 0 || c.y !== 0) continue;
+        ps.pushPose();
+        ps.rotateYDegrees(180);
+        this.emit(c.stack);
+        ps.popPose();
       }
     }
-    return members;
   }
 
   protected override onUpdate(ticks: number): void {
     super.onUpdate(ticks);
-    const tick = Math.floor(ticks);
-    const d = this.dataAt(ticks);
-    if (this.lastData !== d || this.lastTick !== tick) {
-      this.lastData = d;
-      this.lastTick = tick;
-      this.lidNode.visible = d.Cover === true; // Cover is the block entity's boolean `covered`
-      const members = this.connectedMembers(d, tick);
-      this.shownItem = crafterGroupSlot0(members, tick);
-    }
-    this.itemNode.set(this.shownItem, 'fixed'); // every update: a model that finished loading (ItemSlot.onReady) must be shown
+    // a block state change (cycleBlockProperty) reaches the visual through the live lookup
+    const live = this.liveState();
+    if (live.props.facing !== this.facing || (live.props.pointing ?? 'up') !== this.pointing) this.setOrientation(live);
+
+    const own = this.dataAt(ticks);
+    const { state, pt, speedCd } = this.chainAt(ticks);
+    this.used = 0;
+    const s = state.m[0];
+    // the own inventory and lid: Cover is the block entity's boolean `covered`
+    this.lidNode.visible = this.ready && (own.Cover === true || s.phase !== 'IDLE') && s.phase !== 'CRAFTING' && s.phase !== 'INSERTING';
+    this.layoutItems(s, pt, speedCd);
+    for (let k = this.used; k < this.cells.length; k++) { this.cells[k].set(undefined); this.cells[k].object.visible = false; }
+
     const axis = this.axis;
     const angle = (ticks * this.kin.effectiveSpeed * 3 / 10 + this.cogOffset) % 360;
     // standardKineticRotationTransform: rotateCentered(axis, angle), then the Y-axis cog placement (no allocation)
