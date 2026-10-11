@@ -10,7 +10,7 @@ import * as THREE from 'three';
 import type { BlockInstance, ItemStackJson, VisualContext } from '../../../contract';
 import type { VisualModule } from '../registry';
 import {
-  DIR_STEP, PARTIAL, getBool, getItemStack, getNumber, getPartial, horizontalAngle, stateDirection, toYRot, verticalAngle, opposite, type Nbt,
+  BaseVisual, DIR_STEP, PARTIAL, getBool, getItemStack, getNumber, getPartial, horizontalAngle, stateDirection, toYRot, verticalAngle, opposite, type Nbt,
 } from '../common';
 import { PoseStack } from '../items/pose';
 import { createItemObject, prepareItem } from '../items';
@@ -165,7 +165,43 @@ const packagerModule = (blocks: string[], repackager: boolean): VisualModule => 
   },
 });
 
+
+// ------------------------------------------------------------------------------------------------ frogport (rest pose)
+//
+// Java: content/logistics/packagePort/frogport/{FrogportRenderer.renderSafe (rest branch), FrogportBlockEntity.getYaw/passiveYaw}.
+// At rest (no target, no animation, no anticipation) the head pitch and the tongue length are 0 and the body turns by the placed
+// yaw. The package hand-off animation (startAnimation: tongue, rigging and package models) is not reproduced yet (see the report).
+
+class FrogportVisual extends BaseVisual {
+  protected async build(): Promise<void> {
+    const yaw = getNumber(this.data, 'PlacedYaw', 0);
+    const goggles = getBool(this.data, 'Goggles', false);
+    const [body, head] = await Promise.all([
+      getPartial(this.ctx, PARTIAL.FROGPORT_BODY),
+      getPartial(this.ctx, goggles ? PARTIAL.FROGPORT_HEAD_GOGGLES : PARTIAL.FROGPORT_HEAD),
+    ]);
+    // body.center().rotateYDegrees(yaw).uncenter()
+    const bodyM = new PoseStack().translate(0.5, 0.5, 0.5).rotateYDegrees(yaw).translate(-0.5, -0.5, -0.5).matrix.clone();
+    this.object.add(withMatrix(body, bodyM));
+    // head: center().rotateYDegrees(yaw).uncenter().translate(8/16, 10/16, 11/16).rotateXDegrees(0).translateBack(...)
+    const headM = new PoseStack().translate(0.5, 0.5, 0.5).rotateYDegrees(yaw).translate(-0.5, -0.5, -0.5)
+      .translate(8 / 16, 10 / 16, 11 / 16).translate(-8 / 16, -10 / 16, -11 / 16).matrix.clone();
+    this.object.add(withMatrix(head, headM));
+  }
+  protected onUpdate(): void { /* rest pose: nothing moves until the package animation is modelled */ }
+}
+
+const frogportModule: VisualModule = {
+  blocks: ['create:package_frogport'],
+  entityRendered: () => false, // the body and head come from the static blockstate in the chunk; the visual places them with the yaw
+  create: (block, ctx) => new FrogportVisual(block, ctx).init(),
+  async preload(ctx) {
+    await Promise.all([PARTIAL.FROGPORT_BODY, PARTIAL.FROGPORT_HEAD, PARTIAL.FROGPORT_HEAD_GOGGLES].map((id) => getPartial(ctx, id)));
+  },
+};
+
 export default [
   packagerModule(['create:packager'], false),
   packagerModule(['create:repackager'], true),
+  frogportModule,
 ] as VisualModule[];

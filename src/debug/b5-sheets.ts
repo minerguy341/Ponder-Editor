@@ -25,6 +25,11 @@ export function grid(rows: SheetCell[][], gap = 2): Sheet {
 const bogeyNbt = (): Record<string, unknown> => ({ BogeyData: { BogeyStyle: 'create:standard' } });
 
 export const SHEETS: Record<string, () => Sheet> = {
+  frogport: () => grid([
+    [{ state: st('create:package_frogport'), nbt: { PlacedYaw: 0, AcceptsPackages: 0, AddressFilter: '' } },
+      { state: st('create:package_frogport'), nbt: { PlacedYaw: 90, AcceptsPackages: 0, AddressFilter: '' } },
+      { state: st('create:package_frogport'), nbt: { PlacedYaw: 225, AcceptsPackages: 0, AddressFilter: '' } }],
+  ], 3),
   packager: () => grid([
     [{ state: st('create:packager', { powered: 'false', facing: 'west', linked: 'false' }), nbt: { AnimationTicks: 0, AnimationInward: 1, HeldBox: { id: 'minecraft:air', Count: 0 }, InsertedBox: { id: 'minecraft:air', Count: 0 } } },
       { state: st('create:packager', { powered: 'false', facing: 'west', linked: 'false' }), nbt: { AnimationTicks: 15, AnimationInward: 1, HeldBox: { id: 'minecraft:air', Count: 0 }, InsertedBox: { id: 'create:cardboard_package_12x12', Count: 1 } } },
