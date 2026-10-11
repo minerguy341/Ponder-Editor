@@ -41,6 +41,9 @@ export interface SimItem {
   lockedExternally: boolean;
   /** scene element link of the item (createItemOnBelt `out`) */
   link?: string;
+  /** processing state: the segment already offered to a processor, and whether a processor holds the item */
+  processed?: number;
+  processHeld?: boolean;
 }
 
 /** A belt chain: BeltBlock.initBelt / getBeltChain. `segments[i]` is the block of offset i; the first one is the controller. */
@@ -63,6 +66,26 @@ export interface ItemPose {
   angle: number;
   locked: boolean;
 }
+
+/**
+ * Belt processing (BeltProcessingBehaviour.handleReceivedItem / handleHeldItem, kinetics/belt/behaviour): a processing block
+ * whose BeltProcessingBehaviour sits at pos.above(2) of a belt segment sees the items that enter that segment.
+ *   receive(item, ctx): called once when an item's centre reaches the segment (ctx.segment = segment index, ctx.pos = belt pos).
+ *     returns 'remove' (the item is taken), 'hold' (the item stays on the segment, locked, until the processor releases it:
+ *     item.locked = false in a later call to held()), or 'pass' (the item moves on).
+ *   held(item, ctx): called every tick while the item is held; returns the same three results.
+ * Registered per processing block id with registerBeltProcessor (idempotent per id). Scenes that use no processor behave as
+ * before: the scene ops (removeItemsFromBelt, createItemOnBelt, stallBeltItem, changeBeltItemTo) drive the effect.
+ */
+export interface BeltProcessContext { segment: number; pos: Vec3; world: LogisticsWorld }
+export type BeltProcessResult = 'remove' | 'hold' | 'pass';
+export interface BeltProcessor {
+  receive(item: SimItem, ctx: BeltProcessContext): BeltProcessResult;
+  held(item: SimItem, ctx: BeltProcessContext): BeltProcessResult;
+}
+const beltProcessors = new Map<string, BeltProcessor>();
+/** Registers the processor of a processing block id (e.g. 'create:mechanical_press'); the belt under the block is the one at pos.below(2). */
+export function registerBeltProcessor(blockId: string, p: BeltProcessor): void { beltProcessors.set(blockId, p); }
 
 /** A block a belt hands items to (DirectBeltInputBehaviour). */
 export interface BeltReceiver {
@@ -583,6 +606,7 @@ export class LogisticsWorld {
       item.prevBeltPosition = item.beltPosition;
       item.prevSideOffset = item.sideOffset;
       let movement = beltSpeed;
+      if (this.processBelt(chain, item, positive, beltSpeed)) { removed.push(item); continue; }
       // held by processing or by a scene instruction until released
       if (item.locked) continue;
       if (item.lockedExternally) { item.lockedExternally = false; continue; }
@@ -623,6 +647,36 @@ export class LogisticsWorld {
       if (ending === Ending.Eject) removed.push(item); // the item leaves the scene (an ItemEntity in Create)
     }
     if (removed.length) st.items = st.items.filter((it) => !removed.includes(it));
+  }
+
+  /**
+   * BeltInventory.handleBeltProcessingAndCheckIfRemoved (server path): true when the processor removes the item.
+   * A processing block at pos.above(2) of the segment handles items that reach the segment centre (receive); held items are
+   * offered to held() every tick until released.
+   */
+  private processBelt(chain: BeltChain, item: SimItem, positive: boolean, beltSpeed: number): boolean {
+    const seg = Math.floor(item.beltPosition);
+    const segPos = chain.segments[seg];
+    if (!segPos) return false;
+    const procPos: Vec3 = [segPos[0], segPos[1] + 2, segPos[2]];
+    const block = this.lookup.getState(procPos);
+    const proc = block ? beltProcessors.get(block.name) : undefined;
+    if (!proc) return false;
+    const ctx = { segment: seg, pos: segPos, world: this };
+    if (item.locked && item.processHeld) {
+      const r = proc.held(item, ctx);
+      if (r === 'remove') return true;
+      if (r === 'pass') { item.locked = false; item.processHeld = false; }
+      return false;
+    }
+    const centre = seg + 0.5;
+    const crossed = positive ? item.prevBeltPosition < centre && item.beltPosition + beltSpeed >= centre : item.prevBeltPosition > centre && item.beltPosition + beltSpeed <= centre;
+    if (!crossed || item.processed === seg) return false;
+    item.processed = seg;
+    const r = proc.receive(item, ctx);
+    if (r === 'remove') return true;
+    if (r === 'hold') { item.locked = true; item.processHeld = true; }
+    return false;
   }
 
   /** BeltInventory.resolveEnding, for the block one step past the chain end. */

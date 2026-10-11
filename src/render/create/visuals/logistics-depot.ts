@@ -11,10 +11,11 @@ import { itemInfo, prepareItem } from '../items/itemObject';
 import { JavaRandom } from '../items/random';
 import { isItemUpright } from '../items/upright';
 import { PoseStack } from '../items/pose';
+import { uprightYaw } from '../items/cameraFacing';
 import type { VisualModule } from '../registry';
 
 /** DepotRenderer.renderItem for one stack (the depot variant: copies, rotation by angle, scale .5, upright items). */
-export function renderDepotItem(ms: PoseStack, pool: ItemPool, stack: ItemStackJson, angle: number, r: JavaRandom | null): void {
+export function renderDepotItem(ms: PoseStack, pool: ItemPool, stack: ItemStackJson, angle: number, r: JavaRandom | null, yaw = Math.PI): void {
   const info = itemInfo(stack);
   const blockItem = info?.blockItem ?? false;
   const upright = (info?.upright ?? isItemUpright(stack.id));
@@ -24,8 +25,7 @@ export function renderDepotItem(ms: PoseStack, pool: ItemPool, stack: ItemStackJ
   ms.pushPose();
   ms.rotateYDegrees(angle);
   if (upright) {
-    // Create yaws upright items towards the camera; no camera in the scene viewer (see residuals), so face +z
-    ms.rotateYDegrees(180);
+    ms.rotateY(yaw); // DepotRenderer.renderItem: towards the camera (cameraFacing.ts)
     ms.translate(0, 3 / 32, -1 / 16);
   }
   for (let i = 0; i <= count; i++) {
@@ -51,6 +51,8 @@ export function renderDepotItem(ms: PoseStack, pool: ItemPool, stack: ItemStackJ
 export class DepotBlockVisual extends BaseVisual {
   private pool: ItemPool;
   private ms = new PoseStack();
+  /** upright items face the camera (cameraFacing.ts), anchored at the block centre */
+  private yaw = Math.PI;
 
   constructor(block: BlockInstance, ctx: VisualContext) {
     super(block, ctx);
@@ -65,6 +67,7 @@ export class DepotBlockVisual extends BaseVisual {
   }
 
   protected onUpdate(ticks: number): void {
+    this.yaw = uprightYaw(this.object, [0.5, 0.5, 0.5]);
     const world = getLogisticsWorld(this.ctx.lookup);
     world.advance(ticks);
     const pt = Math.max(0, ticks) - Math.floor(Math.max(0, ticks));
@@ -86,7 +89,7 @@ export class DepotBlockVisual extends BaseVisual {
       if (upright) this.ms.rotateYDegrees(-((360 / 8) * i));
       const r = new JavaRandom(i + 1);
       const angle = Math.trunc(360 * r.nextFloat());
-      renderDepotItem(this.ms, this.pool, stack, upright ? angle + 90 : angle, r);
+      renderDepotItem(this.ms, this.pool, stack, upright ? angle + 90 : angle, r, this.yaw);
       this.ms.popPose();
     }
     this.ms.popPose();
@@ -107,7 +110,7 @@ export class DepotBlockVisual extends BaseVisual {
       if (!alongX) sideOffset *= -1;
       this.ms.translate(alongX ? sideOffset : 0, 0, alongX ? 0 : sideOffset);
     }
-    renderDepotItem(this.ms, this.pool, tis.stack, tis.angle, new JavaRandom(0));
+    renderDepotItem(this.ms, this.pool, tis.stack, tis.angle, new JavaRandom(0), this.yaw);
     this.ms.popPose();
   }
 

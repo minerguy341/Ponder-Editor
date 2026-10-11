@@ -11,6 +11,7 @@ import { getLogisticsWorld, type SimItem } from '../items/logisticsSim';
 import { ItemPool } from '../items/itemPool';
 import { JavaRandom } from '../items/random';
 import { PoseStack } from '../items/pose';
+import { uprightYaw } from '../items/cameraFacing';
 import { renderDepotItem } from './logistics-depot';
 import type { VisualModule } from '../registry';
 
@@ -22,6 +23,8 @@ class EjectorBlockVisual extends KineticVisual {
   private lidM = new THREE.Matrix4();
   private pool: ItemPool;
   private ms = new PoseStack();
+  /** upright items face the camera (cameraFacing.ts), anchored at the block centre */
+  private yaw = Math.PI;
   private itemRoot = new THREE.Group();
 
   constructor(block: BlockInstance, ctx: VisualContext) {
@@ -47,6 +50,7 @@ class EjectorBlockVisual extends KineticVisual {
 
   protected override onUpdate(ticks: number): void {
     super.onUpdate(ticks);
+    this.yaw = uprightYaw(this.object, [0.5, 0.5, 0.5]);
     const world = getLogisticsWorld(this.ctx.lookup);
     world.advance(ticks);
     const pt = Math.max(0, ticks) - Math.floor(Math.max(0, ticks));
@@ -95,7 +99,7 @@ class EjectorBlockVisual extends KineticVisual {
       if (!alongX) side *= -1;
       this.ms.translate(alongX ? side : 0, 0, alongX ? 0 : side);
     }
-    renderDepotItem(this.ms, this.pool, tis.stack, tis.angle, new JavaRandom(0));
+    renderDepotItem(this.ms, this.pool, tis.stack, tis.angle, new JavaRandom(0), this.yaw);
     this.ms.popPose();
   }
 

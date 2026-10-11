@@ -7,6 +7,7 @@ import { flapAngle } from '../../../src/render/create/visuals/logistics-funnel';
 import { beltScroll, beltSegmentMatrix, beltPartialId } from '../../../src/render/create/items/beltRender';
 import { blockPosHash } from '../../../src/render/create/visuals/logistics-basin';
 import { JavaRandom } from '../../../src/render/create/items/random';
+import { registerBeltProcessor } from '../../../src/render/create/items/logisticsSim';
 
 /** A straight belt along +x (east): segments at x = 0..n-1, start at 0, end at n-1, each with a Speed on the controller. */
 function beltLine(n: number, speed: number, facing: string = 'east', y = 0): { lookup: WorldLookup; blocks: BlockInstance[] } {
@@ -189,5 +190,63 @@ describe('logistics world seek: states are a pure function of the scene time', (
   it('getLogisticsWorld returns one simulation per lookup', () => {
     const { lookup } = beltLine(2, 0);
     expect(getLogisticsWorld(lookup)).toBe(getLogisticsWorld(lookup));
+  });
+});
+
+describe('BeltProcessingBehaviour contract (BeltInventory.handleBeltProcessingAndCheckIfRemoved, server path)', () => {
+  // processing block at pos.above(2) of the belt segment; a fake processor type registered by id
+  function beltWithProcessor(n: number, speed: number, procName: string | null) {
+    const { lookup, blocks } = beltLine(n, speed);
+    const base = lookup;
+    const lk: WorldLookup = {
+      getState: (p) => (procName && p[1] === 2 && p[0] === 2 && p[2] === 0 ? { name: procName, props: {} } : base.getState(p)),
+      getBlockEntity: base.getBlockEntity,
+    };
+    void blocks;
+    return lk;
+  }
+  it('a processor that removes the item takes it off the belt when it reaches the segment', () => {
+    registerBeltProcessor('create:test_press', { receive: () => 'remove', held: () => 'remove' });
+    const w = new LogisticsWorld(beltWithProcessor(5, -32, 'create:test_press'));
+    w.apply({ tick: 0, op: 'createItemOnBelt', pos: [0, 0, 0], insertionSide: 'west', item: ITEM });
+    const chain = w.chainAt([0, 0, 0])!;
+    expect(w.itemsOf(chain, 3)).toHaveLength(1);
+    expect(w.itemsOf(chain, 60)).toHaveLength(0);
+  });
+  it('a holding processor keeps the item at the segment until it releases it', () => {
+    let release = false;
+    registerBeltProcessor('create:test_mixer', { receive: () => 'hold', held: () => (release ? 'pass' : 'hold') });
+    const w = new LogisticsWorld(beltWithProcessor(5, -32, 'create:test_mixer'));
+    w.apply({ tick: 0, op: 'createItemOnBelt', pos: [0, 0, 0], insertionSide: 'west', item: ITEM });
+    const chain = w.chainAt([0, 0, 0])!;
+    const a = w.itemsOf(chain, 40)[0].offset;
+    expect(w.itemsOf(chain, 80)[0].offset).toBeCloseTo(a, 6);
+    release = true;
+    w.apply({ tick: 81, op: 'createItemOnBelt', pos: [0, 0, 0], insertionSide: 'west', item: ITEM });
+    expect(w.itemsOf(chain, 100)[0].offset).toBeGreaterThan(a);
+  });
+});
+
+describe('upright items face the camera (BeltRenderer.renderItem / DepotRenderer.renderItem yRot = atan2(diff.x, diff.z) + PI)', () => {
+  it('the yaw points the item at the camera, with the anchor in scene space', async () => {
+    const THREEmod = await import('three');
+    const { uprightYaw, setItemCameraSource } = await import('../../../src/render/create/items/cameraFacing');
+    const obj = new THREEmod.Group();
+    obj.position.set(10, 0, 0);
+    setItemCameraSource(() => new THREEmod.Vector3(10, 0, 5));
+    // anchor at local (0.5, 0.5, 0.5) -> world (10.5, .5, .5); diff = (.5, ., -4.5)
+    const yaw = uprightYaw(obj, [0.5, 0.5, 0.5]);
+    expect(yaw).toBeCloseTo(Math.atan2(0.5, -4.5) + Math.PI, 9);
+    setItemCameraSource(null);
+    expect(uprightYaw(obj, [0.5, 0.5, 0.5])).toBe(Math.PI);
+  });
+});
+
+describe('java.util.Random = LegacyRandomSource (RandomSource.create(seed) in MC 1.21.1; seed scrambled with 0x5DEECE66D)', () => {
+  it('known Java values', () => {
+    expect(new JavaRandom(0).nextInt()).toBe(-1155484576);
+    expect(new JavaRandom(42).nextInt()).toBe(-1170105035);
+    expect(new JavaRandom(42).nextInt(10)).toBe(0);
+    expect(new JavaRandom(0).nextInt(16)).toBe(11); // (next(31) = 1569741360) * 16 >> 31
   });
 });

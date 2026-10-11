@@ -10,7 +10,8 @@ import type { BlockInstance, BlockState, BlockVisual, Direction, VisualContext }
 import { BaseVisual, getPartial, markOwned, kineticAngleDeg, rotationOffset, getNumber, posKey } from '../common';
 import { PARTIAL } from '../common/partialModels';
 import type { BlockRendererImpl } from '../../blockRenderer';
-import { beltShape } from '../items/beltMath';
+import { beltShape, vectorForOffset } from '../items/beltMath';
+import { uprightYaw } from '../items/cameraFacing';
 import { getLogisticsWorld, type BeltChain, type ItemPose } from '../items/logisticsSim';
 import { buildStateObject } from '../common';
 import { registerBlockModelProcessor } from '../../blockRenderer';
@@ -263,7 +264,8 @@ class BeltBlockVisual extends BaseVisual {
         this.items.set(pose.item.id, entry);
       }
       this.placements.length = 0;
-      placeBeltItem(pose, dirOf, shape.slope, chain.segments.length, verticality, info.blockItem, info.upright, this.placements, this.ms, this.shadowTmp);
+      const yaw = info.upright ? uprightYaw(this.object, vectorForOffset([0, 0, 0], shape, chain.segments.length, pose.offset)) : Math.PI;
+      placeBeltItem(pose, dirOf, shape.slope, chain.segments.length, verticality, info.blockItem, info.upright, this.placements, this.ms, this.shadowTmp, yaw);
       entry.root.visible = true;
       // shadow (once per item)
       entry.shadow.matrixAutoUpdate = false;

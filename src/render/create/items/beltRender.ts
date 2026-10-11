@@ -172,7 +172,7 @@ export interface ItemPlacement {
  */
 export function placeBeltItem(
   pose: ItemPose, beltFacing: Direction, slope: BeltShape['slope'], beltLength: number, verticalityOf: number,
-  blockItem: boolean, upright: boolean, out: ItemPlacement[], ms: PoseStack, shadowMatrix: THREE.Matrix4,
+  blockItem: boolean, upright: boolean, out: ItemPlacement[], ms: PoseStack, shadowMatrix: THREE.Matrix4, yaw = Math.PI,
 ): ItemPlacement[] {
   const offset = pose.offset;
   let sideOffset = pose.sideOffset;
@@ -210,8 +210,8 @@ export function placeBeltItem(
     ms.translate(0, slopeOffset, 0);
   }
   if (renderUpright) {
-    // Create yaws upright items towards the camera; the web viewer has no camera here, so they face +z (see residuals).
-    ms.rotateYDegrees(180);
+    // BeltRenderer.renderItem: mulPose(YP.rotation(yRot)) towards the camera (cameraFacing.ts)
+    ms.rotateY(yaw);
     ms.translate(0, 3 / 32, 1 / 16);
   }
 

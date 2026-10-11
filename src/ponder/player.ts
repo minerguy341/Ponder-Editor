@@ -2,6 +2,8 @@
 // and the Create block entity visuals (B). The timeline itself is the pure simulation in sim.ts; this class owns the
 // clock (20 ticks/s when playing, via viewer frames), the camera, the scene graph and the UI event stream.
 
+import * as THREE from 'three';
+import { setItemCameraSource } from '../render/create/items/cameraFacing';
 import { bindLogisticsScene, lookupOfBlocks, logisticsEventsOf, LOGISTICS_TEXTURES } from '../render/create/items/logisticsSim';
 import type { BlockState, SceneJson, Vec3, BlockRenderer, CreateVisualFactory } from '../contract';
 import { loadStructure } from '../assets/structure';
@@ -73,6 +75,11 @@ export class PonderPlayer implements PlayerLike {
     private readonly visualFactory: CreateVisualFactory | null,
   ) {
     this.unsubFrame = viewer.onFrame?.((t) => this.onFrame(t)) ?? null;
+    // upright logistics items face the viewer camera (Create: BeltRenderer / DepotRenderer yaw towards the camera)
+    setItemCameraSource(() => {
+      const cam = (viewer as unknown as { camera?: { matrixWorld: THREE.Matrix4 } }).camera;
+      return cam ? new THREE.Vector3().setFromMatrixPosition(cam.matrixWorld) : null;
+    });
   }
 
   // ------------------------------------------------------------------------------------------------ loading
