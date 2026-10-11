@@ -1,0 +1,47 @@
+{
+ "id": "fx:bad-state-error",
+ "schematic": "bad-state-error",
+ "schematicNamespace": "fx",
+ "title": "Bad state.errors",
+ "texts": {
+  "text_1": "fixture text 1 of fx:bad-state-error"
+ },
+ "tags": [],
+ "items": [],
+ "keyframes": [
+  30
+ ],
+ "totalTicks": 80,
+ "instructions": [
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 24
+   }
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "text": "text_1",
+    "duration": 60,
+    "keyframe": true
+   }
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 56
+   }
+  }
+ ],
+ "fixture": {
+  "texts": [
+   {
+    "key": "text_1",
+    "from": 24,
+    "to": 94
+   }
+  ],
+  "behavior": "state-error"
+ }
+}

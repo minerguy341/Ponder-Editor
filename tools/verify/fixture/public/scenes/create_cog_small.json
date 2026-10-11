@@ -1,0 +1,50 @@
+{
+ "id": "create:cog/small",
+ "schematic": "cog/small",
+ "schematicNamespace": "create",
+ "title": "Fixture cog/small",
+ "texts": {
+  "text_1": "fixture text 1 of create:cog/small"
+ },
+ "tags": [
+  "create:kinetic_relays"
+ ],
+ "items": [
+  "create:cogwheel"
+ ],
+ "keyframes": [
+  141
+ ],
+ "totalTicks": 205,
+ "instructions": [
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 135
+   }
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "text": "text_1",
+    "duration": 60,
+    "keyframe": true
+   }
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   }
+  }
+ ],
+ "fixture": {
+  "texts": [
+   {
+    "key": "text_1",
+    "from": 135,
+    "to": 205
+   }
+  ]
+ }
+}

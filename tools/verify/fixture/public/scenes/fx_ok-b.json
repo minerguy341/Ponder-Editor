@@ -1,0 +1,46 @@
+{
+ "id": "fx:ok-b",
+ "schematic": "ok-b",
+ "schematicNamespace": "fx",
+ "title": "OK B",
+ "texts": {
+  "text_1": "fixture text 1 of fx:ok-b"
+ },
+ "tags": [],
+ "items": [],
+ "keyframes": [
+  20
+ ],
+ "totalTicks": 60,
+ "instructions": [
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 14
+   }
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "text": "text_1",
+    "duration": 60,
+    "keyframe": true
+   }
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 46
+   }
+  }
+ ],
+ "fixture": {
+  "texts": [
+   {
+    "key": "text_1",
+    "from": 14,
+    "to": 84
+   }
+  ]
+ }
+}

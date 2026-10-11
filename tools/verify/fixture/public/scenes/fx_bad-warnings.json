@@ -1,0 +1,46 @@
+{
+ "id": "fx:bad-warnings",
+ "schematic": "bad-warnings",
+ "schematicNamespace": "fx",
+ "title": "Bad converter warnings",
+ "texts": {
+  "text_1": "fixture text 1 of fx:bad-warnings"
+ },
+ "tags": [],
+ "items": [],
+ "keyframes": [
+  30
+ ],
+ "totalTicks": 80,
+ "instructions": [
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 24
+   }
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "text": "text_1",
+    "duration": 60,
+    "keyframe": true
+   }
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 56
+   }
+  }
+ ],
+ "fixture": {
+  "texts": [
+   {
+    "key": "text_1",
+    "from": 24,
+    "to": 94
+   }
+  ]
+ }
+}

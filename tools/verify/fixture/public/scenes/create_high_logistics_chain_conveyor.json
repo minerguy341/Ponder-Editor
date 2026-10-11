@@ -1,0 +1,132 @@
+{
+ "id": "create:high_logistics/chain_conveyor",
+ "schematic": "high_logistics/chain_conveyor",
+ "schematicNamespace": "create",
+ "title": "Fixture chain_conveyor",
+ "texts": {
+  "text_1": "fixture text 1 of create:high_logistics/chain_conveyor",
+  "text_2": "fixture text 2 of create:high_logistics/chain_conveyor",
+  "text_3": "fixture text 3 of create:high_logistics/chain_conveyor",
+  "text_4": "fixture text 4 of create:high_logistics/chain_conveyor",
+  "text_5": "fixture text 5 of create:high_logistics/chain_conveyor"
+ },
+ "tags": [],
+ "items": [
+  "create:chain_conveyor"
+ ],
+ "keyframes": [
+  74,
+  211,
+  319,
+  404,
+  543
+ ],
+ "totalTicks": 674,
+ "instructions": [
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 68
+   }
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "text": "text_1",
+    "duration": 60,
+    "keyframe": true
+   }
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 137
+   }
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "text": "text_2",
+    "duration": 60,
+    "keyframe": true
+   }
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 108
+   }
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "text": "text_3",
+    "duration": 60,
+    "keyframe": true
+   }
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 85
+   }
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "text": "text_4",
+    "duration": 60,
+    "keyframe": true
+   }
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 139
+   }
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "text": "text_5",
+    "duration": 60,
+    "keyframe": true
+   }
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 137
+   }
+  }
+ ],
+ "fixture": {
+  "texts": [
+   {
+    "key": "text_1",
+    "from": 68,
+    "to": 138
+   },
+   {
+    "key": "text_2",
+    "from": 205,
+    "to": 275
+   },
+   {
+    "key": "text_3",
+    "from": 313,
+    "to": 383
+   },
+   {
+    "key": "text_4",
+    "from": 398,
+    "to": 468
+   },
+   {
+    "key": "text_5",
+    "from": 537,
+    "to": 607
+   }
+  ]
+ }
+}
