@@ -1,0 +1,145 @@
+/* Ponder web viewer chrome. The Ponder UI itself is laid out in GUI pixels inside `.pd-root` (scaled by a transform, see src/ui/gui.ts);
+   this sheet holds the primitives (boxes, text canvases, sprites) and the web-only screens (scene browser, error/loading). */
+
+:root {
+  --bg-sky: #3c5b9a;
+  --pd-text: #eeeeee;
+  --pd-text-dim: #a3a3a3;
+  --pd-accent: #8ab6d6;
+  --pd-panel: rgba(8, 8, 18, 0.88);
+  --pd-border: rgba(255, 238, 221, 0.25);
+  --pd-border-hi: rgba(192, 192, 255, 0.9);
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --pd-font: "Press Start 2P", "Silkscreen", "Courier New", monospace;
+}
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: #14213d;
+  color: var(--pd-text);
+  overflow: hidden;
+  overscroll-behavior: none;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#app {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+}
+
+/* ----------------------------------------------------------------------------- GUI layer */
+
+.pd-host {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 10;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+.pd-root {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: 0 0;
+  overflow: hidden;
+}
+
+.pd-root * { box-sizing: border-box; }
+.pd-screen, .pd-chrome, .pd-overlay { position: absolute; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; }
+.pd-widget, .pd-arrows, .pd-ticks, .pd-textblock, .pd-content { position: absolute; left: 0; top: 0; pointer-events: none; }
+.pd-arrow, .pd-streak, .pd-leader, .pd-tick, .pd-fill { position: absolute; pointer-events: none; }
+.pd-lines { position: absolute; left: 0; top: 0; pointer-events: none; overflow: visible; }
+
+.pd-box { position: absolute; pointer-events: none; }
+.pd-box .pd-ring { position: absolute; background: var(--bg); }
+.pd-box .rt { left: 1px; right: 1px; top: 0; height: 1px; }
+.pd-box .rb { left: 1px; right: 1px; bottom: 0; height: 1px; }
+.pd-box .rl { left: 0; top: 1px; bottom: 1px; width: 1px; }
+.pd-box .rr { right: 0; top: 1px; bottom: 1px; width: 1px; }
+.pd-box .pd-in {
+  position: absolute;
+  inset: 1px;
+  background: var(--bg);
+  border: 1px solid transparent;
+  border-image: linear-gradient(var(--bt), var(--bb)) 1;
+}
+
+.pd-text { position: absolute; image-rendering: pixelated; pointer-events: none; }
+.pd-sprite {
+  position: absolute;
+  background-image: var(--pd-sheet);
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  pointer-events: none;
+}
+.pd-sprite.tinted {
+  background-image: none;
+  -webkit-mask-image: var(--pd-sheet);
+  mask-image: var(--pd-sheet);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  image-rendering: pixelated;
+}
+.pd-fsicon { image-rendering: pixelated; }
+
+.pd-hit { position: absolute; pointer-events: auto; cursor: pointer; touch-action: manipulation; }
+.pd-bar .pd-hit { cursor: pointer; }
+
+.pd-item { position: absolute; pointer-events: none; }
+.pd-item canvas { width: 100%; height: 100%; display: block; opacity: 0; }
+.pd-item.ready canvas { opacity: 1; }
+
+.pd-speech, .pd-textwin, .pd-ctlwin, .pd-tooltip { position: absolute; left: 0; top: 0; pointer-events: none; }
+.pd-divot { position: absolute; left: 0; top: 0; width: 8px; height: 8px; transform-origin: 4px 4px; }
+.pd-divot .pd-sprite { left: 0; top: 0; }
+.pd-ctl { position: absolute; left: 0; top: 0; pointer-events: none; }
+.pd-error { position: absolute; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; }
+
+/* ----------------------------------------------------------------------------- plain screens (loader / fatal error) */
+
+.pd-fatal {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px calc(24px + var(--safe-right)) 24px calc(24px + var(--safe-left));
+  background: radial-gradient(ellipse at 50% 30%, #3a5a96 0%, #20315a 55%, #101a33 100%);
+  z-index: 50;
+}
+.pd-fatal-card {
+  max-width: 560px;
+  background: rgba(0, 0, 0, 0.82);
+  border: 2px solid rgba(255, 93, 108, 0.75);
+  padding: 20px 22px;
+  font: 14px/1.5 ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace;
+  color: #eee;
+}
+.pd-fatal-card h1 { margin: 0 0 8px; font-size: 18px; color: #ff5d6c; }
+.pd-fatal-card ul { margin: 8px 0 0 18px; padding: 0; }
+.pd-fatal-card code { color: #ddc166; }
+.pd-fatal-card a { color: #8ab6d6; }
+
+.pd-boot {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(#3f67ad, #1b2c52);
+  color: #cfe0f5;
+  font: 14px ui-monospace, Menlo, Consolas, monospace;
+  z-index: 40;
+  transition: opacity 0.4s ease;
+}
+.pd-boot.gone { opacity: 0; pointer-events: none; }
