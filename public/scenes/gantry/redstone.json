@@ -1,0 +1,501 @@
+{
+ "id": "create:gantry/redstone",
+ "schematic": "gantry/redstone",
+ "schematicNamespace": "create",
+ "title": "Gantry Power Propagation",
+ "texts": {
+  "text_1": "Redstone-powered gantry shafts stop moving their carriages",
+  "text_2": "Instead, its rotational force is relayed to the carriages' output shaft"
+ },
+ "tags": [],
+ "items": [
+  "create:gantry_shaft",
+  "create:gantry_carriage"
+ ],
+ "keyframes": [
+  121
+ ],
+ "totalTicks": 195,
+ "instructions": [
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       5,
+       0,
+       1
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       0,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     }
+    ]
+   },
+   "src": "GantryScenes.java:106"
+  },
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "GantryScenes.java:112"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        0,
+        0,
+        0
+       ],
+       "to": [
+        5,
+        0,
+        4
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        3,
+        1,
+        0
+       ],
+       "to": [
+        3,
+        1,
+        1
+       ]
+      }
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "GantryScenes.java:113"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "GantryScenes.java:116"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      1,
+      2
+     ],
+     "to": [
+      5,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "GantryScenes.java:117"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "GantryScenes.java:118"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      2,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "GantryScenes.java:122",
+   "out": "e1"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "GantryScenes.java:123"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     -3,
+     0,
+     0
+    ],
+    "duration": 40
+   },
+   "src": "GantryScenes.java:124"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "GantryScenes.java:125"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       0,
+       1,
+       2
+      ],
+      "state": {
+       "name": "create:gantry_shaft",
+       "props": {
+        "facing": "west",
+        "part": "end",
+        "powered": "true"
+       }
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       2
+      ],
+      "state": {
+       "name": "create:gantry_shaft",
+       "props": {
+        "facing": "west",
+        "part": "middle",
+        "powered": "true"
+       }
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "state": {
+       "name": "create:gantry_shaft",
+       "props": {
+        "facing": "west",
+        "part": "middle",
+        "powered": "true"
+       }
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "state": {
+       "name": "create:gantry_shaft",
+       "props": {
+        "facing": "west",
+        "part": "middle",
+        "powered": "true"
+       }
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       2
+      ],
+      "state": {
+       "name": "create:gantry_shaft",
+       "props": {
+        "facing": "west",
+        "part": "start",
+        "powered": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "GantryScenes.java:127"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       1,
+       0
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "floor",
+        "facing": "east",
+        "powered": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "GantryScenes.java:128"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "15",
+        "south": "none",
+        "west": "none"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "GantryScenes.java:129"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     3,
+     1,
+     0
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "GantryScenes.java:130"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       2,
+       2
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     }
+    ]
+   },
+   "src": "GantryScenes.java:131"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "GantryScenes.java:132"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "red",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     1.5,
+     1.5,
+     2.5
+    ],
+    "key": "text_1",
+    "text": "Redstone-powered gantry shafts stop moving their carriages"
+   },
+   "src": "GantryScenes.java:135"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "GantryScenes.java:142"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      2,
+      1
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "GantryScenes.java:145"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       2,
+       1
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     }
+    ]
+   },
+   "src": "GantryScenes.java:146"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 180,
+    "color": "green",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     1.5,
+     2.5,
+     1
+    ],
+    "key": "text_2",
+    "text": "Instead, its rotational force is relayed to the carriages' output shaft"
+   },
+   "src": "GantryScenes.java:147"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "GantryScenes.java:152"
+  },
+  {
+   "op": "effects.rotationIndicator",
+   "args": {
+    "pos": [
+     1,
+     2,
+     1
+    ],
+    "direction": false
+   },
+   "src": "GantryScenes.java:154"
+  },
+  {
+   "op": "markAsFinished",
+   "args": {},
+   "src": "GantryScenes.java:155"
+  }
+ ]
+}

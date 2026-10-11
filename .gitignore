@@ -5,3 +5,4 @@ dist
 tools/.cache
 tools/verify/out
 tools/a1-out
+public/scenes/.tmp

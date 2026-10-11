@@ -1,0 +1,1020 @@
+{
+ "id": "create:mechanical_crafter/covers",
+ "schematic": "mechanical_crafter/covers",
+ "schematicNamespace": "create",
+ "title": "Covering slots of Mechanical Crafters",
+ "texts": {
+  "text_1": "Some recipes will require additional Crafters to bridge gaps in the path",
+  "text_2": "Using Slot Covers, Crafters can be set to act as an Empty Slot in the arrangement",
+  "text_3": "Shared Inputs created with the Wrench at the back can also reach across covered Crafters"
+ },
+ "tags": [],
+ "items": [
+  "create:mechanical_crafter",
+  "create:crafter_slot_cover"
+ ],
+ "keyframes": [
+  36,
+  141,
+  448
+ ],
+ "totalTicks": 553,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "CrafterScenes.java:343"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      4,
+      0,
+      5
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "CrafterScenes.java:344"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      2,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": false
+   },
+   "src": "CrafterScenes.java:346"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       1,
+       2,
+       2
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       3,
+       2,
+       2
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     }
+    ]
+   },
+   "src": "CrafterScenes.java:349"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      2,
+      2
+     ]
+    },
+    "direction": "east"
+   },
+   "src": "CrafterScenes.java:351"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "CrafterScenes.java:352"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "CrafterScenes.java:353"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "CrafterScenes.java:354"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      2,
+      2
+     ]
+    },
+    "direction": "west"
+   },
+   "src": "CrafterScenes.java:355"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "CrafterScenes.java:356"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     2,
+     2
+    ],
+    "beType": "MechanicalCrafterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getInventory",
+        "a": []
+       },
+       {
+        "m": "insertItem",
+        "a": [
+         0,
+         {
+          "id": "minecraft:iron_ingot",
+          "count": 1
+         },
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "CrafterScenes.java:361"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "CrafterScenes.java:363"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ],
+    "beType": "MechanicalCrafterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getInventory",
+        "a": []
+       },
+       {
+        "m": "insertItem",
+        "a": [
+         0,
+         {
+          "id": "minecraft:iron_ingot",
+          "count": 1
+         },
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "CrafterScenes.java:364"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "CrafterScenes.java:366"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     2
+    ],
+    "beType": "MechanicalCrafterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getInventory",
+        "a": []
+       },
+       {
+        "m": "insertItem",
+        "a": [
+         0,
+         {
+          "id": "minecraft:iron_ingot",
+          "count": 1
+         },
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "CrafterScenes.java:367"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "CrafterScenes.java:369"
+  },
+  {
+   "op": "overlay.showOutlineWithText",
+   "args": {
+    "duration": 90,
+    "color": "red",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      2,
+      2
+     ]
+    },
+    "pointAt": [
+     2.5,
+     2.5,
+     2.5
+    ],
+    "key": "text_1",
+    "text": "Some recipes will require additional Crafters to bridge gaps in the path"
+   },
+   "src": "CrafterScenes.java:372"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "CrafterScenes.java:377"
+  },
+  {
+   "op": "world.restoreBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      2,
+      2
+     ]
+    }
+   },
+   "src": "CrafterScenes.java:378"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     2,
+     2,
+     2
+    ],
+    "beType": "MechanicalCrafterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "setScriptedResult",
+        "a": [
+         {
+          "id": "minecraft:bucket",
+          "count": 1
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "CrafterScenes.java:379"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      2,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "CrafterScenes.java:380"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "CrafterScenes.java:381"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      3,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "CrafterScenes.java:382"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      1,
+      2
+     ],
+     "to": [
+      3,
+      1,
+      5
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "CrafterScenes.java:383"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "CrafterScenes.java:384"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       1,
+       2,
+       2
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       2,
+       2,
+       2
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       3,
+       2,
+       2
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     }
+    ]
+   },
+   "src": "CrafterScenes.java:385"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       2,
+       2,
+       2
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     }
+    ]
+   },
+   "src": "CrafterScenes.java:386"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "CrafterScenes.java:389"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 90,
+    "color": "green",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     2.5,
+     2.5,
+     2
+    ],
+    "key": "text_2",
+    "text": "Using Slot Covers, Crafters can be set to act as an Empty Slot in the arrangement"
+   },
+   "src": "CrafterScenes.java:391"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 100
+   },
+   "src": "CrafterScenes.java:397"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3,
+     2.5,
+     2
+    ],
+    "direction": "right",
+    "duration": 50,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "create:crafter_slot_cover",
+     "count": 1
+    },
+    "icon": "rmb"
+   },
+   "src": "CrafterScenes.java:398"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "CrafterScenes.java:400"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "MechanicalCrafterBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       2,
+       2
+      ],
+      "nbt": {
+       "Cover": true
+      }
+     }
+    ]
+   },
+   "src": "CrafterScenes.java:401"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 130
+   },
+   "src": "CrafterScenes.java:402"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2,
+     3.5,
+     2.5
+    ],
+    "direction": "left",
+    "duration": 40,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "minecraft:bucket",
+     "count": 1
+    }
+   },
+   "src": "CrafterScenes.java:404"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "CrafterScenes.java:406"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      2,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "CrafterScenes.java:407"
+  },
+  {
+   "op": "world.connectCrafterInvs",
+   "args": {
+    "pos1": [
+     3,
+     2,
+     2
+    ],
+    "pos2": [
+     2,
+     2,
+     2
+    ]
+   },
+   "src": "CrafterScenes.java:409"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "CrafterScenes.java:410"
+  },
+  {
+   "op": "world.connectCrafterInvs",
+   "args": {
+    "pos1": [
+     2,
+     1,
+     2
+    ],
+    "pos2": [
+     2,
+     2,
+     2
+    ]
+   },
+   "src": "CrafterScenes.java:411"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "CrafterScenes.java:412"
+  },
+  {
+   "op": "world.connectCrafterInvs",
+   "args": {
+    "pos1": [
+     1,
+     2,
+     2
+    ],
+    "pos2": [
+     2,
+     2,
+     2
+    ]
+   },
+   "src": "CrafterScenes.java:413"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "CrafterScenes.java:414"
+  },
+  {
+   "op": "overlay.showOutlineWithText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "pos",
+       "pos": [
+        2,
+        1,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        1,
+        2,
+        2
+       ],
+       "to": [
+        3,
+        2,
+        2
+       ]
+      }
+     ]
+    },
+    "pointAt": [
+     2.5,
+     2.5,
+     2
+    ],
+    "key": "text_3",
+    "text": "Shared Inputs created with the Wrench at the back can also reach across covered Crafters"
+   },
+   "src": "CrafterScenes.java:416"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "CrafterScenes.java:422"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     4.5,
+     4.5,
+     2.5
+    ],
+    "motion": [
+     0,
+     0.2,
+     0
+    ],
+    "item": {
+     "id": "minecraft:iron_ingot",
+     "count": 1
+    }
+   },
+   "src": "CrafterScenes.java:425",
+   "out": "e1"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 17
+   },
+   "src": "CrafterScenes.java:426"
+  },
+  {
+   "op": "world.modifyEntity",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "discard",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "CrafterScenes.java:427"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     2,
+     2
+    ],
+    "beType": "MechanicalCrafterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getInventory",
+        "a": []
+       },
+       {
+        "m": "insertItem",
+        "a": [
+         0,
+         {
+          "id": "minecraft:iron_ingot",
+          "count": 1
+         },
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "CrafterScenes.java:428"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     4.5,
+     4.5,
+     2.5
+    ],
+    "motion": [
+     0,
+     0.2,
+     0
+    ],
+    "item": {
+     "id": "minecraft:iron_ingot",
+     "count": 1
+    }
+   },
+   "src": "CrafterScenes.java:430",
+   "out": "e2"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 17
+   },
+   "src": "CrafterScenes.java:431"
+  },
+  {
+   "op": "world.modifyEntity",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "discard",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "CrafterScenes.java:432"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ],
+    "beType": "MechanicalCrafterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getInventory",
+        "a": []
+       },
+       {
+        "m": "insertItem",
+        "a": [
+         0,
+         {
+          "id": "minecraft:iron_ingot",
+          "count": 1
+         },
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "CrafterScenes.java:433"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     4.5,
+     4.5,
+     2.5
+    ],
+    "motion": [
+     0,
+     0.2,
+     0
+    ],
+    "item": {
+     "id": "minecraft:iron_ingot",
+     "count": 1
+    }
+   },
+   "src": "CrafterScenes.java:435",
+   "out": "e3"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 17
+   },
+   "src": "CrafterScenes.java:436"
+  },
+  {
+   "op": "world.modifyEntity",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "discard",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "CrafterScenes.java:437"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     2
+    ],
+    "beType": "MechanicalCrafterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getInventory",
+        "a": []
+       },
+       {
+        "m": "insertItem",
+        "a": [
+         0,
+         {
+          "id": "minecraft:iron_ingot",
+          "count": 1
+         },
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "CrafterScenes.java:438"
+  }
+ ]
+}

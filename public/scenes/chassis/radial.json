@@ -1,0 +1,3127 @@
+{
+ "id": "create:chassis/radial",
+ "schematic": "chassis/radial",
+ "schematicNamespace": "create",
+ "title": "Attaching blocks using Radial Chassis",
+ "texts": {
+  "text_1": "Radial Chassis connect to identical Chassis blocks in a row",
+  "text_2": "When one is moved by a Contraption, the others are dragged with it",
+  "text_3": "The side faces of a Radial Chassis can be made Sticky",
+  "text_4": "Click again to make all other sides sticky",
+  "text_5": "Sneak and Right-Click with an empty hand to remove the slime",
+  "text_6": "Whenever a Block is next to a sticky face...",
+  "text_7": "...it will attach all reachable blocks within a radius on that layer",
+  "text_8": "Using a Wrench, a precise Radius can be specified for this chassis",
+  "text_9": "Blocks not reachable by any sticky face will not attach"
+ },
+ "tags": [
+  "create:contraption_assembly"
+ ],
+ "items": [
+  "create:radial_chassis"
+ ],
+ "keyframes": [
+  36,
+  205,
+  511,
+  761
+ ],
+ "totalTicks": 984,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "ChassisScenes.java:296"
+  },
+  {
+   "op": "setSceneOffsetY",
+   "args": {
+    "yOffset": -1
+   },
+   "src": "ChassisScenes.java:297"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      4,
+      0,
+      4
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "ChassisScenes.java:298"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ChassisScenes.java:299"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      1,
+      0
+     ],
+     "to": [
+      4,
+      1,
+      4
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ChassisScenes.java:306"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChassisScenes.java:307"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      2,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ChassisScenes.java:308",
+   "out": "e1"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ChassisScenes.java:309"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      3,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ChassisScenes.java:311",
+   "out": "e2"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChassisScenes.java:312"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 50,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_1",
+    "pointAt": [
+     2.5,
+     4,
+     2.5
+    ],
+    "text": "Radial Chassis connect to identical Chassis blocks in a row"
+   },
+   "src": "ChassisScenes.java:314"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "ChassisScenes.java:319"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     -0.0009765625,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "ChassisScenes.java:322"
+  },
+  {
+   "op": "world.configureCenterOfRotation",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "anchor": [
+     2.5,
+     1.5,
+     2.5
+    ]
+   },
+   "src": "ChassisScenes.java:323"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bearing",
+    "pos": [
+     2,
+     1,
+     2
+    ],
+    "distance": 360,
+    "duration": 80
+   },
+   "src": "ChassisScenes.java:324"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "rotation": [
+     0,
+     360,
+     0
+    ],
+    "duration": 80
+   },
+   "src": "ChassisScenes.java:325"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "rotation": [
+     0,
+     360,
+     0
+    ],
+    "duration": 80
+   },
+   "src": "ChassisScenes.java:326"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "ChassisScenes.java:328"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_2",
+    "pointAt": [
+     2.5,
+     4,
+     2.5
+    ],
+    "text": "When one is moved by a Contraption, the others are dragged with it"
+   },
+   "src": "ChassisScenes.java:329"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "ChassisScenes.java:333"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "direction": "up"
+   },
+   "src": "ChassisScenes.java:335"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "ChassisScenes.java:336"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2,
+     2.5,
+     2.5
+    ],
+    "direction": "left",
+    "duration": 30,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "minecraft:slime_ball",
+     "count": 1
+    }
+   },
+   "src": "ChassisScenes.java:339"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "ChassisScenes.java:341"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       2,
+       2
+      ],
+      "state": {
+       "name": "create:radial_chassis",
+       "props": {
+        "axis": "y",
+        "sticky_east": "false",
+        "sticky_north": "false",
+        "sticky_south": "false",
+        "sticky_west": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ChassisScenes.java:342"
+  },
+  {
+   "op": "effects.superGlue",
+   "args": {
+    "pos": [
+     2,
+     2,
+     2
+    ],
+    "side": "west",
+    "fullBlock": false
+   },
+   "src": "ChassisScenes.java:343"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "ChassisScenes.java:344"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_3",
+    "pointAt": [
+     2,
+     2.5,
+     2.5
+    ],
+    "text": "The side faces of a Radial Chassis can be made Sticky"
+   },
+   "src": "ChassisScenes.java:346"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "ChassisScenes.java:350"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2,
+     2.5,
+     2.5
+    ],
+    "direction": "left",
+    "duration": 15,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "minecraft:slime_ball",
+     "count": 1
+    }
+   },
+   "src": "ChassisScenes.java:352"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "ChassisScenes.java:354"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       2,
+       2
+      ],
+      "state": {
+       "name": "create:radial_chassis",
+       "props": {
+        "axis": "y",
+        "sticky_east": "true",
+        "sticky_north": "true",
+        "sticky_south": "true",
+        "sticky_west": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ChassisScenes.java:355"
+  },
+  {
+   "op": "effects.superGlue",
+   "args": {
+    "pos": [
+     2,
+     2,
+     2
+    ],
+    "side": "east",
+    "fullBlock": false
+   },
+   "src": "ChassisScenes.java:358"
+  },
+  {
+   "op": "effects.superGlue",
+   "args": {
+    "pos": [
+     2,
+     2,
+     2
+    ],
+    "side": "south",
+    "fullBlock": false
+   },
+   "src": "ChassisScenes.java:359"
+  },
+  {
+   "op": "effects.superGlue",
+   "args": {
+    "pos": [
+     2,
+     2,
+     2
+    ],
+    "side": "north",
+    "fullBlock": false
+   },
+   "src": "ChassisScenes.java:360"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "ChassisScenes.java:361"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_4",
+    "pointAt": [
+     2.5,
+     3,
+     2.5
+    ],
+    "text": "Click again to make all other sides sticky"
+   },
+   "src": "ChassisScenes.java:363"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChassisScenes.java:367"
+  },
+  {
+   "op": "rotateCameraY",
+   "args": {
+    "degrees": 60
+   },
+   "src": "ChassisScenes.java:368"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 35
+   },
+   "src": "ChassisScenes.java:369"
+  },
+  {
+   "op": "rotateCameraY",
+   "args": {
+    "degrees": -60
+   },
+   "src": "ChassisScenes.java:370"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 25
+   },
+   "src": "ChassisScenes.java:371"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2,
+     2.5,
+     2.5
+    ],
+    "direction": "left",
+    "duration": 30,
+    "sneak": true,
+    "ctrl": false,
+    "icon": "rmb"
+   },
+   "src": "ChassisScenes.java:373"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "ChassisScenes.java:375"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       2,
+       2
+      ],
+      "state": {
+       "name": "create:radial_chassis",
+       "props": {
+        "axis": "y",
+        "sticky_east": "true",
+        "sticky_north": "true",
+        "sticky_south": "true",
+        "sticky_west": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ChassisScenes.java:376"
+  },
+  {
+   "op": "effects.superGlue",
+   "args": {
+    "pos": [
+     2,
+     2,
+     2
+    ],
+    "side": "west",
+    "fullBlock": false
+   },
+   "src": "ChassisScenes.java:377"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "ChassisScenes.java:378"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_5",
+    "pointAt": [
+     2,
+     2.5,
+     2.5
+    ],
+    "text": "Sneak and Right-Click with an empty hand to remove the slime"
+   },
+   "src": "ChassisScenes.java:380"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "ChassisScenes.java:384"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        1,
+        2,
+        1
+       ],
+       "to": [
+        3,
+        2,
+        1
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        1,
+        2,
+        2
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        3,
+        2,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        1,
+        2,
+        3
+       ],
+       "to": [
+        3,
+        2,
+        3
+       ]
+      }
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "ChassisScenes.java:401"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        0
+       ],
+       "to": [
+        4,
+        2,
+        0
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        1
+       ],
+       "to": [
+        0,
+        2,
+        3
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        4,
+        2,
+        1
+       ],
+       "to": [
+        4,
+        2,
+        3
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        4
+       ],
+       "to": [
+        4,
+        2,
+        4
+       ]
+      }
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ChassisScenes.java:402",
+   "out": "e3"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      3,
+      3
+     ],
+     "to": [
+      1,
+      3,
+      4
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ChassisScenes.java:405"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChassisScenes.java:406"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "green",
+    "slot": "obj:1",
+    "box": {
+     "min": [
+      1.999,
+      1.999,
+      2
+     ],
+     "max": [
+      3.001,
+      3.001,
+      2
+     ]
+    },
+    "duration": 60
+   },
+   "src": "ChassisScenes.java:409"
+  },
+  {
+   "op": "overlay.showOutline",
+   "args": {
+    "color": "white",
+    "slot": "obj:2",
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      2,
+      1
+     ]
+    },
+    "duration": 80
+   },
+   "src": "ChassisScenes.java:410"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 40,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_6",
+    "pointAt": [
+     2.5,
+     3,
+     2
+    ],
+    "text": "Whenever a Block is next to a sticky face..."
+   },
+   "src": "ChassisScenes.java:411"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "ChassisScenes.java:415"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "ChassisScenes.java:419"
+  },
+  {
+   "op": "overlay.showOutline",
+   "args": {
+    "color": "white",
+    "slot": "obj:2",
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        1,
+        2,
+        1
+       ],
+       "to": [
+        2,
+        2,
+        1
+       ]
+      }
+     ]
+    },
+    "duration": 3
+   },
+   "src": "ChassisScenes.java:423"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "ChassisScenes.java:419"
+  },
+  {
+   "op": "overlay.showOutline",
+   "args": {
+    "color": "white",
+    "slot": "obj:2",
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        1,
+        2,
+        1
+       ],
+       "to": [
+        2,
+        2,
+        1
+       ]
+      }
+     ]
+    },
+    "duration": 3
+   },
+   "src": "ChassisScenes.java:423"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "ChassisScenes.java:419"
+  },
+  {
+   "op": "overlay.showOutline",
+   "args": {
+    "color": "white",
+    "slot": "obj:2",
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        1,
+        2,
+        1
+       ],
+       "to": [
+        3,
+        2,
+        1
+       ]
+      }
+     ]
+    },
+    "duration": 3
+   },
+   "src": "ChassisScenes.java:423"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "ChassisScenes.java:419"
+  },
+  {
+   "op": "overlay.showOutline",
+   "args": {
+    "color": "white",
+    "slot": "obj:2",
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        1,
+        2,
+        1
+       ],
+       "to": [
+        3,
+        2,
+        1
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        1,
+        2,
+        2
+       ]
+      }
+     ]
+    },
+    "duration": 3
+   },
+   "src": "ChassisScenes.java:423"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "ChassisScenes.java:419"
+  },
+  {
+   "op": "overlay.showOutline",
+   "args": {
+    "color": "white",
+    "slot": "obj:2",
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        1,
+        2,
+        1
+       ],
+       "to": [
+        3,
+        2,
+        1
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        1,
+        2,
+        2
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        3,
+        2,
+        2
+       ]
+      }
+     ]
+    },
+    "duration": 3
+   },
+   "src": "ChassisScenes.java:423"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "ChassisScenes.java:419"
+  },
+  {
+   "op": "overlay.showOutline",
+   "args": {
+    "color": "white",
+    "slot": "obj:2",
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        1,
+        2,
+        1
+       ],
+       "to": [
+        3,
+        2,
+        1
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        1,
+        2,
+        2
+       ],
+       "to": [
+        1,
+        2,
+        3
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        3,
+        2,
+        2
+       ]
+      }
+     ]
+    },
+    "duration": 3
+   },
+   "src": "ChassisScenes.java:423"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "ChassisScenes.java:419"
+  },
+  {
+   "op": "overlay.showOutline",
+   "args": {
+    "color": "white",
+    "slot": "obj:2",
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        1,
+        2,
+        1
+       ],
+       "to": [
+        3,
+        2,
+        1
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        1,
+        2,
+        2
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        3,
+        2,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        1,
+        2,
+        3
+       ],
+       "to": [
+        2,
+        2,
+        3
+       ]
+      }
+     ]
+    },
+    "duration": 3
+   },
+   "src": "ChassisScenes.java:423"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "ChassisScenes.java:419"
+  },
+  {
+   "op": "overlay.showOutline",
+   "args": {
+    "color": "white",
+    "slot": "obj:2",
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        1,
+        2,
+        1
+       ],
+       "to": [
+        3,
+        2,
+        1
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        1,
+        2,
+        2
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        3,
+        2,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        1,
+        2,
+        3
+       ],
+       "to": [
+        3,
+        2,
+        3
+       ]
+      }
+     ]
+    },
+    "duration": 3
+   },
+   "src": "ChassisScenes.java:423"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "ChassisScenes.java:419"
+  },
+  {
+   "op": "overlay.showOutline",
+   "args": {
+    "color": "white",
+    "slot": "obj:2",
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        1
+       ],
+       "to": [
+        3,
+        2,
+        1
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        1,
+        2,
+        2
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        3,
+        2,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        1,
+        2,
+        3
+       ],
+       "to": [
+        3,
+        2,
+        3
+       ]
+      }
+     ]
+    },
+    "duration": 3
+   },
+   "src": "ChassisScenes.java:423"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "ChassisScenes.java:419"
+  },
+  {
+   "op": "overlay.showOutline",
+   "args": {
+    "color": "white",
+    "slot": "obj:2",
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        1
+       ],
+       "to": [
+        3,
+        2,
+        1
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        2
+       ],
+       "to": [
+        1,
+        2,
+        2
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        3,
+        2,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        1,
+        2,
+        3
+       ],
+       "to": [
+        3,
+        2,
+        3
+       ]
+      }
+     ]
+    },
+    "duration": 3
+   },
+   "src": "ChassisScenes.java:423"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "ChassisScenes.java:419"
+  },
+  {
+   "op": "overlay.showOutline",
+   "args": {
+    "color": "white",
+    "slot": "obj:2",
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        1
+       ],
+       "to": [
+        3,
+        2,
+        1
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        2
+       ],
+       "to": [
+        1,
+        2,
+        2
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        3,
+        2,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        3
+       ],
+       "to": [
+        3,
+        2,
+        3
+       ]
+      }
+     ]
+    },
+    "duration": 3
+   },
+   "src": "ChassisScenes.java:423"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "ChassisScenes.java:419"
+  },
+  {
+   "op": "overlay.showOutline",
+   "args": {
+    "color": "white",
+    "slot": "obj:2",
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "pos",
+       "pos": [
+        1,
+        2,
+        0
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        1
+       ],
+       "to": [
+        3,
+        2,
+        1
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        2
+       ],
+       "to": [
+        1,
+        2,
+        2
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        3,
+        2,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        3
+       ],
+       "to": [
+        3,
+        2,
+        3
+       ]
+      }
+     ]
+    },
+    "duration": 3
+   },
+   "src": "ChassisScenes.java:423"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "ChassisScenes.java:419"
+  },
+  {
+   "op": "overlay.showOutline",
+   "args": {
+    "color": "white",
+    "slot": "obj:2",
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        1,
+        2,
+        0
+       ],
+       "to": [
+        2,
+        2,
+        0
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        1
+       ],
+       "to": [
+        3,
+        2,
+        1
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        2
+       ],
+       "to": [
+        1,
+        2,
+        2
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        3,
+        2,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        3
+       ],
+       "to": [
+        3,
+        2,
+        3
+       ]
+      }
+     ]
+    },
+    "duration": 3
+   },
+   "src": "ChassisScenes.java:423"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "ChassisScenes.java:419"
+  },
+  {
+   "op": "overlay.showOutline",
+   "args": {
+    "color": "white",
+    "slot": "obj:2",
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        1,
+        2,
+        0
+       ],
+       "to": [
+        3,
+        2,
+        0
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        1
+       ],
+       "to": [
+        3,
+        2,
+        1
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        2
+       ],
+       "to": [
+        1,
+        2,
+        2
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        3,
+        2,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        3
+       ],
+       "to": [
+        3,
+        2,
+        3
+       ]
+      }
+     ]
+    },
+    "duration": 3
+   },
+   "src": "ChassisScenes.java:423"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "ChassisScenes.java:419"
+  },
+  {
+   "op": "overlay.showOutline",
+   "args": {
+    "color": "white",
+    "slot": "obj:2",
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        1,
+        2,
+        0
+       ],
+       "to": [
+        3,
+        2,
+        0
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        1
+       ],
+       "to": [
+        3,
+        2,
+        1
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        2
+       ],
+       "to": [
+        1,
+        2,
+        2
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        3,
+        2,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        3
+       ],
+       "to": [
+        3,
+        2,
+        3
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        1,
+        2,
+        4
+       ]
+      }
+     ]
+    },
+    "duration": 3
+   },
+   "src": "ChassisScenes.java:423"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "ChassisScenes.java:419"
+  },
+  {
+   "op": "overlay.showOutline",
+   "args": {
+    "color": "white",
+    "slot": "obj:2",
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        1,
+        2,
+        0
+       ],
+       "to": [
+        3,
+        2,
+        0
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        1
+       ],
+       "to": [
+        3,
+        2,
+        1
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        2
+       ],
+       "to": [
+        1,
+        2,
+        2
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        3,
+        2,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        3
+       ],
+       "to": [
+        3,
+        2,
+        3
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        1,
+        2,
+        4
+       ],
+       "to": [
+        2,
+        2,
+        4
+       ]
+      }
+     ]
+    },
+    "duration": 3
+   },
+   "src": "ChassisScenes.java:423"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "ChassisScenes.java:419"
+  },
+  {
+   "op": "overlay.showOutline",
+   "args": {
+    "color": "white",
+    "slot": "obj:2",
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        1,
+        2,
+        0
+       ],
+       "to": [
+        3,
+        2,
+        0
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        1
+       ],
+       "to": [
+        3,
+        2,
+        1
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        2
+       ],
+       "to": [
+        1,
+        2,
+        2
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        3,
+        2,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        3
+       ],
+       "to": [
+        3,
+        2,
+        3
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        1,
+        2,
+        4
+       ],
+       "to": [
+        3,
+        2,
+        4
+       ]
+      }
+     ]
+    },
+    "duration": 3
+   },
+   "src": "ChassisScenes.java:423"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "ChassisScenes.java:419"
+  },
+  {
+   "op": "overlay.showOutline",
+   "args": {
+    "color": "white",
+    "slot": "obj:2",
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        1,
+        2,
+        0
+       ],
+       "to": [
+        3,
+        2,
+        0
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        1
+       ],
+       "to": [
+        4,
+        2,
+        1
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        2
+       ],
+       "to": [
+        1,
+        2,
+        2
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        3,
+        2,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        3
+       ],
+       "to": [
+        3,
+        2,
+        3
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        1,
+        2,
+        4
+       ],
+       "to": [
+        3,
+        2,
+        4
+       ]
+      }
+     ]
+    },
+    "duration": 3
+   },
+   "src": "ChassisScenes.java:423"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "ChassisScenes.java:419"
+  },
+  {
+   "op": "overlay.showOutline",
+   "args": {
+    "color": "white",
+    "slot": "obj:2",
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        1,
+        2,
+        0
+       ],
+       "to": [
+        3,
+        2,
+        0
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        1
+       ],
+       "to": [
+        4,
+        2,
+        1
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        2
+       ],
+       "to": [
+        1,
+        2,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        3,
+        2,
+        2
+       ],
+       "to": [
+        4,
+        2,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        3
+       ],
+       "to": [
+        3,
+        2,
+        3
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        1,
+        2,
+        4
+       ],
+       "to": [
+        3,
+        2,
+        4
+       ]
+      }
+     ]
+    },
+    "duration": 3
+   },
+   "src": "ChassisScenes.java:423"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "ChassisScenes.java:419"
+  },
+  {
+   "op": "overlay.showOutline",
+   "args": {
+    "color": "white",
+    "slot": "obj:2",
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        1,
+        2,
+        0
+       ],
+       "to": [
+        3,
+        2,
+        0
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        1
+       ],
+       "to": [
+        4,
+        2,
+        1
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        2
+       ],
+       "to": [
+        1,
+        2,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        3,
+        2,
+        2
+       ],
+       "to": [
+        4,
+        2,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        3
+       ],
+       "to": [
+        4,
+        2,
+        3
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        1,
+        2,
+        4
+       ],
+       "to": [
+        3,
+        2,
+        4
+       ]
+      }
+     ]
+    },
+    "duration": 3
+   },
+   "src": "ChassisScenes.java:423"
+  },
+  {
+   "op": "overlay.showOutlineWithText",
+   "args": {
+    "duration": 60,
+    "color": "green",
+    "placeNearTarget": false,
+    "keyframe": false,
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        1,
+        2,
+        0
+       ],
+       "to": [
+        3,
+        2,
+        0
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        1
+       ],
+       "to": [
+        4,
+        2,
+        1
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        2
+       ],
+       "to": [
+        1,
+        2,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        3,
+        2,
+        2
+       ],
+       "to": [
+        4,
+        2,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        3
+       ],
+       "to": [
+        4,
+        2,
+        3
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        1,
+        2,
+        4
+       ],
+       "to": [
+        3,
+        2,
+        4
+       ]
+      }
+     ]
+    },
+    "pointAt": [
+     2.5000000298023224,
+     2.5000000298023224,
+     2.5000000298023224
+    ],
+    "key": "text_7",
+    "text": "...it will attach all reachable blocks within a radius on that layer"
+   },
+   "src": "ChassisScenes.java:427"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "ChassisScenes.java:430"
+  },
+  {
+   "op": "world.configureCenterOfRotation",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "anchor": [
+     2.5,
+     1.5,
+     2.5
+    ]
+   },
+   "src": "ChassisScenes.java:432"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bearing",
+    "pos": [
+     2,
+     1,
+     2
+    ],
+    "distance": 360,
+    "duration": 80
+   },
+   "src": "ChassisScenes.java:433"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "rotation": [
+     0,
+     360,
+     0
+    ],
+    "duration": 80
+   },
+   "src": "ChassisScenes.java:434"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "rotation": [
+     0,
+     360,
+     0
+    ],
+    "duration": 80
+   },
+   "src": "ChassisScenes.java:435"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "ChassisScenes.java:436"
+  },
+  {
+   "op": "overlay.highlightValueBox",
+   "args": {
+    "location": [
+     2.5,
+     3,
+     2.5
+    ],
+    "expands": [
+     0.25,
+     0.0625,
+     0.25
+    ],
+    "duration": 50
+   },
+   "src": "ChassisScenes.java:440"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     3,
+     2.5
+    ],
+    "direction": "down",
+    "duration": 50,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:wrench",
+     "count": 1
+    }
+   },
+   "src": "ChassisScenes.java:441"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChassisScenes.java:444"
+  },
+  {
+   "op": "overlay.showOutline",
+   "args": {
+    "color": "white",
+    "slot": "obj:3",
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        1,
+        2,
+        0
+       ],
+       "to": [
+        3,
+        2,
+        0
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        1
+       ],
+       "to": [
+        4,
+        2,
+        1
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        2
+       ],
+       "to": [
+        1,
+        2,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        3,
+        2,
+        2
+       ],
+       "to": [
+        4,
+        2,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        3
+       ],
+       "to": [
+        4,
+        2,
+        3
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        1,
+        2,
+        4
+       ],
+       "to": [
+        3,
+        2,
+        4
+       ]
+      }
+     ]
+    },
+    "duration": 20
+   },
+   "src": "ChassisScenes.java:445"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChassisScenes.java:446"
+  },
+  {
+   "op": "overlay.showOutline",
+   "args": {
+    "color": "white",
+    "slot": "obj:3",
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        1,
+        2,
+        -1
+       ],
+       "to": [
+        3,
+        2,
+        -1
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        0
+       ],
+       "to": [
+        4,
+        2,
+        0
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        -1,
+        2,
+        1
+       ],
+       "to": [
+        5,
+        2,
+        1
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        -1,
+        2,
+        2
+       ],
+       "to": [
+        1,
+        2,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        3,
+        2,
+        2
+       ],
+       "to": [
+        5,
+        2,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        -1,
+        2,
+        3
+       ],
+       "to": [
+        5,
+        2,
+        3
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        4
+       ],
+       "to": [
+        4,
+        2,
+        4
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        1,
+        2,
+        5
+       ],
+       "to": [
+        3,
+        2,
+        5
+       ]
+      }
+     ]
+    },
+    "duration": 20
+   },
+   "src": "ChassisScenes.java:447"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChassisScenes.java:448"
+  },
+  {
+   "op": "overlay.showOutline",
+   "args": {
+    "color": "white",
+    "slot": "obj:3",
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        1,
+        2,
+        0
+       ],
+       "to": [
+        3,
+        2,
+        0
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        1
+       ],
+       "to": [
+        4,
+        2,
+        1
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        2
+       ],
+       "to": [
+        1,
+        2,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        3,
+        2,
+        2
+       ],
+       "to": [
+        4,
+        2,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        3
+       ],
+       "to": [
+        4,
+        2,
+        3
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        1,
+        2,
+        4
+       ],
+       "to": [
+        3,
+        2,
+        4
+       ]
+      }
+     ]
+    },
+    "duration": 20
+   },
+   "src": "ChassisScenes.java:449"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChassisScenes.java:450"
+  },
+  {
+   "op": "overlay.showOutline",
+   "args": {
+    "color": "white",
+    "slot": "obj:3",
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        1,
+        2,
+        1
+       ],
+       "to": [
+        3,
+        2,
+        1
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        1,
+        2,
+        2
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        3,
+        2,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        1,
+        2,
+        3
+       ],
+       "to": [
+        3,
+        2,
+        3
+       ]
+      }
+     ]
+    },
+    "duration": 15
+   },
+   "src": "ChassisScenes.java:451"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChassisScenes.java:452"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     2.5,
+     3,
+     2.5
+    ],
+    "key": "text_8",
+    "text": "Using a Wrench, a precise Radius can be specified for this chassis"
+   },
+   "src": "ChassisScenes.java:454"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "ChassisScenes.java:458"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bearing",
+    "pos": [
+     2,
+     1,
+     2
+    ],
+    "distance": 360,
+    "duration": 80
+   },
+   "src": "ChassisScenes.java:460"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "rotation": [
+     0,
+     360,
+     0
+    ],
+    "duration": 80
+   },
+   "src": "ChassisScenes.java:461"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "ChassisScenes.java:462"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      2,
+      0
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "ChassisScenes.java:464"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "ChassisScenes.java:465"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      2,
+      1
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "ChassisScenes.java:466"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "ChassisScenes.java:467"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      2,
+      3
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "ChassisScenes.java:468"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "ChassisScenes.java:469"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      2,
+      4
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "ChassisScenes.java:470"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChassisScenes.java:471"
+  },
+  {
+   "op": "overlay.showOutline",
+   "args": {
+    "color": "green",
+    "slot": "obj:4",
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        2,
+        2,
+        0
+       ],
+       "to": [
+        3,
+        2,
+        0
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        2,
+        2,
+        1
+       ],
+       "to": [
+        4,
+        2,
+        1
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        3,
+        2,
+        2
+       ],
+       "to": [
+        4,
+        2,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        2,
+        2,
+        3
+       ],
+       "to": [
+        4,
+        2,
+        3
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        2,
+        2,
+        4
+       ],
+       "to": [
+        3,
+        2,
+        4
+       ]
+      }
+     ]
+    },
+    "duration": 80
+   },
+   "src": "ChassisScenes.java:475"
+  },
+  {
+   "op": "markAsFinished",
+   "args": {},
+   "src": "ChassisScenes.java:477"
+  },
+  {
+   "op": "overlay.showOutlineWithText",
+   "args": {
+    "duration": 80,
+    "color": "red",
+    "placeNearTarget": false,
+    "keyframe": false,
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "pos",
+       "pos": [
+        0,
+        2,
+        1
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        2
+       ],
+       "to": [
+        1,
+        2,
+        2
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        0,
+        2,
+        3
+       ]
+      }
+     ]
+    },
+    "pointAt": [
+     0.75,
+     2.5,
+     2.5
+    ],
+    "key": "text_9",
+    "text": "Blocks not reachable by any sticky face will not attach"
+   },
+   "src": "ChassisScenes.java:478"
+  }
+ ]
+}
