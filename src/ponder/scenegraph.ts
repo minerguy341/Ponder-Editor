@@ -13,7 +13,9 @@ import type { BlockInstance, BlockRenderer, BlockVisual, CreateVisualFactory, Ve
 import type { PonderLighting } from '../render/environment';
 import type { Sel } from './selection';
 import type { AABB, OutlineEntry, Section, SimState } from './simTypes';
-import { keyOf, lerpV, parseKey } from './util';
+import { hash32, keyOf, lerpV, parseKey } from './util';
+import { ITEM_TYPE } from './entities';
+import { resolveItemModel } from '../render/itemModel';
 import { maskedLookup } from './world';
 
 const DEG = THREE.MathUtils.DEG2RAD;
@@ -42,6 +44,14 @@ interface VisualNode {
   rev: number;
   /** key of the section element this visual is attached to */
   section: string | null;
+}
+
+interface EntityNode {
+  group: THREE.Group;
+  item: string;
+  /** per entity random phase (ItemEntity.bobOffs) */
+  bobOffs: number;
+  model: THREE.Object3D | null;
 }
 
 interface OutlineNode {
@@ -148,6 +158,8 @@ export class SceneGraph {
   private sections = new Map<string, SectionNode>();
   private visuals = new Map<string, VisualNode>();
   private outlines = new Map<string, OutlineNode>();
+  private entities = new Map<number, EntityNode>();
+  private itemModels = new Map<string, Promise<THREE.Object3D | null>>();
   private world: SimState['world'] | null = null;
   private pendingCount = 0;
   private waiters: Array<() => void> = [];
@@ -186,6 +198,7 @@ export class SceneGraph {
     this.syncSections(st);
     this.syncVisuals(st);
     this.syncOutlines(st);
+    this.syncEntities(st);
     this.lastBeRev = st.beRev;
   }
 
@@ -333,6 +346,81 @@ export class SceneGraph {
     node.visual = null;
   }
 
+  /** item entities (ItemEntityRenderer): one model per item id, shared by every entity of that item */
+  private itemModel(id: string): Promise<THREE.Object3D | null> {
+    let p = this.itemModels.get(id);
+    if (!p) {
+      this.pendingCount++;
+      p = resolveItemModel(id, this.renderer as any)
+        .then((r) => {
+          if (!r.object) return null;
+          // model space 0..1 -> centred on the origin, like the item renderer's translate(-.5)
+          const wrap = new THREE.Group();
+          r.object.position.set(-0.5, -0.5, -0.5);
+          wrap.add(r.object);
+          return wrap;
+        })
+        .catch((e: unknown) => {
+          this.onError(`item model ${id}: ${(e as Error).message ?? String(e)}`);
+          return null;
+        })
+        .finally(() => {
+          this.pendingCount--;
+          if (this.pendingCount === 0) { const w = this.waiters; this.waiters = []; w.forEach((f) => f()); }
+        });
+      this.itemModels.set(id, p);
+    }
+    return p;
+  }
+
+  private syncEntities(st: SimState): void {
+    const live = new Set<number>();
+    for (const e of st.entities) {
+      if (e.discarded || e.type !== ITEM_TYPE || !e.item) continue;
+      live.add(e.id);
+      let node = this.entities.get(e.id);
+      if (node && node.item !== e.item.id) {
+        node.group.removeFromParent();
+        if (node.model) disposeTree(node.model);
+        this.entities.delete(e.id);
+        node = undefined;
+      }
+      if (!node) {
+        node = { group: new THREE.Group(), item: e.item.id, bobOffs: (hash32(String(e.id)) / 0xffffffff) * Math.PI * 2, model: null };
+        node.group.name = `item:${e.item.id}`;
+        this.root.add(node.group);
+        this.entities.set(e.id, node);
+        const id = e.item.id;
+        const target = node;
+        this.itemModel(id).then((m) => {
+          if (!m || target.item !== id || this.entities.get(e.id) !== target) return;
+          target.model = m.clone();
+          target.group.add(target.model);
+        });
+      }
+    }
+    for (const [id, node] of this.entities) {
+      if (!live.has(id)) { node.group.removeFromParent(); this.entities.delete(id); }
+    }
+  }
+
+  private frameEntities(st: SimState, pt: number): void {
+    if (this.entities.size === 0) return;
+    const byId = new Map(st.entities.map((e) => [e.id, e] as const));
+    for (const [id, node] of this.entities) {
+      const e = byId.get(id);
+      if (!e) continue;
+      const p = lerpV(pt, e.prev, e.pos);
+      // ItemEntityRenderer: bob = sin((age + pt)/10 + bobOffs) * .1 + .1, spin = (age + pt)/20 + bobOffs, scale .5
+      const t = e.age + pt;
+      const bob = Math.sin(t / 10 + node.bobOffs) * 0.1 + 0.1;
+      const spin = t / 20 + node.bobOffs;
+      node.group.position.set(p[0], p[1] + bob + 0.25, p[2]);
+      node.group.rotation.set(0, spin, 0);
+      node.group.scale.setScalar(0.5);
+    }
+  }
+
   private syncOutlines(st: SimState): void {
     const seen = new Set<string>();
     for (const [slot, e] of Object.entries(st.outlines)) {
@@ -369,6 +457,7 @@ export class SceneGraph {
     for (const node of this.visuals.values()) {
       if (node.visual) node.visual.update(ticks);
     }
+    this.frameEntities(st, pt);
     for (const [slot, node] of this.outlines) {
       const e = st.outlines[slot];
       if (!e) continue;
@@ -394,6 +483,8 @@ export class SceneGraph {
     this.sections.clear();
     for (const node of this.outlines.values()) { node.group.removeFromParent(); disposeTree(node.group); }
     this.outlines.clear();
+    for (const node of this.entities.values()) node.group.removeFromParent();
+    this.entities.clear();
     this.root.removeFromParent();
     const w = this.waiters; this.waiters = []; w.forEach((f) => f());
   }
