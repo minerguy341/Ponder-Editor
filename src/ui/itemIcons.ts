@@ -10,7 +10,7 @@
 import * as THREE from 'three';
 import { parseLoc, resources, type ResLoc } from '../assets/resources';
 import { textureBitmap } from './textureBitmap';
-import { ROOTS } from '../config';
+import { compositeElements, type CompositeChild } from './compositeModel';
 
 interface Transform { rotation: [number, number, number]; translation: [number, number, number]; scale: [number, number, number] }
 interface RawModel {
@@ -65,6 +65,11 @@ export async function resolveModel(id: string, depth = 0): Promise<ResolvedModel
   for (let i = chain.length - 1; i >= 0; i--) Object.assign(textures, chain[i].textures ?? {});
   let elements: RawElement[] = [];
   for (const m of chain) if (m.elements) { elements = m.elements; break; }
+  // NeoForge composite models keep their geometry in `children` (see compositeModel.ts); the child textures override the chain's
+  if (!elements.length) for (const m of chain) {
+    const flat = compositeElements((m as { children?: Record<string, CompositeChild> }).children, textures);
+    if (flat.length) { elements = flat as unknown as RawElement[]; break; }
+  }
   let gui: Partial<Transform> | undefined;
   let guiLight: 'front' | 'side' | undefined;
   for (const m of chain) {
@@ -181,11 +186,9 @@ async function fetchModelText(loc: ResLoc): Promise<string | null> {
   let p = textCache.get(key);
   if (!p) {
     p = (async () => {
-      for (const root of ROOTS[loc.ns] ?? []) {
-        const t = await resources.text(`${root}/${loc.path}`);
-        if (t) return t;
-      }
-      return null;
+      // through the resource layer: the Create file index picks the root (no probing 404s)
+      const t = await resources.file({ ns: loc.ns, path: loc.path }, 'text');
+      return typeof t === 'string' ? t : null;
     })();
     textCache.set(key, p);
   }
@@ -318,15 +321,15 @@ export class ItemIconRenderer {
   private async build(itemId: string): Promise<IconBitmap | null> {
     const loc = parseLoc(itemId);
     let model = await resolveModel(`${loc.ns}:item/${loc.path}`);
-    if (model.kind === 'missing') {
-      // items without an item model JSON: fall back to the block model of the same name
+    // the block model of the same name is only a stand-in for items that have no item model JSON at all
+    if (model.kind === 'missing' && !(await resources.model({ ns: loc.ns, path: `item/${loc.path}` }))) {
       const alt = await resolveModel(`${loc.ns}:block/${loc.path}`);
       if (alt.kind !== 'missing') model = alt;
     }
     if (model.kind === 'generated') return this.flat(model);
     if (model.kind === 'entity') {
-      const b = await resolveModel(`${loc.ns}:block/${loc.path}`);
-      const particle = resolveTexture(b.textures.particle ?? b.textures.texture, b.textures) ?? resolveTexture('#particle', model.textures);
+      // the item's own model chain carries the particle texture (no block-model request: Create has none for these items)
+      const particle = resolveTexture('#particle', model.textures) ?? resolveTexture('#texture', model.textures);
       const tex = particle ?? 'minecraft:block/oak_planks';
       const cube: ResolvedModel = {
         kind: 'elements', textures: { all: tex }, guiLight: 'side',

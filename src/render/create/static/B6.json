@@ -1,0 +1,6 @@
+{
+  "create:brass_block": "Plain cube: BRASS_BLOCK = REGISTRATE.block(...).blockstate(simpleCubeAll(\"brass_block\")) in AllBlocks.java (no connectedTextures, no BE, no render-shape override).",
+  "create:cardboard_block": "CardboardBlock (extends Block, no renderer): horizontalAxisBlockProvider(false) blockstate (AllBlocks.java CARDBOARD_BLOCK), plain axis model, no connectedTextures.",
+  "create:industrial_iron_block": "BuilderTransformers.palettesIronBlock(): simpleBlock(cubeColumn(name, block/<name>, block/<name>_top)), no connectedTextures (AllBlocks.java INDUSTRIAL_IRON_BLOCK); its CT window variant is a separate block.",
+  "create:polished_cut_scorchia_stairs": "PaletteBlockPattern.POLISHED has no connectedTextures (only LAYERED and PILLAR do); stairs are the vanilla stair model with the polished textures, no BE, no render override."
+}

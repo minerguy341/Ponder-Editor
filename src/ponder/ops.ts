@@ -199,11 +199,35 @@ function animateActor(what: 'pos' | 'rot', kind: 'parrot' | 'cart', argName: str
 
 // ------------------------------------------------------------------------------------------------ block entity helpers
 
-function logCall(o: OpCtx, pos: Vec3, call: Call): void {
+/**
+ * Block entity calls with a visible effect are applied to the block entity NBT (so the visual sees them through setData):
+ *  - ChainConveyorBlockEntity.connections.add/remove(pos): HashSet of connection offsets, stored as the "Connections" list
+ *  - ContraptionControlsBlockEntity.disabled = v: stored as the "Disabled" flag (BE.write: putBoolean)
+ * Every call is still recorded in PonderCalls (other owners read those for their effects).
+ */
+export function applyBlockEntityCall(nbt: Record<string, unknown>, beType: string | undefined, call: Call): void {
+  const path = call.path ?? [];
+  if (beType === 'ChainConveyorBlockEntity' && path.length === 2 && path[0].f === 'connections' && (path[1].m === 'add' || path[1].m === 'remove')) {
+    const target = (path[1].a?.[0] ?? []) as number[];
+    const list = ((Array.isArray(nbt.Connections) ? nbt.Connections : []) as number[][]).map((c) => [...c]);
+    const same = (c: number[]) => c.length >= 3 && c[0] === target[0] && c[1] === target[1] && c[2] === target[2];
+    const at = list.findIndex(same);
+    if (path[1].m === 'add' && at < 0 && target.length >= 3) list.push([target[0], target[1], target[2]]);
+    if (path[1].m === 'remove' && at >= 0) list.splice(at, 1);
+    nbt.Connections = list;
+    return;
+  }
+  if (beType === 'ContraptionControlsBlockEntity' && path.length === 1 && path[0].set === 'disabled') {
+    nbt.Disabled = path[0].v ? 1 : 0;
+  }
+}
+
+function logCall(o: OpCtx, pos: Vec3, call: Call, beType?: string): void {
   const b = o.st.world.blocks.get(keyOf(pos));
   if (!b) return;
   const nbt = (b.nbt ??= {});
   ((nbt.PonderCalls ??= []) as unknown[]).push({ t: o.st.tick, path: cloneJson(call.path) });
+  applyBlockEntityCall(nbt, beType, call);
   o.st.beRev++;
 }
 
@@ -403,7 +427,8 @@ export const OPS: Record<string, OpDef> = {
   'world.modifyBlockEntity': {
     tick(o) {
       const pos = vec(o.args.pos);
-      for (const c of (o.args.calls ?? []) as Call[]) logCall(o, pos, c);
+      const beType = o.args.beType as string | undefined;
+      for (const c of (o.args.calls ?? []) as Call[]) logCall(o, pos, c, beType);
     },
   },
   'world.createItemEntity': {
