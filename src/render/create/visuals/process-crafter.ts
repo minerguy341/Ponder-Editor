@@ -11,7 +11,8 @@ import type { VisualModule } from '../registry';
 import { KineticVisual, PARTIAL, axisOf, axisVector, getPartial, horizontalAngle, readItemStack, rotationOffset, stateDirection } from '../common';
 import { centredRotation } from './process-harvester-roller';
 
-const POINTING_X: Record<string, number> = { up: -90, down: 90, left: 0, right: 0 };
+// Catnip net.createmod.catnip.math.Pointing (Ponder repo, mc1.21.1 dev/common): UP(0), LEFT(270), DOWN(180), RIGHT(90)
+const POINTING_X: Record<string, number> = { up: 0, left: 270, down: 180, right: 90 };
 
 /** Pointing.getXRotation (degrees) as used by renderAndTransform. */
 export function crafterPointingX(pointing: string | undefined): number {

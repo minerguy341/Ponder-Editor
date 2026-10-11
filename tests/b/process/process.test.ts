@@ -179,11 +179,12 @@ describe('ArmBlockEntity / ArmAngleTarget (content/kinetics/mechanicalArm/ArmAng
   });
 });
 
-describe('Crafter Pointing.getXRotation (values used by renderAndTransform)', () => {
-  it('up/down rotate the arrow about X, left/right stay flat', () => {
-    expect(crafterPointingX('up')).toBe(-90);
-    expect(crafterPointingX('down')).toBe(90);
-    expect(crafterPointingX('left')).toBe(0);
+describe('Catnip Pointing.getXRotation (Ponder repo, dev/common/.../catnip/math/Pointing.java: UP(0) LEFT(270) DOWN(180) RIGHT(90))', () => {
+  it('matches the enum constructor arguments', () => {
+    expect(crafterPointingX('up')).toBe(0);
+    expect(crafterPointingX('left')).toBe(270);
+    expect(crafterPointingX('down')).toBe(180);
+    expect(crafterPointingX('right')).toBe(90);
   });
 });
 
