@@ -1,0 +1,50 @@
+{
+ "id": "fx:beta-press",
+ "schematic": "beta-press",
+ "schematicNamespace": "fx",
+ "title": "Fixture Beta Press",
+ "texts": {
+  "text_1": "fixture text 1 of fx:beta-press"
+ },
+ "tags": [
+  "fx:basics"
+ ],
+ "items": [
+  "fx:press"
+ ],
+ "keyframes": [
+  50
+ ],
+ "totalTicks": 120,
+ "instructions": [
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 44
+   }
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "text": "text_1",
+    "duration": 60,
+    "keyframe": true
+   }
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 76
+   }
+  }
+ ],
+ "fixture": {
+  "texts": [
+   {
+    "key": "text_1",
+    "at": 44,
+    "duration": 60
+   }
+  ]
+ }
+}

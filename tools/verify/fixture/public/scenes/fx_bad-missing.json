@@ -1,0 +1,47 @@
+{
+ "id": "fx:bad-missing",
+ "schematic": "bad-missing",
+ "schematicNamespace": "fx",
+ "title": "Bad missing asset",
+ "texts": {
+  "text_1": "fixture text 1 of fx:bad-missing"
+ },
+ "tags": [],
+ "items": [],
+ "keyframes": [
+  30
+ ],
+ "totalTicks": 80,
+ "instructions": [
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 24
+   }
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "text": "text_1",
+    "duration": 60,
+    "keyframe": true
+   }
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 56
+   }
+  }
+ ],
+ "fixture": {
+  "texts": [
+   {
+    "key": "text_1",
+    "at": 24,
+    "duration": 60
+   }
+  ],
+  "behavior": "missing"
+ }
+}

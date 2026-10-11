@@ -1,0 +1,92 @@
+{
+ "id": "fx:alpha",
+ "schematic": "alpha",
+ "schematicNamespace": "fx",
+ "title": "Fixture Alpha",
+ "texts": {
+  "text_1": "fixture text 1 of fx:alpha",
+  "text_2": "fixture text 2 of fx:alpha",
+  "text_3": "fixture text 3 of fx:alpha"
+ },
+ "tags": [
+  "fx:basics"
+ ],
+ "items": [
+  "fx:cube"
+ ],
+ "keyframes": [
+  40,
+  100,
+  160
+ ],
+ "totalTicks": 200,
+ "instructions": [
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 34
+   }
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "text": "text_1",
+    "duration": 60,
+    "keyframe": true
+   }
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   }
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "text": "text_2",
+    "duration": 60,
+    "keyframe": true
+   }
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   }
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "text": "text_3",
+    "duration": 60,
+    "keyframe": true
+   }
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 46
+   }
+  }
+ ],
+ "fixture": {
+  "texts": [
+   {
+    "key": "text_1",
+    "at": 34,
+    "duration": 60
+   },
+   {
+    "key": "text_2",
+    "at": 94,
+    "duration": 60
+   },
+   {
+    "key": "text_3",
+    "at": 154,
+    "duration": 60
+   }
+  ]
+ }
+}
