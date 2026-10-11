@@ -294,6 +294,21 @@ export class RegistryModel {
   }
 }
 
+/** Minecraft's WoodType constants: Create's window helpers only use `name()` (the lower-case wood id, e.g. "oak"). */
+function woodTypeConstant(id) {
+  const obj = {
+    $class: 'WoodType',
+    $invoke(rt, name) {
+      if (name === 'name' || name === 'getName' || name === 'toString') return id;
+      if (name === 'equals') return false;
+      if (name === 'hashCode') return 0;
+      throw new Unsupported(`WoodType.${id}.${name}()`);
+    },
+  };
+  return obj;
+}
+const WOOD_TYPES = ['OAK', 'SPRUCE', 'BIRCH', 'JUNGLE', 'ACACIA', 'DARK_OAK', 'MANGROVE', 'CHERRY', 'BAMBOO', 'CRIMSON', 'WARPED'];
+
 export function buildRegistry(R, registry) {
   const reg = new Registrate(registry);
   R.add(hc('Create', {
@@ -318,7 +333,8 @@ export function buildRegistry(R, registry) {
   }));
   for (const n of ['ItemEntry', 'BlockEntityEntry', 'ItemProviderEntry', 'RegistryEntry', 'FluidEntry']) R.add(hc(n, { is: (v) => v instanceof Entry }));
   for (const n of ['CreateRegistrate', 'AbstractRegistrate']) R.add(hc(n, { is: (v) => v instanceof Registrate }));
-  for (const n of ['MapColor', 'Tags', 'ItemTags', 'BlockTags', 'EntityTypeTags', 'Ingredient', 'DataIngredient', 'SoundType', 'NoteBlockInstrument', 'PushReaction', 'RecipeCategory', 'BlockBehaviour', 'NeoForgeMod', 'DeferredRegister', 'ParticleType', 'RecordCodecBuilder', 'Codec', 'ByteBufCodecs', 'StreamCodec', 'CatnipCodecs', 'CatnipStreamCodecs', 'CatnipCodecUtils', 'DataComponentType', 'DataComponents', 'DefaultDispenseItemBehavior', 'DispenseItemBehavior', 'CreativeModeTab', 'SoundEvents', 'DeferredSoundType', 'FluidType', 'BlockSetType', 'WoodType', 'StatType', 'Rarity', ]) R.add(hc(n, { stubAll: true }));
+  R.add(hc('WoodType', { statics: Object.fromEntries(WOOD_TYPES.map((c) => [c, woodTypeConstant(c.toLowerCase())])) }));
+  for (const n of ['MapColor', 'Tags', 'ItemTags', 'BlockTags', 'EntityTypeTags', 'Ingredient', 'DataIngredient', 'SoundType', 'NoteBlockInstrument', 'PushReaction', 'RecipeCategory', 'BlockBehaviour', 'NeoForgeMod', 'DeferredRegister', 'ParticleType', 'RecordCodecBuilder', 'Codec', 'ByteBufCodecs', 'StreamCodec', 'CatnipCodecs', 'CatnipStreamCodecs', 'CatnipCodecUtils', 'DataComponentType', 'DataComponents', 'DefaultDispenseItemBehavior', 'DispenseItemBehavior', 'CreativeModeTab', 'SoundEvents', 'DeferredSoundType', 'FluidType', 'BlockSetType', 'StatType', 'Rarity', ]) R.add(hc(n, { stubAll: true }));
   R.map.set('net.createmod.catnip.platform.CatnipServices', hc('CatnipServices', { preferHost: true, statics: { PLATFORM: { $class: 'Platform', getEnv: () => ({ $class: 'Env', isClient: () => false, isDedicatedServer: () => false }), isDevelopmentEnvironment: () => false, executeOnClientOnly: () => undefined, executeOnDedicatedServerOnly: () => undefined, isModLoaded: () => false }, HOOKS: { $class: 'Hooks' } } }));
   // datagen-only Create classes: ids/tags are irrelevant for scene conversion, any access yields an inert stub
   for (const fq of ['com.simibubi.create.foundation.data.recipe.CommonMetal']) {

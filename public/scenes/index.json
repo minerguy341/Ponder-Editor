@@ -209,15 +209,7 @@
   ],
   "tags": [],
   "file": "creative_motor_mojang.json",
-  "titleId": "creative_motor_mojang",
-  "notes": [
-   "palette: unknown block create:oak_window_pane is loaded as air (as in the game)",
-   "palette: create:oak_window_pane has no property east (ignored, as in the game)",
-   "palette: create:oak_window_pane has no property waterlogged (ignored, as in the game)",
-   "palette: create:oak_window_pane has no property south (ignored, as in the game)",
-   "palette: create:oak_window_pane has no property north (ignored, as in the game)",
-   "palette: create:oak_window_pane has no property west (ignored, as in the game)"
-  ]
+  "titleId": "creative_motor_mojang"
  },
  {
   "id": "create:water_wheel",
