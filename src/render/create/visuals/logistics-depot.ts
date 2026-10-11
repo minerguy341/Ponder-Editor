@@ -14,7 +14,7 @@ import { PoseStack } from '../items/pose';
 import type { VisualModule } from '../registry';
 
 /** DepotRenderer.renderItem for one stack (the depot variant: copies, rotation by angle, scale .5, upright items). */
-function renderDepotItem(ms: PoseStack, pool: ItemPool, stack: ItemStackJson, angle: number, r: JavaRandom | null): void {
+export function renderDepotItem(ms: PoseStack, pool: ItemPool, stack: ItemStackJson, angle: number, r: JavaRandom | null): void {
   const info = itemInfo(stack);
   const blockItem = info?.blockItem ?? false;
   const upright = (info?.upright ?? isItemUpright(stack.id));
@@ -48,7 +48,7 @@ function renderDepotItem(ms: PoseStack, pool: ItemPool, stack: ItemStackJson, an
   ms.popPose();
 }
 
-class DepotBlockVisual extends BaseVisual {
+export class DepotBlockVisual extends BaseVisual {
   private pool: ItemPool;
   private ms = new PoseStack();
 

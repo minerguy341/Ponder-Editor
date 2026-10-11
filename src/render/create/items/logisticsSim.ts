@@ -72,7 +72,7 @@ export interface BeltReceiver {
 }
 
 /** Blocks with a DirectBeltInputBehaviour (Ending.INSERT margin). */
-const RECEIVER_BLOCKS = new Set(['create:depot', 'create:basin']);
+const RECEIVER_BLOCKS = new Set(['create:depot', 'create:basin', 'create:item_drain', 'create:weighted_ejector']);
 /** Blocks that do not make a belt end BLOCKED (approximation of BlockHelper.hasBlockSolidSide). */
 const NOT_SOLID = /^(minecraft:air|minecraft:(water|lava)|create:belt|create:.*funnel|create:.*tunnel|create:.*chute|create:.*pipe|create:.*valve|create:.*pump|create:depot|create:item_drain|create:spout|create:hose_pulley|create:.*fluid_tank|create:.*interface)$/;
 
@@ -446,7 +446,7 @@ export class LogisticsWorld {
   /** removeItemsFromBelt: TransportedItemStackHandlerBehaviour.handleCenteredProcessingOnAllItems(.52, removeItem) */
   private removeAt(pos: Vec3): void {
     const name = this.lookup.getState(pos)?.name;
-    if (name === 'create:depot') {
+    if (name === 'create:depot' || name === 'create:item_drain' || name === 'create:weighted_ejector') {
       const d = this.depotAt(pos);
       if (d.held && 0.5 - d.held.beltPosition <= 0.52) d.held = null; // DepotBehaviour.applyToAllItems: held item only
       return;
@@ -480,6 +480,7 @@ export class LogisticsWorld {
       const name = this.lookup.getState(pos)?.name;
       if (name === 'create:depot') this.depotInsert(this.depotAt(pos), stack, side);
       else if (name === 'create:basin') this.basinInsert(this.basinAt(pos), stack);
+      else if (name === 'create:item_drain' || name === 'create:weighted_ejector') this.depotInsert(this.depotAt(pos), stack, side);
       else if (name === 'create:chute' || name === 'create:smart_chute') this.chuteInsert(this.chuteAt(pos), stack);
       return;
     }
@@ -635,7 +636,7 @@ export class LogisticsWorld {
 
   private receiverAt(pos: Vec3): BeltReceiver | undefined {
     const name = this.lookup.getState(pos)?.name;
-    if (name === 'create:depot') {
+    if (name === 'create:depot' || name === 'create:item_drain' || name === 'create:weighted_ejector') {
       const d = this.depotAt(pos);
       return { canInsertFromSide: () => true, insert: (stack, side) => this.depotInsert(d, stack, side) };
     }
