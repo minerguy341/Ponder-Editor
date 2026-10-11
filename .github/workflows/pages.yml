@@ -1,0 +1,64 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Scene timelines are derived data (public/scenes/*.json). They may be committed; when they are not, the converter
+      # (tools/scenegen, leaf C1) regenerates them from the Create sources fetched from jsDelivr.
+      - name: Generate scenes when missing
+        run: |
+          if [ -f public/scenes/index.json ]; then
+            echo "using committed scenes"
+          else
+            node tools/scenegen/run.mjs --all
+          fi
+
+      - name: Type-check and build (base path = repository name)
+        env:
+          REPO_NAME: ${{ github.event.repository.name }}
+        run: |
+          npx tsc --noEmit
+          npx vite build --base "/${REPO_NAME}/"
+          # SPA-style safety net for deep links on project pages
+          cp dist/index.html dist/404.html
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
