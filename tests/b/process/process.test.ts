@@ -12,7 +12,7 @@ import { sawBladeId } from '../../../src/render/create/visuals/process-saw';
 import { blazeModelFor, burnerOffsets } from '../../../src/render/create/visuals/process-blaze-burner';
 import { stickerHeadMatrix } from '../../../src/render/create/visuals/process-sticker';
 import { harvesterBladeMatrix, rollerFrameMatrix, rollerWheelMatrix } from '../../../src/render/create/visuals/process-harvester-roller';
-import { armTargetAngles, ARM_NO_TARGET } from '../../../src/render/create/visuals/process-arm';
+import { armPointGeometry, armTargetAngles, ARM_NO_TARGET } from '../../../src/render/create/visuals/process-arm';
 import { CHEST_PARTS, CHEST_HINGE } from '../../../src/render/create/visuals/process-vanilla-chest';
 import { cubesGeometry } from '../../../src/render/create/vanilla/entityModel';
 import { crafterBeltValid, crafterInitialSlot0, crafterPointingX, crafterSlot0At, crafterTargetDirection } from '../../../src/render/create/visuals/process-crafter';
@@ -286,5 +286,26 @@ describe('LerpedFloat LINEAR chase of the sticker piston (StickerBlockEntity.tic
     near(stickerPiston(false, ch, 7)[1], 0.8);
     expect(stickerPiston(false, ch, 8)[1]).toBe(1);
     const [pv, cv] = stickerPiston(false, ch, 8); near(pv, 0.8); expect(cv).toBe(1);
+  });
+});
+
+describe('ArmInteractionPoint geometry by point type (AllArmInteractionPointTypes.java, Create 6.0.10)', () => {
+  const st = (name: string, props: Record<string, string> = {}) => ({ name, props });
+  it('base type: block centre, claw direction DOWN', () => {
+    expect(armPointGeometry(st('minecraft:chest'), [1, 2, 3])).toEqual({ p: [1.5, 2.5, 3.5], dir: 'down' });
+  });
+  it('depot / belt / saw: (.5, 14/16, .5)', () => {
+    expect(armPointGeometry(st('create:depot'), [0, 0, 0]).p).toEqual([0.5, 14 / 16, 0.5]);
+    expect(armPointGeometry(st('create:belt'), [0, 0, 0]).p).toEqual([0.5, 14 / 16, 0.5]);
+    expect(armPointGeometry(st('create:mechanical_saw'), [0, 0, 0]).p).toEqual([0.5, 14 / 16, 0.5]);
+  });
+  it('top-face types (chute, crushing wheels, jukebox): (.5, 1, .5)', () => {
+    expect(armPointGeometry(st('create:chute'), [0, 0, 0]).p).toEqual([0.5, 1, 0.5]);
+    expect(armPointGeometry(st('create:crushing_wheel'), [0, 0, 0]).p).toEqual([0.5, 1, 0.5]);
+    expect(armPointGeometry(st('minecraft:jukebox'), [0, 0, 0]).p).toEqual([0.5, 1, 0.5]);
+  });
+  it('crafter: centre + normal(dir) * .5 with dir = facing.opposite; deployer: * .65', () => {
+    expect(armPointGeometry(st('create:mechanical_crafter', { facing: 'north' }), [0, 0, 0])).toEqual({ p: [0.5, 0.5, 1], dir: 'south' });
+    expect(armPointGeometry(st('create:deployer', { facing: 'east' }), [0, 0, 0])).toEqual({ p: [0.5 - 0.65, 0.5, 0.5], dir: 'west' });
   });
 });
