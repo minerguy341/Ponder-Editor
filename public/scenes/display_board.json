@@ -1,0 +1,1212 @@
+{
+ "id": "create:display_board",
+ "schematic": "display_board",
+ "schematicNamespace": "create",
+ "title": "Using Display Boards",
+ "texts": {
+  "text_1": "Display Boards are a scalable alternative to the sign",
+  "text_2": "They require Rotational Force to operate",
+  "text_3": "Static text can be applied using written Clipboards",
+  "text_4": "And dynamic text through the use of Display Links",
+  "text_5": "Dyes can be applied to individual lines of the board",
+  "text_6": "Lines can be reset by clicking them with an empty hand"
+ },
+ "tags": [],
+ "items": [
+  "create:display_board"
+ ],
+ "keyframes": [
+  47,
+  157,
+  248,
+  378,
+  609,
+  726
+ ],
+ "totalTicks": 760,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "DisplayScenes.java:235"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      4,
+      0,
+      4
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "DisplayScenes.java:236"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       1,
+       2,
+       3
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       2,
+       2,
+       3
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       3,
+       2,
+       3
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     }
+    ]
+   },
+   "src": "DisplayScenes.java:247"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "DisplayScenes.java:248"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "DisplayScenes.java:252"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "DisplayScenes.java:253"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "DisplayScenes.java:252"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "DisplayScenes.java:253"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "DisplayScenes.java:252"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "DisplayScenes.java:253"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "DisplayScenes.java:255"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      2,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "DisplayScenes.java:252"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "DisplayScenes.java:253"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      2,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "DisplayScenes.java:252"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "DisplayScenes.java:253"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      2,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "DisplayScenes.java:252"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "DisplayScenes.java:253"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "DisplayScenes.java:255"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "DisplayScenes.java:258"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_1",
+    "pointAt": [
+     1,
+     2.5,
+     3.5
+    ],
+    "text": "Display Boards are a scalable alternative to the sign"
+   },
+   "src": "DisplayScenes.java:260"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "DisplayScenes.java:265"
+  },
+  {
+   "op": "rotateCameraY",
+   "args": {
+    "degrees": 60
+   },
+   "src": "DisplayScenes.java:267"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "DisplayScenes.java:268"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      1,
+      1
+     ],
+     "to": [
+      4,
+      1,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "DisplayScenes.java:269"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      5,
+      0,
+      1
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "DisplayScenes.java:270"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "DisplayScenes.java:271"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       1,
+       2,
+       3
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       2,
+       2,
+       3
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       3,
+       2,
+       3
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     }
+    ]
+   },
+   "src": "DisplayScenes.java:272"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     }
+    ]
+   },
+   "src": "DisplayScenes.java:273"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       2,
+       3
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     }
+    ]
+   },
+   "src": "DisplayScenes.java:274"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     }
+    ]
+   },
+   "src": "DisplayScenes.java:275"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 50,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_2",
+    "pointAt": [
+     4,
+     1.5,
+     3.5
+    ],
+    "text": "They require Rotational Force to operate"
+   },
+   "src": "DisplayScenes.java:277"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "DisplayScenes.java:282"
+  },
+  {
+   "op": "rotateCameraY",
+   "args": {
+    "degrees": -60
+   },
+   "src": "DisplayScenes.java:283"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "DisplayScenes.java:284"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3.95,
+     2.75,
+     3.25
+    ],
+    "direction": "right",
+    "duration": 40,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "create:clipboard",
+     "count": 1,
+     "nbt": {
+      "create:clipboard_content": {
+       "class": "ClipboardContent",
+       "type": {
+        "enum": "ClipboardType.WRITTEN"
+       },
+       "pages": [],
+       "readOnly": false,
+       "previouslyOpenedPage": 0,
+       "copiedValues": null
+      }
+     }
+    },
+    "icon": "rmb"
+   },
+   "src": "DisplayScenes.java:289"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 6
+   },
+   "src": "DisplayScenes.java:291"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     2,
+     3
+    ],
+    "beType": "FlapDisplayBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "applyTextManually",
+        "a": [
+         0,
+         "Create"
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "DisplayScenes.java:292"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 25
+   },
+   "src": "DisplayScenes.java:293"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 50,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_3",
+    "pointAt": [
+     1.9500000000000002,
+     2.75,
+     3.25
+    ],
+    "text": "Static text can be applied using written Clipboards"
+   },
+   "src": "DisplayScenes.java:295"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "DisplayScenes.java:300"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      1
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "DisplayScenes.java:302"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "DisplayScenes.java:303"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      1
+     ]
+    },
+    "direction": "east"
+   },
+   "src": "DisplayScenes.java:304"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "DisplayScenes.java:305"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "input",
+    "slot": "obj:1",
+    "box": {
+     "min": [
+      2,
+      1,
+      1
+     ],
+     "max": [
+      3.5,
+      2,
+      2
+     ]
+    },
+    "duration": 60
+   },
+   "src": "DisplayScenes.java:306"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "DisplayScenes.java:307"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "output",
+    "slot": "obj:2",
+    "box": {
+     "min": [
+      1,
+      1,
+      3.1875
+     ],
+     "max": [
+      4,
+      3,
+      3.8125
+     ]
+    },
+    "duration": 60
+   },
+   "src": "DisplayScenes.java:308"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "DisplayScenes.java:310"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "output",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_4",
+    "pointAt": [
+     1.9500000000000002,
+     2.75,
+     3.25
+    ],
+    "text": "And dynamic text through the use of Display Links"
+   },
+   "src": "DisplayScenes.java:312"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "DisplayScenes.java:318"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     3,
+     1,
+     1
+    ],
+    "insertionSide": "south",
+    "item": {
+     "id": "create:propeller",
+     "count": 1
+    }
+   },
+   "src": "DisplayScenes.java:321"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     2,
+     3
+    ],
+    "beType": "FlapDisplayBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "applyTextManually",
+        "a": [
+         1,
+         "Propeller"
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "DisplayScenes.java:322"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     2,
+     1,
+     1
+    ],
+    "beType": "LinkWithBulbBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "pulse",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "DisplayScenes.java:323"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "DisplayScenes.java:324"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     3,
+     1,
+     1
+    ]
+   },
+   "src": "DisplayScenes.java:326"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     3,
+     1,
+     1
+    ],
+    "insertionSide": "south",
+    "item": {
+     "id": "create:blaze_cake",
+     "count": 1
+    }
+   },
+   "src": "DisplayScenes.java:328"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     2,
+     3
+    ],
+    "beType": "FlapDisplayBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "applyTextManually",
+        "a": [
+         1,
+         "Blaze Cake"
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "DisplayScenes.java:329"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     2,
+     1,
+     1
+    ],
+    "beType": "LinkWithBulbBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "pulse",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "DisplayScenes.java:330"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "DisplayScenes.java:331"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     3,
+     1,
+     1
+    ]
+   },
+   "src": "DisplayScenes.java:333"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     3,
+     1,
+     1
+    ],
+    "insertionSide": "south",
+    "item": {
+     "id": "create:display_board",
+     "count": 1
+    }
+   },
+   "src": "DisplayScenes.java:335"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     2,
+     3
+    ],
+    "beType": "FlapDisplayBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "applyTextManually",
+        "a": [
+         1,
+         "Display Board"
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "DisplayScenes.java:336"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     2,
+     1,
+     1
+    ],
+    "beType": "LinkWithBulbBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "pulse",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "DisplayScenes.java:337"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "DisplayScenes.java:338"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3.95,
+     2.75,
+     3.25
+    ],
+    "direction": "right",
+    "duration": 40,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "minecraft:pink_dye",
+     "count": 1
+    },
+    "icon": "rmb"
+   },
+   "src": "DisplayScenes.java:340"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 6
+   },
+   "src": "DisplayScenes.java:342"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     2,
+     3
+    ],
+    "beType": "FlapDisplayBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "setColour",
+        "a": [
+         0,
+         {
+          "enum": "DyeColor.PINK"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "DisplayScenes.java:343"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 25
+   },
+   "src": "DisplayScenes.java:344"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_5",
+    "pointAt": [
+     1.9500000000000002,
+     2.75,
+     3.25
+    ],
+    "text": "Dyes can be applied to individual lines of the board"
+   },
+   "src": "DisplayScenes.java:346"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 25
+   },
+   "src": "DisplayScenes.java:351"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3.95,
+     2.25,
+     3.25
+    ],
+    "direction": "right",
+    "duration": 40,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "minecraft:lime_dye",
+     "count": 1
+    },
+    "icon": "rmb"
+   },
+   "src": "DisplayScenes.java:353"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 6
+   },
+   "src": "DisplayScenes.java:355"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     2,
+     3
+    ],
+    "beType": "FlapDisplayBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "setColour",
+        "a": [
+         1,
+         {
+          "enum": "DyeColor.LIME"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "DisplayScenes.java:356"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 55
+   },
+   "src": "DisplayScenes.java:357"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3.95,
+     2.75,
+     3.25
+    ],
+    "direction": "right",
+    "duration": 40,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb"
+   },
+   "src": "DisplayScenes.java:359"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 6
+   },
+   "src": "DisplayScenes.java:360"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     2,
+     3
+    ],
+    "beType": "FlapDisplayBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "applyTextManually",
+        "a": [
+         0,
+         ""
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "DisplayScenes.java:361"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 25
+   },
+   "src": "DisplayScenes.java:362"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_6",
+    "pointAt": [
+     1.9500000000000002,
+     2.75,
+     3.25
+    ],
+    "text": "Lines can be reset by clicking them with an empty hand"
+   },
+   "src": "DisplayScenes.java:364"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "DisplayScenes.java:369"
+  }
+ ]
+}

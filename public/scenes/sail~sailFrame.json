@@ -1,0 +1,772 @@
+{
+ "id": "create:sail~sailFrame",
+ "schematic": "sail",
+ "schematicNamespace": "create",
+ "title": "Assembling Windmills using Sail Frames",
+ "texts": {
+  "text_1": "Sail Frames are handy blocks to create Windmills with",
+  "text_2": "They will attach to blocks and each other without the need of Super Glue or Chassis Blocks"
+ },
+ "tags": [],
+ "items": [
+  "create:sail_frame"
+ ],
+ "keyframes": [
+  50,
+  130
+ ],
+ "totalTicks": 164,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "BearingScenes.java:648"
+  },
+  {
+   "op": "scaleSceneView",
+   "args": {
+    "factor": 0.9
+   },
+   "src": "BearingScenes.java:649"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      4,
+      0,
+      4
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "BearingScenes.java:650"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "BearingScenes.java:651"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "BearingScenes.java:654"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "BearingScenes.java:655"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      2,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "BearingScenes.java:657",
+   "out": "e1"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "BearingScenes.java:658"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       2,
+       3
+      ],
+      "state": {
+       "name": "create:sail_frame",
+       "props": {
+        "facing": "east"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "BearingScenes.java:665"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      2,
+      3
+     ]
+    },
+    "direction": "north",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "BearingScenes.java:667"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "BearingScenes.java:668"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       2,
+       2
+      ],
+      "state": {
+       "name": "create:sail_frame",
+       "props": {
+        "facing": "south"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "BearingScenes.java:665"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      2,
+      2
+     ]
+    },
+    "direction": "east",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "BearingScenes.java:667"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "BearingScenes.java:668"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       2,
+       1
+      ],
+      "state": {
+       "name": "create:sail_frame",
+       "props": {
+        "facing": "west"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "BearingScenes.java:665"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      2,
+      1
+     ]
+    },
+    "direction": "south",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "BearingScenes.java:667"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "BearingScenes.java:668"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       2,
+       2
+      ],
+      "state": {
+       "name": "create:sail_frame",
+       "props": {
+        "facing": "north"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "BearingScenes.java:665"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      2,
+      2
+     ]
+    },
+    "direction": "west",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "BearingScenes.java:667"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "BearingScenes.java:668"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       3,
+       3
+      ],
+      "state": {
+       "name": "create:sail_frame",
+       "props": {
+        "facing": "east"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "BearingScenes.java:665"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      3,
+      3
+     ]
+    },
+    "direction": "north",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "BearingScenes.java:667"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "BearingScenes.java:668"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       3,
+       2
+      ],
+      "state": {
+       "name": "create:sail_frame",
+       "props": {
+        "facing": "south"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "BearingScenes.java:665"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      3,
+      2
+     ]
+    },
+    "direction": "east",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "BearingScenes.java:667"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "BearingScenes.java:668"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       3,
+       1
+      ],
+      "state": {
+       "name": "create:sail_frame",
+       "props": {
+        "facing": "west"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "BearingScenes.java:665"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      3,
+      1
+     ]
+    },
+    "direction": "south",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "BearingScenes.java:667"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "BearingScenes.java:668"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       3,
+       2
+      ],
+      "state": {
+       "name": "create:sail_frame",
+       "props": {
+        "facing": "north"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "BearingScenes.java:665"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      3,
+      2
+     ]
+    },
+    "direction": "west",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "BearingScenes.java:667"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "BearingScenes.java:668"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       4,
+       3
+      ],
+      "state": {
+       "name": "create:sail_frame",
+       "props": {
+        "facing": "east"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "BearingScenes.java:665"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      4,
+      3
+     ]
+    },
+    "direction": "north",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "BearingScenes.java:667"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "BearingScenes.java:668"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       4,
+       2
+      ],
+      "state": {
+       "name": "create:sail_frame",
+       "props": {
+        "facing": "south"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "BearingScenes.java:665"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      4,
+      2
+     ]
+    },
+    "direction": "east",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "BearingScenes.java:667"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "BearingScenes.java:668"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       4,
+       1
+      ],
+      "state": {
+       "name": "create:sail_frame",
+       "props": {
+        "facing": "west"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "BearingScenes.java:665"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      4,
+      1
+     ]
+    },
+    "direction": "south",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "BearingScenes.java:667"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "BearingScenes.java:668"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       4,
+       2
+      ],
+      "state": {
+       "name": "create:sail_frame",
+       "props": {
+        "facing": "north"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "BearingScenes.java:665"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      4,
+      2
+     ]
+    },
+    "direction": "west",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "BearingScenes.java:667"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "BearingScenes.java:668"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_1",
+    "pointAt": [
+     1,
+     3.5,
+     2.5
+    ],
+    "text": "Sail Frames are handy blocks to create Windmills with"
+   },
+   "src": "BearingScenes.java:672"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "BearingScenes.java:677"
+  },
+  {
+   "op": "overlay.showOutlineWithText",
+   "args": {
+    "duration": 80,
+    "color": "green",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      2,
+      2
+     ]
+    },
+    "pointAt": [
+     2.5,
+     2.5,
+     2.5
+    ],
+    "key": "text_2",
+    "text": "They will attach to blocks and each other without the need of Super Glue or Chassis Blocks"
+   },
+   "src": "BearingScenes.java:679"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "BearingScenes.java:684"
+  },
+  {
+   "op": "world.configureCenterOfRotation",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "anchor": [
+     2.5,
+     1.5,
+     2.5
+    ]
+   },
+   "src": "BearingScenes.java:685"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bearing",
+    "pos": [
+     2,
+     1,
+     2
+    ],
+    "distance": 720,
+    "duration": 300
+   },
+   "src": "BearingScenes.java:741"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "rotation": [
+     0,
+     720,
+     0
+    ],
+    "duration": 300
+   },
+   "src": "BearingScenes.java:742"
+  }
+ ]
+}

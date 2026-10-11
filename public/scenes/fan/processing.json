@@ -1,0 +1,1547 @@
+{
+ "id": "create:fan/processing",
+ "schematic": "fan/processing",
+ "schematicNamespace": "create",
+ "title": "Processing Items using Encased Fans",
+ "texts": {
+  "text_1": "When passing through lava, the Air Flow becomes Heated",
+  "text_2": "Items caught in the area will be smelted",
+  "text_3": "Food items thrown here would be incinerated",
+  "text_4": "Instead, a setup for Smoking using Fire should be used for them",
+  "text_5": "Air Flows passing through water create a Washing Setup",
+  "text_6": "Some interesting new processing can be done with it",
+  "text_7": "The Speed of the Fan does NOT affect the processing speed, only its range",
+  "text_8": "Fan Processing can also be applied to Items on Depots and Belts"
+ },
+ "tags": [],
+ "items": [
+  "create:encased_fan"
+ ],
+ "keyframes": [
+  161,
+  406,
+  521,
+  726,
+  896
+ ],
+ "totalTicks": 1150,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 1,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "FanScenes.java:92"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        0,
+        0,
+        0
+       ],
+       "to": [
+        6,
+        0,
+        3
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        1,
+        0,
+        4
+       ],
+       "to": [
+        6,
+        0,
+        4
+       ]
+      }
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "FanScenes.java:93"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "FanScenes.java:95"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "pos",
+       "pos": [
+        1,
+        1,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        5,
+        1,
+        2
+       ],
+       "to": [
+        6,
+        1,
+        2
+       ]
+      }
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "FanScenes.java:96"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 25
+   },
+   "src": "FanScenes.java:98"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      0
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "FanScenes.java:105",
+   "out": "e1"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     1,
+     0,
+     2
+    ],
+    "duration": 0
+   },
+   "src": "FanScenes.java:106"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      1,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:lava",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "FanScenes.java:107"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "FanScenes.java:108"
+  },
+  {
+   "op": "overlay.showOutlineWithText",
+   "args": {
+    "duration": 80,
+    "color": "red",
+    "placeNearTarget": false,
+    "keyframe": false,
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      1,
+      2
+     ],
+     "to": [
+      4,
+      1,
+      2
+     ]
+    },
+    "pointAt": [
+     3.5,
+     1.5,
+     2.5
+    ],
+    "key": "text_1",
+    "text": "When passing through lava, the Air Flow becomes Heated"
+   },
+   "src": "FanScenes.java:110"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "FanScenes.java:113"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     3.5,
+     2.5
+    ],
+    "motion": [
+     0,
+     0.1,
+     0
+    ],
+    "item": {
+     "id": "minecraft:gold_ore",
+     "count": 1
+    }
+   },
+   "src": "FanScenes.java:118",
+   "out": "e2"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "FanScenes.java:120"
+  },
+  {
+   "op": "world.modifyEntity",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "setDeltaMovement",
+        "a": [
+         -0.2,
+         0,
+         0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FanScenes.java:121"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.1,
+     1.5,
+     2.5
+    ],
+    "direction": "down",
+    "duration": 20,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "minecraft:gold_ore",
+     "count": 1
+    }
+   },
+   "src": "FanScenes.java:124"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "FanScenes.java:125"
+  },
+  {
+   "op": "effects.emitParticles",
+   "args": {
+    "location": [
+     2.1,
+     1.7000000029802322,
+     2.5
+    ],
+    "emitter": {
+     "kind": "simple",
+     "particle": {
+      "type": "minecraft:large_smoke"
+     },
+     "motion": [
+      0,
+      0,
+      0
+     ]
+    },
+    "amountPerCycle": 1,
+    "cycles": 60
+   },
+   "src": "FanScenes.java:126"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     2.1,
+     1.5,
+     2.5
+    ],
+    "key": "text_2",
+    "text": "Items caught in the area will be smelted"
+   },
+   "src": "FanScenes.java:129"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "FanScenes.java:136"
+  },
+  {
+   "op": "world.modifyEntities",
+   "args": {
+    "entityType": "ItemEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "setItem",
+        "a": [
+         {
+          "id": "minecraft:gold_ingot",
+          "count": 1
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FanScenes.java:137"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "FanScenes.java:138"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.1,
+     1.5,
+     2.5
+    ],
+    "direction": "down",
+    "duration": 20,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "minecraft:gold_ingot",
+     "count": 1
+    }
+   },
+   "src": "FanScenes.java:139"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "FanScenes.java:140"
+  },
+  {
+   "op": "world.modifyEntities",
+   "args": {
+    "entityType": "ItemEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "discard",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FanScenes.java:141"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "FanScenes.java:142"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "red",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     2.1,
+     1.5,
+     2.5
+    ],
+    "key": "text_3",
+    "text": "Food items thrown here would be incinerated"
+   },
+   "src": "FanScenes.java:144"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "FanScenes.java:149"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "direction": "north"
+   },
+   "src": "FanScenes.java:154"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "FanScenes.java:155"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      0
+     ]
+    },
+    "state": {
+     "name": "minecraft:fire",
+     "props": {
+      "age": "0",
+      "east": "false",
+      "north": "false",
+      "south": "false",
+      "up": "false",
+      "west": "false"
+     }
+    },
+    "particles": false
+   },
+   "src": "FanScenes.java:156"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      1,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:fire",
+     "props": {
+      "age": "0",
+      "east": "false",
+      "north": "false",
+      "south": "false",
+      "up": "false",
+      "west": "false"
+     }
+    },
+    "particles": true
+   },
+   "src": "FanScenes.java:157"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      0
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "FanScenes.java:158",
+   "out": "e3"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "offset": [
+     1,
+     0,
+     2
+    ],
+    "duration": 0
+   },
+   "src": "FanScenes.java:159"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "FanScenes.java:160"
+  },
+  {
+   "op": "overlay.showOutlineWithText",
+   "args": {
+    "duration": 60,
+    "color": "black",
+    "placeNearTarget": false,
+    "keyframe": true,
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      1,
+      2
+     ],
+     "to": [
+      4,
+      1,
+      2
+     ]
+    },
+    "pointAt": [
+     3.5,
+     1.5,
+     2.5
+    ],
+    "key": "text_4",
+    "text": "Instead, a setup for Smoking using Fire should be used for them"
+   },
+   "src": "FanScenes.java:162"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "FanScenes.java:166"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "direction": "north"
+   },
+   "src": "FanScenes.java:171"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "FanScenes.java:172"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      0
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "FanScenes.java:173"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      1,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": true
+   },
+   "src": "FanScenes.java:174"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      0
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "FanScenes.java:175",
+   "out": "e4"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e4"
+    },
+    "offset": [
+     1,
+     0,
+     2
+    ],
+    "duration": 0
+   },
+   "src": "FanScenes.java:176"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "FanScenes.java:177"
+  },
+  {
+   "op": "overlay.showOutlineWithText",
+   "args": {
+    "duration": 60,
+    "color": "medium",
+    "placeNearTarget": false,
+    "keyframe": true,
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      1,
+      2
+     ],
+     "to": [
+      4,
+      1,
+      2
+     ]
+    },
+    "pointAt": [
+     3.5,
+     1.5,
+     2.5
+    ],
+    "key": "text_5",
+    "text": "Air Flows passing through water create a Washing Setup"
+   },
+   "src": "FanScenes.java:179"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "FanScenes.java:183"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     3.5,
+     2.5
+    ],
+    "motion": [
+     0,
+     0.1,
+     0
+    ],
+    "item": {
+     "id": "minecraft:red_sand",
+     "count": 16
+    }
+   },
+   "src": "FanScenes.java:188",
+   "out": "e5"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "FanScenes.java:190"
+  },
+  {
+   "op": "world.modifyEntity",
+   "args": {
+    "link": {
+     "link": "e5"
+    },
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "setDeltaMovement",
+        "a": [
+         -0.2,
+         0,
+         0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FanScenes.java:191"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.1,
+     1.5,
+     2.5
+    ],
+    "direction": "down",
+    "duration": 20,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "minecraft:red_sand",
+     "count": 16
+    }
+   },
+   "src": "FanScenes.java:192"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "FanScenes.java:193"
+  },
+  {
+   "op": "effects.emitParticles",
+   "args": {
+    "location": [
+     2.1,
+     1.7000000029802322,
+     2.5
+    ],
+    "emitter": {
+     "kind": "simple",
+     "particle": {
+      "type": "minecraft:spit"
+     },
+     "motion": [
+      0,
+      0,
+      0
+     ]
+    },
+    "amountPerCycle": 1,
+    "cycles": 60
+   },
+   "src": "FanScenes.java:194"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 50,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     2.1,
+     1.5,
+     2.5
+    ],
+    "key": "text_6",
+    "text": "Some interesting new processing can be done with it"
+   },
+   "src": "FanScenes.java:196"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "FanScenes.java:202"
+  },
+  {
+   "op": "world.modifyEntities",
+   "args": {
+    "entityType": "ItemEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "setItem",
+        "a": [
+         {
+          "id": "minecraft:gold_nugget",
+          "count": 16
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FanScenes.java:203"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.1,
+     1.5,
+     2.5
+    ],
+    "direction": "down",
+    "duration": 20,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "minecraft:gold_nugget",
+     "count": 16
+    }
+   },
+   "src": "FanScenes.java:204"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "FanScenes.java:205"
+  },
+  {
+   "op": "world.modifyEntities",
+   "args": {
+    "entityType": "ItemEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "discard",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FanScenes.java:206"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "FanScenes.java:207"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 100,
+    "color": "red",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     5.5,
+     2,
+     2.5
+    ],
+    "key": "text_7",
+    "text": "The Speed of the Fan does NOT affect the processing speed, only its range"
+   },
+   "src": "FanScenes.java:209"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "FanScenes.java:215"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 110
+   },
+   "src": "FanScenes.java:216"
+  },
+  {
+   "op": "world.makeSectionIndependent",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        4,
+        0,
+        2
+       ],
+       "to": [
+        6,
+        0,
+        2
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        6,
+        0,
+        3
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        6,
+        1,
+        2
+       ],
+       "to": [
+        6,
+        1,
+        3
+       ]
+      }
+     ]
+    }
+   },
+   "src": "FanScenes.java:218",
+   "out": "e6"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       5,
+       2,
+       2
+      ],
+      "nbt": {
+       "Speed": -21.333334
+      }
+     }
+    ]
+   },
+   "src": "FanScenes.java:221"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e6"
+    },
+    "offset": [
+     0,
+     1,
+     0
+    ],
+    "duration": 15
+   },
+   "src": "FanScenes.java:222"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e4"
+    },
+    "offset": [
+     0,
+     1,
+     0
+    ],
+    "duration": 15
+   },
+   "src": "FanScenes.java:223"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      5,
+      1,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "FanScenes.java:224"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      5,
+      2,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "FanScenes.java:225"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      2,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "FanScenes.java:227"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "FanScenes.java:232"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      4,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "FanScenes.java:235",
+   "out": "e7"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e7"
+    },
+    "offset": [
+     -1,
+     -3,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "FanScenes.java:236"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     3,
+     4,
+     2
+    ],
+    "insertionSide": "north",
+    "item": {
+     "id": "minecraft:sand",
+     "count": 1
+    }
+   },
+   "src": "FanScenes.java:237"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "FanScenes.java:238"
+  },
+  {
+   "op": "effects.emitParticles",
+   "args": {
+    "location": [
+     2.5,
+     2.25,
+     2.5
+    ],
+    "emitter": {
+     "kind": "simple",
+     "particle": {
+      "type": "minecraft:spit"
+     },
+     "motion": [
+      0,
+      0,
+      0
+     ]
+    },
+    "amountPerCycle": 0.5,
+    "cycles": 30
+   },
+   "src": "FanScenes.java:241"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "FanScenes.java:242"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "DepotBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       4,
+       2
+      ],
+      "nbt": {
+       "HeldItem": {
+        "Item": {
+         "id": "minecraft:clay_ball",
+         "count": 1
+        },
+        "Pos": 0,
+        "PrevPos": 0,
+        "Offset": 0.055555556,
+        "PrevOffset": 0.055555556,
+        "InSegment": 0,
+        "Angle": 240,
+        "InDirection": 1
+       }
+      }
+     }
+    ]
+   },
+   "src": "FanScenes.java:243"
+  },
+  {
+   "op": "effects.emitParticles",
+   "args": {
+    "location": [
+     2.5,
+     2.25,
+     2.5
+    ],
+    "emitter": {
+     "kind": "simple",
+     "particle": {
+      "type": "minecraft:spit"
+     },
+     "motion": [
+      0,
+      0,
+      0
+     ]
+    },
+    "amountPerCycle": 0.5,
+    "cycles": 30
+   },
+   "src": "FanScenes.java:245"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 90,
+    "color": "white",
+    "placeNearTarget": false,
+    "keyframe": true,
+    "pointAt": [
+     2.5,
+     2.25,
+     2.5
+    ],
+    "key": "text_8",
+    "text": "Fan Processing can also be applied to Items on Depots and Belts"
+   },
+   "src": "FanScenes.java:246"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 100
+   },
+   "src": "FanScenes.java:251"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e7"
+    },
+    "offset": [
+     -1,
+     0,
+     0
+    ],
+    "duration": 15
+   },
+   "src": "FanScenes.java:252"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "FanScenes.java:253"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      2,
+      4
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "FanScenes.java:255",
+   "out": "e8"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      3,
+      1
+     ],
+     "to": [
+      3,
+      3,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "FanScenes.java:257",
+   "out": "e9"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e8"
+    },
+    "offset": [
+     -1,
+     -2,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "FanScenes.java:258"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e9"
+    },
+    "offset": [
+     -1,
+     -2,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "FanScenes.java:259"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     3,
+     3,
+     3
+    ],
+    "insertionSide": "south",
+    "item": {
+     "id": "minecraft:sand",
+     "count": 1
+    }
+   },
+   "src": "FanScenes.java:261",
+   "out": "e10"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "FanScenes.java:262"
+  },
+  {
+   "op": "effects.emitParticles",
+   "args": {
+    "location": [
+     2.5,
+     2.25,
+     2.5
+    ],
+    "emitter": {
+     "kind": "simple",
+     "particle": {
+      "type": "minecraft:spit"
+     },
+     "motion": [
+      0,
+      0,
+      0
+     ]
+    },
+    "amountPerCycle": 0.5,
+    "cycles": 25
+   },
+   "src": "FanScenes.java:263"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 25
+   },
+   "src": "FanScenes.java:264"
+  },
+  {
+   "op": "world.changeBeltItemTo",
+   "args": {
+    "link": {
+     "link": "e10"
+    },
+    "item": {
+     "id": "minecraft:clay_ball",
+     "count": 1
+    }
+   },
+   "src": "FanScenes.java:265"
+  },
+  {
+   "op": "effects.emitParticles",
+   "args": {
+    "location": [
+     2.5,
+     2.25,
+     2.5
+    ],
+    "emitter": {
+     "kind": "simple",
+     "particle": {
+      "type": "minecraft:spit"
+     },
+     "motion": [
+      0,
+      0,
+      0
+     ]
+    },
+    "amountPerCycle": 0.5,
+    "cycles": 25
+   },
+   "src": "FanScenes.java:266"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "FanScenes.java:267"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       2,
+       4
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       3,
+       3,
+       1
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       3,
+       3,
+       2
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       1,
+       3,
+       3
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       2,
+       3,
+       3
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       3,
+       3,
+       3
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     }
+    ]
+   },
+   "src": "FanScenes.java:269"
+  }
+ ]
+}

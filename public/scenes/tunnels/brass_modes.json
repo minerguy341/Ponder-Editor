@@ -1,0 +1,3091 @@
+{
+ "id": "create:tunnels/brass_modes",
+ "schematic": "tunnels/brass_modes",
+ "schematicNamespace": "create",
+ "title": "Distribution Modes of the Brass Tunnel",
+ "texts": {
+  "text_1": "The distribution behaviour of Brass Tunnels can be configured",
+  "text_2": "'Split' will attempt to distribute the stack evenly between available outputs",
+  "text_3": "If an output is unable to take more items, it will be skipped",
+  "text_4": "'Forced Split' will never skip outputs, and instead wait until they are free",
+  "text_5": "'Round Robin' keeps stacks whole, and cycles through outputs iteratively",
+  "text_6": "Once Again, if an output is unable to take more items, it will be skipped",
+  "text_7": "'Forced Round Robin' never skips outputs",
+  "text_8": "'Prefer Nearest' prioritizes the outputs closest to the items' input location",
+  "text_9": "'Randomize' will distribute whole stacks to randomly picked outputs",
+  "text_10": "'Synchronize Inputs' is a unique setting for Brass Tunnels",
+  "text_11": "Items are only allowed past if every tunnel in the group has one waiting",
+  "text_12": "This ensures that all affected belts supply items at the same rate"
+ },
+ "tags": [],
+ "items": [
+  "create:brass_tunnel"
+ ],
+ "keyframes": [
+  40,
+  210,
+  410,
+  550,
+  830,
+  950,
+  1190,
+  1350
+ ],
+ "totalTicks": 1594,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 1,
+    "size": 5
+   },
+   "src": "TunnelScenes.java:349"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      0
+     ]
+    },
+    "state": {
+     "name": "minecraft:barrier",
+     "props": {
+      "waterlogged": "false"
+     }
+    },
+    "particles": false
+   },
+   "src": "TunnelScenes.java:351"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      5,
+      0,
+      5
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "TunnelScenes.java:352"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "TunnelScenes.java:353"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        1,
+        1,
+        1
+       ],
+       "to": [
+        5,
+        1,
+        5
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        1,
+        2,
+        5
+       ],
+       "to": [
+        3,
+        2,
+        5
+       ]
+      }
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TunnelScenes.java:354"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "TunnelScenes.java:356"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      2,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TunnelScenes.java:358"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "TunnelScenes.java:359"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      2,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TunnelScenes.java:358"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "TunnelScenes.java:359"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      2,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TunnelScenes.java:358"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "TunnelScenes.java:359"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     3,
+     3.5
+    ],
+    "direction": "down",
+    "duration": 80,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb"
+   },
+   "src": "TunnelScenes.java:363"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "TunnelScenes.java:364"
+  },
+  {
+   "op": "overlay.highlightValueBox",
+   "args": {
+    "location": [
+     2.5,
+     3,
+     3.5
+    ],
+    "expands": [
+     0.25,
+     0.0625,
+     0.25
+    ],
+    "duration": 120
+   },
+   "src": "TunnelScenes.java:365"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 120,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     2.5,
+     3,
+     3.5
+    ],
+    "key": "text_1",
+    "text": "The distribution behaviour of Brass Tunnels can be configured"
+   },
+   "src": "TunnelScenes.java:366"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 130
+   },
+   "src": "TunnelScenes.java:371"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      1,
+      0
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "TunnelScenes.java:375",
+   "out": "e1"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     -3,
+     0,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "TunnelScenes.java:376"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     4,
+     2.5,
+     3
+    ],
+    "direction": "right",
+    "duration": 140,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "[object Object]"
+   },
+   "src": "TunnelScenes.java:379"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     5
+    ],
+    "insertionSide": "east",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 12
+    }
+   },
+   "src": "TunnelScenes.java:385",
+   "out": "e2"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     5
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "TunnelScenes.java:385"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "TunnelScenes.java:386"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     2.5,
+     3,
+     3.5
+    ],
+    "key": "text_2",
+    "text": "'Split' will attempt to distribute the stack evenly between available outputs"
+   },
+   "src": "TunnelScenes.java:389"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     5
+    ],
+    "insertionSide": "east",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 12
+    }
+   },
+   "src": "TunnelScenes.java:385",
+   "out": "e3"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     5
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "TunnelScenes.java:385"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "TunnelScenes.java:386"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     5
+    ],
+    "insertionSide": "east",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 12
+    }
+   },
+   "src": "TunnelScenes.java:385",
+   "out": "e4"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     5
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "TunnelScenes.java:385"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "TunnelScenes.java:386"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "green",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_3",
+    "pointAt": [
+     1.5,
+     2,
+     2.5
+    ],
+    "text": "If an output is unable to take more items, it will be skipped"
+   },
+   "src": "TunnelScenes.java:397"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     5
+    ],
+    "insertionSide": "east",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 12
+    }
+   },
+   "src": "TunnelScenes.java:385",
+   "out": "e5"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     5
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "TunnelScenes.java:385"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "TunnelScenes.java:386"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     5
+    ],
+    "insertionSide": "east",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 12
+    }
+   },
+   "src": "TunnelScenes.java:385",
+   "out": "e6"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     5
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "TunnelScenes.java:385"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "TunnelScenes.java:386"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     4,
+     2.5,
+     3
+    ],
+    "direction": "right",
+    "duration": 140,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "[object Object]"
+   },
+   "src": "TunnelScenes.java:405"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     3
+    ],
+    "beType": "BrassTunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getBehaviour",
+        "a": [
+         {
+          "behaviour": "ScrollValueBehaviour"
+         }
+        ]
+       },
+       {
+        "m": "setValue",
+        "a": [
+         1
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "TunnelScenes.java:406"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     5
+    ],
+    "insertionSide": "east",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 12
+    }
+   },
+   "src": "TunnelScenes.java:385",
+   "out": "e7"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     5
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "TunnelScenes.java:385"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "TunnelScenes.java:386"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "red",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_4",
+    "pointAt": [
+     1.5,
+     2,
+     2.5
+    ],
+    "text": "'Forced Split' will never skip outputs, and instead wait until they are free"
+   },
+   "src": "TunnelScenes.java:412"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "TunnelScenes.java:418"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     -1,
+     0,
+     0
+    ],
+    "duration": 10
+   },
+   "src": "TunnelScenes.java:419"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      0
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": false
+   },
+   "src": "TunnelScenes.java:420"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       1,
+       1
+      ],
+      "nbt": {
+       "Speed": -24
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       1
+      ],
+      "nbt": {
+       "Speed": -24
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       1
+      ],
+      "nbt": {
+       "Speed": -24
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -24
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -24
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -24
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": -24
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": -24
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": -24
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": -24
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": -24
+      }
+     },
+     {
+      "pos": [
+       5,
+       0,
+       4
+      ],
+      "nbt": {
+       "Speed": 12
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": -24
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": -24
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": -24
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": -24
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": -24
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": -24
+      }
+     }
+    ]
+   },
+   "src": "TunnelScenes.java:421"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     5
+    ],
+    "insertionSide": "east",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 12
+    }
+   },
+   "src": "TunnelScenes.java:385",
+   "out": "e8"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     5
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "TunnelScenes.java:385"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "TunnelScenes.java:386"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     5
+    ],
+    "insertionSide": "east",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 12
+    }
+   },
+   "src": "TunnelScenes.java:385",
+   "out": "e9"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     5
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "TunnelScenes.java:385"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "TunnelScenes.java:386"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     3
+    ],
+    "beType": "BrassTunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getBehaviour",
+        "a": [
+         {
+          "behaviour": "ScrollValueBehaviour"
+         }
+        ]
+       },
+       {
+        "m": "setValue",
+        "a": [
+         2
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "TunnelScenes.java:425"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     4,
+     2.5,
+     3
+    ],
+    "direction": "right",
+    "duration": 140,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "[object Object]"
+   },
+   "src": "TunnelScenes.java:428"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     2.5,
+     3,
+     3.5
+    ],
+    "key": "text_5",
+    "text": "'Round Robin' keeps stacks whole, and cycles through outputs iteratively"
+   },
+   "src": "TunnelScenes.java:429"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     1,
+     0,
+     0
+    ],
+    "duration": 10
+   },
+   "src": "TunnelScenes.java:437"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      0
+     ]
+    },
+    "state": {
+     "name": "minecraft:barrier",
+     "props": {
+      "waterlogged": "false"
+     }
+    },
+    "particles": false
+   },
+   "src": "TunnelScenes.java:438"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     5
+    ],
+    "insertionSide": "east",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 12
+    }
+   },
+   "src": "TunnelScenes.java:385",
+   "out": "e10"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     5
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "TunnelScenes.java:385"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "TunnelScenes.java:386"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     5
+    ],
+    "insertionSide": "east",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 12
+    }
+   },
+   "src": "TunnelScenes.java:385",
+   "out": "e11"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     5
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "TunnelScenes.java:385"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "TunnelScenes.java:386"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     5
+    ],
+    "insertionSide": "east",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 12
+    }
+   },
+   "src": "TunnelScenes.java:385",
+   "out": "e12"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     5
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "TunnelScenes.java:385"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "TunnelScenes.java:386"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     5
+    ],
+    "insertionSide": "east",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 12
+    }
+   },
+   "src": "TunnelScenes.java:385",
+   "out": "e13"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     5
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "TunnelScenes.java:385"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "TunnelScenes.java:386"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     5
+    ],
+    "insertionSide": "east",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 12
+    }
+   },
+   "src": "TunnelScenes.java:385",
+   "out": "e14"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     5
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "TunnelScenes.java:385"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "TunnelScenes.java:386"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     5
+    ],
+    "insertionSide": "east",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 12
+    }
+   },
+   "src": "TunnelScenes.java:385",
+   "out": "e15"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     5
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "TunnelScenes.java:385"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "TunnelScenes.java:386"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "green",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_6",
+    "pointAt": [
+     1.5,
+     2,
+     2.5
+    ],
+    "text": "Once Again, if an output is unable to take more items, it will be skipped"
+   },
+   "src": "TunnelScenes.java:442"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     5
+    ],
+    "insertionSide": "east",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 12
+    }
+   },
+   "src": "TunnelScenes.java:385",
+   "out": "e16"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     5
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "TunnelScenes.java:385"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "TunnelScenes.java:386"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     5
+    ],
+    "insertionSide": "east",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 12
+    }
+   },
+   "src": "TunnelScenes.java:385",
+   "out": "e17"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     5
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "TunnelScenes.java:385"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "TunnelScenes.java:386"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     4,
+     2.5,
+     3
+    ],
+    "direction": "right",
+    "duration": 140,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "[object Object]"
+   },
+   "src": "TunnelScenes.java:450"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     3
+    ],
+    "beType": "BrassTunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getBehaviour",
+        "a": [
+         {
+          "behaviour": "ScrollValueBehaviour"
+         }
+        ]
+       },
+       {
+        "m": "setValue",
+        "a": [
+         3
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "TunnelScenes.java:451"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     5
+    ],
+    "insertionSide": "east",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 12
+    }
+   },
+   "src": "TunnelScenes.java:385",
+   "out": "e18"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     5
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "TunnelScenes.java:385"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "TunnelScenes.java:386"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 50,
+    "color": "red",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_7",
+    "pointAt": [
+     1.5,
+     2,
+     2.5
+    ],
+    "text": "'Forced Round Robin' never skips outputs"
+   },
+   "src": "TunnelScenes.java:457"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "TunnelScenes.java:463"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     -1,
+     0,
+     0
+    ],
+    "duration": 10
+   },
+   "src": "TunnelScenes.java:464"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      0
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": false
+   },
+   "src": "TunnelScenes.java:465"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     5
+    ],
+    "insertionSide": "east",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 12
+    }
+   },
+   "src": "TunnelScenes.java:385",
+   "out": "e19"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     5
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "TunnelScenes.java:385"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "TunnelScenes.java:386"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     5
+    ],
+    "insertionSide": "east",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 12
+    }
+   },
+   "src": "TunnelScenes.java:385",
+   "out": "e20"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     5
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "TunnelScenes.java:385"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "TunnelScenes.java:386"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     5
+    ],
+    "insertionSide": "east",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 12
+    }
+   },
+   "src": "TunnelScenes.java:385",
+   "out": "e21"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     5
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "TunnelScenes.java:385"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "TunnelScenes.java:386"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     4,
+     2.5,
+     3
+    ],
+    "direction": "right",
+    "duration": 140,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "[object Object]"
+   },
+   "src": "TunnelScenes.java:469"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     3
+    ],
+    "beType": "BrassTunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getBehaviour",
+        "a": [
+         {
+          "behaviour": "ScrollValueBehaviour"
+         }
+        ]
+       },
+       {
+        "m": "setValue",
+        "a": [
+         4
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "TunnelScenes.java:470"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     1,
+     0,
+     0
+    ],
+    "duration": 10
+   },
+   "src": "TunnelScenes.java:473"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      0
+     ]
+    },
+    "state": {
+     "name": "minecraft:barrier",
+     "props": {
+      "waterlogged": "false"
+     }
+    },
+    "particles": false
+   },
+   "src": "TunnelScenes.java:474"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "green",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_8",
+    "pointAt": [
+     1.5,
+     2,
+     2.5
+    ],
+    "text": "'Prefer Nearest' prioritizes the outputs closest to the items' input location"
+   },
+   "src": "TunnelScenes.java:475"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     5
+    ],
+    "insertionSide": "east",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 12
+    }
+   },
+   "src": "TunnelScenes.java:385",
+   "out": "e22"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     5
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "TunnelScenes.java:385"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "TunnelScenes.java:386"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     5
+    ],
+    "insertionSide": "east",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 12
+    }
+   },
+   "src": "TunnelScenes.java:385",
+   "out": "e23"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     5
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "TunnelScenes.java:385"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "TunnelScenes.java:386"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      0
+     ]
+    },
+    "state": {
+     "name": "minecraft:barrier",
+     "props": {
+      "waterlogged": "false"
+     }
+    },
+    "particles": false
+   },
+   "src": "TunnelScenes.java:484"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      1,
+      0
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "TunnelScenes.java:485",
+   "out": "e24"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e24"
+    },
+    "offset": [
+     -2,
+     0,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "TunnelScenes.java:486"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     5
+    ],
+    "insertionSide": "east",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 12
+    }
+   },
+   "src": "TunnelScenes.java:385",
+   "out": "e25"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     5
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "TunnelScenes.java:385"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "TunnelScenes.java:386"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     5
+    ],
+    "insertionSide": "east",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 12
+    }
+   },
+   "src": "TunnelScenes.java:385",
+   "out": "e26"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     5
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "TunnelScenes.java:385"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "TunnelScenes.java:386"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     5
+    ],
+    "insertionSide": "east",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 12
+    }
+   },
+   "src": "TunnelScenes.java:385",
+   "out": "e27"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     5
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "TunnelScenes.java:385"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "TunnelScenes.java:386"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     5
+    ],
+    "insertionSide": "east",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 12
+    }
+   },
+   "src": "TunnelScenes.java:385",
+   "out": "e28"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     5
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "TunnelScenes.java:385"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "TunnelScenes.java:386"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "direction": "down"
+   },
+   "src": "TunnelScenes.java:490"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      0
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": false
+   },
+   "src": "TunnelScenes.java:491"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e24"
+    },
+    "direction": "down"
+   },
+   "src": "TunnelScenes.java:492"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      0
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": false
+   },
+   "src": "TunnelScenes.java:493"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     5
+    ],
+    "insertionSide": "east",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 12
+    }
+   },
+   "src": "TunnelScenes.java:385",
+   "out": "e29"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     5
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "TunnelScenes.java:385"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "TunnelScenes.java:386"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     4,
+     2.5,
+     3
+    ],
+    "direction": "right",
+    "duration": 140,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "[object Object]"
+   },
+   "src": "TunnelScenes.java:497"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     3
+    ],
+    "beType": "BrassTunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getBehaviour",
+        "a": [
+         {
+          "behaviour": "ScrollValueBehaviour"
+         }
+        ]
+       },
+       {
+        "m": "setValue",
+        "a": [
+         5
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "TunnelScenes.java:498"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     5
+    ],
+    "insertionSide": "east",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 12
+    }
+   },
+   "src": "TunnelScenes.java:385",
+   "out": "e30"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     5
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "TunnelScenes.java:385"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "TunnelScenes.java:386"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_9",
+    "pointAt": [
+     2.5,
+     3,
+     3.5
+    ],
+    "text": "'Randomize' will distribute whole stacks to randomly picked outputs"
+   },
+   "src": "TunnelScenes.java:504"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     5
+    ],
+    "insertionSide": "east",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 12
+    }
+   },
+   "src": "TunnelScenes.java:385",
+   "out": "e31"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     5
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "TunnelScenes.java:385"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "TunnelScenes.java:386"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     5
+    ],
+    "insertionSide": "east",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 12
+    }
+   },
+   "src": "TunnelScenes.java:385",
+   "out": "e32"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     5
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "TunnelScenes.java:385"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "TunnelScenes.java:386"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "TunnelScenes.java:386"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "TunnelScenes.java:386"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      2,
+      5
+     ],
+     "to": [
+      3,
+      2,
+      5
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "TunnelScenes.java:512"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "TunnelScenes.java:513"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     4,
+     2.5,
+     3
+    ],
+    "direction": "right",
+    "duration": 140,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "[object Object]"
+   },
+   "src": "TunnelScenes.java:514"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     3
+    ],
+    "beType": "BrassTunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getBehaviour",
+        "a": [
+         {
+          "behaviour": "ScrollValueBehaviour"
+         }
+        ]
+       },
+       {
+        "m": "setValue",
+        "a": [
+         6
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "TunnelScenes.java:515"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "TunnelScenes.java:518"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_10",
+    "pointAt": [
+     2.5,
+     3,
+     3.5
+    ],
+    "text": "'Synchronize Inputs' is a unique setting for Brass Tunnels"
+   },
+   "src": "TunnelScenes.java:519"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     3,
+     1,
+     4
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:carrot",
+     "count": 1
+    }
+   },
+   "src": "TunnelScenes.java:529",
+   "out": "e33"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     2,
+     1,
+     4
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:honey_bottle",
+     "count": 1
+    }
+   },
+   "src": "TunnelScenes.java:530",
+   "out": "e34"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     3,
+     1,
+     5
+    ],
+    "insertionSide": "south",
+    "item": {
+     "id": "minecraft:carrot",
+     "count": 1
+    }
+   },
+   "src": "TunnelScenes.java:531",
+   "out": "e35"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     2,
+     1,
+     5
+    ],
+    "insertionSide": "south",
+    "item": {
+     "id": "minecraft:honey_bottle",
+     "count": 1
+    }
+   },
+   "src": "TunnelScenes.java:532",
+   "out": "e36"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "TunnelScenes.java:534"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     2,
+     1,
+     5
+    ],
+    "insertionSide": "south",
+    "item": {
+     "id": "minecraft:honey_bottle",
+     "count": 1
+    }
+   },
+   "src": "TunnelScenes.java:535",
+   "out": "e37"
+  },
+  {
+   "op": "rotateCameraY",
+   "args": {
+    "degrees": -90
+   },
+   "src": "TunnelScenes.java:536"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "TunnelScenes.java:537"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       1,
+       1
+      ],
+      "nbt": {
+       "Speed": -12
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       1
+      ],
+      "nbt": {
+       "Speed": -12
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       1
+      ],
+      "nbt": {
+       "Speed": -12
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -12
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -12
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -12
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": -12
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": -12
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": -12
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": -12
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": -12
+      }
+     },
+     {
+      "pos": [
+       5,
+       0,
+       4
+      ],
+      "nbt": {
+       "Speed": 6
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": -12
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": -12
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": -12
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": -12
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": -12
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": -12
+      }
+     }
+    ]
+   },
+   "src": "TunnelScenes.java:538"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "output",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_11",
+    "pointAt": [
+     2.5,
+     2,
+     4.5
+    ],
+    "text": "Items are only allowed past if every tunnel in the group has one waiting"
+   },
+   "src": "TunnelScenes.java:540"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "TunnelScenes.java:545"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     5
+    ],
+    "insertionSide": "south",
+    "item": {
+     "id": "create:polished_rose_quartz",
+     "count": 1
+    }
+   },
+   "src": "TunnelScenes.java:546",
+   "out": "e38"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     5
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "TunnelScenes.java:546"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "TunnelScenes.java:547"
+  },
+  {
+   "op": "rotateCameraY",
+   "args": {
+    "degrees": 90
+   },
+   "src": "TunnelScenes.java:548"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 100,
+    "color": "green",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_12",
+    "pointAt": [
+     1,
+     2.5,
+     3.5
+    ],
+    "text": "This ensures that all affected belts supply items at the same rate"
+   },
+   "src": "TunnelScenes.java:550"
+  }
+ ]
+}

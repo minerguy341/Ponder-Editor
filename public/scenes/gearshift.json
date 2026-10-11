@@ -1,0 +1,752 @@
+{
+ "id": "create:gearshift",
+ "schematic": "gearshift",
+ "schematicNamespace": "create",
+ "title": "Controlling rotational force using a Gearshift",
+ "texts": {
+  "text_1": "Gearshifts will relay rotation in a straight line",
+  "text_2": "When powered by Redstone, it reverses the transmission"
+ },
+ "tags": [
+  "create:kinetic_relays"
+ ],
+ "items": [
+  "create:gearshift"
+ ],
+ "keyframes": [
+  141
+ ],
+ "totalTicks": 315,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "KineticsScenes.java:544"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      5,
+      0,
+      4
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "KineticsScenes.java:545"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      1,
+      0
+     ],
+     "to": [
+      3,
+      1,
+      1
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "KineticsScenes.java:547"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "KineticsScenes.java:549"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      5,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "KineticsScenes.java:550"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "KineticsScenes.java:551"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "KineticsScenes.java:554"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "KineticsScenes.java:555"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "KineticsScenes.java:554"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "KineticsScenes.java:555"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "KineticsScenes.java:554"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "KineticsScenes.java:555"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "KineticsScenes.java:554"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "KineticsScenes.java:555"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "KineticsScenes.java:559"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 50,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_1",
+    "pointAt": [
+     3.5,
+     2,
+     2.5
+    ],
+    "text": "Gearshifts will relay rotation in a straight line"
+   },
+   "src": "KineticsScenes.java:560"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "KineticsScenes.java:565"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       1,
+       0
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "floor",
+        "facing": "east",
+        "powered": "true"
+       }
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "15",
+        "south": "none",
+        "west": "none"
+       }
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "state": {
+       "name": "create:gearshift",
+       "props": {
+        "axis": "x",
+        "powered": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "KineticsScenes.java:566"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     3,
+     1,
+     0
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "KineticsScenes.java:567"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     }
+    ]
+   },
+   "src": "KineticsScenes.java:568"
+  },
+  {
+   "op": "effects.rotationIndicator",
+   "args": {
+    "pos": [
+     5,
+     1,
+     2
+    ],
+    "direction": true
+   },
+   "src": "KineticsScenes.java:569"
+  },
+  {
+   "op": "effects.rotationIndicator",
+   "args": {
+    "pos": [
+     1,
+     1,
+     2
+    ],
+    "direction": true
+   },
+   "src": "KineticsScenes.java:570"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "KineticsScenes.java:571"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 50,
+    "color": "red",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_2",
+    "pointAt": [
+     3.5,
+     2,
+     2.5
+    ],
+    "text": "When powered by Redstone, it reverses the transmission"
+   },
+   "src": "KineticsScenes.java:573"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "KineticsScenes.java:581"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       1,
+       0
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "floor",
+        "facing": "east",
+        "powered": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "0",
+        "south": "none",
+        "west": "none"
+       }
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "state": {
+       "name": "create:gearshift",
+       "props": {
+        "axis": "x",
+        "powered": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "KineticsScenes.java:582"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     3,
+     1,
+     0
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "KineticsScenes.java:583"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     }
+    ]
+   },
+   "src": "KineticsScenes.java:584"
+  },
+  {
+   "op": "effects.rotationIndicator",
+   "args": {
+    "pos": [
+     5,
+     1,
+     2
+    ],
+    "direction": true
+   },
+   "src": "KineticsScenes.java:585"
+  },
+  {
+   "op": "effects.rotationIndicator",
+   "args": {
+    "pos": [
+     1,
+     1,
+     2
+    ],
+    "direction": true
+   },
+   "src": "KineticsScenes.java:586"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "KineticsScenes.java:581"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       1,
+       0
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "floor",
+        "facing": "east",
+        "powered": "true"
+       }
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "15",
+        "south": "none",
+        "west": "none"
+       }
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "state": {
+       "name": "create:gearshift",
+       "props": {
+        "axis": "x",
+        "powered": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "KineticsScenes.java:582"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     3,
+     1,
+     0
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "KineticsScenes.java:583"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     }
+    ]
+   },
+   "src": "KineticsScenes.java:584"
+  },
+  {
+   "op": "effects.rotationIndicator",
+   "args": {
+    "pos": [
+     5,
+     1,
+     2
+    ],
+    "direction": true
+   },
+   "src": "KineticsScenes.java:585"
+  },
+  {
+   "op": "effects.rotationIndicator",
+   "args": {
+    "pos": [
+     1,
+     1,
+     2
+    ],
+    "direction": true
+   },
+   "src": "KineticsScenes.java:586"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "KineticsScenes.java:581"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       1,
+       0
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "floor",
+        "facing": "east",
+        "powered": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "0",
+        "south": "none",
+        "west": "none"
+       }
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "state": {
+       "name": "create:gearshift",
+       "props": {
+        "axis": "x",
+        "powered": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "KineticsScenes.java:582"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     3,
+     1,
+     0
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "KineticsScenes.java:583"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     }
+    ]
+   },
+   "src": "KineticsScenes.java:584"
+  },
+  {
+   "op": "effects.rotationIndicator",
+   "args": {
+    "pos": [
+     5,
+     1,
+     2
+    ],
+    "direction": true
+   },
+   "src": "KineticsScenes.java:585"
+  },
+  {
+   "op": "effects.rotationIndicator",
+   "args": {
+    "pos": [
+     1,
+     1,
+     2
+    ],
+    "direction": true
+   },
+   "src": "KineticsScenes.java:586"
+  }
+ ]
+}

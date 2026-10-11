@@ -1,0 +1,634 @@
+{
+ "id": "create:clutch",
+ "schematic": "clutch",
+ "schematicNamespace": "create",
+ "title": "Controlling rotational force using a Clutch",
+ "texts": {
+  "text_1": "Clutches will relay rotation in a straight line",
+  "text_2": "When powered by Redstone, it breaks the connection"
+ },
+ "tags": [
+  "create:kinetic_relays"
+ ],
+ "items": [
+  "create:clutch"
+ ],
+ "keyframes": [
+  131
+ ],
+ "totalTicks": 195,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "KineticsScenes.java:491"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      5,
+      0,
+      4
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "KineticsScenes.java:492"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      1,
+      0
+     ],
+     "to": [
+      3,
+      1,
+      1
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "KineticsScenes.java:494"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      1,
+      2
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "KineticsScenes.java:498"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "SpeedGaugeBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       0,
+       1,
+       2
+      ],
+      "nbt": {
+       "Value": 0
+      }
+     }
+    ]
+   },
+   "src": "KineticsScenes.java:499"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       0,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     }
+    ]
+   },
+   "src": "KineticsScenes.java:499"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "KineticsScenes.java:501"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      5,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "KineticsScenes.java:502"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "KineticsScenes.java:503"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "KineticsScenes.java:506"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "KineticsScenes.java:507"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "KineticsScenes.java:506"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "KineticsScenes.java:507"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "KineticsScenes.java:506"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "KineticsScenes.java:507"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "KineticsScenes.java:506"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "KineticsScenes.java:507"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "SpeedGaugeBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       0,
+       1,
+       2
+      ],
+      "nbt": {
+       "Value": 0.4585714
+      }
+     }
+    ]
+   },
+   "src": "KineticsScenes.java:512"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       0,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     }
+    ]
+   },
+   "src": "KineticsScenes.java:512"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     0,
+     1,
+     2
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "KineticsScenes.java:513"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "KineticsScenes.java:514"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 50,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_1",
+    "pointAt": [
+     3.5,
+     2,
+     2.5
+    ],
+    "text": "Clutches will relay rotation in a straight line"
+   },
+   "src": "KineticsScenes.java:515"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "KineticsScenes.java:520"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       1,
+       0
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "floor",
+        "facing": "east",
+        "powered": "true"
+       }
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "15",
+        "south": "none",
+        "west": "none"
+       }
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "state": {
+       "name": "create:clutch",
+       "props": {
+        "axis": "x",
+        "powered": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "KineticsScenes.java:521"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     3,
+     1,
+     0
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "KineticsScenes.java:522"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "SpeedGaugeBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       0,
+       1,
+       2
+      ],
+      "nbt": {
+       "Value": 0
+      }
+     }
+    ]
+   },
+   "src": "KineticsScenes.java:523"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       0,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     }
+    ]
+   },
+   "src": "KineticsScenes.java:523"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "KineticsScenes.java:524"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "KineticsScenes.java:526"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 50,
+    "color": "red",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_2",
+    "pointAt": [
+     3.5,
+     2,
+     2.5
+    ],
+    "text": "When powered by Redstone, it breaks the connection"
+   },
+   "src": "KineticsScenes.java:527"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "KineticsScenes.java:534"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       1,
+       0
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "floor",
+        "facing": "east",
+        "powered": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "0",
+        "south": "none",
+        "west": "none"
+       }
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "state": {
+       "name": "create:clutch",
+       "props": {
+        "axis": "x",
+        "powered": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "KineticsScenes.java:535"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     3,
+     1,
+     0
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "KineticsScenes.java:536"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "SpeedGaugeBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       0,
+       1,
+       2
+      ],
+      "nbt": {
+       "Value": 0.4585714
+      }
+     }
+    ]
+   },
+   "src": "KineticsScenes.java:537"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       0,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     }
+    ]
+   },
+   "src": "KineticsScenes.java:537"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     0,
+     1,
+     2
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "KineticsScenes.java:538"
+  }
+ ]
+}

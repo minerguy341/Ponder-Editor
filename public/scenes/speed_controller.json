@@ -1,0 +1,866 @@
+{
+ "id": "create:speed_controller",
+ "schematic": "speed_controller",
+ "schematicNamespace": "create",
+ "title": "Using the Rotational Speed Controller",
+ "texts": {
+  "text_1": "Rot. Speed Controllers relay rotation from their axis to a Large Cogwheel above them",
+  "text_2": "Using the value panel on its side, the conveyed speed can be configured"
+ },
+ "tags": [],
+ "items": [
+  "create:rotation_speed_controller"
+ ],
+ "keyframes": [
+  61,
+  161
+ ],
+ "totalTicks": 305,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "KineticsScenes.java:1214"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      5,
+      0,
+      4
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "KineticsScenes.java:1215"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "KineticsScenes.java:1216"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "SpeedGaugeBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       2,
+       3
+      ],
+      "nbt": {
+       "Value": 0.120000005
+      }
+     }
+    ]
+   },
+   "src": "KineticsScenes.java:1221"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       0,
+       1,
+       1
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       1
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       1
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       1
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       1
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       1
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       1,
+       2,
+       1
+      ],
+      "nbt": {
+       "Speed": 8
+      }
+     },
+     {
+      "pos": [
+       5,
+       0,
+       2
+      ],
+      "nbt": {
+       "Speed": -8
+      }
+     },
+     {
+      "pos": [
+       1,
+       2,
+       2
+      ],
+      "nbt": {
+       "Speed": 8
+      }
+     },
+     {
+      "pos": [
+       1,
+       2,
+       3
+      ],
+      "nbt": {
+       "Speed": 8
+      }
+     }
+    ]
+   },
+   "src": "KineticsScenes.java:1221"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "SpeedGaugeBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       2,
+       3
+      ],
+      "nbt": {
+       "Value": 0
+      }
+     }
+    ]
+   },
+   "src": "KineticsScenes.java:1222"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       2,
+       3
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     }
+    ]
+   },
+   "src": "KineticsScenes.java:1222"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      1,
+      1
+     ],
+     "to": [
+      5,
+      1,
+      1
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "KineticsScenes.java:1223"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      1,
+      3
+     ],
+     "to": [
+      1,
+      2,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "KineticsScenes.java:1224"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "KineticsScenes.java:1225"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      1,
+      1
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "KineticsScenes.java:1227",
+   "out": "e1"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     1,
+     0,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "KineticsScenes.java:1228"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      1
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "KineticsScenes.java:1230",
+   "out": "e2"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     0,
+     -100,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "KineticsScenes.java:1231"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "KineticsScenes.java:1232"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      2,
+      1
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "KineticsScenes.java:1233"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "KineticsScenes.java:1234"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     1,
+     2,
+     1
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "KineticsScenes.java:1235"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     0,
+     100,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "KineticsScenes.java:1236"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     -100,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "KineticsScenes.java:1237"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "KineticsScenes.java:1238"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      2,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "KineticsScenes.java:1239"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "KineticsScenes.java:1240"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "SpeedGaugeBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       2,
+       3
+      ],
+      "nbt": {
+       "Value": 0.120000005
+      }
+     }
+    ]
+   },
+   "src": "KineticsScenes.java:1241"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       2,
+       3
+      ],
+      "nbt": {
+       "Speed": 8
+      }
+     }
+    ]
+   },
+   "src": "KineticsScenes.java:1241"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     1,
+     2,
+     3
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "KineticsScenes.java:1242"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 90,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     1.5,
+     2.5,
+     1
+    ],
+    "key": "text_1",
+    "text": "Rot. Speed Controllers relay rotation from their axis to a Large Cogwheel above them"
+   },
+   "src": "KineticsScenes.java:1244"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 100
+   },
+   "src": "KineticsScenes.java:1249"
+  },
+  {
+   "op": "overlay.highlightValueBox",
+   "args": {
+    "location": [
+     1.5,
+     1.6875,
+     1.0234375
+    ],
+    "expands": [
+     0.0859375,
+     0.0859375,
+     0
+    ],
+    "duration": 60
+   },
+   "src": "KineticsScenes.java:1252"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     1.5,
+     1.6875,
+     1
+    ],
+    "key": "text_2",
+    "text": "Using the value panel on its side, the conveyed speed can be configured"
+   },
+   "src": "KineticsScenes.java:1254"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "KineticsScenes.java:1259"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     1.5,
+     1.6875,
+     1
+    ],
+    "direction": "up",
+    "duration": 40,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb"
+   },
+   "src": "KineticsScenes.java:1261"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "KineticsScenes.java:1262"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "SpeedGaugeBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       2,
+       3
+      ],
+      "nbt": {
+       "Value": 0.4585714
+      }
+     }
+    ]
+   },
+   "src": "KineticsScenes.java:1263"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       2,
+       1
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       1,
+       2,
+       2
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       1,
+       2,
+       3
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     }
+    ]
+   },
+   "src": "KineticsScenes.java:1263"
+  },
+  {
+   "op": "effects.rotationIndicator",
+   "args": {
+    "pos": [
+     1,
+     2,
+     1
+    ],
+    "direction": false
+   },
+   "src": "KineticsScenes.java:1264"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 55
+   },
+   "src": "KineticsScenes.java:1265"
+  },
+  {
+   "op": "markAsFinished",
+   "args": {},
+   "src": "KineticsScenes.java:1266"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     1.5,
+     1.6875,
+     1
+    ],
+    "direction": "up",
+    "duration": 30,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb"
+   },
+   "src": "KineticsScenes.java:1268"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "KineticsScenes.java:1269"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "SpeedGaugeBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       2,
+       3
+      ],
+      "nbt": {
+       "Value": 0.8173077
+      }
+     }
+    ]
+   },
+   "src": "KineticsScenes.java:1270"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       2,
+       1
+      ],
+      "nbt": {
+       "Speed": 128
+      }
+     },
+     {
+      "pos": [
+       1,
+       2,
+       2
+      ],
+      "nbt": {
+       "Speed": 128
+      }
+     },
+     {
+      "pos": [
+       1,
+       2,
+       3
+      ],
+      "nbt": {
+       "Speed": 128
+      }
+     }
+    ]
+   },
+   "src": "KineticsScenes.java:1270"
+  },
+  {
+   "op": "effects.rotationIndicator",
+   "args": {
+    "pos": [
+     1,
+     2,
+     1
+    ],
+    "direction": false
+   },
+   "src": "KineticsScenes.java:1271"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 55
+   },
+   "src": "KineticsScenes.java:1272"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     1.5,
+     1.6875,
+     1
+    ],
+    "direction": "up",
+    "duration": 30,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb"
+   },
+   "src": "KineticsScenes.java:1274"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "KineticsScenes.java:1275"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "SpeedGaugeBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       2,
+       3
+      ],
+      "nbt": {
+       "Value": 0.096
+      }
+     }
+    ]
+   },
+   "src": "KineticsScenes.java:1276"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       2,
+       1
+      ],
+      "nbt": {
+       "Speed": -6.4
+      }
+     },
+     {
+      "pos": [
+       1,
+       2,
+       2
+      ],
+      "nbt": {
+       "Speed": -6.4
+      }
+     },
+     {
+      "pos": [
+       1,
+       2,
+       3
+      ],
+      "nbt": {
+       "Speed": -6.4
+      }
+     }
+    ]
+   },
+   "src": "KineticsScenes.java:1276"
+  },
+  {
+   "op": "effects.rotationIndicator",
+   "args": {
+    "pos": [
+     1,
+     2,
+     1
+    ],
+    "direction": false
+   },
+   "src": "KineticsScenes.java:1277"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 35
+   },
+   "src": "KineticsScenes.java:1278"
+  }
+ ]
+}

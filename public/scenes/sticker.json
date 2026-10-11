@@ -1,0 +1,668 @@
+{
+ "id": "create:sticker",
+ "schematic": "sticker",
+ "schematicNamespace": "create",
+ "title": "Attaching blocks using the Sticker",
+ "texts": {
+  "text_1": "Stickers are ideal for Redstone-controlled block attachment",
+  "text_2": "Upon receiving a signal, it will toggle its state",
+  "text_3": "If it is now moved in a contraption, the block will move with it",
+  "text_4": "Toggled once again, the block is no longer attached"
+ },
+ "tags": [
+  "create:contraption_assembly"
+ ],
+ "items": [
+  "create:sticker"
+ ],
+ "keyframes": [
+  31,
+  295
+ ],
+ "totalTicks": 405,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "RedstoneScenes.java:46"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      4,
+      0,
+      4
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "RedstoneScenes.java:47"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "RedstoneScenes.java:48"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        0,
+        1,
+        2
+       ],
+       "to": [
+        2,
+        1,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        2
+       ],
+       "to": [
+        1,
+        2,
+        2
+       ]
+      }
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "RedstoneScenes.java:56"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "RedstoneScenes.java:58"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      2,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "RedstoneScenes.java:59",
+   "out": "e1"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "RedstoneScenes.java:60"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      2,
+      1
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "RedstoneScenes.java:62",
+   "out": "e2"
+  },
+  {
+   "op": "world.configureCenterOfRotation",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "anchor": [
+     2.5,
+     2.5,
+     2.5
+    ]
+   },
+   "src": "RedstoneScenes.java:63"
+  },
+  {
+   "op": "world.configureCenterOfRotation",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "anchor": [
+     2.5,
+     2.5,
+     2.5
+    ]
+   },
+   "src": "RedstoneScenes.java:64"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_1",
+    "pointAt": [
+     2,
+     2.5,
+     2.5
+    ],
+    "text": "Stickers are ideal for Redstone-controlled block attachment"
+   },
+   "src": "RedstoneScenes.java:65"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "RedstoneScenes.java:70"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       0,
+       2,
+       2
+      ],
+      "state": {
+       "name": "minecraft:birch_button",
+       "props": {
+        "face": "floor",
+        "facing": "south",
+        "powered": "true"
+       }
+      }
+     },
+     {
+      "pos": [
+       1,
+       2,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "none",
+        "power": "15",
+        "south": "none",
+        "west": "side"
+       }
+      }
+     },
+     {
+      "pos": [
+       2,
+       2,
+       2
+      ],
+      "state": {
+       "name": "create:sticker",
+       "props": {
+        "extended": "false",
+        "facing": "north",
+        "powered": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:72"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       2,
+       2
+      ],
+      "state": {
+       "name": "create:sticker",
+       "props": {
+        "extended": "true",
+        "facing": "north",
+        "powered": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:73"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     0,
+     2,
+     2
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "RedstoneScenes.java:74"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "RedstoneScenes.java:77"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       0,
+       2,
+       2
+      ],
+      "state": {
+       "name": "minecraft:birch_button",
+       "props": {
+        "face": "floor",
+        "facing": "south",
+        "powered": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       1,
+       2,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "none",
+        "power": "0",
+        "south": "none",
+        "west": "side"
+       }
+      }
+     },
+     {
+      "pos": [
+       2,
+       2,
+       2
+      ],
+      "state": {
+       "name": "create:sticker",
+       "props": {
+        "extended": "true",
+        "facing": "north",
+        "powered": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:79"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "RedstoneScenes.java:80"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_2",
+    "pointAt": [
+     2,
+     2.5,
+     2.5
+    ],
+    "text": "Upon receiving a signal, it will toggle its state"
+   },
+   "src": "RedstoneScenes.java:82"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "RedstoneScenes.java:86"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bearing",
+    "pos": [
+     2,
+     1,
+     2
+    ],
+    "distance": 540,
+    "duration": 80
+   },
+   "src": "RedstoneScenes.java:88"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "rotation": [
+     0,
+     540,
+     0
+    ],
+    "duration": 80
+   },
+   "src": "RedstoneScenes.java:89"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "rotation": [
+     0,
+     540,
+     0
+    ],
+    "duration": 80
+   },
+   "src": "RedstoneScenes.java:90"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_3",
+    "pointAt": [
+     2.5,
+     3,
+     2.5
+    ],
+    "text": "If it is now moved in a contraption, the block will move with it"
+   },
+   "src": "RedstoneScenes.java:91"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "RedstoneScenes.java:95"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       0,
+       2,
+       2
+      ],
+      "state": {
+       "name": "minecraft:birch_button",
+       "props": {
+        "face": "floor",
+        "facing": "south",
+        "powered": "true"
+       }
+      }
+     },
+     {
+      "pos": [
+       1,
+       2,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "none",
+        "power": "15",
+        "south": "none",
+        "west": "side"
+       }
+      }
+     },
+     {
+      "pos": [
+       2,
+       2,
+       2
+      ],
+      "state": {
+       "name": "create:sticker",
+       "props": {
+        "extended": "true",
+        "facing": "north",
+        "powered": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:98"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       2,
+       2
+      ],
+      "state": {
+       "name": "create:sticker",
+       "props": {
+        "extended": "false",
+        "facing": "north",
+        "powered": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:99"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     0,
+     2,
+     2
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "RedstoneScenes.java:100"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "RedstoneScenes.java:103"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       0,
+       2,
+       2
+      ],
+      "state": {
+       "name": "minecraft:birch_button",
+       "props": {
+        "face": "floor",
+        "facing": "south",
+        "powered": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       1,
+       2,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "none",
+        "power": "0",
+        "south": "none",
+        "west": "side"
+       }
+      }
+     },
+     {
+      "pos": [
+       2,
+       2,
+       2
+      ],
+      "state": {
+       "name": "create:sticker",
+       "props": {
+        "extended": "false",
+        "facing": "north",
+        "powered": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:105"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "RedstoneScenes.java:106"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_4",
+    "pointAt": [
+     2,
+     2.5,
+     2.5
+    ],
+    "text": "Toggled once again, the block is no longer attached"
+   },
+   "src": "RedstoneScenes.java:108"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "RedstoneScenes.java:112"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bearing",
+    "pos": [
+     2,
+     1,
+     2
+    ],
+    "distance": 540,
+    "duration": 80
+   },
+   "src": "RedstoneScenes.java:114"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "rotation": [
+     0,
+     540,
+     0
+    ],
+    "duration": 80
+   },
+   "src": "RedstoneScenes.java:115"
+  }
+ ]
+}

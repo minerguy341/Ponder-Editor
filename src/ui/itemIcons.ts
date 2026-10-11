@@ -9,6 +9,7 @@
 
 import * as THREE from 'three';
 import { parseLoc, resources, type ResLoc } from '../assets/resources';
+import { textureBitmap } from './textureBitmap';
 import { ROOTS } from '../config';
 
 interface Transform { rotation: [number, number, number]; translation: [number, number, number]; scale: [number, number, number] }
@@ -276,7 +277,7 @@ function loadTextureCanvas(id: string): Promise<HTMLCanvasElement | null> {
   let p = bitmapCache.get(id);
   if (!p) {
     p = (async () => {
-      const bmp = await resources.textureBitmap(parseLoc(id));
+      const bmp = await textureBitmap(parseLoc(id));
       if (!bmp) return null;
       const size = bmp.width;
       const h = bmp.height >= size ? size : bmp.height; // animation strips: first frame
