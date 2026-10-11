@@ -7,7 +7,7 @@
 
 import * as THREE from 'three';
 import type { BlockInstance, BlockState, BlockVisual, Direction, VisualContext } from '../../../contract';
-import { BaseVisual, getPartial, markOwned, kineticAngleDeg, rotationOffset, getNumber, posKey } from '../common';
+import { BaseVisual, getPartial, kineticAngleDeg, rotationOffset, getNumber, posKey } from '../common';
 import { PARTIAL } from '../common/partialModels';
 import type { BlockRendererImpl } from '../../blockRenderer';
 import { beltShape, vectorForOffset } from '../items/beltMath';
@@ -19,6 +19,7 @@ import { retextureQuad } from '../../models';
 import { beltPartialId, beltSegmentMatrix, beltSprites, beltPulleyBase, beltPulleyDirection, beltRotationAxis, beltScroll, ScrollMesh, placeBeltItem, type ItemPlacement, type BeltSprites } from '../items/beltRender';
 import { createItemObjectSync, itemInfo, prepareItem } from '../items/itemObject';
 import { PoseStack } from '../items/pose';
+import { loadShadowMaterial, shadowGeometry, shadowMaterialReady } from '../items/shadow';
 import type { VisualModule } from '../registry';
 
 /** BeltModel (ANDESIDE_BELT_CASING): the casing model is textured with the brass casing; andesite casings retarget it. */
@@ -54,36 +55,12 @@ interface ItemEntry {
 }
 
 const SHADOW_SCALE = new THREE.Matrix4().makeScale(0.2, 1, 0.2);
-let shadowTexture: THREE.Texture | null = null;
-let shadowMaterial: THREE.MeshBasicMaterial | null = null;
-let shadowGeometry: THREE.BufferGeometry | null = null;
-
-/** Stand-in for minecraft:textures/misc/shadow.png (vanilla entity shadow: a soft radial alpha falloff). */
+/** the shared entity shadow (items/shadow.ts: vanilla shadow.png, loaded before the visual is built) */
 function sharedShadow(): { material: THREE.MeshBasicMaterial; geometry: THREE.BufferGeometry } {
-  if (!shadowMaterial) {
-    const n = 64;
-    const data = new Uint8Array(n * n * 4);
-    for (let y = 0; y < n; y++) {
-      for (let x = 0; x < n; x++) {
-        const dx = (x + 0.5) / n * 2 - 1, dy = (y + 0.5) / n * 2 - 1;
-        const d = Math.min(1, Math.sqrt(dx * dx + dy * dy));
-        const a = Math.max(0, 1 - d);
-        const i = (y * n + x) * 4;
-        data[i] = 255; data[i + 1] = 255; data[i + 2] = 255; data[i + 3] = Math.round(a * a * 255);
-      }
-    }
-    shadowTexture = new THREE.DataTexture(data, n, n, THREE.RGBAFormat);
-    shadowTexture.magFilter = THREE.LinearFilter;
-    shadowTexture.minFilter = THREE.LinearFilter;
-    shadowTexture.needsUpdate = true;
-    markOwned(shadowTexture);
-    shadowMaterial = new THREE.MeshBasicMaterial({ map: shadowTexture, transparent: true, depthWrite: false, color: 0xffffff, opacity: 0.375 });
-    markOwned(shadowMaterial);
-    shadowGeometry = new THREE.PlaneGeometry(2, 2);
-    shadowGeometry.rotateX(-Math.PI / 2);
-    markOwned(shadowGeometry);
-  }
-  return { material: shadowMaterial, geometry: shadowGeometry! };
+  const material = shadowMaterialReady();
+  const geometry = shadowGeometry();
+  if (!material || !geometry) throw new Error('shadow material not loaded');
+  return { material, geometry };
 }
 
 /** Same retexture as the processor, applied to an already built casing object (uv inside the brass casing sprite). */
@@ -149,6 +126,7 @@ class BeltBlockVisual extends BaseVisual {
     this.isController = this.chain ? posKey(this.chain.controller) === posKey(this.block.pos) : false;
 
     await this.renderer.ensureTextures(BELT_SPRITE_IDS);
+    await loadShadowMaterial();
     this.segment = beltSegmentMatrix(shape, new THREE.Matrix4());
 
     for (const bottom of diagonal ? [true] : [true, false]) {
