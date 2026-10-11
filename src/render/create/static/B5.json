@@ -1,0 +1,8 @@
+{
+  "create:rose_quartz_lamp": "RoseQuartzLampBlock has no BlockEntity and no renderer (grep RoseQuartzLampBlock.java: IWrenchable only); the lit state is its blockstate model",
+  "create:redstone_contact": "RedstoneContactBlock has no BlockEntity and no renderer; its states are plain blockstate models (ContactMovementBehaviour is entity-side only)",
+  "create:powered_latch": "PoweredLatchBlock has no BlockEntity and no renderer; the latch states are plain blockstate models",
+  "create:powered_toggle_latch": "ToggleLatchBlock has no BlockEntity and no renderer; the toggle latch states are plain blockstate models",
+  "create:stock_ticker": "StockTickerBlockEntity is registered in AllBlockEntityTypes with validBlocks only (no renderer, no visual): the static blockstate model is the whole look",
+  "create:redstone_requester": "RedstoneRequesterBlockEntity is registered in AllBlockEntityTypes with validBlocks only (no renderer, no visual): the static blockstate model is the whole look"
+}
