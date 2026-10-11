@@ -25,6 +25,10 @@ export function grid(rows: SheetCell[][], gap = 2): Sheet {
 const bogeyNbt = (): Record<string, unknown> => ({ BogeyData: { BogeyStyle: 'create:standard' } });
 
 export const SHEETS: Record<string, () => Sheet> = {
+  flap: () => grid([
+    [{ state: st('create:display_board', { waterlogged: 'false', facing: 'north', up: 'true', down: 'false' }), nbt: { Speed: 32, NeedsSpeedUpdate: 1, XSize: 1, YSize: 1 } },
+      { state: st('create:display_board', { waterlogged: 'false', facing: 'north', up: 'false', down: 'true' }), nbt: { Speed: -32, NeedsSpeedUpdate: 1, XSize: 1, YSize: 1 } }],
+  ], 3),
   nixie: () => grid([
     [{ state: st('create:nixie_tube', { waterlogged: 'false', double_face: 'floor', facing: 'west' }), nbt: { RedstoneStrength: 7 } },
       { state: st('create:nixie_tube', { waterlogged: 'false', double_face: 'wall', facing: 'north' }), nbt: { RedstoneStrength: 12 } },
