@@ -1,3 +1,6 @@
 node_modules
 dist
 *.log
+tools/.cache
+tools/verify/out
+public/scenes/.tmp
