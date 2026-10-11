@@ -1,0 +1,1692 @@
+{
+ "id": "create:train_signal/placement",
+ "schematic": "train_signal/placement",
+ "schematicNamespace": "create",
+ "title": "Placing Train Signals",
+ "texts": {
+  "text_1": "Select a Train Track then place the Signal nearby",
+  "text_2": "Signals control the flow of Trains not driven by players",
+  "text_3": "Scheduled Trains will never cross signals in the opposite direction",
+  "text_4": "...unless a second signal is added facing the opposite way.",
+  "text_5": "Nixie tubes can be attached to make a signal's lights more visible"
+ },
+ "tags": [],
+ "items": [
+  "create:track_signal"
+ ],
+ "keyframes": [
+  146,
+  236,
+  448,
+  680
+ ],
+ "totalTicks": 744,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 1,
+    "zOffset": 0,
+    "size": 12
+   },
+   "src": "TrainSignalScenes.java:28"
+  },
+  {
+   "op": "scaleSceneView",
+   "args": {
+    "factor": 0.6499999761581421
+   },
+   "src": "TrainSignalScenes.java:29"
+  },
+  {
+   "op": "setSceneOffsetY",
+   "args": {
+    "yOffset": -1
+   },
+   "src": "TrainSignalScenes.java:30"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      0,
+      0
+     ],
+     "to": [
+      12,
+      0,
+      11
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "TrainSignalScenes.java:31"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      13,
+      1,
+      6
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainSignalScenes.java:34"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "TrainSignalScenes.java:35"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      12,
+      1,
+      6
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainSignalScenes.java:34"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "TrainSignalScenes.java:35"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      11,
+      1,
+      6
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainSignalScenes.java:34"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "TrainSignalScenes.java:35"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      10,
+      1,
+      6
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainSignalScenes.java:34"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "TrainSignalScenes.java:35"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      9,
+      1,
+      6
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainSignalScenes.java:34"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "TrainSignalScenes.java:35"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      8,
+      1,
+      6
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainSignalScenes.java:34"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "TrainSignalScenes.java:35"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      7,
+      1,
+      6
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainSignalScenes.java:34"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "TrainSignalScenes.java:35"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      6,
+      1,
+      6
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainSignalScenes.java:34"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "TrainSignalScenes.java:35"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      5,
+      1,
+      6
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainSignalScenes.java:34"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "TrainSignalScenes.java:35"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      1,
+      6
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainSignalScenes.java:34"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "TrainSignalScenes.java:35"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      6
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainSignalScenes.java:34"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "TrainSignalScenes.java:35"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      6
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainSignalScenes.java:34"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "TrainSignalScenes.java:35"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      6
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainSignalScenes.java:34"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "TrainSignalScenes.java:35"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      1,
+      6
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainSignalScenes.java:34"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "TrainSignalScenes.java:35"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "TrainSignalScenes.java:38"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       3,
+       6
+      ],
+      "state": {
+       "name": "create:controls",
+       "props": {
+        "facing": "west",
+        "open": "false",
+        "virtual": "true",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "TrainSignalScenes.java:52"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     8.5,
+     1.1875,
+     6.5
+    ],
+    "direction": "down",
+    "duration": 40,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:track_signal",
+     "count": 1
+    }
+   },
+   "src": "TrainSignalScenes.java:60"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 6
+   },
+   "src": "TrainSignalScenes.java:62"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "green",
+    "slot": "obj:1",
+    "box": {
+     "min": [
+      8.5,
+      1.125,
+      6.5
+     ],
+     "max": [
+      8.5,
+      1.125,
+      6.5
+     ]
+    },
+    "duration": 1
+   },
+   "src": "TrainSignalScenes.java:63"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "green",
+    "slot": "obj:1",
+    "box": {
+     "min": [
+      8.050000011920929,
+      1.0625,
+      6.050000011920929
+     ],
+     "max": [
+      8.949999988079071,
+      1.1875,
+      6.949999988079071
+     ]
+    },
+    "duration": 100
+   },
+   "src": "TrainSignalScenes.java:64"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "TrainSignalScenes.java:66"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "green",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     8.5,
+     1.1875,
+     6.5
+    ],
+    "key": "text_1",
+    "text": "Select a Train Track then place the Signal nearby"
+   },
+   "src": "TrainSignalScenes.java:68"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "TrainSignalScenes.java:73"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      7,
+      1,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainSignalScenes.java:75",
+   "out": "e1"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     1,
+     0,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "TrainSignalScenes.java:76"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "TrainSignalScenes.java:77"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "green",
+    "slot": "obj:1",
+    "box": {
+     "min": [
+      8,
+      1,
+      3
+     ],
+     "max": [
+      9,
+      2,
+      4
+     ]
+    },
+    "duration": 20
+   },
+   "src": "TrainSignalScenes.java:78"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 25
+   },
+   "src": "TrainSignalScenes.java:79"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     8,
+     1.5,
+     3.5
+    ],
+    "key": "text_2",
+    "text": "Signals control the flow of Trains not driven by players"
+   },
+   "src": "TrainSignalScenes.java:81"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "TrainSignalScenes.java:86"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      2,
+      5
+     ],
+     "to": [
+      5,
+      3,
+      7
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainSignalScenes.java:88",
+   "out": "e2"
+  },
+  {
+   "op": "special.createBirb",
+   "args": {
+    "location": [
+     2.5,
+     3.5,
+     6.5
+    ],
+    "pose": {
+     "type": "face_poi"
+    }
+   },
+   "src": "TrainSignalScenes.java:90",
+   "out": "e3"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "TrainSignalScenes.java:92"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      11,
+      1,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainSignalScenes.java:93"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "TrainSignalScenes.java:95"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "red",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     8.05,
+     1.1875,
+     6.5
+    ],
+    "key": "text_3",
+    "text": "Scheduled Trains will never cross signals in the opposite direction"
+   },
+   "src": "TrainSignalScenes.java:97"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "TrainSignalScenes.java:103"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     4,
+     6.5
+    ],
+    "direction": "down",
+    "duration": 40,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "create:schedule",
+     "count": 1
+    }
+   },
+   "src": "TrainSignalScenes.java:105"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 6
+   },
+   "src": "TrainSignalScenes.java:106"
+  },
+  {
+   "op": "special.movePointOfInterest",
+   "args": {
+    "location": [
+     19.5,
+     4.5,
+     6.5
+    ]
+   },
+   "src": "TrainSignalScenes.java:107"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "output",
+    "slot": "obj:2",
+    "box": {
+     "min": [
+      11.5,
+      1.1875,
+      6.5
+     ],
+     "max": [
+      11.5,
+      1.1875,
+      6.5
+     ]
+    },
+    "duration": 1
+   },
+   "src": "TrainSignalScenes.java:109"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "output",
+    "slot": "obj:2",
+    "box": {
+     "min": [
+      11.050000011920929,
+      1.1875,
+      6.050000011920929
+     ],
+     "max": [
+      11.949999988079071,
+      1.1875,
+      6.949999988079071
+     ]
+    },
+    "duration": 40
+   },
+   "src": "TrainSignalScenes.java:110"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "TrainSignalScenes.java:111"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "output",
+    "slot": "obj:3",
+    "box": {
+     "min": [
+      4.050000000000001,
+      1.1875,
+      6.5
+     ],
+     "max": [
+      4.050000000000001,
+      1.1875,
+      6.5
+     ]
+    },
+    "duration": 1
+   },
+   "src": "TrainSignalScenes.java:114"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "output",
+    "slot": "obj:3",
+    "box": {
+     "min": [
+      4.050000000000001,
+      1.1875,
+      6.5
+     ],
+     "max": [
+      8.05,
+      1.1875,
+      6.5
+     ]
+    },
+    "duration": 20
+   },
+   "src": "TrainSignalScenes.java:115"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "TrainSignalScenes.java:116"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "red",
+    "slot": "obj:1",
+    "box": {
+     "min": [
+      8.5,
+      1.1875,
+      6.5
+     ],
+     "max": [
+      8.5,
+      1.1875,
+      6.5
+     ]
+    },
+    "duration": 1
+   },
+   "src": "TrainSignalScenes.java:118"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "red",
+    "slot": "obj:1",
+    "box": {
+     "min": [
+      8.050000011920929,
+      1.1875,
+      6.050000011920929
+     ],
+     "max": [
+      8.949999988079071,
+      1.1875,
+      6.949999988079071
+     ]
+    },
+    "duration": 40
+   },
+   "src": "TrainSignalScenes.java:119"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "red",
+    "slot": "obj:2",
+    "box": {
+     "min": [
+      11.050000011920929,
+      1.1875,
+      6.050000011920929
+     ],
+     "max": [
+      11.949999988079071,
+      1.1875,
+      6.949999988079071
+     ]
+    },
+    "duration": 45
+   },
+   "src": "TrainSignalScenes.java:120"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "red",
+    "slot": "obj:3",
+    "box": {
+     "min": [
+      4.050000000000001,
+      1.1875,
+      6.5
+     ],
+     "max": [
+      8.05,
+      1.1875,
+      6.5
+     ]
+    },
+    "duration": 45
+   },
+   "src": "TrainSignalScenes.java:121"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "TrainSignalScenes.java:122"
+  },
+  {
+   "op": "special.movePointOfInterest",
+   "args": {
+    "location": [
+     5.5,
+     1.5,
+     4.5
+    ]
+   },
+   "src": "TrainSignalScenes.java:123"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "TrainSignalScenes.java:124"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     8.5,
+     1.1875,
+     6.5
+    ],
+    "direction": "down",
+    "duration": 40,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:track_signal",
+     "count": 1
+    }
+   },
+   "src": "TrainSignalScenes.java:126"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 6
+   },
+   "src": "TrainSignalScenes.java:128"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "green",
+    "slot": "obj:1",
+    "box": {
+     "min": [
+      8.5,
+      1.125,
+      6.5
+     ],
+     "max": [
+      8.5,
+      1.125,
+      6.5
+     ]
+    },
+    "duration": 1
+   },
+   "src": "TrainSignalScenes.java:129"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "green",
+    "slot": "obj:1",
+    "box": {
+     "min": [
+      8.050000011920929,
+      1.0625,
+      6.050000011920929
+     ],
+     "max": [
+      8.949999988079071,
+      1.1875,
+      6.949999988079071
+     ]
+    },
+    "duration": 70
+   },
+   "src": "TrainSignalScenes.java:130"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "TrainSignalScenes.java:132"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      8,
+      1,
+      9
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainSignalScenes.java:133"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "TrainSignalScenes.java:134"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     -1000,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "TrainSignalScenes.java:135"
+  },
+  {
+   "op": "world.showIndependentSectionImmediately",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      8,
+      1,
+      3
+     ]
+    }
+   },
+   "src": "TrainSignalScenes.java:136",
+   "out": "e4"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "green",
+    "slot": "obj:1",
+    "box": {
+     "min": [
+      8,
+      1,
+      9
+     ],
+     "max": [
+      9,
+      2,
+      10
+     ]
+    },
+    "duration": 40
+   },
+   "src": "TrainSignalScenes.java:137"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     8,
+     1.5,
+     9.5
+    ],
+    "key": "text_4",
+    "text": "...unless a second signal is added facing the opposite way."
+   },
+   "src": "TrainSignalScenes.java:139"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "TrainSignalScenes.java:144"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "direction": null
+   },
+   "src": "TrainSignalScenes.java:145"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     4,
+     6.5
+    ],
+    "direction": "down",
+    "duration": 40,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "create:schedule",
+     "count": 1
+    }
+   },
+   "src": "TrainSignalScenes.java:147"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 6
+   },
+   "src": "TrainSignalScenes.java:148"
+  },
+  {
+   "op": "special.movePointOfInterest",
+   "args": {
+    "location": [
+     19.5,
+     4.5,
+     6.5
+    ]
+   },
+   "src": "TrainSignalScenes.java:149"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "output",
+    "slot": "obj:2",
+    "box": {
+     "min": [
+      11.5,
+      1.1875,
+      6.5
+     ],
+     "max": [
+      11.5,
+      1.1875,
+      6.5
+     ]
+    },
+    "duration": 1
+   },
+   "src": "TrainSignalScenes.java:151"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "output",
+    "slot": "obj:2",
+    "box": {
+     "min": [
+      11.050000011920929,
+      1.1875,
+      6.050000011920929
+     ],
+     "max": [
+      11.949999988079071,
+      1.1875,
+      6.949999988079071
+     ]
+    },
+    "duration": 40
+   },
+   "src": "TrainSignalScenes.java:152"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "TrainSignalScenes.java:153"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "output",
+    "slot": "obj:3",
+    "box": {
+     "min": [
+      4.050000000000001,
+      1.1875,
+      6.5
+     ],
+     "max": [
+      4.050000000000001,
+      1.1875,
+      6.5
+     ]
+    },
+    "duration": 1
+   },
+   "src": "TrainSignalScenes.java:155"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "output",
+    "slot": "obj:3",
+    "box": {
+     "min": [
+      4.050000000000001,
+      1.1875,
+      6.5
+     ],
+     "max": [
+      8.05,
+      1.1875,
+      6.5
+     ]
+    },
+    "duration": 40
+   },
+   "src": "TrainSignalScenes.java:156"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "TrainSignalScenes.java:157"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "output",
+    "slot": "obj:1",
+    "box": {
+     "min": [
+      8.5,
+      1.1875,
+      6.5
+     ],
+     "max": [
+      8.5,
+      1.1875,
+      6.5
+     ]
+    },
+    "duration": 1
+   },
+   "src": "TrainSignalScenes.java:159"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "output",
+    "slot": "obj:1",
+    "box": {
+     "min": [
+      8.050000011920929,
+      1.1875,
+      6.050000011920929
+     ],
+     "max": [
+      8.949999988079071,
+      1.1875,
+      6.949999988079071
+     ]
+    },
+    "duration": 30
+   },
+   "src": "TrainSignalScenes.java:160"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "TrainSignalScenes.java:161"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "output",
+    "slot": "obj:4",
+    "box": {
+     "min": [
+      8.95,
+      1.1875,
+      6.5
+     ],
+     "max": [
+      8.95,
+      1.1875,
+      6.5
+     ]
+    },
+    "duration": 1
+   },
+   "src": "TrainSignalScenes.java:164"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "output",
+    "slot": "obj:4",
+    "box": {
+     "min": [
+      8.95,
+      1.1875,
+      6.5
+     ],
+     "max": [
+      10.95,
+      1.1875,
+      6.5
+     ]
+    },
+    "duration": 20
+   },
+   "src": "TrainSignalScenes.java:165"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "TrainSignalScenes.java:166"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "green",
+    "slot": "obj:4",
+    "box": {
+     "min": [
+      8.95,
+      1.1875,
+      6.5
+     ],
+     "max": [
+      10.95,
+      1.1875,
+      6.5
+     ]
+    },
+    "duration": 25
+   },
+   "src": "TrainSignalScenes.java:168"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "green",
+    "slot": "obj:2",
+    "box": {
+     "min": [
+      11.050000011920929,
+      1.1875,
+      6.050000011920929
+     ],
+     "max": [
+      11.949999988079071,
+      1.1875,
+      6.949999988079071
+     ]
+    },
+    "duration": 25
+   },
+   "src": "TrainSignalScenes.java:169"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "green",
+    "slot": "obj:3",
+    "box": {
+     "min": [
+      4.050000000000001,
+      1.1875,
+      6.5
+     ],
+     "max": [
+      8.05,
+      1.1875,
+      6.5
+     ]
+    },
+    "duration": 25
+   },
+   "src": "TrainSignalScenes.java:170"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "green",
+    "slot": "obj:1",
+    "box": {
+     "min": [
+      8.050000011920929,
+      1.1875,
+      6.050000011920929
+     ],
+     "max": [
+      8.949999988079071,
+      1.1875,
+      6.949999988079071
+     ]
+    },
+    "duration": 25
+   },
+   "src": "TrainSignalScenes.java:171"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "TrainSignalScenes.java:172"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     7,
+     0,
+     0
+    ],
+    "duration": 25
+   },
+   "src": "TrainSignalScenes.java:174"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bogey",
+    "pos": [
+     3,
+     2,
+     6
+    ],
+    "distance": -7,
+    "duration": 26
+   },
+   "src": "TrainSignalScenes.java:175"
+  },
+  {
+   "op": "special.moveParrot",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "offset": [
+     7,
+     0,
+     0
+    ],
+    "duration": 25
+   },
+   "src": "TrainSignalScenes.java:176"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 25
+   },
+   "src": "TrainSignalScenes.java:177"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "StationBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       11,
+       1,
+       3
+      ],
+      "nbt": {
+       "ForceFlag": true
+      }
+     }
+    ]
+   },
+   "src": "TrainSignalScenes.java:179"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "SignalBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       8,
+       1,
+       9
+      ],
+      "nbt": {
+       "State": "RED"
+      }
+     }
+    ]
+   },
+   "src": "TrainSignalScenes.java:180"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "SignalBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       9,
+       4,
+       9
+      ],
+      "nbt": {
+       "State": "RED"
+      }
+     }
+    ]
+   },
+   "src": "TrainSignalScenes.java:181"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 25
+   },
+   "src": "TrainSignalScenes.java:182"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      9,
+      1,
+      9
+     ],
+     "to": [
+      9,
+      4,
+      9
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainSignalScenes.java:184"
+  },
+  {
+   "op": "rotateCameraY",
+   "args": {
+    "degrees": -90
+   },
+   "src": "TrainSignalScenes.java:185"
+  },
+  {
+   "op": "special.movePointOfInterest",
+   "args": {
+    "location": [
+     8.5,
+     2.5,
+     9.5
+    ]
+   },
+   "src": "TrainSignalScenes.java:186"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "TrainSignalScenes.java:187"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      8,
+      2,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainSignalScenes.java:188"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "TrainSignalScenes.java:189"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      8,
+      2,
+      9
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainSignalScenes.java:190"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "TrainSignalScenes.java:191"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      9,
+      4,
+      8
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "TrainSignalScenes.java:192"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "TrainSignalScenes.java:193"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 100,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     8.5,
+     2.5,
+     10
+    ],
+    "key": "text_5",
+    "text": "Nixie tubes can be attached to make a signal's lights more visible"
+   },
+   "src": "TrainSignalScenes.java:195"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "TrainSignalScenes.java:200"
+  }
+ ]
+}

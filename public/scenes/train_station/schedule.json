@@ -1,0 +1,1860 @@
+{
+ "id": "create:train_station/schedule",
+ "schematic": "train_station/schedule",
+ "schematicNamespace": "create",
+ "title": "Stations & Scheduling",
+ "texts": {
+  "text_1": "Schedules can be used to provide drivers with a destination",
+  "text_2": "Comparators will receive a signal whenever a Train is present",
+  "text_3": "Mind that a Station can only be approached from the indicated direction",
+  "text_4": "Stations can also be used to assign new Schedules automatically",
+  "text_5": "The Schedule placed on a station will automatically copy itself to present trains",
+  "text_6": "As opposed to manual scheduling, drivers will not take the item with them"
+ },
+ "tags": [],
+ "items": [
+  "create:track_station"
+ ],
+ "keyframes": [
+  44,
+  215,
+  349,
+  538,
+  693
+ ],
+ "totalTicks": 872,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 1,
+    "zOffset": 0,
+    "size": 12
+   },
+   "src": "TrainStationScenes.java:335"
+  },
+  {
+   "op": "scaleSceneView",
+   "args": {
+    "factor": 0.6499999761581421
+   },
+   "src": "TrainStationScenes.java:336"
+  },
+  {
+   "op": "setSceneOffsetY",
+   "args": {
+    "yOffset": -1
+   },
+   "src": "TrainStationScenes.java:337"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      0,
+      0
+     ],
+     "to": [
+      12,
+      0,
+      11
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "TrainStationScenes.java:338"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      13,
+      1,
+      6
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainStationScenes.java:341"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "TrainStationScenes.java:342"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      12,
+      1,
+      6
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainStationScenes.java:341"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "TrainStationScenes.java:342"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      11,
+      1,
+      6
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainStationScenes.java:341"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "TrainStationScenes.java:342"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      10,
+      1,
+      6
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainStationScenes.java:341"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "TrainStationScenes.java:342"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      9,
+      1,
+      6
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainStationScenes.java:341"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "TrainStationScenes.java:342"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      8,
+      1,
+      6
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainStationScenes.java:341"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "TrainStationScenes.java:342"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      7,
+      1,
+      6
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainStationScenes.java:341"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "TrainStationScenes.java:342"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      6,
+      1,
+      6
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainStationScenes.java:341"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "TrainStationScenes.java:342"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      5,
+      1,
+      6
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainStationScenes.java:341"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "TrainStationScenes.java:342"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      1,
+      6
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainStationScenes.java:341"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "TrainStationScenes.java:342"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      6
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainStationScenes.java:341"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "TrainStationScenes.java:342"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      6
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainStationScenes.java:341"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "TrainStationScenes.java:342"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      6
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainStationScenes.java:341"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "TrainStationScenes.java:342"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      1,
+      6
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainStationScenes.java:341"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "TrainStationScenes.java:342"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       7,
+       3,
+       6
+      ],
+      "state": {
+       "name": "create:controls",
+       "props": {
+        "facing": "west",
+        "open": "false",
+        "virtual": "true",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "TrainStationScenes.java:345"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "TrainStationScenes.java:347"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      8,
+      1,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainStationScenes.java:356"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "TrainStationScenes.java:357"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      5,
+      2,
+      5
+     ],
+     "to": [
+      9,
+      3,
+      7
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainStationScenes.java:359",
+   "out": "e1"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     -4,
+     0,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "TrainStationScenes.java:360"
+  },
+  {
+   "op": "special.createBirb",
+   "args": {
+    "location": [
+     2.5,
+     3.5,
+     6.5
+    ],
+    "pose": {
+     "type": "face_poi"
+    }
+   },
+   "src": "TrainStationScenes.java:362",
+   "out": "e2"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "TrainStationScenes.java:363"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 90,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     2.5,
+     3.5,
+     6.5
+    ],
+    "key": "text_1",
+    "text": "Schedules can be used to provide drivers with a destination"
+   },
+   "src": "TrainStationScenes.java:365"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "TrainStationScenes.java:370"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     4,
+     6.5
+    ],
+    "direction": "down",
+    "duration": 40,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "create:schedule",
+     "count": 1
+    }
+   },
+   "src": "TrainStationScenes.java:371"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 6
+   },
+   "src": "TrainStationScenes.java:372"
+  },
+  {
+   "op": "special.movePointOfInterest",
+   "args": {
+    "location": [
+     9.5,
+     4.5,
+     6.5
+    ]
+   },
+   "src": "TrainStationScenes.java:373"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "output",
+    "slot": "obj:1",
+    "box": {
+     "min": [
+      8.5,
+      1.1875,
+      6.5
+     ],
+     "max": [
+      8.5,
+      1.1875,
+      6.5
+     ]
+    },
+    "duration": 1
+   },
+   "src": "TrainStationScenes.java:378"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "output",
+    "slot": "obj:1",
+    "box": {
+     "min": [
+      8.050000011920929,
+      1.1875,
+      6.050000011920929
+     ],
+     "max": [
+      8.949999988079071,
+      1.1875,
+      6.949999988079071
+     ]
+    },
+    "duration": 40
+   },
+   "src": "TrainStationScenes.java:379"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "TrainStationScenes.java:380"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "output",
+    "slot": "obj:2",
+    "box": {
+     "min": [
+      4.050000000000001,
+      1.1875,
+      6.5
+     ],
+     "max": [
+      4.050000000000001,
+      1.1875,
+      6.5
+     ]
+    },
+    "duration": 1
+   },
+   "src": "TrainStationScenes.java:383"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "output",
+    "slot": "obj:2",
+    "box": {
+     "min": [
+      4.050000000000001,
+      1.1875,
+      6.5
+     ],
+     "max": [
+      8.05,
+      1.1875,
+      6.5
+     ]
+    },
+    "duration": 20
+   },
+   "src": "TrainStationScenes.java:384"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "TrainStationScenes.java:385"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "green",
+    "slot": "obj:1",
+    "box": {
+     "min": [
+      8.050000011920929,
+      1.1875,
+      6.050000011920929
+     ],
+     "max": [
+      8.949999988079071,
+      1.1875,
+      6.949999988079071
+     ]
+    },
+    "duration": 25
+   },
+   "src": "TrainStationScenes.java:387"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "green",
+    "slot": "obj:2",
+    "box": {
+     "min": [
+      4.050000000000001,
+      1.1875,
+      6.5
+     ],
+     "max": [
+      8.05,
+      1.1875,
+      6.5
+     ]
+    },
+    "duration": 25
+   },
+   "src": "TrainStationScenes.java:388"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "TrainStationScenes.java:389"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      8,
+      1,
+      1
+     ],
+     "to": [
+      8,
+      1,
+      2
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "TrainStationScenes.java:391"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     4,
+     0,
+     0
+    ],
+    "duration": 20
+   },
+   "src": "TrainStationScenes.java:393"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bogey",
+    "pos": [
+     7,
+     2,
+     6
+    ],
+    "distance": -4,
+    "duration": 21
+   },
+   "src": "TrainStationScenes.java:394"
+  },
+  {
+   "op": "special.moveParrot",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     4,
+     0,
+     0
+    ],
+    "duration": 20
+   },
+   "src": "TrainStationScenes.java:395"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "TrainStationScenes.java:396"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "StationBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       8,
+       1,
+       3
+      ],
+      "nbt": {
+       "ForceFlag": true
+      }
+     }
+    ]
+   },
+   "src": "TrainStationScenes.java:398"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       8,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "15",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     },
+     {
+      "pos": [
+       8,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:comparator",
+       "props": {
+        "facing": "south",
+        "mode": "compare",
+        "powered": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "TrainStationScenes.java:399"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     8,
+     1,
+     3
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "TrainStationScenes.java:400"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 25
+   },
+   "src": "TrainStationScenes.java:401"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     8.5,
+     1.125,
+     2.5
+    ],
+    "key": "text_2",
+    "text": "Comparators will receive a signal whenever a Train is present"
+   },
+   "src": "TrainStationScenes.java:402"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "TrainStationScenes.java:408"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      8,
+      1,
+      1
+     ],
+     "to": [
+      8,
+      1,
+      2
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "TrainStationScenes.java:410"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "StationBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       8,
+       1,
+       3
+      ],
+      "nbt": {
+       "ForceFlag": false
+      }
+     }
+    ]
+   },
+   "src": "TrainStationScenes.java:411"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     1,
+     0
+    ],
+    "duration": 5
+   },
+   "src": "TrainStationScenes.java:412"
+  },
+  {
+   "op": "special.moveParrot",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     0,
+     2,
+     0
+    ],
+    "duration": 5
+   },
+   "src": "TrainStationScenes.java:413"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "TrainStationScenes.java:414"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     4,
+     0,
+     0
+    ],
+    "duration": 10
+   },
+   "src": "TrainStationScenes.java:415"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "rotation": [
+     0,
+     180,
+     0
+    ],
+    "duration": 10
+   },
+   "src": "TrainStationScenes.java:416"
+  },
+  {
+   "op": "special.moveParrot",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     6,
+     0,
+     0
+    ],
+    "duration": 10
+   },
+   "src": "TrainStationScenes.java:417"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "TrainStationScenes.java:418"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     -1,
+     0
+    ],
+    "duration": 5
+   },
+   "src": "TrainStationScenes.java:419"
+  },
+  {
+   "op": "special.moveParrot",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     0,
+     -2,
+     0
+    ],
+    "duration": 5
+   },
+   "src": "TrainStationScenes.java:420"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 25
+   },
+   "src": "TrainStationScenes.java:421"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 90,
+    "color": "red",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     8.05,
+     1.1875,
+     6.5
+    ],
+    "key": "text_3",
+    "text": "Mind that a Station can only be approached from the indicated direction"
+   },
+   "src": "TrainStationScenes.java:424"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "TrainStationScenes.java:430"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     12.5,
+     4,
+     6.5
+    ],
+    "direction": "down",
+    "duration": 40,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "create:schedule",
+     "count": 1
+    }
+   },
+   "src": "TrainStationScenes.java:431"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 6
+   },
+   "src": "TrainStationScenes.java:432"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "output",
+    "slot": "obj:1",
+    "box": {
+     "min": [
+      8.5,
+      1.1875,
+      6.5
+     ],
+     "max": [
+      8.5,
+      1.1875,
+      6.5
+     ]
+    },
+    "duration": 1
+   },
+   "src": "TrainStationScenes.java:434"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "output",
+    "slot": "obj:1",
+    "box": {
+     "min": [
+      8.050000011920929,
+      1.1875,
+      6.050000011920929
+     ],
+     "max": [
+      8.949999988079071,
+      1.1875,
+      6.949999988079071
+     ]
+    },
+    "duration": 40
+   },
+   "src": "TrainStationScenes.java:435"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "TrainStationScenes.java:436"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "output",
+    "slot": "obj:3",
+    "box": {
+     "min": [
+      12.95,
+      1.1875,
+      6.5
+     ],
+     "max": [
+      12.95,
+      1.1875,
+      6.5
+     ]
+    },
+    "duration": 1
+   },
+   "src": "TrainStationScenes.java:439"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "output",
+    "slot": "obj:3",
+    "box": {
+     "min": [
+      8.95,
+      1.1875,
+      6.5
+     ],
+     "max": [
+      12.95,
+      1.1875,
+      6.5
+     ]
+    },
+    "duration": 20
+   },
+   "src": "TrainStationScenes.java:440"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "TrainStationScenes.java:441"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "red",
+    "slot": "obj:1",
+    "box": {
+     "min": [
+      8.050000011920929,
+      1.1875,
+      6.050000011920929
+     ],
+     "max": [
+      8.949999988079071,
+      1.1875,
+      6.949999988079071
+     ]
+    },
+    "duration": 45
+   },
+   "src": "TrainStationScenes.java:443"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "red",
+    "slot": "obj:3",
+    "box": {
+     "min": [
+      8.95,
+      1.1875,
+      6.5
+     ],
+     "max": [
+      12.95,
+      1.1875,
+      6.5
+     ]
+    },
+    "duration": 45
+   },
+   "src": "TrainStationScenes.java:444"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "TrainStationScenes.java:445"
+  },
+  {
+   "op": "special.movePointOfInterest",
+   "args": {
+    "location": [
+     11.5,
+     2.5,
+     5.5
+    ]
+   },
+   "src": "TrainStationScenes.java:447"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 25
+   },
+   "src": "TrainStationScenes.java:448"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "direction": "east"
+   },
+   "src": "TrainStationScenes.java:450"
+  },
+  {
+   "op": "special.hideElement",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "direction": "east"
+   },
+   "src": "TrainStationScenes.java:451"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "TrainStationScenes.java:452"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       9,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": 48
+      }
+     },
+     {
+      "pos": [
+       10,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": 48
+      }
+     },
+     {
+      "pos": [
+       11,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": 48
+      }
+     },
+     {
+      "pos": [
+       12,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": 48
+      }
+     },
+     {
+      "pos": [
+       13,
+       0,
+       4
+      ],
+      "nbt": {
+       "Speed": -24
+      }
+     },
+     {
+      "pos": [
+       12,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 48
+      }
+     }
+    ]
+   },
+   "src": "TrainStationScenes.java:454"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      13,
+      0,
+      4
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "TrainStationScenes.java:456"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      12,
+      1,
+      4
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainStationScenes.java:457"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "TrainStationScenes.java:458"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      9,
+      1,
+      3
+     ],
+     "to": [
+      12,
+      1,
+      3
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "TrainStationScenes.java:459"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "TrainStationScenes.java:460"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     8,
+     2,
+     3.5
+    ],
+    "key": "text_4",
+    "text": "Stations can also be used to assign new Schedules automatically"
+   },
+   "src": "TrainStationScenes.java:462"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "TrainStationScenes.java:468"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      5,
+      2,
+      5
+     ],
+     "to": [
+      9,
+      3,
+      7
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainStationScenes.java:470",
+   "out": "e3"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "offset": [
+     -4,
+     0,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "TrainStationScenes.java:471"
+  },
+  {
+   "op": "special.createBirb",
+   "args": {
+    "location": [
+     2.5,
+     3.5,
+     6.5
+    ],
+    "pose": {
+     "type": "face_poi"
+    }
+   },
+   "src": "TrainStationScenes.java:473",
+   "out": "e4"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "TrainStationScenes.java:474"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "offset": [
+     4,
+     0,
+     0
+    ],
+    "duration": 20
+   },
+   "src": "TrainStationScenes.java:475"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bogey",
+    "pos": [
+     7,
+     2,
+     6
+    ],
+    "distance": -4,
+    "duration": 21
+   },
+   "src": "TrainStationScenes.java:476"
+  },
+  {
+   "op": "special.moveParrot",
+   "args": {
+    "link": {
+     "link": "e4"
+    },
+    "offset": [
+     4,
+     0,
+     0
+    ],
+    "duration": 20
+   },
+   "src": "TrainStationScenes.java:477"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "TrainStationScenes.java:478"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     11,
+     1,
+     3
+    ],
+    "insertionSide": "down",
+    "item": {
+     "id": "create:schedule",
+     "count": 1
+    }
+   },
+   "src": "TrainStationScenes.java:480",
+   "out": "e5"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "TrainStationScenes.java:481"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "StationBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       8,
+       1,
+       3
+      ],
+      "nbt": {
+       "ForceFlag": true
+      }
+     }
+    ]
+   },
+   "src": "TrainStationScenes.java:482"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "TrainStationScenes.java:483"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     8.5,
+     2,
+     3.5
+    ],
+    "direction": "down",
+    "duration": 20,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "create:schedule",
+     "count": 1
+    }
+   },
+   "src": "TrainStationScenes.java:484"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "TrainStationScenes.java:485"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     8,
+     1,
+     3
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "TrainStationScenes.java:486"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "TrainStationScenes.java:487"
+  },
+  {
+   "op": "overlay.showLine",
+   "args": {
+    "color": "green",
+    "start": [
+     8.5,
+     1.875,
+     3.95
+    ],
+    "end": [
+     6.5,
+     3.5,
+     6
+    ],
+    "duration": 40,
+    "big": false
+   },
+   "src": "TrainStationScenes.java:489"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "TrainStationScenes.java:491"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     6,
+     3,
+     6
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "TrainStationScenes.java:492"
+  },
+  {
+   "op": "special.conductorBirb",
+   "args": {
+    "link": {
+     "link": "e4"
+    },
+    "conductor": true
+   },
+   "src": "TrainStationScenes.java:493"
+  },
+  {
+   "op": "special.movePointOfInterest",
+   "args": {
+    "location": [
+     18.5,
+     4.5,
+     6.5
+    ]
+   },
+   "src": "TrainStationScenes.java:494"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 25
+   },
+   "src": "TrainStationScenes.java:495"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     6.5,
+     3.5,
+     6.5
+    ],
+    "key": "text_5",
+    "text": "The Schedule placed on a station will automatically copy itself to present trains"
+   },
+   "src": "TrainStationScenes.java:497"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "TrainStationScenes.java:502"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "offset": [
+     8,
+     0,
+     0
+    ],
+    "duration": 30
+   },
+   "src": "TrainStationScenes.java:504"
+  },
+  {
+   "op": "special.moveParrot",
+   "args": {
+    "link": {
+     "link": "e4"
+    },
+    "offset": [
+     8,
+     0,
+     0
+    ],
+    "duration": 30
+   },
+   "src": "TrainStationScenes.java:505"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bogey",
+    "pos": [
+     7,
+     2,
+     6
+    ],
+    "distance": -8,
+    "duration": 31
+   },
+   "src": "TrainStationScenes.java:506"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "StationBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       8,
+       1,
+       3
+      ],
+      "nbt": {
+       "ForceFlag": false
+      }
+     }
+    ]
+   },
+   "src": "TrainStationScenes.java:507"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "TrainStationScenes.java:508"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "direction": null
+   },
+   "src": "TrainStationScenes.java:509"
+  },
+  {
+   "op": "special.hideElement",
+   "args": {
+    "link": {
+     "link": "e4"
+    },
+    "direction": null
+   },
+   "src": "TrainStationScenes.java:510"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 25
+   },
+   "src": "TrainStationScenes.java:511"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 100,
+    "color": "blue",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     8,
+     2,
+     3.5
+    ],
+    "key": "text_6",
+    "text": "As opposed to manual scheduling, drivers will not take the item with them"
+   },
+   "src": "TrainStationScenes.java:513"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "TrainStationScenes.java:519"
+  }
+ ]
+}

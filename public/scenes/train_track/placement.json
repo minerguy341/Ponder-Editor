@@ -1,0 +1,1899 @@
+{
+ "id": "create:train_track/placement",
+ "schematic": "train_track/placement",
+ "schematicNamespace": "create",
+ "title": "Placing Train Tracks",
+ "texts": {
+  "text_1": "A new type of rail designed for Train Contraptions",
+  "text_2": "To place rows of track in bulk, click on an existing track",
+  "text_3": "Then place or select a second track",
+  "text_4": "Tracks can also be placed as turns or slopes",
+  "text_5": "When connecting, tracks will try to make each turn equally sized",
+  "text_6": "Holding the sprint key while connecting...",
+  "text_7": "...will create the longest fitting bend instead",
+  "text_8": "Materials in the off-hand will be paved under tracks automatically"
+ },
+ "tags": [],
+ "items": [
+  "create:track"
+ ],
+ "keyframes": [
+  106,
+  304,
+  460,
+  625,
+  905
+ ],
+ "totalTicks": 1097,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 15
+   },
+   "src": "TrackScenes.java:28"
+  },
+  {
+   "op": "scaleSceneView",
+   "args": {
+    "factor": 0.5
+   },
+   "src": "TrackScenes.java:29"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      14,
+      0,
+      14
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "TrackScenes.java:30"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "TrackScenes.java:31"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      11,
+      4,
+      9
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrackScenes.java:34",
+   "out": "e1"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     -2,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "TrackScenes.java:35"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      11,
+      3,
+      9
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "TrackScenes.java:38"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "TrackScenes.java:41"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      10,
+      3,
+      9
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "TrackScenes.java:38"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "TrackScenes.java:41"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      9,
+      3,
+      9
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "TrackScenes.java:38"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "TrackScenes.java:41"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      8,
+      3,
+      9
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "TrackScenes.java:38"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "TrackScenes.java:41"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      7,
+      3,
+      9
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "TrackScenes.java:38"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "TrackScenes.java:41"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      6,
+      3,
+      9
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "TrackScenes.java:38"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "TrackScenes.java:41"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      5,
+      3,
+      9
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "TrackScenes.java:38"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      7,
+      4,
+      9
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "TrackScenes.java:40"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "TrackScenes.java:41"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      3,
+      9
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "TrackScenes.java:38"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "TrackScenes.java:41"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      3,
+      9
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "TrackScenes.java:38"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "TrackScenes.java:41"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      3,
+      9
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "TrackScenes.java:38"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "TrackScenes.java:41"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     5.5,
+     1,
+     9.5
+    ],
+    "key": "text_1",
+    "text": "A new type of rail designed for Train Contraptions"
+   },
+   "src": "TrackScenes.java:44"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "TrackScenes.java:48"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      3,
+      5
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrackScenes.java:51",
+   "out": "e2"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     0,
+     -2,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "TrackScenes.java:52"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "TrackScenes.java:53"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "green",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     3.5,
+     1,
+     5.5
+    ],
+    "key": "text_2",
+    "text": "To place rows of track in bulk, click on an existing track"
+   },
+   "src": "TrackScenes.java:56"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "TrackScenes.java:62"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3.5,
+     1,
+     5.5
+    ],
+    "direction": "down",
+    "duration": 40,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:track",
+     "count": 1
+    }
+   },
+   "src": "TrackScenes.java:66"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3.5,
+     1,
+     5.5
+    ],
+    "direction": "down",
+    "duration": 40,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:track",
+     "count": 1
+    }
+   },
+   "src": "TrackScenes.java:70"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 6
+   },
+   "src": "TrackScenes.java:72"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "green",
+    "slot": "vec:3.5,1,5.5",
+    "box": {
+     "min": [
+      3,
+      0.25,
+      4.149999976158142
+     ],
+     "max": [
+      4,
+      2,
+      6.850000023841858
+     ]
+    },
+    "duration": 32
+   },
+   "src": "TrackScenes.java:75"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 45
+   },
+   "src": "TrackScenes.java:76"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     12.5,
+     1,
+     5.5
+    ],
+    "direction": "down",
+    "duration": 40,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:track",
+     "count": 1
+    }
+   },
+   "src": "TrackScenes.java:78"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 6
+   },
+   "src": "TrackScenes.java:80"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 40,
+    "color": "green",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     12.5,
+     1,
+     5.5
+    ],
+    "key": "text_3",
+    "text": "Then place or select a second track"
+   },
+   "src": "TrackScenes.java:81"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "TrackScenes.java:86"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "green",
+    "slot": "vec:3.5,1,5.5",
+    "box": {
+     "min": [
+      3,
+      0.25,
+      4.149999976158142
+     ],
+     "max": [
+      13,
+      2,
+      6.850000023841858
+     ]
+    },
+    "duration": 30
+   },
+   "src": "TrackScenes.java:87"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      3,
+      5
+     ],
+     "to": [
+      12,
+      3,
+      5
+     ]
+    },
+    "direction": "west",
+    "link": {
+     "link": "e2"
+    }
+   },
+   "src": "TrackScenes.java:89"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 55
+   },
+   "src": "TrackScenes.java:90"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "direction": "up"
+   },
+   "src": "TrackScenes.java:92"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "TrackScenes.java:93"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "direction": "up"
+   },
+   "src": "TrackScenes.java:94"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 25
+   },
+   "src": "TrackScenes.java:95"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      8,
+      1,
+      2
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "TrackScenes.java:97"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "TrackScenes.java:98"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     8.5,
+     1,
+     2.5
+    ],
+    "direction": "down",
+    "duration": 15,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:track",
+     "count": 1
+    }
+   },
+   "src": "TrackScenes.java:101"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "TrackScenes.java:103"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     1,
+     8.5
+    ],
+    "direction": "down",
+    "duration": 15,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:track",
+     "count": 1
+    }
+   },
+   "src": "TrackScenes.java:104"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "TrackScenes.java:106"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      8
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrackScenes.java:107"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 25
+   },
+   "src": "TrackScenes.java:108"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     7.5,
+     1,
+     7.5
+    ],
+    "key": "text_4",
+    "text": "Tracks can also be placed as turns or slopes"
+   },
+   "src": "TrackScenes.java:110"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "TrackScenes.java:114"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      12,
+      1,
+      2
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "TrackScenes.java:116"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "TrackScenes.java:117"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     12.5,
+     1,
+     2.5
+    ],
+    "direction": "down",
+    "duration": 10,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:track",
+     "count": 1
+    }
+   },
+   "src": "TrackScenes.java:119"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "TrackScenes.java:121"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     1,
+     12.5
+    ],
+    "direction": "down",
+    "duration": 10,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:track",
+     "count": 1
+    }
+   },
+   "src": "TrackScenes.java:122"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "TrackScenes.java:124"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      12,
+      1,
+      3
+     ],
+     "to": [
+      12,
+      1,
+      5
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrackScenes.java:125"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "TrackScenes.java:126"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      6,
+      1,
+      6
+     ],
+     "to": [
+      12,
+      1,
+      12
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrackScenes.java:127"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "TrackScenes.java:128"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      1,
+      12
+     ],
+     "to": [
+      5,
+      1,
+      12
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrackScenes.java:129"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 25
+   },
+   "src": "TrackScenes.java:130"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "green",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     11.5,
+     1,
+     11.5
+    ],
+    "key": "text_5",
+    "text": "When connecting, tracks will try to make each turn equally sized"
+   },
+   "src": "TrackScenes.java:132"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "TrackScenes.java:138"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      12,
+      1,
+      2
+     ],
+     "to": [
+      12,
+      1,
+      5
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "TrackScenes.java:140"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      1,
+      12
+     ],
+     "to": [
+      5,
+      1,
+      12
+     ]
+    },
+    "direction": "west"
+   },
+   "src": "TrackScenes.java:141"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "green",
+    "slot": "vec:3.5,1,5.5",
+    "box": {
+     "min": [
+      2,
+      0.25,
+      2
+     ],
+     "max": [
+      9.850000023841858,
+      2,
+      9.850000023841858
+     ]
+    },
+    "duration": 32
+   },
+   "src": "TrackScenes.java:146"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "TrackScenes.java:147"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "green",
+    "slot": "vec:3.5,1,5.5",
+    "box": {
+     "min": [
+      6,
+      0.25,
+      6
+     ],
+     "max": [
+      13.850000023841858,
+      2,
+      13.850000023841858
+     ]
+    },
+    "duration": 32
+   },
+   "src": "TrackScenes.java:148"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "TrackScenes.java:149"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      6,
+      1,
+      6
+     ],
+     "to": [
+      12,
+      1,
+      12
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "TrackScenes.java:151"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "TrackScenes.java:152"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      12,
+      1,
+      2
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "TrackScenes.java:153"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "TrackScenes.java:154"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     12.5,
+     1,
+     2.5
+    ],
+    "direction": "down",
+    "duration": 10,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:track",
+     "count": 1
+    }
+   },
+   "src": "TrackScenes.java:156"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "TrackScenes.java:158"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     1,
+     12.5
+    ],
+    "direction": "down",
+    "duration": 60,
+    "sneak": false,
+    "ctrl": true,
+    "icon": "rmb",
+    "item": {
+     "id": "create:track",
+     "count": 1
+    }
+   },
+   "src": "TrackScenes.java:160"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "TrackScenes.java:163"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "green",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     2.5,
+     1,
+     12.5
+    ],
+    "key": "text_6",
+    "text": "Holding the sprint key while connecting..."
+   },
+   "src": "TrackScenes.java:165"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "TrackScenes.java:171"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      2,
+      12
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrackScenes.java:174",
+   "out": "e3"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "offset": [
+     0,
+     -1,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "TrackScenes.java:175"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "TrackScenes.java:176"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "green",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     9.5,
+     1.5,
+     9.5
+    ],
+    "key": "text_7",
+    "text": "...will create the longest fitting bend instead"
+   },
+   "src": "TrackScenes.java:178"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "TrackScenes.java:183"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "direction": "up"
+   },
+   "src": "TrackScenes.java:185"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      12,
+      1,
+      2
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "TrackScenes.java:186"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "TrackScenes.java:187"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      1,
+      2
+     ],
+     "to": [
+      8,
+      1,
+      8
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "TrackScenes.java:188"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 25
+   },
+   "src": "TrackScenes.java:189"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      12,
+      6,
+      2
+     ],
+     "to": [
+      12,
+      9,
+      12
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrackScenes.java:192",
+   "out": "e4"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e4"
+    },
+    "offset": [
+     0,
+     -5,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "TrackScenes.java:193"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "TrackScenes.java:194"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      6,
+      2
+     ],
+     "to": [
+      2,
+      7,
+      4
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e4"
+    }
+   },
+   "src": "TrackScenes.java:195"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      6,
+      6
+     ],
+     "to": [
+      2,
+      9,
+      8
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e4"
+    }
+   },
+   "src": "TrackScenes.java:196"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      6,
+      10
+     ],
+     "to": [
+      2,
+      11,
+      12
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e4"
+    }
+   },
+   "src": "TrackScenes.java:197"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "TrackScenes.java:198"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     12.5,
+     4,
+     11.5
+    ],
+    "direction": "left",
+    "duration": 30,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "create:track",
+     "count": 1
+    }
+   },
+   "src": "TrackScenes.java:200"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "TrackScenes.java:201"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     12.5,
+     4,
+     11.5
+    ],
+    "direction": "right",
+    "duration": 26,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "minecraft:smooth_stone",
+     "count": 1
+    }
+   },
+   "src": "TrackScenes.java:203"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "TrackScenes.java:204"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     7,
+     11.5
+    ],
+    "direction": "left",
+    "duration": 30,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "create:track",
+     "count": 1
+    }
+   },
+   "src": "TrackScenes.java:206"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "TrackScenes.java:207"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     7,
+     11.5
+    ],
+    "direction": "right",
+    "duration": 26,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "minecraft:smooth_stone",
+     "count": 1
+    }
+   },
+   "src": "TrackScenes.java:208"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "TrackScenes.java:209"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      12,
+      11
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e4"
+    }
+   },
+   "src": "TrackScenes.java:211"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "TrackScenes.java:212"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      8,
+      10
+     ],
+     "to": [
+      11,
+      11,
+      12
+     ]
+    },
+    "direction": "up",
+    "link": {
+     "link": "e4"
+    }
+   },
+   "src": "TrackScenes.java:213"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "TrackScenes.java:214"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 100,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     9.5,
+     3.5,
+     10
+    ],
+    "key": "text_8",
+    "text": "Materials in the off-hand will be paved under tracks automatically"
+   },
+   "src": "TrackScenes.java:216"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "TrackScenes.java:221"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     12.5,
+     3,
+     7.5
+    ],
+    "direction": "left",
+    "duration": 30,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "create:track",
+     "count": 1
+    }
+   },
+   "src": "TrackScenes.java:223"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "TrackScenes.java:224"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     12.5,
+     3,
+     7.5
+    ],
+    "direction": "right",
+    "duration": 26,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "minecraft:smooth_stone_slab",
+     "count": 1
+    }
+   },
+   "src": "TrackScenes.java:226"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "TrackScenes.java:227"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     5,
+     7.5
+    ],
+    "direction": "left",
+    "duration": 30,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "create:track",
+     "count": 1
+    }
+   },
+   "src": "TrackScenes.java:229"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "TrackScenes.java:230"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     5,
+     7.5
+    ],
+    "direction": "right",
+    "duration": 26,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "minecraft:smooth_stone_slab",
+     "count": 1
+    }
+   },
+   "src": "TrackScenes.java:231"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "TrackScenes.java:232"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      10,
+      7
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e4"
+    }
+   },
+   "src": "TrackScenes.java:234"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "TrackScenes.java:235"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      7,
+      6
+     ],
+     "to": [
+      11,
+      11,
+      8
+     ]
+    },
+    "direction": "up",
+    "link": {
+     "link": "e4"
+    }
+   },
+   "src": "TrackScenes.java:236"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "TrackScenes.java:237"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     12.5,
+     2,
+     3.5
+    ],
+    "direction": "left",
+    "duration": 30,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "create:track",
+     "count": 1
+    }
+   },
+   "src": "TrackScenes.java:239"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "TrackScenes.java:240"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     12.5,
+     2,
+     3.5
+    ],
+    "direction": "right",
+    "duration": 26,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "create:metal_girder",
+     "count": 1
+    }
+   },
+   "src": "TrackScenes.java:242"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "TrackScenes.java:243"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     3,
+     3.5
+    ],
+    "direction": "left",
+    "duration": 30,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "create:track",
+     "count": 1
+    }
+   },
+   "src": "TrackScenes.java:245"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "TrackScenes.java:246"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     3,
+     3.5
+    ],
+    "direction": "right",
+    "duration": 26,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "create:metal_girder",
+     "count": 1
+    }
+   },
+   "src": "TrackScenes.java:247"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "TrackScenes.java:248"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      8,
+      3
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e4"
+    }
+   },
+   "src": "TrackScenes.java:250"
+  }
+ ]
+}

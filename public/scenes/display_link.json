@@ -1,0 +1,1547 @@
+{
+ "id": "create:display_link",
+ "schematic": "display_link",
+ "schematicNamespace": "create",
+ "title": "Setting up Display Links",
+ "texts": {
+  "text_1": "Display Links can be used to visualise dynamic information",
+  "text_2": "First, right-click the target display...",
+  "text_3": "...then attach it to the block to read from",
+  "text_4": "Open the Interface to select and configure what is sent",
+  "text_5": "The display will now receive information from the link",
+  "text_6": "Not every block can act as a source",
+  "text_7": "Each compatible block provides unique information",
+  "text_8": "The Display Link can work with several different displays"
+ },
+ "tags": [],
+ "items": [
+  "create:display_link"
+ ],
+ "keyframes": [
+  31,
+  167,
+  357,
+  507,
+  622,
+  812,
+  972
+ ],
+ "totalTicks": 1036,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "DisplayScenes.java:34"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      4,
+      0,
+      4
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "DisplayScenes.java:35"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "DisplayScenes.java:55"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "DisplayScenes.java:57"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "DisplayScenes.java:59"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_1",
+    "pointAt": [
+     2,
+     1.5,
+     2.5
+    ],
+    "text": "Display Links can be used to visualise dynamic information"
+   },
+   "src": "DisplayScenes.java:61"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "DisplayScenes.java:66"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      2
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "DisplayScenes.java:68"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "DisplayScenes.java:69"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      0,
+      5
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "DisplayScenes.java:70"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      1,
+      3
+     ],
+     "to": [
+      4,
+      1,
+      5
+     ]
+    },
+    "direction": "west"
+   },
+   "src": "DisplayScenes.java:71"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "DisplayScenes.java:72"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      1,
+      3
+     ],
+     "to": [
+      3,
+      2,
+      3
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "DisplayScenes.java:73"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 25
+   },
+   "src": "DisplayScenes.java:74"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3.5,
+     2.75,
+     3.25
+    ],
+    "direction": "right",
+    "duration": 60,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "create:display_link",
+     "count": 1
+    },
+    "icon": "rmb"
+   },
+   "src": "DisplayScenes.java:77"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 6
+   },
+   "src": "DisplayScenes.java:79"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "output",
+    "slot": "obj:1",
+    "box": {
+     "min": [
+      1,
+      1,
+      3.1875
+     ],
+     "max": [
+      4,
+      3,
+      3.8125
+     ]
+    },
+    "duration": 60
+   },
+   "src": "DisplayScenes.java:80"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 35
+   },
+   "src": "DisplayScenes.java:82"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "output",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_2",
+    "pointAt": [
+     2.5,
+     2.75,
+     3.25
+    ],
+    "text": "First, right-click the target display..."
+   },
+   "src": "DisplayScenes.java:83"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "DisplayScenes.java:89"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      1
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "DisplayScenes.java:91"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "DisplayScenes.java:92"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      1
+     ]
+    },
+    "direction": "east"
+   },
+   "src": "DisplayScenes.java:93"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "DisplayScenes.java:94"
+  },
+  {
+   "op": "overlay.showOutlineWithText",
+   "args": {
+    "duration": 70,
+    "color": "input",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      1
+     ]
+    },
+    "pointAt": [
+     2.5,
+     1.5,
+     1.5
+    ],
+    "key": "text_3",
+    "text": "...then attach it to the block to read from"
+   },
+   "src": "DisplayScenes.java:95"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "DisplayScenes.java:100"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     3,
+     1,
+     1
+    ],
+    "insertionSide": "south",
+    "item": {
+     "id": "create:propeller",
+     "count": 1
+    }
+   },
+   "src": "DisplayScenes.java:103"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "DisplayScenes.java:104"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     2,
+     1.5
+    ],
+    "direction": "down",
+    "duration": 60,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb"
+   },
+   "src": "DisplayScenes.java:106"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "DisplayScenes.java:107"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_4",
+    "pointAt": [
+     2.5,
+     1.5,
+     1.5
+    ],
+    "text": "Open the Interface to select and configure what is sent"
+   },
+   "src": "DisplayScenes.java:108"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "DisplayScenes.java:113"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     2,
+     1,
+     1
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "DisplayScenes.java:114"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     2,
+     3
+    ],
+    "beType": "FlapDisplayBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "applyTextManually",
+        "a": [
+         1,
+         "Propeller"
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "DisplayScenes.java:115"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     2,
+     1,
+     1
+    ],
+    "beType": "LinkWithBulbBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "pulse",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "DisplayScenes.java:116"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "DisplayScenes.java:117"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     3,
+     1,
+     1
+    ]
+   },
+   "src": "DisplayScenes.java:119"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     3,
+     1,
+     1
+    ],
+    "insertionSide": "south",
+    "item": {
+     "id": "create:blaze_cake",
+     "count": 1
+    }
+   },
+   "src": "DisplayScenes.java:121"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     2,
+     3
+    ],
+    "beType": "FlapDisplayBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "applyTextManually",
+        "a": [
+         1,
+         "Blaze Cake"
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "DisplayScenes.java:122"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     2,
+     1,
+     1
+    ],
+    "beType": "LinkWithBulbBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "pulse",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "DisplayScenes.java:123"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "DisplayScenes.java:124"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_5",
+    "pointAt": [
+     1.0499999523162842,
+     2.25,
+     3.25
+    ],
+    "text": "The display will now receive information from the link"
+   },
+   "src": "DisplayScenes.java:126"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "DisplayScenes.java:132"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     3,
+     1,
+     1
+    ]
+   },
+   "src": "DisplayScenes.java:133"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     3,
+     1,
+     1
+    ],
+    "insertionSide": "south",
+    "item": {
+     "id": "create:display_board",
+     "count": 1
+    }
+   },
+   "src": "DisplayScenes.java:135"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     2,
+     3
+    ],
+    "beType": "FlapDisplayBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "applyTextManually",
+        "a": [
+         1,
+         "Display Board"
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "DisplayScenes.java:136"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     2,
+     1,
+     1
+    ],
+    "beType": "LinkWithBulbBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "pulse",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "DisplayScenes.java:137"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "DisplayScenes.java:138"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      1
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "DisplayScenes.java:140"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "DisplayScenes.java:141"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     2,
+     3
+    ],
+    "beType": "FlapDisplayBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "applyTextManually",
+        "a": [
+         1,
+         ""
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "DisplayScenes.java:142"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     2,
+     1,
+     1
+    ],
+    "beType": "LinkWithBulbBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "pulse",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "DisplayScenes.java:143"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "DisplayScenes.java:144"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      5,
+      1
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "DisplayScenes.java:145",
+   "out": "e1"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     -4,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "DisplayScenes.java:146"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 25
+   },
+   "src": "DisplayScenes.java:148"
+  },
+  {
+   "op": "overlay.showOutlineWithText",
+   "args": {
+    "duration": 50,
+    "color": "red",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      1
+     ]
+    },
+    "pointAt": [
+     3.5,
+     2,
+     1.5
+    ],
+    "key": "text_6",
+    "text": "Not every block can act as a source"
+   },
+   "src": "DisplayScenes.java:149"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "DisplayScenes.java:155"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "direction": "south"
+   },
+   "src": "DisplayScenes.java:156"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "DisplayScenes.java:157"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      3,
+      1
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "DisplayScenes.java:159",
+   "out": "e2"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     0,
+     -2,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "DisplayScenes.java:160"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "DisplayScenes.java:161"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     2,
+     3
+    ],
+    "beType": "FlapDisplayBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "applyTextManually",
+        "a": [
+         1,
+         "1024 create.generic.unit.stress"
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "DisplayScenes.java:162"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     2,
+     1,
+     1
+    ],
+    "beType": "LinkWithBulbBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "pulse",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "DisplayScenes.java:164"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "DisplayScenes.java:165"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "direction": "south"
+   },
+   "src": "DisplayScenes.java:166"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "DisplayScenes.java:167"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      4,
+      1
+     ],
+     "to": [
+      4,
+      4,
+      1
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "DisplayScenes.java:169",
+   "out": "e3"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "offset": [
+     0,
+     -3,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "DisplayScenes.java:170"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "DisplayScenes.java:171"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     2,
+     3
+    ],
+    "beType": "FlapDisplayBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "applyTextManually",
+        "a": [
+         1,
+         "418 Deepslate"
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "DisplayScenes.java:172"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     2,
+     3
+    ],
+    "beType": "FlapDisplayBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "applyTextManually",
+        "a": [
+         2,
+         "14 Cogwheel"
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "DisplayScenes.java:174"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     2,
+     1,
+     1
+    ],
+    "beType": "LinkWithBulbBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "pulse",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "DisplayScenes.java:176"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "DisplayScenes.java:177"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "direction": "south"
+   },
+   "src": "DisplayScenes.java:178"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "DisplayScenes.java:179"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 90,
+    "color": "green",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_7",
+    "pointAt": [
+     3.5,
+     2,
+     1.5
+    ],
+    "text": "Each compatible block provides unique information"
+   },
+   "src": "DisplayScenes.java:181"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      2,
+      1
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "DisplayScenes.java:188",
+   "out": "e4"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e4"
+    },
+    "offset": [
+     0,
+     -1,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "DisplayScenes.java:189"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "DisplayScenes.java:190"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     2,
+     3
+    ],
+    "beType": "FlapDisplayBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "applyTextManually",
+        "a": [
+         1,
+         "6:00 create.generic.daytime.pm"
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "DisplayScenes.java:191"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     2,
+     3
+    ],
+    "beType": "FlapDisplayBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "applyTextManually",
+        "a": [
+         2,
+         ""
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "DisplayScenes.java:193"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     2,
+     1,
+     1
+    ],
+    "beType": "LinkWithBulbBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "pulse",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "DisplayScenes.java:194"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "DisplayScenes.java:195"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      1,
+      3
+     ],
+     "to": [
+      3,
+      2,
+      3
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "DisplayScenes.java:197"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      0,
+      5
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "DisplayScenes.java:198"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      1,
+      3
+     ],
+     "to": [
+      4,
+      1,
+      5
+     ]
+    },
+    "direction": "east"
+   },
+   "src": "DisplayScenes.java:199"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "DisplayScenes.java:200"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      4
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "DisplayScenes.java:202",
+   "out": "e5"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e5"
+    },
+    "offset": [
+     0,
+     0,
+     -1
+    ],
+    "duration": 0
+   },
+   "src": "DisplayScenes.java:203"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "DisplayScenes.java:204"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     2,
+     1,
+     1
+    ],
+    "beType": "LinkWithBulbBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "pulse",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "DisplayScenes.java:205"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "DisplayScenes.java:206"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e5"
+    },
+    "direction": "south"
+   },
+   "src": "DisplayScenes.java:207"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "DisplayScenes.java:208"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      2,
+      4
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "DisplayScenes.java:210",
+   "out": "e6"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e6"
+    },
+    "offset": [
+     0,
+     -1,
+     -1
+    ],
+    "duration": 0
+   },
+   "src": "DisplayScenes.java:211"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "DisplayScenes.java:212"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     2,
+     1,
+     1
+    ],
+    "beType": "LinkWithBulbBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "pulse",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "DisplayScenes.java:213"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "DisplayScenes.java:214"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e6"
+    },
+    "direction": "south"
+   },
+   "src": "DisplayScenes.java:215"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "DisplayScenes.java:216"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 90,
+    "color": "green",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_8",
+    "pointAt": [
+     1,
+     1.5,
+     3.5
+    ],
+    "text": "The Display Link can work with several different displays"
+   },
+   "src": "DisplayScenes.java:218"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      3,
+      4
+     ],
+     "to": [
+      3,
+      3,
+      4
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "DisplayScenes.java:225",
+   "out": "e7"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e7"
+    },
+    "offset": [
+     0,
+     -2,
+     -1
+    ],
+    "duration": 0
+   },
+   "src": "DisplayScenes.java:226"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "DisplayScenes.java:227"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     2,
+     1,
+     1
+    ],
+    "beType": "LinkWithBulbBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "pulse",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "DisplayScenes.java:228"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "DisplayScenes.java:229"
+  }
+ ]
+}

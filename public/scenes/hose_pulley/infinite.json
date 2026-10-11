@@ -1,0 +1,554 @@
+{
+ "id": "create:hose_pulley/infinite",
+ "schematic": "hose_pulley/infinite",
+ "schematicNamespace": "create",
+ "title": "Passively Filling and Draining large bodies of Fluid",
+ "texts": {
+  "text_1": "When deploying the Hose Pulley into a large enough ocean...",
+  "text_2": "It will provide/dispose fluids without affecting the source",
+  "text_3": "Pipe networks can limitlessly take fluids from/to such pulleys"
+ },
+ "tags": [],
+ "items": [
+  "create:hose_pulley"
+ ],
+ "keyframes": [
+  51,
+  121,
+  201
+ ],
+ "totalTicks": 235,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "HosePulleyScenes.java:312"
+  },
+  {
+   "op": "setSceneOffsetY",
+   "args": {
+    "yOffset": -0.5
+   },
+   "src": "HosePulleyScenes.java:313"
+  },
+  {
+   "op": "scaleSceneView",
+   "args": {
+    "factor": 0.8999999761581421
+   },
+   "src": "HosePulleyScenes.java:314"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      4,
+      0,
+      4
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "HosePulleyScenes.java:315"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "HosePulleyScenes.java:316"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       5,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       4,
+       2,
+       2
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       5,
+       2,
+       2
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       5,
+       0,
+       2
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     }
+    ]
+   },
+   "src": "HosePulleyScenes.java:325"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       2,
+       2
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     }
+    ]
+   },
+   "src": "HosePulleyScenes.java:326"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      3,
+      2
+     ],
+     "to": [
+      1,
+      3,
+      2
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "HosePulleyScenes.java:328"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "HosePulleyScenes.java:329"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      1,
+      1
+     ],
+     "to": [
+      4,
+      3,
+      1
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "HosePulleyScenes.java:330"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "HosePulleyScenes.java:331"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      1,
+      1
+     ],
+     "to": [
+      3,
+      3,
+      2
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "HosePulleyScenes.java:332"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "HosePulleyScenes.java:333"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "pos",
+       "pos": [
+        5,
+        0,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        4,
+        1,
+        2
+       ],
+       "to": [
+        5,
+        2,
+        2
+       ]
+      }
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "HosePulleyScenes.java:334"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "HosePulleyScenes.java:335"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       0,
+       3,
+       2
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       1,
+       3,
+       2
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     }
+    ]
+   },
+   "src": "HosePulleyScenes.java:337"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "HosePulleyScenes.java:338"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_1",
+    "pointAt": [
+     1.5,
+     1,
+     2.5
+    ],
+    "text": "When deploying the Hose Pulley into a large enough ocean..."
+   },
+   "src": "HosePulleyScenes.java:341"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "HosePulleyScenes.java:347"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     3,
+     2
+    ],
+    "beType": "HosePulleyBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          1,
+          3,
+          2
+         ],
+         null
+        ]
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "minecraft:water",
+          "amount": 1000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "HosePulleyScenes.java:348"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       0,
+       3,
+       2
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       1,
+       3,
+       2
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     }
+    ]
+   },
+   "src": "HosePulleyScenes.java:353"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       2,
+       2
+      ],
+      "state": {
+       "name": "create:mechanical_pump",
+       "props": {
+        "facing": "down",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": true
+   },
+   "src": "HosePulleyScenes.java:354"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     2,
+     2
+    ],
+    "beType": "PumpBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "onSpeedChanged",
+        "a": [
+         0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "HosePulleyScenes.java:355"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "HosePulleyScenes.java:356"
+  },
+  {
+   "op": "overlay.showOutlineWithText",
+   "args": {
+    "duration": 60,
+    "color": "blue",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      3,
+      2
+     ]
+    },
+    "pointAt": [
+     1.5,
+     4,
+     2.5
+    ],
+    "key": "text_2",
+    "text": "It will provide/dispose fluids without affecting the source"
+   },
+   "src": "HosePulleyScenes.java:359"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "HosePulleyScenes.java:366"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     4,
+     1,
+     1
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getTankInventory",
+        "a": []
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "minecraft:water",
+          "amount": 24000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "HosePulleyScenes.java:368"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "HosePulleyScenes.java:371"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_3",
+    "pointAt": [
+     3,
+     2.5,
+     2.5
+    ],
+    "text": "Pipe networks can limitlessly take fluids from/to such pulleys"
+   },
+   "src": "HosePulleyScenes.java:373"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "HosePulleyScenes.java:378"
+  }
+ ]
+}

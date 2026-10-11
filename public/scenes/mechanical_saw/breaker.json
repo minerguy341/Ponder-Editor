@@ -1,0 +1,5382 @@
+{
+ "id": "create:mechanical_saw/breaker",
+ "schematic": "mechanical_saw/breaker",
+ "schematicNamespace": "create",
+ "title": "Cutting Trees with the Mechanical Saw",
+ "texts": {
+  "text_1": "When given Rotational Force, a Mechanical Saw will cut trees directly in front of it",
+  "text_2": "In order to cut the tree fully, the Saw has to break the last block connecting it to the ground"
+ },
+ "tags": [],
+ "items": [
+  "create:mechanical_saw"
+ ],
+ "keyframes": [
+  66,
+  221
+ ],
+ "totalTicks": 370,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "MechanicalSawScenes.java:176"
+  },
+  {
+   "op": "scaleSceneView",
+   "args": {
+    "factor": 0.8999999761581421
+   },
+   "src": "MechanicalSawScenes.java:177"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      0,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:grass_block",
+     "props": {
+      "snowy": "false"
+     }
+    },
+    "particles": false
+   },
+   "src": "MechanicalSawScenes.java:178"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        0,
+        0,
+        0
+       ],
+       "to": [
+        5,
+        0,
+        4
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        3,
+        1,
+        1
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        1,
+        1,
+        2
+       ]
+      }
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "MechanicalSawScenes.java:179"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       5,
+       0,
+       1
+      ],
+      "nbt": {
+       "Speed": -8
+      }
+     }
+    ]
+   },
+   "src": "MechanicalSawScenes.java:183"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     }
+    ]
+   },
+   "src": "MechanicalSawScenes.java:184"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "MechanicalSawScenes.java:186"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      1,
+      2
+     ],
+     "to": [
+      5,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "MechanicalSawScenes.java:187"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "MechanicalSawScenes.java:188"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "MechanicalSawScenes.java:189"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "MechanicalSawScenes.java:191"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      1,
+      2
+     ],
+     "to": [
+      2,
+      3,
+      2
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "MechanicalSawScenes.java:192"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      4,
+      0
+     ],
+     "to": [
+      5,
+      18,
+      4
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "MechanicalSawScenes.java:193"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "MechanicalSawScenes.java:196"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "MechanicalSawScenes.java:198"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ]
+   },
+   "src": "MechanicalSawScenes.java:199"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "MechanicalSawScenes.java:198"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ]
+   },
+   "src": "MechanicalSawScenes.java:199"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     2,
+     1.5,
+     2.5
+    ],
+    "key": "text_1",
+    "text": "When given Rotational Force, a Mechanical Saw will cut trees directly in front of it"
+   },
+   "src": "MechanicalSawScenes.java:201"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "MechanicalSawScenes.java:198"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ]
+   },
+   "src": "MechanicalSawScenes.java:199"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "MechanicalSawScenes.java:198"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ]
+   },
+   "src": "MechanicalSawScenes.java:199"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "MechanicalSawScenes.java:198"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ]
+   },
+   "src": "MechanicalSawScenes.java:199"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "MechanicalSawScenes.java:198"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ]
+   },
+   "src": "MechanicalSawScenes.java:199"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "MechanicalSawScenes.java:198"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ]
+   },
+   "src": "MechanicalSawScenes.java:199"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "MechanicalSawScenes.java:198"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ]
+   },
+   "src": "MechanicalSawScenes.java:199"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "MechanicalSawScenes.java:198"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ]
+   },
+   "src": "MechanicalSawScenes.java:199"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "MechanicalSawScenes.java:198"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ]
+   },
+   "src": "MechanicalSawScenes.java:199"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       2,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       3,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       4,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       5,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       6,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     }
+    ],
+    "particles": true
+   },
+   "src": "MechanicalSawScenes.java:209"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      5,
+      0
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "MechanicalSawScenes.java:211"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      4,
+      1
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "MechanicalSawScenes.java:212"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      6,
+      1
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "MechanicalSawScenes.java:213"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      4,
+      0
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "MechanicalSawScenes.java:214"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      6,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "MechanicalSawScenes.java:215"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      5,
+      3
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "MechanicalSawScenes.java:216"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      4,
+      3
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "MechanicalSawScenes.java:217"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       4,
+       0
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       3,
+       4,
+       0
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       1,
+       5,
+       0
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       5,
+       0
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       1,
+       4,
+       1
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       4,
+       1
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       3,
+       4,
+       1
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       4,
+       4,
+       1
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       0,
+       5,
+       1
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       1,
+       5,
+       1
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       5,
+       1
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       3,
+       5,
+       1
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       4,
+       5,
+       1
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       3,
+       6,
+       1
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       7,
+       1
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       0,
+       4,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       1,
+       4,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       3,
+       4,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       4,
+       4,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       0,
+       5,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       1,
+       5,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       3,
+       5,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       4,
+       5,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       3,
+       6,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       1,
+       7,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       7,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       3,
+       7,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       18,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       1,
+       4,
+       3
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       4,
+       3
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       3,
+       4,
+       3
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       4,
+       4,
+       3
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       0,
+       5,
+       3
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       5,
+       3
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       3,
+       5,
+       3
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       4,
+       5,
+       3
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       6,
+       3
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       3,
+       6,
+       3
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       7,
+       3
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       1,
+       4,
+       4
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       4,
+       4
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       3,
+       4,
+       4
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       4,
+       4,
+       4
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       1,
+       5,
+       4
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       5,
+       4
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       3,
+       5,
+       4
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       4,
+       5,
+       4
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "MechanicalSawScenes.java:219"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     1.5,
+     2.5
+    ],
+    "motion": [
+     0,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:oak_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:224",
+   "out": "e1"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     2.5,
+     2.5
+    ],
+    "motion": [
+     -0.05000000074505806,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:oak_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:224",
+   "out": "e2"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     3.5,
+     2.5
+    ],
+    "motion": [
+     -0.10000000149011612,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:oak_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:224",
+   "out": "e3"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     4.5,
+     2.5
+    ],
+    "motion": [
+     -0.15000000596046448,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:oak_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:224",
+   "out": "e4"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     5.5,
+     2.5
+    ],
+    "motion": [
+     -0.20000000298023224,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:oak_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:224",
+   "out": "e5"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 35
+   },
+   "src": "MechanicalSawScenes.java:227"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "MechanicalSawScenes.java:228"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        1,
+        1,
+        2
+       ],
+       "to": [
+        2,
+        1,
+        3
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        0
+       ],
+       "to": [
+        5,
+        18,
+        4
+       ]
+      }
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "MechanicalSawScenes.java:229"
+  },
+  {
+   "op": "world.modifyEntities",
+   "args": {
+    "entityType": "ItemEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "discard",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "MechanicalSawScenes.java:231"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "MechanicalSawScenes.java:232"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      1,
+      2
+     ],
+     "to": [
+      2,
+      20,
+      3
+     ]
+    },
+    "state": {
+     "name": "minecraft:jungle_log",
+     "props": {
+      "axis": "y"
+     }
+    },
+    "particles": false
+   },
+   "src": "MechanicalSawScenes.java:233"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        1,
+        1,
+        2
+       ],
+       "to": [
+        2,
+        1,
+        3
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        0
+       ],
+       "to": [
+        5,
+        18,
+        4
+       ]
+      }
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "MechanicalSawScenes.java:234"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "MechanicalSawScenes.java:236"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "pos",
+       "pos": [
+        1,
+        1,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        1,
+        1,
+        3
+       ],
+       "to": [
+        2,
+        1,
+        3
+       ]
+      }
+     ]
+    },
+    "direction": "west"
+   },
+   "src": "MechanicalSawScenes.java:238"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "MechanicalSawScenes.java:240"
+  },
+  {
+   "op": "overlay.showOutlineWithText",
+   "args": {
+    "duration": 90,
+    "color": "green",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      2
+     ]
+    },
+    "pointAt": [
+     2.5,
+     1.5,
+     2.5
+    ],
+    "key": "text_2",
+    "text": "In order to cut the tree fully, the Saw has to break the last block connecting it to the ground"
+   },
+   "src": "MechanicalSawScenes.java:241"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 25
+   },
+   "src": "MechanicalSawScenes.java:247"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "MechanicalSawScenes.java:249"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ]
+   },
+   "src": "MechanicalSawScenes.java:250"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "MechanicalSawScenes.java:249"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ]
+   },
+   "src": "MechanicalSawScenes.java:250"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "MechanicalSawScenes.java:249"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ]
+   },
+   "src": "MechanicalSawScenes.java:250"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "MechanicalSawScenes.java:249"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ]
+   },
+   "src": "MechanicalSawScenes.java:250"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "MechanicalSawScenes.java:249"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ]
+   },
+   "src": "MechanicalSawScenes.java:250"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "MechanicalSawScenes.java:249"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ]
+   },
+   "src": "MechanicalSawScenes.java:250"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "MechanicalSawScenes.java:249"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ]
+   },
+   "src": "MechanicalSawScenes.java:250"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "MechanicalSawScenes.java:249"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ]
+   },
+   "src": "MechanicalSawScenes.java:250"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "MechanicalSawScenes.java:249"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ]
+   },
+   "src": "MechanicalSawScenes.java:250"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "MechanicalSawScenes.java:249"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ]
+   },
+   "src": "MechanicalSawScenes.java:250"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       3
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       3
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     }
+    ],
+    "particles": true
+   },
+   "src": "MechanicalSawScenes.java:254"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     1.5,
+     2.5
+    ],
+    "motion": [
+     -0.05000000074505806,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e6"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     1.5,
+     3.5
+    ],
+    "motion": [
+     -0.0707106739282608,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e7"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     1.5,
+     2.5
+    ],
+    "motion": [
+     0,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e8"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     1.5,
+     3.5
+    ],
+    "motion": [
+     -0.05000000074505806,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e9"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "MechanicalSawScenes.java:264"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       2,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       2,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       1,
+       2,
+       3
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       2,
+       3
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     }
+    ],
+    "particles": true
+   },
+   "src": "MechanicalSawScenes.java:254"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     2.5,
+     2.5
+    ],
+    "motion": [
+     -0.0707106739282608,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e10"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     2.5,
+     3.5
+    ],
+    "motion": [
+     -0.08660253882408142,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e11"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     2.5,
+     2.5
+    ],
+    "motion": [
+     -0.05000000074505806,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e12"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     2.5,
+     3.5
+    ],
+    "motion": [
+     -0.0707106739282608,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e13"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "MechanicalSawScenes.java:264"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       3,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       3,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       1,
+       3,
+       3
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       3,
+       3
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     }
+    ],
+    "particles": true
+   },
+   "src": "MechanicalSawScenes.java:254"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     3.5,
+     2.5
+    ],
+    "motion": [
+     -0.11180339753627777,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e14"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     3.5,
+     3.5
+    ],
+    "motion": [
+     -0.12247449159622192,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e15"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     3.5,
+     2.5
+    ],
+    "motion": [
+     -0.10000000149011612,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e16"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     3.5,
+     3.5
+    ],
+    "motion": [
+     -0.11180339753627777,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e17"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "MechanicalSawScenes.java:264"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       4,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       4,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       1,
+       4,
+       3
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       4,
+       3
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     }
+    ],
+    "particles": true
+   },
+   "src": "MechanicalSawScenes.java:254"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     4.5,
+     2.5
+    ],
+    "motion": [
+     -0.15811388194561005,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e18"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     4.5,
+     3.5
+    ],
+    "motion": [
+     -0.16583123803138733,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e19"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     4.5,
+     2.5
+    ],
+    "motion": [
+     -0.15000000596046448,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e20"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     4.5,
+     3.5
+    ],
+    "motion": [
+     -0.15811388194561005,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e21"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "MechanicalSawScenes.java:264"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       5,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       5,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       1,
+       5,
+       3
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       5,
+       3
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     }
+    ],
+    "particles": true
+   },
+   "src": "MechanicalSawScenes.java:254"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     5.5,
+     2.5
+    ],
+    "motion": [
+     -0.20615527033805847,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e22"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     5.5,
+     3.5
+    ],
+    "motion": [
+     -0.2121320217847824,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e23"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     5.5,
+     2.5
+    ],
+    "motion": [
+     -0.20000000298023224,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e24"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     5.5,
+     3.5
+    ],
+    "motion": [
+     -0.20615527033805847,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e25"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "MechanicalSawScenes.java:264"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       6,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       6,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       1,
+       6,
+       3
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       6,
+       3
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     }
+    ],
+    "particles": true
+   },
+   "src": "MechanicalSawScenes.java:254"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     6.5,
+     2.5
+    ],
+    "motion": [
+     -0.25495097041130066,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e26"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     6.5,
+     3.5
+    ],
+    "motion": [
+     -0.25980761647224426,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e27"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     6.5,
+     2.5
+    ],
+    "motion": [
+     -0.25,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e28"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     6.5,
+     3.5
+    ],
+    "motion": [
+     -0.25495097041130066,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e29"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "MechanicalSawScenes.java:264"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       7,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       7,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       1,
+       7,
+       3
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       7,
+       3
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     }
+    ],
+    "particles": true
+   },
+   "src": "MechanicalSawScenes.java:254"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     7.5,
+     2.5
+    ],
+    "motion": [
+     -0.3041381239891052,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e30"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     7.5,
+     3.5
+    ],
+    "motion": [
+     -0.30822068452835083,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e31"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     7.5,
+     2.5
+    ],
+    "motion": [
+     -0.30000001192092896,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e32"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     7.5,
+     3.5
+    ],
+    "motion": [
+     -0.3041381239891052,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e33"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "MechanicalSawScenes.java:264"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       8,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       8,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       1,
+       8,
+       3
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       8,
+       3
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     }
+    ],
+    "particles": true
+   },
+   "src": "MechanicalSawScenes.java:254"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     8.5,
+     2.5
+    ],
+    "motion": [
+     -0.3535533845424652,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e34"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     8.5,
+     3.5
+    ],
+    "motion": [
+     -0.3570714294910431,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e35"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     8.5,
+     2.5
+    ],
+    "motion": [
+     -0.3499999940395355,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e36"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     8.5,
+     3.5
+    ],
+    "motion": [
+     -0.3535533845424652,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e37"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "MechanicalSawScenes.java:264"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       9,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       9,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       1,
+       9,
+       3
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       9,
+       3
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     }
+    ],
+    "particles": true
+   },
+   "src": "MechanicalSawScenes.java:254"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     9.5,
+     2.5
+    ],
+    "motion": [
+     -0.40311288833618164,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e38"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     9.5,
+     3.5
+    ],
+    "motion": [
+     -0.40620192885398865,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e39"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     9.5,
+     2.5
+    ],
+    "motion": [
+     -0.4000000059604645,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e40"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     9.5,
+     3.5
+    ],
+    "motion": [
+     -0.40311288833618164,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e41"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "MechanicalSawScenes.java:264"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       10,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       10,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       1,
+       10,
+       3
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       10,
+       3
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     }
+    ],
+    "particles": true
+   },
+   "src": "MechanicalSawScenes.java:254"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     10.5,
+     2.5
+    ],
+    "motion": [
+     -0.45276927947998047,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e42"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     10.5,
+     3.5
+    ],
+    "motion": [
+     -0.45552167296409607,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e43"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     10.5,
+     2.5
+    ],
+    "motion": [
+     -0.44999998807907104,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e44"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     10.5,
+     3.5
+    ],
+    "motion": [
+     -0.45276927947998047,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e45"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "MechanicalSawScenes.java:264"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       11,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       11,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       1,
+       11,
+       3
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       11,
+       3
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     }
+    ],
+    "particles": true
+   },
+   "src": "MechanicalSawScenes.java:254"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     11.5,
+     2.5
+    ],
+    "motion": [
+     -0.5024937391281128,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e46"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     11.5,
+     3.5
+    ],
+    "motion": [
+     -0.5049751996994019,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e47"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     11.5,
+     2.5
+    ],
+    "motion": [
+     -0.5,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e48"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     11.5,
+     3.5
+    ],
+    "motion": [
+     -0.5024937391281128,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e49"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "MechanicalSawScenes.java:264"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       12,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       12,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       1,
+       12,
+       3
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       12,
+       3
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     }
+    ],
+    "particles": true
+   },
+   "src": "MechanicalSawScenes.java:254"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     12.5,
+     2.5
+    ],
+    "motion": [
+     -0.5522680282592773,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e50"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     12.5,
+     3.5
+    ],
+    "motion": [
+     -0.5545268058776855,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e51"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     12.5,
+     2.5
+    ],
+    "motion": [
+     -0.550000011920929,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e52"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     12.5,
+     3.5
+    ],
+    "motion": [
+     -0.5522680282592773,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e53"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "MechanicalSawScenes.java:264"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       13,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       13,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       1,
+       13,
+       3
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       13,
+       3
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     }
+    ],
+    "particles": true
+   },
+   "src": "MechanicalSawScenes.java:254"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     13.5,
+     2.5
+    ],
+    "motion": [
+     -0.6020797491073608,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e54"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     13.5,
+     3.5
+    ],
+    "motion": [
+     -0.6041523218154907,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e55"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     13.5,
+     2.5
+    ],
+    "motion": [
+     -0.6000000238418579,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e56"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     13.5,
+     3.5
+    ],
+    "motion": [
+     -0.6020797491073608,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e57"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "MechanicalSawScenes.java:264"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       14,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       14,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       1,
+       14,
+       3
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       14,
+       3
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     }
+    ],
+    "particles": true
+   },
+   "src": "MechanicalSawScenes.java:254"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     14.5,
+     2.5
+    ],
+    "motion": [
+     -0.6519201993942261,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e58"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     14.5,
+     3.5
+    ],
+    "motion": [
+     -0.6538348197937012,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e59"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     14.5,
+     2.5
+    ],
+    "motion": [
+     -0.6499999761581421,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e60"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     14.5,
+     3.5
+    ],
+    "motion": [
+     -0.6519201993942261,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e61"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "MechanicalSawScenes.java:264"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       15,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       15,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       1,
+       15,
+       3
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       15,
+       3
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     }
+    ],
+    "particles": true
+   },
+   "src": "MechanicalSawScenes.java:254"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     15.5,
+     2.5
+    ],
+    "motion": [
+     -0.7017834186553955,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e62"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     15.5,
+     3.5
+    ],
+    "motion": [
+     -0.7035623788833618,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e63"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     15.5,
+     2.5
+    ],
+    "motion": [
+     -0.699999988079071,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e64"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     15.5,
+     3.5
+    ],
+    "motion": [
+     -0.7017834186553955,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e65"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "MechanicalSawScenes.java:264"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       16,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       16,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       1,
+       16,
+       3
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       16,
+       3
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     }
+    ],
+    "particles": true
+   },
+   "src": "MechanicalSawScenes.java:254"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     16.5,
+     2.5
+    ],
+    "motion": [
+     -0.7516648173332214,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e66"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     16.5,
+     3.5
+    ],
+    "motion": [
+     -0.7533259391784668,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e67"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     16.5,
+     2.5
+    ],
+    "motion": [
+     -0.75,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e68"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     16.5,
+     3.5
+    ],
+    "motion": [
+     -0.7516648173332214,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e69"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "MechanicalSawScenes.java:264"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       17,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       17,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       1,
+       17,
+       3
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       17,
+       3
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     }
+    ],
+    "particles": true
+   },
+   "src": "MechanicalSawScenes.java:254"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     17.5,
+     2.5
+    ],
+    "motion": [
+     -0.8015609979629517,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e70"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     17.5,
+     3.5
+    ],
+    "motion": [
+     -0.803118884563446,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e71"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     17.5,
+     2.5
+    ],
+    "motion": [
+     -0.800000011920929,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e72"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     17.5,
+     3.5
+    ],
+    "motion": [
+     -0.8015609979629517,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e73"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "MechanicalSawScenes.java:264"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       18,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       18,
+       2
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       1,
+       18,
+       3
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       18,
+       3
+      ],
+      "state": {
+       "name": "minecraft:air",
+       "props": {}
+      }
+     }
+    ],
+    "particles": true
+   },
+   "src": "MechanicalSawScenes.java:254"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     18.5,
+     2.5
+    ],
+    "motion": [
+     -0.8514693379402161,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e74"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     18.5,
+     3.5
+    ],
+    "motion": [
+     -0.8529360890388489,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e75"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     18.5,
+     2.5
+    ],
+    "motion": [
+     -0.8500000238418579,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e76"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     18.5,
+     3.5
+    ],
+    "motion": [
+     -0.8514693379402161,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e77"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "MechanicalSawScenes.java:264"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     19.5,
+     2.5
+    ],
+    "motion": [
+     -0.9013878107070923,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e78"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     19.5,
+     3.5
+    ],
+    "motion": [
+     -0.9027734994888306,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e79"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     19.5,
+     2.5
+    ],
+    "motion": [
+     -0.8999999761581421,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e80"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     19.5,
+     3.5
+    ],
+    "motion": [
+     -0.9013878107070923,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e81"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "MechanicalSawScenes.java:264"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     20.5,
+     2.5
+    ],
+    "motion": [
+     -0.9513149261474609,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e82"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     20.5,
+     3.5
+    ],
+    "motion": [
+     -0.952627956867218,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e83"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     20.5,
+     2.5
+    ],
+    "motion": [
+     -0.949999988079071,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e84"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     20.5,
+     3.5
+    ],
+    "motion": [
+     -0.9513149261474609,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e85"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "MechanicalSawScenes.java:264"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     21.5,
+     2.5
+    ],
+    "motion": [
+     -1.0012491941452026,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e86"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     21.5,
+     3.5
+    ],
+    "motion": [
+     -1.0024969577789307,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e87"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     21.5,
+     2.5
+    ],
+    "motion": [
+     -1,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e88"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     21.5,
+     3.5
+    ],
+    "motion": [
+     -1.0012491941452026,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e89"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "MechanicalSawScenes.java:264"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     22.5,
+     2.5
+    ],
+    "motion": [
+     -1.0511897802352905,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e90"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     22.5,
+     3.5
+    ],
+    "motion": [
+     -1.0523782968521118,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e91"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     22.5,
+     2.5
+    ],
+    "motion": [
+     -1.0499999523162842,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e92"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     22.5,
+     3.5
+    ],
+    "motion": [
+     -1.0511897802352905,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e93"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "MechanicalSawScenes.java:264"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     23.5,
+     2.5
+    ],
+    "motion": [
+     -1.1011357307434082,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e94"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     23.5,
+     3.5
+    ],
+    "motion": [
+     -1.1022703647613525,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e95"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     23.5,
+     2.5
+    ],
+    "motion": [
+     -1.100000023841858,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e96"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     23.5,
+     3.5
+    ],
+    "motion": [
+     -1.1011357307434082,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e97"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "MechanicalSawScenes.java:264"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     24.5,
+     2.5
+    ],
+    "motion": [
+     -1.151086449623108,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e98"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     24.5,
+     3.5
+    ],
+    "motion": [
+     -1.1521718502044678,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e99"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     24.5,
+     2.5
+    ],
+    "motion": [
+     -1.149999976158142,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e100"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     24.5,
+     3.5
+    ],
+    "motion": [
+     -1.151086449623108,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e101"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "MechanicalSawScenes.java:264"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     25.5,
+     2.5
+    ],
+    "motion": [
+     -1.2010412216186523,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e102"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     25.5,
+     3.5
+    ],
+    "motion": [
+     -1.2020814418792725,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e103"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     25.5,
+     2.5
+    ],
+    "motion": [
+     -1.2000000476837158,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e104"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     25.5,
+     3.5
+    ],
+    "motion": [
+     -1.2010412216186523,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e105"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "MechanicalSawScenes.java:264"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     26.5,
+     2.5
+    ],
+    "motion": [
+     -1.2509996891021729,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e106"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     26.5,
+     3.5
+    ],
+    "motion": [
+     -1.2519984245300293,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e107"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     26.5,
+     2.5
+    ],
+    "motion": [
+     -1.25,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e108"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     26.5,
+     3.5
+    ],
+    "motion": [
+     -1.2509996891021729,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e109"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "MechanicalSawScenes.java:264"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     27.5,
+     2.5
+    ],
+    "motion": [
+     -1.3009612560272217,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e110"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     27.5,
+     3.5
+    ],
+    "motion": [
+     -1.3019216060638428,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e111"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     27.5,
+     2.5
+    ],
+    "motion": [
+     -1.2999999523162842,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e112"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     27.5,
+     3.5
+    ],
+    "motion": [
+     -1.3009612560272217,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e113"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "MechanicalSawScenes.java:264"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     28.5,
+     2.5
+    ],
+    "motion": [
+     -1.3509256839752197,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e114"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     28.5,
+     3.5
+    ],
+    "motion": [
+     -1.3518506288528442,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e115"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     28.5,
+     2.5
+    ],
+    "motion": [
+     -1.350000023841858,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e116"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     28.5,
+     3.5
+    ],
+    "motion": [
+     -1.3509256839752197,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e117"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "MechanicalSawScenes.java:264"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     29.5,
+     2.5
+    ],
+    "motion": [
+     -1.4008924961090088,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e118"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     29.5,
+     3.5
+    ],
+    "motion": [
+     -1.4017846584320068,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e119"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     29.5,
+     2.5
+    ],
+    "motion": [
+     -1.399999976158142,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e120"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     29.5,
+     3.5
+    ],
+    "motion": [
+     -1.4008924961090088,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e121"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "MechanicalSawScenes.java:264"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     30.5,
+     2.5
+    ],
+    "motion": [
+     -1.4508618116378784,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e122"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     30.5,
+     3.5
+    ],
+    "motion": [
+     -1.4517230987548828,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e123"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     30.5,
+     2.5
+    ],
+    "motion": [
+     -1.4500000476837158,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e124"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     30.5,
+     3.5
+    ],
+    "motion": [
+     -1.4508618116378784,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:jungle_log",
+     "count": 1
+    }
+   },
+   "src": "MechanicalSawScenes.java:260",
+   "out": "e125"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "MechanicalSawScenes.java:264"
+  }
+ ]
+}

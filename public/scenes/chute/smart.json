@@ -1,0 +1,1070 @@
+{
+ "id": "create:chute/smart",
+ "schematic": "chute/smart",
+ "schematicNamespace": "create",
+ "title": "Filtering Items using Smart Chutes",
+ "texts": {
+  "text_1": "Smart Chutes are vertical chutes with additional control",
+  "text_2": "Items in the filter slot specify what to extract or transfer",
+  "text_3": "Use the value panel to specify the extracted stack size",
+  "text_4": "Redstone power will prevent Smart Chutes from acting."
+ },
+ "tags": [],
+ "items": [
+  "create:chute",
+  "create:smart_chute"
+ ],
+ "keyframes": [
+  21,
+  101,
+  273,
+  363
+ ],
+ "totalTicks": 427,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "ChuteScenes.java:205"
+  },
+  {
+   "op": "scaleSceneView",
+   "args": {
+    "factor": 0.8999999761581421
+   },
+   "src": "ChuteScenes.java:206"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      4,
+      0,
+      4
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "ChuteScenes.java:211"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ChuteScenes.java:212"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      1,
+      2
+     ],
+     "to": [
+      2,
+      2,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ChuteScenes.java:213"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChuteScenes.java:214"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      3,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ChuteScenes.java:215"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_1",
+    "pointAt": [
+     2,
+     3.5,
+     2.5
+    ],
+    "text": "Smart Chutes are vertical chutes with additional control"
+   },
+   "src": "ChuteScenes.java:217"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "ChuteScenes.java:222"
+  },
+  {
+   "op": "overlay.highlightValueBox",
+   "args": {
+    "location": [
+     2.5,
+     3.6875,
+     2.0234375
+    ],
+    "expands": [
+     0.0859375,
+     0.0859375,
+     0
+    ],
+    "duration": 70
+   },
+   "src": "ChuteScenes.java:226"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChuteScenes.java:227"
+  },
+  {
+   "op": "rotateCameraY",
+   "args": {
+    "degrees": 20
+   },
+   "src": "ChuteScenes.java:228"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_2",
+    "pointAt": [
+     2.5,
+     3.6875,
+     2.125
+    ],
+    "text": "Items in the filter slot specify what to extract or transfer"
+   },
+   "src": "ChuteScenes.java:229"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "ChuteScenes.java:234"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      4,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ChuteScenes.java:236"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "ChuteScenes.java:237"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     3.8125,
+     2
+    ],
+    "direction": "down",
+    "duration": 40,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "minecraft:iron_ingot",
+     "count": 1
+    }
+   },
+   "src": "ChuteScenes.java:240"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "ChuteScenes.java:242"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "SmartChuteBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       3,
+       2
+      ],
+      "nbt": {
+       "Filter": {
+        "id": "minecraft:iron_ingot",
+        "count": 1
+       }
+      }
+     }
+    ]
+   },
+   "src": "ChuteScenes.java:243"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChuteScenes.java:246"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     2,
+     2,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:iron_ingot",
+     "count": 1
+    }
+   },
+   "src": "ChuteScenes.java:247"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChuteScenes.java:246"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     2,
+     2,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:iron_ingot",
+     "count": 1
+    }
+   },
+   "src": "ChuteScenes.java:247"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChuteScenes.java:246"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     2,
+     2,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:iron_ingot",
+     "count": 1
+    }
+   },
+   "src": "ChuteScenes.java:247"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChuteScenes.java:246"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     2,
+     2,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:iron_ingot",
+     "count": 1
+    }
+   },
+   "src": "ChuteScenes.java:247"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChuteScenes.java:246"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     2,
+     2,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:iron_ingot",
+     "count": 1
+    }
+   },
+   "src": "ChuteScenes.java:247"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChuteScenes.java:246"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     2,
+     2,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:iron_ingot",
+     "count": 1
+    }
+   },
+   "src": "ChuteScenes.java:247"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChuteScenes.java:246"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     2,
+     2,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:iron_ingot",
+     "count": 1
+    }
+   },
+   "src": "ChuteScenes.java:247"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChuteScenes.java:246"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     2,
+     2,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:iron_ingot",
+     "count": 1
+    }
+   },
+   "src": "ChuteScenes.java:247"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChuteScenes.java:246"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     2,
+     2,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:iron_ingot",
+     "count": 1
+    }
+   },
+   "src": "ChuteScenes.java:247"
+  },
+  {
+   "op": "rotateCameraY",
+   "args": {
+    "degrees": -20
+   },
+   "src": "ChuteScenes.java:249"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     3.8125,
+     2
+    ],
+    "direction": "down",
+    "duration": 40,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb"
+   },
+   "src": "ChuteScenes.java:250"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 50,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_3",
+    "pointAt": [
+     2.5,
+     3.6875,
+     2.125
+    ],
+    "text": "Use the value panel to specify the extracted stack size"
+   },
+   "src": "ChuteScenes.java:251"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChuteScenes.java:246"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     2,
+     2,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:iron_ingot",
+     "count": 1
+    }
+   },
+   "src": "ChuteScenes.java:247"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChuteScenes.java:246"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     2,
+     2,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:iron_ingot",
+     "count": 1
+    }
+   },
+   "src": "ChuteScenes.java:247"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChuteScenes.java:246"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     2,
+     2,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:iron_ingot",
+     "count": 1
+    }
+   },
+   "src": "ChuteScenes.java:247"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChuteScenes.java:246"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     2,
+     2,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:iron_ingot",
+     "count": 1
+    }
+   },
+   "src": "ChuteScenes.java:247"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChuteScenes.java:246"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     2,
+     2,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:iron_ingot",
+     "count": 1
+    }
+   },
+   "src": "ChuteScenes.java:247"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      1,
+      2
+     ],
+     "to": [
+      1,
+      3,
+      2
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "ChuteScenes.java:258"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChuteScenes.java:246"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     2,
+     2,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:iron_ingot",
+     "count": 1
+    }
+   },
+   "src": "ChuteScenes.java:247"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChuteScenes.java:246"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     2,
+     2,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:iron_ingot",
+     "count": 1
+    }
+   },
+   "src": "ChuteScenes.java:247"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChuteScenes.java:246"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     2,
+     2,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:iron_ingot",
+     "count": 1
+    }
+   },
+   "src": "ChuteScenes.java:247"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChuteScenes.java:246"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     2,
+     2,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:iron_ingot",
+     "count": 1
+    }
+   },
+   "src": "ChuteScenes.java:247"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       0,
+       3,
+       2
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "floor",
+        "facing": "south",
+        "powered": "true"
+       }
+      }
+     },
+     {
+      "pos": [
+       1,
+       3,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "none",
+        "power": "15",
+        "south": "none",
+        "west": "side"
+       }
+      }
+     },
+     {
+      "pos": [
+       2,
+       3,
+       2
+      ],
+      "state": {
+       "name": "create:smart_chute",
+       "props": {
+        "powered": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ChuteScenes.java:261"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     0,
+     3,
+     2
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "ChuteScenes.java:262"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 50,
+    "color": "red",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_4",
+    "pointAt": [
+     0.5,
+     3,
+     2.5
+    ],
+    "text": "Redstone power will prevent Smart Chutes from acting."
+   },
+   "src": "ChuteScenes.java:263"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "ChuteScenes.java:269"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       0,
+       3,
+       2
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "floor",
+        "facing": "south",
+        "powered": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       1,
+       3,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "none",
+        "power": "0",
+        "south": "none",
+        "west": "side"
+       }
+      }
+     },
+     {
+      "pos": [
+       2,
+       3,
+       2
+      ],
+      "state": {
+       "name": "create:smart_chute",
+       "props": {
+        "powered": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ChuteScenes.java:271"
+  },
+  {
+   "op": "markAsFinished",
+   "args": {},
+   "src": "ChuteScenes.java:272"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChuteScenes.java:274"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     2,
+     2,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:iron_ingot",
+     "count": 1
+    }
+   },
+   "src": "ChuteScenes.java:275"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChuteScenes.java:274"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     2,
+     2,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:iron_ingot",
+     "count": 1
+    }
+   },
+   "src": "ChuteScenes.java:275"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChuteScenes.java:274"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     2,
+     2,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:iron_ingot",
+     "count": 1
+    }
+   },
+   "src": "ChuteScenes.java:275"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChuteScenes.java:274"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     2,
+     2,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:iron_ingot",
+     "count": 1
+    }
+   },
+   "src": "ChuteScenes.java:275"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChuteScenes.java:274"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     2,
+     2,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:iron_ingot",
+     "count": 1
+    }
+   },
+   "src": "ChuteScenes.java:275"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChuteScenes.java:274"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     2,
+     2,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:iron_ingot",
+     "count": 1
+    }
+   },
+   "src": "ChuteScenes.java:275"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChuteScenes.java:274"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     2,
+     2,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:iron_ingot",
+     "count": 1
+    }
+   },
+   "src": "ChuteScenes.java:275"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChuteScenes.java:274"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     2,
+     2,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:iron_ingot",
+     "count": 1
+    }
+   },
+   "src": "ChuteScenes.java:275"
+  }
+ ]
+}

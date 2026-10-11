@@ -1,0 +1,1186 @@
+{
+ "id": "create:large_water_wheel",
+ "schematic": "large_water_wheel",
+ "schematicNamespace": "create",
+ "title": "Generating Rotational Force using Large Water Wheels",
+ "texts": {
+  "text_1": "Large Water Wheels draw force from adjacent Water Currents",
+  "text_2": "Covering additional sides will not improve its kinetic output further",
+  "text_3": "These rotate only at half the speed of regular water wheels...",
+  "text_4": "...but provide a substantially higher stress capacity",
+  "text_5": "Use wood planks on the wheel to change its appearance"
+ },
+ "tags": [
+  "create:kinetic_sources"
+ ],
+ "items": [
+  "create:large_water_wheel"
+ ],
+ "keyframes": [
+  155,
+  276,
+  428
+ ],
+ "totalTicks": 569,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "KineticsScenes.java:739"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        0,
+        0,
+        0
+       ],
+       "to": [
+        2,
+        0,
+        0
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        4,
+        0,
+        0
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        0,
+        1
+       ],
+       "to": [
+        4,
+        0,
+        4
+       ]
+      }
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "KineticsScenes.java:740"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      0,
+      0
+     ],
+     "to": [
+      1,
+      0,
+      4
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "KineticsScenes.java:743",
+   "out": "e1"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     2,
+     0,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "KineticsScenes.java:744"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "KineticsScenes.java:745"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      1,
+      3
+     ],
+     "to": [
+      3,
+      2,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "KineticsScenes.java:746"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "SpeedGaugeBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       1,
+       2
+      ],
+      "nbt": {
+       "Value": 0
+      }
+     }
+    ]
+   },
+   "src": "KineticsScenes.java:747"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     }
+    ]
+   },
+   "src": "KineticsScenes.java:747"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "KineticsScenes.java:752"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "direction": "down"
+   },
+   "src": "KineticsScenes.java:754"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "KineticsScenes.java:755"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "KineticsScenes.java:752"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "KineticsScenes.java:755"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "KineticsScenes.java:752"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "KineticsScenes.java:755"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "KineticsScenes.java:752"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "KineticsScenes.java:755"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "KineticsScenes.java:758"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "KineticsScenes.java:761"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      3,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "KineticsScenes.java:762"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "KineticsScenes.java:761"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      3,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "KineticsScenes.java:762"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "KineticsScenes.java:761"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      3,
+      1
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "KineticsScenes.java:762"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "SpeedGaugeBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       1,
+       2
+      ],
+      "nbt": {
+       "Value": 0.060000002
+      }
+     }
+    ]
+   },
+   "src": "KineticsScenes.java:764"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -4
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -4
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -4
+      }
+     }
+    ]
+   },
+   "src": "KineticsScenes.java:764"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     1,
+     1,
+     2
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "KineticsScenes.java:765"
+  },
+  {
+   "op": "effects.rotationIndicator",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ],
+    "direction": false
+   },
+   "src": "KineticsScenes.java:768"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_1",
+    "pointAt": [
+     3.5,
+     2,
+     2.5
+    ],
+    "text": "Large Water Wheels draw force from adjacent Water Currents"
+   },
+   "src": "KineticsScenes.java:769"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "KineticsScenes.java:773"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "medium",
+    "slot": "obj:1",
+    "box": {
+     "min": [
+      2.875,
+      0.25,
+      1
+     ],
+     "max": [
+      4.125,
+      6,
+      4
+     ]
+    },
+    "duration": 80
+   },
+   "src": "KineticsScenes.java:776"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "KineticsScenes.java:778"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "medium",
+    "slot": "obj:2",
+    "box": {
+     "min": [
+      2.875,
+      0,
+      -2
+     ],
+     "max": [
+      4.125,
+      3,
+      3.75
+     ]
+    },
+    "duration": 75
+   },
+   "src": "KineticsScenes.java:779"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "KineticsScenes.java:781"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "medium",
+    "slot": "obj:3",
+    "box": {
+     "min": [
+      2.875,
+      -3,
+      1
+     ],
+     "max": [
+      4.125,
+      2.75,
+      4
+     ]
+    },
+    "duration": 70
+   },
+   "src": "KineticsScenes.java:782"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "KineticsScenes.java:784"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "medium",
+    "slot": "obj:4",
+    "box": {
+     "min": [
+      2.875,
+      0,
+      1.25
+     ],
+     "max": [
+      4.125,
+      3,
+      7
+     ]
+    },
+    "duration": 65
+   },
+   "src": "KineticsScenes.java:785"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 75
+   },
+   "src": "KineticsScenes.java:787"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      3,
+      0
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "KineticsScenes.java:790"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "KineticsScenes.java:792"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      2,
+      0
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "KineticsScenes.java:793"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "KineticsScenes.java:792"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      0
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "KineticsScenes.java:793"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "KineticsScenes.java:792"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      0,
+      0
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "KineticsScenes.java:793"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "KineticsScenes.java:796"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 50,
+    "color": "red",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_2",
+    "pointAt": [
+     3.5,
+     1.5,
+     2
+    ],
+    "text": "Covering additional sides will not improve its kinetic output further"
+   },
+   "src": "KineticsScenes.java:797"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "KineticsScenes.java:803"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "KineticsScenes.java:805"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_3",
+    "pointAt": [
+     1.5,
+     1.5,
+     2
+    ],
+    "text": "These rotate only at half the speed of regular water wheels..."
+   },
+   "src": "KineticsScenes.java:806"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 78
+   },
+   "src": "KineticsScenes.java:813"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_4",
+    "pointAt": [
+     1,
+     1.5,
+     2.5
+    ],
+    "text": "...but provide a substantially higher stress capacity"
+   },
+   "src": "KineticsScenes.java:814"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "KineticsScenes.java:820"
+  },
+  {
+   "op": "world.makeSectionIndependent",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        3,
+        0,
+        0
+       ],
+       "to": [
+        3,
+        2,
+        0
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        3,
+        3,
+        0
+       ],
+       "to": [
+        3,
+        3,
+        3
+       ]
+      }
+     ]
+    }
+   },
+   "src": "KineticsScenes.java:825",
+   "out": "e2"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     1,
+     0.5,
+     -0.5
+    ],
+    "duration": 15
+   },
+   "src": "KineticsScenes.java:827"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "KineticsScenes.java:828"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "SpeedGaugeBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       1,
+       2
+      ],
+      "nbt": {
+       "Value": 0
+      }
+     }
+    ]
+   },
+   "src": "KineticsScenes.java:829"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     }
+    ]
+   },
+   "src": "KineticsScenes.java:829"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "KineticsScenes.java:834"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3.5,
+     3,
+     3.5
+    ],
+    "direction": "down",
+    "duration": 20,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "minecraft:crimson_planks",
+     "count": 1
+    }
+   },
+   "src": "KineticsScenes.java:836"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "KineticsScenes.java:838"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ],
+    "beType": "WaterWheelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "applyMaterialIfValid",
+        "a": [
+         {
+          "id": "minecraft:crimson_planks",
+          "count": 1
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "KineticsScenes.java:839"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 50,
+    "color": "blue",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_5",
+    "pointAt": [
+     3,
+     2.5,
+     3.5
+    ],
+    "text": "Use wood planks on the wheel to change its appearance"
+   },
+   "src": "KineticsScenes.java:840"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "KineticsScenes.java:845"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3.5,
+     3,
+     3.5
+    ],
+    "direction": "down",
+    "duration": 20,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "minecraft:birch_planks",
+     "count": 1
+    }
+   },
+   "src": "KineticsScenes.java:848"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "KineticsScenes.java:850"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ],
+    "beType": "WaterWheelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "applyMaterialIfValid",
+        "a": [
+         {
+          "id": "minecraft:birch_planks",
+          "count": 1
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "KineticsScenes.java:851"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "KineticsScenes.java:852"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3.5,
+     3,
+     3.5
+    ],
+    "direction": "down",
+    "duration": 20,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "minecraft:jungle_planks",
+     "count": 1
+    }
+   },
+   "src": "KineticsScenes.java:855"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "KineticsScenes.java:857"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ],
+    "beType": "WaterWheelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "applyMaterialIfValid",
+        "a": [
+         {
+          "id": "minecraft:jungle_planks",
+          "count": 1
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "KineticsScenes.java:858"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "KineticsScenes.java:859"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     -1,
+     -0.5,
+     0.5
+    ],
+    "duration": 15
+   },
+   "src": "KineticsScenes.java:861"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "KineticsScenes.java:862"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "SpeedGaugeBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       1,
+       2
+      ],
+      "nbt": {
+       "Value": 0.060000002
+      }
+     }
+    ]
+   },
+   "src": "KineticsScenes.java:863"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -4
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -4
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -4
+      }
+     }
+    ]
+   },
+   "src": "KineticsScenes.java:863"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     1,
+     1,
+     2
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "KineticsScenes.java:864"
+  }
+ ]
+}

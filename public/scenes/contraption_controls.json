@@ -1,0 +1,2434 @@
+{
+ "id": "create:contraption_controls",
+ "schematic": "contraption_controls",
+ "schematicNamespace": "create",
+ "title": "Using Contraption Controls",
+ "texts": {
+  "text_1": "Actors on moving contraptions are always active by default",
+  "text_2": "Contraption Controls can be used to toggle them on the fly",
+  "text_3": "They can be attached anywhere on the contraption",
+  "text_4": "While disassembled, the filter can be changed to target specific types of actors",
+  "text_5": "If it is redstone-activated during assembly...",
+  "text_6": "...targeted actors will be turned off from the start"
+ },
+ "tags": [],
+ "items": [
+  "create:contraption_controls"
+ ],
+ "keyframes": [
+  176,
+  375,
+  492,
+  709
+ ],
+ "totalTicks": 868,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 1,
+    "zOffset": 0,
+    "size": 6
+   },
+   "src": "MovementActorScenes.java:519"
+  },
+  {
+   "op": "scaleSceneView",
+   "args": {
+    "factor": 0.8999999761581421
+   },
+   "src": "MovementActorScenes.java:520"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      0,
+      0
+     ],
+     "to": [
+      6,
+      0,
+      5
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "MovementActorScenes.java:521"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "MovementActorScenes.java:534"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      1
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "MovementActorScenes.java:536"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      2
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "MovementActorScenes.java:537"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "MovementActorScenes.java:538"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      5,
+      1,
+      4
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "MovementActorScenes.java:540"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "MovementActorScenes.java:541"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        1,
+        1,
+        4
+       ],
+       "to": [
+        3,
+        1,
+        5
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        3,
+        2,
+        4
+       ],
+       "to": [
+        5,
+        2,
+        5
+       ]
+      }
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "MovementActorScenes.java:544",
+   "out": "e1"
+  },
+  {
+   "op": "world.configureCenterOfRotation",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "anchor": [
+     5.5,
+     1.5,
+     4.5
+    ]
+   },
+   "src": "MovementActorScenes.java:545"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "MovementActorScenes.java:546"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ],
+    "beType": "HarvesterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "setAnimatedSpeed",
+        "a": [
+         -280
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:548"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 64
+      }
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:549"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bearing",
+    "pos": [
+     5,
+     1,
+     4
+    ],
+    "distance": -30,
+    "duration": 20
+   },
+   "src": "MovementActorScenes.java:550"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "rotation": [
+     0,
+     -30,
+     0
+    ],
+    "duration": 20
+   },
+   "src": "MovementActorScenes.java:551"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "MovementActorScenes.java:555"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     3.5,
+     2,
+     2.5
+    ],
+    "key": "text_1",
+    "text": "Actors on moving contraptions are always active by default"
+   },
+   "src": "MovementActorScenes.java:556"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "MovementActorScenes.java:562"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ]
+   },
+   "src": "MovementActorScenes.java:563"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "MovementActorScenes.java:562"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ]
+   },
+   "src": "MovementActorScenes.java:563"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "MovementActorScenes.java:562"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ]
+   },
+   "src": "MovementActorScenes.java:563"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "MovementActorScenes.java:562"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ]
+   },
+   "src": "MovementActorScenes.java:563"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "MovementActorScenes.java:562"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ]
+   },
+   "src": "MovementActorScenes.java:563"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "MovementActorScenes.java:562"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ]
+   },
+   "src": "MovementActorScenes.java:563"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "MovementActorScenes.java:562"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ]
+   },
+   "src": "MovementActorScenes.java:563"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "MovementActorScenes.java:562"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ]
+   },
+   "src": "MovementActorScenes.java:563"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "MovementActorScenes.java:562"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ]
+   },
+   "src": "MovementActorScenes.java:563"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "MovementActorScenes.java:562"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ]
+   },
+   "src": "MovementActorScenes.java:563"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     3.5,
+     1.5,
+     2.5
+    ],
+    "motion": [
+     0.1,
+     0,
+     -0.1
+    ],
+    "item": {
+     "id": "minecraft:cobblestone",
+     "count": 1
+    }
+   },
+   "src": "MovementActorScenes.java:569",
+   "out": "e2"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "MovementActorScenes.java:571"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bearing",
+    "pos": [
+     5,
+     1,
+     4
+    ],
+    "distance": -60,
+    "duration": 40
+   },
+   "src": "MovementActorScenes.java:573"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "rotation": [
+     0,
+     -60,
+     0
+    ],
+    "duration": 40
+   },
+   "src": "MovementActorScenes.java:574"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "MovementActorScenes.java:575"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      1
+     ]
+    },
+    "state": {
+     "name": "minecraft:wheat",
+     "props": {
+      "age": "0"
+     }
+    },
+    "particles": true
+   },
+   "src": "MovementActorScenes.java:577"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     1.5,
+     1.5
+    ],
+    "motion": [
+     0.1,
+     0,
+     -0.1
+    ],
+    "item": {
+     "id": "minecraft:wheat",
+     "count": 1
+    }
+   },
+   "src": "MovementActorScenes.java:578",
+   "out": "e3"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 35
+   },
+   "src": "MovementActorScenes.java:579"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ],
+    "beType": "HarvesterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "setAnimatedSpeed",
+        "a": [
+         0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:581"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:582"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "MovementActorScenes.java:583"
+  },
+  {
+   "op": "world.modifyEntity",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "discard",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:585"
+  },
+  {
+   "op": "world.modifyEntity",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "discard",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:586"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "direction": "up"
+   },
+   "src": "MovementActorScenes.java:587"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "MovementActorScenes.java:588"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        1,
+        1,
+        4
+       ],
+       "to": [
+        3,
+        1,
+        5
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        3,
+        2,
+        4
+       ],
+       "to": [
+        5,
+        2,
+        5
+       ]
+      }
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "MovementActorScenes.java:589",
+   "out": "e4"
+  },
+  {
+   "op": "world.configureCenterOfRotation",
+   "args": {
+    "link": {
+     "link": "e4"
+    },
+    "anchor": [
+     5.5,
+     1.5,
+     4.5
+    ]
+   },
+   "src": "MovementActorScenes.java:590"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e4"
+    },
+    "offset": [
+     0,
+     0.001953125,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "MovementActorScenes.java:591"
+  },
+  {
+   "op": "world.restoreBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      1
+     ]
+    }
+   },
+   "src": "MovementActorScenes.java:593"
+  },
+  {
+   "op": "world.restoreBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      2
+     ]
+    }
+   },
+   "src": "MovementActorScenes.java:594"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "MovementActorScenes.java:595"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      2,
+      5
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e4"
+    }
+   },
+   "src": "MovementActorScenes.java:597"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "MovementActorScenes.java:598"
+  },
+  {
+   "op": "effects.superGlue",
+   "args": {
+    "pos": [
+     1,
+     2,
+     5
+    ],
+    "side": "down",
+    "fullBlock": true
+   },
+   "src": "MovementActorScenes.java:599"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     1.5,
+     2.75,
+     5.5
+    ],
+    "key": "text_2",
+    "text": "Contraption Controls can be used to toggle them on the fly"
+   },
+   "src": "MovementActorScenes.java:601"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 55
+   },
+   "src": "MovementActorScenes.java:607"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bearing",
+    "pos": [
+     5,
+     1,
+     4
+    ],
+    "distance": -15,
+    "duration": 10
+   },
+   "src": "MovementActorScenes.java:609"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e4"
+    },
+    "rotation": [
+     0,
+     -15,
+     0
+    ],
+    "duration": 10
+   },
+   "src": "MovementActorScenes.java:610"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ],
+    "beType": "HarvesterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "setAnimatedSpeed",
+        "a": [
+         -280
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:611"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 64
+      }
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:612"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "MovementActorScenes.java:613"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ],
+    "beType": "HarvesterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "setAnimatedSpeed",
+        "a": [
+         0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:614"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:615"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     1.5,
+     2.75,
+     4.5
+    ],
+    "direction": "down",
+    "duration": 15,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb"
+   },
+   "src": "MovementActorScenes.java:616"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "MovementActorScenes.java:617"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     5
+    ],
+    "beType": "ContraptionControlsBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "set": "disabled",
+        "v": true
+       }
+      ]
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:618"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     1,
+     2,
+     4
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "MovementActorScenes.java:619"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "MovementActorScenes.java:620"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bearing",
+    "pos": [
+     5,
+     1,
+     4
+    ],
+    "distance": -60,
+    "duration": 40
+   },
+   "src": "MovementActorScenes.java:621"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e4"
+    },
+    "rotation": [
+     0,
+     -60,
+     0
+    ],
+    "duration": 40
+   },
+   "src": "MovementActorScenes.java:622"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "MovementActorScenes.java:623"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3.5,
+     2.75,
+     1
+    ],
+    "direction": "down",
+    "duration": 15,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb"
+   },
+   "src": "MovementActorScenes.java:625"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "MovementActorScenes.java:626"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     5
+    ],
+    "beType": "ContraptionControlsBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "set": "disabled",
+        "v": false
+       }
+      ]
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:627"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     3,
+     2,
+     0
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "MovementActorScenes.java:629"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "MovementActorScenes.java:630"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ],
+    "beType": "HarvesterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "setAnimatedSpeed",
+        "a": [
+         -280
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:631"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 64
+      }
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:632"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bearing",
+    "pos": [
+     5,
+     1,
+     4
+    ],
+    "distance": -15,
+    "duration": 10
+   },
+   "src": "MovementActorScenes.java:633"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e4"
+    },
+    "rotation": [
+     0,
+     -15,
+     0
+    ],
+    "duration": 10
+   },
+   "src": "MovementActorScenes.java:634"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "MovementActorScenes.java:635"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ],
+    "beType": "HarvesterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "setAnimatedSpeed",
+        "a": [
+         0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:636"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:637"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "MovementActorScenes.java:638"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e4"
+    },
+    "direction": "up"
+   },
+   "src": "MovementActorScenes.java:640"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "MovementActorScenes.java:641"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        1,
+        1,
+        4
+       ],
+       "to": [
+        3,
+        1,
+        5
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        3,
+        2,
+        4
+       ],
+       "to": [
+        5,
+        2,
+        5
+       ]
+      }
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "MovementActorScenes.java:642",
+   "out": "e5"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      2,
+      5
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e5"
+    }
+   },
+   "src": "MovementActorScenes.java:643"
+  },
+  {
+   "op": "world.configureCenterOfRotation",
+   "args": {
+    "link": {
+     "link": "e5"
+    },
+    "anchor": [
+     5.5,
+     1.5,
+     4.5
+    ]
+   },
+   "src": "MovementActorScenes.java:644"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e5"
+    },
+    "offset": [
+     0,
+     0.001953125,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "MovementActorScenes.java:645"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "MovementActorScenes.java:647"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      2,
+      5
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e5"
+    }
+   },
+   "src": "MovementActorScenes.java:648"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "MovementActorScenes.java:649"
+  },
+  {
+   "op": "effects.superGlue",
+   "args": {
+    "pos": [
+     2,
+     2,
+     5
+    ],
+    "side": "down",
+    "fullBlock": true
+   },
+   "src": "MovementActorScenes.java:650"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     2.5,
+     2.75,
+     5.5
+    ],
+    "key": "text_3",
+    "text": "They can be attached anywhere on the contraption"
+   },
+   "src": "MovementActorScenes.java:652"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 75
+   },
+   "src": "MovementActorScenes.java:658"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     3,
+     5.5
+    ],
+    "direction": "down",
+    "duration": 30,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:mechanical_drill",
+     "count": 1
+    }
+   },
+   "src": "MovementActorScenes.java:660"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "MovementActorScenes.java:662"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     1.5,
+     2.5,
+     5.5
+    ],
+    "direction": "up",
+    "duration": 25,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:mechanical_harvester",
+     "count": 1
+    }
+   },
+   "src": "MovementActorScenes.java:663"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "MovementActorScenes.java:665"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ContraptionControlsBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       2,
+       5
+      ],
+      "nbt": {
+       "Filter": {
+        "id": "create:mechanical_drill",
+        "count": 1
+       }
+      }
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:666"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "MovementActorScenes.java:668"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ContraptionControlsBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       2,
+       5
+      ],
+      "nbt": {
+       "Filter": {
+        "id": "create:mechanical_harvester",
+        "count": 1
+       }
+      }
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:669"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "MovementActorScenes.java:671"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 90,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "independent": 80,
+    "key": "text_4",
+    "text": "While disassembled, the filter can be changed to target specific types of actors"
+   },
+   "src": "MovementActorScenes.java:673"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "MovementActorScenes.java:678"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     3,
+     5.5
+    ],
+    "direction": "right",
+    "duration": 15,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb"
+   },
+   "src": "MovementActorScenes.java:680"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "MovementActorScenes.java:681"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     2,
+     2,
+     5
+    ],
+    "beType": "ContraptionControlsBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "set": "disabled",
+        "v": true
+       }
+      ]
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:682"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     2,
+     2,
+     5
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "MovementActorScenes.java:683"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "MovementActorScenes.java:684"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ],
+    "beType": "HarvesterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "setAnimatedSpeed",
+        "a": [
+         -280
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:686"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bearing",
+    "pos": [
+     5,
+     1,
+     4
+    ],
+    "distance": -90,
+    "duration": 60
+   },
+   "src": "MovementActorScenes.java:687"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e5"
+    },
+    "rotation": [
+     0,
+     -90,
+     0
+    ],
+    "duration": 60
+   },
+   "src": "MovementActorScenes.java:688"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 25
+   },
+   "src": "MovementActorScenes.java:689"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      1
+     ]
+    },
+    "state": {
+     "name": "minecraft:wheat",
+     "props": {
+      "age": "0"
+     }
+    },
+    "particles": true
+   },
+   "src": "MovementActorScenes.java:690"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     1.5,
+     1.5
+    ],
+    "motion": [
+     0.1,
+     0,
+     -0.1
+    ],
+    "item": {
+     "id": "minecraft:wheat",
+     "count": 1
+    }
+   },
+   "src": "MovementActorScenes.java:691",
+   "out": "e6"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 35
+   },
+   "src": "MovementActorScenes.java:692"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ],
+    "beType": "HarvesterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "setAnimatedSpeed",
+        "a": [
+         0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:693"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "MovementActorScenes.java:694"
+  },
+  {
+   "op": "world.modifyEntity",
+   "args": {
+    "link": {
+     "link": "e6"
+    },
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "discard",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:696"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e5"
+    },
+    "direction": "up"
+   },
+   "src": "MovementActorScenes.java:697"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "MovementActorScenes.java:698"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     2,
+     2,
+     5
+    ],
+    "beType": "ContraptionControlsBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "set": "disabled",
+        "v": false
+       }
+      ]
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:699"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        1,
+        1,
+        4
+       ],
+       "to": [
+        3,
+        1,
+        5
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        3,
+        2,
+        4
+       ],
+       "to": [
+        5,
+        2,
+        5
+       ]
+      }
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "MovementActorScenes.java:701",
+   "out": "e7"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      2,
+      5
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e7"
+    }
+   },
+   "src": "MovementActorScenes.java:702"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      2,
+      5
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e7"
+    }
+   },
+   "src": "MovementActorScenes.java:703"
+  },
+  {
+   "op": "world.configureCenterOfRotation",
+   "args": {
+    "link": {
+     "link": "e7"
+    },
+    "anchor": [
+     5.5,
+     1.5,
+     4.5
+    ]
+   },
+   "src": "MovementActorScenes.java:704"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e7"
+    },
+    "offset": [
+     0,
+     0.001953125,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "MovementActorScenes.java:705"
+  },
+  {
+   "op": "world.restoreBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      1
+     ]
+    }
+   },
+   "src": "MovementActorScenes.java:707"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "MovementActorScenes.java:708"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      5
+     ],
+     "to": [
+      0,
+      2,
+      5
+     ]
+    },
+    "direction": "east"
+   },
+   "src": "MovementActorScenes.java:710"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 50,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "independent": 100,
+    "key": "text_5",
+    "text": "If it is redstone-activated during assembly..."
+   },
+   "src": "MovementActorScenes.java:712"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "MovementActorScenes.java:717"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       0,
+       2,
+       5
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "floor",
+        "facing": "south",
+        "powered": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "MovementActorScenes.java:719"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     0,
+     2,
+     5
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "MovementActorScenes.java:720"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     5
+    ],
+    "beType": "ContraptionControlsBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "set": "disabled",
+        "v": true
+       }
+      ]
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:721"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 35
+   },
+   "src": "MovementActorScenes.java:722"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 64
+      }
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:724"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bearing",
+    "pos": [
+     5,
+     1,
+     4
+    ],
+    "distance": -30,
+    "duration": 20
+   },
+   "src": "MovementActorScenes.java:725"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e7"
+    },
+    "rotation": [
+     0,
+     -30,
+     0
+    ],
+    "duration": 20
+   },
+   "src": "MovementActorScenes.java:726"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "MovementActorScenes.java:728"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     2.5,
+     1.5,
+     1.5
+    ],
+    "key": "text_6",
+    "text": "...targeted actors will be turned off from the start"
+   },
+   "src": "MovementActorScenes.java:729"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "MovementActorScenes.java:735"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ]
+   },
+   "src": "MovementActorScenes.java:736"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "MovementActorScenes.java:735"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ]
+   },
+   "src": "MovementActorScenes.java:736"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "MovementActorScenes.java:735"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ]
+   },
+   "src": "MovementActorScenes.java:736"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "MovementActorScenes.java:735"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ]
+   },
+   "src": "MovementActorScenes.java:736"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "MovementActorScenes.java:735"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ]
+   },
+   "src": "MovementActorScenes.java:736"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "MovementActorScenes.java:735"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ]
+   },
+   "src": "MovementActorScenes.java:736"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "MovementActorScenes.java:735"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ]
+   },
+   "src": "MovementActorScenes.java:736"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "MovementActorScenes.java:735"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ]
+   },
+   "src": "MovementActorScenes.java:736"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "MovementActorScenes.java:735"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ]
+   },
+   "src": "MovementActorScenes.java:736"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "MovementActorScenes.java:735"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ]
+   },
+   "src": "MovementActorScenes.java:736"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     3.5,
+     1.5,
+     2.5
+    ],
+    "motion": [
+     0.1,
+     0,
+     -0.1
+    ],
+    "item": {
+     "id": "minecraft:cobblestone",
+     "count": 1
+    }
+   },
+   "src": "MovementActorScenes.java:739",
+   "out": "e8"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "MovementActorScenes.java:741"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bearing",
+    "pos": [
+     5,
+     1,
+     4
+    ],
+    "distance": -60,
+    "duration": 40
+   },
+   "src": "MovementActorScenes.java:742"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e7"
+    },
+    "rotation": [
+     0,
+     -60,
+     0
+    ],
+    "duration": 40
+   },
+   "src": "MovementActorScenes.java:743"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "MovementActorScenes.java:744"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:745"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "MovementActorScenes.java:746"
+  },
+  {
+   "op": "world.modifyEntity",
+   "args": {
+    "link": {
+     "link": "e8"
+    },
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "discard",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:747"
+  }
+ ]
+}

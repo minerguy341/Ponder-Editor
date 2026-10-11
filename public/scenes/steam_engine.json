@@ -1,0 +1,2614 @@
+{
+ "id": "create:steam_engine",
+ "schematic": "steam_engine",
+ "schematicNamespace": "create",
+ "title": "Setting up Steam Engines",
+ "texts": {
+  "text_1": "Steam Engines can be placed on a Fluid Tank",
+  "text_2": "Clicking the engine with a Shaft creates the Kinetic Output",
+  "text_3": "With sufficient Heat, Water and Boiler space...",
+  "text_4": "...they will generate Rotational Force",
+  "text_5": "The minimal setup requires 4 Fluid Tanks",
+  "text_6": "With the help of Blaze Burners, the power output can be increased",
+  "text_7": "Higher power levels require more Water, Size and Heat",
+  "text_8": "The boiler's current power level can be inspected with Engineer's Goggles",
+  "text_9": "With each added power level, an additional Engine can output at full capacity",
+  "text_10": "Lvl 4",
+  "text_11": "4 Engines",
+  "text_12": "Lvl 8",
+  "text_13": "8 Engines"
+ },
+ "tags": [],
+ "items": [
+  "create:steam_engine"
+ ],
+ "keyframes": [
+  71,
+  186,
+  331,
+  471,
+  626,
+  761,
+  857,
+  987
+ ],
+ "totalTicks": 1347,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 7
+   },
+   "src": "SteamScenes.java:199"
+  },
+  {
+   "op": "setSceneOffsetY",
+   "args": {
+    "yOffset": -1
+   },
+   "src": "SteamScenes.java:200"
+  },
+  {
+   "op": "scaleSceneView",
+   "args": {
+    "factor": 0.8999999761581421
+   },
+   "src": "SteamScenes.java:201"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      6,
+      0,
+      6
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "SteamScenes.java:202"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      0,
+      0
+     ],
+     "to": [
+      4,
+      0,
+      0
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "SteamScenes.java:206",
+   "out": "e1"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     1,
+     0,
+     1
+    ],
+    "duration": 0
+   },
+   "src": "SteamScenes.java:207"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       4,
+       2,
+       7
+      ],
+      "state": {
+       "name": "create:mechanical_pump",
+       "props": {
+        "facing": "south",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "SteamScenes.java:229"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       2,
+       7
+      ],
+      "state": {
+       "name": "create:mechanical_pump",
+       "props": {
+        "facing": "south",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "SteamScenes.java:230"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       3,
+       7
+      ],
+      "state": {
+       "name": "create:mechanical_pump",
+       "props": {
+        "facing": "south",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "SteamScenes.java:231"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "SteamScenes.java:233"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      2,
+      3
+     ],
+     "to": [
+      5,
+      2,
+      4
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "SteamScenes.java:234",
+   "out": "e2"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     0,
+     -1,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "SteamScenes.java:235"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "SteamScenes.java:236"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      2,
+      3
+     ]
+    },
+    "direction": "east"
+   },
+   "src": "SteamScenes.java:237",
+   "out": "e3"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "offset": [
+     1,
+     -1,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "SteamScenes.java:238"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "SteamScenes.java:239"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     0,
+     -1000,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "SteamScenes.java:240"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "direction": null
+   },
+   "src": "SteamScenes.java:241"
+  },
+  {
+   "op": "world.showIndependentSectionImmediately",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      4,
+      1
+     ],
+     "to": [
+      5,
+      4,
+      2
+     ]
+    }
+   },
+   "src": "SteamScenes.java:242",
+   "out": "e4"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e4"
+    },
+    "offset": [
+     0,
+     -3,
+     2
+    ],
+    "duration": 0
+   },
+   "src": "SteamScenes.java:243"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     5,
+     1,
+     3
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "SteamScenes.java:244"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     4,
+     1,
+     3
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "SteamScenes.java:245"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     5,
+     1,
+     4
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "SteamScenes.java:246"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     4,
+     1,
+     4
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "SteamScenes.java:247"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 25
+   },
+   "src": "SteamScenes.java:248"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 50,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_1",
+    "pointAt": [
+     3,
+     1.5,
+     3.5
+    ],
+    "text": "Steam Engines can be placed on a Fluid Tank"
+   },
+   "src": "SteamScenes.java:250"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "SteamScenes.java:255"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3.5,
+     2,
+     3.5
+    ],
+    "direction": "down",
+    "duration": 60,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "create:shaft",
+     "count": 1
+    },
+    "icon": "rmb"
+   },
+   "src": "SteamScenes.java:257"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "SteamScenes.java:260"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      4,
+      1
+     ]
+    },
+    "state": {
+     "name": "create:shaft",
+     "props": {
+      "axis": "z",
+      "waterlogged": "false"
+     }
+    },
+    "particles": false
+   },
+   "src": "SteamScenes.java:261"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      4,
+      1
+     ]
+    },
+    "direction": null
+   },
+   "src": "SteamScenes.java:263",
+   "out": "e5"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e5"
+    },
+    "offset": [
+     0,
+     -3,
+     2
+    ],
+    "duration": 0
+   },
+   "src": "SteamScenes.java:264"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "SteamScenes.java:265"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "offset": [
+     0,
+     -1000,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "SteamScenes.java:266"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "direction": null
+   },
+   "src": "SteamScenes.java:267"
+  },
+  {
+   "op": "world.showIndependentSectionImmediately",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      4,
+      1
+     ],
+     "to": [
+      3,
+      4,
+      1
+     ]
+    }
+   },
+   "src": "SteamScenes.java:268",
+   "out": "e6"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e6"
+    },
+    "offset": [
+     0,
+     -3,
+     2
+    ],
+    "duration": 0
+   },
+   "src": "SteamScenes.java:269"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      4,
+      1
+     ]
+    },
+    "state": {
+     "name": "create:powered_shaft",
+     "props": {
+      "axis": "z",
+      "waterlogged": "false"
+     }
+    },
+    "particles": false
+   },
+   "src": "SteamScenes.java:270"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     1,
+     1,
+     3
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "SteamScenes.java:272"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "SteamScenes.java:273"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "blue",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_2",
+    "pointAt": [
+     1.5,
+     1.5,
+     3.5
+    ],
+    "text": "Clicking the engine with a Shaft creates the Kinetic Output"
+   },
+   "src": "SteamScenes.java:275"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "SteamScenes.java:281"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       5,
+       0,
+       7
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     }
+    ]
+   },
+   "src": "SteamScenes.java:283"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       6,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       6,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       6,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       6,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       6,
+       1,
+       6
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       6,
+       1,
+       7
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     }
+    ]
+   },
+   "src": "SteamScenes.java:284"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       5,
+       2,
+       2
+      ],
+      "nbt": {
+       "Speed": 64
+      }
+     }
+    ]
+   },
+   "src": "SteamScenes.java:285"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       2,
+       7
+      ],
+      "nbt": {
+       "Speed": -64
+      }
+     },
+     {
+      "pos": [
+       5,
+       2,
+       7
+      ],
+      "nbt": {
+       "Speed": 64
+      }
+     }
+    ]
+   },
+   "src": "SteamScenes.java:286"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e4"
+    },
+    "offset": [
+     0,
+     1,
+     0
+    ],
+    "duration": 15
+   },
+   "src": "SteamScenes.java:288"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e6"
+    },
+    "offset": [
+     0,
+     1,
+     0
+    ],
+    "duration": 15
+   },
+   "src": "SteamScenes.java:289"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e5"
+    },
+    "offset": [
+     0,
+     1,
+     0
+    ],
+    "duration": 15
+   },
+   "src": "SteamScenes.java:290"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "SteamScenes.java:291"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      1,
+      3
+     ],
+     "to": [
+      5,
+      1,
+      4
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "SteamScenes.java:292"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "SteamScenes.java:293"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "direction": "down"
+   },
+   "src": "SteamScenes.java:294"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      5,
+      0,
+      7
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "SteamScenes.java:295"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "SteamScenes.java:296"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      1,
+      1
+     ],
+     "to": [
+      5,
+      2,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "SteamScenes.java:297"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "SteamScenes.java:298"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      6,
+      1,
+      2
+     ],
+     "to": [
+      6,
+      1,
+      7
+     ]
+    },
+    "direction": "west"
+   },
+   "src": "SteamScenes.java:299"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 25
+   },
+   "src": "SteamScenes.java:300"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_3",
+    "pointAt": [
+     4.5,
+     3,
+     4.5
+    ],
+    "text": "With sufficient Heat, Water and Boiler space..."
+   },
+   "src": "SteamScenes.java:302"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "SteamScenes.java:307"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       4,
+       1
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     }
+    ]
+   },
+   "src": "SteamScenes.java:309"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     3,
+     2,
+     3
+    ],
+    "color": 16777215,
+    "amount": 10
+   },
+   "src": "SteamScenes.java:310"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "SteamScenes.java:311"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_4",
+    "pointAt": [
+     1.5,
+     2.5,
+     3
+    ],
+    "text": "...they will generate Rotational Force"
+   },
+   "src": "SteamScenes.java:313"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "SteamScenes.java:317"
+  },
+  {
+   "op": "overlay.showOutlineWithText",
+   "args": {
+    "duration": 50,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      2,
+      3
+     ],
+     "to": [
+      5,
+      2,
+      4
+     ]
+    },
+    "pointAt": [
+     4.5,
+     3,
+     4.5
+    ],
+    "key": "text_5",
+    "text": "The minimal setup requires 4 Fluid Tanks"
+   },
+   "src": "SteamScenes.java:319"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "SteamScenes.java:324"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      1,
+      3
+     ],
+     "to": [
+      5,
+      1,
+      4
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "SteamScenes.java:326"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "SteamScenes.java:327"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      1,
+      3
+     ],
+     "to": [
+      3,
+      1,
+      4
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "SteamScenes.java:328",
+   "out": "e7"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e7"
+    },
+    "offset": [
+     2,
+     0,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "SteamScenes.java:329"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 25
+   },
+   "src": "SteamScenes.java:330"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     5,
+     1.5,
+     3.5
+    ],
+    "direction": "right",
+    "duration": 60,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "minecraft:oak_log",
+     "count": 1
+    },
+    "icon": "rmb"
+   },
+   "src": "SteamScenes.java:332"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "SteamScenes.java:335"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      1,
+      3
+     ],
+     "to": [
+      3,
+      1,
+      4
+     ]
+    },
+    "state": {
+     "name": "create:blaze_burner",
+     "props": {
+      "blaze": "kindled",
+      "facing": "north"
+     }
+    },
+    "particles": false
+   },
+   "src": "SteamScenes.java:336"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "SteamScenes.java:338"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       4,
+       1
+      ],
+      "nbt": {
+       "Speed": 64
+      }
+     }
+    ]
+   },
+   "src": "SteamScenes.java:340"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     3,
+     2,
+     3
+    ],
+    "color": 16777215,
+    "amount": 10
+   },
+   "src": "SteamScenes.java:341"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "SteamScenes.java:342"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_6",
+    "pointAt": [
+     4,
+     1.5,
+     3.5
+    ],
+    "text": "With the help of Blaze Burners, the power output can be increased"
+   },
+   "src": "SteamScenes.java:344"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "SteamScenes.java:349"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      1,
+      1
+     ],
+     "to": [
+      5,
+      2,
+      2
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "SteamScenes.java:351"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "SteamScenes.java:352"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e4"
+    },
+    "direction": "south"
+   },
+   "src": "SteamScenes.java:353"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "SteamScenes.java:354"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      4,
+      5
+     ],
+     "to": [
+      5,
+      7,
+      6
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "SteamScenes.java:355",
+   "out": "e8"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e8"
+    },
+    "offset": [
+     0,
+     -2,
+     -2
+    ],
+    "duration": 0
+   },
+   "src": "SteamScenes.java:356"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "SteamScenes.java:357"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      1,
+      6
+     ],
+     "to": [
+      5,
+      2,
+      7
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "SteamScenes.java:358",
+   "out": "e9"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e9"
+    },
+    "offset": [
+     0,
+     0,
+     -5
+    ],
+    "duration": 0
+   },
+   "src": "SteamScenes.java:359"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "SteamScenes.java:360"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_7",
+    "pointAt": [
+     4,
+     3.5,
+     3.5
+    ],
+    "text": "Higher power levels require more Water, Size and Heat"
+   },
+   "src": "SteamScenes.java:363"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "SteamScenes.java:368"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     4,
+     3.5,
+     4
+    ],
+    "direction": "down",
+    "duration": 60,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "create:goggles",
+     "count": 1
+    }
+   },
+   "src": "SteamScenes.java:370"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 6
+   },
+   "src": "SteamScenes.java:371"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "blue",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_8",
+    "pointAt": [
+     4,
+     3.5,
+     4
+    ],
+    "text": "The boiler's current power level can be inspected with Engineer's Goggles"
+   },
+   "src": "SteamScenes.java:372"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "SteamScenes.java:378"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      4,
+      6
+     ],
+     "to": [
+      3,
+      4,
+      6
+     ]
+    },
+    "direction": "east",
+    "link": {
+     "link": "e8"
+    }
+   },
+   "src": "SteamScenes.java:380"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "SteamScenes.java:381"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       4,
+       6
+      ],
+      "nbt": {
+       "Speed": 64
+      }
+     }
+    ]
+   },
+   "src": "SteamScenes.java:382"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      5,
+      6
+     ],
+     "to": [
+      3,
+      5,
+      6
+     ]
+    },
+    "direction": "east",
+    "link": {
+     "link": "e8"
+    }
+   },
+   "src": "SteamScenes.java:383"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "SteamScenes.java:384"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       5,
+       6
+      ],
+      "nbt": {
+       "Speed": -64
+      }
+     }
+    ]
+   },
+   "src": "SteamScenes.java:385"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      5,
+      5
+     ],
+     "to": [
+      3,
+      5,
+      5
+     ]
+    },
+    "direction": "east",
+    "link": {
+     "link": "e8"
+    }
+   },
+   "src": "SteamScenes.java:386"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "SteamScenes.java:387"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       5,
+       5
+      ],
+      "nbt": {
+       "Speed": -64
+      }
+     }
+    ]
+   },
+   "src": "SteamScenes.java:388"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      4,
+      7
+     ],
+     "to": [
+      1,
+      5,
+      7
+     ]
+    },
+    "direction": "north",
+    "link": {
+     "link": "e8"
+    }
+   },
+   "src": "SteamScenes.java:389"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "SteamScenes.java:390"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       5,
+       7
+      ],
+      "nbt": {
+       "Speed": -64
+      }
+     }
+    ]
+   },
+   "src": "SteamScenes.java:391"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       4,
+       7
+      ],
+      "nbt": {
+       "Speed": 64
+      }
+     }
+    ]
+   },
+   "src": "SteamScenes.java:392"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "SteamScenes.java:393"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 100,
+    "color": "green",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_9",
+    "pointAt": [
+     1.5,
+     3.5,
+     3
+    ],
+    "text": "With each added power level, an additional Engine can output at full capacity"
+   },
+   "src": "SteamScenes.java:395"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 110
+   },
+   "src": "SteamScenes.java:401"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 30,
+    "color": "blue",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_10",
+    "pointAt": [
+     4,
+     4.5,
+     4.5
+    ],
+    "text": "Lvl 4"
+   },
+   "src": "SteamScenes.java:403"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "SteamScenes.java:408"
+  },
+  {
+   "op": "overlay.showOutlineWithText",
+   "args": {
+    "duration": 30,
+    "color": "blue",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      2,
+      3
+     ],
+     "to": [
+      3,
+      3,
+      4
+     ]
+    },
+    "pointAt": [
+     3.5,
+     4,
+     4.5
+    ],
+    "key": "text_11",
+    "text": "4 Engines"
+   },
+   "src": "SteamScenes.java:409"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "SteamScenes.java:414"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e9"
+    },
+    "direction": "up"
+   },
+   "src": "SteamScenes.java:416"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "SteamScenes.java:417"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e8"
+    },
+    "direction": "south"
+   },
+   "src": "SteamScenes.java:418"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e6"
+    },
+    "direction": "south"
+   },
+   "src": "SteamScenes.java:419"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e5"
+    },
+    "direction": "south"
+   },
+   "src": "SteamScenes.java:420"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "SteamScenes.java:421"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     5,
+     2,
+     4
+    ],
+    "direction": "down",
+    "duration": 10,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "create:blaze_cake",
+     "count": 1
+    },
+    "icon": "rmb"
+   },
+   "src": "SteamScenes.java:423"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 6
+   },
+   "src": "SteamScenes.java:425"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      1,
+      3
+     ],
+     "to": [
+      3,
+      1,
+      4
+     ]
+    },
+    "state": {
+     "name": "create:blaze_burner",
+     "props": {
+      "blaze": "seething",
+      "facing": "north"
+     }
+    },
+    "particles": false
+   },
+   "src": "SteamScenes.java:426"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "SteamScenes.java:428"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      4,
+      3
+     ],
+     "to": [
+      5,
+      11,
+      4
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "SteamScenes.java:430",
+   "out": "e10"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e10"
+    },
+    "offset": [
+     0,
+     -2,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "SteamScenes.java:431"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "SteamScenes.java:432"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      1,
+      6
+     ],
+     "to": [
+      2,
+      3,
+      7
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "SteamScenes.java:433",
+   "out": "e11"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e11"
+    },
+    "offset": [
+     3,
+     0,
+     -5
+    ],
+    "duration": 0
+   },
+   "src": "SteamScenes.java:434"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "SteamScenes.java:435"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      7
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "SteamScenes.java:438",
+   "out": "e12"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e12"
+    },
+    "offset": [
+     0,
+     -2,
+     -2
+    ],
+    "duration": 0
+   },
+   "src": "SteamScenes.java:439"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      4,
+      4
+     ],
+     "to": [
+      3,
+      4,
+      4
+     ]
+    },
+    "direction": "east",
+    "link": {
+     "link": "e10"
+    }
+   },
+   "src": "SteamScenes.java:449"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "SteamScenes.java:452"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       4,
+       4
+      ],
+      "nbt": {
+       "Speed": 64
+      }
+     }
+    ]
+   },
+   "src": "SteamScenes.java:448"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      4,
+      3
+     ],
+     "to": [
+      3,
+      4,
+      3
+     ]
+    },
+    "direction": "east",
+    "link": {
+     "link": "e10"
+    }
+   },
+   "src": "SteamScenes.java:449"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "SteamScenes.java:452"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      4,
+      7
+     ]
+    },
+    "direction": "north",
+    "link": {
+     "link": "e12"
+    }
+   },
+   "src": "SteamScenes.java:455"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       4,
+       3
+      ],
+      "nbt": {
+       "Speed": 64
+      }
+     }
+    ]
+   },
+   "src": "SteamScenes.java:448"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      5,
+      3
+     ],
+     "to": [
+      3,
+      5,
+      3
+     ]
+    },
+    "direction": "east",
+    "link": {
+     "link": "e10"
+    }
+   },
+   "src": "SteamScenes.java:449"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "SteamScenes.java:452"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       5,
+       3
+      ],
+      "nbt": {
+       "Speed": -64
+      }
+     }
+    ]
+   },
+   "src": "SteamScenes.java:448"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      5,
+      4
+     ],
+     "to": [
+      3,
+      5,
+      4
+     ]
+    },
+    "direction": "east",
+    "link": {
+     "link": "e10"
+    }
+   },
+   "src": "SteamScenes.java:449"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "SteamScenes.java:452"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      5,
+      7
+     ]
+    },
+    "direction": "north",
+    "link": {
+     "link": "e12"
+    }
+   },
+   "src": "SteamScenes.java:455"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      6,
+      7
+     ]
+    },
+    "direction": "north",
+    "link": {
+     "link": "e12"
+    }
+   },
+   "src": "SteamScenes.java:455"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       6,
+       7
+      ],
+      "nbt": {
+       "Speed": 64
+      }
+     }
+    ]
+   },
+   "src": "SteamScenes.java:456"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       5,
+       4
+      ],
+      "nbt": {
+       "Speed": -64
+      }
+     }
+    ]
+   },
+   "src": "SteamScenes.java:448"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      7,
+      3
+     ],
+     "to": [
+      3,
+      7,
+      3
+     ]
+    },
+    "direction": "east",
+    "link": {
+     "link": "e10"
+    }
+   },
+   "src": "SteamScenes.java:449"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "SteamScenes.java:452"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       7,
+       3
+      ],
+      "nbt": {
+       "Speed": -64
+      }
+     }
+    ]
+   },
+   "src": "SteamScenes.java:448"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      7,
+      4
+     ],
+     "to": [
+      3,
+      7,
+      4
+     ]
+    },
+    "direction": "east",
+    "link": {
+     "link": "e10"
+    }
+   },
+   "src": "SteamScenes.java:449"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "SteamScenes.java:452"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      7,
+      7
+     ]
+    },
+    "direction": "north",
+    "link": {
+     "link": "e12"
+    }
+   },
+   "src": "SteamScenes.java:455"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       7,
+       7
+      ],
+      "nbt": {
+       "Speed": -64
+      }
+     }
+    ]
+   },
+   "src": "SteamScenes.java:456"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       7,
+       4
+      ],
+      "nbt": {
+       "Speed": -64
+      }
+     }
+    ]
+   },
+   "src": "SteamScenes.java:448"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      8,
+      4
+     ],
+     "to": [
+      3,
+      8,
+      4
+     ]
+    },
+    "direction": "east",
+    "link": {
+     "link": "e10"
+    }
+   },
+   "src": "SteamScenes.java:449"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "SteamScenes.java:452"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       8,
+       4
+      ],
+      "nbt": {
+       "Speed": 64
+      }
+     }
+    ]
+   },
+   "src": "SteamScenes.java:448"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      8,
+      3
+     ],
+     "to": [
+      3,
+      8,
+      3
+     ]
+    },
+    "direction": "east",
+    "link": {
+     "link": "e10"
+    }
+   },
+   "src": "SteamScenes.java:449"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "SteamScenes.java:452"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      8,
+      7
+     ]
+    },
+    "direction": "north",
+    "link": {
+     "link": "e12"
+    }
+   },
+   "src": "SteamScenes.java:455"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       8,
+       7
+      ],
+      "nbt": {
+       "Speed": 64
+      }
+     }
+    ]
+   },
+   "src": "SteamScenes.java:456"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       8,
+       3
+      ],
+      "nbt": {
+       "Speed": 64
+      }
+     }
+    ]
+   },
+   "src": "SteamScenes.java:459"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 30,
+    "color": "blue",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_12",
+    "pointAt": [
+     4.5,
+     4.5,
+     3
+    ],
+    "text": "Lvl 8"
+   },
+   "src": "SteamScenes.java:461"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "SteamScenes.java:466"
+  },
+  {
+   "op": "overlay.showOutlineWithText",
+   "args": {
+    "duration": 30,
+    "color": "blue",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      2,
+      3
+     ],
+     "to": [
+      3,
+      6,
+      4
+     ]
+    },
+    "pointAt": [
+     3.5,
+     4,
+     4.5
+    ],
+    "key": "text_13",
+    "text": "8 Engines"
+   },
+   "src": "SteamScenes.java:467"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "SteamScenes.java:472"
+  }
+ ]
+}

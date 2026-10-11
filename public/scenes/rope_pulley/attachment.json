@@ -1,0 +1,425 @@
+{
+ "id": "create:rope_pulley/attachment",
+ "schematic": "rope_pulley/attachment",
+ "schematicNamespace": "create",
+ "title": "Moving Pulleys as part of a Contraption",
+ "texts": {
+  "text_1": "Whenever Pulleys are themselves being moved by a Contraption...",
+  "text_2": "...its attached structure will be dragged with it",
+  "text_3": "Mind that pulleys are only movable while stopped"
+ },
+ "tags": [],
+ "items": [
+  "create:rope_pulley"
+ ],
+ "keyframes": [
+  41,
+  141
+ ],
+ "totalTicks": 245,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "PulleyScenes.java:195"
+  },
+  {
+   "op": "scaleSceneView",
+   "args": {
+    "factor": 0.949999988079071
+   },
+   "src": "PulleyScenes.java:196"
+  },
+  {
+   "op": "setSceneOffsetY",
+   "args": {
+    "yOffset": -1
+   },
+   "src": "PulleyScenes.java:197"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      6,
+      0,
+      5
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "PulleyScenes.java:198"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "PulleyScenes.java:199"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      1,
+      2
+     ],
+     "to": [
+      4,
+      3,
+      5
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "PulleyScenes.java:204"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      4,
+      2
+     ],
+     "to": [
+      6,
+      4,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "PulleyScenes.java:206",
+   "out": "e1"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     -1,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "PulleyScenes.java:207"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "PulleyScenes.java:208"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      3,
+      2
+     ]
+    },
+    "direction": "east"
+   },
+   "src": "PulleyScenes.java:212",
+   "out": "e2"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "PulleyScenes.java:213"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        3,
+        1,
+        1
+       ],
+       "to": [
+        3,
+        1,
+        2
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        3,
+        2,
+        1
+       ]
+      }
+     ]
+    },
+    "direction": "south",
+    "link": {
+     "link": "e2"
+    }
+   },
+   "src": "PulleyScenes.java:214"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "PulleyScenes.java:217"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 50,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     3,
+     3.5,
+     2.5
+    ],
+    "key": "text_1",
+    "text": "Whenever Pulleys are themselves being moved by a Contraption..."
+   },
+   "src": "PulleyScenes.java:218"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "PulleyScenes.java:223"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       0,
+       5
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     }
+    ]
+   },
+   "src": "PulleyScenes.java:225"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       3,
+       2
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       4,
+       2,
+       3
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       4,
+       3,
+       3
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     }
+    ]
+   },
+   "src": "PulleyScenes.java:226"
+  },
+  {
+   "op": "effects.rotationIndicator",
+   "args": {
+    "pos": [
+     4,
+     1,
+     5
+    ],
+    "direction": true
+   },
+   "src": "PulleyScenes.java:227"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     -2,
+     0,
+     0
+    ],
+    "duration": 40
+   },
+   "src": "PulleyScenes.java:228"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     -2,
+     0,
+     0
+    ],
+    "duration": 40
+   },
+   "src": "PulleyScenes.java:229"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "PulleyScenes.java:230"
+  },
+  {
+   "op": "overlay.showOutlineWithText",
+   "args": {
+    "duration": 50,
+    "color": "green",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      1,
+      1
+     ],
+     "to": [
+      1,
+      1,
+      2
+     ]
+    },
+    "pointAt": [
+     1.5,
+     1.5,
+     2
+    ],
+    "key": "text_2",
+    "text": "...its attached structure will be dragged with it"
+   },
+   "src": "PulleyScenes.java:232"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "PulleyScenes.java:237"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "red",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     1.5,
+     4,
+     2.5
+    ],
+    "key": "text_3",
+    "text": "Mind that pulleys are only movable while stopped"
+   },
+   "src": "PulleyScenes.java:238"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "PulleyScenes.java:243"
+  }
+ ]
+}

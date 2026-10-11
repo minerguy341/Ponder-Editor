@@ -1,0 +1,1465 @@
+{
+ "id": "create:harvester",
+ "schematic": "harvester",
+ "schematicNamespace": "create",
+ "title": "Using Mechanical Harvesters on Contraptions",
+ "texts": {
+  "text_1": "Whenever Harvesters are moved as part of an animated Contraption...",
+  "text_2": "They will harvest and reset any mature crops on their way"
+ },
+ "tags": [],
+ "items": [
+  "create:mechanical_harvester"
+ ],
+ "keyframes": [
+  41,
+  262
+ ],
+ "totalTicks": 467,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 6
+   },
+   "src": "MovementActorScenes.java:211"
+  },
+  {
+   "op": "scaleSceneView",
+   "args": {
+    "factor": 0.8999999761581421
+   },
+   "src": "MovementActorScenes.java:212"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        2,
+        1,
+        1
+       ],
+       "to": [
+        3,
+        1,
+        1
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        1,
+        1,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        3,
+        1,
+        2
+       ],
+       "to": [
+        4,
+        1,
+        2
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        2,
+        1,
+        3
+       ]
+      }
+     ]
+    },
+    "state": {
+     "name": "minecraft:wheat",
+     "props": {
+      "age": "7"
+     }
+    },
+    "particles": false
+   },
+   "src": "MovementActorScenes.java:219"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      5,
+      0,
+      5
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "MovementActorScenes.java:221"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "MovementActorScenes.java:225"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        2,
+        1,
+        1
+       ],
+       "to": [
+        3,
+        1,
+        1
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        1,
+        1,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        3,
+        1,
+        2
+       ],
+       "to": [
+        4,
+        1,
+        2
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        2,
+        1,
+        3
+       ]
+      }
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "MovementActorScenes.java:226"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      1,
+      4
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "MovementActorScenes.java:227"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "MovementActorScenes.java:228"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        0,
+        1,
+        5
+       ],
+       "to": [
+        2,
+        1,
+        5
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        2,
+        2,
+        4
+       ],
+       "to": [
+        4,
+        2,
+        5
+       ]
+      }
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "MovementActorScenes.java:230",
+   "out": "e1"
+  },
+  {
+   "op": "world.configureCenterOfRotation",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "anchor": [
+     4.5,
+     1.5,
+     4.5
+    ]
+   },
+   "src": "MovementActorScenes.java:232"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "MovementActorScenes.java:233"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      1,
+      4
+     ]
+    },
+    "direction": "south",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "MovementActorScenes.java:236"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "MovementActorScenes.java:237"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      4
+     ]
+    },
+    "direction": "south",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "MovementActorScenes.java:236"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "MovementActorScenes.java:237"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      4
+     ]
+    },
+    "direction": "south",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "MovementActorScenes.java:236"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "MovementActorScenes.java:237"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     1.5,
+     1.5,
+     5
+    ],
+    "key": "text_1",
+    "text": "Whenever Harvesters are moved as part of an animated Contraption..."
+   },
+   "src": "MovementActorScenes.java:240"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "MovementActorScenes.java:245"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     4
+    ],
+    "beType": "HarvesterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "setAnimatedSpeed",
+        "a": [
+         -150
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:248"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ],
+    "beType": "HarvesterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "setAnimatedSpeed",
+        "a": [
+         -150
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:248"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     2,
+     1,
+     4
+    ],
+    "beType": "HarvesterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "setAnimatedSpeed",
+        "a": [
+         -150
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:248"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bearing",
+    "pos": [
+     4,
+     1,
+     4
+    ],
+    "distance": -360,
+    "duration": 140
+   },
+   "src": "MovementActorScenes.java:250"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "rotation": [
+     0,
+     -360,
+     0
+    ],
+    "duration": 140
+   },
+   "src": "MovementActorScenes.java:251"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "MovementActorScenes.java:256"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      3
+     ]
+    },
+    "state": {
+     "name": "minecraft:wheat",
+     "props": {
+      "age": "0"
+     }
+    },
+    "particles": true
+   },
+   "src": "MovementActorScenes.java:258"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     1.5,
+     3.5
+    ],
+    "motion": [
+     0,
+     0.3,
+     -0.2
+    ],
+    "item": {
+     "id": "minecraft:wheat",
+     "count": 1
+    }
+   },
+   "src": "MovementActorScenes.java:259",
+   "out": "e2"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "MovementActorScenes.java:260"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:wheat",
+     "props": {
+      "age": "0"
+     }
+    },
+    "particles": true
+   },
+   "src": "MovementActorScenes.java:262"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     1.5,
+     2.5
+    ],
+    "motion": [
+     0,
+     0.3,
+     -0.2
+    ],
+    "item": {
+     "id": "minecraft:wheat",
+     "count": 1
+    }
+   },
+   "src": "MovementActorScenes.java:263",
+   "out": "e3"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "MovementActorScenes.java:264"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:wheat",
+     "props": {
+      "age": "0"
+     }
+    },
+    "particles": true
+   },
+   "src": "MovementActorScenes.java:266"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     3.5,
+     1.5,
+     2.5
+    ],
+    "motion": [
+     0.1,
+     0.3,
+     -0.1
+    ],
+    "item": {
+     "id": "minecraft:wheat",
+     "count": 1
+    }
+   },
+   "src": "MovementActorScenes.java:267",
+   "out": "e4"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      1
+     ]
+    },
+    "state": {
+     "name": "minecraft:wheat",
+     "props": {
+      "age": "0"
+     }
+    },
+    "particles": true
+   },
+   "src": "MovementActorScenes.java:269"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     1.5,
+     1.5
+    ],
+    "motion": [
+     0.1,
+     0.3,
+     -0.1
+    ],
+    "item": {
+     "id": "minecraft:wheat",
+     "count": 1
+    }
+   },
+   "src": "MovementActorScenes.java:270",
+   "out": "e5"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "MovementActorScenes.java:271"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      1
+     ]
+    },
+    "state": {
+     "name": "minecraft:wheat",
+     "props": {
+      "age": "0"
+     }
+    },
+    "particles": true
+   },
+   "src": "MovementActorScenes.java:273"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     3.5,
+     1.5,
+     1.5
+    ],
+    "motion": [
+     0.1,
+     0.3,
+     -0.1
+    ],
+    "item": {
+     "id": "minecraft:wheat",
+     "count": 1
+    }
+   },
+   "src": "MovementActorScenes.java:274",
+   "out": "e6"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "MovementActorScenes.java:275"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      1,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:wheat",
+     "props": {
+      "age": "0"
+     }
+    },
+    "particles": true
+   },
+   "src": "MovementActorScenes.java:277"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     4.5,
+     1.5,
+     2.5
+    ],
+    "motion": [
+     0.2,
+     0.3,
+     0
+    ],
+    "item": {
+     "id": "minecraft:wheat",
+     "count": 1
+    }
+   },
+   "src": "MovementActorScenes.java:278",
+   "out": "e7"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     1.5,
+     1,
+     2.5
+    ],
+    "key": "text_2",
+    "text": "They will harvest and reset any mature crops on their way"
+   },
+   "src": "MovementActorScenes.java:280"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 101
+   },
+   "src": "MovementActorScenes.java:285"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        2,
+        1,
+        1
+       ],
+       "to": [
+        3,
+        1,
+        1
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        1,
+        1,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        3,
+        1,
+        2
+       ],
+       "to": [
+        4,
+        1,
+        2
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        2,
+        1,
+        3
+       ]
+      }
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "MovementActorScenes.java:286"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "MovementActorScenes.java:287"
+  },
+  {
+   "op": "world.modifyEntities",
+   "args": {
+    "entityType": "ItemEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "discard",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:288"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        2,
+        1,
+        1
+       ],
+       "to": [
+        3,
+        1,
+        1
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        1,
+        1,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        3,
+        1,
+        2
+       ],
+       "to": [
+        4,
+        1,
+        2
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        2,
+        1,
+        3
+       ]
+      }
+     ]
+    },
+    "state": {
+     "name": "minecraft:wheat",
+     "props": {
+      "age": "7"
+     }
+    },
+    "particles": false
+   },
+   "src": "MovementActorScenes.java:289"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        2,
+        1,
+        1
+       ],
+       "to": [
+        3,
+        1,
+        1
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        1,
+        1,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        3,
+        1,
+        2
+       ],
+       "to": [
+        4,
+        1,
+        2
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        2,
+        1,
+        3
+       ]
+      }
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "MovementActorScenes.java:291"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     4
+    ],
+    "beType": "HarvesterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "setAnimatedSpeed",
+        "a": [
+         0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:294"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ],
+    "beType": "HarvesterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "setAnimatedSpeed",
+        "a": [
+         0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:294"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     2,
+     1,
+     4
+    ],
+    "beType": "HarvesterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "setAnimatedSpeed",
+        "a": [
+         0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:294"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "MovementActorScenes.java:296"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       5
+      ],
+      "state": {
+       "name": "create:linear_chassis",
+       "props": {
+        "axis": "y",
+        "sticky_bottom": "false",
+        "sticky_top": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "MovementActorScenes.java:298"
+  },
+  {
+   "op": "world.glueBlockOnto",
+   "args": {
+    "pos": [
+     1,
+     2,
+     5
+    ],
+    "direction": "down",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "MovementActorScenes.java:299"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     1,
+     2.5,
+     5.5
+    ],
+    "sharedKey": "create:storage_on_contraption",
+    "text": "Inventories attached to the Contraption will pick up their drops automatically"
+   },
+   "src": "MovementActorScenes.java:301"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "MovementActorScenes.java:306"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     4
+    ],
+    "beType": "HarvesterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "setAnimatedSpeed",
+        "a": [
+         -150
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:309"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ],
+    "beType": "HarvesterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "setAnimatedSpeed",
+        "a": [
+         -150
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:309"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     2,
+     1,
+     4
+    ],
+    "beType": "HarvesterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "setAnimatedSpeed",
+        "a": [
+         -150
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:309"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bearing",
+    "pos": [
+     4,
+     1,
+     4
+    ],
+    "distance": -360,
+    "duration": 140
+   },
+   "src": "MovementActorScenes.java:311"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "rotation": [
+     0,
+     -360,
+     0
+    ],
+    "duration": 140
+   },
+   "src": "MovementActorScenes.java:312"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "MovementActorScenes.java:314"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      3
+     ]
+    },
+    "state": {
+     "name": "minecraft:wheat",
+     "props": {
+      "age": "0"
+     }
+    },
+    "particles": true
+   },
+   "src": "MovementActorScenes.java:316"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "MovementActorScenes.java:317"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:wheat",
+     "props": {
+      "age": "0"
+     }
+    },
+    "particles": true
+   },
+   "src": "MovementActorScenes.java:319"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "MovementActorScenes.java:320"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:wheat",
+     "props": {
+      "age": "0"
+     }
+    },
+    "particles": true
+   },
+   "src": "MovementActorScenes.java:322"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      1
+     ]
+    },
+    "state": {
+     "name": "minecraft:wheat",
+     "props": {
+      "age": "0"
+     }
+    },
+    "particles": true
+   },
+   "src": "MovementActorScenes.java:324"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "MovementActorScenes.java:325"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      1
+     ]
+    },
+    "state": {
+     "name": "minecraft:wheat",
+     "props": {
+      "age": "0"
+     }
+    },
+    "particles": true
+   },
+   "src": "MovementActorScenes.java:327"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "MovementActorScenes.java:328"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      1,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:wheat",
+     "props": {
+      "age": "0"
+     }
+    },
+    "particles": true
+   },
+   "src": "MovementActorScenes.java:330"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 116
+   },
+   "src": "MovementActorScenes.java:332"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     1.5,
+     3,
+     5.5
+    ],
+    "direction": "down",
+    "duration": 50,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "minecraft:wheat",
+     "count": 1
+    }
+   },
+   "src": "MovementActorScenes.java:333"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     4
+    ],
+    "beType": "HarvesterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "setAnimatedSpeed",
+        "a": [
+         0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:335"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ],
+    "beType": "HarvesterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "setAnimatedSpeed",
+        "a": [
+         0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:335"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     2,
+     1,
+     4
+    ],
+    "beType": "HarvesterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "setAnimatedSpeed",
+        "a": [
+         0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:335"
+  }
+ ]
+}

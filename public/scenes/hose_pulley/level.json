@@ -1,0 +1,3210 @@
+{
+ "id": "create:hose_pulley/level",
+ "schematic": "hose_pulley/level",
+ "schematicNamespace": "create",
+ "title": "Fill and Drain level of Hose Pulleys",
+ "texts": {
+  "text_1": "While fully retracted, the Hose Pulley cannot operate",
+  "text_2": "Draining runs from top to bottom",
+  "text_3": "The surface level will end up just below where the hose ends",
+  "text_4": "Filling runs from bottom to top",
+  "text_5": "The filled pool will not grow beyond the layer above the hose end"
+ },
+ "tags": [],
+ "items": [
+  "create:hose_pulley"
+ ],
+ "keyframes": [
+  51,
+  156,
+  243,
+  349,
+  469
+ ],
+ "totalTicks": 543,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 3
+   },
+   "src": "HosePulleyScenes.java:169"
+  },
+  {
+   "op": "setSceneOffsetY",
+   "args": {
+    "yOffset": -1.5
+   },
+   "src": "HosePulleyScenes.java:170"
+  },
+  {
+   "op": "scaleSceneView",
+   "args": {
+    "factor": 0.8999999761581421
+   },
+   "src": "HosePulleyScenes.java:171"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      2,
+      0,
+      2
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "HosePulleyScenes.java:172"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      1
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:188"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      1,
+      1
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:188"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      0
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:188"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      1
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:188"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:188"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      1,
+      0
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:188"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      0
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:188"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:188"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      1,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:188"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      2,
+      1
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:188"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      2,
+      1
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:188"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      2,
+      0
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:188"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      2,
+      1
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:188"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      2,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:188"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      2,
+      0
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:188"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      2,
+      0
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:188"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      2,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:188"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      2,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:188"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      3,
+      1
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:188"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      3,
+      1
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:188"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      3,
+      0
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:188"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      3,
+      1
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:188"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      3,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:188"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      3,
+      0
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:188"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      3,
+      0
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:188"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      3,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:188"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      3,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:188"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "HosePulleyScenes.java:189"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      1,
+      0
+     ],
+     "to": [
+      2,
+      4,
+      2
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "HosePulleyScenes.java:192"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "HosePulleyScenes.java:193"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      6,
+      1
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "HosePulleyScenes.java:202",
+   "out": "e1"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     -1,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "HosePulleyScenes.java:203"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "HosePulleyScenes.java:204"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      6,
+      1
+     ]
+    },
+    "direction": "east",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "HosePulleyScenes.java:206"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "HosePulleyScenes.java:207"
+  },
+  {
+   "op": "overlay.showOutlineWithText",
+   "args": {
+    "duration": 50,
+    "color": "red",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      5,
+      1
+     ]
+    },
+    "pointAt": [
+     1.5,
+     6,
+     1.5
+    ],
+    "key": "text_1",
+    "text": "While fully retracted, the Hose Pulley cannot operate"
+   },
+   "src": "HosePulleyScenes.java:209"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 55
+   },
+   "src": "HosePulleyScenes.java:215"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       2,
+       1
+      ],
+      "state": {
+       "name": "create:mechanical_pump",
+       "props": {
+        "facing": "down",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:217"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       0,
+       6,
+       1
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       1,
+       6,
+       1
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     }
+    ]
+   },
+   "src": "HosePulleyScenes.java:219"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "HosePulleyScenes.java:220"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       0,
+       6,
+       1
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       1,
+       6,
+       1
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     }
+    ]
+   },
+   "src": "HosePulleyScenes.java:222"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 40,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_2",
+    "pointAt": [
+     1.5,
+     3.5,
+     1.5
+    ],
+    "text": "Draining runs from top to bottom"
+   },
+   "src": "HosePulleyScenes.java:223"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "HosePulleyScenes.java:228"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      1,
+      2
+     ],
+     "to": [
+      3,
+      2,
+      2
+     ]
+    },
+    "direction": "north",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "HosePulleyScenes.java:230"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        3,
+        1,
+        1
+       ],
+       "to": [
+        3,
+        5,
+        1
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        2,
+        6,
+        1
+       ],
+       "to": [
+        3,
+        6,
+        1
+       ]
+      }
+     ]
+    },
+    "direction": "west",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "HosePulleyScenes.java:231"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     6,
+     1
+    ],
+    "beType": "HosePulleyBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          1,
+          6,
+          1
+         ],
+         null
+        ]
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "minecraft:water",
+          "amount": 100
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "HosePulleyScenes.java:232"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     2,
+     1
+    ],
+    "beType": "PumpBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "onSpeedChanged",
+        "a": [
+         0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "HosePulleyScenes.java:237"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "medium",
+    "slot": "obj:1",
+    "box": {
+     "min": [
+      0,
+      3.75,
+      0
+     ],
+     "max": [
+      3,
+      3.75,
+      3
+     ]
+    },
+    "duration": 3
+   },
+   "src": "HosePulleyScenes.java:242"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "HosePulleyScenes.java:243"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "medium",
+    "slot": "obj:1",
+    "box": {
+     "min": [
+      0,
+      1.75,
+      0
+     ],
+     "max": [
+      3,
+      3.75,
+      3
+     ]
+    },
+    "duration": 70
+   },
+   "src": "HosePulleyScenes.java:244"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "HosePulleyScenes.java:245"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      3,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "HosePulleyScenes.java:252"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "HosePulleyScenes.java:253"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      3,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "HosePulleyScenes.java:252"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "HosePulleyScenes.java:253"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      3,
+      0
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "HosePulleyScenes.java:252"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "HosePulleyScenes.java:253"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      3,
+      0
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "HosePulleyScenes.java:252"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "HosePulleyScenes.java:253"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      3,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "HosePulleyScenes.java:252"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "HosePulleyScenes.java:253"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      3,
+      1
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "HosePulleyScenes.java:252"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "HosePulleyScenes.java:253"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      3,
+      0
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "HosePulleyScenes.java:252"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "HosePulleyScenes.java:253"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      3,
+      1
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "HosePulleyScenes.java:252"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "HosePulleyScenes.java:253"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      3,
+      1
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "HosePulleyScenes.java:252"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "HosePulleyScenes.java:253"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      2,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "HosePulleyScenes.java:252"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "HosePulleyScenes.java:253"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      2,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "HosePulleyScenes.java:252"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "HosePulleyScenes.java:253"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      2,
+      0
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "HosePulleyScenes.java:252"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "HosePulleyScenes.java:253"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      2,
+      0
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "HosePulleyScenes.java:252"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "HosePulleyScenes.java:253"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      2,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "HosePulleyScenes.java:252"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "HosePulleyScenes.java:253"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      2,
+      1
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "HosePulleyScenes.java:252"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "HosePulleyScenes.java:253"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      2,
+      0
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "HosePulleyScenes.java:252"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "HosePulleyScenes.java:253"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      2,
+      1
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "HosePulleyScenes.java:252"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "HosePulleyScenes.java:253"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      2,
+      1
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "HosePulleyScenes.java:252"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "HosePulleyScenes.java:253"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "white",
+    "slot": "obj:1",
+    "box": {
+     "min": [
+      0,
+      1.75,
+      0
+     ],
+     "max": [
+      3,
+      1.75,
+      3
+     ]
+    },
+    "duration": 60
+   },
+   "src": "HosePulleyScenes.java:256"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_3",
+    "pointAt": [
+     0,
+     1.875,
+     1.5
+    ],
+    "text": "The surface level will end up just below where the hose ends"
+   },
+   "src": "HosePulleyScenes.java:257"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "HosePulleyScenes.java:262"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "HosePulleyScenes.java:264"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      1,
+      0
+     ],
+     "to": [
+      2,
+      4,
+      2
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "HosePulleyScenes.java:265"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "HosePulleyScenes.java:266"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      3,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "HosePulleyScenes.java:268"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      3,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "HosePulleyScenes.java:268"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      3,
+      0
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "HosePulleyScenes.java:268"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      3,
+      0
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "HosePulleyScenes.java:268"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      3,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "HosePulleyScenes.java:268"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      3,
+      1
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "HosePulleyScenes.java:268"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      3,
+      0
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "HosePulleyScenes.java:268"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      3,
+      1
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "HosePulleyScenes.java:268"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      3,
+      1
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "HosePulleyScenes.java:268"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      2,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "HosePulleyScenes.java:268"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      2,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "HosePulleyScenes.java:268"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      2,
+      0
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "HosePulleyScenes.java:268"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      2,
+      0
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "HosePulleyScenes.java:268"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      2,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "HosePulleyScenes.java:268"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      2,
+      1
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "HosePulleyScenes.java:268"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      2,
+      0
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "HosePulleyScenes.java:268"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      2,
+      1
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "HosePulleyScenes.java:268"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      2,
+      1
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "HosePulleyScenes.java:268"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      1,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "HosePulleyScenes.java:268"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "HosePulleyScenes.java:268"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      0
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "HosePulleyScenes.java:268"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      1,
+      0
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "HosePulleyScenes.java:268"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "HosePulleyScenes.java:268"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      1
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "HosePulleyScenes.java:268"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      0
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "HosePulleyScenes.java:268"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      1,
+      1
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "HosePulleyScenes.java:268"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      1
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "HosePulleyScenes.java:268"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      1,
+      0
+     ],
+     "to": [
+      2,
+      4,
+      2
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "HosePulleyScenes.java:269"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "HosePulleyScenes.java:270"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       0,
+       6,
+       1
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       1,
+       6,
+       1
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     }
+    ]
+   },
+   "src": "HosePulleyScenes.java:271"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       2,
+       1
+      ],
+      "state": {
+       "name": "create:mechanical_pump",
+       "props": {
+        "facing": "up",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": true
+   },
+   "src": "HosePulleyScenes.java:272"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     2,
+     1
+    ],
+    "beType": "PumpBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "onSpeedChanged",
+        "a": [
+         0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "HosePulleyScenes.java:273"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 16
+   },
+   "src": "HosePulleyScenes.java:274"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       0,
+       6,
+       1
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       1,
+       6,
+       1
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     }
+    ]
+   },
+   "src": "HosePulleyScenes.java:275"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 40,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_4",
+    "pointAt": [
+     1.5,
+     3.5,
+     1.5
+    ],
+    "text": "Filling runs from bottom to top"
+   },
+   "src": "HosePulleyScenes.java:277"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "HosePulleyScenes.java:282"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "medium",
+    "slot": "obj:1",
+    "box": {
+     "min": [
+      0,
+      1,
+      0
+     ],
+     "max": [
+      3,
+      1,
+      3
+     ]
+    },
+    "duration": 3
+   },
+   "src": "HosePulleyScenes.java:284"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "HosePulleyScenes.java:285"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "medium",
+    "slot": "obj:1",
+    "box": {
+     "min": [
+      0,
+      1,
+      0
+     ],
+     "max": [
+      3,
+      3.75,
+      3
+     ]
+    },
+    "duration": 120
+   },
+   "src": "HosePulleyScenes.java:286"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "HosePulleyScenes.java:287"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      3,
+      1
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:289"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "HosePulleyScenes.java:290"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      2,
+      1
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:291"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "HosePulleyScenes.java:292"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      1
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:296"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "HosePulleyScenes.java:297"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      1,
+      1
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:296"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "HosePulleyScenes.java:297"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      0
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:296"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "HosePulleyScenes.java:297"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      1
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:296"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "HosePulleyScenes.java:297"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:296"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "HosePulleyScenes.java:297"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      1,
+      0
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:296"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "HosePulleyScenes.java:297"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      0
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:296"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "HosePulleyScenes.java:297"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:296"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "HosePulleyScenes.java:297"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      1,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:296"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "HosePulleyScenes.java:297"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      2,
+      1
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:296"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "HosePulleyScenes.java:297"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      2,
+      1
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:296"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "HosePulleyScenes.java:297"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      2,
+      0
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:296"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "HosePulleyScenes.java:297"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      2,
+      1
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:296"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "HosePulleyScenes.java:297"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      2,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:296"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "HosePulleyScenes.java:297"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      2,
+      0
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:296"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "HosePulleyScenes.java:297"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      2,
+      0
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:296"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "HosePulleyScenes.java:297"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      2,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:296"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "HosePulleyScenes.java:297"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      2,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:296"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "HosePulleyScenes.java:297"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      3,
+      1
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:296"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "HosePulleyScenes.java:297"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      3,
+      1
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:296"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "HosePulleyScenes.java:297"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      3,
+      0
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:296"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "HosePulleyScenes.java:297"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      3,
+      1
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:296"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "HosePulleyScenes.java:297"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      3,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:296"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "HosePulleyScenes.java:297"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      3,
+      0
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:296"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "HosePulleyScenes.java:297"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      3,
+      0
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:296"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "HosePulleyScenes.java:297"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      3,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:296"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "HosePulleyScenes.java:297"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      3,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:water",
+     "props": {
+      "level": "0"
+     }
+    },
+    "particles": false
+   },
+   "src": "HosePulleyScenes.java:296"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "HosePulleyScenes.java:297"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "white",
+    "slot": "obj:1",
+    "box": {
+     "min": [
+      0,
+      3.75,
+      0
+     ],
+     "max": [
+      3,
+      3.75,
+      3
+     ]
+    },
+    "duration": 100
+   },
+   "src": "HosePulleyScenes.java:300"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 100,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_5",
+    "pointAt": [
+     0,
+     3.875,
+     1.5
+    ],
+    "text": "The filled pool will not grow beyond the layer above the hose end"
+   },
+   "src": "HosePulleyScenes.java:301"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "HosePulleyScenes.java:306"
+  }
+ ]
+}

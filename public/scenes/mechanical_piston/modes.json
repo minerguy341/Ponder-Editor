@@ -1,0 +1,853 @@
+{
+ "id": "create:mechanical_piston/modes",
+ "schematic": "mechanical_piston/modes",
+ "schematicNamespace": "create",
+ "title": "Movement Modes of the Mechanical Piston",
+ "texts": {
+  "text_1": "Whenever Pistons stop moving, the moved structure reverts to blocks",
+  "text_2": "It can be configured never to revert to solid blocks, or only at the location it started at"
+ },
+ "tags": [],
+ "items": [
+  "create:mechanical_piston",
+  "create:sticky_mechanical_piston"
+ ],
+ "keyframes": [
+  126,
+  256
+ ],
+ "totalTicks": 380,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "PistonScenes.java:214"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        0,
+        0,
+        0
+       ],
+       "to": [
+        5,
+        0,
+        5
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        1,
+        2
+       ],
+       "to": [
+        0,
+        2,
+        2
+       ]
+      }
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "PistonScenes.java:216"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "PistonScenes.java:224"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      1,
+      3
+     ],
+     "to": [
+      3,
+      2,
+      5
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "PistonScenes.java:225"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "PistonScenes.java:226"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "PistonScenes.java:227"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      1
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "PistonScenes.java:229",
+   "out": "e1"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     0,
+     1
+    ],
+    "duration": 0
+   },
+   "src": "PistonScenes.java:230"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "PistonScenes.java:231"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      1,
+      1
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "PistonScenes.java:232"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "PistonScenes.java:234"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      5,
+      1,
+      1
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "PistonScenes.java:235"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      1
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "PistonScenes.java:237"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "PistonScenes.java:239"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      2,
+      1
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "PistonScenes.java:240"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "PistonScenes.java:243"
+  },
+  {
+   "op": "effects.superGlue",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ],
+    "side": "up",
+    "fullBlock": true
+   },
+   "src": "PistonScenes.java:244"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "PistonScenes.java:245"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     3,
+     2,
+     4
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "PistonScenes.java:247"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "state": {
+       "name": "create:gearshift",
+       "props": {
+        "axis": "z",
+        "powered": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       3,
+       2,
+       4
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "floor",
+        "facing": "east",
+        "powered": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "PistonScenes.java:248"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     }
+    ]
+   },
+   "src": "PistonScenes.java:249"
+  },
+  {
+   "op": "effects.rotationIndicator",
+   "args": {
+    "pos": [
+     3,
+     1,
+     3
+    ],
+    "direction": true
+   },
+   "src": "PistonScenes.java:250"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     -2,
+     0,
+     0
+    ],
+    "duration": 40
+   },
+   "src": "PistonScenes.java:251"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "PistonScenes.java:252"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      1,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "PistonScenes.java:254"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      2,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "PistonScenes.java:255"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "PistonScenes.java:256"
+  },
+  {
+   "op": "overlay.showOutlineWithText",
+   "args": {
+    "duration": 70,
+    "color": "red",
+    "placeNearTarget": false,
+    "keyframe": true,
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      1,
+      2
+     ],
+     "to": [
+      0,
+      2,
+      2
+     ]
+    },
+    "pointAt": [
+     0.5,
+     2,
+     2.5
+    ],
+    "key": "text_1",
+    "text": "Whenever Pistons stop moving, the moved structure reverts to blocks"
+   },
+   "src": "PistonScenes.java:257"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "PistonScenes.java:261"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     3,
+     2,
+     4
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "PistonScenes.java:263"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "state": {
+       "name": "create:gearshift",
+       "props": {
+        "axis": "z",
+        "powered": "true"
+       }
+      }
+     },
+     {
+      "pos": [
+       3,
+       2,
+       4
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "floor",
+        "facing": "east",
+        "powered": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "PistonScenes.java:264"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     }
+    ]
+   },
+   "src": "PistonScenes.java:265"
+  },
+  {
+   "op": "effects.rotationIndicator",
+   "args": {
+    "pos": [
+     3,
+     1,
+     3
+    ],
+    "direction": true
+   },
+   "src": "PistonScenes.java:266"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     2,
+     0,
+     0
+    ],
+    "duration": 40
+   },
+   "src": "PistonScenes.java:267"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      1,
+      2
+     ],
+     "to": [
+      0,
+      2,
+      2
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "PistonScenes.java:268"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "PistonScenes.java:269"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      1,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:rose_bush",
+     "props": {
+      "half": "lower"
+     }
+    },
+    "particles": false
+   },
+   "src": "PistonScenes.java:271"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      2,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:rose_bush",
+     "props": {
+      "half": "upper"
+     }
+    },
+    "particles": false
+   },
+   "src": "PistonScenes.java:272"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      1,
+      2
+     ],
+     "to": [
+      0,
+      2,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "PistonScenes.java:274",
+   "out": "e2"
+  },
+  {
+   "op": "overlay.highlightValueBox",
+   "args": {
+    "location": [
+     3.625,
+     1.9765625,
+     2.5
+    ],
+    "expands": [
+     0.0859375,
+     0,
+     0.0859375
+    ],
+    "duration": 60
+   },
+   "src": "PistonScenes.java:277"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3.625,
+     2.125,
+     2.5
+    ],
+    "direction": "down",
+    "duration": 60,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb"
+   },
+   "src": "PistonScenes.java:278"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     3.5,
+     2,
+     2.5
+    ],
+    "sharedKey": "create:behaviour_modify_value_panel",
+    "text": "This behaviour can be modified using the value panel"
+   },
+   "src": "PistonScenes.java:279"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "PistonScenes.java:284"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     3,
+     2,
+     4
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "PistonScenes.java:286"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "state": {
+       "name": "create:gearshift",
+       "props": {
+        "axis": "z",
+        "powered": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       3,
+       2,
+       4
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "floor",
+        "facing": "east",
+        "powered": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "PistonScenes.java:287"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     }
+    ]
+   },
+   "src": "PistonScenes.java:288"
+  },
+  {
+   "op": "effects.rotationIndicator",
+   "args": {
+    "pos": [
+     3,
+     1,
+     3
+    ],
+    "direction": true
+   },
+   "src": "PistonScenes.java:289"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     -2,
+     0,
+     0
+    ],
+    "duration": 40
+   },
+   "src": "PistonScenes.java:290"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "PistonScenes.java:291"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 120,
+    "color": "green",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     0,
+     1.5,
+     2.5
+    ],
+    "key": "text_2",
+    "text": "It can be configured never to revert to solid blocks, or only at the location it started at"
+   },
+   "src": "PistonScenes.java:292"
+  }
+ ]
+}

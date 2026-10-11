@@ -1,0 +1,377 @@
+{
+ "id": "create:chute/upward",
+ "schematic": "chute/upward",
+ "schematicNamespace": "create",
+ "title": "Transporting Items upward via Chutes",
+ "texts": {
+  "text_1": "Using Encased Fans at the top or bottom, a Chute can move items upward",
+  "text_2": "Inspecting chutes with Engineers' Goggles reveals information about the movement direction",
+  "text_3": "On the 'blocked' end, items will have to be inserted/taken from the sides"
+ },
+ "tags": [],
+ "items": [
+  "create:chute"
+ ],
+ "keyframes": [
+  46,
+  126,
+  216
+ ],
+ "totalTicks": 242,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "ChuteScenes.java:156"
+  },
+  {
+   "op": "scaleSceneView",
+   "args": {
+    "factor": 0.8999999761581421
+   },
+   "src": "ChuteScenes.java:157"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      4,
+      0,
+      4
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "ChuteScenes.java:158"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      2,
+      2
+     ],
+     "to": [
+      1,
+      4,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": false
+   },
+   "src": "ChuteScenes.java:160"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      2
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "ChuteScenes.java:161"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "ChuteScenes.java:162"
+  },
+  {
+   "op": "world.restoreBlocks",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      2,
+      2
+     ],
+     "to": [
+      1,
+      4,
+      2
+     ]
+    }
+   },
+   "src": "ChuteScenes.java:164"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      2,
+      2
+     ],
+     "to": [
+      1,
+      4,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ChuteScenes.java:165"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "ChuteScenes.java:166"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     }
+    ]
+   },
+   "src": "ChuteScenes.java:167"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_1",
+    "pointAt": [
+     1,
+     2.5,
+     2.5
+    ],
+    "text": "Using Encased Fans at the top or bottom, a Chute can move items upward"
+   },
+   "src": "ChuteScenes.java:169"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "ChuteScenes.java:174"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     1.5,
+     2.5,
+     2
+    ],
+    "direction": "right",
+    "duration": 50,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "create:goggles",
+     "count": 1
+    }
+   },
+   "src": "ChuteScenes.java:175"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_2",
+    "pointAt": [
+     1,
+     2.5,
+     2.5
+    ],
+    "text": "Inspecting chutes with Engineers' Goggles reveals information about the movement direction"
+   },
+   "src": "ChuteScenes.java:177"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "ChuteScenes.java:182"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "pos",
+       "pos": [
+        3,
+        0,
+        5
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        2,
+        1,
+        2
+       ],
+       "to": [
+        4,
+        2,
+        5
+       ]
+      }
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ChuteScenes.java:184"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     4,
+     1,
+     2
+    ],
+    "insertionSide": "east",
+    "item": {
+     "id": "minecraft:copper_block",
+     "count": 1
+    }
+   },
+   "src": "ChuteScenes.java:187",
+   "out": "e1"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChuteScenes.java:188"
+  },
+  {
+   "op": "rotateCameraY",
+   "args": {
+    "degrees": 60
+   },
+   "src": "ChuteScenes.java:189"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_3",
+    "pointAt": [
+     3.5,
+     1.6875,
+     2.5
+    ],
+    "text": "On the 'blocked' end, items will have to be inserted/taken from the sides"
+   },
+   "src": "ChuteScenes.java:190"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 32
+   },
+   "src": "ChuteScenes.java:196"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     2,
+     2,
+     2
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         true
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ChuteScenes.java:197"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ]
+   },
+   "src": "ChuteScenes.java:198"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     1,
+     2,
+     2
+    ],
+    "insertionSide": "east",
+    "item": {
+     "id": "minecraft:copper_block",
+     "count": 1
+    }
+   },
+   "src": "ChuteScenes.java:199"
+  }
+ ]
+}

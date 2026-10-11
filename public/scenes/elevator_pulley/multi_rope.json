@@ -1,0 +1,577 @@
+{
+ "id": "create:elevator_pulley/multi_rope",
+ "schematic": "elevator_pulley/multi_rope",
+ "schematicNamespace": "create",
+ "title": "Synchronised Pulley Movement",
+ "texts": {
+  "text_1": "Whenever a pulley assembles a contraption...",
+  "text_2": "...other pulleys on the same layer will connect to the structure",
+  "text_3": "They do not require to be powered, the effect is purely cosmetic"
+ },
+ "tags": [],
+ "items": [
+  "create:elevator_pulley"
+ ],
+ "keyframes": [],
+ "totalTicks": 349,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "ElevatorScenes.java:427"
+  },
+  {
+   "op": "setSceneOffsetY",
+   "args": {
+    "yOffset": -1
+   },
+   "src": "ElevatorScenes.java:428"
+  },
+  {
+   "op": "scaleSceneView",
+   "args": {
+    "factor": 0.949999988079071
+   },
+   "src": "ElevatorScenes.java:429"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      4,
+      0,
+      4
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "ElevatorScenes.java:430"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ElevatorScenes.java:431"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      1,
+      1
+     ],
+     "to": [
+      3,
+      1,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ElevatorScenes.java:440",
+   "out": "e1"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ElevatorScenes.java:441"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        5,
+        0,
+        1
+       ],
+       "to": [
+        5,
+        3,
+        1
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        3,
+        4,
+        1
+       ],
+       "to": [
+        5,
+        4,
+        1
+       ]
+      }
+     ]
+    },
+    "direction": "west"
+   },
+   "src": "ElevatorScenes.java:442"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "ElevatorScenes.java:443"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      4,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ElevatorScenes.java:444"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "ElevatorScenes.java:445"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      4,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ElevatorScenes.java:446"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "ElevatorScenes.java:447"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "pulley",
+    "pos": [
+     3,
+     4,
+     1
+    ],
+    "distance": 2,
+    "duration": 20
+   },
+   "src": "ElevatorScenes.java:449"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "ElevatorScenes.java:450"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     3.5,
+     2,
+     1.5
+    ],
+    "key": "text_1",
+    "text": "Whenever a pulley assembles a contraption..."
+   },
+   "src": "ElevatorScenes.java:452"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "ElevatorScenes.java:456"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "pulley",
+    "pos": [
+     3,
+     4,
+     3
+    ],
+    "distance": 2,
+    "duration": 0
+   },
+   "src": "ElevatorScenes.java:458"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "pulley",
+    "pos": [
+     1,
+     4,
+     3
+    ],
+    "distance": 2,
+    "duration": 0
+   },
+   "src": "ElevatorScenes.java:459"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "ElevatorScenes.java:460"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "pulley",
+    "pos": [
+     3,
+     4,
+     1
+    ],
+    "distance": -2,
+    "duration": 20
+   },
+   "src": "ElevatorScenes.java:461"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "pulley",
+    "pos": [
+     3,
+     4,
+     3
+    ],
+    "distance": -2,
+    "duration": 20
+   },
+   "src": "ElevatorScenes.java:462"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "pulley",
+    "pos": [
+     1,
+     4,
+     3
+    ],
+    "distance": -2,
+    "duration": 20
+   },
+   "src": "ElevatorScenes.java:463"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     2,
+     0
+    ],
+    "duration": 20
+   },
+   "src": "ElevatorScenes.java:464"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "ElevatorScenes.java:465"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     1,
+     4.5,
+     3.5
+    ],
+    "key": "text_2",
+    "text": "...other pulleys on the same layer will connect to the structure"
+   },
+   "src": "ElevatorScenes.java:467"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "ElevatorScenes.java:471"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "pulley",
+    "pos": [
+     3,
+     4,
+     1
+    ],
+    "distance": 2,
+    "duration": 20
+   },
+   "src": "ElevatorScenes.java:473"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "pulley",
+    "pos": [
+     3,
+     4,
+     3
+    ],
+    "distance": 2,
+    "duration": 20
+   },
+   "src": "ElevatorScenes.java:474"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "pulley",
+    "pos": [
+     1,
+     4,
+     3
+    ],
+    "distance": 2,
+    "duration": 20
+   },
+   "src": "ElevatorScenes.java:475"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     -2,
+     0
+    ],
+    "duration": 20
+   },
+   "src": "ElevatorScenes.java:476"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "ElevatorScenes.java:477"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "ElevatorScenes.java:479"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "pulley",
+    "pos": [
+     3,
+     4,
+     1
+    ],
+    "distance": -2,
+    "duration": 20
+   },
+   "src": "ElevatorScenes.java:480"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "pulley",
+    "pos": [
+     3,
+     4,
+     3
+    ],
+    "distance": -2,
+    "duration": 20
+   },
+   "src": "ElevatorScenes.java:481"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "pulley",
+    "pos": [
+     1,
+     4,
+     3
+    ],
+    "distance": -2,
+    "duration": 20
+   },
+   "src": "ElevatorScenes.java:482"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     2,
+     0
+    ],
+    "duration": 20
+   },
+   "src": "ElevatorScenes.java:483"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "ElevatorScenes.java:484"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     1,
+     4.5,
+     3.5
+    ],
+    "key": "text_3",
+    "text": "They do not require to be powered, the effect is purely cosmetic"
+   },
+   "src": "ElevatorScenes.java:486"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "ElevatorScenes.java:490"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "pulley",
+    "pos": [
+     3,
+     4,
+     1
+    ],
+    "distance": 2,
+    "duration": 20
+   },
+   "src": "ElevatorScenes.java:492"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "pulley",
+    "pos": [
+     3,
+     4,
+     3
+    ],
+    "distance": 2,
+    "duration": 20
+   },
+   "src": "ElevatorScenes.java:493"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "pulley",
+    "pos": [
+     1,
+     4,
+     3
+    ],
+    "distance": 2,
+    "duration": 20
+   },
+   "src": "ElevatorScenes.java:494"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     -2,
+     0
+    ],
+    "duration": 20
+   },
+   "src": "ElevatorScenes.java:495"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "ElevatorScenes.java:496"
+  }
+ ]
+}

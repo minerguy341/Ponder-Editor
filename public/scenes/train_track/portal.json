@@ -1,0 +1,765 @@
+{
+ "id": "create:train_track/portal",
+ "schematic": "train_track/portal",
+ "schematicNamespace": "create",
+ "title": "Tracks and the Nether",
+ "texts": {
+  "text_1": "Tracks placed up against a nether portal...",
+  "text_2": "...will attempt to create a paired track on the other side",
+  "text_3": "Trains on this track are now able to travel across dimensions"
+ },
+ "tags": [],
+ "items": [
+  "create:track"
+ ],
+ "keyframes": [
+  41,
+  145,
+  257
+ ],
+ "totalTicks": 291,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 9
+   },
+   "src": "TrackScenes.java:256"
+  },
+  {
+   "op": "scaleSceneView",
+   "args": {
+    "factor": 0.6499999761581421
+   },
+   "src": "TrackScenes.java:257"
+  },
+  {
+   "op": "setSceneOffsetY",
+   "args": {
+    "yOffset": -1
+   },
+   "src": "TrackScenes.java:258"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      8,
+      0,
+      8
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "TrackScenes.java:259"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      1,
+      7
+     ],
+     "to": [
+      6,
+      6,
+      7
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "TrackScenes.java:260"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "TrackScenes.java:261"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      1,
+      1
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrackScenes.java:264"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "TrackScenes.java:265"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrackScenes.java:264"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "TrackScenes.java:265"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      1,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrackScenes.java:264"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "TrackScenes.java:265"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      1,
+      4
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrackScenes.java:264"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "TrackScenes.java:265"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      1,
+      5
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrackScenes.java:264"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "TrackScenes.java:265"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       4,
+       3,
+       3
+      ],
+      "state": {
+       "name": "create:controls",
+       "props": {
+        "facing": "north",
+        "open": "false",
+        "virtual": "true",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "TrackScenes.java:268"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "TrackScenes.java:270"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     4.5,
+     1,
+     6.5
+    ],
+    "key": "text_1",
+    "text": "Tracks placed up against a nether portal..."
+   },
+   "src": "TrackScenes.java:271"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "TrackScenes.java:276"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      1,
+      6
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrackScenes.java:278"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "TrackScenes.java:280"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     4.5,
+     1,
+     6.5
+    ],
+    "key": "text_2",
+    "text": "...will attempt to create a paired track on the other side"
+   },
+   "src": "TrackScenes.java:281"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "TrackScenes.java:285"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      2,
+      1
+     ],
+     "to": [
+      5,
+      3,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrackScenes.java:288",
+   "out": "e1"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      2,
+      3
+     ],
+     "to": [
+      5,
+      3,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrackScenes.java:290",
+   "out": "e2"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      2,
+      4
+     ],
+     "to": [
+      5,
+      3,
+      5
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrackScenes.java:292",
+   "out": "e3"
+  },
+  {
+   "op": "special.createBirb",
+   "args": {
+    "location": [
+     4.5,
+     3.5,
+     2.5
+    ],
+    "pose": {
+     "type": "face_poi"
+    }
+   },
+   "src": "TrackScenes.java:295",
+   "out": "e4"
+  },
+  {
+   "op": "special.conductorBirb",
+   "args": {
+    "link": {
+     "link": "e4"
+    },
+    "conductor": true
+   },
+   "src": "TrackScenes.java:296"
+  },
+  {
+   "op": "special.movePointOfInterest",
+   "args": {
+    "location": [
+     4.5,
+     4.5,
+     10.5
+    ]
+   },
+   "src": "TrackScenes.java:297"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "TrackScenes.java:300"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     0,
+     6
+    ],
+    "duration": 30
+   },
+   "src": "TrackScenes.java:303"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     0,
+     0,
+     6
+    ],
+    "duration": 30
+   },
+   "src": "TrackScenes.java:303"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "offset": [
+     0,
+     0,
+     6
+    ],
+    "duration": 30
+   },
+   "src": "TrackScenes.java:303"
+  },
+  {
+   "op": "special.moveParrot",
+   "args": {
+    "link": {
+     "link": "e4"
+    },
+    "offset": [
+     0,
+     0,
+     5.6
+    ],
+    "duration": 28
+   },
+   "src": "TrackScenes.java:304"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bogey",
+    "pos": [
+     4,
+     2,
+     3
+    ],
+    "distance": -6,
+    "duration": 31
+   },
+   "src": "TrackScenes.java:305"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "TrackScenes.java:308"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "direction": "south"
+   },
+   "src": "TrackScenes.java:309"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "TrackScenes.java:308"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "direction": "south"
+   },
+   "src": "TrackScenes.java:309"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "TrackScenes.java:308"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "direction": "south"
+   },
+   "src": "TrackScenes.java:309"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      8,
+      0,
+      8
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "TrackScenes.java:312"
+  },
+  {
+   "op": "rotateCameraY",
+   "args": {
+    "degrees": 360
+   },
+   "src": "TrackScenes.java:313"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "TrackScenes.java:314"
+  },
+  {
+   "op": "special.movePointOfInterest",
+   "args": {
+    "location": [
+     4.5,
+     4.5,
+     0.5
+    ]
+   },
+   "src": "TrackScenes.java:315"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      7,
+      0
+     ],
+     "to": [
+      8,
+      7,
+      8
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "TrackScenes.java:317",
+   "out": "e5"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e5"
+    },
+    "offset": [
+     0,
+     -7,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "TrackScenes.java:318"
+  },
+  {
+   "op": "special.moveParrot",
+   "args": {
+    "link": {
+     "link": "e4"
+    },
+    "offset": [
+     0,
+     0,
+     -0.10000000149011612
+    ],
+    "duration": 1
+   },
+   "src": "TrackScenes.java:319"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 25
+   },
+   "src": "TrackScenes.java:320"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      2,
+      1
+     ],
+     "to": [
+      5,
+      3,
+      5
+     ]
+    },
+    "direction": null
+   },
+   "src": "TrackScenes.java:323",
+   "out": "e6"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e6"
+    },
+    "rotation": [
+     0,
+     180,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "TrackScenes.java:324"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e6"
+    },
+    "offset": [
+     0,
+     0,
+     3.5
+    ],
+    "duration": 0
+   },
+   "src": "TrackScenes.java:325"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e6"
+    },
+    "offset": [
+     0,
+     0,
+     -3.5
+    ],
+    "duration": 18
+   },
+   "src": "TrackScenes.java:326"
+  },
+  {
+   "op": "special.moveParrot",
+   "args": {
+    "link": {
+     "link": "e4"
+    },
+    "offset": [
+     0,
+     0,
+     -3.5
+    ],
+    "duration": 18
+   },
+   "src": "TrackScenes.java:327"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bogey",
+    "pos": [
+     4,
+     2,
+     3
+    ],
+    "distance": -3.5,
+    "duration": 19
+   },
+   "src": "TrackScenes.java:328"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "TrackScenes.java:329"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     3.5,
+     3,
+     3.5
+    ],
+    "key": "text_3",
+    "text": "Trains on this track are now able to travel across dimensions"
+   },
+   "src": "TrackScenes.java:331"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "TrackScenes.java:336"
+  }
+ ]
+}

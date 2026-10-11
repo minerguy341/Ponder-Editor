@@ -1,0 +1,1500 @@
+{
+ "id": "create:high_logistics/table_cloth",
+ "schematic": "high_logistics/table_cloth",
+ "schematicNamespace": "create",
+ "title": "Selling items with Table Cloths",
+ "texts": {
+  "text_1": "Table cloths can be used to display items",
+  "text_2": "With the help of a logistics system, they can also be used to sell items",
+  "text_3": "Start with the shop's inventory, a Packager and Stock link",
+  "text_4": "Bind a Stock ticker to the link and place it in the shop",
+  "text_5": "Employ a mob or blaze burner as the shop keeper",
+  "text_6": "Fill the shop inventory with items to be sold",
+  "text_7": "To create a new trade, interact with the shop keeper while holding a table cloth",
+  "text_8": "Once placed, set a price in the item slot on the side",
+  "text_9": "Other players can now interact with the shop",
+  "text_10": "When checking out at the cashier, the bought items will be placed into a package",
+  "text_11": "From there, they can be transported to the shop front",
+  "text_12": "The payments will be stored inside the stock ticker block"
+ },
+ "tags": [],
+ "items": [
+  "create:white_table_cloth",
+  "create:orange_table_cloth",
+  "create:magenta_table_cloth",
+  "create:light_blue_table_cloth",
+  "create:yellow_table_cloth",
+  "create:lime_table_cloth",
+  "create:pink_table_cloth",
+  "create:gray_table_cloth",
+  "create:light_gray_table_cloth",
+  "create:cyan_table_cloth",
+  "create:purple_table_cloth",
+  "create:blue_table_cloth",
+  "create:brown_table_cloth",
+  "create:green_table_cloth",
+  "create:red_table_cloth",
+  "create:black_table_cloth",
+  "create:andesite_table_cloth",
+  "create:brass_table_cloth",
+  "create:copper_table_cloth"
+ ],
+ "keyframes": [
+  48,
+  118,
+  268,
+  410,
+  520,
+  630,
+  740,
+  890,
+  1020,
+  1155,
+  1326,
+  1436
+ ],
+ "totalTicks": 1530,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 7
+   },
+   "src": "TableClothScenes.java:35"
+  },
+  {
+   "op": "scaleSceneView",
+   "args": {
+    "factor": 0.925000011920929
+   },
+   "src": "TableClothScenes.java:36"
+  },
+  {
+   "op": "setSceneOffsetY",
+   "args": {
+    "yOffset": -0.5
+   },
+   "src": "TableClothScenes.java:37"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      6,
+      0,
+      6
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "TableClothScenes.java:38"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "TableClothScenes.java:71"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      1,
+      3
+     ],
+     "to": [
+      3,
+      2,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TableClothScenes.java:74"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "TableClothScenes.java:75"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3.5,
+     2.5,
+     3.5
+    ],
+    "direction": "down",
+    "duration": 50,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "minecraft:oak_log",
+     "count": 1
+    }
+   },
+   "src": "TableClothScenes.java:79"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "TableClothScenes.java:84"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     3,
+     2,
+     3
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "TableClothScenes.java:86"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       2,
+       3
+      ],
+      "state": {
+       "name": "create:light_gray_table_cloth",
+       "props": {
+        "entity": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "TableClothScenes.java:89"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     2,
+     3
+    ],
+    "beType": "TableClothBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "f": "manuallyAddedItems"
+       },
+       {
+        "m": "add",
+        "a": [
+         {
+          "id": "minecraft:oak_log",
+          "count": 1
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "TableClothScenes.java:92"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "TableClothScenes.java:94"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_1",
+    "pointAt": [
+     3.5,
+     2,
+     3.5
+    ],
+    "text": "Table cloths can be used to display items"
+   },
+   "src": "TableClothScenes.java:97"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "TableClothScenes.java:103"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     3,
+     2,
+     3
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "TableClothScenes.java:106"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     2,
+     3
+    ],
+    "beType": "TableClothBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "set": "requestData",
+        "v": {
+         "class": "AutoRequestData",
+         "encodedRequest": {
+          "class": "PackageOrderWithCrafts",
+          "orderedStacks": {
+           "class": "PackageOrder",
+           "stacks": [
+            {
+             "class": "BigItemStack",
+             "stack": {
+              "id": "minecraft:oak_log",
+              "count": 1
+             },
+             "count": 1
+            }
+           ]
+          },
+          "orderedCrafts": []
+         },
+         "encodedTargetAddress": "",
+         "targetOffset": [
+          0,
+          0,
+          0
+         ],
+         "targetDim": "null",
+         "isValid": true
+        }
+       }
+      ]
+     },
+     {
+      "path": [
+       {
+        "f": "priceTag"
+       },
+       {
+        "m": "setFilter",
+        "a": [
+         {
+          "id": "minecraft:diamond",
+          "count": 1
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "path": [
+       {
+        "f": "priceTag"
+       },
+       {
+        "set": "count",
+        "v": 1
+       }
+      ]
+     },
+     {
+      "path": [
+       {
+        "set": "facing",
+        "v": "north"
+       }
+      ]
+     }
+    ]
+   },
+   "src": "TableClothScenes.java:109"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 100,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_2",
+    "pointAt": [
+     3,
+     1.75,
+     3
+    ],
+    "text": "With the help of a logistics system, they can also be used to sell items"
+   },
+   "src": "TableClothScenes.java:121"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 110
+   },
+   "src": "TableClothScenes.java:127"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      1,
+      3
+     ],
+     "to": [
+      3,
+      2,
+      3
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "TableClothScenes.java:130"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "TableClothScenes.java:131"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      1,
+      4
+     ],
+     "to": [
+      4,
+      3,
+      5
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "TableClothScenes.java:133"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      4
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "TableClothScenes.java:135"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "TableClothScenes.java:136"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      2,
+      4
+     ]
+    },
+    "direction": "east"
+   },
+   "src": "TableClothScenes.java:138"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "TableClothScenes.java:139"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      3,
+      4
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TableClothScenes.java:141"
+  },
+  {
+   "op": "overlay.showOutlineWithText",
+   "args": {
+    "duration": 100,
+    "color": "blue",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      2,
+      4
+     ],
+     "to": [
+      4,
+      3,
+      5
+     ]
+    },
+    "pointAt": [
+     2,
+     3,
+     4
+    ],
+    "key": "text_3",
+    "text": "Start with the shop's inventory, a Packager and Stock link"
+   },
+   "src": "TableClothScenes.java:144"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 110
+   },
+   "src": "TableClothScenes.java:152"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     3.5,
+     4.5
+    ],
+    "direction": "down",
+    "duration": 80,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:stock_ticker",
+     "count": 1
+    }
+   },
+   "src": "TableClothScenes.java:156"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "TableClothScenes.java:160"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "blue",
+    "slot": "pos:2,3,4",
+    "box": {
+     "min": [
+      2.45,
+      3.45,
+      4.45
+     ],
+     "max": [
+      2.55,
+      3.55,
+      4.55
+     ]
+    },
+    "duration": 10
+   },
+   "src": "TableClothScenes.java:164"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "TableClothScenes.java:165"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "blue",
+    "slot": "pos:2,3,4",
+    "box": {
+     "min": [
+      2.0625,
+      2.5625,
+      4.0625
+     ],
+     "max": [
+      2.9375,
+      3.9375,
+      4.9375
+     ]
+    },
+    "duration": 50
+   },
+   "src": "TableClothScenes.java:169"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 26
+   },
+   "src": "TableClothScenes.java:170"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "blue",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_4",
+    "pointAt": [
+     2.5,
+     3.5,
+     4.5
+    ],
+    "text": "Bind a Stock ticker to the link and place it in the shop"
+   },
+   "src": "TableClothScenes.java:173"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "TableClothScenes.java:180"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      1
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TableClothScenes.java:183"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "TableClothScenes.java:184"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      2
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "TableClothScenes.java:186"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "TableClothScenes.java:187"
+  },
+  {
+   "op": "special.createBirb",
+   "args": {
+    "location": [
+     3.5,
+     1.5,
+     2.5
+    ],
+    "pose": {
+     "type": "face_poi"
+    }
+   },
+   "src": "TableClothScenes.java:189",
+   "out": "e1"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "TableClothScenes.java:193"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 90,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_5",
+    "pointAt": [
+     2.5,
+     2.75,
+     1.5
+    ],
+    "text": "Employ a mob or blaze burner as the shop keeper"
+   },
+   "src": "TableClothScenes.java:196"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 100
+   },
+   "src": "TableClothScenes.java:202"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     5,
+     3.5,
+     4
+    ],
+    "direction": "right",
+    "duration": 80,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "minecraft:oak_log",
+     "count": 1
+    }
+   },
+   "src": "TableClothScenes.java:207"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     5,
+     2,
+     4
+    ],
+    "direction": "right",
+    "duration": 80,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "minecraft:birch_log",
+     "count": 1
+    }
+   },
+   "src": "TableClothScenes.java:211"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "TableClothScenes.java:214"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_6",
+    "pointAt": [
+     4,
+     3,
+     4
+    ],
+    "text": "Fill the shop inventory with items to be sold"
+   },
+   "src": "TableClothScenes.java:217"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "TableClothScenes.java:223"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3,
+     3,
+     1.75
+    ],
+    "direction": "down",
+    "duration": 120,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:light_gray_table_cloth",
+     "count": 1
+    }
+   },
+   "src": "TableClothScenes.java:228"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "TableClothScenes.java:232"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 100,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_7",
+    "pointAt": [
+     2.5,
+     2.75,
+     1.5
+    ],
+    "text": "To create a new trade, interact with the shop keeper while holding a table cloth"
+   },
+   "src": "TableClothScenes.java:235"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 100
+   },
+   "src": "TableClothScenes.java:241"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       5,
+       2,
+       1
+      ],
+      "state": {
+       "name": "create:light_gray_table_cloth",
+       "props": {
+        "entity": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "TableClothScenes.java:244"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     5,
+     2,
+     1
+    ],
+    "beType": "TableClothBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "set": "requestData",
+        "v": {
+         "class": "AutoRequestData",
+         "encodedRequest": {
+          "class": "PackageOrderWithCrafts",
+          "orderedStacks": {
+           "class": "PackageOrder",
+           "stacks": [
+            {
+             "class": "BigItemStack",
+             "stack": {
+              "id": "minecraft:oak_log",
+              "count": 1
+             },
+             "count": 1
+            }
+           ]
+          },
+          "orderedCrafts": []
+         },
+         "encodedTargetAddress": "",
+         "targetOffset": [
+          0,
+          0,
+          0
+         ],
+         "targetDim": "null",
+         "isValid": true
+        }
+       }
+      ]
+     },
+     {
+      "path": [
+       {
+        "set": "facing",
+        "v": "north"
+       }
+      ]
+     }
+    ]
+   },
+   "src": "TableClothScenes.java:247"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      5,
+      1,
+      1
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TableClothScenes.java:257"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "TableClothScenes.java:258"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      5,
+      2,
+      1
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TableClothScenes.java:260"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "TableClothScenes.java:261"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     5.25,
+     1.825,
+     1
+    ],
+    "direction": "down",
+    "duration": 120,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "minecraft:diamond",
+     "count": 1
+    }
+   },
+   "src": "TableClothScenes.java:267"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "TableClothScenes.java:270"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "TableClothBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       5,
+       2,
+       1
+      ],
+      "nbt": {
+       "Filter": {
+        "id": "minecraft:diamond",
+        "count": 1
+       }
+      }
+     }
+    ]
+   },
+   "src": "TableClothScenes.java:272"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "TableClothScenes.java:274"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 90,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_8",
+    "pointAt": [
+     5.25,
+     1.825,
+     1
+    ],
+    "text": "Once placed, set a price in the item slot on the side"
+   },
+   "src": "TableClothScenes.java:277"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 120
+   },
+   "src": "TableClothScenes.java:282"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     5.5,
+     2.5,
+     1.5
+    ],
+    "direction": "down",
+    "duration": 90,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb"
+   },
+   "src": "TableClothScenes.java:285"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "TableClothScenes.java:290"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 90,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_9",
+    "pointAt": [
+     5,
+     2,
+     1.5
+    ],
+    "text": "Other players can now interact with the shop"
+   },
+   "src": "TableClothScenes.java:293"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 100
+   },
+   "src": "TableClothScenes.java:299"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3,
+     3,
+     1.75
+    ],
+    "direction": "down",
+    "duration": 90,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:shopping_list",
+     "count": 1
+    }
+   },
+   "src": "TableClothScenes.java:303"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "TableClothScenes.java:307"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     3,
+     1,
+     1
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "TableClothScenes.java:309"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     2,
+     3,
+     4
+    ],
+    "beType": "LinkWithBulbBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "pulse",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "PonderHilo.java:56"
+  },
+  {
+   "op": "effects.addParticles",
+   "args": {
+    "particles": [
+     {
+      "particle": {
+       "type": "create:wifi"
+      },
+      "location": [
+       2.5,
+       3.5,
+       4.5
+      ],
+      "motion": [
+       1,
+       1,
+       1
+      ]
+     }
+    ]
+   },
+   "src": "PonderHilo.java:57"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     2,
+     2,
+     4
+    ],
+    "beType": "PackagerBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "set": "animationTicks",
+        "v": 20
+       }
+      ]
+     },
+     {
+      "path": [
+       {
+        "set": "animationInward",
+        "v": false
+       }
+      ]
+     },
+     {
+      "path": [
+       {
+        "set": "heldBox",
+        "v": {
+         "id": "create:cardboard_package_10x12",
+         "count": 1,
+         "nbt": {
+          "create:package_contents": []
+         }
+        }
+       }
+      ]
+     }
+    ]
+   },
+   "src": "PonderHilo.java:19"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "TableClothScenes.java:314"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 120,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_10",
+    "pointAt": [
+     2.5,
+     2.5,
+     4
+    ],
+    "text": "When checking out at the cashier, the bought items will be placed into a package"
+   },
+   "src": "TableClothScenes.java:317"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 100
+   },
+   "src": "TableClothScenes.java:323"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      0,
+      7
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "TableClothScenes.java:326"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "TableClothScenes.java:327"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      1,
+      5
+     ],
+     "to": [
+      2,
+      1,
+      6
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TableClothScenes.java:329"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "TableClothScenes.java:330"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      1,
+      0
+     ],
+     "to": [
+      1,
+      1,
+      5
+     ]
+    },
+    "direction": "east"
+   },
+   "src": "TableClothScenes.java:332"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "TableClothScenes.java:333"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      2,
+      4
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TableClothScenes.java:335"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "TableClothScenes.java:336"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ],
+    "insertionSide": "east",
+    "item": {
+     "id": "create:cardboard_package_10x12",
+     "count": 1,
+     "nbt": {
+      "create:package_contents": []
+     }
+    }
+   },
+   "src": "TableClothScenes.java:338",
+   "out": "e2"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     4
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "TableClothScenes.java:338"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     2,
+     2,
+     4
+    ],
+    "beType": "PackagerBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "set": "heldBox",
+        "v": {
+         "id": "minecraft:air",
+         "count": 0
+        }
+       }
+      ]
+     }
+    ]
+   },
+   "src": "PonderHilo.java:37"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 45
+   },
+   "src": "TableClothScenes.java:341"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 90,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_11",
+    "pointAt": [
+     1,
+     2.5,
+     1.5
+    ],
+    "text": "From there, they can be transported to the shop front"
+   },
+   "src": "TableClothScenes.java:344"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 100
+   },
+   "src": "TableClothScenes.java:350"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3.5,
+     2,
+     1.5
+    ],
+    "direction": "down",
+    "duration": 100,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "minecraft:diamond",
+     "count": 1
+    }
+   },
+   "src": "TableClothScenes.java:353"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "TableClothScenes.java:359"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 90,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_12",
+    "pointAt": [
+     3.5,
+     1.5,
+     1.5
+    ],
+    "text": "The payments will be stored inside the stock ticker block"
+   },
+   "src": "TableClothScenes.java:362"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 100
+   },
+   "src": "TableClothScenes.java:369"
+  }
+ ]
+}

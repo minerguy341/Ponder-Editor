@@ -1,0 +1,1505 @@
+{
+ "id": "create:train_observer",
+ "schematic": "train_observer",
+ "schematicNamespace": "create",
+ "title": "Detecting Trains",
+ "texts": {
+  "text_1": "Select a Train Track then place the Observer nearby",
+  "text_2": "The Observer will detect any Trains passing over the marker",
+  "text_3": "Observers can be filtered to activate for matching cargo"
+ },
+ "tags": [],
+ "items": [
+  "create:track_observer"
+ ],
+ "keyframes": [
+  103,
+  231
+ ],
+ "totalTicks": 452,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 1,
+    "zOffset": 1,
+    "size": 9
+   },
+   "src": "TrackObserverScenes.java:27"
+  },
+  {
+   "op": "scaleSceneView",
+   "args": {
+    "factor": 0.6499999761581421
+   },
+   "src": "TrackObserverScenes.java:28"
+  },
+  {
+   "op": "setSceneOffsetY",
+   "args": {
+    "yOffset": -1
+   },
+   "src": "TrackObserverScenes.java:29"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      0,
+      1
+     ],
+     "to": [
+      9,
+      0,
+      9
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "TrackObserverScenes.java:30"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       5,
+       3,
+       7
+      ],
+      "state": {
+       "name": "create:controls",
+       "props": {
+        "facing": "east",
+        "open": "false",
+        "virtual": "true",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "TrackObserverScenes.java:32"
+  },
+  {
+   "op": "special.movePointOfInterest",
+   "args": {
+    "location": [
+     -9.5,
+     2.5,
+     7.5
+    ]
+   },
+   "src": "TrackObserverScenes.java:33"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      10,
+      1,
+      7
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrackObserverScenes.java:44"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "TrackObserverScenes.java:45"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      9,
+      1,
+      7
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrackObserverScenes.java:44"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "TrackObserverScenes.java:45"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      8,
+      1,
+      7
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrackObserverScenes.java:44"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "TrackObserverScenes.java:45"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      7,
+      1,
+      7
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrackObserverScenes.java:44"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "TrackObserverScenes.java:45"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      6,
+      1,
+      7
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrackObserverScenes.java:44"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "TrackObserverScenes.java:45"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      5,
+      1,
+      7
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrackObserverScenes.java:44"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "TrackObserverScenes.java:45"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      1,
+      7
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrackObserverScenes.java:44"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "TrackObserverScenes.java:45"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      7
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrackObserverScenes.java:44"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "TrackObserverScenes.java:45"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      7
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrackObserverScenes.java:44"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "TrackObserverScenes.java:45"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      7
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrackObserverScenes.java:44"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "TrackObserverScenes.java:45"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      1,
+      7
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrackObserverScenes.java:44"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "TrackObserverScenes.java:45"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "TrackObserverScenes.java:48"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     5.5,
+     1,
+     7.5
+    ],
+    "direction": "down",
+    "duration": 40,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:track_observer",
+     "count": 1
+    }
+   },
+   "src": "TrackObserverScenes.java:53"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 6
+   },
+   "src": "TrackObserverScenes.java:55"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "green",
+    "slot": "obj:1",
+    "box": {
+     "min": [
+      5.5,
+      1.125,
+      7.5
+     ],
+     "max": [
+      5.5,
+      1.125,
+      7.5
+     ]
+    },
+    "duration": 1
+   },
+   "src": "TrackObserverScenes.java:56"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "green",
+    "slot": "obj:1",
+    "box": {
+     "min": [
+      5.050000011920929,
+      1.0625,
+      7.050000011920929
+     ],
+     "max": [
+      5.949999988079071,
+      1.1875,
+      7.949999988079071
+     ]
+    },
+    "duration": 60
+   },
+   "src": "TrackObserverScenes.java:57"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "TrackObserverScenes.java:58"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 50,
+    "color": "green",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     5.5,
+     1,
+     7.5
+    ],
+    "key": "text_1",
+    "text": "Select a Train Track then place the Observer nearby"
+   },
+   "src": "TrackObserverScenes.java:60"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "TrackObserverScenes.java:65"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      5,
+      1,
+      4
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrackObserverScenes.java:67"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "TrackObserverScenes.java:68"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "green",
+    "slot": "obj:1",
+    "box": {
+     "min": [
+      5,
+      1,
+      4
+     ],
+     "max": [
+      6,
+      2,
+      5
+     ]
+    },
+    "duration": 20
+   },
+   "src": "TrackObserverScenes.java:69"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 25
+   },
+   "src": "TrackObserverScenes.java:70"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     5,
+     1.5,
+     4.5
+    ],
+    "key": "text_2",
+    "text": "The Observer will detect any Trains passing over the marker"
+   },
+   "src": "TrackObserverScenes.java:72"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "TrackObserverScenes.java:77"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      5,
+      1,
+      2
+     ],
+     "to": [
+      5,
+      1,
+      3
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "TrackObserverScenes.java:78"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "TrackObserverScenes.java:79"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      2,
+      6
+     ],
+     "to": [
+      7,
+      3,
+      8
+     ]
+    },
+    "direction": "west"
+   },
+   "src": "TrackObserverScenes.java:81",
+   "out": "e1"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     6,
+     0,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "TrackObserverScenes.java:82"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     -16,
+     0,
+     0
+    ],
+    "duration": 80
+   },
+   "src": "TrackObserverScenes.java:83"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bogey",
+    "pos": [
+     5,
+     2,
+     7
+    ],
+    "distance": 16,
+    "duration": 81
+   },
+   "src": "TrackObserverScenes.java:84"
+  },
+  {
+   "op": "special.createBirb",
+   "args": {
+    "location": [
+     12.5,
+     3.5,
+     7.5
+    ],
+    "pose": {
+     "type": "face_poi"
+    }
+   },
+   "src": "TrackObserverScenes.java:86",
+   "out": "e2"
+  },
+  {
+   "op": "special.moveParrot",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     -16,
+     0,
+     0
+    ],
+    "duration": 80
+   },
+   "src": "TrackObserverScenes.java:87"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "TrackObserverScenes.java:88"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      8,
+      2,
+      6
+     ],
+     "to": [
+      11,
+      3,
+      8
+     ]
+    },
+    "direction": "west"
+   },
+   "src": "TrackObserverScenes.java:90",
+   "out": "e3"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "offset": [
+     4,
+     0,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "TrackObserverScenes.java:91"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "offset": [
+     -14,
+     0,
+     0
+    ],
+    "duration": 70
+   },
+   "src": "TrackObserverScenes.java:92"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bogey",
+    "pos": [
+     9,
+     2,
+     7
+    ],
+    "distance": 14,
+    "duration": 71
+   },
+   "src": "TrackObserverScenes.java:93"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 13
+   },
+   "src": "TrackObserverScenes.java:97"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       5,
+       1,
+       3
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "15",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       4
+      ],
+      "state": {
+       "name": "create:track_observer",
+       "props": {
+        "powered": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "TrackObserverScenes.java:98"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     5,
+     1,
+     4
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "TrackObserverScenes.java:99"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "TrackObserverScenes.java:100"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "direction": "west"
+   },
+   "src": "TrackObserverScenes.java:101"
+  },
+  {
+   "op": "special.hideElement",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "direction": "west"
+   },
+   "src": "TrackObserverScenes.java:102"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "TrackObserverScenes.java:103"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       5,
+       1,
+       3
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "0",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       4
+      ],
+      "state": {
+       "name": "create:track_observer",
+       "props": {
+        "powered": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "TrackObserverScenes.java:104"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "TrackObserverScenes.java:105"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "direction": "west"
+   },
+   "src": "TrackObserverScenes.java:106"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "TrackObserverScenes.java:107"
+  },
+  {
+   "op": "overlay.highlightValueBox",
+   "args": {
+    "location": [
+     5.5,
+     2,
+     4.5
+    ],
+    "expands": [
+     0.25,
+     0.0625,
+     0.25
+    ],
+    "duration": 60
+   },
+   "src": "TrackObserverScenes.java:111"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     5.5,
+     2,
+     4.5
+    ],
+    "key": "text_3",
+    "text": "Observers can be filtered to activate for matching cargo"
+   },
+   "src": "TrackObserverScenes.java:113"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "TrackObserverScenes.java:118"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     5.5,
+     2,
+     4.5
+    ],
+    "direction": "down",
+    "duration": 30,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "minecraft:water_bucket",
+     "count": 1
+    }
+   },
+   "src": "TrackObserverScenes.java:121"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 6
+   },
+   "src": "TrackObserverScenes.java:122"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "TrackObserverBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       5,
+       1,
+       4
+      ],
+      "nbt": {
+       "Filter": {
+        "id": "minecraft:water_bucket",
+        "count": 1
+       }
+      }
+     }
+    ]
+   },
+   "src": "TrackObserverScenes.java:123"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "TrackObserverScenes.java:124"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      2,
+      6
+     ],
+     "to": [
+      7,
+      3,
+      8
+     ]
+    },
+    "direction": "west"
+   },
+   "src": "TrackObserverScenes.java:126",
+   "out": "e4"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e4"
+    },
+    "offset": [
+     6,
+     0,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "TrackObserverScenes.java:127"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e4"
+    },
+    "offset": [
+     -16,
+     0,
+     0
+    ],
+    "duration": 80
+   },
+   "src": "TrackObserverScenes.java:128"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bogey",
+    "pos": [
+     5,
+     2,
+     7
+    ],
+    "distance": 16,
+    "duration": 81
+   },
+   "src": "TrackObserverScenes.java:129"
+  },
+  {
+   "op": "special.createBirb",
+   "args": {
+    "location": [
+     12.5,
+     3.5,
+     7.5
+    ],
+    "pose": {
+     "type": "face_poi"
+    }
+   },
+   "src": "TrackObserverScenes.java:130",
+   "out": "e5"
+  },
+  {
+   "op": "special.moveParrot",
+   "args": {
+    "link": {
+     "link": "e5"
+    },
+    "offset": [
+     -16,
+     0,
+     0
+    ],
+    "duration": 80
+   },
+   "src": "TrackObserverScenes.java:131"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "TrackObserverScenes.java:132"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      8,
+      2,
+      0
+     ],
+     "to": [
+      11,
+      3,
+      2
+     ]
+    },
+    "direction": "west"
+   },
+   "src": "TrackObserverScenes.java:134",
+   "out": "e6"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e6"
+    },
+    "offset": [
+     4,
+     0,
+     6
+    ],
+    "duration": 0
+   },
+   "src": "TrackObserverScenes.java:135"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e6"
+    },
+    "offset": [
+     -14,
+     0,
+     0
+    ],
+    "duration": 70
+   },
+   "src": "TrackObserverScenes.java:136"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bogey",
+    "pos": [
+     9,
+     2,
+     1
+    ],
+    "distance": 14,
+    "duration": 81
+   },
+   "src": "TrackObserverScenes.java:137"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 33
+   },
+   "src": "TrackObserverScenes.java:139"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e4"
+    },
+    "direction": "west"
+   },
+   "src": "TrackObserverScenes.java:140"
+  },
+  {
+   "op": "special.hideElement",
+   "args": {
+    "link": {
+     "link": "e5"
+    },
+    "direction": "west"
+   },
+   "src": "TrackObserverScenes.java:141"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "TrackObserverScenes.java:142"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e6"
+    },
+    "direction": "west"
+   },
+   "src": "TrackObserverScenes.java:143"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "TrackObserverScenes.java:144"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      2,
+      6
+     ],
+     "to": [
+      7,
+      3,
+      8
+     ]
+    },
+    "direction": "west"
+   },
+   "src": "TrackObserverScenes.java:146",
+   "out": "e7"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e7"
+    },
+    "offset": [
+     6,
+     0,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "TrackObserverScenes.java:147"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e7"
+    },
+    "offset": [
+     -16,
+     0,
+     0
+    ],
+    "duration": 80
+   },
+   "src": "TrackObserverScenes.java:148"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bogey",
+    "pos": [
+     5,
+     2,
+     7
+    ],
+    "distance": 16,
+    "duration": 81
+   },
+   "src": "TrackObserverScenes.java:149"
+  },
+  {
+   "op": "special.createBirb",
+   "args": {
+    "location": [
+     12.5,
+     3.5,
+     7.5
+    ],
+    "pose": {
+     "type": "face_poi"
+    }
+   },
+   "src": "TrackObserverScenes.java:150",
+   "out": "e8"
+  },
+  {
+   "op": "special.moveParrot",
+   "args": {
+    "link": {
+     "link": "e8"
+    },
+    "offset": [
+     -16,
+     0,
+     0
+    ],
+    "duration": 80
+   },
+   "src": "TrackObserverScenes.java:151"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "TrackObserverScenes.java:152"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      8,
+      2,
+      3
+     ],
+     "to": [
+      11,
+      3,
+      5
+     ]
+    },
+    "direction": "west"
+   },
+   "src": "TrackObserverScenes.java:154",
+   "out": "e9"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e9"
+    },
+    "offset": [
+     4,
+     0,
+     3
+    ],
+    "duration": 0
+   },
+   "src": "TrackObserverScenes.java:155"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e9"
+    },
+    "offset": [
+     -14,
+     0,
+     0
+    ],
+    "duration": 70
+   },
+   "src": "TrackObserverScenes.java:156"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bogey",
+    "pos": [
+     9,
+     2,
+     4
+    ],
+    "distance": 14,
+    "duration": 71
+   },
+   "src": "TrackObserverScenes.java:157"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 13
+   },
+   "src": "TrackObserverScenes.java:159"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       5,
+       1,
+       3
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "15",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       4
+      ],
+      "state": {
+       "name": "create:track_observer",
+       "props": {
+        "powered": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "TrackObserverScenes.java:160"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     5,
+     1,
+     4
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "TrackObserverScenes.java:161"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "TrackObserverScenes.java:162"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e7"
+    },
+    "direction": "west"
+   },
+   "src": "TrackObserverScenes.java:163"
+  },
+  {
+   "op": "special.hideElement",
+   "args": {
+    "link": {
+     "link": "e8"
+    },
+    "direction": "west"
+   },
+   "src": "TrackObserverScenes.java:164"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "TrackObserverScenes.java:165"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       5,
+       1,
+       3
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "0",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       4
+      ],
+      "state": {
+       "name": "create:track_observer",
+       "props": {
+        "powered": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "TrackObserverScenes.java:166"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "TrackObserverScenes.java:167"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e9"
+    },
+    "direction": "west"
+   },
+   "src": "TrackObserverScenes.java:168"
+  }
+ ]
+}

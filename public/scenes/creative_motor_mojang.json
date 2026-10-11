@@ -1,0 +1,672 @@
+{
+ "id": "create:creative_motor_mojang",
+ "schematic": "creative_motor_mojang",
+ "schematicNamespace": "create",
+ "title": "Mojang's Enigma",
+ "texts": {},
+ "tags": [],
+ "items": [
+  "create:creative_motor"
+ ],
+ "keyframes": [],
+ "totalTicks": 101,
+ "instructions": [
+  {
+   "op": "setNextUpEnabled",
+   "args": {
+    "enabled": false
+   },
+   "src": "KineticsScenes.java:1376"
+  },
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 15
+   },
+   "src": "KineticsScenes.java:1377"
+  },
+  {
+   "op": "scaleSceneView",
+   "args": {
+    "factor": 0.550000011920929
+   },
+   "src": "KineticsScenes.java:1378"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      14,
+      0,
+      14
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "KineticsScenes.java:1379"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "KineticsScenes.java:1380"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      12,
+      1,
+      2
+     ],
+     "to": [
+      12,
+      1,
+      7
+     ]
+    },
+    "direction": "west"
+   },
+   "src": "KineticsScenes.java:1381"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "KineticsScenes.java:1382"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      5,
+      1,
+      1
+     ],
+     "to": [
+      7,
+      2,
+      2
+     ]
+    },
+    "direction": "east"
+   },
+   "src": "KineticsScenes.java:1383"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "KineticsScenes.java:1384"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      7,
+      1,
+      3
+     ],
+     "to": [
+      7,
+      1,
+      8
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "KineticsScenes.java:1385"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "KineticsScenes.java:1386"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      7,
+      2,
+      8
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "KineticsScenes.java:1387"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "KineticsScenes.java:1388"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      1,
+      4
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "KineticsScenes.java:1389"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "KineticsScenes.java:1390"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      1,
+      6
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "KineticsScenes.java:1391"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "KineticsScenes.java:1392"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      10
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "KineticsScenes.java:1393"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "KineticsScenes.java:1394"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      11
+     ]
+    },
+    "direction": "east"
+   },
+   "src": "KineticsScenes.java:1395"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "KineticsScenes.java:1396"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      11,
+      1,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "KineticsScenes.java:1397"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "KineticsScenes.java:1398"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      11,
+      2,
+      3
+     ],
+     "to": [
+      11,
+      2,
+      7
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "KineticsScenes.java:1399"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "KineticsScenes.java:1400"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      8,
+      1,
+      2
+     ],
+     "to": [
+      10,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "KineticsScenes.java:1401"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "KineticsScenes.java:1402"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      11,
+      1,
+      2
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "KineticsScenes.java:1403"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "KineticsScenes.java:1404"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      5,
+      1,
+      8
+     ],
+     "to": [
+      6,
+      1,
+      8
+     ]
+    },
+    "direction": "east"
+   },
+   "src": "KineticsScenes.java:1405"
+  },
+  {
+   "op": "rotateCameraY",
+   "args": {
+    "degrees": -90
+   },
+   "src": "KineticsScenes.java:1406"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "KineticsScenes.java:1407"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      12,
+      1,
+      10
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "KineticsScenes.java:1408"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "KineticsScenes.java:1409"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      11,
+      1,
+      12
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "KineticsScenes.java:1410"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "KineticsScenes.java:1411"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      8,
+      1,
+      8
+     ],
+     "to": [
+      11,
+      1,
+      8
+     ]
+    },
+    "direction": "west"
+   },
+   "src": "KineticsScenes.java:1412"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "KineticsScenes.java:1413"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      5,
+      2,
+      8
+     ],
+     "to": [
+      5,
+      3,
+      8
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "KineticsScenes.java:1414"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "KineticsScenes.java:1415"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      8,
+      1,
+      5
+     ],
+     "to": [
+      8,
+      2,
+      7
+     ]
+    },
+    "direction": "west"
+   },
+   "src": "KineticsScenes.java:1416"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "KineticsScenes.java:1417"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      7,
+      3,
+      8
+     ],
+     "to": [
+      8,
+      3,
+      9
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "KineticsScenes.java:1418"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "KineticsScenes.java:1419"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        6,
+        3,
+        7
+       ],
+       "to": [
+        9,
+        3,
+        7
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        6,
+        3,
+        8
+       ],
+       "to": [
+        6,
+        3,
+        9
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        9,
+        3,
+        8
+       ],
+       "to": [
+        9,
+        3,
+        9
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        6,
+        3,
+        10
+       ],
+       "to": [
+        9,
+        3,
+        10
+       ]
+      }
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "KineticsScenes.java:1420"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "KineticsScenes.java:1424"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      6,
+      4,
+      7
+     ],
+     "to": [
+      10,
+      4,
+      10
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "KineticsScenes.java:1425"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "KineticsScenes.java:1426"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      8,
+      1,
+      11
+     ],
+     "to": [
+      8,
+      2,
+      13
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "KineticsScenes.java:1427"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "KineticsScenes.java:1428"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "KineticsScenes.java:1429"
+  }
+ ]
+}

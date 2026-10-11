@@ -1,0 +1,1164 @@
+{
+ "id": "create:chute/downward",
+ "schematic": "chute/downward",
+ "schematicNamespace": "create",
+ "title": "Transporting Items downward via Chutes",
+ "texts": {
+  "text_1": "Chutes can transport items vertically from and to inventories",
+  "text_2": "Using the Wrench, a window can be created",
+  "text_3": "Using Industrial Iron Blocks, chutes can be encased",
+  "text_4": "Placing chutes targeting the side faces of another will make it diagonal"
+ },
+ "tags": [
+  "create:logistics"
+ ],
+ "items": [
+  "create:chute"
+ ],
+ "keyframes": [
+  61,
+  158,
+  344,
+  464
+ ],
+ "totalTicks": 563,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "ChuteScenes.java:34"
+  },
+  {
+   "op": "scaleSceneView",
+   "args": {
+    "factor": 0.8999999761581421
+   },
+   "src": "ChuteScenes.java:35"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      4,
+      0,
+      4
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "ChuteScenes.java:36"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      3,
+      3
+     ],
+     "to": [
+      3,
+      4,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ChuteScenes.java:39",
+   "out": "e1"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      1,
+      3
+     ],
+     "to": [
+      3,
+      2,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ChuteScenes.java:41",
+   "out": "e2"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     -2,
+     0,
+     -1
+    ],
+    "duration": 0
+   },
+   "src": "ChuteScenes.java:42"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     0,
+     -1
+    ],
+    "duration": 0
+   },
+   "src": "ChuteScenes.java:43"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "ChuteScenes.java:44"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     3.5,
+     3.5,
+     2.5
+    ],
+    "motion": [
+     0,
+     -0.1,
+     0
+    ],
+    "item": {
+     "id": "minecraft:copper_block",
+     "count": 1
+    }
+   },
+   "src": "ChuteScenes.java:47",
+   "out": "e3"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "ChuteScenes.java:48"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     5.5,
+     2.5
+    ],
+    "motion": [
+     0,
+     0.1,
+     0
+    ],
+    "item": {
+     "id": "minecraft:copper_block",
+     "count": 1
+    }
+   },
+   "src": "ChuteScenes.java:50",
+   "out": "e4"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "ChuteScenes.java:51"
+  },
+  {
+   "op": "world.modifyEntity",
+   "args": {
+    "link": {
+     "link": "e4"
+    },
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "discard",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ChuteScenes.java:52"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     1.5,
+     3,
+     2.5
+    ],
+    "key": "text_1",
+    "text": "Chutes can transport items vertically from and to inventories"
+   },
+   "src": "ChuteScenes.java:54"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "ChuteScenes.java:59"
+  },
+  {
+   "op": "world.modifyEntities",
+   "args": {
+    "entityType": "ItemEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "discard",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ChuteScenes.java:60"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     1,
+     0,
+     0
+    ],
+    "duration": 10
+   },
+   "src": "ChuteScenes.java:61"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     -1,
+     0,
+     0
+    ],
+    "duration": 10
+   },
+   "src": "ChuteScenes.java:62"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "ChuteScenes.java:63"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     3.5,
+     2
+    ],
+    "direction": "right",
+    "duration": 40,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:wrench",
+     "count": 1
+    }
+   },
+   "src": "ChuteScenes.java:64"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "ChuteScenes.java:67"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       3,
+       3
+      ],
+      "state": {
+       "name": "create:chute",
+       "props": {
+        "facing": "down",
+        "shape": "window",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ChuteScenes.java:68"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 50,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     2,
+     3.5,
+     2.5
+    ],
+    "key": "text_2",
+    "text": "Using the Wrench, a window can be created"
+   },
+   "src": "ChuteScenes.java:70"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "ChuteScenes.java:76"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     2.5,
+     2
+    ],
+    "direction": "right",
+    "duration": 40,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:industrial_iron_block",
+     "count": 1
+    }
+   },
+   "src": "ChuteScenes.java:77"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "ChuteScenes.java:80"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       2,
+       3
+      ],
+      "state": {
+       "name": "create:chute",
+       "props": {
+        "facing": "down",
+        "shape": "encased",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ChuteScenes.java:81"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 50,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     2,
+     2.5,
+     2.5
+    ],
+    "key": "text_3",
+    "text": "Using Industrial Iron Blocks, chutes can be encased"
+   },
+   "src": "ChuteScenes.java:83"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChuteScenes.java:88"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChuteScenes.java:91"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     3,
+     3,
+     3
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:copper_block",
+     "count": 1
+    }
+   },
+   "src": "ChuteScenes.java:92"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChuteScenes.java:91"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     3,
+     3,
+     3
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:copper_block",
+     "count": 1
+    }
+   },
+   "src": "ChuteScenes.java:92"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChuteScenes.java:91"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     3,
+     3,
+     3
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:copper_block",
+     "count": 1
+    }
+   },
+   "src": "ChuteScenes.java:92"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChuteScenes.java:91"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     3,
+     3,
+     3
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:copper_block",
+     "count": 1
+    }
+   },
+   "src": "ChuteScenes.java:92"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChuteScenes.java:91"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     3,
+     3,
+     3
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:copper_block",
+     "count": 1
+    }
+   },
+   "src": "ChuteScenes.java:92"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChuteScenes.java:91"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     3,
+     3,
+     3
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:copper_block",
+     "count": 1
+    }
+   },
+   "src": "ChuteScenes.java:92"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChuteScenes.java:91"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     3,
+     3,
+     3
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:copper_block",
+     "count": 1
+    }
+   },
+   "src": "ChuteScenes.java:92"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChuteScenes.java:91"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     3,
+     3,
+     3
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:copper_block",
+     "count": 1
+    }
+   },
+   "src": "ChuteScenes.java:92"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "ChuteScenes.java:94"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "direction": "east"
+   },
+   "src": "ChuteScenes.java:95"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "direction": "east"
+   },
+   "src": "ChuteScenes.java:96"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "ChuteScenes.java:97"
+  },
+  {
+   "op": "rotateCameraY",
+   "args": {
+    "degrees": -90
+   },
+   "src": "ChuteScenes.java:100"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       2,
+       1
+      ],
+      "state": {
+       "name": "create:chute",
+       "props": {
+        "facing": "down",
+        "shape": "normal",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ChuteScenes.java:101"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       3,
+       2
+      ],
+      "state": {
+       "name": "create:chute",
+       "props": {
+        "facing": "south",
+        "shape": "intersection",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ChuteScenes.java:102"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      1,
+      1
+     ],
+     "to": [
+      2,
+      2,
+      1
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ChuteScenes.java:103"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "ChuteScenes.java:104"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     2.5,
+     2
+    ],
+    "direction": "left",
+    "duration": 30,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:chute",
+     "count": 1
+    }
+   },
+   "src": "ChuteScenes.java:106"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "ChuteScenes.java:109"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      3,
+      2
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "ChuteScenes.java:110"
+  },
+  {
+   "op": "world.restoreBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      2,
+      1
+     ]
+    }
+   },
+   "src": "ChuteScenes.java:111"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "ChuteScenes.java:112"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "ChuteScenes.java:113"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     3.5,
+     3
+    ],
+    "direction": "left",
+    "duration": 30,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:chute",
+     "count": 1
+    }
+   },
+   "src": "ChuteScenes.java:114"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "ChuteScenes.java:117"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      4,
+      3
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "ChuteScenes.java:118"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChuteScenes.java:119"
+  },
+  {
+   "op": "world.restoreBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      3,
+      2
+     ]
+    }
+   },
+   "src": "ChuteScenes.java:120"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 25
+   },
+   "src": "ChuteScenes.java:121"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     2,
+     4.5,
+     3.5
+    ],
+    "key": "text_4",
+    "text": "Placing chutes targeting the side faces of another will make it diagonal"
+   },
+   "src": "ChuteScenes.java:123"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "ChuteScenes.java:128"
+  },
+  {
+   "op": "rotateCameraY",
+   "args": {
+    "degrees": 90
+   },
+   "src": "ChuteScenes.java:129"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 35
+   },
+   "src": "ChuteScenes.java:131"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     6.5,
+     2.5
+    ],
+    "motion": [
+     0,
+     0.1,
+     0.1
+    ],
+    "item": {
+     "id": "minecraft:copper_block",
+     "count": 1
+    }
+   },
+   "src": "ChuteScenes.java:135",
+   "out": "e5"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "ChuteScenes.java:140"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     2,
+     4,
+     3
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:copper_block",
+     "count": 1
+    }
+   },
+   "src": "ChuteScenes.java:141"
+  },
+  {
+   "op": "world.modifyEntity",
+   "args": {
+    "link": {
+     "link": "e5"
+    },
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "discard",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ChuteScenes.java:142"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "ChuteScenes.java:143"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     3.5,
+     6.5,
+     3.5
+    ],
+    "motion": [
+     -0.1,
+     0.1,
+     0
+    ],
+    "item": {
+     "id": "minecraft:copper_block",
+     "count": 1
+    }
+   },
+   "src": "ChuteScenes.java:135",
+   "out": "e6"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "ChuteScenes.java:140"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     2,
+     4,
+     3
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:copper_block",
+     "count": 1
+    }
+   },
+   "src": "ChuteScenes.java:141"
+  },
+  {
+   "op": "world.modifyEntity",
+   "args": {
+    "link": {
+     "link": "e6"
+    },
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "discard",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ChuteScenes.java:142"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "ChuteScenes.java:143"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     6.5,
+     4.5
+    ],
+    "motion": [
+     0,
+     0.1,
+     -0.1
+    ],
+    "item": {
+     "id": "minecraft:copper_block",
+     "count": 1
+    }
+   },
+   "src": "ChuteScenes.java:135",
+   "out": "e7"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "ChuteScenes.java:140"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     2,
+     4,
+     3
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:copper_block",
+     "count": 1
+    }
+   },
+   "src": "ChuteScenes.java:141"
+  },
+  {
+   "op": "world.modifyEntity",
+   "args": {
+    "link": {
+     "link": "e7"
+    },
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "discard",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ChuteScenes.java:142"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "ChuteScenes.java:143"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChuteScenes.java:147"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     1.5,
+     1
+    ],
+    "direction": "right",
+    "duration": 50,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "minecraft:copper_block",
+     "count": 1
+    }
+   },
+   "src": "ChuteScenes.java:148"
+  },
+  {
+   "op": "markAsFinished",
+   "args": {},
+   "src": "ChuteScenes.java:150"
+  }
+ ]
+}

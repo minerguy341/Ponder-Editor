@@ -1,0 +1,380 @@
+[
+ {
+  "id": "create:kinetic_relays",
+  "title": "Kinetic Blocks",
+  "description": "Components which help relaying Rotational Force elsewhere",
+  "icon": "create:cogwheel",
+  "mainItem": null,
+  "index": true,
+  "items": [
+   "create:shaft",
+   "create:cogwheel",
+   "create:large_cogwheel",
+   "create:belt_connector",
+   "create:gearbox",
+   "create:vertical_gearbox",
+   "create:clutch",
+   "create:gearshift",
+   "create:encased_chain_drive",
+   "create:adjustable_chain_gearshift",
+   "create:chain_conveyor",
+   "create:sequenced_gearshift",
+   "create:rotation_speed_controller"
+  ]
+ },
+ {
+  "id": "create:kinetic_sources",
+  "title": "Kinetic Sources",
+  "description": "Components which generate Rotational Force",
+  "icon": "create:water_wheel",
+  "mainItem": null,
+  "index": true,
+  "items": [
+   "create:hand_crank",
+   "create:copper_valve_handle",
+   "create:water_wheel",
+   "create:large_water_wheel",
+   "create:windmill_bearing",
+   "create:steam_engine",
+   "create:creative_motor"
+  ]
+ },
+ {
+  "id": "create:kinetic_appliances",
+  "title": "Kinetic Appliances",
+  "description": "Components which make use of Rotational Force",
+  "icon": "create:mechanical_press",
+  "mainItem": null,
+  "index": true,
+  "items": [
+   "create:millstone",
+   "create:turntable",
+   "create:encased_fan",
+   "create:cuckoo_clock",
+   "create:mechanical_press",
+   "create:mechanical_mixer",
+   "create:mechanical_crafter",
+   "create:mechanical_drill",
+   "create:mechanical_saw",
+   "create:deployer",
+   "create:mechanical_pump",
+   "create:mechanical_arm",
+   "create:mechanical_piston",
+   "create:rope_pulley",
+   "create:elevator_pulley",
+   "create:mechanical_bearing",
+   "create:gantry_shaft",
+   "create:gantry_carriage",
+   "create:clockwork_bearing",
+   "create:display_board",
+   "create:crushing_wheel"
+  ]
+ },
+ {
+  "id": "create:fluids",
+  "title": "Fluid Manipulators",
+  "description": "Components which help relaying and making use of Fluids",
+  "icon": "create:fluid_pipe",
+  "mainItem": null,
+  "index": true,
+  "items": [
+   "create:fluid_pipe",
+   "create:mechanical_pump",
+   "create:fluid_valve",
+   "create:smart_fluid_pipe",
+   "create:hose_pulley",
+   "create:item_drain",
+   "create:spout",
+   "create:portable_fluid_interface",
+   "create:fluid_tank",
+   "create:creative_fluid_tank"
+  ]
+ },
+ {
+  "id": "create:logistics",
+  "title": "Item Transportation",
+  "description": "Components which help moving items around",
+  "icon": "minecraft:chest",
+  "mainItem": null,
+  "index": true,
+  "items": [
+   "create:belt_connector",
+   "create:filter",
+   "create:attribute_filter",
+   "create:chute",
+   "create:smart_chute",
+   "create:item_vault",
+   "create:depot",
+   "create:weighted_ejector",
+   "create:mechanical_arm",
+   "create:andesite_funnel",
+   "create:brass_funnel",
+   "create:andesite_tunnel",
+   "create:brass_tunnel",
+   "create:content_observer",
+   "create:stockpile_switch",
+   "create:creative_crate",
+   "create:portable_storage_interface"
+  ]
+ },
+ {
+  "id": "create:high_logistics",
+  "title": "High Logistics",
+  "description": "Components which help manage distributed item storage and automated requests around your factory",
+  "icon": "create:stock_ticker",
+  "mainItem": null,
+  "index": true,
+  "items": [
+   "create:packager",
+   "create:stock_link",
+   "create:stock_ticker",
+   "create:package_frogport",
+   "create:white_postbox",
+   "create:redstone_requester",
+   "create:red_table_cloth",
+   "create:factory_gauge",
+   "create:repackager",
+   "create:package_filter"
+  ]
+ },
+ {
+  "id": "create:redstone",
+  "title": "Logic Components",
+  "description": "Components which help with redstone engineering",
+  "icon": "minecraft:redstone",
+  "mainItem": null,
+  "index": true,
+  "items": [
+   "create:content_observer",
+   "create:stockpile_switch",
+   "create:nixie_tube",
+   "create:redstone_contact",
+   "create:analog_lever",
+   "create:redstone_link",
+   "create:pulse_extender",
+   "create:pulse_repeater",
+   "create:pulse_timer",
+   "create:powered_latch",
+   "create:powered_toggle_latch",
+   "create:rose_quartz_lamp"
+  ]
+ },
+ {
+  "id": "create:decoration",
+  "title": "Aesthetics",
+  "description": "Components used mostly for decorative purposes",
+  "icon": "minecraft:rose_bush",
+  "mainItem": null,
+  "index": true,
+  "items": [
+   "create:nixie_tube",
+   "create:display_board",
+   "create:cuckoo_clock",
+   "create:wooden_bracket",
+   "create:metal_bracket",
+   "create:metal_girder",
+   "create:andesite_casing",
+   "create:brass_casing",
+   "create:copper_casing",
+   "create:railway_casing"
+  ]
+ },
+ {
+  "id": "create:creative",
+  "title": "Creative Mode",
+  "description": "Components not usually available for Survival Mode",
+  "icon": "create:creative_crate",
+  "mainItem": null,
+  "index": true,
+  "items": [
+   "create:creative_crate",
+   "create:creative_fluid_tank",
+   "create:creative_motor"
+  ]
+ },
+ {
+  "id": "create:movement_anchor",
+  "title": "Movement Anchors",
+  "description": "Components which allow the creation of moving contraptions, animating an attached structure in a variety of ways",
+  "icon": "create:mechanical_piston",
+  "mainItem": null,
+  "index": true,
+  "items": [
+   "create:mechanical_piston",
+   "create:windmill_bearing",
+   "create:mechanical_bearing",
+   "create:clockwork_bearing",
+   "create:rope_pulley",
+   "create:elevator_pulley",
+   "create:gantry_carriage",
+   "create:cart_assembler",
+   "create:track_station"
+  ]
+ },
+ {
+  "id": "create:contraption_actor",
+  "title": "Contraption Actors",
+  "description": "Components which expose special behaviour when attached to a moving contraption",
+  "icon": "create:mechanical_harvester",
+  "mainItem": null,
+  "index": true,
+  "items": [
+   "create:mechanical_harvester",
+   "create:mechanical_plough",
+   "create:mechanical_drill",
+   "create:mechanical_saw",
+   "create:deployer",
+   "create:portable_storage_interface",
+   "create:portable_fluid_interface",
+   "create:mechanical_bearing",
+   "create:andesite_funnel",
+   "create:brass_funnel",
+   "create:white_seat",
+   "create:controls",
+   "create:contraption_controls",
+   "create:redstone_contact",
+   "minecraft:bell",
+   "minecraft:dispenser",
+   "minecraft:dropper"
+  ]
+ },
+ {
+  "id": "create:contraption_assembly",
+  "title": "Block Attachment Utility",
+  "description": "Tools and Components used to assemble structures moved as an animated Contraption",
+  "icon": "create:super_glue",
+  "mainItem": null,
+  "index": true,
+  "items": [
+   "create:linear_chassis",
+   "create:secondary_linear_chassis",
+   "create:radial_chassis",
+   "create:super_glue",
+   "create:sticker",
+   "minecraft:slime_block",
+   "minecraft:honey_block"
+  ]
+ },
+ {
+  "id": "create:windmill_sails",
+  "title": "Sails for Windmill Bearings",
+  "description": "Blocks that count towards the strength of a Windmill Contraption when assembled. Each of these have equal efficiency in doing so.",
+  "icon": "create:windmill_bearing",
+  "mainItem": "create:windmill_bearing",
+  "index": false,
+  "items": [
+   "create:white_sail",
+   "create:sail_frame",
+   "minecraft:white_wool"
+  ]
+ },
+ {
+  "id": "create:arm_targets",
+  "title": "Targets for Mechanical Arms",
+  "description": "Components which can be selected as inputs or outputs to the Mechanical Arm",
+  "icon": "create:mechanical_arm",
+  "mainItem": "create:mechanical_arm",
+  "index": false,
+  "items": [
+   "create:mechanical_arm",
+   "create:belt_connector",
+   "create:chute",
+   "create:depot",
+   "create:weighted_ejector",
+   "create:basin",
+   "create:andesite_funnel",
+   "create:brass_funnel",
+   "create:mechanical_crafter",
+   "create:millstone",
+   "create:deployer",
+   "create:mechanical_saw",
+   "create:blaze_burner",
+   "create:crushing_wheel",
+   "create:track_station",
+   "minecraft:composter",
+   "minecraft:jukebox",
+   "minecraft:campfire",
+   "minecraft:soul_campfire",
+   "minecraft:respawn_anchor"
+  ]
+ },
+ {
+  "id": "create:train_related",
+  "title": "Railway Equipment",
+  "description": "Components used in the construction or management of Train Contraptions",
+  "icon": "create:track",
+  "mainItem": null,
+  "index": true,
+  "items": [
+   "create:track",
+   "create:track_station",
+   "create:track_signal",
+   "create:track_observer",
+   "create:controls",
+   "create:schedule",
+   "create:train_door",
+   "create:train_trapdoor",
+   "create:railway_casing"
+  ]
+ },
+ {
+  "id": "create:display_sources",
+  "title": "Sources for Display Links",
+  "description": "Components or Blocks which offer some data that can be read with a Display Link",
+  "icon": "create:display_link",
+  "mainItem": "create:display_link",
+  "index": false,
+  "items": [
+   "create:white_seat",
+   "create:depot",
+   "create:nixie_tube",
+   "create:stockpile_switch",
+   "create:content_observer",
+   "create:andesite_tunnel",
+   "create:track_observer",
+   "create:track_station",
+   "create:display_link",
+   "create:brass_tunnel",
+   "create:cuckoo_clock",
+   "create:stressometer",
+   "create:speedometer",
+   "create:fluid_tank",
+   "create:factory_gauge",
+   "create:belt_connector",
+   "minecraft:enchanting_table",
+   "minecraft:respawn_anchor",
+   "minecraft:command_block",
+   "minecraft:target"
+  ]
+ },
+ {
+  "id": "create:display_targets",
+  "title": "Targets for Display Links",
+  "description": "Components or Blocks which can process and display the data received from a Display Link",
+  "icon": "create:display_link",
+  "mainItem": "create:display_link",
+  "index": false,
+  "items": [
+   "create:nixie_tube",
+   "create:display_board",
+   "create:display_link",
+   "minecraft:oak_sign",
+   "minecraft:lectern"
+  ]
+ },
+ {
+  "id": "create:threshold_switch_targets",
+  "title": "Targets for Threshold Switches",
+  "description": "Threshold Switches can read from these blocks, as well as most item and fluid containers.",
+  "icon": "create:stockpile_switch",
+  "mainItem": "create:stockpile_switch",
+  "index": false,
+  "items": [
+   "create:rope_pulley",
+   "create:item_vault",
+   "create:fluid_tank",
+   "minecraft:chest",
+   "minecraft:barrel"
+  ]
+ }
+]

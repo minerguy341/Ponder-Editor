@@ -1,0 +1,2519 @@
+{
+ "id": "create:mechanical_arm/filter",
+ "schematic": "mechanical_arm/filter",
+ "schematicNamespace": "create",
+ "title": "Filtering Outputs of the Mechanical Arm",
+ "texts": {
+  "text_1": "Inputs",
+  "text_2": "Outputs",
+  "text_3": "Sometimes it is desirable to restrict targets of the Arm by matching a filter",
+  "text_4": "Mechanical Arms by themselves do not provide any options for filtering",
+  "text_5": "Brass Funnels as Targets do however communicate their own filter to the Arm",
+  "text_6": "The Arm is smart enough not to pick up items it couldn't distribute"
+ },
+ "tags": [],
+ "items": [
+  "create:mechanical_arm"
+ ],
+ "keyframes": [
+  150,
+  366,
+  609
+ ],
+ "totalTicks": 1163,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 6
+   },
+   "src": "ArmScenes.java:246"
+  },
+  {
+   "op": "scaleSceneView",
+   "args": {
+    "factor": 0.8999999761581421
+   },
+   "src": "ArmScenes.java:247"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       6,
+       0,
+       5
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:248"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      6,
+      0,
+      5
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "ArmScenes.java:249"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ArmScenes.java:250"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      1,
+      4
+     ],
+     "to": [
+      5,
+      1,
+      5
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ArmScenes.java:251"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ArmScenes.java:252"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "ArmScenes.java:255"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      4
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ArmScenes.java:256"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "ArmScenes.java:255"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      4
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ArmScenes.java:256"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      5,
+      1,
+      1
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ArmScenes.java:261"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "ArmScenes.java:262"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      1,
+      1
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ArmScenes.java:261"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "ArmScenes.java:262"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      1
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ArmScenes.java:261"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "ArmScenes.java:262"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      2,
+      1
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ArmScenes.java:261"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "ArmScenes.java:262"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      2,
+      1
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ArmScenes.java:261"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "ArmScenes.java:262"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      5,
+      2,
+      1
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ArmScenes.java:261"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "ArmScenes.java:262"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      5,
+      3,
+      1
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ArmScenes.java:261"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "ArmScenes.java:262"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      3,
+      1
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ArmScenes.java:261"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "ArmScenes.java:262"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      3,
+      1
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ArmScenes.java:261"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "ArmScenes.java:262"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      6,
+      1,
+      1
+     ]
+    },
+    "direction": "west"
+   },
+   "src": "ArmScenes.java:266"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      1
+     ]
+    },
+    "direction": "east"
+   },
+   "src": "ArmScenes.java:267"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     2,
+     1,
+     4
+    ],
+    "insertionSide": "south",
+    "item": {
+     "id": "minecraft:sand",
+     "count": 64
+    }
+   },
+   "src": "ArmScenes.java:271"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ],
+    "insertionSide": "south",
+    "item": {
+     "id": "minecraft:gunpowder",
+     "count": 64
+    }
+   },
+   "src": "ArmScenes.java:272"
+  },
+  {
+   "op": "overlay.showOutlineWithText",
+   "args": {
+    "duration": 60,
+    "color": "input",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      1,
+      4
+     ],
+     "to": [
+      2,
+      1,
+      4
+     ]
+    },
+    "pointAt": [
+     2,
+     1.5,
+     4.5
+    ],
+    "key": "text_1",
+    "text": "Inputs"
+   },
+   "src": "ArmScenes.java:274"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "ArmScenes.java:278"
+  },
+  {
+   "op": "overlay.showOutlineWithText",
+   "args": {
+    "duration": 40,
+    "color": "output",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      1,
+      1
+     ],
+     "to": [
+      5,
+      3,
+      1
+     ]
+    },
+    "pointAt": [
+     4.5,
+     2.5,
+     1.5
+    ],
+    "key": "text_2",
+    "text": "Outputs"
+   },
+   "src": "ArmScenes.java:279"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "ArmScenes.java:283"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_3",
+    "pointAt": [
+     3,
+     3.5,
+     1.5
+    ],
+    "text": "Sometimes it is desirable to restrict targets of the Arm by matching a filter"
+   },
+   "src": "ArmScenes.java:285"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "ArmScenes.java:291"
+  },
+  {
+   "op": "rotateCameraY",
+   "args": {
+    "degrees": -120
+   },
+   "src": "ArmScenes.java:292"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "ArmScenes.java:293"
+  },
+  {
+   "op": "overlay.showOutlineWithText",
+   "args": {
+    "duration": 80,
+    "color": "red",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      1,
+      4
+     ]
+    },
+    "pointAt": [
+     4.5,
+     1.5,
+     4.5
+    ],
+    "key": "text_4",
+    "text": "Mechanical Arms by themselves do not provide any options for filtering"
+   },
+   "src": "ArmScenes.java:295"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "ArmScenes.java:299"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      1,
+      2
+     ],
+     "to": [
+      5,
+      1,
+      2
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "ArmScenes.java:302"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "ArmScenes.java:303"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      2,
+      2
+     ],
+     "to": [
+      5,
+      2,
+      2
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "ArmScenes.java:302"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "ArmScenes.java:303"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      3,
+      2
+     ],
+     "to": [
+      5,
+      3,
+      2
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "ArmScenes.java:302"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "ArmScenes.java:303"
+  },
+  {
+   "op": "overlay.highlightValueBox",
+   "args": {
+    "location": [
+     3.5,
+     3.75,
+     2.6234375
+    ],
+    "expands": [
+     0.0859375,
+     0.0859375,
+     0
+    ],
+    "duration": 80
+   },
+   "src": "ArmScenes.java:307"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ArmScenes.java:308"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "green",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     3.5,
+     3.75,
+     2.6
+    ],
+    "key": "text_5",
+    "text": "Brass Funnels as Targets do however communicate their own filter to the Arm"
+   },
+   "src": "ArmScenes.java:309"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "ArmScenes.java:315"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     5.5,
+     3.75,
+     2.6
+    ],
+    "direction": "left",
+    "duration": 5,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "minecraft:gunpowder",
+     "count": 64
+    }
+   },
+   "src": "ArmScenes.java:320"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "ArmScenes.java:322"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "FunnelBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       5,
+       3,
+       2
+      ],
+      "nbt": {
+       "Filter": {
+        "id": "minecraft:gunpowder",
+        "count": 64
+       }
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:323"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "ArmScenes.java:324"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     4.5,
+     3.75,
+     2.6
+    ],
+    "direction": "left",
+    "duration": 5,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "minecraft:sand",
+     "count": 64
+    }
+   },
+   "src": "ArmScenes.java:320"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "ArmScenes.java:322"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "FunnelBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       3,
+       2
+      ],
+      "nbt": {
+       "Filter": {
+        "id": "minecraft:sand",
+        "count": 64
+       }
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:323"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "ArmScenes.java:324"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3.5,
+     3.75,
+     2.6
+    ],
+    "direction": "left",
+    "duration": 5,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "minecraft:gunpowder",
+     "count": 64
+    }
+   },
+   "src": "ArmScenes.java:320"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "ArmScenes.java:322"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "FunnelBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       3,
+       2
+      ],
+      "nbt": {
+       "Filter": {
+        "id": "minecraft:gunpowder",
+        "count": 64
+       }
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:323"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "ArmScenes.java:324"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     5.5,
+     2.75,
+     2.6
+    ],
+    "direction": "left",
+    "duration": 5,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "minecraft:sand",
+     "count": 64
+    }
+   },
+   "src": "ArmScenes.java:320"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "ArmScenes.java:322"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "FunnelBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       5,
+       2,
+       2
+      ],
+      "nbt": {
+       "Filter": {
+        "id": "minecraft:sand",
+        "count": 64
+       }
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:323"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "ArmScenes.java:324"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     4.5,
+     2.75,
+     2.6
+    ],
+    "direction": "left",
+    "duration": 5,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "minecraft:gunpowder",
+     "count": 64
+    }
+   },
+   "src": "ArmScenes.java:320"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "ArmScenes.java:322"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "FunnelBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       2,
+       2
+      ],
+      "nbt": {
+       "Filter": {
+        "id": "minecraft:gunpowder",
+        "count": 64
+       }
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:323"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "ArmScenes.java:324"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3.5,
+     2.75,
+     2.6
+    ],
+    "direction": "left",
+    "duration": 5,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "minecraft:sand",
+     "count": 64
+    }
+   },
+   "src": "ArmScenes.java:320"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "ArmScenes.java:322"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "FunnelBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       2,
+       2
+      ],
+      "nbt": {
+       "Filter": {
+        "id": "minecraft:sand",
+        "count": 64
+       }
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:323"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "ArmScenes.java:324"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     5.5,
+     1.75,
+     2.6
+    ],
+    "direction": "left",
+    "duration": 5,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "minecraft:gunpowder",
+     "count": 64
+    }
+   },
+   "src": "ArmScenes.java:320"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "ArmScenes.java:322"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "FunnelBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       5,
+       1,
+       2
+      ],
+      "nbt": {
+       "Filter": {
+        "id": "minecraft:gunpowder",
+        "count": 64
+       }
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:323"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "ArmScenes.java:324"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     4.5,
+     1.75,
+     2.6
+    ],
+    "direction": "left",
+    "duration": 5,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "minecraft:sand",
+     "count": 64
+    }
+   },
+   "src": "ArmScenes.java:320"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "ArmScenes.java:322"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "FunnelBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       2
+      ],
+      "nbt": {
+       "Filter": {
+        "id": "minecraft:sand",
+        "count": 64
+       }
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:323"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "ArmScenes.java:324"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3.5,
+     1.75,
+     2.6
+    ],
+    "direction": "left",
+    "duration": 5,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "minecraft:gunpowder",
+     "count": 64
+    }
+   },
+   "src": "ArmScenes.java:320"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "ArmScenes.java:322"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "FunnelBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "nbt": {
+       "Filter": {
+        "id": "minecraft:gunpowder",
+        "count": 64
+       }
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:323"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "ArmScenes.java:324"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 24
+      }
+     },
+     {
+      "pos": [
+       6,
+       0,
+       5
+      ],
+      "nbt": {
+       "Speed": 24
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": 24
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:328"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       5,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": -24
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:329"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 48
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:330"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ArmScenes.java:331"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       4
+      ],
+      "nbt": {
+       "HeldItem": {},
+       "MovementProgress": 0,
+       "Phase": "MOVE_TO_INPUT",
+       "TargetPointIndex": 1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:334"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 24
+   },
+   "src": "ArmScenes.java:335"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       4
+      ],
+      "nbt": {
+       "HeldItem": {
+        "id": "minecraft:sand",
+        "count": 64
+       },
+       "Phase": "SEARCH_OUTPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:336"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "ArmScenes.java:337"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     2.5,
+     2,
+     4.5
+    ],
+    "key": "text_6",
+    "text": "The Arm is smart enough not to pick up items it couldn't distribute"
+   },
+   "src": "ArmScenes.java:339"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "ArmScenes.java:344"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "MOVE_TO_OUTPUT",
+       "TargetPointIndex": 1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:348"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 24
+   },
+   "src": "ArmScenes.java:349"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     4,
+     1,
+     2
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         true
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ArmScenes.java:351"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "SEARCH_INPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:352"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     4,
+     1,
+     1
+    ],
+    "beType": "MechanicalCrafterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getInventory",
+        "a": []
+       },
+       {
+        "m": "insertItem",
+        "a": [
+         0,
+         {
+          "id": "minecraft:sand",
+          "count": 64
+         },
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ArmScenes.java:353"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ArmScenes.java:355"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "MOVE_TO_OUTPUT",
+       "TargetPointIndex": 3
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:348"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 24
+   },
+   "src": "ArmScenes.java:349"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     5,
+     2,
+     2
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         true
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ArmScenes.java:351"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "SEARCH_INPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:352"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     5,
+     2,
+     1
+    ],
+    "beType": "MechanicalCrafterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getInventory",
+        "a": []
+       },
+       {
+        "m": "insertItem",
+        "a": [
+         0,
+         {
+          "id": "minecraft:sand",
+          "count": 64
+         },
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ArmScenes.java:353"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ArmScenes.java:355"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "MOVE_TO_OUTPUT",
+       "TargetPointIndex": 5
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:348"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 24
+   },
+   "src": "ArmScenes.java:349"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     2,
+     2
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         true
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ArmScenes.java:351"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "SEARCH_INPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:352"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     2,
+     1
+    ],
+    "beType": "MechanicalCrafterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getInventory",
+        "a": []
+       },
+       {
+        "m": "insertItem",
+        "a": [
+         0,
+         {
+          "id": "minecraft:sand",
+          "count": 64
+         },
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ArmScenes.java:353"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ArmScenes.java:355"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "MOVE_TO_OUTPUT",
+       "TargetPointIndex": 7
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:348"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 24
+   },
+   "src": "ArmScenes.java:349"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     4,
+     3,
+     2
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         true
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ArmScenes.java:351"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       4
+      ],
+      "nbt": {
+       "HeldItem": {},
+       "Phase": "SEARCH_INPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:352"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     4,
+     3,
+     1
+    ],
+    "beType": "MechanicalCrafterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getInventory",
+        "a": []
+       },
+       {
+        "m": "insertItem",
+        "a": [
+         0,
+         {
+          "id": "minecraft:sand",
+          "count": 64
+         },
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ArmScenes.java:353"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ArmScenes.java:355"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "MOVE_TO_INPUT",
+       "TargetPointIndex": 0
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:358"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 24
+   },
+   "src": "ArmScenes.java:359"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       4
+      ],
+      "nbt": {
+       "HeldItem": {
+        "id": "minecraft:gunpowder",
+        "count": 64
+       },
+       "Phase": "SEARCH_OUTPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:360"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "ArmScenes.java:361"
+  },
+  {
+   "op": "rotateCameraY",
+   "args": {
+    "degrees": 120
+   },
+   "src": "ArmScenes.java:363"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     1,
+     1
+    ],
+    "beType": "MechanicalCrafterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "setScriptedResult",
+        "a": [
+         {
+          "id": "minecraft:tnt",
+          "count": 1
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ArmScenes.java:364"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "MOVE_TO_OUTPUT",
+       "TargetPointIndex": 0
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:368"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 24
+   },
+   "src": "ArmScenes.java:369"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         true
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ArmScenes.java:371"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "SEARCH_INPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:372"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     1,
+     1
+    ],
+    "beType": "MechanicalCrafterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getInventory",
+        "a": []
+       },
+       {
+        "m": "insertItem",
+        "a": [
+         0,
+         {
+          "id": "minecraft:gunpowder",
+          "count": 64
+         },
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ArmScenes.java:373"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ArmScenes.java:375"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "MOVE_TO_OUTPUT",
+       "TargetPointIndex": 2
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:368"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 24
+   },
+   "src": "ArmScenes.java:369"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     5,
+     1,
+     2
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         true
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ArmScenes.java:371"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "SEARCH_INPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:372"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     5,
+     1,
+     1
+    ],
+    "beType": "MechanicalCrafterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getInventory",
+        "a": []
+       },
+       {
+        "m": "insertItem",
+        "a": [
+         0,
+         {
+          "id": "minecraft:gunpowder",
+          "count": 64
+         },
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ArmScenes.java:373"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ArmScenes.java:375"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "MOVE_TO_OUTPUT",
+       "TargetPointIndex": 4
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:368"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 24
+   },
+   "src": "ArmScenes.java:369"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     4,
+     2,
+     2
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         true
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ArmScenes.java:371"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "SEARCH_INPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:372"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     4,
+     2,
+     1
+    ],
+    "beType": "MechanicalCrafterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getInventory",
+        "a": []
+       },
+       {
+        "m": "insertItem",
+        "a": [
+         0,
+         {
+          "id": "minecraft:gunpowder",
+          "count": 64
+         },
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ArmScenes.java:373"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ArmScenes.java:375"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "MOVE_TO_OUTPUT",
+       "TargetPointIndex": 6
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:368"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 24
+   },
+   "src": "ArmScenes.java:369"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     3,
+     2
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         true
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ArmScenes.java:371"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "SEARCH_INPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:372"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     3,
+     1
+    ],
+    "beType": "MechanicalCrafterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getInventory",
+        "a": []
+       },
+       {
+        "m": "insertItem",
+        "a": [
+         0,
+         {
+          "id": "minecraft:gunpowder",
+          "count": 64
+         },
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ArmScenes.java:373"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ArmScenes.java:375"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "MOVE_TO_OUTPUT",
+       "TargetPointIndex": 8
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:368"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 24
+   },
+   "src": "ArmScenes.java:369"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     5,
+     3,
+     2
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         true
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ArmScenes.java:371"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       4
+      ],
+      "nbt": {
+       "HeldItem": {},
+       "Phase": "SEARCH_INPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:372"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     5,
+     3,
+     1
+    ],
+    "beType": "MechanicalCrafterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getInventory",
+        "a": []
+       },
+       {
+        "m": "insertItem",
+        "a": [
+         0,
+         {
+          "id": "minecraft:gunpowder",
+          "count": 64
+         },
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ArmScenes.java:373"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ArmScenes.java:375"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 120
+   },
+   "src": "ArmScenes.java:378"
+  }
+ ]
+}

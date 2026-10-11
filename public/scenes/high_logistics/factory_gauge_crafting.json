@@ -1,0 +1,2005 @@
+{
+ "id": "create:high_logistics/factory_gauge_crafting",
+ "schematic": "high_logistics/factory_gauge_crafting",
+ "schematicNamespace": "create",
+ "title": "Automatic Crafting with Factory Gauges",
+ "texts": {
+  "text_1": "Factory gauges provide auto-arrangement for crafting table recipes",
+  "text_2": "Connect the required ingredients as before",
+  "text_3": "When a valid recipe is detected, a new button appears in the UI",
+  "text_4": "With auto-arrangement active, the boxes can be unwrapped into crafters directly",
+  "text_5": "The setup must be 3x3 and the crafters have to be connected via wrench",
+  "text_6": "Hold Right-click on the gauge to set the target amount",
+  "text_7": "This crafter can now be used universally, by more gauges with different recipes",
+  "text_8": "Outputs should be sent back to a linked inventory to close the loop",
+  "text_9": "Using a Re-packager is recommended to prevent fragmentation of input packages"
+ },
+ "tags": [],
+ "items": [
+  "create:factory_gauge"
+ ],
+ "keyframes": [
+  46,
+  191,
+  288,
+  418,
+  615,
+  772,
+  967,
+  1142,
+  1257
+ ],
+ "totalTicks": 1371,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 9
+   },
+   "src": "FactoryGaugeScenes.java:961"
+  },
+  {
+   "op": "scaleSceneView",
+   "args": {
+    "factor": 0.925000011920929
+   },
+   "src": "FactoryGaugeScenes.java:962"
+  },
+  {
+   "op": "setSceneOffsetY",
+   "args": {
+    "yOffset": -0.5
+   },
+   "src": "FactoryGaugeScenes.java:963"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      8,
+      0,
+      8
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "FactoryGaugeScenes.java:964"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      2,
+      1
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": false
+   },
+   "src": "FactoryGaugeScenes.java:980"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "FactoryGaugeScenes.java:1014"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      1,
+      5
+     ],
+     "to": [
+      3,
+      1,
+      5
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "FactoryGaugeScenes.java:1016"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      2,
+      5
+     ],
+     "to": [
+      3,
+      3,
+      5
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "FactoryGaugeScenes.java:1018"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "FactoryGaugeScenes.java:1019"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      6,
+      1,
+      3
+     ],
+     "to": [
+      7,
+      1,
+      3
+     ]
+    },
+    "direction": "west"
+   },
+   "src": "FactoryGaugeScenes.java:1021"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      9,
+      0,
+      2
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "FactoryGaugeScenes.java:1023"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      7,
+      1,
+      2
+     ],
+     "to": [
+      8,
+      1,
+      2
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "FactoryGaugeScenes.java:1025"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "FactoryGaugeScenes.java:1026"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "pos",
+       "pos": [
+        6,
+        1,
+        2
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        6,
+        1,
+        4
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        6,
+        2,
+        2
+       ],
+       "to": [
+        6,
+        4,
+        4
+       ]
+      }
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "FactoryGaugeScenes.java:1028"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "FactoryGaugeScenes.java:1029"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 100,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_1",
+    "pointAt": [
+     6,
+     3.5,
+     3.5
+    ],
+    "text": "Factory gauges provide auto-arrangement for crafting table recipes"
+   },
+   "src": "FactoryGaugeScenes.java:1032"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 110
+   },
+   "src": "FactoryGaugeScenes.java:1039"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     3,
+     4
+    ],
+    "beType": "FactoryPanelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "f": "panels"
+       },
+       {
+        "m": "get",
+        "a": [
+         {
+          "enum": "PanelSlot.BOTTOM_LEFT"
+         }
+        ]
+       },
+       {
+        "m": "disconnectAll",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FactoryGaugeScenes.java:1520"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     3,
+     4
+    ],
+    "beType": "FactoryPanelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "f": "panels"
+       },
+       {
+        "m": "get",
+        "a": [
+         {
+          "enum": "PanelSlot.BOTTOM_LEFT"
+         }
+        ]
+       },
+       {
+        "set": "count",
+        "v": 0
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FactoryGaugeScenes.java:1520"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      3,
+      4
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "FactoryGaugeScenes.java:1045"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "FactoryGaugeScenes.java:1047"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      2,
+      4
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "FactoryGaugeScenes.java:1049"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "FactoryGaugeScenes.java:1051"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      3,
+      4
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "FactoryGaugeScenes.java:1053"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "FactoryGaugeScenes.java:1055"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     3,
+     4
+    ],
+    "beType": "FactoryPanelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "f": "panels"
+       },
+       {
+        "m": "get",
+        "a": [
+         {
+          "enum": "PanelSlot.BOTTOM_LEFT"
+         }
+        ]
+       },
+       {
+        "m": "addConnection",
+        "a": [
+         {
+          "class": "FactoryPanelPosition",
+          "pos": [
+           3,
+           3,
+           4
+          ],
+          "slot": {
+           "enum": "PanelSlot.BOTTOM_RIGHT"
+          }
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FactoryGaugeScenes.java:1520"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "FactoryGaugeScenes.java:1057"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     3,
+     4
+    ],
+    "beType": "FactoryPanelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "f": "panels"
+       },
+       {
+        "m": "get",
+        "a": [
+         {
+          "enum": "PanelSlot.BOTTOM_LEFT"
+         }
+        ]
+       },
+       {
+        "m": "addConnection",
+        "a": [
+         {
+          "class": "FactoryPanelPosition",
+          "pos": [
+           2,
+           2,
+           4
+          ],
+          "slot": {
+           "enum": "PanelSlot.TOP_LEFT"
+          }
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FactoryGaugeScenes.java:1520"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "FactoryGaugeScenes.java:1059"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_2",
+    "pointAt": [
+     1.75,
+     3.25,
+     5
+    ],
+    "text": "Connect the required ingredients as before"
+   },
+   "src": "FactoryGaugeScenes.java:1064"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "FactoryGaugeScenes.java:1069"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     1.75,
+     3.25,
+     5
+    ],
+    "direction": "down",
+    "duration": 120,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "[object Object]"
+   },
+   "src": "FactoryGaugeScenes.java:1072"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "FactoryGaugeScenes.java:1074"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "blue",
+    "slot": "obj:1",
+    "box": {
+     "min": [
+      1.56,
+      3.06,
+      5
+     ],
+     "max": [
+      1.94,
+      3.44,
+      5
+     ]
+    },
+    "duration": 100
+   },
+   "src": "FactoryGaugeScenes.java:1077"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "FactoryGaugeScenes.java:1078"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 90,
+    "color": "blue",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_3",
+    "pointAt": [
+     1.75,
+     3.25,
+     5
+    ],
+    "text": "When a valid recipe is detected, a new button appears in the UI"
+   },
+   "src": "FactoryGaugeScenes.java:1080"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 100
+   },
+   "src": "FactoryGaugeScenes.java:1086"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      1,
+      1
+     ],
+     "to": [
+      7,
+      1,
+      1
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "FactoryGaugeScenes.java:1089"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      6,
+      2,
+      1
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "FactoryGaugeScenes.java:1091"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "FactoryGaugeScenes.java:1092"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 120,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_4",
+    "pointAt": [
+     6,
+     2.5,
+     1.5
+    ],
+    "text": "With auto-arrangement active, the boxes can be unwrapped into crafters directly"
+   },
+   "src": "FactoryGaugeScenes.java:1095"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 130
+   },
+   "src": "FactoryGaugeScenes.java:1102"
+  },
+  {
+   "op": "rotateCameraY",
+   "args": {
+    "degrees": 90
+   },
+   "src": "FactoryGaugeScenes.java:1103"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "FactoryGaugeScenes.java:1104"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     7,
+     3.5,
+     4.5
+    ],
+    "direction": "right",
+    "duration": 120,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:wrench",
+     "count": 1
+    }
+   },
+   "src": "FactoryGaugeScenes.java:1107"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "FactoryGaugeScenes.java:1113"
+  },
+  {
+   "op": "world.connectCrafterInvs",
+   "args": {
+    "pos1": [
+     6,
+     4,
+     4
+    ],
+    "pos2": [
+     6,
+     4,
+     3
+    ]
+   },
+   "src": "FactoryGaugeScenes.java:1116"
+  },
+  {
+   "op": "world.connectCrafterInvs",
+   "args": {
+    "pos1": [
+     6,
+     4,
+     3
+    ],
+    "pos2": [
+     6,
+     4,
+     2
+    ]
+   },
+   "src": "FactoryGaugeScenes.java:1121"
+  },
+  {
+   "op": "world.connectCrafterInvs",
+   "args": {
+    "pos1": [
+     6,
+     4,
+     4
+    ],
+    "pos2": [
+     6,
+     3,
+     4
+    ]
+   },
+   "src": "FactoryGaugeScenes.java:1126"
+  },
+  {
+   "op": "world.connectCrafterInvs",
+   "args": {
+    "pos1": [
+     6,
+     4,
+     3
+    ],
+    "pos2": [
+     6,
+     3,
+     3
+    ]
+   },
+   "src": "FactoryGaugeScenes.java:1131"
+  },
+  {
+   "op": "world.connectCrafterInvs",
+   "args": {
+    "pos1": [
+     6,
+     4,
+     2
+    ],
+    "pos2": [
+     6,
+     3,
+     2
+    ]
+   },
+   "src": "FactoryGaugeScenes.java:1136"
+  },
+  {
+   "op": "world.connectCrafterInvs",
+   "args": {
+    "pos1": [
+     6,
+     3,
+     4
+    ],
+    "pos2": [
+     6,
+     2,
+     4
+    ]
+   },
+   "src": "FactoryGaugeScenes.java:1141"
+  },
+  {
+   "op": "world.connectCrafterInvs",
+   "args": {
+    "pos1": [
+     6,
+     3,
+     3
+    ],
+    "pos2": [
+     6,
+     2,
+     3
+    ]
+   },
+   "src": "FactoryGaugeScenes.java:1146"
+  },
+  {
+   "op": "world.connectCrafterInvs",
+   "args": {
+    "pos1": [
+     6,
+     3,
+     2
+    ],
+    "pos2": [
+     6,
+     2,
+     2
+    ]
+   },
+   "src": "FactoryGaugeScenes.java:1151"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     6,
+     2,
+     2
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "FactoryGaugeScenes.java:1158"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     6,
+     2,
+     3
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "FactoryGaugeScenes.java:1158"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     6,
+     2,
+     4
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "FactoryGaugeScenes.java:1158"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     6,
+     3,
+     2
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "FactoryGaugeScenes.java:1158"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     6,
+     3,
+     3
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "FactoryGaugeScenes.java:1158"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     6,
+     3,
+     4
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "FactoryGaugeScenes.java:1158"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     6,
+     4,
+     2
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "FactoryGaugeScenes.java:1158"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     6,
+     4,
+     3
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "FactoryGaugeScenes.java:1158"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     6,
+     4,
+     4
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "FactoryGaugeScenes.java:1158"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "FactoryGaugeScenes.java:1160"
+  },
+  {
+   "op": "overlay.showOutlineWithText",
+   "args": {
+    "duration": 100,
+    "color": "green",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "selection": {
+     "t": "box",
+     "from": [
+      6,
+      2,
+      2
+     ],
+     "to": [
+      6,
+      4,
+      4
+     ]
+    },
+    "pointAt": [
+     6.5,
+     3.5,
+     2
+    ],
+    "key": "text_5",
+    "text": "The setup must be 3x3 and the crafters have to be connected via wrench"
+   },
+   "src": "FactoryGaugeScenes.java:1163"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 100
+   },
+   "src": "FactoryGaugeScenes.java:1173"
+  },
+  {
+   "op": "rotateCameraY",
+   "args": {
+    "degrees": -90
+   },
+   "src": "FactoryGaugeScenes.java:1174"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "FactoryGaugeScenes.java:1175"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      5,
+      2,
+      1
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "FactoryGaugeScenes.java:1177"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "FactoryGaugeScenes.java:1179"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      6,
+      1,
+      5
+     ],
+     "to": [
+      6,
+      2,
+      5
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "FactoryGaugeScenes.java:1181"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "FactoryGaugeScenes.java:1182"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     1.75,
+     3.25,
+     5
+    ],
+    "direction": "down",
+    "duration": 60,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb"
+   },
+   "src": "FactoryGaugeScenes.java:1185"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "FactoryGaugeScenes.java:1187"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "green",
+    "slot": "obj:1",
+    "box": {
+     "min": [
+      1.56,
+      3.06,
+      5
+     ],
+     "max": [
+      1.94,
+      3.44,
+      5
+     ]
+    },
+    "duration": 100
+   },
+   "src": "FactoryGaugeScenes.java:1189"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "green",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_6",
+    "pointAt": [
+     1.75,
+     3.25,
+     5
+    ],
+    "text": "Hold Right-click on the gauge to set the target amount"
+   },
+   "src": "FactoryGaugeScenes.java:1191"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "FactoryGaugeScenes.java:1198"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     3,
+     4
+    ],
+    "beType": "FactoryPanelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "f": "panels"
+       },
+       {
+        "m": "get",
+        "a": [
+         {
+          "enum": "PanelSlot.BOTTOM_LEFT"
+         }
+        ]
+       },
+       {
+        "set": "count",
+        "v": 2
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FactoryGaugeScenes.java:1520"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "FactoryGaugeScenes.java:1200"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     0,
+     1,
+     1
+    ],
+    "insertionSide": "west",
+    "item": {
+     "id": "create:cardboard_package_10x12",
+     "count": 1,
+     "nbt": {
+      "create:package_contents": []
+     }
+    }
+   },
+   "src": "FactoryGaugeScenes.java:1203",
+   "out": "e1"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "FactoryGaugeScenes.java:1205"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     5,
+     1,
+     1
+    ]
+   },
+   "src": "FactoryGaugeScenes.java:1207"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     5,
+     2,
+     1
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         true
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FactoryGaugeScenes.java:1210"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     6,
+     2,
+     1
+    ],
+    "beType": "PackagerBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "set": "animationTicks",
+        "v": 20
+       }
+      ]
+     },
+     {
+      "path": [
+       {
+        "set": "animationInward",
+        "v": true
+       }
+      ]
+     },
+     {
+      "path": [
+       {
+        "set": "previouslyUnwrapped",
+        "v": {
+         "id": "create:cardboard_package_10x12",
+         "count": 1,
+         "nbt": {
+          "create:package_contents": []
+         }
+        }
+       }
+      ]
+     }
+    ]
+   },
+   "src": "PonderHilo.java:28"
+  },
+  {
+   "op": "rotateCameraY",
+   "args": {
+    "degrees": -15
+   },
+   "src": "FactoryGaugeScenes.java:1213"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "FactoryGaugeScenes.java:1214"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     6,
+     4,
+     2
+    ],
+    "beType": "MechanicalCrafterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getInventory",
+        "a": []
+       },
+       {
+        "m": "setItem",
+        "a": [
+         0,
+         {
+          "id": "minecraft:diamond",
+          "count": 1
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FactoryGaugeScenes.java:1513"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     6,
+     4,
+     3
+    ],
+    "beType": "MechanicalCrafterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getInventory",
+        "a": []
+       },
+       {
+        "m": "setItem",
+        "a": [
+         0,
+         {
+          "id": "minecraft:diamond",
+          "count": 1
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FactoryGaugeScenes.java:1513"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     6,
+     4,
+     4
+    ],
+    "beType": "MechanicalCrafterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getInventory",
+        "a": []
+       },
+       {
+        "m": "setItem",
+        "a": [
+         0,
+         {
+          "id": "minecraft:diamond",
+          "count": 1
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FactoryGaugeScenes.java:1513"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     6,
+     3,
+     3
+    ],
+    "beType": "MechanicalCrafterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getInventory",
+        "a": []
+       },
+       {
+        "m": "setItem",
+        "a": [
+         0,
+         {
+          "id": "minecraft:stick",
+          "count": 1
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FactoryGaugeScenes.java:1513"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     6,
+     2,
+     3
+    ],
+    "beType": "MechanicalCrafterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getInventory",
+        "a": []
+       },
+       {
+        "m": "setItem",
+        "a": [
+         0,
+         {
+          "id": "minecraft:stick",
+          "count": 1
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FactoryGaugeScenes.java:1513"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     6,
+     2,
+     4
+    ],
+    "beType": "MechanicalCrafterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "setScriptedResult",
+        "a": [
+         {
+          "id": "minecraft:diamond_pickaxe",
+          "count": 1
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FactoryGaugeScenes.java:1227"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     6,
+     3,
+     2
+    ],
+    "beType": "MechanicalCrafterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "checkCompletedRecipe",
+        "a": [
+         true
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FactoryGaugeScenes.java:1230"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "FactoryGaugeScenes.java:1233"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 120,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_7",
+    "pointAt": [
+     6,
+     3.5,
+     4.5
+    ],
+    "text": "This crafter can now be used universally, by more gauges with different recipes"
+   },
+   "src": "FactoryGaugeScenes.java:1235"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 120
+   },
+   "src": "FactoryGaugeScenes.java:1243"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "pos",
+       "pos": [
+        6,
+        1,
+        6
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        5,
+        2,
+        6
+       ],
+       "to": [
+        6,
+        2,
+        6
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        6,
+        3,
+        6
+       ]
+      }
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "FactoryGaugeScenes.java:1246"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "FactoryGaugeScenes.java:1247"
+  },
+  {
+   "op": "rotateCameraY",
+   "args": {
+    "degrees": 15
+   },
+   "src": "FactoryGaugeScenes.java:1248"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       6,
+       2,
+       6
+      ],
+      "state": {
+       "name": "create:packager",
+       "props": {
+        "facing": "south",
+        "linked": "false",
+        "powered": "true"
+       }
+      }
+     },
+     {
+      "pos": [
+       6,
+       3,
+       6
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "floor",
+        "facing": "south",
+        "powered": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "FactoryGaugeScenes.java:1250"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     6,
+     3,
+     6
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "FactoryGaugeScenes.java:1253"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      1,
+      7
+     ],
+     "to": [
+      7,
+      1,
+      7
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "FactoryGaugeScenes.java:1256"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      6,
+      2,
+      7
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "FactoryGaugeScenes.java:1258"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      9,
+      0,
+      6
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "FactoryGaugeScenes.java:1260"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      7,
+      1,
+      6
+     ],
+     "to": [
+      8,
+      1,
+      6
+     ]
+    },
+    "direction": "west"
+   },
+   "src": "FactoryGaugeScenes.java:1262"
+  },
+  {
+   "op": "world.restoreBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      2,
+      1
+     ]
+    }
+   },
+   "src": "FactoryGaugeScenes.java:1264"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "FactoryGaugeScenes.java:1266"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     6,
+     2,
+     6
+    ],
+    "beType": "PackagerBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "set": "animationTicks",
+        "v": 20
+       }
+      ]
+     },
+     {
+      "path": [
+       {
+        "set": "animationInward",
+        "v": false
+       }
+      ]
+     },
+     {
+      "path": [
+       {
+        "set": "heldBox",
+        "v": {
+         "id": "create:cardboard_package_10x8",
+         "count": 1,
+         "nbt": {
+          "create:package_contents": []
+         }
+        }
+       }
+      ]
+     }
+    ]
+   },
+   "src": "PonderHilo.java:19"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "FactoryGaugeScenes.java:1270"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     6,
+     2,
+     6
+    ],
+    "beType": "PackagerBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "set": "heldBox",
+        "v": {
+         "id": "minecraft:air",
+         "count": 0
+        }
+       }
+      ]
+     }
+    ]
+   },
+   "src": "PonderHilo.java:37"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     6,
+     1,
+     7
+    ],
+    "insertionSide": "north",
+    "item": {
+     "id": "create:cardboard_package_10x8",
+     "count": 1,
+     "nbt": {
+      "create:package_contents": []
+     }
+    }
+   },
+   "src": "FactoryGaugeScenes.java:1274",
+   "out": "e2"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     6,
+     2,
+     7
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FactoryGaugeScenes.java:1274"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 100,
+    "color": "blue",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_8",
+    "pointAt": [
+     6,
+     2.5,
+     6.5
+    ],
+    "text": "Outputs should be sent back to a linked inventory to close the loop"
+   },
+   "src": "FactoryGaugeScenes.java:1278"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 45
+   },
+   "src": "FactoryGaugeScenes.java:1287"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     0,
+     1,
+     7
+    ]
+   },
+   "src": "PonderHilo.java:43"
+  },
+  {
+   "op": "world.createEntity",
+   "args": {
+    "entity": {
+     "type": "create:package",
+     "ctor": [
+      -0.17500000000000004,
+      1.875,
+      7.5
+     ],
+     "calls": [
+      {
+       "path": [
+        {
+         "m": "setDeltaMovement",
+         "a": [
+          [
+           -0.125,
+           0.125,
+           0
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "path": [
+        {
+         "set": "box",
+         "v": {
+          "id": "create:cardboard_package_10x8",
+          "count": 1,
+          "nbt": {
+           "create:package_contents": []
+          }
+         }
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "src": "PonderHilo.java:45",
+   "out": "e3"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "FactoryGaugeScenes.java:1290"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      2,
+      1
+     ],
+     "to": [
+      4,
+      3,
+      1
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "FactoryGaugeScenes.java:1293"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "FactoryGaugeScenes.java:1294"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 120,
+    "color": "blue",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_9",
+    "pointAt": [
+     3.5,
+     2.5,
+     1
+    ],
+    "text": "Using a Re-packager is recommended to prevent fragmentation of input packages"
+   },
+   "src": "FactoryGaugeScenes.java:1297"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 120
+   },
+   "src": "FactoryGaugeScenes.java:1305"
+  }
+ ]
+}

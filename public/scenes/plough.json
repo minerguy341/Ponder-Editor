@@ -1,0 +1,2297 @@
+{
+ "id": "create:plough",
+ "schematic": "plough",
+ "schematicNamespace": "create",
+ "title": "Using Mechanical Ploughs on Contraptions",
+ "texts": {
+  "text_1": "Whenever Ploughs are moved as part of an animated Contraption...",
+  "text_2": "...they will break blocks without a solid collision hitbox",
+  "text_3": "Additionally, ploughs can create farmland",
+  "text_4": "...they can also launch entities without hurting them"
+ },
+ "tags": [],
+ "items": [
+  "create:mechanical_plough"
+ ],
+ "keyframes": [
+  51,
+  256,
+  491,
+  675
+ ],
+ "totalTicks": 756,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 6
+   },
+   "src": "MovementActorScenes.java:342"
+  },
+  {
+   "op": "scaleSceneView",
+   "args": {
+    "factor": 0.8999999761581421
+   },
+   "src": "MovementActorScenes.java:343"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      5,
+      0,
+      5
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "MovementActorScenes.java:349"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      0,
+      6
+     ],
+     "to": [
+      5,
+      1,
+      6
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "MovementActorScenes.java:351",
+   "out": "e1"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "MovementActorScenes.java:352"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        5,
+        1,
+        2
+       ],
+       "to": [
+        5,
+        1,
+        5
+       ]
+      }
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "MovementActorScenes.java:353"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      5,
+      1,
+      1
+     ],
+     "to": [
+      7,
+      1,
+      1
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "MovementActorScenes.java:355",
+   "out": "e2"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     0,
+     0,
+     1
+    ],
+    "duration": 0
+   },
+   "src": "MovementActorScenes.java:356"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "MovementActorScenes.java:357"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      1,
+      2
+     ],
+     "to": [
+      4,
+      1,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "MovementActorScenes.java:359",
+   "out": "e3"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "MovementActorScenes.java:360"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      3
+     ]
+    },
+    "direction": "east",
+    "link": {
+     "link": "e3"
+    }
+   },
+   "src": "MovementActorScenes.java:361"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "MovementActorScenes.java:362"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      2
+     ]
+    },
+    "direction": "east",
+    "link": {
+     "link": "e3"
+    }
+   },
+   "src": "MovementActorScenes.java:363"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "MovementActorScenes.java:364"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     4,
+     1.5,
+     3.5
+    ],
+    "key": "text_1",
+    "text": "Whenever Ploughs are moved as part of an animated Contraption..."
+   },
+   "src": "MovementActorScenes.java:366"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "MovementActorScenes.java:371"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      1,
+      2
+     ],
+     "to": [
+      2,
+      1,
+      3
+     ]
+    },
+    "direction": "east"
+   },
+   "src": "MovementActorScenes.java:372"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "MovementActorScenes.java:373"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       0,
+       6
+      ],
+      "nbt": {
+       "Speed": -8
+      }
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:375"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       5,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       6
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:376"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     -2,
+     0,
+     0
+    ],
+    "duration": 60
+   },
+   "src": "MovementActorScenes.java:377"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "offset": [
+     -2,
+     0,
+     0
+    ],
+    "duration": 60
+   },
+   "src": "MovementActorScenes.java:378"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "MovementActorScenes.java:379"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      3
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "MovementActorScenes.java:382"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     1.5,
+     3.5
+    ],
+    "motion": [
+     -0.1,
+     0.2,
+     0
+    ],
+    "item": {
+     "id": "minecraft:lever",
+     "count": 1
+    }
+   },
+   "src": "MovementActorScenes.java:383",
+   "out": "e4"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "MovementActorScenes.java:384"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     1.5,
+     2.5
+    ],
+    "motion": [
+     -0.1,
+     0.2,
+     0
+    ],
+    "item": {
+     "id": "minecraft:torch",
+     "count": 1
+    }
+   },
+   "src": "MovementActorScenes.java:385",
+   "out": "e5"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "MovementActorScenes.java:387"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      3
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "MovementActorScenes.java:389"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     1.5,
+     3.5
+    ],
+    "motion": [
+     -0.1,
+     0.2,
+     0
+    ],
+    "item": {
+     "id": "minecraft:rail",
+     "count": 1
+    }
+   },
+   "src": "MovementActorScenes.java:390",
+   "out": "e6"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "MovementActorScenes.java:391"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     1.5,
+     2.5
+    ],
+    "motion": [
+     -0.1,
+     0.2,
+     0
+    ],
+    "item": {
+     "id": "minecraft:redstone",
+     "count": 1
+    }
+   },
+   "src": "MovementActorScenes.java:392",
+   "out": "e7"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     2,
+     1.5,
+     3.5
+    ],
+    "key": "text_2",
+    "text": "...they will break blocks without a solid collision hitbox"
+   },
+   "src": "MovementActorScenes.java:394"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "MovementActorScenes.java:398"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       5,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     },
+     {
+      "pos": [
+       4,
+       0,
+       6
+      ],
+      "nbt": {
+       "Speed": 8
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       6
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:400"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     2,
+     0,
+     0
+    ],
+    "duration": 40
+   },
+   "src": "MovementActorScenes.java:401"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "offset": [
+     2,
+     0,
+     0
+    ],
+    "duration": 40
+   },
+   "src": "MovementActorScenes.java:402"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      1,
+      2
+     ],
+     "to": [
+      2,
+      1,
+      3
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "MovementActorScenes.java:403"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "MovementActorScenes.java:404"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      1,
+      2
+     ],
+     "to": [
+      2,
+      1,
+      3
+     ]
+    },
+    "state": {
+     "name": "minecraft:snow",
+     "props": {
+      "layers": "1"
+     }
+    },
+    "particles": false
+   },
+   "src": "MovementActorScenes.java:405"
+  },
+  {
+   "op": "world.modifyEntities",
+   "args": {
+    "entityType": "ItemEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "discard",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:406"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      2,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "MovementActorScenes.java:408",
+   "out": "e8"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     4,
+     2.5,
+     2.5
+    ],
+    "sharedKey": "create:storage_on_contraption",
+    "text": "Inventories attached to the Contraption will pick up their drops automatically"
+   },
+   "src": "MovementActorScenes.java:410"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "MovementActorScenes.java:415"
+  },
+  {
+   "op": "effects.superGlue",
+   "args": {
+    "pos": [
+     4,
+     2,
+     2
+    ],
+    "side": "down",
+    "fullBlock": true
+   },
+   "src": "MovementActorScenes.java:416"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 45
+   },
+   "src": "MovementActorScenes.java:417"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      1,
+      2
+     ],
+     "to": [
+      2,
+      1,
+      3
+     ]
+    },
+    "direction": "east"
+   },
+   "src": "MovementActorScenes.java:418"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "MovementActorScenes.java:419"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       5,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       4,
+       0,
+       6
+      ],
+      "nbt": {
+       "Speed": -8
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       6
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:421"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     -2,
+     0,
+     0
+    ],
+    "duration": 60
+   },
+   "src": "MovementActorScenes.java:422"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "offset": [
+     -2,
+     0,
+     0
+    ],
+    "duration": 60
+   },
+   "src": "MovementActorScenes.java:423"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e8"
+    },
+    "offset": [
+     -2,
+     0,
+     0
+    ],
+    "duration": 60
+   },
+   "src": "MovementActorScenes.java:424"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "MovementActorScenes.java:425"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      3
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "MovementActorScenes.java:426"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "MovementActorScenes.java:427"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "MovementActorScenes.java:428"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      3
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "MovementActorScenes.java:429"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "MovementActorScenes.java:430"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "MovementActorScenes.java:431"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     3,
+     2.5
+    ],
+    "direction": "down",
+    "duration": 40,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 1
+    }
+   },
+   "src": "MovementActorScenes.java:433"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "MovementActorScenes.java:434"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e8"
+    },
+    "direction": "up"
+   },
+   "src": "MovementActorScenes.java:435"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       5,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     },
+     {
+      "pos": [
+       4,
+       0,
+       6
+      ],
+      "nbt": {
+       "Speed": 8
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       6
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:436"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     2,
+     0,
+     0
+    ],
+    "duration": 40
+   },
+   "src": "MovementActorScenes.java:437"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "offset": [
+     2,
+     0,
+     0
+    ],
+    "duration": 40
+   },
+   "src": "MovementActorScenes.java:438"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "MovementActorScenes.java:439"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      0,
+      2
+     ],
+     "to": [
+      2,
+      0,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "MovementActorScenes.java:442"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "MovementActorScenes.java:443"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      0,
+      2
+     ],
+     "to": [
+      2,
+      0,
+      3
+     ]
+    },
+    "state": {
+     "name": "minecraft:grass_block",
+     "props": {
+      "snowy": "false"
+     }
+    },
+    "particles": false
+   },
+   "src": "MovementActorScenes.java:444"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      0,
+      2
+     ],
+     "to": [
+      2,
+      0,
+      3
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "MovementActorScenes.java:445"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     4,
+     1.5,
+     3.5
+    ],
+    "key": "text_3",
+    "text": "Additionally, ploughs can create farmland"
+   },
+   "src": "MovementActorScenes.java:446"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "MovementActorScenes.java:451"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       5,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       4,
+       0,
+       6
+      ],
+      "nbt": {
+       "Speed": -8
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       6
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:453"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     -2,
+     0,
+     0
+    ],
+    "duration": 60
+   },
+   "src": "MovementActorScenes.java:454"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "offset": [
+     -2,
+     0,
+     0
+    ],
+    "duration": 60
+   },
+   "src": "MovementActorScenes.java:455"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e8"
+    },
+    "offset": [
+     -2,
+     0,
+     0
+    ],
+    "duration": 60
+   },
+   "src": "MovementActorScenes.java:456"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "MovementActorScenes.java:457"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      0,
+      2
+     ],
+     "to": [
+      2,
+      0,
+      3
+     ]
+    },
+    "state": {
+     "name": "minecraft:farmland",
+     "props": {
+      "moisture": "0"
+     }
+    },
+    "particles": true
+   },
+   "src": "MovementActorScenes.java:458"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "MovementActorScenes.java:459"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      0,
+      2
+     ],
+     "to": [
+      1,
+      0,
+      3
+     ]
+    },
+    "state": {
+     "name": "minecraft:farmland",
+     "props": {
+      "moisture": "0"
+     }
+    },
+    "particles": true
+   },
+   "src": "MovementActorScenes.java:460"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "MovementActorScenes.java:461"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       5,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     },
+     {
+      "pos": [
+       4,
+       0,
+       6
+      ],
+      "nbt": {
+       "Speed": 8
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       6
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:463"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     2,
+     0,
+     0
+    ],
+    "duration": 40
+   },
+   "src": "MovementActorScenes.java:464"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "offset": [
+     2,
+     0,
+     0
+    ],
+    "duration": 40
+   },
+   "src": "MovementActorScenes.java:465"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "MovementActorScenes.java:467"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       5,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       4,
+       0,
+       6
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       6
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:468"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        5,
+        1,
+        2
+       ],
+       "to": [
+        5,
+        1,
+        5
+       ]
+      }
+     ]
+    },
+    "direction": "east"
+   },
+   "src": "MovementActorScenes.java:469"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      0,
+      2
+     ],
+     "to": [
+      2,
+      0,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "MovementActorScenes.java:470"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "direction": "east"
+   },
+   "src": "MovementActorScenes.java:471"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     -1,
+     0,
+     0
+    ],
+    "duration": 15
+   },
+   "src": "MovementActorScenes.java:472"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "MovementActorScenes.java:473"
+  },
+  {
+   "op": "world.restoreBlocks",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      0,
+      2
+     ],
+     "to": [
+      2,
+      0,
+      3
+     ]
+    }
+   },
+   "src": "MovementActorScenes.java:474"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      0,
+      2
+     ],
+     "to": [
+      2,
+      0,
+      3
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "MovementActorScenes.java:475"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      1,
+      4
+     ],
+     "to": [
+      4,
+      3,
+      6
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "MovementActorScenes.java:476"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "MovementActorScenes.java:477"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      2,
+      3
+     ],
+     "to": [
+      4,
+      3,
+      3
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e3"
+    }
+   },
+   "src": "MovementActorScenes.java:478"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "MovementActorScenes.java:479"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       0,
+       6
+      ],
+      "nbt": {
+       "Speed": 8
+      }
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:484"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       5,
+       1,
+       6
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:485"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       3,
+       5
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:486"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:487"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       2,
+       5
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:488"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       4,
+       2,
+       5
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       4,
+       3,
+       5
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       4,
+       0,
+       6
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       6
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:489"
+  },
+  {
+   "op": "world.configureCenterOfRotation",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "anchor": [
+     4.5,
+     3.5,
+     4.5
+    ]
+   },
+   "src": "MovementActorScenes.java:490"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "rotation": [
+     0,
+     0,
+     90
+    ],
+    "duration": 20
+   },
+   "src": "MovementActorScenes.java:491"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bearing",
+    "pos": [
+     4,
+     3,
+     4
+    ],
+    "distance": 90,
+    "duration": 20
+   },
+   "src": "MovementActorScenes.java:492"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "MovementActorScenes.java:494"
+  },
+  {
+   "op": "special.createBirb",
+   "args": {
+    "location": [
+     3.5,
+     1,
+     3
+    ],
+    "pose": {
+     "type": "flappy"
+    }
+   },
+   "src": "MovementActorScenes.java:495",
+   "out": "e9"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 11
+   },
+   "src": "MovementActorScenes.java:497"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": -64
+      }
+     },
+     {
+      "pos": [
+       4,
+       2,
+       5
+      ],
+      "nbt": {
+       "Speed": 64
+      }
+     },
+     {
+      "pos": [
+       4,
+       3,
+       5
+      ],
+      "nbt": {
+       "Speed": -64
+      }
+     },
+     {
+      "pos": [
+       4,
+       0,
+       6
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       6
+      ],
+      "nbt": {
+       "Speed": -64
+      }
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:499"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "rotation": [
+     0,
+     0,
+     -135
+    ],
+    "duration": 10
+   },
+   "src": "MovementActorScenes.java:500"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bearing",
+    "pos": [
+     4,
+     3,
+     4
+    ],
+    "distance": -135,
+    "duration": 10
+   },
+   "src": "MovementActorScenes.java:501"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "MovementActorScenes.java:502"
+  },
+  {
+   "op": "special.moveParrot",
+   "args": {
+    "link": {
+     "link": "e9"
+    },
+    "offset": [
+     -20,
+     15,
+     0
+    ],
+    "duration": 20
+   },
+   "src": "MovementActorScenes.java:503"
+  },
+  {
+   "op": "special.rotateParrot",
+   "args": {
+    "link": {
+     "link": "e9"
+    },
+    "rotation": [
+     0,
+     360,
+     0
+    ],
+    "duration": 20
+   },
+   "src": "MovementActorScenes.java:504"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "MovementActorScenes.java:505"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       4,
+       2,
+       5
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       4,
+       3,
+       5
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       4,
+       0,
+       6
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       6
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:506"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "MovementActorScenes.java:507"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     1.5,
+     3.5,
+     2.5
+    ],
+    "key": "text_4",
+    "text": "...they can also launch entities without hurting them"
+   },
+   "src": "MovementActorScenes.java:509"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "MovementActorScenes.java:513"
+  }
+ ]
+}

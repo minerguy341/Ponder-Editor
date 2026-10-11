@@ -37,18 +37,16 @@ if (args.includes('--texts')) {
   }
   // reverse direction: every scene-specific lang key must be produced by some converted scene (detects skipped branches)
   const sceneKeys = new Map(); // titleId -> Set(keys)
-  const titleIds = new Map();
-  for (const { scene } of scenes) {
-    const hdr = Object.keys(lang).filter((k) => /^create\.ponder\.[^.]+\.header$/.test(k) && lang[k] === scene.title);
-    for (const h of hdr) titleIds.set(h.split('.')[2], scene.id);
-  }
-  for (const { scene } of scenes) {
-    const ids = [...titleIds].filter(([, sid]) => sid === scene.id).map(([t]) => t);
-    for (const id of ids) {
-      if (!sceneKeys.has(id)) sceneKeys.set(id, new Set());
-      for (const k of Object.keys(scene.texts)) sceneKeys.get(id).add(k);
-      for (const k of Object.keys(scene.texts)) if (lang[`create.ponder.${id}.${k}`] !== scene.texts[k]) problems.push(`${scene.id}: ${k} differs from lang`);
+  const titleIds = new Set();
+  for (const { entry, scene } of scenes) {
+    const id = entry.titleId;
+    titleIds.add(id);
+    if (!sceneKeys.has(id)) sceneKeys.set(id, new Set());
+    for (const k of Object.keys(scene.texts)) {
+      sceneKeys.get(id).add(k);
+      if (lang[`create.ponder.${id}.${k}`] !== scene.texts[k]) problems.push(`${scene.id}: ${k} differs from lang`);
     }
+    if (lang[`create.ponder.${id}.header`] !== scene.title) problems.push(`${scene.id}: title differs from lang`);
   }
   for (const k of Object.keys(lang)) {
     const m = k.match(/^create\.ponder\.([^.]+)\.(text_\d+)$/);
