@@ -12,6 +12,7 @@ import { PonderViewer } from '../render/viewer';
 import { PoseStack, createItemEntityObject, createItemObjectSync, prepareItem } from '../render/create/items';
 import type { ItemStackJson, BlockVisual } from '../contract';
 import { createVisual, isEntityRendered } from '../render/create';
+import { getLogisticsWorld, logisticsEventsOf } from '../render/create/items/logisticsSim';
 
 const qs = new URLSearchParams(location.search);
 const stage = document.getElementById('stage')!;
@@ -82,10 +83,14 @@ function setTicks(t: number) {
 }
 
 async function sceneMode() {
-  const path = qs.get('path') ?? 'belt/transport';
+  // ?scene=belt/transport loads public/scenes/<file>.json: its schematic and its logistics ops (B2 events)
+  const sceneId = qs.get('scene');
+  const scene = sceneId ? await (await fetch(`/scenes/${sceneId}.json`)).json() as { schematic: string; instructions: { op: string; args?: Record<string, unknown>; out?: string }[] } : null;
+  const path = qs.get('path') ?? scene?.schematic ?? 'belt/transport';
   const st = await loadStructure('create', path);
   renderer.setEntityBlockPredicate(isEntityRendered);
   const lookup = makeLookup(st.blocks);
+  if (scene) for (const ev of logisticsEventsOf(scene.instructions)) getLogisticsWorld(lookup).apply(ev);
   await renderer.prepare(st.blocks.map((b) => b.state));
   const group = renderer.buildSection(st.blocks, { lookup });
   viewer.world.add(group);
