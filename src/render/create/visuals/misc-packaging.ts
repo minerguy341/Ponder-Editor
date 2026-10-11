@@ -52,13 +52,69 @@ export function packagerAt(snaps: readonly PackagerSnapshot[], ticks: number): {
   return { a, pt: elapsed - whole, s };
 }
 
+/** A state change of the BE at a scene tick: NBT patches (AnimationTicks, AnimationInward, HeldBox, InsertedBox) or the
+ *  PonderCalls set entries (set: animationTicks | animationInward | heldBox | previouslyUnwrapped). */
+interface PackagerEvent { tick: number; patch: Partial<Omit<PackagerSnapshot, 'tick'>> }
+
+/** A stack written by a scene: minecraft:air or a zero count is the empty stack (readItemStack semantics), components kept. */
+function setStack(v: unknown): ItemStackJson | undefined {
+  if (typeof v !== 'object' || v === null) return undefined;
+  const o = v as { id?: unknown; count?: unknown; nbt?: unknown };
+  const id = typeof o.id === 'string' ? o.id : undefined;
+  if (!id || id === 'minecraft:air') return undefined;
+  const count = typeof o.count === 'number' ? o.count : 1;
+  if (count <= 0) return undefined;
+  return o.nbt === undefined ? { id, count } : { id, count, nbt: o.nbt as ItemStackJson['nbt'] };
+}
+
+/** Event for one PonderCalls set entry, or null when the field is not part of the packager state. */
+function eventOfSetCall(tick: number, name: string, v: unknown): PackagerEvent | null {
+  switch (name) {
+    case 'animationTicks': return { tick, patch: { animationTicks: Number(v) || 0 } };
+    case 'animationInward': return { tick, patch: { inward: Boolean(v) } };
+    case 'heldBox': return { tick, patch: { held: setStack(v) } };
+    case 'previouslyUnwrapped': return { tick, patch: { inserted: setStack(v) } };
+    default: return null;
+  }
+}
+
+/** The set entries of a block's PonderCalls, as state events. */
+export function eventsOfCalls(nbt: Nbt | undefined): PackagerEvent[] {
+  const out: PackagerEvent[] = [];
+  const calls = (nbt?.PonderCalls ?? []) as { t?: number; path?: { set?: string; v?: unknown }[] }[];
+  if (!Array.isArray(calls)) return out;
+  for (const c of calls) {
+    for (const p of c.path ?? []) {
+      if (typeof p?.set !== 'string') continue;
+      const e = eventOfSetCall(Number(c.t ?? 0), p.set, p.v);
+      if (e) out.push(e);
+    }
+  }
+  return out;
+}
+
+/** The NBT keys that changed in a scene data update (SceneVisual onScene `rest`). */
+function eventOfNbt(tick: number, rest: Nbt): PackagerEvent | null {
+  const patch: PackagerEvent['patch'] = {};
+  if ('AnimationTicks' in rest) patch.animationTicks = getNumber(rest, 'AnimationTicks', 0);
+  if ('AnimationInward' in rest) patch.inward = getBool(rest, 'AnimationInward', true);
+  if ('HeldBox' in rest) patch.held = getItemStack(rest, 'HeldBox');
+  if ('InsertedBox' in rest) patch.inserted = getItemStack(rest, 'InsertedBox');
+  return Object.keys(patch).length ? { tick, patch } : null;
+}
+
+function stackKey(st: ItemStackJson): string { return `${st.id}|${JSON.stringify(st.nbt ?? null)}`; }
+
 class PackagerVisual extends SceneVisual {
+  /** Full states after each event (packagerAt picks the last one at or before the scene tick). */
   private snaps: PackagerSnapshot[] = [];
+  private base: PackagerSnapshot;
+  private callEvents: PackagerEvent[] = [];
+  private nbtEvents: PackagerEvent[] = [];
+  private boxes = new Map<string, THREE.Group>(); // one fixed item model per distinct held / inserted stack
   private hatchOpen!: THREE.Group;
   private hatchClosed!: THREE.Group;
   private tray!: THREE.Group;
-  private heldGroup: THREE.Group | null = null;
-  private insertedGroup: THREE.Group | null = null;
   private readonly ps = new PoseStack();
   private readonly hatchM = new THREE.Matrix4();
   private readonly trayBase = new THREE.Matrix4();
@@ -70,7 +126,9 @@ class PackagerVisual extends SceneVisual {
     super(block, ctx);
     const n = DIR_STEP[this.facing];
     this.normal = [n[0], n[1], n[2]];
-    this.snaps = [this.snapshotFrom(this.data, 0)];
+    this.base = this.snapshotFrom(this.data, 0);
+    this.callEvents = eventsOfCalls(this.block.nbt);
+    this.rebuild();
   }
 
   private snapshotFrom(nbt: Nbt, tick: number): PackagerSnapshot {
@@ -81,6 +139,18 @@ class PackagerVisual extends SceneVisual {
       held: getItemStack(nbt, 'HeldBox'),
       inserted: getItemStack(nbt, 'InsertedBox'),
     };
+  }
+
+  /** Folds the base state with the events in tick order (stable for equal ticks, so later calls win). */
+  private rebuild(): void {
+    const events = [...this.callEvents, ...this.nbtEvents].sort((x, y) => x.tick - y.tick);
+    let cur: PackagerSnapshot = { ...this.base };
+    const out: PackagerSnapshot[] = [cur];
+    for (const e of events) {
+      cur = { ...cur, ...e.patch, tick: e.tick };
+      out.push(cur);
+    }
+    this.snaps = out;
   }
 
   protected async build(): Promise<void> {
@@ -102,13 +172,20 @@ class PackagerVisual extends SceneVisual {
     // tray base: rotateYCentered(facing.toYRot()), the offset translate is added per frame
     this.trayBase.copy(this.ps.reset().translate(0.5, 0.5, 0.5).rotateYDegrees(toYRot(this.facing)).translate(-0.5, -0.5, -0.5).matrix);
 
-    // boxes (PackagerRenderer.renderSafe: translate(normal*offset).translate(.5).rotateYDegrees(facing.toYRot()).translate(0, 2/16, 0).scale(1.49))
-    const held = getItemStack(this.data, 'HeldBox');
-    const inserted = getItemStack(this.data, 'InsertedBox');
-    if (held) this.heldGroup = await this.boxGroup(held);
-    if (inserted) this.insertedGroup = await this.boxGroup(inserted);
-    if (this.heldGroup) this.object.add(this.heldGroup);
-    if (this.insertedGroup) this.object.add(this.insertedGroup);
+    // the boxes every state of the timeline holds (PackagerRenderer.renderSafe), one group per distinct stack
+    const seen = new Set<string>();
+    for (const sn of this.snaps) {
+      for (const st of [sn.held, sn.inserted]) {
+        if (!st) continue;
+        const key = stackKey(st);
+        if (seen.has(key)) continue;
+        seen.add(key);
+        const g = await this.boxGroup(st);
+        g.visible = false;
+        this.boxes.set(key, g);
+        this.object.add(g);
+      }
+    }
   }
 
   private async boxGroup(stack: ItemStackJson): Promise<THREE.Group> {
@@ -117,12 +194,17 @@ class PackagerVisual extends SceneVisual {
     return withMatrix(obj);
   }
 
+  protected override onTimelineChanged(): void {
+    this.callEvents = eventsOfCalls(this.block.nbt);
+    this.rebuild();
+  }
+
   protected override onScene(tick: number, _keys: SceneDataKeys, rest: Nbt): void {
-    if ('AnimationTicks' in rest || 'AnimationInward' in rest || 'HeldBox' in rest || 'InsertedBox' in rest) {
-      this.snaps = this.snaps.filter((e) => e.tick < tick);
-      const full = { ...this.data };
-      this.snaps.push(this.snapshotFrom(full, tick));
-    }
+    const e = eventOfNbt(tick, rest);
+    if (!e) return;
+    this.nbtEvents = this.nbtEvents.filter((x) => x.tick < tick);
+    this.nbtEvents.push(e);
+    this.rebuild();
   }
 
   /** Box transform for this frame, written into `out` (no allocation per frame). */
@@ -144,17 +226,13 @@ class PackagerVisual extends SceneVisual {
     const open = hatchOpenOf(a, s.inward);
     setVisible(this.hatchOpen, open);
     setVisible(this.hatchClosed, !open);
-    // PackagerRenderer.renderSafe with getRenderedBox(): inward shows the previously unwrapped box, outward the held box
-    const showInserted = s.inward && a > PACKAGER_CYCLE / 2 && !!s.inserted;
-    const showHeld = !s.inward && a < PACKAGER_CYCLE / 2 && !!s.held;
-    if (this.insertedGroup) {
-      setVisible(this.insertedGroup, showInserted);
-      if (showInserted) setMatrix(this.insertedGroup, this.boxMatrix(offset, this.boxM));
-    }
-    if (this.heldGroup) {
-      setVisible(this.heldGroup, showHeld);
-      if (showHeld) setMatrix(this.heldGroup, this.boxMatrix(offset, this.boxM));
-    }
+    // PackagerBlockEntity.getRenderedBox: inward shows the previously unwrapped box after the first half, outward the held box
+    // until the middle of the cycle
+    let shown: THREE.Group | undefined;
+    if (s.inward && a > PACKAGER_CYCLE / 2 && s.inserted) shown = this.boxes.get(stackKey(s.inserted));
+    else if (!s.inward && a < PACKAGER_CYCLE / 2 && s.held) shown = this.boxes.get(stackKey(s.held));
+    for (const g of this.boxes.values()) setVisible(g, g === shown);
+    if (shown) setMatrix(shown, this.boxMatrix(offset, this.boxM));
   }
 }
 

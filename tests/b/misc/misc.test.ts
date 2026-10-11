@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { bogeyAngleAt, GatedChase } from '../../../src/render/create/trains/timeline';
 import { StepSim } from '../../../src/render/create/common/sim';
-import { trayOffsetOf, hatchOpenOf, packagerAt, PACKAGER_CYCLE, type PackagerSnapshot } from '../../../src/render/create/visuals/misc-packaging';
+import { trayOffsetOf, hatchOpenOf, packagerAt, eventsOfCalls, PACKAGER_CYCLE, type PackagerSnapshot } from '../../../src/render/create/visuals/misc-packaging';
 import {
   analogLeverValueAt, diodeStep, expChaseEventsAt, mixColor,
 } from '../../../src/render/create/visuals/misc-redstone';
@@ -237,5 +237,26 @@ describe('FlapDisplaySection / FlapDisplayBlockEntity (content/trains/display, L
     ]);
     expect(calls.map((c) => [c.t, c.kind, c.line])).toEqual([[3, 'colour', 0], [9, 'text', 1]]);
     expect(calls[1].text).toBe('Blaze Cake');
+  });
+});
+
+describe('PackagerBlockEntity set calls (scene PonderCalls set entries)', () => {
+  it('animationTicks / animationInward / heldBox / previouslyUnwrapped map to the packager state; air is the empty stack', () => {
+    const ev = eventsOfCalls({
+      PonderCalls: [
+        { t: 4, path: [{ set: 'animationTicks', v: 20 }] },
+        { t: 4, path: [{ set: 'animationInward', v: false }] },
+        { t: 4, path: [{ set: 'heldBox', v: { id: 'create:cardboard_package_10x12', count: 1, nbt: { 'create:package_contents': [] } } }] },
+        { t: 9, path: [{ set: 'heldBox', v: { id: 'minecraft:air', count: 0 } }] },
+        { t: 9, path: [{ set: 'previouslyUnwrapped', v: { id: 'create:cardboard_package_10x8', count: 1 } }] },
+        { t: 9, path: [{ m: 'startAnimation', a: [] }] },
+      ],
+    });
+    expect(ev.map((e) => [e.tick, Object.keys(e.patch)[0]])).toEqual([
+      [4, 'animationTicks'], [4, 'inward'], [4, 'held'], [9, 'held'], [9, 'inserted'],
+    ]);
+    expect(ev[2].patch.held?.id).toBe('create:cardboard_package_10x12');
+    expect(ev[3].patch.held).toBeUndefined();
+    expect(ev[4].patch.inserted?.count).toBe(1);
   });
 });
