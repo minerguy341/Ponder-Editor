@@ -35,6 +35,39 @@ export interface LayerGeometry {
 export interface MeshPart { layer: RenderLayer; unshaded: boolean; geometry: LayerGeometry }
 export type MeshResult = MeshPart[];
 
+/**
+ * Translucent geometry is drawn back to front like the game (VertexSorting.DISTANCE_TO_ORIGIN on the translucent buffer):
+ * order the quads of `index` (6 indices per quad, quad i uses vertices 4i..4i+3) by the eye-space depth of their centroid.
+ * `modelView` is a column-major 4x4 (THREE.Matrix4.elements). Returns true when the order changed.
+ */
+export function sortQuadsBackToFront(positions: ArrayLike<number>, index: Uint32Array, modelView: ArrayLike<number>, scratch: { order: Uint32Array; depth: Float32Array }): boolean {
+  const n = index.length / 6;
+  const m = modelView;
+  const { order, depth } = scratch;
+  for (let q = 0; q < n; q++) {
+    const b = q * 12;
+    const cx = (positions[b] + positions[b + 3] + positions[b + 6] + positions[b + 9]) / 4;
+    const cy = (positions[b + 1] + positions[b + 4] + positions[b + 7] + positions[b + 10]) / 4;
+    const cz = (positions[b + 2] + positions[b + 5] + positions[b + 8] + positions[b + 11]) / 4;
+    const ex = m[0] * cx + m[4] * cy + m[8] * cz + m[12];
+    const ey = m[1] * cx + m[5] * cy + m[9] * cz + m[13];
+    const ez = m[2] * cx + m[6] * cy + m[10] * cz + m[14];
+    // DISTANCE_TO_ORIGIN: squared distance of the centroid to the eye-space origin
+    depth[q] = ex * ex + ey * ey + ez * ez;
+    order[q] = q;
+  }
+  const ord = Array.from(order.subarray(0, n)).sort((a, b) => depth[b] - depth[a] || a - b);
+  let changed = false;
+  for (let i = 0; i < n; i++) {
+    const q = ord[i];
+    if (index[i * 6] !== q * 4) changed = true;
+    const v = q * 4;
+    index[i * 6] = v; index[i * 6 + 1] = v + 1; index[i * 6 + 2] = v + 2;
+    index[i * 6 + 3] = v; index[i * 6 + 4] = v + 2; index[i * 6 + 5] = v + 3;
+  }
+  return changed;
+}
+
 class LayerBuilder {
   positions: number[] = [];
   normals: number[] = [];
