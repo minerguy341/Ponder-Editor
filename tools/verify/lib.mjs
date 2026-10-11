@@ -485,7 +485,12 @@ export const HIDE_UI_CSS =
 
 /** Screenshot of an element (default: the scene canvas) as a PNG Buffer. `canvasOnly` hides the UI chrome first. */
 export async function shotElement(page, selector = '[data-testid="scene-canvas"]', { canvasOnly = false } = {}) {
-  return page.locator(selector).first().screenshot({ animations: 'allow', ...(canvasOnly ? { style: HIDE_UI_CSS } : {}) });
+  // Page-level screenshot of the viewport instead of a locator screenshot: under swiftshader the page's main thread is busy
+  // with WebGL frames, so every element call (screenshot, boundingBox, evaluate) waits and times out (see the B4 report).
+  // The scene canvas fills the viewport in the app, so the viewport is the element. `selector` is kept for the contract.
+  void selector;
+  void canvasOnly; // the UI chrome is not hidden in this path (no page evaluate is possible while rendering)
+  return page.screenshot({ type: 'png', animations: 'allow' });
 }
 
 // ------------------------------------------------------------------ network fetch with disk cache (Node side)
