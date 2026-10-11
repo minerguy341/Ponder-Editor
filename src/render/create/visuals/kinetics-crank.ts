@@ -5,7 +5,7 @@ import * as THREE from 'three';
 import type { BlockInstance, Direction, VisualContext } from '../../../contract';
 import type { VisualModule } from '../registry';
 import {
-  DYE_COLORS, KineticVisual, PARTIAL, RotatingPart, StepSim, axisDirectionStep, axisOf, dyedValveHandle, getBool, getNumber, getPartial,
+  KineticVisual, PARTIAL, RotatingPart, StepSim, axisDirectionStep, axisOf, dyedValveHandle, getBool, getNumber, getPartial,
   kineticAngleDeg, quatRotationTo, rotationOffset, stateDirection, DIR_STEP, readKinetic,
 } from '../common';
 
@@ -94,7 +94,12 @@ class ValveHandleVisual extends CrankVisualBase {
   }
 }
 
-const valveIds = ['create:copper_valve_handle', ...DYE_COLORS.map((c) => `create:${c}_valve_handle`)];
+/** Valve handles: copper uses AllPartialModels.VALVE_HANDLE, dyed ones DYED_VALVE_HANDLES.get(color) (ValveHandleVisual.<init>). */
+const valveModule = (id: string, partialId: string): VisualModule => ({
+  blocks: [id],
+  entityRendered: () => true,
+  create: async (b, ctx) => new ValveHandleVisual(b, ctx, partialId).init(),
+});
 
 export default [
   {
@@ -103,12 +108,21 @@ export default [
     create: async (b, ctx) => new HandCrankVisual(b, ctx).init(),
     preload: async (ctx) => { await getPartial(ctx, PARTIAL.HAND_CRANK_BASE); await getPartial(ctx, PARTIAL.HAND_CRANK_HANDLE); },
   },
-  ...valveIds.map((id): VisualModule => ({
-    blocks: [id],
-    entityRendered: () => true,
-    create: async (b, ctx) => {
-      const color = DYE_COLORS.find((c) => id === `create:${c}_valve_handle`);
-      return new ValveHandleVisual(b, ctx, color ? dyedValveHandle(color) : PARTIAL.VALVE_HANDLE).init();
-    },
-  })),
+  valveModule('create:copper_valve_handle', PARTIAL.VALVE_HANDLE),
+  valveModule('create:white_valve_handle', dyedValveHandle('white')),
+  valveModule('create:orange_valve_handle', dyedValveHandle('orange')),
+  valveModule('create:magenta_valve_handle', dyedValveHandle('magenta')),
+  valveModule('create:light_blue_valve_handle', dyedValveHandle('light_blue')),
+  valveModule('create:yellow_valve_handle', dyedValveHandle('yellow')),
+  valveModule('create:lime_valve_handle', dyedValveHandle('lime')),
+  valveModule('create:pink_valve_handle', dyedValveHandle('pink')),
+  valveModule('create:gray_valve_handle', dyedValveHandle('gray')),
+  valveModule('create:light_gray_valve_handle', dyedValveHandle('light_gray')),
+  valveModule('create:cyan_valve_handle', dyedValveHandle('cyan')),
+  valveModule('create:purple_valve_handle', dyedValveHandle('purple')),
+  valveModule('create:blue_valve_handle', dyedValveHandle('blue')),
+  valveModule('create:brown_valve_handle', dyedValveHandle('brown')),
+  valveModule('create:green_valve_handle', dyedValveHandle('green')),
+  valveModule('create:red_valve_handle', dyedValveHandle('red')),
+  valveModule('create:black_valve_handle', dyedValveHandle('black')),
 ] as VisualModule[];
