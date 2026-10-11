@@ -20,15 +20,22 @@ const ids = [...new Set(Object.values(scenes).flat())].sort();
 const list = only ?? ids;
 
 const target = await resolveTarget({});
-const browser = await launchBrowser();
+let browser = await launchBrowser();
 const report = [];
+let current = null;
+const closedRe = /has been closed|Target page|Browser has disconnected/;
 try {
   for (const id of list) {
     const entry = { id, frames: [], problems: [] };
+    for (let attempt = 0; attempt < 3; attempt++) {
+    entry.problems = []; entry.frames = [];
     try {
-      const p = await newPage(browser, { url: target.url, viewport: { width: 1280, height: 720 } });
-      await p.page.goto(target.url);
-      await waitPonder(p.page);
+      if (!current) {
+        current = await newPage(browser, { url: target.url, viewport: { width: 1280, height: 720 } });
+        await current.page.goto(target.url);
+        await waitPonder(current.page);
+      }
+      const p = current;
       await ponder.loadScene(p.page, id);
       await ponder.pause(p.page);
       const st0 = await ponder.state(p.page);
@@ -46,15 +53,21 @@ try {
         if (st.errors?.length) entry.problems.push(`errors: ${st.errors.slice(0, 3).join(' | ')}`);
         if (st.warnings?.length) entry.problems.push(`warnings: ${st.warnings.slice(0, 3).join(' | ')}`);
       }
-      await p.close?.();
+      break;
     } catch (e) {
       entry.problems.push('exception: ' + String(e?.message ?? e).slice(0, 200));
+      if (!closedRe.test(String(e?.message ?? e))) break;
+      // the browser died (not a scene problem): relaunch and retry this scene
+      current = null;
+      try { await browser.close(); } catch {}
+      browser = await launchBrowser();
+    }
     }
     report.push(entry);
     console.log(id, entry.problems.length ? 'PROBLEMS ' + entry.problems.join('; ') : 'ok');
   }
 } finally {
-  await browser.close();
+  try { await browser.close(); } catch {}
   await target.close();
 }
 fs.writeFileSync(path.join(outDir, 'g6-report.json'), JSON.stringify(report, null, 1));
