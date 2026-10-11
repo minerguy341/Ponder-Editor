@@ -2,6 +2,7 @@
 // and the Create block entity visuals (B). The timeline itself is the pure simulation in sim.ts; this class owns the
 // clock (20 ticks/s when playing, via viewer frames), the camera, the scene graph and the UI event stream.
 
+import { bindLogisticsScene, lookupOfBlocks, logisticsEventsOf, LOGISTICS_TEXTURES } from '../render/create/items/logisticsSim';
 import type { BlockState, SceneJson, Vec3, BlockRenderer, CreateVisualFactory } from '../contract';
 import { loadStructure } from '../assets/structure';
 import { missingResources } from '../assets/resources';
@@ -90,6 +91,9 @@ export class PonderPlayer implements PlayerLike {
       const states = collectStates(scene, structure.blocks);
       await this.renderer.prepare(states);
       if (token !== this.loadToken) return;
+      // Create logistics (belts, depots, basins, funnels, chutes, fluids): the simulation of this scene and its textures
+      await (this.renderer as unknown as { ensureTextures?: (ids: string[]) => Promise<void> }).ensureTextures?.(LOGISTICS_TEXTURES);
+      if (token !== this.loadToken) return;
 
       this.ctx = ctx;
       this.runner = createRunner(ctx);
@@ -98,6 +102,7 @@ export class PonderPlayer implements PlayerLike {
       this.viewer.setBasePlate(ctx.config.basePlate);
       this.viewer.setShadowHidden(ctx.config.hideShadow);
       this.graph = new SceneGraph(this.viewer.world, this.renderer, this.viewer.lighting, this.visualFactory, (m) => this.playerErrors.push(m));
+      bindLogisticsScene(this.graph.worldLookup, lookupOfBlocks(structure.blocks), logisticsEventsOf(scene.instructions));
       this.emit('keyframes', scene.keyframes);
       this.syncAndEmit(true);
       await this.settle();

@@ -844,3 +844,38 @@ export function logisticsEventsOf(instructions: { op: string; args?: Record<stri
   }
   return out;
 }
+
+/**
+ * Lookup over the blocks of a loaded structure, as they are at scene tick 0 (the simulation must never see later block
+ * entity data: the scene graph's live lookup changes with the scene timeline).
+ */
+export function lookupOfBlocks(blocks: { pos: Vec3; state: BlockState; nbt?: Record<string, unknown> }[]): WorldLookup {
+  const map = new Map<string, { pos: Vec3; state: BlockState; nbt?: Record<string, unknown> }>();
+  for (const b of blocks) map.set(posKey(b.pos), b);
+  return {
+    getState: (p) => map.get(posKey(p))?.state,
+    getBlockEntity: (p) => {
+      const b = map.get(posKey(p));
+      return b && b.nbt ? (b as never) : undefined;
+    },
+  };
+}
+
+/**
+ * Binds the logistics simulation of one scene: `dynamic` is the lookup the visuals receive (their VisualContext), `initial`
+ * the scene-start lookup (lookupOfBlocks), `events` the scene's logistics ops (logisticsEventsOf). Later getLogisticsWorld(dynamic)
+ * returns this simulation.
+ */
+export function bindLogisticsScene(dynamic: WorldLookup, initial: WorldLookup, events: LogisticsEvent[]): LogisticsWorld {
+  const w = new LogisticsWorld(initial);
+  for (const ev of events) w.apply(ev);
+  worlds.set(dynamic, w);
+  return w;
+}
+
+/** Textures that the logistics visuals and block-model processors need before a section is built. */
+export const LOGISTICS_TEXTURES = [
+  'create:block/belt/brass_belt_casing', 'create:block/belt/andesite_belt_casing',
+  'create:block/belt', 'create:block/belt_offset', 'create:block/belt_diagonal',
+  'create:block/belt_scroll', 'create:block/belt_diagonal_scroll',
+];
