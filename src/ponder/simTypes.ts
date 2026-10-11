@@ -1,0 +1,181 @@
+// Plain-data types of the timeline simulation. Everything in SimState must stay structuredClone-able (no classes, no
+// closures): seek() restores snapshots with structuredClone.
+
+import type { BlockInstance, SceneJson, TimelineInstruction, Vec3 } from '../contract';
+import type { Bounds, Sel } from './selection';
+import type { WorldData } from './world';
+
+/** catnip LerpedFloat.linear() with setValue semantics: p = previous tick value, c = current value. */
+export interface Lerped { p: number; c: number }
+
+export type AABB = [number, number, number, number, number, number]; // minX minY minZ maxX maxY maxZ
+
+export interface Section {
+  kind: 'section';
+  id: string;
+  visible: boolean;
+  fade: Lerped;
+  /** AnimatedSceneElementBase.fadeVec (null = none) */
+  fadeVec: Vec3 | null;
+  /** WorldSectionElementImpl.section; null = empty */
+  sel: Sel | null;
+  off: { p: Vec3; c: Vec3 };
+  rot: { p: Vec3; c: Vec3 };
+  center: Vec3;
+  stab: Vec3 | null;
+}
+
+/** text window / input window: overlay elements whose data lives in the instruction args */
+export interface OverlayEl {
+  kind: 'text' | 'controls';
+  id: string;
+  visible: boolean;
+  fade: Lerped;
+  instr: number;
+}
+
+/** OutlinerElement (outline shown together with a text window) */
+export interface OutlinerEl {
+  kind: 'outliner';
+  id: string;
+  visible: boolean;
+  fade: Lerped;
+  instr: number;
+  /** palette colour override, -1 = none */
+  color: number;
+}
+
+/** A world entity (PonderLevel.entities), e.g. ItemEntity. */
+export interface WorldEntity {
+  id: number;
+  type: string;
+  pos: Vec3;
+  /** xOld/yOld/zOld */
+  prev: Vec3;
+  vel: Vec3;
+  age: number;
+  onGround: boolean;
+  item?: { id: string; count: number; nbt?: unknown };
+  /** yaw in degrees (minecarts), entity data from createEntity calls */
+  yaw?: number;
+  props?: Record<string, unknown>;
+  discarded?: boolean;
+}
+
+export interface EntityEl {
+  kind: 'entity';
+  id: string;
+  visible: boolean;
+  fade: Lerped;
+  entity: number;
+}
+
+/** BeltItemElement: tracks one TransportedItemStack of a belt controller */
+export interface BeltItemEl {
+  kind: 'beltItem';
+  id: string;
+  visible: boolean;
+  fade: Lerped;
+  controller: string;
+  item: number;
+}
+
+/** ParrotElementImpl / MinecartElementImpl */
+export interface ActorEl {
+  kind: 'parrot' | 'cart';
+  id: string;
+  visible: boolean;
+  fade: Lerped;
+  fadeVec: Vec3 | null;
+  instr: number;
+  pos: { p: Vec3; c: Vec3 };
+  rot: { p: Vec3; c: Vec3 };
+  pose: Record<string, unknown> | null;
+  conductor: boolean;
+  /** ticks since creation (parrot animation clock) */
+  age: number;
+}
+
+export type El = Section | OverlayEl | OutlinerEl | EntityEl | BeltItemEl | ActorEl;
+
+export interface OutlineEntry {
+  kind: 'aabb' | 'cluster' | 'line';
+  /** Outliner.OutlineEntry.ticksTillRemoval */
+  ttl: number;
+  color: number;
+  lineWidth: number;
+  bb?: AABB;
+  prevBB?: AABB;
+  targetBB?: AABB;
+  keys?: string[];
+  start?: Vec3;
+  end?: Vec3;
+}
+
+export interface Chaser { p: number; v: number; t: number; speed: number; mode: 'idle' | 'exp' | 'linear' }
+
+export interface InstrRT {
+  total: number;
+  rem: number;
+  /** per-instruction scratch data (element ids, resolved targets, ...) */
+  d?: Record<string, unknown>;
+}
+
+export interface TransportedItem {
+  id: number;
+  stack: { id: string; count: number; nbt?: unknown };
+  pos: number;
+  prevPos: number;
+  offset: number;
+  prevOffset: number;
+  angle: number;
+  insertedAt: number;
+  insertedFrom: number; // Direction 3d data value
+  locked: boolean;
+  lockedExternally: boolean;
+}
+
+export interface BeltCtrl {
+  items: TransportedItem[];
+  toInsert: TransportedItem[];
+  toRemove: number[];
+  positiveOrder: boolean;
+}
+
+export interface SimState {
+  tick: number;
+  finished: boolean;
+  nextUpEnabled: boolean;
+  rt: InstrRT[];
+  active: number[];
+  next: number;
+  world: WorldData;
+  /** elements in insertion order (Java HashSet order is irrelevant for our uses) */
+  elements: Record<string, El>;
+  outlines: Record<string, OutlineEntry>;
+  cam: { yaw: Chaser; pitch: Chaser };
+  poi: { cur: Vec3; chase: Vec3 | null };
+  entities: WorldEntity[];
+  nextEntityId: number;
+  belts: Record<string, BeltCtrl>;
+  nextItemId: number;
+  /** bumped whenever block entity data changed (visuals re-read it) */
+  beRev: number;
+  /** keys of block entities carrying an animated value (`PonderAnim`), advanced once per tick like BlockEntity.tick() */
+  animKeys: string[];
+  /** ops met at run time that have no implementation (never silently ignored) */
+  unsupported: string[];
+  errors: string[];
+}
+
+/** Immutable per-scene data derived once at load. */
+export interface SimCtx {
+  scene: SceneJson;
+  instrs: TimelineInstruction[];
+  original: Map<string, BlockInstance>;
+  bounds: Bounds;
+  /** build-time configuration (OPS 0.2) */
+  config: { basePlate: { x: number; z: number; size: number }; scale: number; yOffset: number; hideShadow: boolean };
+  /** `Selection` values resolved once per args object */
+  selCache: WeakMap<object, Sel>;
+}

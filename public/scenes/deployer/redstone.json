@@ -1,0 +1,602 @@
+{
+ "id": "create:deployer/redstone",
+ "schematic": "deployer/redstone",
+ "schematicNamespace": "create",
+ "title": "Controlling Deployers with Redstone",
+ "texts": {
+  "text_1": "When powered by Redstone, Deployers will not activate",
+  "text_2": "Before stopping, the Deployer will finish any started cycles",
+  "text_3": "Thus, a negative pulse can be used to trigger exactly one activation cycle"
+ },
+ "tags": [],
+ "items": [
+  "create:deployer"
+ ],
+ "keyframes": [
+  109,
+  293
+ ],
+ "totalTicks": 358,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "DeployerScenes.java:437"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      4,
+      0,
+      5
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "DeployerScenes.java:438"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "DeployerScenes.java:439"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      1,
+      3
+     ],
+     "to": [
+      3,
+      1,
+      5
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "DeployerScenes.java:440"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "floor",
+        "facing": "east",
+        "powered": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "0",
+        "south": "none",
+        "west": "none"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "DeployerScenes.java:446"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 26
+   },
+   "src": "DeployerScenes.java:448"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "deployer",
+    "pos": [
+     3,
+     1,
+     3
+    ],
+    "distance": 1,
+    "duration": 30
+   },
+   "src": "DeployerScenes.java:449"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 31
+   },
+   "src": "DeployerScenes.java:450"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "deployer",
+    "pos": [
+     3,
+     1,
+     3
+    ],
+    "distance": -1,
+    "duration": 30
+   },
+   "src": "DeployerScenes.java:451"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      1,
+      1
+     ],
+     "to": [
+      3,
+      1,
+      2
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "DeployerScenes.java:452"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 31
+   },
+   "src": "DeployerScenes.java:453"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "floor",
+        "facing": "east",
+        "powered": "true"
+       }
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "15",
+        "south": "none",
+        "west": "none"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "DeployerScenes.java:455"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     3,
+     1,
+     1
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "DeployerScenes.java:456"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "DeployerScenes.java:457"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "red",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     3.5,
+     2,
+     3.5
+    ],
+    "key": "text_1",
+    "text": "When powered by Redstone, Deployers will not activate"
+   },
+   "src": "DeployerScenes.java:459"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "DeployerScenes.java:465"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "floor",
+        "facing": "east",
+        "powered": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "0",
+        "south": "none",
+        "west": "none"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "DeployerScenes.java:467"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "DeployerScenes.java:468"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "deployer",
+    "pos": [
+     3,
+     1,
+     3
+    ],
+    "distance": 1,
+    "duration": 30
+   },
+   "src": "DeployerScenes.java:469"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "DeployerScenes.java:470"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "floor",
+        "facing": "east",
+        "powered": "true"
+       }
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "15",
+        "south": "none",
+        "west": "none"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "DeployerScenes.java:472"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     3,
+     1,
+     1
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "DeployerScenes.java:473"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 21
+   },
+   "src": "DeployerScenes.java:474"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     3.5,
+     2,
+     3.5
+    ],
+    "key": "text_2",
+    "text": "Before stopping, the Deployer will finish any started cycles"
+   },
+   "src": "DeployerScenes.java:476"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "deployer",
+    "pos": [
+     3,
+     1,
+     3
+    ],
+    "distance": -1,
+    "duration": 30
+   },
+   "src": "DeployerScenes.java:481"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "DeployerScenes.java:482"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "floor",
+        "facing": "east",
+        "powered": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "0",
+        "south": "none",
+        "west": "none"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "DeployerScenes.java:484"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "DeployerScenes.java:485"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "floor",
+        "facing": "east",
+        "powered": "true"
+       }
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "15",
+        "south": "none",
+        "west": "none"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "DeployerScenes.java:486"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     3,
+     1,
+     1
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "DeployerScenes.java:487"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "deployer",
+    "pos": [
+     3,
+     1,
+     3
+    ],
+    "distance": 1,
+    "duration": 30
+   },
+   "src": "DeployerScenes.java:488"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 100,
+    "color": "green",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     3.5,
+     2,
+     3.5
+    ],
+    "key": "text_3",
+    "text": "Thus, a negative pulse can be used to trigger exactly one activation cycle"
+   },
+   "src": "DeployerScenes.java:489"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 31
+   },
+   "src": "DeployerScenes.java:495"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "deployer",
+    "pos": [
+     3,
+     1,
+     3
+    ],
+    "distance": -1,
+    "duration": 30
+   },
+   "src": "DeployerScenes.java:496"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "DeployerScenes.java:497"
+  }
+ ]
+}

@@ -1,0 +1,1968 @@
+{
+ "id": "create:clockwork_bearing",
+ "schematic": "clockwork_bearing",
+ "schematicNamespace": "create",
+ "title": "Animating Structures using Clockwork Bearings",
+ "texts": {
+  "text_1": "Clockwork Bearings attach to blocks in front of them",
+  "text_2": "Upon receiving Rotational Force, the structure will be rotated according to the hour of the day",
+  "text_3": "3:00",
+  "text_4": "4:00",
+  "text_5": "Right-Click the bearing to start or stop animating the structure",
+  "text_6": "In front of the Hour Hand, a second structure can be added",
+  "text_7": "Ensure that the two Structures are not glued to each other",
+  "text_8": "The Second Structure will now rotate as the Minute Hand"
+ },
+ "tags": [
+  "create:kinetic_appliances",
+  "create:movement_anchor"
+ ],
+ "items": [
+  "create:clockwork_bearing"
+ ],
+ "keyframes": [
+  31,
+  126,
+  307,
+  407,
+  564
+ ],
+ "totalTicks": 882,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 1,
+    "zOffset": 1,
+    "size": 5
+   },
+   "src": "BearingScenes.java:497"
+  },
+  {
+   "op": "setSceneOffsetY",
+   "args": {
+    "yOffset": -1
+   },
+   "src": "BearingScenes.java:498"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      5,
+      0,
+      6
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "BearingScenes.java:504"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "BearingScenes.java:505"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      1,
+      4
+     ],
+     "to": [
+      3,
+      3,
+      6
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "BearingScenes.java:506"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "BearingScenes.java:507"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      3,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "BearingScenes.java:508"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "BearingScenes.java:509"
+  },
+  {
+   "op": "overlay.showOutlineWithText",
+   "args": {
+    "duration": 60,
+    "color": "green",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      3,
+      2
+     ]
+    },
+    "pointAt": [
+     3,
+     3.5,
+     3.5
+    ],
+    "key": "text_1",
+    "text": "Clockwork Bearings attach to blocks in front of them"
+   },
+   "src": "BearingScenes.java:511"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "BearingScenes.java:517"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      3,
+      2
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "BearingScenes.java:520",
+   "out": "e1"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     1,
+     0,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "BearingScenes.java:521"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "BearingScenes.java:522"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "rotation": [
+     0,
+     0,
+     60
+    ],
+    "duration": 25
+   },
+   "src": "BearingScenes.java:524"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bearing",
+    "pos": [
+     3,
+     3,
+     3
+    ],
+    "distance": 60,
+    "duration": 25
+   },
+   "src": "BearingScenes.java:525"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 8
+      }
+     },
+     {
+      "pos": [
+       3,
+       2,
+       4
+      ],
+      "nbt": {
+       "Speed": 8
+      }
+     },
+     {
+      "pos": [
+       3,
+       3,
+       4
+      ],
+      "nbt": {
+       "Speed": 8
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": 8
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       6
+      ],
+      "nbt": {
+       "Speed": 8
+      }
+     }
+    ]
+   },
+   "src": "BearingScenes.java:526"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       0,
+       6
+      ],
+      "nbt": {
+       "Speed": -4
+      }
+     }
+    ]
+   },
+   "src": "BearingScenes.java:527"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 25
+   },
+   "src": "BearingScenes.java:529"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     3.5,
+     3.5,
+     2
+    ],
+    "key": "text_2",
+    "text": "Upon receiving Rotational Force, the structure will be rotated according to the hour of the day"
+   },
+   "src": "BearingScenes.java:530"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "BearingScenes.java:535"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 30,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     3.5,
+     3.5,
+     2
+    ],
+    "key": "text_3",
+    "text": "3:00"
+   },
+   "src": "BearingScenes.java:537"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "rotation": [
+     0,
+     0,
+     30
+    ],
+    "duration": 12
+   },
+   "src": "BearingScenes.java:541"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bearing",
+    "pos": [
+     3,
+     3,
+     3
+    ],
+    "distance": 30,
+    "duration": 12
+   },
+   "src": "BearingScenes.java:542"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 42
+   },
+   "src": "BearingScenes.java:543"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 30,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     3.5,
+     3.5,
+     2
+    ],
+    "key": "text_4",
+    "text": "4:00"
+   },
+   "src": "BearingScenes.java:544"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "rotation": [
+     0,
+     0,
+     30
+    ],
+    "duration": 12
+   },
+   "src": "BearingScenes.java:548"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bearing",
+    "pos": [
+     3,
+     3,
+     3
+    ],
+    "distance": 30,
+    "duration": 12
+   },
+   "src": "BearingScenes.java:549"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 42
+   },
+   "src": "BearingScenes.java:550"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3.5,
+     4,
+     3.5
+    ],
+    "direction": "down",
+    "duration": 60,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb"
+   },
+   "src": "BearingScenes.java:552"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "BearingScenes.java:553"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "rotation": [
+     0,
+     0,
+     -120
+    ],
+    "duration": 0
+   },
+   "src": "BearingScenes.java:554"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bearing",
+    "pos": [
+     3,
+     3,
+     3
+    ],
+    "distance": -120,
+    "duration": 0
+   },
+   "src": "BearingScenes.java:555"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     3,
+     3.5,
+     3.5
+    ],
+    "key": "text_5",
+    "text": "Right-Click the bearing to start or stop animating the structure"
+   },
+   "src": "BearingScenes.java:556"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "BearingScenes.java:561"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "direction": "north"
+   },
+   "src": "BearingScenes.java:563"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "BearingScenes.java:564"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       3,
+       1
+      ],
+      "state": {
+       "name": "minecraft:oak_planks",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       3,
+       4,
+       1
+      ],
+      "state": {
+       "name": "minecraft:oak_planks",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       3,
+       3,
+       2
+      ],
+      "state": {
+       "name": "minecraft:oak_planks",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       3,
+       4,
+       2
+      ],
+      "state": {
+       "name": "minecraft:oak_planks",
+       "props": {}
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "BearingScenes.java:566"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      3,
+      1
+     ],
+     "to": [
+      3,
+      5,
+      2
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "BearingScenes.java:568",
+   "out": "e2"
+  },
+  {
+   "op": "world.configureCenterOfRotation",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "anchor": [
+     3.5,
+     3.5,
+     3.5
+    ]
+   },
+   "src": "BearingScenes.java:569"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "BearingScenes.java:570"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3.5,
+     4.5,
+     1.5
+    ],
+    "direction": "right",
+    "duration": 40,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "create:super_glue",
+     "count": 1
+    }
+   },
+   "src": "BearingScenes.java:571"
+  },
+  {
+   "op": "overlay.showOutlineWithText",
+   "args": {
+    "duration": 80,
+    "color": "green",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      3,
+      1
+     ],
+     "to": [
+      3,
+      4,
+      2
+     ]
+    },
+    "pointAt": [
+     3.5,
+     4,
+     2
+    ],
+    "sharedKey": "create:movement_anchors",
+    "text": "With the help of Super Glue, larger structures can be moved."
+   },
+   "src": "BearingScenes.java:573"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "BearingScenes.java:578"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3,
+     3.5,
+     3.5
+    ],
+    "direction": "left",
+    "duration": 20,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb"
+   },
+   "src": "BearingScenes.java:580"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "BearingScenes.java:581"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "rotation": [
+     0,
+     0,
+     120
+    ],
+    "duration": 50
+   },
+   "src": "BearingScenes.java:582"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bearing",
+    "pos": [
+     3,
+     3,
+     3
+    ],
+    "distance": 120,
+    "duration": 50
+   },
+   "src": "BearingScenes.java:583"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "BearingScenes.java:584"
+  },
+  {
+   "op": "overlay.showOutlineWithText",
+   "args": {
+    "duration": 80,
+    "color": "blue",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      3,
+      0
+     ]
+    },
+    "pointAt": [
+     3.5,
+     3.5,
+     0.5
+    ],
+    "key": "text_6",
+    "text": "In front of the Hour Hand, a second structure can be added"
+   },
+   "src": "BearingScenes.java:586"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "BearingScenes.java:591"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3,
+     3.5,
+     3.5
+    ],
+    "direction": "left",
+    "duration": 20,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb"
+   },
+   "src": "BearingScenes.java:592"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "BearingScenes.java:593"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "rotation": [
+     0,
+     0,
+     -120
+    ],
+    "duration": 0
+   },
+   "src": "BearingScenes.java:594"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bearing",
+    "pos": [
+     3,
+     3,
+     3
+    ],
+    "distance": -120,
+    "duration": 0
+   },
+   "src": "BearingScenes.java:595"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "BearingScenes.java:596"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      3,
+      0
+     ]
+    },
+    "state": {
+     "name": "minecraft:stone_brick_wall",
+     "props": {
+      "east": "none",
+      "north": "none",
+      "south": "tall",
+      "up": "true",
+      "waterlogged": "false",
+      "west": "none"
+     }
+    },
+    "particles": false
+   },
+   "src": "BearingScenes.java:598"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      3,
+      0
+     ],
+     "to": [
+      3,
+      6,
+      0
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "BearingScenes.java:601",
+   "out": "e3"
+  },
+  {
+   "op": "world.configureCenterOfRotation",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "anchor": [
+     3.5,
+     3.5,
+     3.5
+    ]
+   },
+   "src": "BearingScenes.java:602"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "BearingScenes.java:603"
+  },
+  {
+   "op": "overlay.showOutline",
+   "args": {
+    "color": "blue",
+    "slot": "obj:1",
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      3,
+      0
+     ],
+     "to": [
+      3,
+      6,
+      0
+     ]
+    },
+    "duration": 85
+   },
+   "src": "BearingScenes.java:605"
+  },
+  {
+   "op": "overlay.showOutlineWithText",
+   "args": {
+    "duration": 80,
+    "color": "green",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      3,
+      1
+     ],
+     "to": [
+      3,
+      4,
+      2
+     ]
+    },
+    "pointAt": [
+     3.5,
+     4,
+     2
+    ],
+    "key": "text_7",
+    "text": "Ensure that the two Structures are not glued to each other"
+   },
+   "src": "BearingScenes.java:606"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "BearingScenes.java:610"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3,
+     3.5,
+     3.5
+    ],
+    "direction": "left",
+    "duration": 20,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb"
+   },
+   "src": "BearingScenes.java:612"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "BearingScenes.java:613"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "rotation": [
+     0,
+     0,
+     120
+    ],
+    "duration": 50
+   },
+   "src": "BearingScenes.java:615"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "rotation": [
+     0,
+     0,
+     180
+    ],
+    "duration": 75
+   },
+   "src": "BearingScenes.java:616"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bearing",
+    "pos": [
+     3,
+     3,
+     3
+    ],
+    "distance": 120,
+    "duration": 50
+   },
+   "src": "BearingScenes.java:617"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "BearingScenes.java:618"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "rotation": [
+     0,
+     0,
+     6
+    ],
+    "duration": 3
+   },
+   "src": "BearingScenes.java:619"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "green",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     3.5,
+     3.5,
+     0
+    ],
+    "key": "text_8",
+    "text": "The Second Structure will now rotate as the Minute Hand"
+   },
+   "src": "BearingScenes.java:621"
+  },
+  {
+   "op": "markAsFinished",
+   "args": {},
+   "src": "BearingScenes.java:626"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 23
+   },
+   "src": "BearingScenes.java:629"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "rotation": [
+     0,
+     0,
+     6
+    ],
+    "duration": 3
+   },
+   "src": "BearingScenes.java:630"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 23
+   },
+   "src": "BearingScenes.java:629"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "rotation": [
+     0,
+     0,
+     6
+    ],
+    "duration": 3
+   },
+   "src": "BearingScenes.java:630"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 23
+   },
+   "src": "BearingScenes.java:629"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "rotation": [
+     0,
+     0,
+     6
+    ],
+    "duration": 3
+   },
+   "src": "BearingScenes.java:630"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 23
+   },
+   "src": "BearingScenes.java:629"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "rotation": [
+     0,
+     0,
+     6
+    ],
+    "duration": 3
+   },
+   "src": "BearingScenes.java:630"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 23
+   },
+   "src": "BearingScenes.java:629"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "rotation": [
+     0,
+     0,
+     6
+    ],
+    "duration": 3
+   },
+   "src": "BearingScenes.java:630"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 23
+   },
+   "src": "BearingScenes.java:629"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "rotation": [
+     0,
+     0,
+     6
+    ],
+    "duration": 3
+   },
+   "src": "BearingScenes.java:630"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 23
+   },
+   "src": "BearingScenes.java:629"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "rotation": [
+     0,
+     0,
+     6
+    ],
+    "duration": 3
+   },
+   "src": "BearingScenes.java:630"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 23
+   },
+   "src": "BearingScenes.java:629"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "rotation": [
+     0,
+     0,
+     6
+    ],
+    "duration": 3
+   },
+   "src": "BearingScenes.java:630"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 23
+   },
+   "src": "BearingScenes.java:629"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "rotation": [
+     0,
+     0,
+     6
+    ],
+    "duration": 3
+   },
+   "src": "BearingScenes.java:630"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 23
+   },
+   "src": "BearingScenes.java:629"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "rotation": [
+     0,
+     0,
+     6
+    ],
+    "duration": 3
+   },
+   "src": "BearingScenes.java:630"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 23
+   },
+   "src": "BearingScenes.java:629"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "rotation": [
+     0,
+     0,
+     6
+    ],
+    "duration": 3
+   },
+   "src": "BearingScenes.java:630"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 23
+   },
+   "src": "BearingScenes.java:629"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "rotation": [
+     0,
+     0,
+     6
+    ],
+    "duration": 3
+   },
+   "src": "BearingScenes.java:630"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 23
+   },
+   "src": "BearingScenes.java:629"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "rotation": [
+     0,
+     0,
+     6
+    ],
+    "duration": 3
+   },
+   "src": "BearingScenes.java:630"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 23
+   },
+   "src": "BearingScenes.java:629"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "rotation": [
+     0,
+     0,
+     6
+    ],
+    "duration": 3
+   },
+   "src": "BearingScenes.java:630"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 23
+   },
+   "src": "BearingScenes.java:629"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "rotation": [
+     0,
+     0,
+     6
+    ],
+    "duration": 3
+   },
+   "src": "BearingScenes.java:630"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 23
+   },
+   "src": "BearingScenes.java:629"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "rotation": [
+     0,
+     0,
+     6
+    ],
+    "duration": 3
+   },
+   "src": "BearingScenes.java:630"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 23
+   },
+   "src": "BearingScenes.java:629"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "rotation": [
+     0,
+     0,
+     6
+    ],
+    "duration": 3
+   },
+   "src": "BearingScenes.java:630"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 23
+   },
+   "src": "BearingScenes.java:629"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "rotation": [
+     0,
+     0,
+     6
+    ],
+    "duration": 3
+   },
+   "src": "BearingScenes.java:630"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 23
+   },
+   "src": "BearingScenes.java:629"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "rotation": [
+     0,
+     0,
+     6
+    ],
+    "duration": 3
+   },
+   "src": "BearingScenes.java:630"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 23
+   },
+   "src": "BearingScenes.java:629"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "rotation": [
+     0,
+     0,
+     6
+    ],
+    "duration": 3
+   },
+   "src": "BearingScenes.java:630"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 23
+   },
+   "src": "BearingScenes.java:629"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "rotation": [
+     0,
+     0,
+     6
+    ],
+    "duration": 3
+   },
+   "src": "BearingScenes.java:630"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 23
+   },
+   "src": "BearingScenes.java:629"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "rotation": [
+     0,
+     0,
+     6
+    ],
+    "duration": 3
+   },
+   "src": "BearingScenes.java:630"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 23
+   },
+   "src": "BearingScenes.java:629"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "rotation": [
+     0,
+     0,
+     6
+    ],
+    "duration": 3
+   },
+   "src": "BearingScenes.java:630"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 23
+   },
+   "src": "BearingScenes.java:629"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "rotation": [
+     0,
+     0,
+     6
+    ],
+    "duration": 3
+   },
+   "src": "BearingScenes.java:630"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 23
+   },
+   "src": "BearingScenes.java:629"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "rotation": [
+     0,
+     0,
+     6
+    ],
+    "duration": 3
+   },
+   "src": "BearingScenes.java:630"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 23
+   },
+   "src": "BearingScenes.java:629"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "rotation": [
+     0,
+     0,
+     6
+    ],
+    "duration": 3
+   },
+   "src": "BearingScenes.java:630"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 23
+   },
+   "src": "BearingScenes.java:629"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "rotation": [
+     0,
+     0,
+     6
+    ],
+    "duration": 3
+   },
+   "src": "BearingScenes.java:630"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 23
+   },
+   "src": "BearingScenes.java:629"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "rotation": [
+     0,
+     0,
+     6
+    ],
+    "duration": 3
+   },
+   "src": "BearingScenes.java:630"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 23
+   },
+   "src": "BearingScenes.java:629"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "rotation": [
+     0,
+     0,
+     6
+    ],
+    "duration": 3
+   },
+   "src": "BearingScenes.java:630"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 23
+   },
+   "src": "BearingScenes.java:629"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "rotation": [
+     0,
+     0,
+     6
+    ],
+    "duration": 3
+   },
+   "src": "BearingScenes.java:630"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "rotation": [
+     0,
+     0,
+     30
+    ],
+    "duration": 20
+   },
+   "src": "BearingScenes.java:632"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 23
+   },
+   "src": "BearingScenes.java:629"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "rotation": [
+     0,
+     0,
+     6
+    ],
+    "duration": 3
+   },
+   "src": "BearingScenes.java:630"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 23
+   },
+   "src": "BearingScenes.java:629"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "rotation": [
+     0,
+     0,
+     6
+    ],
+    "duration": 3
+   },
+   "src": "BearingScenes.java:630"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 23
+   },
+   "src": "BearingScenes.java:629"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "rotation": [
+     0,
+     0,
+     6
+    ],
+    "duration": 3
+   },
+   "src": "BearingScenes.java:630"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 23
+   },
+   "src": "BearingScenes.java:629"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "rotation": [
+     0,
+     0,
+     6
+    ],
+    "duration": 3
+   },
+   "src": "BearingScenes.java:630"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 23
+   },
+   "src": "BearingScenes.java:629"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "rotation": [
+     0,
+     0,
+     6
+    ],
+    "duration": 3
+   },
+   "src": "BearingScenes.java:630"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 23
+   },
+   "src": "BearingScenes.java:629"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "rotation": [
+     0,
+     0,
+     6
+    ],
+    "duration": 3
+   },
+   "src": "BearingScenes.java:630"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 23
+   },
+   "src": "BearingScenes.java:629"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "rotation": [
+     0,
+     0,
+     6
+    ],
+    "duration": 3
+   },
+   "src": "BearingScenes.java:630"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 23
+   },
+   "src": "BearingScenes.java:629"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "rotation": [
+     0,
+     0,
+     6
+    ],
+    "duration": 3
+   },
+   "src": "BearingScenes.java:630"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 23
+   },
+   "src": "BearingScenes.java:629"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "rotation": [
+     0,
+     0,
+     6
+    ],
+    "duration": 3
+   },
+   "src": "BearingScenes.java:630"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 23
+   },
+   "src": "BearingScenes.java:629"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "rotation": [
+     0,
+     0,
+     6
+    ],
+    "duration": 3
+   },
+   "src": "BearingScenes.java:630"
+  }
+ ]
+}

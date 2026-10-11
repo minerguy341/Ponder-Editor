@@ -1,0 +1,509 @@
+{
+ "id": "create:windmill_bearing/structure",
+ "schematic": "windmill_bearing/structure",
+ "schematicNamespace": "create",
+ "title": "Windmill Contraptions",
+ "texts": {
+  "text_1": "Any Structure can count as a valid Windmill, as long as it contains at least 8 sail-like Blocks."
+ },
+ "tags": [
+  "create:movement_anchor"
+ ],
+ "items": [
+  "create:windmill_bearing"
+ ],
+ "keyframes": [
+  66
+ ],
+ "totalTicks": 157,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 1,
+    "zOffset": 1,
+    "size": 5
+   },
+   "src": "BearingScenes.java:191"
+  },
+  {
+   "op": "setSceneOffsetY",
+   "args": {
+    "yOffset": -1
+   },
+   "src": "BearingScenes.java:192"
+  },
+  {
+   "op": "world.modifyEntities",
+   "args": {
+    "entityType": "SuperGlueEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "discard",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "BearingScenes.java:193"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      5,
+      0,
+      5
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "BearingScenes.java:194"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "BearingScenes.java:195"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "BearingScenes.java:198"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "BearingScenes.java:199"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      2,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "BearingScenes.java:201",
+   "out": "e1"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "BearingScenes.java:202"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      2,
+      1
+     ],
+     "to": [
+      3,
+      3,
+      2
+     ]
+    },
+    "direction": "south",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "BearingScenes.java:203"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      2,
+      4
+     ],
+     "to": [
+      3,
+      3,
+      5
+     ]
+    },
+    "direction": "north",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "BearingScenes.java:204"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "BearingScenes.java:205"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      5
+     ]
+    },
+    "direction": "north",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "BearingScenes.java:206"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      4,
+      2
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "BearingScenes.java:207"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "BearingScenes.java:208"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      5
+     ]
+    },
+    "direction": "east",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "BearingScenes.java:209"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      3,
+      3
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "BearingScenes.java:210"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "BearingScenes.java:211"
+  },
+  {
+   "op": "effects.superGlue",
+   "args": {
+    "pos": [
+     3,
+     2,
+     3
+    ],
+    "side": "south",
+    "fullBlock": true
+   },
+   "src": "BearingScenes.java:212"
+  },
+  {
+   "op": "effects.superGlue",
+   "args": {
+    "pos": [
+     3,
+     2,
+     3
+    ],
+    "side": "north",
+    "fullBlock": true
+   },
+   "src": "BearingScenes.java:213"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "BearingScenes.java:214"
+  },
+  {
+   "op": "effects.superGlue",
+   "args": {
+    "pos": [
+     3,
+     1,
+     5
+    ],
+    "side": "up",
+    "fullBlock": true
+   },
+   "src": "BearingScenes.java:215"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "BearingScenes.java:216"
+  },
+  {
+   "op": "effects.superGlue",
+   "args": {
+    "pos": [
+     3,
+     3,
+     3
+    ],
+    "side": "down",
+    "fullBlock": true
+   },
+   "src": "BearingScenes.java:217"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "BearingScenes.java:218"
+  },
+  {
+   "op": "overlay.showOutline",
+   "args": {
+    "color": "blue",
+    "slot": "pos:3,1,3",
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      2,
+      1
+     ],
+     "to": [
+      3,
+      3,
+      2
+     ]
+    },
+    "duration": 80
+   },
+   "src": "BearingScenes.java:220"
+  },
+  {
+   "op": "overlay.showOutlineWithText",
+   "args": {
+    "duration": 80,
+    "color": "blue",
+    "placeNearTarget": false,
+    "keyframe": true,
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      2,
+      4
+     ],
+     "to": [
+      3,
+      3,
+      5
+     ]
+    },
+    "pointAt": [
+     3.5,
+     3,
+     5
+    ],
+    "key": "text_1",
+    "text": "Any Structure can count as a valid Windmill, as long as it contains at least 8 sail-like Blocks."
+   },
+   "src": "BearingScenes.java:221"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "BearingScenes.java:226"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3,
+     1.5,
+     3.5
+    ],
+    "direction": "left",
+    "duration": 40,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb"
+   },
+   "src": "BearingScenes.java:227"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "BearingScenes.java:228"
+  },
+  {
+   "op": "markAsFinished",
+   "args": {},
+   "src": "BearingScenes.java:229"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bearing",
+    "pos": [
+     3,
+     1,
+     3
+    ],
+    "distance": -720,
+    "duration": 400
+   },
+   "src": "BearingScenes.java:230"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "rotation": [
+     0,
+     -720,
+     0
+    ],
+    "duration": 400
+   },
+   "src": "BearingScenes.java:231"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     2,
+     1,
+     5
+    ],
+    "beType": "HarvesterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "setAnimatedSpeed",
+        "a": [
+         -150
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "BearingScenes.java:232"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 400
+   },
+   "src": "BearingScenes.java:234"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     2,
+     1,
+     5
+    ],
+    "beType": "HarvesterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "setAnimatedSpeed",
+        "a": [
+         0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "BearingScenes.java:235"
+  }
+ ]
+}

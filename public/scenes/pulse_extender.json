@@ -1,0 +1,850 @@
+{
+ "id": "create:pulse_extender",
+ "schematic": "pulse_extender",
+ "schematicNamespace": "create",
+ "title": "Controlling signals using Pulse Extenders",
+ "texts": {
+  "text_1": "Pulse Extenders can lengthen a signal passing through",
+  "text_2": "They activate after a short delay...",
+  "text_3": "...and cool down for the configured duration",
+  "text_4": "Using the value panel, the discharge time can be configured",
+  "text_5": "The configured duration can range up to an hour"
+ },
+ "tags": [],
+ "items": [
+  "create:pulse_extender"
+ ],
+ "keyframes": [
+  36,
+  269
+ ],
+ "totalTicks": 456,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "RedstoneScenes.java:200"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      4,
+      0,
+      4
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "RedstoneScenes.java:201"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "PulseExtenderBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "nbt": {
+       "ScrollValue": 30
+      }
+     }
+    ]
+   },
+   "src": "RedstoneScenes.java:206"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        0,
+        1,
+        0
+       ],
+       "to": [
+        4,
+        1,
+        1
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        1,
+        2
+       ],
+       "to": [
+        1,
+        1,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        3,
+        1,
+        2
+       ],
+       "to": [
+        4,
+        1,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        1,
+        3
+       ],
+       "to": [
+        4,
+        1,
+        4
+       ]
+      }
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "RedstoneScenes.java:208"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "RedstoneScenes.java:210"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "RedstoneScenes.java:211"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "RedstoneScenes.java:212"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_1",
+    "pointAt": [
+     2.5,
+     1.1875,
+     2.5
+    ],
+    "text": "Pulse Extenders can lengthen a signal passing through"
+   },
+   "src": "RedstoneScenes.java:216"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "RedstoneScenes.java:221"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     4,
+     1,
+     2
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "RedstoneScenes.java:223"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "state": {
+       "name": "create:pulse_extender",
+       "props": {
+        "facing": "east",
+        "inverted": "false",
+        "powered": "true",
+        "powering": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "side",
+        "north": "none",
+        "power": "15",
+        "south": "none",
+        "west": "side"
+       }
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "floor",
+        "facing": "south",
+        "powered": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:224"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RedstoneScenes.java:225"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "side",
+        "north": "none",
+        "power": "15",
+        "south": "none",
+        "west": "side"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:226"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "RedstoneScenes.java:227"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_2",
+    "pointAt": [
+     0.5,
+     2,
+     2.5
+    ],
+    "text": "They activate after a short delay..."
+   },
+   "src": "RedstoneScenes.java:229"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "RedstoneScenes.java:233"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     4,
+     1,
+     2
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "RedstoneScenes.java:235"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "state": {
+       "name": "create:pulse_extender",
+       "props": {
+        "facing": "east",
+        "inverted": "false",
+        "powered": "false",
+        "powering": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "side",
+        "north": "none",
+        "power": "0",
+        "south": "none",
+        "west": "side"
+       }
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "floor",
+        "facing": "south",
+        "powered": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:236"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "RedstoneScenes.java:237"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "state": {
+       "name": "create:pulse_extender",
+       "props": {
+        "facing": "east",
+        "inverted": "false",
+        "powered": "false",
+        "powering": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:238"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "side",
+        "north": "none",
+        "power": "0",
+        "south": "none",
+        "west": "side"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:239"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "RedstoneScenes.java:240"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "RedstoneScenes.java:242"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 40,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_3",
+    "pointAt": [
+     0.5,
+     2,
+     2.5
+    ],
+    "text": "...and cool down for the configured duration"
+   },
+   "src": "RedstoneScenes.java:244"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "RedstoneScenes.java:248"
+  },
+  {
+   "op": "overlay.highlightValueBox",
+   "args": {
+    "location": [
+     2.5,
+     1.1875,
+     2.5
+    ],
+    "expands": [
+     0.1666666716337204,
+     0.0625,
+     0.1666666716337204
+    ],
+    "duration": 60
+   },
+   "src": "RedstoneScenes.java:250"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     1.1875,
+     2.5
+    ],
+    "direction": "down",
+    "duration": 60,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb"
+   },
+   "src": "RedstoneScenes.java:251"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "RedstoneScenes.java:252"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_4",
+    "pointAt": [
+     2.5,
+     1.1875,
+     2.5
+    ],
+    "text": "Using the value panel, the discharge time can be configured"
+   },
+   "src": "RedstoneScenes.java:253"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "PulseExtenderBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "nbt": {
+       "ScrollValue": 120
+      }
+     }
+    ]
+   },
+   "src": "RedstoneScenes.java:258"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "RedstoneScenes.java:260"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     4,
+     1,
+     2
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "RedstoneScenes.java:262"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "state": {
+       "name": "create:pulse_extender",
+       "props": {
+        "facing": "east",
+        "inverted": "false",
+        "powered": "true",
+        "powering": "true"
+       }
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "side",
+        "north": "none",
+        "power": "15",
+        "south": "none",
+        "west": "side"
+       }
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "floor",
+        "facing": "south",
+        "powered": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:263"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RedstoneScenes.java:264"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "side",
+        "north": "none",
+        "power": "15",
+        "south": "none",
+        "west": "side"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:265"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "RedstoneScenes.java:266"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     4,
+     1,
+     2
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "RedstoneScenes.java:267"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "state": {
+       "name": "create:pulse_extender",
+       "props": {
+        "facing": "east",
+        "inverted": "false",
+        "powered": "false",
+        "powering": "true"
+       }
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "side",
+        "north": "none",
+        "power": "0",
+        "south": "none",
+        "west": "side"
+       }
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "floor",
+        "facing": "south",
+        "powered": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:268"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "RedstoneScenes.java:269"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 50,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_5",
+    "pointAt": [
+     2.5,
+     1.1875,
+     2.5
+    ],
+    "text": "The configured duration can range up to an hour"
+   },
+   "src": "RedstoneScenes.java:270"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "RedstoneScenes.java:274"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "state": {
+       "name": "create:pulse_extender",
+       "props": {
+        "facing": "east",
+        "inverted": "false",
+        "powered": "false",
+        "powering": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:275"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "side",
+        "north": "none",
+        "power": "0",
+        "south": "none",
+        "west": "side"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:276"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "RedstoneScenes.java:277"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "RedstoneScenes.java:279"
+  }
+ ]
+}

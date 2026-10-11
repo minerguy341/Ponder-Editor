@@ -1,0 +1,159 @@
+// World entities of a Ponder scene (PonderLevel.entities): item entities with vanilla ItemEntity physics, plus the
+// recorded `Call` interpreter used by modifyEntity / modifyEntities / createEntity.
+
+import type { Vec3 } from '../contract';
+import type { SimState, WorldEntity } from './simTypes';
+import { noteUnsupported } from './simCore';
+import { asVec3 } from './util';
+
+export type Call = { path: Array<{ m?: string; a?: unknown[]; set?: string; v?: unknown; f?: string }> };
+
+export const ITEM_TYPE = 'minecraft:item';
+
+export function addEntity(st: SimState, e: Omit<WorldEntity, 'id' | 'prev' | 'age' | 'onGround'> & Partial<WorldEntity>): WorldEntity {
+  const ent: WorldEntity = {
+    id: st.nextEntityId++, prev: [...e.pos] as Vec3, age: 0, onGround: false, ...e,
+  } as WorldEntity;
+  st.entities.push(ent);
+  return ent;
+}
+
+// ------------------------------------------------------------------------------------------------ collision (approximation)
+
+/** Blocks the item passes through (no collision box in the game, or too thin to matter). */
+const PASS_RE = /(shaft|cogwheel|chain|pipe|wire|ladder|lever|button|torch|rail|sign|vine|flower|fern|grass|bush|rope|pulley_magnet|redstone_link|nixie|sapling|glass_pane|iron_bars|chain_conveyor|stock_link|display_link|clipboard|filter|valve_handle|hand_crank|gauge|water|lava|bubble|fire)/;
+const PASS_EXACT = new Set(['minecraft:air', 'minecraft:cave_air', 'minecraft:void_air', 'minecraft:light', 'minecraft:structure_void', 'minecraft:barrier']);
+
+/** top of the collision box in block-local y (0..1) or null when the block does not collide */
+export function collisionTop(name: string, props: Record<string, string>): number | null {
+  if (PASS_EXACT.has(name)) return null;
+  if (name === 'create:belt') return props.slope === 'horizontal' || props.slope === 'sideways' ? 13 / 16 : props.slope === 'vertical' ? null : 1;
+  if (name === 'create:depot' || name === 'create:weighted_ejector') return 13 / 16;
+  if (name.endsWith('_slab')) return props.type === 'bottom' ? 0.5 : 1;
+  if (name.endsWith('carpet')) return 1 / 16;
+  if (PASS_RE.test(name)) return null;
+  return 1;
+}
+
+const HALF_W = 0.125; // ItemEntity 0.25 x 0.25
+const HEIGHT = 0.25;
+
+function topAt(st: SimState, bx: number, by: number, bz: number): number | null {
+  const b = st.world.blocks.get(`${bx},${by},${bz}`);
+  if (!b) return null;
+  const t = collisionTop(b.state.name, b.state.props);
+  return t === null ? null : by + t;
+}
+
+/** Simplified `Entity.move(SELF)`: axis-wise collision against block tops / full-cube sides. */
+function move(st: SimState, e: WorldEntity): void {
+  const [vx, vy, vz] = e.vel;
+  let [x, y, z] = e.pos;
+  // vertical
+  let ny = y + vy;
+  e.onGround = false;
+  const minX = Math.floor(x - HALF_W), maxX = Math.floor(x + HALF_W);
+  const minZ = Math.floor(z - HALF_W), maxZ = Math.floor(z + HALF_W);
+  if (vy <= 0) {
+    // find the highest collision top between the new and old feet height
+    let best: number | null = null;
+    for (let bx = minX; bx <= maxX; bx++) for (let bz = minZ; bz <= maxZ; bz++) {
+      for (let by = Math.floor(y); by >= Math.floor(ny) - 1; by--) {
+        const t = topAt(st, bx, by, bz);
+        if (t !== null && t <= y + 1e-6 && t >= ny - 1e-6) { if (best === null || t > best) best = t; break; }
+      }
+    }
+    if (best !== null) { ny = best; e.onGround = true; e.vel = [vx, 0, vz]; }
+  }
+  y = ny;
+  // horizontal: stop against full cubes at feet height
+  const hit = (px: number, pz: number): boolean => {
+    for (let by = Math.floor(y); by <= Math.floor(y + HEIGHT - 1e-6); by++) {
+      const b = st.world.blocks.get(`${Math.floor(px)},${by},${Math.floor(pz)}`);
+      if (!b) continue;
+      const t = collisionTop(b.state.name, b.state.props);
+      if (t !== null && by + t > y + 1e-6) return true;
+    }
+    return false;
+  };
+  let nx = x + vx;
+  if (vx !== 0 && hit(nx + Math.sign(vx) * HALF_W, z)) { nx = x; e.vel = [0, e.vel[1], e.vel[2]]; }
+  x = nx;
+  let nz = z + vz;
+  if (vz !== 0 && hit(x, nz + Math.sign(vz) * HALF_W)) { nz = z; e.vel = [e.vel[0], e.vel[1], 0]; }
+  z = nz;
+  e.pos = [x, y, z];
+}
+
+/** PonderLevel.tick() entity pass + ItemEntity.tick() */
+export function tickEntities(st: SimState): void {
+  for (const e of st.entities) {
+    e.age++;
+    e.prev = [...e.pos] as Vec3;
+    if (e.type === ITEM_TYPE) tickItem(st, e);
+    if (e.pos[1] <= -0.5) e.discarded = true;
+  }
+  if (st.entities.some((e) => e.discarded)) st.entities = st.entities.filter((e) => !e.discarded);
+}
+
+function tickItem(st: SimState, e: WorldEntity): void {
+  let [vx, vy, vz] = e.vel;
+  vy -= 0.04; // applyGravity
+  e.vel = [vx, vy, vz];
+  if (!e.onGround || vx * vx + vz * vz > 1e-5 || (e.age + e.id) % 4 === 0) {
+    move(st, e);
+    let f = 0.98;
+    if (e.onGround) {
+      const below = st.world.blocks.get(`${Math.floor(e.pos[0])},${Math.floor(e.pos[1] - 0.5)},${Math.floor(e.pos[2])}`);
+      f = (below && /ice|slime/.test(below.state.name) ? (/slime/.test(below.state.name) ? 0.8 : 0.98) : 0.6) * 0.98;
+    }
+    [vx, vy, vz] = e.vel;
+    e.vel = [vx * f, vy * 0.98, vz * f];
+    if (e.onGround && e.vel[1] < 0) e.vel = [e.vel[0], e.vel[1] * -0.5, e.vel[2]];
+  }
+}
+
+// ------------------------------------------------------------------------------------------------ calls
+
+const COSMETIC_SETS = new Set(['xo', 'yo', 'zo', 'yRotO', 'yHeadRot', 'yHeadRotO', 'yBodyRot', 'yBodyRotO', 'xRotO', 'xRot']);
+
+/** Apply a recorded `Call` chain to an entity. Unknown calls are reported (never silently dropped). */
+export function applyEntityCall(st: SimState, e: WorldEntity, call: Call): void {
+  const path = call.path ?? [];
+  const first = path[0];
+  if (!first) return;
+  if (first.set !== undefined) {
+    if (COSMETIC_SETS.has(first.set)) {
+      if (first.set === 'xo') e.prev[0] = Number(first.v);
+      else if (first.set === 'yo') e.prev[1] = Number(first.v);
+      else if (first.set === 'zo') e.prev[2] = Number(first.v);
+      return;
+    }
+    (e.props ??= {})[first.set] = first.v;
+    return;
+  }
+  if (first.f !== undefined) { (e.props ??= {}); return; } // walkAnimation.* etc.: purely cosmetic
+  const a = first.a ?? [];
+  switch (first.m) {
+    case 'discard': case 'kill': case 'remove': e.discarded = true; return;
+    case 'setDeltaMovement': e.vel = a.length === 1 ? asVec3(a[0]) : [Number(a[0]), Number(a[1]), Number(a[2])]; return;
+    case 'setPos': case 'setPosRaw': case 'moveTo': e.pos = a.length === 1 ? asVec3(a[0]) : [Number(a[0]), Number(a[1]), Number(a[2])]; return;
+    case 'setYRot': e.yaw = Number(a[0]); return;
+    case 'setItem': case 'setItemSlot': e.item = a[0] as WorldEntity['item']; return;
+    case 'setColor': case 'setSheared': case 'setBaby': case 'setCustomName': case 'setNoGravity': case 'setInvulnerable':
+      (e.props ??= {})[first.m] = a[0]; return;
+    default:
+      noteUnsupported(st, `entity-call:${first.m}`);
+  }
+}
+
+const SIMPLE_NAMES: Record<string, string> = { ItemEntity: ITEM_TYPE };
+
+/** `modifyEntities(Class, ...)` class filter (Java simple class name -> entity type id) */
+export function entityMatches(e: WorldEntity, entityType: string): boolean {
+  if (entityType === 'Entity') return true;
+  const t = SIMPLE_NAMES[entityType];
+  if (t) return e.type === t;
+  const norm = entityType.replace(/Entity$/, '').replace(/([a-z])([A-Z])/g, '$1_$2').toLowerCase();
+  return e.type.endsWith(':' + norm);
+}

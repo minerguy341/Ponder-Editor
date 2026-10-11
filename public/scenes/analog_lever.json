@@ -1,0 +1,2029 @@
+{
+ "id": "create:analog_lever",
+ "schematic": "analog_lever",
+ "schematicNamespace": "create",
+ "title": "Controlling signals using the Analog Lever",
+ "texts": {
+  "text_1": "Analog Levers make for a compact and precise source of redstone power",
+  "text_2": "Right-click to increase its analog power output",
+  "text_3": "Right-click while Sneaking to decrease the power output again"
+ },
+ "tags": [],
+ "items": [
+  "create:analog_lever"
+ ],
+ "keyframes": [
+  41,
+  152,
+  263
+ ],
+ "totalTicks": 384,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "RedstoneScenes.java:507"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        0,
+        0,
+        0
+       ],
+       "to": [
+        4,
+        0,
+        4
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        1,
+        0
+       ],
+       "to": [
+        3,
+        1,
+        0
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        1,
+        1
+       ],
+       "to": [
+        4,
+        1,
+        1
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        1,
+        2
+       ],
+       "to": [
+        1,
+        2,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        3,
+        1,
+        2
+       ],
+       "to": [
+        4,
+        2,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        1,
+        3
+       ],
+       "to": [
+        4,
+        2,
+        4
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        0
+       ],
+       "to": [
+        4,
+        2,
+        1
+       ]
+      }
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "RedstoneScenes.java:520"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "RedstoneScenes.java:523"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      1,
+      0
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "RedstoneScenes.java:524"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "RedstoneScenes.java:525"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      1,
+      2
+     ],
+     "to": [
+      2,
+      2,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "RedstoneScenes.java:527"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "RedstoneScenes.java:528"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_1",
+    "pointAt": [
+     2.5,
+     2.25,
+     2.5
+    ],
+    "text": "Analog Levers make for a compact and precise source of redstone power"
+   },
+   "src": "RedstoneScenes.java:530"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "RedstoneScenes.java:535"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     2.25,
+     2.5
+    ],
+    "direction": "down",
+    "duration": 40,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb"
+   },
+   "src": "RedstoneScenes.java:538"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "RedstoneScenes.java:539"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RedstoneScenes.java:541"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "AnalogLeverBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       2,
+       2
+      ],
+      "nbt": {
+       "State": 1
+      }
+     }
+    ]
+   },
+   "src": "RedstoneScenes.java:543"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "7",
+        "south": "none",
+        "west": "none"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:545"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     2,
+     1,
+     1
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "RedstoneScenes.java:546"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RedstoneScenes.java:541"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "AnalogLeverBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       2,
+       2
+      ],
+      "nbt": {
+       "State": 2
+      }
+     }
+    ]
+   },
+   "src": "RedstoneScenes.java:543"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       1,
+       0
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "none",
+        "power": "6",
+        "south": "side",
+        "west": "side"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:545"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     2,
+     1,
+     0
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "RedstoneScenes.java:546"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RedstoneScenes.java:541"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "AnalogLeverBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       2,
+       2
+      ],
+      "nbt": {
+       "State": 3
+      }
+     }
+    ]
+   },
+   "src": "RedstoneScenes.java:543"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       0
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "side",
+        "north": "none",
+        "power": "5",
+        "south": "none",
+        "west": "side"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:545"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     1,
+     1,
+     0
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "RedstoneScenes.java:546"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RedstoneScenes.java:541"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "AnalogLeverBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       2,
+       2
+      ],
+      "nbt": {
+       "State": 4
+      }
+     }
+    ]
+   },
+   "src": "RedstoneScenes.java:543"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       0,
+       1,
+       0
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "side",
+        "north": "none",
+        "power": "4",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:545"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     0,
+     1,
+     0
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "RedstoneScenes.java:546"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RedstoneScenes.java:541"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "AnalogLeverBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       2,
+       2
+      ],
+      "nbt": {
+       "State": 5
+      }
+     }
+    ]
+   },
+   "src": "RedstoneScenes.java:543"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       0,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "3",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:545"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     0,
+     1,
+     1
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "RedstoneScenes.java:546"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RedstoneScenes.java:541"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "AnalogLeverBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       2,
+       2
+      ],
+      "nbt": {
+       "State": 6
+      }
+     }
+    ]
+   },
+   "src": "RedstoneScenes.java:543"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       0,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "2",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:545"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     0,
+     1,
+     2
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "RedstoneScenes.java:546"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RedstoneScenes.java:541"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "AnalogLeverBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       2,
+       2
+      ],
+      "nbt": {
+       "State": 7
+      }
+     }
+    ]
+   },
+   "src": "RedstoneScenes.java:543"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       0,
+       1,
+       3
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "1",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:545"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     0,
+     1,
+     3
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "RedstoneScenes.java:546"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "RedstoneScenes.java:548"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_2",
+    "pointAt": [
+     2.5,
+     2.25,
+     2.5
+    ],
+    "text": "Right-click to increase its analog power output"
+   },
+   "src": "RedstoneScenes.java:550"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "RedstoneScenes.java:555"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     2.25,
+     2.5
+    ],
+    "direction": "down",
+    "duration": 40,
+    "sneak": true,
+    "ctrl": false,
+    "icon": "rmb"
+   },
+   "src": "RedstoneScenes.java:557"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "RedstoneScenes.java:559"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RedstoneScenes.java:561"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "AnalogLeverBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       2,
+       2
+      ],
+      "nbt": {
+       "State": 6
+      }
+     }
+    ]
+   },
+   "src": "RedstoneScenes.java:564"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     0,
+     1,
+     3
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "RedstoneScenes.java:566"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RedstoneScenes.java:561"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "AnalogLeverBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       2,
+       2
+      ],
+      "nbt": {
+       "State": 5
+      }
+     }
+    ]
+   },
+   "src": "RedstoneScenes.java:564"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     0,
+     1,
+     2
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "RedstoneScenes.java:566"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       0,
+       1,
+       3
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "0",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:568"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RedstoneScenes.java:561"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "AnalogLeverBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       2,
+       2
+      ],
+      "nbt": {
+       "State": 4
+      }
+     }
+    ]
+   },
+   "src": "RedstoneScenes.java:564"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     0,
+     1,
+     1
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "RedstoneScenes.java:566"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       0,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "0",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:568"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RedstoneScenes.java:561"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       0,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "0",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:568"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RedstoneScenes.java:561"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       0,
+       1,
+       0
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "side",
+        "north": "none",
+        "power": "1",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:568"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RedstoneScenes.java:561"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       0
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "side",
+        "north": "none",
+        "power": "2",
+        "south": "none",
+        "west": "side"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:568"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RedstoneScenes.java:561"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       1,
+       0
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "none",
+        "power": "3",
+        "south": "side",
+        "west": "side"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:568"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "4",
+        "south": "none",
+        "west": "none"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:570"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "RedstoneScenes.java:571"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_3",
+    "pointAt": [
+     2.5,
+     2.25,
+     2.5
+    ],
+    "text": "Right-click while Sneaking to decrease the power output again"
+   },
+   "src": "RedstoneScenes.java:573"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "RedstoneScenes.java:578"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     2.25,
+     2.5
+    ],
+    "direction": "down",
+    "duration": 40,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb"
+   },
+   "src": "RedstoneScenes.java:580"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "RedstoneScenes.java:581"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RedstoneScenes.java:583"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "15",
+        "south": "none",
+        "west": "none"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:590"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RedstoneScenes.java:583"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       1,
+       0
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "none",
+        "power": "14",
+        "south": "side",
+        "west": "side"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:590"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RedstoneScenes.java:583"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       0
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "side",
+        "north": "none",
+        "power": "13",
+        "south": "none",
+        "west": "side"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:590"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RedstoneScenes.java:583"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       0,
+       1,
+       0
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "side",
+        "north": "none",
+        "power": "12",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:590"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RedstoneScenes.java:583"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "AnalogLeverBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       2,
+       2
+      ],
+      "nbt": {
+       "State": 5
+      }
+     }
+    ]
+   },
+   "src": "RedstoneScenes.java:586"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     0,
+     1,
+     1
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "RedstoneScenes.java:588"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       0,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "11",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:590"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RedstoneScenes.java:583"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "AnalogLeverBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       2,
+       2
+      ],
+      "nbt": {
+       "State": 6
+      }
+     }
+    ]
+   },
+   "src": "RedstoneScenes.java:586"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     0,
+     1,
+     2
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "RedstoneScenes.java:588"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       0,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "10",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:590"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RedstoneScenes.java:583"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "AnalogLeverBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       2,
+       2
+      ],
+      "nbt": {
+       "State": 7
+      }
+     }
+    ]
+   },
+   "src": "RedstoneScenes.java:586"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     0,
+     1,
+     3
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "RedstoneScenes.java:588"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       0,
+       1,
+       3
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "9",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:590"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RedstoneScenes.java:583"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "AnalogLeverBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       2,
+       2
+      ],
+      "nbt": {
+       "State": 8
+      }
+     }
+    ]
+   },
+   "src": "RedstoneScenes.java:586"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     0,
+     1,
+     4
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "RedstoneScenes.java:588"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       0,
+       1,
+       4
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "side",
+        "north": "side",
+        "power": "8",
+        "south": "none",
+        "west": "none"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:590"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RedstoneScenes.java:583"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "AnalogLeverBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       2,
+       2
+      ],
+      "nbt": {
+       "State": 9
+      }
+     }
+    ]
+   },
+   "src": "RedstoneScenes.java:586"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "RedstoneScenes.java:588"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       4
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "side",
+        "north": "none",
+        "power": "7",
+        "south": "none",
+        "west": "side"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:590"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RedstoneScenes.java:583"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "AnalogLeverBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       2,
+       2
+      ],
+      "nbt": {
+       "State": 10
+      }
+     }
+    ]
+   },
+   "src": "RedstoneScenes.java:586"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     2,
+     1,
+     4
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "RedstoneScenes.java:588"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       1,
+       4
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "side",
+        "north": "none",
+        "power": "6",
+        "south": "none",
+        "west": "side"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:590"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RedstoneScenes.java:583"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "AnalogLeverBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       2,
+       2
+      ],
+      "nbt": {
+       "State": 11
+      }
+     }
+    ]
+   },
+   "src": "RedstoneScenes.java:586"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     3,
+     1,
+     4
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "RedstoneScenes.java:588"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "side",
+        "north": "none",
+        "power": "5",
+        "south": "none",
+        "west": "side"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:590"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RedstoneScenes.java:583"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "AnalogLeverBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       2,
+       2
+      ],
+      "nbt": {
+       "State": 12
+      }
+     }
+    ]
+   },
+   "src": "RedstoneScenes.java:586"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     4,
+     1,
+     4
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "RedstoneScenes.java:588"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       4,
+       1,
+       4
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "4",
+        "south": "none",
+        "west": "side"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:590"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RedstoneScenes.java:583"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "AnalogLeverBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       2,
+       2
+      ],
+      "nbt": {
+       "State": 13
+      }
+     }
+    ]
+   },
+   "src": "RedstoneScenes.java:586"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     4,
+     1,
+     3
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "RedstoneScenes.java:588"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       4,
+       1,
+       3
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "3",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:590"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RedstoneScenes.java:583"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "AnalogLeverBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       2,
+       2
+      ],
+      "nbt": {
+       "State": 14
+      }
+     }
+    ]
+   },
+   "src": "RedstoneScenes.java:586"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     4,
+     1,
+     2
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "RedstoneScenes.java:588"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       4,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "2",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:590"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RedstoneScenes.java:583"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "AnalogLeverBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       2,
+       2
+      ],
+      "nbt": {
+       "State": 15
+      }
+     }
+    ]
+   },
+   "src": "RedstoneScenes.java:586"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     4,
+     1,
+     1
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "RedstoneScenes.java:588"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       4,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "none",
+        "power": "1",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:590"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     2,
+     2,
+     2
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "RedstoneScenes.java:594"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     4,
+     1,
+     1
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "RedstoneScenes.java:595"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "RedstoneScenes.java:596"
+  }
+ ]
+}

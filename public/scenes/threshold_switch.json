@@ -1,0 +1,2735 @@
+{
+ "id": "create:threshold_switch",
+ "schematic": "threshold_switch",
+ "schematicNamespace": "create",
+ "title": "Monitoring with the Threshold Switch",
+ "texts": {
+  "text_1": "Threshold Switches monitor the fill level of containers",
+  "text_2": "When the inventory content exceeds the upper threshold...",
+  "text_3": "...the switch will change its redstone output",
+  "text_4": "The signal stays until the lower threshold is reached",
+  "text_5": "The redstone output can now be used to control item supply, keeping the buffer filled",
+  "text_6": "The specific thresholds can be changed in the UI",
+  "text_7": "A filter can help to only count specific contents toward the total",
+  "text_8": "Fluid buffers can be monitored in a similar fashion",
+  "text_9": "...as well as, curiously, the length of an extended rope pulley"
+ },
+ "tags": [],
+ "items": [
+  "create:stockpile_switch"
+ ],
+ "keyframes": [
+  176,
+  381,
+  481,
+  575,
+  688,
+  813,
+  923
+ ],
+ "totalTicks": 1027,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 1,
+    "size": 5
+   },
+   "src": "DetectorScenes.java:186"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        0,
+        0,
+        1
+       ],
+       "to": [
+        2,
+        0,
+        5
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        4,
+        0,
+        1
+       ],
+       "to": [
+        4,
+        0,
+        5
+       ]
+      }
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "DetectorScenes.java:203"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      0,
+      1
+     ],
+     "to": [
+      1,
+      0,
+      5
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "DetectorScenes.java:204",
+   "out": "e1"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     2,
+     0,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "DetectorScenes.java:205"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "DetectorScenes.java:206"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "DetectorScenes.java:208"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "DetectorScenes.java:209"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      1,
+      3
+     ],
+     "to": [
+      3,
+      1,
+      3
+     ]
+    },
+    "direction": "west"
+   },
+   "src": "DetectorScenes.java:210"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "DetectorScenes.java:211"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       3
+      ],
+      "state": {
+       "name": "create:stockpile_switch",
+       "props": {
+        "facing": "east",
+        "level": "1",
+        "target": "wall"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "DetectorScenes.java:212"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "DetectorScenes.java:213"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_1",
+    "pointAt": [
+     1.5,
+     1.5,
+     3
+    ],
+    "text": "Threshold Switches monitor the fill level of containers"
+   },
+   "src": "DetectorScenes.java:215"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "DetectorScenes.java:219"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "direction": "down"
+   },
+   "src": "DetectorScenes.java:221"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "DetectorScenes.java:222"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "pos",
+       "pos": [
+        5,
+        0,
+        5
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        4,
+        0,
+        6
+       ],
+       "to": [
+        5,
+        0,
+        6
+       ]
+      }
+     ]
+    },
+    "direction": "west"
+   },
+   "src": "DetectorScenes.java:223"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      0,
+      0
+     ],
+     "to": [
+      3,
+      0,
+      6
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "DetectorScenes.java:224"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "DetectorScenes.java:225"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "DetectorScenes.java:226"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "DetectorScenes.java:227"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      1,
+      1
+     ],
+     "to": [
+      1,
+      1,
+      2
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "DetectorScenes.java:228"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     3,
+     0,
+     0
+    ],
+    "insertionSide": "north",
+    "item": {
+     "id": "minecraft:iron_ingot",
+     "count": 32
+    }
+   },
+   "src": "DetectorScenes.java:232",
+   "out": "e2"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "DetectorScenes.java:233"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     3,
+     0,
+     2
+    ]
+   },
+   "src": "DetectorScenes.java:234"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         true
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "DetectorScenes.java:235"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     3,
+     0,
+     0
+    ],
+    "insertionSide": "north",
+    "item": {
+     "id": "minecraft:iron_ingot",
+     "count": 32
+    }
+   },
+   "src": "DetectorScenes.java:232",
+   "out": "e3"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "DetectorScenes.java:233"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     3,
+     0,
+     2
+    ]
+   },
+   "src": "DetectorScenes.java:234"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         true
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "DetectorScenes.java:235"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       3
+      ],
+      "state": {
+       "name": "create:stockpile_switch",
+       "props": {
+        "facing": "east",
+        "level": "2",
+        "target": "wall"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "DetectorScenes.java:238"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     3,
+     0,
+     0
+    ],
+    "insertionSide": "north",
+    "item": {
+     "id": "minecraft:iron_ingot",
+     "count": 32
+    }
+   },
+   "src": "DetectorScenes.java:232",
+   "out": "e4"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "DetectorScenes.java:233"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     3,
+     0,
+     2
+    ]
+   },
+   "src": "DetectorScenes.java:234"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         true
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "DetectorScenes.java:235"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     3,
+     0,
+     0
+    ],
+    "insertionSide": "north",
+    "item": {
+     "id": "minecraft:iron_ingot",
+     "count": 32
+    }
+   },
+   "src": "DetectorScenes.java:232",
+   "out": "e5"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "DetectorScenes.java:233"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     3,
+     0,
+     2
+    ]
+   },
+   "src": "DetectorScenes.java:234"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         true
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "DetectorScenes.java:235"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       3
+      ],
+      "state": {
+       "name": "create:stockpile_switch",
+       "props": {
+        "facing": "east",
+        "level": "3",
+        "target": "wall"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "DetectorScenes.java:238"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     3,
+     0,
+     0
+    ],
+    "insertionSide": "north",
+    "item": {
+     "id": "minecraft:iron_ingot",
+     "count": 32
+    }
+   },
+   "src": "DetectorScenes.java:232",
+   "out": "e6"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "DetectorScenes.java:233"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     3,
+     0,
+     2
+    ]
+   },
+   "src": "DetectorScenes.java:234"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         true
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "DetectorScenes.java:235"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     3,
+     0,
+     0
+    ],
+    "insertionSide": "north",
+    "item": {
+     "id": "minecraft:iron_ingot",
+     "count": 32
+    }
+   },
+   "src": "DetectorScenes.java:242",
+   "out": "e7"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     3,
+     0,
+     2
+    ]
+   },
+   "src": "DetectorScenes.java:243"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       0,
+       0
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       3,
+       0,
+       1
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       3,
+       0,
+       2
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       3,
+       0,
+       3
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       3,
+       0,
+       4
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       3,
+       0,
+       5
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       5,
+       0,
+       5
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     },
+     {
+      "pos": [
+       3,
+       0,
+       6
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       4,
+       0,
+       6
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       5,
+       0,
+       6
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     }
+    ]
+   },
+   "src": "DetectorScenes.java:244"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "DetectorScenes.java:245"
+  },
+  {
+   "op": "overlay.showLine",
+   "args": {
+    "color": "red",
+    "start": [
+     1.625,
+     1.6875,
+     3
+    ],
+    "end": [
+     1.375,
+     1.6875,
+     3
+    ],
+    "duration": 60,
+    "big": false
+   },
+   "src": "DetectorScenes.java:249"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "red",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_2",
+    "pointAt": [
+     1.375,
+     1.6875,
+     3
+    ],
+    "text": "When the inventory content exceeds the upper threshold..."
+   },
+   "src": "DetectorScenes.java:250"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "DetectorScenes.java:256"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     3,
+     0,
+     2
+    ]
+   },
+   "src": "DetectorScenes.java:257"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         true
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "DetectorScenes.java:258"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       3
+      ],
+      "state": {
+       "name": "create:stockpile_switch",
+       "props": {
+        "facing": "east",
+        "level": "4",
+        "target": "wall"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "DetectorScenes.java:259"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     1,
+     1,
+     3
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "DetectorScenes.java:260"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "15",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "15",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "DetectorScenes.java:261"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "DetectorScenes.java:262"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 50,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_3",
+    "pointAt": [
+     1.5,
+     1,
+     2.5
+    ],
+    "text": "...the switch will change its redstone output"
+   },
+   "src": "DetectorScenes.java:264"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "DetectorScenes.java:268"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      4
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "DetectorScenes.java:270"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "state": {
+       "name": "create:brass_belt_funnel",
+       "props": {
+        "facing": "south",
+        "powered": "false",
+        "shape": "retracted",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "DetectorScenes.java:271"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "DetectorScenes.java:272"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       0,
+       0
+      ],
+      "nbt": {
+       "Speed": 128
+      }
+     },
+     {
+      "pos": [
+       3,
+       0,
+       1
+      ],
+      "nbt": {
+       "Speed": 128
+      }
+     },
+     {
+      "pos": [
+       3,
+       0,
+       2
+      ],
+      "nbt": {
+       "Speed": 128
+      }
+     },
+     {
+      "pos": [
+       3,
+       0,
+       3
+      ],
+      "nbt": {
+       "Speed": 128
+      }
+     },
+     {
+      "pos": [
+       3,
+       0,
+       4
+      ],
+      "nbt": {
+       "Speed": 128
+      }
+     },
+     {
+      "pos": [
+       3,
+       0,
+       5
+      ],
+      "nbt": {
+       "Speed": 128
+      }
+     },
+     {
+      "pos": [
+       5,
+       0,
+       5
+      ],
+      "nbt": {
+       "Speed": -128
+      }
+     },
+     {
+      "pos": [
+       3,
+       0,
+       6
+      ],
+      "nbt": {
+       "Speed": 128
+      }
+     },
+     {
+      "pos": [
+       4,
+       0,
+       6
+      ],
+      "nbt": {
+       "Speed": 128
+      }
+     },
+     {
+      "pos": [
+       5,
+       0,
+       6
+      ],
+      "nbt": {
+       "Speed": 128
+      }
+     }
+    ]
+   },
+   "src": "DetectorScenes.java:274"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "DetectorScenes.java:276"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     3,
+     0,
+     4
+    ],
+    "insertionSide": "north",
+    "item": {
+     "id": "minecraft:iron_ingot",
+     "count": 32
+    }
+   },
+   "src": "DetectorScenes.java:277",
+   "out": "e8"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     1,
+     4
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "DetectorScenes.java:277"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "DetectorScenes.java:276"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     3,
+     0,
+     4
+    ],
+    "insertionSide": "north",
+    "item": {
+     "id": "minecraft:iron_ingot",
+     "count": 32
+    }
+   },
+   "src": "DetectorScenes.java:277",
+   "out": "e9"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     1,
+     4
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "DetectorScenes.java:277"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       3
+      ],
+      "state": {
+       "name": "create:stockpile_switch",
+       "props": {
+        "facing": "east",
+        "level": "3",
+        "target": "wall"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "DetectorScenes.java:279"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "DetectorScenes.java:276"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     3,
+     0,
+     4
+    ],
+    "insertionSide": "north",
+    "item": {
+     "id": "minecraft:iron_ingot",
+     "count": 32
+    }
+   },
+   "src": "DetectorScenes.java:277",
+   "out": "e10"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     1,
+     4
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "DetectorScenes.java:277"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "DetectorScenes.java:276"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     3,
+     0,
+     4
+    ],
+    "insertionSide": "north",
+    "item": {
+     "id": "minecraft:iron_ingot",
+     "count": 32
+    }
+   },
+   "src": "DetectorScenes.java:277",
+   "out": "e11"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     1,
+     4
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "DetectorScenes.java:277"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "DetectorScenes.java:276"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     3,
+     0,
+     4
+    ],
+    "insertionSide": "north",
+    "item": {
+     "id": "minecraft:iron_ingot",
+     "count": 32
+    }
+   },
+   "src": "DetectorScenes.java:277",
+   "out": "e12"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     1,
+     4
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "DetectorScenes.java:277"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       3
+      ],
+      "state": {
+       "name": "create:stockpile_switch",
+       "props": {
+        "facing": "east",
+        "level": "2",
+        "target": "wall"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "DetectorScenes.java:279"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       0,
+       0
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       3,
+       0,
+       1
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       3,
+       0,
+       2
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       3,
+       0,
+       3
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       3,
+       0,
+       4
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       3,
+       0,
+       5
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       5,
+       0,
+       5
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     },
+     {
+      "pos": [
+       3,
+       0,
+       6
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       4,
+       0,
+       6
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       5,
+       0,
+       6
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     }
+    ]
+   },
+   "src": "DetectorScenes.java:282"
+  },
+  {
+   "op": "overlay.showLine",
+   "args": {
+    "color": "green",
+    "start": [
+     1.625,
+     1.3125,
+     3
+    ],
+    "end": [
+     1.375,
+     1.3125,
+     3
+    ],
+    "duration": 60,
+    "big": false
+   },
+   "src": "DetectorScenes.java:286"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "green",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_4",
+    "pointAt": [
+     1.375,
+     1.3125,
+     3
+    ],
+    "text": "The signal stays until the lower threshold is reached"
+   },
+   "src": "DetectorScenes.java:287"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "DetectorScenes.java:293"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "DetectorScenes.java:296"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     3,
+     0,
+     4
+    ],
+    "insertionSide": "north",
+    "item": {
+     "id": "minecraft:iron_ingot",
+     "count": 32
+    }
+   },
+   "src": "DetectorScenes.java:297",
+   "out": "e13"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     1,
+     4
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "DetectorScenes.java:297"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "DetectorScenes.java:296"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     3,
+     0,
+     4
+    ],
+    "insertionSide": "north",
+    "item": {
+     "id": "minecraft:iron_ingot",
+     "count": 32
+    }
+   },
+   "src": "DetectorScenes.java:297",
+   "out": "e14"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     1,
+     4
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "DetectorScenes.java:297"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "DetectorScenes.java:296"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     3,
+     0,
+     4
+    ],
+    "insertionSide": "north",
+    "item": {
+     "id": "minecraft:iron_ingot",
+     "count": 32
+    }
+   },
+   "src": "DetectorScenes.java:297",
+   "out": "e15"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     1,
+     4
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "DetectorScenes.java:297"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       3
+      ],
+      "state": {
+       "name": "create:stockpile_switch",
+       "props": {
+        "facing": "east",
+        "level": "1",
+        "target": "wall"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "DetectorScenes.java:299"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "0",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "0",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "DetectorScenes.java:303"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "DetectorScenes.java:304"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 90,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_5",
+    "pointAt": [
+     1.5,
+     1,
+     2.5
+    ],
+    "text": "The redstone output can now be used to control item supply, keeping the buffer filled"
+   },
+   "src": "DetectorScenes.java:306"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 100
+   },
+   "src": "DetectorScenes.java:311"
+  },
+  {
+   "op": "overlay.showLine",
+   "args": {
+    "color": "green",
+    "start": [
+     1.625,
+     1.3125,
+     3
+    ],
+    "end": [
+     1.375,
+     1.3125,
+     3
+    ],
+    "duration": 105,
+    "big": false
+   },
+   "src": "DetectorScenes.java:314"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "DetectorScenes.java:315"
+  },
+  {
+   "op": "overlay.showLine",
+   "args": {
+    "color": "red",
+    "start": [
+     1.625,
+     1.6875,
+     3
+    ],
+    "end": [
+     1.375,
+     1.6875,
+     3
+    ],
+    "duration": 100,
+    "big": false
+   },
+   "src": "DetectorScenes.java:316"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "DetectorScenes.java:317"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     1.5,
+     2,
+     3.5
+    ],
+    "direction": "down",
+    "duration": 60,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb"
+   },
+   "src": "DetectorScenes.java:318"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "DetectorScenes.java:319"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_6",
+    "pointAt": [
+     1.375,
+     1.6875,
+     3
+    ],
+    "text": "The specific thresholds can be changed in the UI"
+   },
+   "src": "DetectorScenes.java:320"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "DetectorScenes.java:324"
+  },
+  {
+   "op": "overlay.highlightValueBox",
+   "args": {
+    "location": [
+     1.5,
+     2,
+     3.5
+    ],
+    "expands": [
+     0.25,
+     0.0625,
+     0.25
+    ],
+    "duration": 70
+   },
+   "src": "DetectorScenes.java:326"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_7",
+    "pointAt": [
+     1.5,
+     2,
+     3.5
+    ],
+    "text": "A filter can help to only count specific contents toward the total"
+   },
+   "src": "DetectorScenes.java:327"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "DetectorScenes.java:333"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      0,
+      0
+     ],
+     "to": [
+      3,
+      0,
+      6
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "DetectorScenes.java:334"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "pos",
+       "pos": [
+        5,
+        0,
+        5
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        4,
+        0,
+        6
+       ],
+       "to": [
+        5,
+        0,
+        6
+       ]
+      }
+     ]
+    },
+    "direction": "east"
+   },
+   "src": "DetectorScenes.java:335"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "DetectorScenes.java:336"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      2
+     ]
+    },
+    "direction": "east"
+   },
+   "src": "DetectorScenes.java:337"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "DetectorScenes.java:338"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      1,
+      3
+     ],
+     "to": [
+      3,
+      1,
+      3
+     ]
+    },
+    "direction": "east"
+   },
+   "src": "DetectorScenes.java:339"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "DetectorScenes.java:340"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      4
+     ]
+    },
+    "direction": "east"
+   },
+   "src": "DetectorScenes.java:341"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 9
+   },
+   "src": "DetectorScenes.java:342"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      0,
+      1
+     ],
+     "to": [
+      1,
+      0,
+      5
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "DetectorScenes.java:343",
+   "out": "e16"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e16"
+    },
+    "offset": [
+     2,
+     0,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "DetectorScenes.java:344"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "DetectorScenes.java:345"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      1,
+      5
+     ],
+     "to": [
+      1,
+      3,
+      5
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "DetectorScenes.java:346",
+   "out": "e17"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e17"
+    },
+    "offset": [
+     1,
+     0,
+     -2
+    ],
+    "duration": 0
+   },
+   "src": "DetectorScenes.java:347"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "DetectorScenes.java:348"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       3
+      ],
+      "state": {
+       "name": "create:stockpile_switch",
+       "props": {
+        "facing": "east",
+        "level": "2",
+        "target": "wall"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "DetectorScenes.java:350"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       3
+      ],
+      "state": {
+       "name": "create:stockpile_switch",
+       "props": {
+        "facing": "east",
+        "level": "3",
+        "target": "wall"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "DetectorScenes.java:351"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "DetectorScenes.java:352"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_8",
+    "pointAt": [
+     1.5,
+     1.5,
+     3
+    ],
+    "text": "Fluid buffers can be monitored in a similar fashion"
+   },
+   "src": "DetectorScenes.java:354"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "DetectorScenes.java:359"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e17"
+    },
+    "direction": "south"
+   },
+   "src": "DetectorScenes.java:361"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      1,
+      1
+     ],
+     "to": [
+      1,
+      1,
+      2
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "DetectorScenes.java:362"
+  },
+  {
+   "op": "world.makeSectionIndependent",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      3
+     ]
+    }
+   },
+   "src": "DetectorScenes.java:364",
+   "out": "e18"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "DetectorScenes.java:365"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e18"
+    },
+    "offset": [
+     0,
+     1,
+     0
+    ],
+    "duration": 15
+   },
+   "src": "DetectorScenes.java:366"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       3
+      ],
+      "state": {
+       "name": "create:stockpile_switch",
+       "props": {
+        "facing": "east",
+        "level": "0",
+        "target": "wall"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "DetectorScenes.java:367"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "DetectorScenes.java:368"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      2,
+      3
+     ],
+     "to": [
+      3,
+      2,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "DetectorScenes.java:369"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "DetectorScenes.java:370"
+  },
+  {
+   "op": "world.makeSectionIndependent",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      0,
+      3
+     ]
+    }
+   },
+   "src": "DetectorScenes.java:371",
+   "out": "e19"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e19"
+    },
+    "direction": "down"
+   },
+   "src": "DetectorScenes.java:372"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_9",
+    "pointAt": [
+     1.5,
+     2.5,
+     3
+    ],
+    "text": "...as well as, curiously, the length of an extended rope pulley"
+   },
+   "src": "DetectorScenes.java:374"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "DetectorScenes.java:379"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       2,
+       3
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       3,
+       2,
+       3
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     }
+    ]
+   },
+   "src": "DetectorScenes.java:381"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "pulley",
+    "pos": [
+     2,
+     2,
+     3
+    ],
+    "distance": 15,
+    "duration": 205
+   },
+   "src": "DetectorScenes.java:382"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "DetectorScenes.java:385"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       3
+      ],
+      "state": {
+       "name": "create:stockpile_switch",
+       "props": {
+        "facing": "east",
+        "level": "1",
+        "target": "wall"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "DetectorScenes.java:386"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 45
+   },
+   "src": "DetectorScenes.java:387"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "DetectorScenes.java:385"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       3
+      ],
+      "state": {
+       "name": "create:stockpile_switch",
+       "props": {
+        "facing": "east",
+        "level": "2",
+        "target": "wall"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "DetectorScenes.java:386"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 45
+   },
+   "src": "DetectorScenes.java:387"
+  },
+  {
+   "op": "markAsFinished",
+   "args": {},
+   "src": "DetectorScenes.java:389"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "DetectorScenes.java:385"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       3
+      ],
+      "state": {
+       "name": "create:stockpile_switch",
+       "props": {
+        "facing": "east",
+        "level": "3",
+        "target": "wall"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "DetectorScenes.java:386"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 45
+   },
+   "src": "DetectorScenes.java:387"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "DetectorScenes.java:385"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       3
+      ],
+      "state": {
+       "name": "create:stockpile_switch",
+       "props": {
+        "facing": "east",
+        "level": "4",
+        "target": "wall"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "DetectorScenes.java:386"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 45
+   },
+   "src": "DetectorScenes.java:387"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "DetectorScenes.java:392"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       3
+      ],
+      "state": {
+       "name": "create:stockpile_switch",
+       "props": {
+        "facing": "east",
+        "level": "5",
+        "target": "wall"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "DetectorScenes.java:393"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       2,
+       3
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       3,
+       2,
+       3
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     }
+    ]
+   },
+   "src": "DetectorScenes.java:394"
+  }
+ ]
+}

@@ -1,0 +1,958 @@
+{
+ "id": "create:mechanical_press/pressing",
+ "schematic": "mechanical_press/pressing",
+ "schematicNamespace": "create",
+ "title": "Processing Items with the Mechanical Press",
+ "texts": {
+  "text_1": "The Mechanical Press can process items provided beneath it",
+  "text_2": "The Input items can be dropped or placed on a Depot under the Press",
+  "text_3": "When items are provided on a belt...",
+  "text_4": "The Press will hold and process them automatically"
+ },
+ "tags": [],
+ "items": [
+  "create:mechanical_press"
+ ],
+ "keyframes": [
+  47,
+  312,
+  372
+ ],
+ "totalTicks": 471,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "ProcessingScenes.java:275"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      4,
+      0,
+      5
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "ProcessingScenes.java:276"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ProcessingScenes.java:277"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      1
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ProcessingScenes.java:280",
+   "out": "e1"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     0,
+     1
+    ],
+    "duration": 0
+   },
+   "src": "ProcessingScenes.java:281"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ProcessingScenes.java:282"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       3,
+       2
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     }
+    ]
+   },
+   "src": "ProcessingScenes.java:287"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      3,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ProcessingScenes.java:288"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ProcessingScenes.java:289"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      1,
+      3
+     ],
+     "to": [
+      2,
+      1,
+      5
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "ProcessingScenes.java:291"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "ProcessingScenes.java:292"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      2,
+      3
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "ProcessingScenes.java:293"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "ProcessingScenes.java:294"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      3,
+      3
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "ProcessingScenes.java:295"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       3,
+       2
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     }
+    ]
+   },
+   "src": "ProcessingScenes.java:296"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     2,
+     3,
+     2
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "ProcessingScenes.java:297"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ProcessingScenes.java:298"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     2,
+     3.5,
+     2.5
+    ],
+    "key": "text_1",
+    "text": "The Mechanical Press can process items provided beneath it"
+   },
+   "src": "ProcessingScenes.java:301"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "ProcessingScenes.java:306"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     2,
+     1.5,
+     2.5
+    ],
+    "key": "text_2",
+    "text": "The Input items can be dropped or placed on a Depot under the Press"
+   },
+   "src": "ProcessingScenes.java:307"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "ProcessingScenes.java:311"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     2,
+     1,
+     1
+    ],
+    "insertionSide": "north",
+    "item": {
+     "id": "minecraft:copper_ingot",
+     "count": 1
+    }
+   },
+   "src": "ProcessingScenes.java:313"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     1.5,
+     2.5
+    ],
+    "direction": "up",
+    "duration": 30,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "minecraft:copper_ingot",
+     "count": 1
+    }
+   },
+   "src": "ProcessingScenes.java:315"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ProcessingScenes.java:316"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     2,
+     3,
+     2
+    ],
+    "beType": "MechanicalPressBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getPressingBehaviour",
+        "a": []
+       },
+       {
+        "m": "start",
+        "a": [
+         {
+          "enum": "Mode.BELT"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ProcessingScenes.java:319"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "ProcessingScenes.java:321"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     2,
+     3,
+     2
+    ],
+    "beType": "MechanicalPressBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getPressingBehaviour",
+        "a": []
+       },
+       {
+        "m": "makePressingParticleEffect",
+        "a": [
+         [
+          2.5,
+          2,
+          2.5
+         ],
+         {
+          "id": "minecraft:copper_ingot",
+          "count": 1
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ProcessingScenes.java:322"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     2,
+     1,
+     1
+    ]
+   },
+   "src": "ProcessingScenes.java:324"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     2,
+     1,
+     1
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "create:copper_sheet",
+     "count": 1
+    }
+   },
+   "src": "ProcessingScenes.java:326"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ProcessingScenes.java:327"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     1.5,
+     2.5
+    ],
+    "direction": "up",
+    "duration": 50,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "create:copper_sheet",
+     "count": 1
+    }
+   },
+   "src": "ProcessingScenes.java:328"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "ProcessingScenes.java:329"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "direction": "north"
+   },
+   "src": "ProcessingScenes.java:331"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ProcessingScenes.java:332"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      1,
+      3
+     ],
+     "to": [
+      0,
+      2,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ProcessingScenes.java:333"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ProcessingScenes.java:334"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      1,
+      2
+     ],
+     "to": [
+      4,
+      2,
+      2
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "ProcessingScenes.java:335"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "ProcessingScenes.java:336"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 40,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     0,
+     1.5,
+     2.5
+    ],
+    "key": "text_3",
+    "text": "When items are provided on a belt..."
+   },
+   "src": "ProcessingScenes.java:338"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "ProcessingScenes.java:343"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     0,
+     1,
+     2
+    ],
+    "insertionSide": "south",
+    "item": {
+     "id": "minecraft:copper_ingot",
+     "count": 1
+    }
+   },
+   "src": "ProcessingScenes.java:345",
+   "out": "e2"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     2,
+     2
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ProcessingScenes.java:345"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "ProcessingScenes.java:346"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     0,
+     1,
+     2
+    ],
+    "insertionSide": "south",
+    "item": {
+     "id": "minecraft:copper_ingot",
+     "count": 1
+    }
+   },
+   "src": "ProcessingScenes.java:347",
+   "out": "e3"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     2,
+     2
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ProcessingScenes.java:347"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "ProcessingScenes.java:348"
+  },
+  {
+   "op": "world.stallBeltItem",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "stalled": true
+   },
+   "src": "ProcessingScenes.java:349"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     2,
+     3,
+     2
+    ],
+    "beType": "MechanicalPressBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getPressingBehaviour",
+        "a": []
+       },
+       {
+        "m": "start",
+        "a": [
+         {
+          "enum": "Mode.BELT"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ProcessingScenes.java:350"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 50,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     2,
+     3.5,
+     2.5
+    ],
+    "key": "text_4",
+    "text": "The Press will hold and process them automatically"
+   },
+   "src": "ProcessingScenes.java:353"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "ProcessingScenes.java:359"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     2,
+     3,
+     2
+    ],
+    "beType": "MechanicalPressBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getPressingBehaviour",
+        "a": []
+       },
+       {
+        "m": "makePressingParticleEffect",
+        "a": [
+         [
+          2.5,
+          2,
+          2.5
+         ],
+         {
+          "id": "minecraft:copper_ingot",
+          "count": 1
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ProcessingScenes.java:360"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ]
+   },
+   "src": "ProcessingScenes.java:362"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "create:copper_sheet",
+     "count": 1
+    }
+   },
+   "src": "ProcessingScenes.java:363",
+   "out": "e4"
+  },
+  {
+   "op": "world.stallBeltItem",
+   "args": {
+    "link": {
+     "link": "e4"
+    },
+    "stalled": true
+   },
+   "src": "ProcessingScenes.java:364"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "ProcessingScenes.java:365"
+  },
+  {
+   "op": "world.stallBeltItem",
+   "args": {
+    "link": {
+     "link": "e4"
+    },
+    "stalled": false
+   },
+   "src": "ProcessingScenes.java:366"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "ProcessingScenes.java:367"
+  },
+  {
+   "op": "world.stallBeltItem",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "stalled": true
+   },
+   "src": "ProcessingScenes.java:368"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     2,
+     3,
+     2
+    ],
+    "beType": "MechanicalPressBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getPressingBehaviour",
+        "a": []
+       },
+       {
+        "m": "start",
+        "a": [
+         {
+          "enum": "Mode.BELT"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ProcessingScenes.java:369"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "ProcessingScenes.java:371"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     2,
+     3,
+     2
+    ],
+    "beType": "MechanicalPressBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getPressingBehaviour",
+        "a": []
+       },
+       {
+        "m": "makePressingParticleEffect",
+        "a": [
+         [
+          2.5,
+          2,
+          2.5
+         ],
+         {
+          "id": "minecraft:copper_ingot",
+          "count": 1
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ProcessingScenes.java:372"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ]
+   },
+   "src": "ProcessingScenes.java:374"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "create:copper_sheet",
+     "count": 1
+    }
+   },
+   "src": "ProcessingScenes.java:375",
+   "out": "e5"
+  },
+  {
+   "op": "world.stallBeltItem",
+   "args": {
+    "link": {
+     "link": "e5"
+    },
+    "stalled": true
+   },
+   "src": "ProcessingScenes.java:376"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "ProcessingScenes.java:377"
+  },
+  {
+   "op": "world.stallBeltItem",
+   "args": {
+    "link": {
+     "link": "e5"
+    },
+    "stalled": false
+   },
+   "src": "ProcessingScenes.java:378"
+  }
+ ]
+}

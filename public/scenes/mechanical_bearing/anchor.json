@@ -1,0 +1,872 @@
+{
+ "id": "create:mechanical_bearing/anchor",
+ "schematic": "mechanical_bearing/anchor",
+ "schematicNamespace": "create",
+ "title": "Moving Structures using the Mechanical Bearing",
+ "texts": {
+  "text_1": "Mechanical Bearings attach to the block in front of them",
+  "text_2": "Upon receiving Rotational Force, it will assemble it into a Rotating Contraption"
+ },
+ "tags": [
+  "create:kinetic_appliances",
+  "create:movement_anchor"
+ ],
+ "items": [
+  "create:mechanical_bearing"
+ ],
+ "keyframes": [
+  31,
+  101,
+  245
+ ],
+ "totalTicks": 412,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 1,
+    "zOffset": 1,
+    "size": 5
+   },
+   "src": "BearingScenes.java:242"
+  },
+  {
+   "op": "setSceneOffsetY",
+   "args": {
+    "yOffset": -1
+   },
+   "src": "BearingScenes.java:243"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      6,
+      0,
+      5
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "BearingScenes.java:244"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "BearingScenes.java:245"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      1,
+      0
+     ],
+     "to": [
+      6,
+      1,
+      5
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "BearingScenes.java:246"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "BearingScenes.java:247"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      2,
+      0
+     ],
+     "to": [
+      6,
+      2,
+      5
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "BearingScenes.java:248"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "BearingScenes.java:249"
+  },
+  {
+   "op": "overlay.showOutlineWithText",
+   "args": {
+    "duration": 60,
+    "color": "green",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      3,
+      3
+     ]
+    },
+    "pointAt": [
+     3,
+     2.5,
+     3.5
+    ],
+    "key": "text_1",
+    "text": "Mechanical Bearings attach to the block in front of them"
+   },
+   "src": "BearingScenes.java:261"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "BearingScenes.java:267"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      3,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "BearingScenes.java:270",
+   "out": "e1"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     -1,
+     0,
+     1
+    ],
+    "duration": 0
+   },
+   "src": "BearingScenes.java:273"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "BearingScenes.java:274"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       6,
+       0,
+       4
+      ],
+      "nbt": {
+       "Speed": -8
+      }
+     }
+    ]
+   },
+   "src": "BearingScenes.java:276"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       5,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 8
+      }
+     }
+    ]
+   },
+   "src": "BearingScenes.java:277"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     }
+    ]
+   },
+   "src": "BearingScenes.java:278"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     }
+    ]
+   },
+   "src": "BearingScenes.java:279"
+  },
+  {
+   "op": "effects.rotationIndicator",
+   "args": {
+    "pos": [
+     3,
+     1,
+     3
+    ],
+    "direction": false
+   },
+   "src": "BearingScenes.java:280"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bearing",
+    "pos": [
+     3,
+     2,
+     3
+    ],
+    "distance": 360,
+    "duration": 74
+   },
+   "src": "BearingScenes.java:281"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "rotation": [
+     0,
+     360,
+     0
+    ],
+    "duration": 74
+   },
+   "src": "BearingScenes.java:282"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     3.5,
+     4,
+     3.5
+    ],
+    "key": "text_2",
+    "text": "Upon receiving Rotational Force, it will assemble it into a Rotating Contraption"
+   },
+   "src": "BearingScenes.java:284"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 74
+   },
+   "src": "BearingScenes.java:289"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       6,
+       0,
+       4
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     }
+    ]
+   },
+   "src": "BearingScenes.java:290"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "BearingScenes.java:291"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "direction": "up"
+   },
+   "src": "BearingScenes.java:293"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "BearingScenes.java:294"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        0,
+        3,
+        0
+       ],
+       "to": [
+        6,
+        3,
+        1
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        3,
+        2
+       ],
+       "to": [
+        3,
+        3,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        5,
+        3,
+        2
+       ],
+       "to": [
+        6,
+        3,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        3,
+        3
+       ],
+       "to": [
+        6,
+        3,
+        5
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        4,
+        0
+       ],
+       "to": [
+        6,
+        4,
+        5
+       ]
+      }
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "BearingScenes.java:296",
+   "out": "e2"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       3,
+       3
+      ],
+      "state": {
+       "name": "minecraft:oak_planks",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       3,
+       3,
+       3
+      ],
+      "state": {
+       "name": "minecraft:oak_planks",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       4,
+       3,
+       3
+      ],
+      "state": {
+       "name": "minecraft:oak_planks",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       4,
+       3
+      ],
+      "state": {
+       "name": "minecraft:oak_planks",
+       "props": {}
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "BearingScenes.java:298"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "BearingScenes.java:299"
+  },
+  {
+   "op": "overlay.showOutline",
+   "args": {
+    "color": "green",
+    "slot": "glue",
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "pos",
+       "pos": [
+        4,
+        3,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        2,
+        3,
+        3
+       ],
+       "to": [
+        4,
+        3,
+        3
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        2,
+        4,
+        3
+       ]
+      }
+     ]
+    },
+    "duration": 40
+   },
+   "src": "BearingScenes.java:301"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     4.5,
+     3.5,
+     3.5
+    ],
+    "direction": "right",
+    "duration": 40,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "create:super_glue",
+     "count": 1
+    }
+   },
+   "src": "BearingScenes.java:304"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "BearingScenes.java:307"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      3,
+      2
+     ]
+    },
+    "direction": "south",
+    "link": {
+     "link": "e2"
+    }
+   },
+   "src": "BearingScenes.java:308"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "BearingScenes.java:309"
+  },
+  {
+   "op": "effects.superGlue",
+   "args": {
+    "pos": [
+     4,
+     3,
+     2
+    ],
+    "side": "south",
+    "fullBlock": true
+   },
+   "src": "BearingScenes.java:310"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 120,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     3.5,
+     4,
+     3.5
+    ],
+    "sharedKey": "create:movement_anchors",
+    "text": "With the help of Super Glue, larger structures can be moved."
+   },
+   "src": "BearingScenes.java:311"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 25
+   },
+   "src": "BearingScenes.java:316"
+  },
+  {
+   "op": "world.configureCenterOfRotation",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "anchor": [
+     3.5,
+     3,
+     3.5
+    ]
+   },
+   "src": "BearingScenes.java:318"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       6,
+       0,
+       4
+      ],
+      "nbt": {
+       "Speed": -8
+      }
+     }
+    ]
+   },
+   "src": "BearingScenes.java:319"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       5,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 8
+      }
+     }
+    ]
+   },
+   "src": "BearingScenes.java:320"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     }
+    ]
+   },
+   "src": "BearingScenes.java:321"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     }
+    ]
+   },
+   "src": "BearingScenes.java:322"
+  },
+  {
+   "op": "effects.rotationIndicator",
+   "args": {
+    "pos": [
+     3,
+     1,
+     3
+    ],
+    "direction": false
+   },
+   "src": "BearingScenes.java:323"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bearing",
+    "pos": [
+     3,
+     2,
+     3
+    ],
+    "distance": 720,
+    "duration": 148
+   },
+   "src": "BearingScenes.java:324"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "rotation": [
+     0,
+     720,
+     0
+    ],
+    "duration": 148
+   },
+   "src": "BearingScenes.java:325"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 148
+   },
+   "src": "BearingScenes.java:327"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       6,
+       0,
+       4
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     }
+    ]
+   },
+   "src": "BearingScenes.java:328"
+  }
+ ]
+}

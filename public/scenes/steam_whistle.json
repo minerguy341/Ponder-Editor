@@ -1,0 +1,1497 @@
+{
+ "id": "create:steam_whistle",
+ "schematic": "steam_whistle",
+ "schematicNamespace": "create",
+ "title": "Setting up Steam Whistles",
+ "texts": {
+  "text_1": "Steam Whistles can be placed on a Fluid Tank",
+  "text_2": "If the tank receives sufficient heat...",
+  "text_3": "...the Whistle will play a note when activated",
+  "text_4": "Use a Whistle item on the block to lower its pitch",
+  "text_5": "Cycle between three different octaves using a Wrench",
+  "text_6": "Engineer's Goggles can help to find out the current pitch of a Whistle"
+ },
+ "tags": [],
+ "items": [
+  "create:steam_whistle"
+ ],
+ "keyframes": [
+  71,
+  156,
+  226,
+  342,
+  468,
+  584
+ ],
+ "totalTicks": 618,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "SteamScenes.java:34"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      4,
+      0,
+      4
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "SteamScenes.java:35"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "SteamScenes.java:45"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      1,
+      2
+     ],
+     "to": [
+      3,
+      2,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "SteamScenes.java:46",
+   "out": "e1"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     -1,
+     0,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "SteamScenes.java:47"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "SteamScenes.java:48"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      3,
+      1
+     ],
+     "to": [
+      2,
+      7,
+      1
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "SteamScenes.java:50",
+   "out": "e2"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     0,
+     -1,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "SteamScenes.java:51"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "SteamScenes.java:52"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     -1000,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "SteamScenes.java:53"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "direction": null
+   },
+   "src": "SteamScenes.java:54"
+  },
+  {
+   "op": "world.showIndependentSectionImmediately",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      2,
+      2
+     ],
+     "to": [
+      2,
+      3,
+      2
+     ]
+    }
+   },
+   "src": "SteamScenes.java:55",
+   "out": "e3"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "offset": [
+     0,
+     -1,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "SteamScenes.java:56"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "SteamScenes.java:57"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 25
+   },
+   "src": "SteamScenes.java:58"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_1",
+    "pointAt": [
+     2.5,
+     2.5,
+     2
+    ],
+    "text": "Steam Whistles can be placed on a Fluid Tank"
+   },
+   "src": "SteamScenes.java:60"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "SteamScenes.java:65"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "offset": [
+     0,
+     1,
+     0
+    ],
+    "duration": 15
+   },
+   "src": "SteamScenes.java:67"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     0,
+     1,
+     0
+    ],
+    "duration": 15
+   },
+   "src": "SteamScenes.java:68"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "SteamScenes.java:69"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      2
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "SteamScenes.java:70"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "SteamScenes.java:71"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 50,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_2",
+    "pointAt": [
+     2,
+     1.5,
+     2.5
+    ],
+    "text": "If the tank receives sufficient heat..."
+   },
+   "src": "SteamScenes.java:73"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "SteamScenes.java:78"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      3,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "SteamScenes.java:80"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "SteamScenes.java:81"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       3,
+       1
+      ],
+      "state": {
+       "name": "create:steam_whistle",
+       "props": {
+        "facing": "south",
+        "powered": "true",
+        "size": "medium",
+        "wall": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "SteamScenes.java:82"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       3,
+       2
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "wall",
+        "facing": "west",
+        "powered": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "SteamScenes.java:83"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     1,
+     3,
+     2
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "SteamScenes.java:84"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "SteamScenes.java:85"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_3",
+    "pointAt": [
+     2.5,
+     3.5,
+     2
+    ],
+    "text": "...the Whistle will play a note when activated"
+   },
+   "src": "SteamScenes.java:87"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "SteamScenes.java:93"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       3,
+       1
+      ],
+      "state": {
+       "name": "create:steam_whistle",
+       "props": {
+        "facing": "south",
+        "powered": "false",
+        "size": "medium",
+        "wall": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "SteamScenes.java:94"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       3,
+       2
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "wall",
+        "facing": "west",
+        "powered": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "SteamScenes.java:95"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "SteamScenes.java:96"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       3,
+       1
+      ],
+      "state": {
+       "name": "create:steam_whistle",
+       "props": {
+        "facing": "south",
+        "powered": "true",
+        "size": "medium",
+        "wall": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "SteamScenes.java:97"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       3,
+       2
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "wall",
+        "facing": "west",
+        "powered": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "SteamScenes.java:98"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     1,
+     3,
+     2
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "SteamScenes.java:99"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "SteamScenes.java:100"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       3,
+       1
+      ],
+      "state": {
+       "name": "create:steam_whistle",
+       "props": {
+        "facing": "south",
+        "powered": "false",
+        "size": "medium",
+        "wall": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "SteamScenes.java:101"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       3,
+       2
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "wall",
+        "facing": "west",
+        "powered": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "SteamScenes.java:102"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "SteamScenes.java:103"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3,
+     3.5,
+     1.5
+    ],
+    "direction": "right",
+    "duration": 50,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "create:steam_whistle",
+     "count": 1
+    },
+    "icon": "rmb"
+   },
+   "src": "SteamScenes.java:105"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 6
+   },
+   "src": "SteamScenes.java:108"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      4,
+      1
+     ]
+    },
+    "state": {
+     "name": "create:steam_whistle_extension",
+     "props": {
+      "shape": "single",
+      "size": "medium"
+     }
+    },
+    "particles": false
+   },
+   "src": "SteamScenes.java:110"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "SteamScenes.java:111"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_4",
+    "pointAt": [
+     2.5,
+     3.5,
+     2
+    ],
+    "text": "Use a Whistle item on the block to lower its pitch"
+   },
+   "src": "SteamScenes.java:113"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "SteamScenes.java:119"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3,
+     3.5,
+     1.5
+    ],
+    "direction": "right",
+    "duration": 2,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "create:steam_whistle",
+     "count": 1
+    },
+    "icon": "rmb"
+   },
+   "src": "SteamScenes.java:121"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 6
+   },
+   "src": "SteamScenes.java:124"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       4,
+       1
+      ],
+      "state": {
+       "name": "create:steam_whistle_extension",
+       "props": {
+        "shape": "double",
+        "size": "medium"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "SteamScenes.java:125"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "SteamScenes.java:126"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3,
+     3.5,
+     1.5
+    ],
+    "direction": "right",
+    "duration": 2,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "create:steam_whistle",
+     "count": 1
+    },
+    "icon": "rmb"
+   },
+   "src": "SteamScenes.java:127"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 6
+   },
+   "src": "SteamScenes.java:130"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      5,
+      1
+     ]
+    },
+    "state": {
+     "name": "create:steam_whistle_extension",
+     "props": {
+      "shape": "single",
+      "size": "medium"
+     }
+    },
+    "particles": false
+   },
+   "src": "SteamScenes.java:131"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       4,
+       1
+      ],
+      "state": {
+       "name": "create:steam_whistle_extension",
+       "props": {
+        "shape": "double_connected",
+        "size": "medium"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "SteamScenes.java:132"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "SteamScenes.java:133"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3,
+     3.5,
+     1.5
+    ],
+    "direction": "right",
+    "duration": 2,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "create:steam_whistle",
+     "count": 1
+    },
+    "icon": "rmb"
+   },
+   "src": "SteamScenes.java:134"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 6
+   },
+   "src": "SteamScenes.java:137"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       5,
+       1
+      ],
+      "state": {
+       "name": "create:steam_whistle_extension",
+       "props": {
+        "shape": "double",
+        "size": "medium"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "SteamScenes.java:138"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "SteamScenes.java:139"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3,
+     3.5,
+     1.5
+    ],
+    "direction": "right",
+    "duration": 2,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "create:steam_whistle",
+     "count": 1
+    },
+    "icon": "rmb"
+   },
+   "src": "SteamScenes.java:140"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 6
+   },
+   "src": "SteamScenes.java:143"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       5,
+       1
+      ],
+      "state": {
+       "name": "create:steam_whistle_extension",
+       "props": {
+        "shape": "double_connected",
+        "size": "medium"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "SteamScenes.java:144"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      6,
+      1
+     ]
+    },
+    "state": {
+     "name": "create:steam_whistle_extension",
+     "props": {
+      "shape": "single",
+      "size": "medium"
+     }
+    },
+    "particles": false
+   },
+   "src": "SteamScenes.java:145"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "SteamScenes.java:146"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3,
+     3.5,
+     1.5
+    ],
+    "direction": "right",
+    "duration": 50,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "create:wrench",
+     "count": 1
+    },
+    "icon": "rmb"
+   },
+   "src": "SteamScenes.java:148"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 6
+   },
+   "src": "SteamScenes.java:151"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       3,
+       1
+      ],
+      "state": {
+       "name": "create:steam_whistle",
+       "props": {
+        "facing": "south",
+        "powered": "false",
+        "size": "large",
+        "wall": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "SteamScenes.java:153"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "SteamScenes.java:154"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       4,
+       1
+      ],
+      "state": {
+       "name": "create:steam_whistle_extension",
+       "props": {
+        "shape": "double_connected",
+        "size": "large"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "SteamScenes.java:153"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "SteamScenes.java:154"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       5,
+       1
+      ],
+      "state": {
+       "name": "create:steam_whistle_extension",
+       "props": {
+        "shape": "double_connected",
+        "size": "large"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "SteamScenes.java:153"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "SteamScenes.java:154"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       6,
+       1
+      ],
+      "state": {
+       "name": "create:steam_whistle_extension",
+       "props": {
+        "shape": "single",
+        "size": "large"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "SteamScenes.java:153"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "SteamScenes.java:154"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "SteamScenes.java:156"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_5",
+    "pointAt": [
+     2.5,
+     3.5,
+     2
+    ],
+    "text": "Cycle between three different octaves using a Wrench"
+   },
+   "src": "SteamScenes.java:158"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "SteamScenes.java:164"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3,
+     3.5,
+     1.5
+    ],
+    "direction": "right",
+    "duration": 4,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "create:wrench",
+     "count": 1
+    },
+    "icon": "rmb"
+   },
+   "src": "SteamScenes.java:165"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 6
+   },
+   "src": "SteamScenes.java:168"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       3,
+       1
+      ],
+      "state": {
+       "name": "create:steam_whistle",
+       "props": {
+        "facing": "south",
+        "powered": "false",
+        "size": "small",
+        "wall": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "SteamScenes.java:170"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "SteamScenes.java:171"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       4,
+       1
+      ],
+      "state": {
+       "name": "create:steam_whistle_extension",
+       "props": {
+        "shape": "double_connected",
+        "size": "small"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "SteamScenes.java:170"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "SteamScenes.java:171"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       5,
+       1
+      ],
+      "state": {
+       "name": "create:steam_whistle_extension",
+       "props": {
+        "shape": "double_connected",
+        "size": "small"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "SteamScenes.java:170"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "SteamScenes.java:171"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       6,
+       1
+      ],
+      "state": {
+       "name": "create:steam_whistle_extension",
+       "props": {
+        "shape": "single",
+        "size": "small"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "SteamScenes.java:170"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "SteamScenes.java:171"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "SteamScenes.java:174"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       3,
+       1
+      ],
+      "state": {
+       "name": "create:steam_whistle",
+       "props": {
+        "facing": "south",
+        "powered": "true",
+        "size": "small",
+        "wall": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "SteamScenes.java:175"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       3,
+       2
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "wall",
+        "facing": "west",
+        "powered": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "SteamScenes.java:176"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     1,
+     3,
+     2
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "SteamScenes.java:177"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "SteamScenes.java:178"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       3,
+       1
+      ],
+      "state": {
+       "name": "create:steam_whistle",
+       "props": {
+        "facing": "south",
+        "powered": "false",
+        "size": "small",
+        "wall": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "SteamScenes.java:179"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       3,
+       2
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "wall",
+        "facing": "west",
+        "powered": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "SteamScenes.java:180"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "SteamScenes.java:181"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     3,
+     1.5
+    ],
+    "direction": "up",
+    "duration": 80,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "create:goggles",
+     "count": 1
+    }
+   },
+   "src": "SteamScenes.java:183"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 6
+   },
+   "src": "SteamScenes.java:185"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "blue",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_6",
+    "pointAt": [
+     2.5,
+     3.5,
+     2
+    ],
+    "text": "Engineer's Goggles can help to find out the current pitch of a Whistle"
+   },
+   "src": "SteamScenes.java:187"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "SteamScenes.java:193"
+  }
+ ]
+}

@@ -1,0 +1,829 @@
+{
+ "id": "create:belt/transport",
+ "schematic": "belt/transport",
+ "schematicNamespace": "create",
+ "title": "Using Mechanical Belts for Logistics",
+ "texts": {
+  "text_1": "Moving belts will transport Items and other Entities",
+  "text_2": "Right-Click with an empty hand to take items off a belt"
+ },
+ "tags": [
+  "create:logistics"
+ ],
+ "items": [
+  "create:belt_connector"
+ ],
+ "keyframes": [
+  205
+ ],
+ "totalTicks": 239,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "BeltScenes.java:326"
+  },
+  {
+   "op": "setSceneOffsetY",
+   "args": {
+    "yOffset": -1
+   },
+   "src": "BeltScenes.java:327"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       0,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -19.2
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -19.2
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -19.2
+      }
+     },
+     {
+      "pos": [
+       3,
+       2,
+       2
+      ],
+      "nbt": {
+       "Speed": -19.2
+      }
+     },
+     {
+      "pos": [
+       4,
+       3,
+       2
+      ],
+      "nbt": {
+       "Speed": -19.2
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": -19.2
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": -19.2
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": -19.2
+      }
+     },
+     {
+      "pos": [
+       3,
+       0,
+       5
+      ],
+      "nbt": {
+       "Speed": 9.6
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": -19.2
+      }
+     }
+    ]
+   },
+   "src": "BeltScenes.java:328"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      4,
+      0,
+      4
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "BeltScenes.java:329"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "BeltScenes.java:330"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      1,
+      3
+     ],
+     "to": [
+      2,
+      1,
+      5
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "BeltScenes.java:331"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "BeltScenes.java:332"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      1,
+      2
+     ],
+     "to": [
+      4,
+      3,
+      2
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "BeltScenes.java:333"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "BeltScenes.java:334"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      1,
+      2
+     ],
+     "to": [
+      1,
+      1,
+      2
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "BeltScenes.java:335"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "BeltScenes.java:336"
+  },
+  {
+   "op": "special.movePointOfInterest",
+   "args": {
+    "location": [
+     2.5,
+     2.5,
+     0.5
+    ]
+   },
+   "src": "BeltScenes.java:337"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     0.5,
+     4.5,
+     2.5
+    ],
+    "motion": [
+     0,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:copper_block",
+     "count": 1
+    }
+   },
+   "src": "BeltScenes.java:341",
+   "out": "e1"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 13
+   },
+   "src": "BeltScenes.java:342"
+  },
+  {
+   "op": "world.modifyEntity",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "discard",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "BeltScenes.java:343"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     0,
+     1,
+     2
+    ],
+    "insertionSide": "down",
+    "item": {
+     "id": "minecraft:copper_block",
+     "count": 1
+    }
+   },
+   "src": "BeltScenes.java:345",
+   "out": "e2"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "BeltScenes.java:347"
+  },
+  {
+   "op": "special.createBirb",
+   "args": {
+    "location": [
+     0.5,
+     1.8125,
+     2.5
+    ],
+    "pose": {
+     "type": "face_poi"
+    }
+   },
+   "src": "BeltScenes.java:349",
+   "out": "e3"
+  },
+  {
+   "op": "special.moveParrot",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "offset": [
+     1.78,
+     0,
+     0
+    ],
+    "duration": 40
+   },
+   "src": "BeltScenes.java:351"
+  },
+  {
+   "op": "special.movePointOfInterest",
+   "args": {
+    "location": [
+     1.5,
+     1.5,
+     3.5
+    ]
+   },
+   "src": "BeltScenes.java:352"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     0.5,
+     2,
+     2.5
+    ],
+    "key": "text_1",
+    "text": "Moving belts will transport Items and other Entities"
+   },
+   "src": "BeltScenes.java:354"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "BeltScenes.java:359"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     0.5,
+     4.5,
+     2.5
+    ],
+    "motion": [
+     0,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:copper_block",
+     "count": 1
+    }
+   },
+   "src": "BeltScenes.java:360",
+   "out": "e4"
+  },
+  {
+   "op": "special.movePointOfInterest",
+   "args": {
+    "location": [
+     0.5,
+     3.5,
+     2.5
+    ]
+   },
+   "src": "BeltScenes.java:361"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "BeltScenes.java:362"
+  },
+  {
+   "op": "special.movePointOfInterest",
+   "args": {
+    "location": [
+     0.5,
+     1.5,
+     2.5
+    ]
+   },
+   "src": "BeltScenes.java:363"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "BeltScenes.java:364"
+  },
+  {
+   "op": "world.modifyEntity",
+   "args": {
+    "link": {
+     "link": "e4"
+    },
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "discard",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "BeltScenes.java:365"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     0,
+     1,
+     2
+    ],
+    "insertionSide": "down",
+    "item": {
+     "id": "minecraft:copper_block",
+     "count": 1
+    }
+   },
+   "src": "BeltScenes.java:366",
+   "out": "e5"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 8
+   },
+   "src": "BeltScenes.java:367"
+  },
+  {
+   "op": "special.movePointOfInterest",
+   "args": {
+    "location": [
+     3.5,
+     2.5,
+     1.5
+    ]
+   },
+   "src": "BeltScenes.java:369"
+  },
+  {
+   "op": "special.moveParrot",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "offset": [
+     2.1,
+     2.1,
+     0
+    ],
+    "duration": 60
+   },
+   "src": "BeltScenes.java:370"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "BeltScenes.java:371"
+  },
+  {
+   "op": "special.movePointOfInterest",
+   "args": {
+    "location": [
+     5.5,
+     5.5,
+     2.5
+    ]
+   },
+   "src": "BeltScenes.java:372"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "BeltScenes.java:373"
+  },
+  {
+   "op": "special.movePointOfInterest",
+   "args": {
+    "location": [
+     2.5,
+     1.5,
+     5.5
+    ]
+   },
+   "src": "BeltScenes.java:374"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "BeltScenes.java:375"
+  },
+  {
+   "op": "special.moveParrot",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "offset": [
+     0.23,
+     0,
+     0
+    ],
+    "duration": 5
+   },
+   "src": "BeltScenes.java:376"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "BeltScenes.java:377"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       0,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       3,
+       2,
+       2
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       4,
+       3,
+       2
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       3,
+       0,
+       5
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     }
+    ]
+   },
+   "src": "BeltScenes.java:378"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "BeltScenes.java:379"
+  },
+  {
+   "op": "world.modifyEntities",
+   "args": {
+    "entityType": "ItemEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "discard",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "BeltScenes.java:380"
+  },
+  {
+   "op": "special.movePointOfInterest",
+   "args": {
+    "location": [
+     2.5,
+     5.5,
+     4.5
+    ]
+   },
+   "src": "BeltScenes.java:381"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3.4,
+     3.3,
+     2.5
+    ],
+    "direction": "down",
+    "duration": 60,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb"
+   },
+   "src": "BeltScenes.java:385"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "BeltScenes.java:386"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     3.4,
+     3.1999999999999997,
+     2.5
+    ],
+    "key": "text_2",
+    "text": "Right-Click with an empty hand to take items off a belt"
+   },
+   "src": "BeltScenes.java:387"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "BeltScenes.java:392"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     3,
+     2,
+     2
+    ]
+   },
+   "src": "BeltScenes.java:393"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     3,
+     2,
+     2
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "BeltScenes.java:394"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "BeltScenes.java:395"
+  },
+  {
+   "op": "special.changeBirbPose",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "pose": {
+     "type": "face_cursor"
+    }
+   },
+   "src": "BeltScenes.java:397"
+  }
+ ]
+}

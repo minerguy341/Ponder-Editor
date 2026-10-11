@@ -1,0 +1,5743 @@
+{
+ "id": "create:portable_interface/transfer_fluid",
+ "schematic": "portable_interface/transfer_fluid",
+ "schematicNamespace": "create",
+ "title": "Contraption Fluid Exchange",
+ "texts": {
+  "text_1": "Fluid Tanks on moving contraptions cannot be accessed by any pipes",
+  "text_2": "This component can interact with fluid tanks without the need to stop the contraption",
+  "text_3": "Place a second one with a gap of 1 or 2 blocks inbetween",
+  "text_4": "Whenever they pass by each other, they will engage in a connection",
+  "text_5": "While engaged, the stationary interface will represent ALL Tanks on the contraption",
+  "text_6": "Fluid can now be inserted...",
+  "text_7": "...or extracted from the contraption",
+  "text_8": "After no contents have been exchanged for a while, the contraption will continue on its way"
+ },
+ "tags": [
+  "create:fluids",
+  "create:contraption_actor"
+ ],
+ "items": [
+  "create:portable_fluid_interface"
+ ],
+ "keyframes": [
+  26,
+  109,
+  199,
+  339,
+  439,
+  695
+ ],
+ "totalTicks": 804,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 6
+   },
+   "src": "FluidMovementActorScenes.java:30"
+  },
+  {
+   "op": "scaleSceneView",
+   "args": {
+    "factor": 0.95
+   },
+   "src": "FluidMovementActorScenes.java:31"
+  },
+  {
+   "op": "setSceneOffsetY",
+   "args": {
+    "yOffset": -1
+   },
+   "src": "FluidMovementActorScenes.java:32"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      5,
+      0,
+      5
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "FluidMovementActorScenes.java:33"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "FluidMovementActorScenes.java:34"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       0,
+       1,
+       4
+      ],
+      "state": {
+       "name": "create:mechanical_pump",
+       "props": {
+        "facing": "north",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "FluidMovementActorScenes.java:51"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     5
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          0,
+          1,
+          5
+         ],
+         null
+        ]
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 10000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:53"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      5,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "FluidMovementActorScenes.java:60"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "FluidMovementActorScenes.java:61"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      5,
+      2,
+      2
+     ],
+     "to": [
+      6,
+      4,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "FluidMovementActorScenes.java:63",
+   "out": "e1"
+  },
+  {
+   "op": "world.configureCenterOfRotation",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "anchor": [
+     5.5,
+     1.5,
+     2.5
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:64"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "FluidMovementActorScenes.java:65"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bearing",
+    "pos": [
+     5,
+     1,
+     2
+    ],
+    "distance": 360,
+    "duration": 70
+   },
+   "src": "FluidMovementActorScenes.java:66"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "rotation": [
+     0,
+     360,
+     0
+    ],
+    "duration": 70
+   },
+   "src": "FluidMovementActorScenes.java:67"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "red",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     5.5,
+     4,
+     2.5
+    ],
+    "key": "text_1",
+    "text": "Fluid Tanks on moving contraptions cannot be accessed by any pipes"
+   },
+   "src": "FluidMovementActorScenes.java:68"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "FluidMovementActorScenes.java:75"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      2,
+      2
+     ]
+    },
+    "direction": "east",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "FluidMovementActorScenes.java:77"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 13
+   },
+   "src": "FluidMovementActorScenes.java:78"
+  },
+  {
+   "op": "effects.superGlue",
+   "args": {
+    "pos": [
+     4,
+     2,
+     2
+    ],
+    "side": "east",
+    "fullBlock": true
+   },
+   "src": "FluidMovementActorScenes.java:79"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "green",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     4.5,
+     3,
+     2.5
+    ],
+    "key": "text_2",
+    "text": "This component can interact with fluid tanks without the need to stop the contraption"
+   },
+   "src": "FluidMovementActorScenes.java:81"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "FluidMovementActorScenes.java:87"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      2,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "FluidMovementActorScenes.java:90"
+  },
+  {
+   "op": "overlay.showOutlineWithText",
+   "args": {
+    "duration": 50,
+    "color": "red",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      2,
+      2
+     ]
+    },
+    "pointAt": [
+     3.5,
+     2.5,
+     2.5
+    ],
+    "key": "text_3",
+    "text": "Place a second one with a gap of 1 or 2 blocks inbetween"
+   },
+   "src": "FluidMovementActorScenes.java:91"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 55
+   },
+   "src": "FluidMovementActorScenes.java:96"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bearing",
+    "pos": [
+     5,
+     1,
+     2
+    ],
+    "distance": 360,
+    "duration": 60
+   },
+   "src": "FluidMovementActorScenes.java:98"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "rotation": [
+     0,
+     360,
+     0
+    ],
+    "duration": 60
+   },
+   "src": "FluidMovementActorScenes.java:99"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "FluidMovementActorScenes.java:100"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 40,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     3,
+     3,
+     2.5
+    ],
+    "key": "text_4",
+    "text": "Whenever they pass by each other, they will engage in a connection"
+   },
+   "src": "FluidMovementActorScenes.java:102"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 38
+   },
+   "src": "FluidMovementActorScenes.java:106"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "PortableFluidInterfaceBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       2,
+       2
+      ],
+      "nbt": {
+       "Timer": 14,
+       "Distance": 1
+      }
+     },
+     {
+      "pos": [
+       4,
+       2,
+       2
+      ],
+      "nbt": {
+       "Timer": 14,
+       "Distance": 1
+      }
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:111"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 17
+   },
+   "src": "FluidMovementActorScenes.java:116"
+  },
+  {
+   "op": "overlay.showOutline",
+   "args": {
+    "color": "green",
+    "slot": "pos:4,2,2",
+    "selection": {
+     "t": "box",
+     "from": [
+      5,
+      3,
+      2
+     ],
+     "to": [
+      6,
+      4,
+      2
+     ]
+    },
+    "duration": 80
+   },
+   "src": "FluidMovementActorScenes.java:117"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "FluidMovementActorScenes.java:118"
+  },
+  {
+   "op": "overlay.showOutlineWithText",
+   "args": {
+    "duration": 70,
+    "color": "green",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      2,
+      2
+     ]
+    },
+    "pointAt": [
+     2.5,
+     2.5,
+     2.5
+    ],
+    "key": "text_5",
+    "text": "While engaged, the stationary interface will represent ALL Tanks on the contraption"
+   },
+   "src": "FluidMovementActorScenes.java:120"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "FluidMovementActorScenes.java:125"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      1,
+      5
+     ],
+     "to": [
+      0,
+      3,
+      5
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "FluidMovementActorScenes.java:127",
+   "out": "e2"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     0,
+     0,
+     -1
+    ],
+    "duration": 0
+   },
+   "src": "FluidMovementActorScenes.java:128"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "FluidMovementActorScenes.java:129"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        0,
+        1,
+        3
+       ],
+       "to": [
+        2,
+        1,
+        3
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        0,
+        1,
+        4
+       ]
+      }
+     ]
+    },
+    "direction": "east",
+    "link": {
+     "link": "e2"
+    }
+   },
+   "src": "FluidMovementActorScenes.java:130"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "FluidMovementActorScenes.java:131"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      0,
+      7
+     ]
+    },
+    "direction": "up",
+    "link": {
+     "link": "e2"
+    }
+   },
+   "src": "FluidMovementActorScenes.java:132"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      1,
+      4
+     ],
+     "to": [
+      1,
+      1,
+      7
+     ]
+    },
+    "direction": "north",
+    "link": {
+     "link": "e2"
+    }
+   },
+   "src": "FluidMovementActorScenes.java:133"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "FluidMovementActorScenes.java:134"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     0.5,
+     2,
+     4.5
+    ],
+    "key": "text_6",
+    "text": "Fluid can now be inserted..."
+   },
+   "src": "FluidMovementActorScenes.java:136"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "FluidMovementActorScenes.java:141"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     5
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          0,
+          1,
+          5
+         ],
+         null
+        ]
+       },
+       {
+        "m": "drain",
+        "a": [
+         1000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:150"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     5,
+     3,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          5,
+          3,
+          2
+         ],
+         null
+        ]
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 1000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:155"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "FluidMovementActorScenes.java:160"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     5
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          0,
+          1,
+          5
+         ],
+         null
+        ]
+       },
+       {
+        "m": "drain",
+        "a": [
+         1000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:150"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     5,
+     3,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          5,
+          3,
+          2
+         ],
+         null
+        ]
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 1000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:155"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "FluidMovementActorScenes.java:160"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     5
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          0,
+          1,
+          5
+         ],
+         null
+        ]
+       },
+       {
+        "m": "drain",
+        "a": [
+         1000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:150"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     5,
+     3,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          5,
+          3,
+          2
+         ],
+         null
+        ]
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 1000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:155"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "FluidMovementActorScenes.java:160"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     5
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          0,
+          1,
+          5
+         ],
+         null
+        ]
+       },
+       {
+        "m": "drain",
+        "a": [
+         1000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:150"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     5,
+     3,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          5,
+          3,
+          2
+         ],
+         null
+        ]
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 1000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:155"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "FluidMovementActorScenes.java:160"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     5
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          0,
+          1,
+          5
+         ],
+         null
+        ]
+       },
+       {
+        "m": "drain",
+        "a": [
+         1000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:150"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     5,
+     3,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          5,
+          3,
+          2
+         ],
+         null
+        ]
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 1000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:155"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "FluidMovementActorScenes.java:160"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     5
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          0,
+          1,
+          5
+         ],
+         null
+        ]
+       },
+       {
+        "m": "drain",
+        "a": [
+         1000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:150"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     5,
+     3,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          5,
+          3,
+          2
+         ],
+         null
+        ]
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 1000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:155"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "FluidMovementActorScenes.java:160"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     5
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          0,
+          1,
+          5
+         ],
+         null
+        ]
+       },
+       {
+        "m": "drain",
+        "a": [
+         1000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:150"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     5,
+     3,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          5,
+          3,
+          2
+         ],
+         null
+        ]
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 1000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:155"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "FluidMovementActorScenes.java:160"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     5
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          0,
+          1,
+          5
+         ],
+         null
+        ]
+       },
+       {
+        "m": "drain",
+        "a": [
+         1000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:150"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     5,
+     3,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          5,
+          3,
+          2
+         ],
+         null
+        ]
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 1000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:155"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "FluidMovementActorScenes.java:160"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     5,
+     4,
+     2.5
+    ],
+    "direction": "left",
+    "duration": 30,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "create:chocolate_bucket",
+     "count": 1
+    }
+   },
+   "src": "FluidMovementActorScenes.java:145"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     5
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          0,
+          1,
+          5
+         ],
+         null
+        ]
+       },
+       {
+        "m": "drain",
+        "a": [
+         1000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:150"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     5,
+     3,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          5,
+          3,
+          2
+         ],
+         null
+        ]
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 1000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:155"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "FluidMovementActorScenes.java:160"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     5
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          0,
+          1,
+          5
+         ],
+         null
+        ]
+       },
+       {
+        "m": "drain",
+        "a": [
+         1000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:150"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     5,
+     3,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          5,
+          3,
+          2
+         ],
+         null
+        ]
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 1000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:155"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "FluidMovementActorScenes.java:160"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     5
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          0,
+          1,
+          5
+         ],
+         null
+        ]
+       },
+       {
+        "m": "drain",
+        "a": [
+         1000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:150"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     5,
+     3,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          5,
+          3,
+          2
+         ],
+         null
+        ]
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 1000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:155"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "FluidMovementActorScenes.java:160"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     5
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          0,
+          1,
+          5
+         ],
+         null
+        ]
+       },
+       {
+        "m": "drain",
+        "a": [
+         1000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:150"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     5,
+     3,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          5,
+          3,
+          2
+         ],
+         null
+        ]
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 1000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:155"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "FluidMovementActorScenes.java:160"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     5
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          0,
+          1,
+          5
+         ],
+         null
+        ]
+       },
+       {
+        "m": "drain",
+        "a": [
+         1000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:150"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     5,
+     3,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          5,
+          3,
+          2
+         ],
+         null
+        ]
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 1000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:155"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "FluidMovementActorScenes.java:160"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     5
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          0,
+          1,
+          5
+         ],
+         null
+        ]
+       },
+       {
+        "m": "drain",
+        "a": [
+         1000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:150"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     5,
+     3,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          5,
+          3,
+          2
+         ],
+         null
+        ]
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 1000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:155"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "FluidMovementActorScenes.java:160"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     5
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          0,
+          1,
+          5
+         ],
+         null
+        ]
+       },
+       {
+        "m": "drain",
+        "a": [
+         1000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:150"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     5,
+     3,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          5,
+          3,
+          2
+         ],
+         null
+        ]
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 1000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:155"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "FluidMovementActorScenes.java:160"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     5
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          0,
+          1,
+          5
+         ],
+         null
+        ]
+       },
+       {
+        "m": "drain",
+        "a": [
+         1000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:150"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     5,
+     3,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          5,
+          3,
+          2
+         ],
+         null
+        ]
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 1000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:155"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "FluidMovementActorScenes.java:160"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     5
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          0,
+          1,
+          5
+         ],
+         null
+        ]
+       },
+       {
+        "m": "drain",
+        "a": [
+         1000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:163"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     6,
+     3,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          6,
+          3,
+          2
+         ],
+         null
+        ]
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 1000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:168"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "FluidMovementActorScenes.java:173"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     5
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          0,
+          1,
+          5
+         ],
+         null
+        ]
+       },
+       {
+        "m": "drain",
+        "a": [
+         1000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:163"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     6,
+     3,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          6,
+          3,
+          2
+         ],
+         null
+        ]
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 1000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:168"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "FluidMovementActorScenes.java:173"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     5
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          0,
+          1,
+          5
+         ],
+         null
+        ]
+       },
+       {
+        "m": "drain",
+        "a": [
+         1000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:163"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     6,
+     3,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          6,
+          3,
+          2
+         ],
+         null
+        ]
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 1000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:168"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "FluidMovementActorScenes.java:173"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     5
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          0,
+          1,
+          5
+         ],
+         null
+        ]
+       },
+       {
+        "m": "drain",
+        "a": [
+         1000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:163"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     6,
+     3,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          6,
+          3,
+          2
+         ],
+         null
+        ]
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 1000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:168"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "FluidMovementActorScenes.java:173"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     5
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          0,
+          1,
+          5
+         ],
+         null
+        ]
+       },
+       {
+        "m": "drain",
+        "a": [
+         1000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:163"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     6,
+     3,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          6,
+          3,
+          2
+         ],
+         null
+        ]
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 1000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:168"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "FluidMovementActorScenes.java:173"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     5
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          0,
+          1,
+          5
+         ],
+         null
+        ]
+       },
+       {
+        "m": "drain",
+        "a": [
+         1000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:163"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     6,
+     3,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          6,
+          3,
+          2
+         ],
+         null
+        ]
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 1000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:168"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "FluidMovementActorScenes.java:173"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     5
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          0,
+          1,
+          5
+         ],
+         null
+        ]
+       },
+       {
+        "m": "drain",
+        "a": [
+         1000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:163"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     6,
+     3,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          6,
+          3,
+          2
+         ],
+         null
+        ]
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 1000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:168"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "FluidMovementActorScenes.java:173"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     5
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          0,
+          1,
+          5
+         ],
+         null
+        ]
+       },
+       {
+        "m": "drain",
+        "a": [
+         1000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:163"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     6,
+     3,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          6,
+          3,
+          2
+         ],
+         null
+        ]
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 1000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:168"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "FluidMovementActorScenes.java:173"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "FluidMovementActorScenes.java:176"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 40,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     0.5,
+     2,
+     4.5
+    ],
+    "key": "text_7",
+    "text": "...or extracted from the contraption"
+   },
+   "src": "FluidMovementActorScenes.java:178"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       0,
+       1,
+       4
+      ],
+      "state": {
+       "name": "create:mechanical_pump",
+       "props": {
+        "facing": "south",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": true
+   },
+   "src": "FluidMovementActorScenes.java:182"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     4
+    ],
+    "beType": "PumpBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "onSpeedChanged",
+        "a": [
+         0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:183"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "FluidMovementActorScenes.java:184"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     6,
+     3,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          6,
+          3,
+          2
+         ],
+         null
+        ]
+       },
+       {
+        "m": "drain",
+        "a": [
+         1000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:187"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     5
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          0,
+          1,
+          5
+         ],
+         null
+        ]
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 1000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:192"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "FluidMovementActorScenes.java:197"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     6,
+     3,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          6,
+          3,
+          2
+         ],
+         null
+        ]
+       },
+       {
+        "m": "drain",
+        "a": [
+         1000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:187"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     5
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          0,
+          1,
+          5
+         ],
+         null
+        ]
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 1000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:192"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "FluidMovementActorScenes.java:197"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     6,
+     3,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          6,
+          3,
+          2
+         ],
+         null
+        ]
+       },
+       {
+        "m": "drain",
+        "a": [
+         1000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:187"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     5
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          0,
+          1,
+          5
+         ],
+         null
+        ]
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 1000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:192"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "FluidMovementActorScenes.java:197"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     6,
+     3,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          6,
+          3,
+          2
+         ],
+         null
+        ]
+       },
+       {
+        "m": "drain",
+        "a": [
+         1000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:187"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     5
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          0,
+          1,
+          5
+         ],
+         null
+        ]
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 1000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:192"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "FluidMovementActorScenes.java:197"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     6,
+     3,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          6,
+          3,
+          2
+         ],
+         null
+        ]
+       },
+       {
+        "m": "drain",
+        "a": [
+         1000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:187"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     5
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          0,
+          1,
+          5
+         ],
+         null
+        ]
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 1000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:192"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "FluidMovementActorScenes.java:197"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     6,
+     3,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          6,
+          3,
+          2
+         ],
+         null
+        ]
+       },
+       {
+        "m": "drain",
+        "a": [
+         1000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:187"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     5
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          0,
+          1,
+          5
+         ],
+         null
+        ]
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 1000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:192"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "FluidMovementActorScenes.java:197"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     6,
+     3,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          6,
+          3,
+          2
+         ],
+         null
+        ]
+       },
+       {
+        "m": "drain",
+        "a": [
+         1000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:187"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     5
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          0,
+          1,
+          5
+         ],
+         null
+        ]
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 1000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:192"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "FluidMovementActorScenes.java:197"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     6,
+     3,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          6,
+          3,
+          2
+         ],
+         null
+        ]
+       },
+       {
+        "m": "drain",
+        "a": [
+         1000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:187"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     5
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          0,
+          1,
+          5
+         ],
+         null
+        ]
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 1000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:192"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "FluidMovementActorScenes.java:197"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     5,
+     3,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          5,
+          3,
+          2
+         ],
+         null
+        ]
+       },
+       {
+        "m": "drain",
+        "a": [
+         1000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:200"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     5
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          0,
+          1,
+          5
+         ],
+         null
+        ]
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 1000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:205"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "FluidMovementActorScenes.java:210"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     5,
+     3,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          5,
+          3,
+          2
+         ],
+         null
+        ]
+       },
+       {
+        "m": "drain",
+        "a": [
+         1000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:200"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     5
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          0,
+          1,
+          5
+         ],
+         null
+        ]
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 1000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:205"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "FluidMovementActorScenes.java:210"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     5,
+     3,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          5,
+          3,
+          2
+         ],
+         null
+        ]
+       },
+       {
+        "m": "drain",
+        "a": [
+         1000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:200"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     5
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          0,
+          1,
+          5
+         ],
+         null
+        ]
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 1000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:205"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "FluidMovementActorScenes.java:210"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     5,
+     3,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          5,
+          3,
+          2
+         ],
+         null
+        ]
+       },
+       {
+        "m": "drain",
+        "a": [
+         1000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:200"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     5
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          0,
+          1,
+          5
+         ],
+         null
+        ]
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 1000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:205"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "FluidMovementActorScenes.java:210"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     5,
+     3,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          5,
+          3,
+          2
+         ],
+         null
+        ]
+       },
+       {
+        "m": "drain",
+        "a": [
+         1000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:200"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     5
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          0,
+          1,
+          5
+         ],
+         null
+        ]
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 1000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:205"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "FluidMovementActorScenes.java:210"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     5,
+     3,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          5,
+          3,
+          2
+         ],
+         null
+        ]
+       },
+       {
+        "m": "drain",
+        "a": [
+         1000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:200"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     5
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          0,
+          1,
+          5
+         ],
+         null
+        ]
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 1000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:205"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "FluidMovementActorScenes.java:210"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     5,
+     3,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          5,
+          3,
+          2
+         ],
+         null
+        ]
+       },
+       {
+        "m": "drain",
+        "a": [
+         1000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:200"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     5
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          0,
+          1,
+          5
+         ],
+         null
+        ]
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 1000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:205"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "FluidMovementActorScenes.java:210"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     5,
+     3,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          5,
+          3,
+          2
+         ],
+         null
+        ]
+       },
+       {
+        "m": "drain",
+        "a": [
+         1000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:200"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     5
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          0,
+          1,
+          5
+         ],
+         null
+        ]
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 1000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:205"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "FluidMovementActorScenes.java:210"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     5,
+     3,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          5,
+          3,
+          2
+         ],
+         null
+        ]
+       },
+       {
+        "m": "drain",
+        "a": [
+         1000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:200"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     5
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          0,
+          1,
+          5
+         ],
+         null
+        ]
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 1000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:205"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "FluidMovementActorScenes.java:210"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     5,
+     3,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          5,
+          3,
+          2
+         ],
+         null
+        ]
+       },
+       {
+        "m": "drain",
+        "a": [
+         1000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:200"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     5
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          0,
+          1,
+          5
+         ],
+         null
+        ]
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 1000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:205"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "FluidMovementActorScenes.java:210"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     5,
+     3,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          5,
+          3,
+          2
+         ],
+         null
+        ]
+       },
+       {
+        "m": "drain",
+        "a": [
+         1000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:200"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     5
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          0,
+          1,
+          5
+         ],
+         null
+        ]
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 1000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:205"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "FluidMovementActorScenes.java:210"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     5,
+     3,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          5,
+          3,
+          2
+         ],
+         null
+        ]
+       },
+       {
+        "m": "drain",
+        "a": [
+         1000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:200"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     5
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          0,
+          1,
+          5
+         ],
+         null
+        ]
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 1000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:205"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "FluidMovementActorScenes.java:210"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     5,
+     3,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          5,
+          3,
+          2
+         ],
+         null
+        ]
+       },
+       {
+        "m": "drain",
+        "a": [
+         1000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:200"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     5
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          0,
+          1,
+          5
+         ],
+         null
+        ]
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 1000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:205"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "FluidMovementActorScenes.java:210"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     5,
+     3,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          5,
+          3,
+          2
+         ],
+         null
+        ]
+       },
+       {
+        "m": "drain",
+        "a": [
+         1000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:200"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     5
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          0,
+          1,
+          5
+         ],
+         null
+        ]
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 1000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:205"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "FluidMovementActorScenes.java:210"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     5,
+     3,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          5,
+          3,
+          2
+         ],
+         null
+        ]
+       },
+       {
+        "m": "drain",
+        "a": [
+         1000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:200"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     5
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          0,
+          1,
+          5
+         ],
+         null
+        ]
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 1000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:205"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "FluidMovementActorScenes.java:210"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     5,
+     3,
+     2
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          5,
+          3,
+          2
+         ],
+         null
+        ]
+       },
+       {
+        "m": "drain",
+        "a": [
+         1000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:200"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     1,
+     5
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          0,
+          1,
+          5
+         ],
+         null
+        ]
+       },
+       {
+        "m": "fill",
+        "a": [
+         {
+          "fluid": "create:chocolate",
+          "amount": 1000
+         },
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:205"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "FluidMovementActorScenes.java:210"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     2,
+     2,
+     3
+    ],
+    "beType": "FluidTankBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getLevel",
+        "a": []
+       },
+       {
+        "m": "getCapability",
+        "a": [
+         {
+          "cap": "FluidHandler.BLOCK"
+         },
+         [
+          2,
+          2,
+          3
+         ],
+         null
+        ]
+       },
+       {
+        "m": "drain",
+        "a": [
+         8000,
+         {
+          "enum": "FluidAction.EXECUTE"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:213"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "FluidMovementActorScenes.java:218"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 120,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     2.5,
+     3,
+     2.5
+    ],
+    "key": "text_8",
+    "text": "After no contents have been exchanged for a while, the contraption will continue on its way"
+   },
+   "src": "FluidMovementActorScenes.java:220"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "PortableFluidInterfaceBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       2,
+       2
+      ],
+      "nbt": {
+       "Timer": 2
+      }
+     },
+     {
+      "pos": [
+       4,
+       2,
+       2
+      ],
+      "nbt": {
+       "Timer": 2
+      }
+     }
+    ]
+   },
+   "src": "FluidMovementActorScenes.java:225"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "FluidMovementActorScenes.java:227"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bearing",
+    "pos": [
+     5,
+     1,
+     2
+    ],
+    "distance": 270,
+    "duration": 120
+   },
+   "src": "FluidMovementActorScenes.java:228"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "rotation": [
+     0,
+     270,
+     0
+    ],
+    "duration": 120
+   },
+   "src": "FluidMovementActorScenes.java:229"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 100
+   },
+   "src": "FluidMovementActorScenes.java:230"
+  },
+  {
+   "op": "markAsFinished",
+   "args": {},
+   "src": "FluidMovementActorScenes.java:231"
+  }
+ ]
+}
