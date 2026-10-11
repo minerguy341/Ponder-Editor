@@ -9,7 +9,7 @@
 //   offset = BlockEntity.getHandOffset(pt): Ponder's virtual deployer reads its animated offset (PonderAnim.deployer, see
 //            ProcessVisual.animValue); the timer / state machine only drives non-virtual (Flywheel) visuals.
 import * as THREE from 'three';
-import type { BlockInstance, BlockState, BlockVisual, Direction, VisualContext } from '../../../contract';
+import type { BlockInstance, BlockState, BlockVisual, Direction, ItemStackJson, VisualContext } from '../../../contract';
 import type { VisualModule } from '../registry';
 import {
   type Axis, PARTIAL, RotatingPart, axisOf, dirVector, getPartial, horizontalAngle, readItemStack, rotationOffset,
@@ -48,7 +48,23 @@ export function deployerQuat(out: THREE.Quaternion, yRot: number, xRot: number, 
 
 const HANDS = [PARTIAL.DEPLOYER_HAND_POINTING, PARTIAL.DEPLOYER_HAND_PUNCHING, PARTIAL.DEPLOYER_HAND_HOLDING] as const;
 
+const QX = new THREE.Quaternion(), QZ = new THREE.Quaternion();
+/** deployerQuat without allocation (the result is written into `out`). */
+function deployerQuatInto(out: THREE.Quaternion, yRot: number, xRot: number, zRot: number): THREE.Quaternion {
+  out.setFromAxisAngle(AY, yRot * DEG);
+  QX.setFromAxisAngle(AX, xRot * DEG);
+  out.multiply(QX);
+  if (zRot !== 0) { QZ.setFromAxisAngle(AZ, zRot * DEG); out.multiply(QZ); }
+  return out;
+}
+
 class DeployerVisual extends ProcessVisual {
+  private angles: { yRot: number; xRot: number; zRot: number };
+  private heldRaw: unknown = undefined;
+  private heldStack: ItemStackJson | undefined;
+  private heldIsBlock = false;
+  private heldInfoFor: ItemStackJson | undefined = undefined;
+  private heldInfoCtx: ItemContext | undefined = undefined;
   private facing: Direction;
   private alongFirst: boolean;
   private shaft!: RotatingPart;
@@ -66,6 +82,7 @@ class DeployerVisual extends ProcessVisual {
     super(block, ctx);
     this.facing = stateDirection(block.state, 'facing') ?? 'north';
     this.alongFirst = stateBool(block.state, 'axis_along_first');
+    this.angles = deployerModelAngles(this.facing, this.alongFirst);
   }
 
   protected async build(): Promise<void> {
@@ -103,13 +120,13 @@ class DeployerVisual extends ProcessVisual {
 
     const distance = this.animValue(whole, pt, 'deployer');
     dirVector(this.facing, this.off).multiplyScalar(distance);
-    const { yRot, xRot, zRot } = deployerModelAngles(this.facing, this.alongFirst);
+    const { yRot, xRot, zRot } = this.angles;
 
     // pole and hand: rotate about the block centre (Flywheel ORIENTED instances), then move by the hand offset
-    deployerQuat(this.qPole, yRot, xRot, zRot);
+    deployerQuatInto(this.qPole, yRot, xRot, zRot);
     setRotationAboutCentre(this.pivotPole, this.qPole);
     this.pivotPole.position.add(this.off);
-    deployerQuat(this.qHand, yRot, xRot, 0);
+    deployerQuatInto(this.qHand, yRot, xRot, 0);
     setRotationAboutCentre(this.pivotHand, this.qHand);
     this.pivotHand.position.add(this.off);
     const handId = this.handPart(whole);
@@ -120,12 +137,19 @@ class DeployerVisual extends ProcessVisual {
 
     // held item: DeployerRenderer.renderItem
     const punching = handId === PARTIAL.DEPLOYER_HAND_PUNCHING;
-    const stack = readItemStack(this.nbtAt(whole, 'HeldItem'));
+    const raw = this.nbtAt(whole, 'HeldItem');
+    if (raw !== this.heldRaw) { this.heldRaw = raw; this.heldStack = readItemStack(raw); }
+    const stack = this.heldStack;
     const display = this.facing === 'up' && speed === 0 && !punching;
     const ctx: ItemContext = display ? 'ground' : 'fixed';
     this.held.set(stack, ctx);
     if (this.held.shown && stack) {
-      const isBlockItem = !!itemInfo(stack, { context: ctx })?.blockItem;
+      if (this.heldInfoCtx !== ctx || this.heldInfoFor !== stack) {
+        this.heldIsBlock = !!itemInfo(stack, { context: ctx })?.blockItem;
+        this.heldInfoFor = stack;
+        this.heldInfoCtx = ctx;
+      }
+      const isBlockItem = this.heldIsBlock;
       const p = this.pose.reset();
       p.translate(this.off.x + 0.5, this.off.y + 0.5, this.off.z + 0.5);
       p.rotateYDegrees(horizontalAngle(this.facing) + 180);

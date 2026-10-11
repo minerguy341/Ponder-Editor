@@ -15,7 +15,9 @@ import type { BlockInstance, BlockState, BlockVisual, ItemStackJson, Vec3, Visua
 import type { VisualModule } from '../registry';
 import { PARTIAL, getPartial, lerpAngleDeg, readItemStack, rotationOffset, stateBool } from '../common';
 import { itemInfo } from '../items';
-import { centredRotation } from './process-harvester-roller';
+import { AXIS, axisDegMatrix, centredMatrix, mulInto, transMatrix, transRotMatrix } from '../vanilla/scratch';
+
+const RX180 = new THREE.Matrix4().makeRotationX(Math.PI);
 import { ItemSlot } from '../vanilla/itemSlot';
 import { ProcessVisual, TickSim, type BEvent } from '../vanilla/processBase';
 
@@ -153,6 +155,11 @@ class ArmVisual extends ProcessVisual {
     head: new THREE.Group(), tilt: new THREE.Group(),
   };
   private grips = [new THREE.Group(), new THREE.Group()];
+  private m = Array.from({ length: 9 }, () => new THREE.Matrix4());
+  private heldRaw: unknown = undefined;
+  private heldStack: ItemStackJson | undefined;
+  private heldBlock = false;
+  private cogOffset = 0;
   private held = new ItemSlot();
   private sim: TickSim<ArmState>;
   private angleCache = new Map<string, ArmTarget>();
@@ -161,6 +168,7 @@ class ArmVisual extends ProcessVisual {
     super(block, ctx);
     this.ceiling = stateBool(block.state, 'ceiling');
     this.goggles = !!block.nbt?.Goggles;
+    this.cogOffset = rotationOffset(block.state, 'y', block.pos);
     const angles = (p: Vec3) => this.anglesFor(p);
     this.sim = this.registerSim(new TickSim<ArmState>(
       () => armInitial(block.nbt, block.pos),
@@ -203,34 +211,50 @@ class ArmVisual extends ProcessVisual {
 
   protected onUpdate(ticks: number): void {
     const whole = Math.floor(ticks);
-    const s = this.sim.at(whole, this.events);
+    const st = this.sim.at(whole, this.events);
     const n = this.nodes;
-    // msr.translate(pos); msr.center(); [ceiling: rotateX(180)]  (the object sits at the block origin)
-    const rootM = new THREE.Matrix4().makeTranslation(0.5, 0.5, 0.5);
-    if (this.ceiling) rootM.multiply(new THREE.Matrix4().makeRotationX(Math.PI));
-    setMatrix(n.root, rootM);
-    setMatrix(n.base, new THREE.Matrix4().makeTranslation(0, 4 / 16, 0).multiply(new THREE.Matrix4().makeRotationY(s.base * DEG)));
-    setMatrix(n.lower, new THREE.Matrix4().makeTranslation(0, 2 / 16, 0).multiply(new THREE.Matrix4().makeRotationX(s.lower * DEG)));
-    setMatrix(n.upper, new THREE.Matrix4().makeTranslation(0, 0, -14 / 16).multiply(new THREE.Matrix4().makeRotationX((s.upper - 180) * DEG)));
-    setMatrix(n.head, new THREE.Matrix4().makeTranslation(0, 0, -15 / 16).multiply(new THREE.Matrix4().makeRotationX((s.head - 45) * DEG)));
-    setMatrix(n.tilt, this.ceiling && this.goggles ? new THREE.Matrix4().makeRotationZ(Math.PI) : new THREE.Matrix4());
+    // msr.translate(pos); msr.center(); [ceiling: rotateX(180)]  (the object sits at the block origin); allocation free
+    transMatrix(this.m[0], 0.5, 0.5, 0.5);
+    if (this.ceiling) mulInto(this.m[0], this.m[0], RX180);
+    setMatrix(n.root, this.m[0]);
+    transRotMatrix(this.m[1], 0, 4 / 16, 0, AXIS.y, st.base);
+    setMatrix(n.base, this.m[1]);
+    transRotMatrix(this.m[2], 0, 2 / 16, 0, AXIS.x, st.lower);
+    setMatrix(n.lower, this.m[2]);
+    transRotMatrix(this.m[3], 0, 0, -14 / 16, AXIS.x, st.upper - 180);
+    setMatrix(n.upper, this.m[3]);
+    transRotMatrix(this.m[4], 0, 0, -15 / 16, AXIS.x, st.head - 45);
+    setMatrix(n.head, this.m[4]);
+    if (this.ceiling && this.goggles) axisDegMatrix(this.m[5], AXIS.z, 180); else this.m[5].identity();
+    setMatrix(n.tilt, this.m[5]);
     // ArmRenderer.transformClawHalf: T(0, -flip * k, -6/16) with k depending on the held item
-    const stack = readItemStack(this.nbtAt(whole, 'HeldItem')) as ItemStackJson | undefined;
-    const isBlock = stack ? !!itemInfo(stack, { context: 'fixed' })?.blockItem : false;
+    const raw = this.nbtAt(whole, 'HeldItem');
+    if (raw !== this.heldRaw) {
+      this.heldRaw = raw;
+      this.heldStack = readItemStack(raw) as ItemStackJson | undefined;
+      this.heldBlock = this.heldStack ? !!itemInfo(this.heldStack, { context: 'fixed' })?.blockItem : false;
+    }
+    const stack = this.heldStack;
+    const isBlock = this.heldBlock;
     const k = stack ? (isBlock ? 3 / 16 : 5 / 64) : 1 / 16;
     for (const [i, g] of this.grips.entries()) {
       const flip = i * 2 - 1;
-      setMatrix(g, new THREE.Matrix4().makeTranslation(0, -flip * k, -6 / 16));
+      g.matrixAutoUpdate = false;
+      g.matrix.makeTranslation(0, -flip * k, -6 / 16);
+      g.matrixWorldNeedsUpdate = true;
     }
     // held item: rotateX(90) on the claw frame, then translate(0, -(9|10)/16, 0) and scale (itemScale 0.5)
-    const hm = new THREE.Matrix4().makeRotationX(Math.PI / 2)
-      .multiply(new THREE.Matrix4().makeTranslation(0, isBlock ? -9 / 16 : -10 / 16, 0))
-      .multiply(new THREE.Matrix4().makeScale(0.5, 0.5, 0.5));
-    setMatrix(this.held.object, hm);
+    axisDegMatrix(this.m[6], AXIS.x, 90);
+    transMatrix(this.m[7], 0, isBlock ? -9 / 16 : -10 / 16, 0);
+    mulInto(this.m[6], this.m[6], this.m[7]);
+    this.m[7].makeScale(0.5, 0.5, 0.5);
+    mulInto(this.m[6], this.m[6], this.m[7]);
+    setMatrix(this.held.object, this.m[6]);
     this.held.set(stack, 'fixed');
-    // cogwheel (SingleAxisRotatingVisual): centred rotation about Y, speed * 6/20 deg per tick, plus the position offset
-    const cogAngle = ((ticks * this.speedAt(ticks) * 3) / 10 + rotationOffset(this.block.state, 'y', this.block.pos)) % 360;
-    setMatrix(this.cogNode, centredRotation(cogAngle, new THREE.Vector3(0, 1, 0)));
+    // cogwheel (SingleAxisRotatingVisual): centred rotation about Y, speed * 3/10 deg per tick, plus the position offset
+    const cogAngle = ((ticks * this.speedAt(ticks) * 3) / 10 + this.cogOffset) % 360;
+    centredMatrix(this.m[8], AXIS.y, cogAngle);
+    setMatrix(this.cogNode, this.m[8]);
   }
 }
 

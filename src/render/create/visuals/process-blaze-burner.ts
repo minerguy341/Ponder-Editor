@@ -27,11 +27,12 @@ export function blazeModelFor(heat: number): string {
   return PARTIAL.BLAZE_INERT;
 }
 /** The bobbing offset of the head/rods: sin((renderTick/16) mod 2pi) / offsetMult, phases 0, pi, pi/2. */
-export function burnerOffsets(renderTick: number, heat: number): [number, number, number] {
+export function burnerOffset(renderTick: number, heat: number, phase: number): number {
   const mult = heat >= 2 ? 64 : 16;
-  const tau = Math.PI * 2;
-  const f = (phase: number) => Math.sin(((renderTick / 16 + phase) % tau)) / mult;
-  return [f(0), f(Math.PI), f(Math.PI / 2)];
+  return Math.sin(((renderTick / 16 + phase) % (Math.PI * 2))) / mult;
+}
+export function burnerOffsets(renderTick: number, heat: number): [number, number, number] {
+  return [burnerOffset(renderTick, heat, 0), burnerOffset(renderTick, heat, Math.PI), burnerOffset(renderTick, heat, Math.PI / 2)];
 }
 
 class BlazeBurnerVisual extends BaseVisual {
@@ -40,6 +41,8 @@ class BlazeBurnerVisual extends BaseVisual {
   private blaze!: THREE.Group;
   private rods: THREE.Group[] = [];
   private hash: number;
+  private rot = new THREE.Quaternion();
+  private yAxis = new THREE.Vector3(0, 1, 0);
   constructor(block: BlockInstance, ctx: VisualContext) {
     super(block, ctx);
     this.heat = blazeHeat(block.state);
@@ -64,11 +67,13 @@ class BlazeBurnerVisual extends BaseVisual {
   protected onUpdate(ticks: number): void {
     if (this.heat === 0 || !this.blaze) return;
     const renderTick = ticks + this.hash * 16;
-    const [o0, o1, o2] = burnerOffsets(renderTick, this.heat);
+    const o0 = burnerOffset(renderTick, this.heat, 0);
+    const o1 = burnerOffset(renderTick, this.heat, Math.PI);
+    const o2 = burnerOffset(renderTick, this.heat, Math.PI / 2);
     const headY = o0;
     // blazeBuffer.translate(0, headY, 0) (outermost) then draw(): rotateCentered(headAngle, UP) (innermost)
-    const rot = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), horizontalAngle(this.facing) * Math.PI / 180);
-    setRotationAboutCentre(this.blaze, rot);
+    this.rot.setFromAxisAngle(this.yAxis, horizontalAngle(this.facing) * Math.PI / 180);
+    setRotationAboutCentre(this.blaze, this.rot);
     this.blaze.position.y += headY;
     if (this.rods.length === 2) {
       this.rods[0].position.set(0, o1 + 0.125, 0);

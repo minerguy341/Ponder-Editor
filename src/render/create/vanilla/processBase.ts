@@ -88,6 +88,7 @@ export abstract class ProcessVisual extends BaseVisual {
 
   constructor(block: BlockInstance, ctx: VisualContext) {
     super(block, ctx);
+    this.seen = { ...(block.nbt ?? {}) };
     const k = readKinetic(this.data);
     this.baseSpeed = k.speed;
     this.overstressed = k.overStressed;
@@ -132,22 +133,44 @@ export abstract class ProcessVisual extends BaseVisual {
   /** Current speed (end of the event log) for visuals that are not time dependent. */
   protected get currentSpeed(): number { return this.overstressed ? 0 : getNumber(this.data, 'Speed', this.baseSpeed); }
 
-  override setData(nbt: Record<string, unknown>): void {
-    const { __tick, calls, ...patch } = nbt;
-    const tick = typeof __tick === 'number' ? __tick : Math.floor(this.lastTicks);
-    const ev: BEvent = { tick, patch, calls: Array.isArray(calls) ? (calls as Call[]) : [] };
-    // keep sorted by tick, stable for equal ticks
+  /** Keys of the last nbt the player sent (the player re-sends the whole block-entity nbt; only changed keys are applied). */
+  private seen: Nbt;
+  /** Number of PonderCalls entries (recorded block-entity method calls, see scenegraph / ops logCall) already turned into events. */
+  private callsSeen = 0;
+
+  private insertEvent(ev: BEvent): void {
     let i = this.events.length;
-    while (i > 0 && this.events[i - 1].tick > tick) i--;
+    while (i > 0 && this.events[i - 1].tick > ev.tick) i--;
     this.events.splice(i, 0, ev);
-    if (typeof patch.Speed === 'number') {
+    if (typeof ev.patch.Speed === 'number') {
       let j = this.speedKnots.length;
-      while (j > 0 && this.speedKnots[j - 1].tick > tick) j--;
-      this.speedKnots.splice(j, 0, { tick, speed: patch.Speed });
+      while (j > 0 && this.speedKnots[j - 1].tick > ev.tick) j--;
+      this.speedKnots.splice(j, 0, { tick: ev.tick, speed: ev.patch.Speed });
     }
-    if (isNbt(patch.Network)) { const k = readKinetic({ Speed: 0, Network: patch.Network }); this.overstressed = k.overStressed; }
+    if (isNbt(ev.patch.Network)) { const k = readKinetic({ Speed: 0, Network: ev.patch.Network }); this.overstressed = k.overStressed; }
+  }
+
+  override setData(nbt: Record<string, unknown>): void {
+    const { __tick, calls, PonderCalls, ...rest } = nbt;
+    const tick = typeof __tick === 'number' ? __tick : Math.floor(this.lastTicks);
+    const patch: Nbt = {};
+    for (const k of Object.keys(rest)) {
+      if (JSON.stringify(rest[k]) !== JSON.stringify(this.seen[k])) patch[k] = rest[k];
+    }
+    Object.assign(this.seen, rest);
+    Object.assign(this.data, rest);
+    if (Object.keys(patch).length > 0 || (Array.isArray(calls) && calls.length > 0)) {
+      this.insertEvent({ tick, patch, calls: Array.isArray(calls) ? (calls as Call[]) : [] });
+    }
+    // recorded block-entity method calls: [{ t: scene tick, path: [{m, a}] }], appended in order
+    if (Array.isArray(PonderCalls)) {
+      for (let i = this.callsSeen; i < PonderCalls.length; i++) {
+        const c = PonderCalls[i] as { t?: number; path?: Call['path'] };
+        if (c && Array.isArray(c.path)) this.insertEvent({ tick: typeof c.t === 'number' ? c.t : tick, patch: {}, calls: [{ path: c.path }] });
+      }
+      this.callsSeen = Math.max(this.callsSeen, PonderCalls.length);
+    }
     for (const s of this.sims) s.invalidate();
-    Object.assign(this.data, patch);
     this.onData();
     this.onUpdate(this.lastTicks); // redraw a paused scene with the new data (BaseVisual no longer does)
   }

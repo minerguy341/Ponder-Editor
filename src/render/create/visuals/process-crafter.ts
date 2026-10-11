@@ -6,10 +6,10 @@
 //   renderAndTransform: rotateCentered(yRot + 90, UP), rotateCentered(xRot, EAST); xRot = Pointing.getXRotation()
 // Not drawn: the grid items (GroupedItems / Inventory) and the belt (it needs the neighbouring block entity's state).
 import * as THREE from 'three';
+import { AXIS, centredMatrix, mulInto } from '../vanilla/scratch';
 import type { BlockInstance, BlockState, BlockVisual, Direction, VisualContext } from '../../../contract';
 import type { VisualModule } from '../registry';
-import { KineticVisual, PARTIAL, axisOf, axisVector, getPartial, horizontalAngle, readItemStack, rotationOffset, stateDirection } from '../common';
-import { centredRotation } from './process-harvester-roller';
+import { type Axis, KineticVisual, PARTIAL, axisOf, getPartial, horizontalAngle, readItemStack, rotationOffset, stateDirection } from '../common';
 
 // Catnip net.createmod.catnip.math.Pointing (Ponder repo, mc1.21.1 dev/common): UP(0), LEFT(270), DOWN(180), RIGHT(90)
 const POINTING_X: Record<string, number> = { up: 0, left: 270, down: 180, right: 90 };
@@ -22,7 +22,10 @@ export function crafterPointingX(pointing: string | undefined): number {
 /** renderAndTransform(model): rotateCentered(yRot + 90, UP) then rotateCentered(xRot, EAST). */
 export function crafterPartMatrix(facing: Direction, pointing: string | undefined): THREE.Matrix4 {
   const yRot = horizontalAngle(facing);
-  return centredRotation(yRot + 90, new THREE.Vector3(0, 1, 0)).multiply(centredRotation(crafterPointingX(pointing), new THREE.Vector3(1, 0, 0)));
+  const a = new THREE.Matrix4(), b = new THREE.Matrix4();
+  centredMatrix(a, AXIS.y, yRot + 90);
+  centredMatrix(b, AXIS.x, crafterPointingX(pointing));
+  return a.multiply(b);
 }
 
 class CrafterVisual extends KineticVisual {
@@ -31,11 +34,18 @@ class CrafterVisual extends KineticVisual {
   private cogNode = new THREE.Group();
   private lidNode = new THREE.Group();
   private arrowNode = new THREE.Group();
+  private m = Array.from({ length: 4 }, () => new THREE.Matrix4());
+  private axis: Axis;
+  private placeY: number;
+  private cogOffset: number;
 
   constructor(block: BlockInstance, ctx: VisualContext) {
     super(block, ctx);
     this.facing = stateDirection(block.state, 'facing') ?? 'north';
     this.pointing = block.state.props.pointing ?? 'up';
+    this.axis = axisOf(this.facing);
+    this.placeY = this.axis === 'x' ? 90 : 0;
+    this.cogOffset = rotationOffset(block.state, this.axis, block.pos);
   }
 
   protected async build(): Promise<void> {
@@ -61,14 +71,16 @@ class CrafterVisual extends KineticVisual {
 
   protected override onUpdate(ticks: number): void {
     super.onUpdate(ticks);
-    const axis = axisOf(this.facing);
-    const angle = (ticks * this.kin.effectiveSpeed * 3 / 10 + rotationOffset(this.block.state, axis, this.block.pos)) % 360;
-    // standardKineticRotationTransform: rotateCentered(axis, angle), then the cog placement (Y-axis cog)
-    const kinetic = centredRotation(angle, axisVector(axis, new THREE.Vector3()));
-    const placeY = centredRotation(axis === 'x' ? 90 : 0, new THREE.Vector3(0, 1, 0));
-    const placeX = centredRotation(90, new THREE.Vector3(1, 0, 0));
+    const axis = this.axis;
+    const angle = (ticks * this.kin.effectiveSpeed * 3 / 10 + this.cogOffset) % 360;
+    // standardKineticRotationTransform: rotateCentered(axis, angle), then the Y-axis cog placement (no allocation)
+    centredMatrix(this.m[0], AXIS[axis], angle);
+    centredMatrix(this.m[1], AXIS.y, this.placeY);
+    centredMatrix(this.m[2], AXIS.x, 90);
+    mulInto(this.m[3], this.m[0], this.m[1]);
+    mulInto(this.m[3], this.m[3], this.m[2]);
     this.cogNode.matrixAutoUpdate = false;
-    this.cogNode.matrix.copy(kinetic.multiply(placeY).multiply(placeX));
+    this.cogNode.matrix.copy(this.m[3]);
   }
 }
 

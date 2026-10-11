@@ -11,11 +11,16 @@ export class ItemSlot {
   private current: THREE.Group | null = null;
   private key = '';
   private loading = new Set<string>();
+  private lastStack: ItemStackJson | undefined = undefined;
+  private lastCtx: ItemContext | undefined = undefined;
 
   constructor(private onReady: () => void = () => {}) {}
 
   /** Shows `stack` in display context `ctx` (undefined = nothing). Cheap when nothing changed. */
   set(stack: ItemStackJson | undefined, ctx: ItemContext = 'fixed'): void {
+    if (stack === this.lastStack && ctx === this.lastCtx) return; // same parsed stack object: nothing to do (no per-frame key)
+    this.lastStack = stack;
+    this.lastCtx = ctx;
     const key = stack ? `${ctx}|${JSON.stringify(stack)}` : '';
     if (key === this.key) return;
     this.key = key;
