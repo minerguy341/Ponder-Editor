@@ -5,7 +5,7 @@
 //   lid       : pivots on the back edge (hinge at y = 9 px, z = 1 px); openness 0 = closed. Ponder never opens chests.
 //   lock      : rides on the lid (ChestModel: lock.xRot = lid.xRot).
 //   singles   : bottom 14x10x14 at (1,0,1); lid 14x5x14; lock 2x4x1 at x 7..9, z 15..16
-//   double    : left half 15 wide with lock at x 15..16, right half 15 wide without lock (texture normal_left / normal_right).
+//   double    : LEFT = x 0..15 (lock x 0..1), RIGHT = x 1..16 (lock x 15..16); textures normal_left / normal_right (ChestRenderer).
 import * as THREE from 'three';
 import type { BlockInstance, BlockState, BlockVisual, VisualContext } from '../../../contract';
 import type { VisualModule } from '../registry';
@@ -23,14 +23,17 @@ export const CHEST_PARTS: Record<'single' | 'left' | 'right', ChestParts> = {
     lid: { u: 0, v: 0, x: 1, y: 0, z: 0, w: 14, h: 5, d: 14 },
     lock: { u: 0, v: 0, x: 7, y: -2, z: 14, w: 2, h: 4, d: 1 },
   },
+  // ChestRenderer.createDoubleBodyLeftLayer / createDoubleBodyRightLayer (MCP 1.21 sources): LEFT is x 0..15 with the lock at x 0..1,
+  // RIGHT is x 1..16 with the lock at x 15..16 (lid/lock cubes relative to the hinge pivot at (0, 9, 1)).
   left: {
+    bottom: { u: 0, v: 19, x: 0, y: 0, z: 1, w: 15, h: 10, d: 14 },
+    lid: { u: 0, v: 0, x: 0, y: 0, z: 0, w: 15, h: 5, d: 14 },
+    lock: { u: 0, v: 0, x: 0, y: -2, z: 14, w: 1, h: 4, d: 1 },
+  },
+  right: {
     bottom: { u: 0, v: 19, x: 1, y: 0, z: 1, w: 15, h: 10, d: 14 },
     lid: { u: 0, v: 0, x: 1, y: 0, z: 0, w: 15, h: 5, d: 14 },
     lock: { u: 0, v: 0, x: 15, y: -2, z: 14, w: 1, h: 4, d: 1 },
-  },
-  right: {
-    bottom: { u: 0, v: 19, x: 0, y: 0, z: 1, w: 15, h: 10, d: 14 },
-    lid: { u: 0, v: 0, x: 0, y: 0, z: 0, w: 15, h: 5, d: 14 },
   },
 };
 /** PartPose of the lid (the hinge), in block pixels. */

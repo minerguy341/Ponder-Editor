@@ -158,6 +158,19 @@
     "changes": [
      {
       "pos": [
+       0,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_lamp",
+       "props": {
+        "lit": "true"
+       }
+      }
+     },
+     {
+      "pos": [
        1,
        1,
        2
@@ -244,6 +257,28 @@
    "src": "RedstoneScenes2.java:244"
   },
   {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       0,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_lamp",
+       "props": {
+        "lit": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes2.java:245"
+  },
+  {
    "op": "idle",
    "args": {
     "ticks": 15
@@ -305,6 +340,19 @@
     "changes": [
      {
       "pos": [
+       0,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_lamp",
+       "props": {
+        "lit": "true"
+       }
+      }
+     },
+     {
+      "pos": [
        1,
        1,
        2
@@ -389,6 +437,28 @@
     "ticks": 1
    },
    "src": "RedstoneScenes2.java:263"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       0,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_lamp",
+       "props": {
+        "lit": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes2.java:264"
   },
   {
    "op": "idle",
@@ -428,6 +498,19 @@
     "changes": [
      {
       "pos": [
+       0,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_lamp",
+       "props": {
+        "lit": "true"
+       }
+      }
+     },
+     {
+      "pos": [
        1,
        1,
        2
@@ -512,6 +595,28 @@
     "ticks": 1
    },
    "src": "RedstoneScenes2.java:263"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       0,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_lamp",
+       "props": {
+        "lit": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes2.java:264"
   },
   {
    "op": "idle",
@@ -551,6 +656,19 @@
     "changes": [
      {
       "pos": [
+       0,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_lamp",
+       "props": {
+        "lit": "true"
+       }
+      }
+     },
+     {
+      "pos": [
        1,
        1,
        2
@@ -635,6 +753,28 @@
     "ticks": 1
    },
    "src": "RedstoneScenes2.java:263"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       0,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_lamp",
+       "props": {
+        "lit": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes2.java:264"
   },
   {
    "op": "idle",
@@ -785,6 +925,19 @@
     "changes": [
      {
       "pos": [
+       0,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_lamp",
+       "props": {
+        "lit": "true"
+       }
+      }
+     },
+     {
+      "pos": [
        1,
        1,
        2
@@ -869,6 +1022,28 @@
     "ticks": 1
    },
    "src": "RedstoneScenes2.java:293"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       0,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_lamp",
+       "props": {
+        "lit": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes2.java:294"
   },
   {
    "op": "idle",
@@ -1219,6 +1394,19 @@
     "changes": [
      {
       "pos": [
+       0,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_lamp",
+       "props": {
+        "lit": "true"
+       }
+      }
+     },
+     {
+      "pos": [
        1,
        1,
        2
@@ -1305,6 +1493,28 @@
    "src": "RedstoneScenes2.java:343"
   },
   {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       0,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_lamp",
+       "props": {
+        "lit": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes2.java:344"
+  },
+  {
    "op": "idle",
    "args": {
     "ticks": 10
@@ -1364,6 +1574,19 @@
    "op": "world.modifyBlocks",
    "args": {
     "changes": [
+     {
+      "pos": [
+       0,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_lamp",
+       "props": {
+        "lit": "true"
+       }
+      }
+     },
      {
       "pos": [
        1,
@@ -1452,6 +1675,28 @@
    "src": "RedstoneScenes2.java:360"
   },
   {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       0,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_lamp",
+       "props": {
+        "lit": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes2.java:361"
+  },
+  {
    "op": "idle",
    "args": {
     "ticks": 10
@@ -1499,6 +1744,19 @@
    "op": "world.modifyBlocks",
    "args": {
     "changes": [
+     {
+      "pos": [
+       0,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_lamp",
+       "props": {
+        "lit": "true"
+       }
+      }
+     },
      {
       "pos": [
        1,
@@ -1585,6 +1843,28 @@
     "ticks": 1
    },
    "src": "RedstoneScenes2.java:372"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       0,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_lamp",
+       "props": {
+        "lit": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes2.java:373"
   }
  ]
 }

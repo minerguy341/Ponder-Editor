@@ -306,6 +306,8 @@ export function buildPonderHost(R, ctx) {
   HOOKS.particleJSON = (p) => ({ type: p.type, ...(p.extra || {}) });
 
   const fluidCls = hc('Fluids', { statics: {}, staticGet: (r, n) => new JFluid('minecraft:' + n.toLowerCase()) });
+  // NeoForgeMod.MILK is a DeferredHolder<Fluid, ...> registered by NeoForge as neoforge:milk; scenes use .get()
+  R.add(hc('NeoForgeMod', { statics: { MILK: { $class: 'DeferredHolder', $invoke(rt, name) { if (name === 'get' || name === 'value') return new JFluid('neoforge:milk'); throw new Unsupported(`NeoForgeMod.MILK.${name}()`); } } } }));
   R.add(fluidCls);
   R.add(hc('Fluid', { is: (v) => v instanceof JFluid }));
   R.add(hc('FluidStack', {

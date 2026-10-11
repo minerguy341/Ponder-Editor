@@ -54,55 +54,47 @@ export function entityMaterial(path: string): Promise<THREE.MeshBasicMaterial> {
   return m;
 }
 
-const N_OUT: Record<'west' | 'east' | 'north' | 'south' | 'up' | 'down', [number, number, number]> = {
-  west: [-1, 0, 0], east: [1, 0, 0], north: [0, 0, -1], south: [0, 0, 1], up: [0, 1, 0], down: [0, -1, 0],
-};
+/**
+ * ModelPart.Cube (net/minecraft/client/model/geom/ModelPart.java, L205-L345 of the 1.21 sources): the six polygons, each with its
+ * corner order (indices into the cube's 8 corners below) and its texture rectangle [u1, v1, u2, v2] as functions of (u, v, d, w, h).
+ * Polygon(): vertex 0 <- (u2, v1), 1 <- (u1, v1), 2 <- (u1, v2), 3 <- (u2, v2) (texels, then /texW, /texH); quads are drawn 0-1-2, 0-2-3.
+ * Corners: 0 (x1,y0,z0) 1 (x1,y1,z0) 2 (x0,y1,z0) 3 (x0,y0,z1) 4 (x1,y0,z1) 5 (x1,y1,z1) 6 (x0,y1,z1) 7 (x0,y0,z0).
+ */
+const FACES: { dir: 'west' | 'east' | 'north' | 'south' | 'up' | 'down'; idx: [number, number, number, number]; rect: (u: number, v: number, d: number, w: number, h: number) => [number, number, number, number] }[] = [
+  { dir: 'down', idx: [4, 3, 7, 0], rect: (u, v, d, w) => [u + d, v, u + d + w, v + d] },
+  { dir: 'up', idx: [1, 2, 6, 5], rect: (u, v, d, w) => [u + d + w, v + d, u + d + 2 * w, v] },
+  { dir: 'west', idx: [7, 3, 6, 2], rect: (u, v, d, _w, h) => [u, v + d, u + d, v + d + h] },
+  { dir: 'north', idx: [0, 7, 2, 1], rect: (u, v, d, w, h) => [u + d, v + d, u + d + w, v + d + h] },
+  { dir: 'east', idx: [4, 0, 1, 5], rect: (u, v, d, w, h) => [u + d + w, v + d, u + 2 * d + w, v + d + h] },
+  { dir: 'south', idx: [3, 4, 5, 6], rect: (u, v, d, w, h) => [u + 2 * d + w, v + d, u + 2 * d + 2 * w, v + d + h] },
+];
 
 /**
- * Triangles of every cube, positions in block units (pixels / 16), normals outward, uvs in 0..1 of a texW x texH texture.
- * Each cube contributes 6 faces x 2 triangles; winding is fixed so that the front side is the outside.
+ * Triangles of every cube (ModelPart.Cube polygons), positions in block units (pixels / 16), outward normals, uvs in 0..1.
  */
 export function cubesGeometry(cubes: readonly Cube[], texW: number, texH: number): THREE.BufferGeometry {
   const pos: number[] = [], nor: number[] = [], uv: number[] = [];
-  const quad = (p: [number, number, number][], t: [number, number][], n: [number, number, number]) => {
-    // p/t: TL, TR, BR, BL as seen from outside. Two triangles, wound CCW when seen from outside (checked against the normal).
-    const order = [0, 3, 2, 0, 2, 1];
-    const a = p[0], b = p[3], c = p[2];
-    const ux = b[0] - a[0], uy = b[1] - a[1], uz = b[2] - a[2];
-    const vx = c[0] - a[0], vy = c[1] - a[1], vz = c[2] - a[2];
-    const cx = uy * vz - uz * vy, cy = uz * vx - ux * vz, cz = ux * vy - uy * vx;
-    const flip = cx * n[0] + cy * n[1] + cz * n[2] < 0;
-    const seq = flip ? [0, 1, 2, 0, 2, 3] : order;
-    for (const i of seq) {
-      pos.push(p[i][0], p[i][1], p[i][2]);
-      nor.push(n[0], n[1], n[2]);
-      uv.push(t[i][0] / texW, t[i][1] / texH);
-    }
-  };
+  const NORMAL: Record<string, [number, number, number]> = { west: [-1, 0, 0], east: [1, 0, 0], north: [0, 0, -1], south: [0, 0, 1], up: [0, 1, 0], down: [0, -1, 0] };
   for (const c of cubes) {
     const x0 = c.x / 16, y0 = c.y / 16, z0 = c.z / 16;
     const x1 = (c.x + c.w) / 16, y1 = (c.y + c.h) / 16, z1 = (c.z + c.d) / 16;
-    const { u, v, w, h, d } = c;
-    // The x faces use the mirrored ModelBox regions (u..u+d is the +x face, u+d+w..u+2d+w the -x face): this is the layout the
-    // chest textures are painted for (the double-chest seam faces are transparent in normal_left/normal_right).
-    // east (+x): viewer right = -z
-    quad([[x1, y1, z1], [x1, y1, z0], [x1, y0, z0], [x1, y0, z1]],
-      [[u, v + d], [u + d, v + d], [u + d, v + d + h], [u, v + d + h]], N_OUT.east);
-    // west (-x): viewer right = +z
-    quad([[x0, y1, z0], [x0, y1, z1], [x0, y0, z1], [x0, y0, z0]],
-      [[u + d + w, v + d], [u + 2 * d + w, v + d], [u + 2 * d + w, v + d + h], [u + d + w, v + d + h]], N_OUT.west);
-    // north (-z): viewer right = -x
-    quad([[x1, y1, z0], [x0, y1, z0], [x0, y0, z0], [x1, y0, z0]],
-      [[u + d, v + d], [u + d + w, v + d], [u + d + w, v + d + h], [u + d, v + d + h]], N_OUT.north);
-    // south (+z): viewer right = +x
-    quad([[x0, y1, z1], [x1, y1, z1], [x1, y0, z1], [x0, y0, z1]],
-      [[u + 2 * d + w, v + d], [u + 2 * d + 2 * w, v + d], [u + 2 * d + 2 * w, v + d + h], [u + 2 * d + w, v + d + h]], N_OUT.south);
-    // up (+y): north edge at the top row of the texture
-    quad([[x0, y1, z0], [x1, y1, z0], [x1, y1, z1], [x0, y1, z1]],
-      [[u + d, v], [u + d + w, v], [u + d + w, v + d], [u + d, v + d]], N_OUT.up);
-    // down (-y): north edge at the top row, viewer right = -x
-    quad([[x1, y0, z0], [x0, y0, z0], [x0, y0, z1], [x1, y0, z1]],
-      [[u + d + w, v], [u + d + 2 * w, v], [u + d + 2 * w, v + d], [u + d + w, v + d]], N_OUT.down);
+    const corners: [number, number, number][] = [
+      [x1, y0, z0], [x1, y1, z0], [x0, y1, z0], [x0, y0, z1], [x1, y0, z1], [x1, y1, z1], [x0, y1, z1], [x0, y0, z0],
+    ];
+    for (const f of FACES) {
+      const [u1, v1, u2, v2] = f.rect(c.u, c.v, c.d, c.w, c.h);
+      // Polygon(): remapped texture coordinates per vertex position in the polygon
+      const uvs: [number, number][] = [[u2 / texW, v1 / texH], [u1 / texW, v1 / texH], [u1 / texW, v2 / texH], [u2 / texW, v2 / texH]];
+      const quad = f.idx.map((i) => corners[i]);
+      const n = NORMAL[f.dir];
+      for (const t of [[0, 1, 2], [0, 2, 3]]) {
+        for (const k of t) {
+          pos.push(quad[k][0], quad[k][1], quad[k][2]);
+          nor.push(n[0], n[1], n[2]);
+          uv.push(uvs[k][0], uvs[k][1]);
+        }
+      }
+    }
   }
   const g = new THREE.BufferGeometry();
   g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));

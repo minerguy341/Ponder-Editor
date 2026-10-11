@@ -12,10 +12,10 @@ import { sawBladeId } from '../../../src/render/create/visuals/process-saw';
 import { blazeModelFor, burnerOffsets } from '../../../src/render/create/visuals/process-blaze-burner';
 import { stickerHeadMatrix } from '../../../src/render/create/visuals/process-sticker';
 import { harvesterBladeMatrix, rollerFrameMatrix, rollerWheelMatrix } from '../../../src/render/create/visuals/process-harvester-roller';
-import { armTargetAngles, ARM_NO_TARGET } from '../../../src/render/create/visuals/process-arm';
+import { armPointGeometry, armTargetAngles, ARM_NO_TARGET } from '../../../src/render/create/visuals/process-arm';
 import { CHEST_PARTS, CHEST_HINGE } from '../../../src/render/create/visuals/process-vanilla-chest';
 import { cubesGeometry } from '../../../src/render/create/vanilla/entityModel';
-import { crafterPointingX } from '../../../src/render/create/visuals/process-crafter';
+import { crafterBeltValid, crafterInitialSlot0, crafterPointingX, crafterSlot0At, crafterTargetDirection } from '../../../src/render/create/visuals/process-crafter';
 import { TickSim, type BEvent } from '../../../src/render/create/vanilla/processBase';
 
 const near = (a: number, b: number, eps = 1e-6) => expect(Math.abs(a - b)).toBeLessThan(eps);
@@ -43,11 +43,9 @@ describe('PressingBehaviour (Create 6.0.10, content/kinetics/press/PressingBehav
     pressStep(s, 512);
     expect(s.ticks).toBe(60);
     pressStep(s, 512);
-    expect(s.ticks).toBe(-(CYCLE / 2)); // crossing CYCLE/2 on the client pauses at -CYCLE/2 (Ponder BEs are not virtual; ref3/ref4)
+    expect(s.ticks).toBe(CYCLE / 2); // crossing CYCLE/2 clamps once (virtual block entity: no client pause; ref3 end state)
     pressStep(s, 512);
-    expect(s.ticks).toBe(-(CYCLE / 2)); // stays paused until a start() call (the server packet never arrives)
-    expect(s.prev).toBe(CYCLE / 2);
-    expect(pressRenderedHeadOffset(true, s.prev, s.ticks, 0)).toBe(1); // head fully depressed
+    expect(s.ticks).toBe(CYCLE / 2 + 60);
   });
   it('start(Mode) (L104-L112) resets the cycle', () => {
     const s: PressState = { running: false, mode: 0, finished: false, prev: 50, ticks: 50 };
@@ -190,6 +188,49 @@ describe('Catnip Pointing.getXRotation (Ponder repo, dev/common/.../catnip/math/
   });
 });
 
+describe('MechanicalCrafterBlock.getTargetDirection / isValidTarget (Create 6.0.10, MechanicalCrafterBlock.java L250-275)', () => {
+  it('up and down pointing target UP and DOWN; left and right follow VecHelper.rotate (Z by -xRot, then Y by horizontalAngle)', () => {
+    expect(crafterTargetDirection('north', 'up')).toBe('up');
+    expect(crafterTargetDirection('north', 'down')).toBe('down');
+    // facing north: horizontalAngle 180; right (xRot 90) gives (1,0,0) then rotY(180) gives west
+    expect(crafterTargetDirection('north', 'right')).toBe('west');
+    expect(crafterTargetDirection('north', 'left')).toBe('east');
+  });
+
+  it('a valid target is a crafter with the same facing and a pointing that is not opposite', () => {
+    const crafter = (facing: string, pointing: string): BlockState => ({ name: 'create:mechanical_crafter', props: { facing, pointing } });
+    const at = (st: BlockState | undefined) => () => st;
+    expect(crafterBeltValid(at(crafter('north', 'up')), [0, 0, 0], 'north', 'up')).toBe(true);
+    expect(crafterBeltValid(at(crafter('south', 'up')), [0, 0, 0], 'north', 'up')).toBe(false);
+    expect(crafterBeltValid(at(crafter('north', 'down')), [0, 0, 0], 'north', 'up')).toBe(false);
+    expect(crafterBeltValid(at({ name: 'minecraft:stone', props: {} }), [0, 0, 0], 'north', 'up')).toBe(false);
+  });
+
+  it('slot 0 follows insertItem / setItem / ejectWholeGrid at their scene ticks; simulated inserts are ignored', () => {
+    const calls = [
+      { t: 5, path: [{ m: 'getInventory', a: [] }, { m: 'insertItem', a: [0, { id: 'minecraft:oak_planks', count: 1 }, false] }] },
+      { t: 6, path: [{ m: 'getInventory', a: [] }, { m: 'insertItem', a: [0, { id: 'minecraft:stone', count: 1 }, true] }] },
+      { t: 10, path: [{ m: 'getInventory', a: [] }, { m: 'setItem', a: [0, { id: 'minecraft:stick', count: 1 }] }] },
+      { t: 12, path: [{ m: 'ejectWholeGrid', a: [] }] },
+    ];
+    expect(crafterSlot0At(undefined, calls, 4)).toBeUndefined();
+    expect(crafterSlot0At(undefined, calls, 5)?.id).toBe('minecraft:oak_planks');
+    expect(crafterSlot0At(undefined, calls, 9)?.id).toBe('minecraft:oak_planks');
+    expect(crafterSlot0At(undefined, calls, 10)?.id).toBe('minecraft:stick');
+    expect(crafterSlot0At(undefined, calls, 12)).toBeUndefined();
+  });
+
+  it('a second insertItem of the same item adds to slot 0 (up to 64); the initial inventory comes from nbt Inventory slot 0', () => {
+    const calls = [
+      { t: 1, path: [{ m: 'getInventory', a: [] }, { m: 'insertItem', a: [0, { id: 'minecraft:iron_ingot', count: 2 }, false] }] },
+      { t: 2, path: [{ m: 'getInventory', a: [] }, { m: 'insertItem', a: [0, { id: 'minecraft:iron_ingot', count: 3 }, false] }] },
+    ];
+    expect(crafterSlot0At(undefined, calls, 2)?.count).toBe(5);
+    expect(crafterInitialSlot0({ Items: [{ Slot: 1, id: 'minecraft:stone', count: 1 }, { Slot: 0, id: 'minecraft:gold_ingot', count: 4 }] })).toEqual({ id: 'minecraft:gold_ingot', count: 4 });
+    expect(crafterInitialSlot0(undefined)).toBeUndefined();
+  });
+});
+
 describe('Chest model (ChestModel L13-L40 of the 1.21 layer definitions, see the report: values from memory of ChestModel)', () => {
   it('single chest: bottom 14x10x14 at (1,0,1), lid hinge at y=9 z=1, lock at x 7..9', () => {
     expect(CHEST_PARTS.single.bottom).toMatchObject({ x: 1, y: 0, z: 1, w: 14, h: 10, d: 14 });
@@ -245,5 +286,26 @@ describe('LerpedFloat LINEAR chase of the sticker piston (StickerBlockEntity.tic
     near(stickerPiston(false, ch, 7)[1], 0.8);
     expect(stickerPiston(false, ch, 8)[1]).toBe(1);
     const [pv, cv] = stickerPiston(false, ch, 8); near(pv, 0.8); expect(cv).toBe(1);
+  });
+});
+
+describe('ArmInteractionPoint geometry by point type (AllArmInteractionPointTypes.java, Create 6.0.10)', () => {
+  const st = (name: string, props: Record<string, string> = {}) => ({ name, props });
+  it('base type: block centre, claw direction DOWN', () => {
+    expect(armPointGeometry(st('minecraft:chest'), [1, 2, 3])).toEqual({ p: [1.5, 2.5, 3.5], dir: 'down' });
+  });
+  it('depot / belt / saw: (.5, 14/16, .5)', () => {
+    expect(armPointGeometry(st('create:depot'), [0, 0, 0]).p).toEqual([0.5, 14 / 16, 0.5]);
+    expect(armPointGeometry(st('create:belt'), [0, 0, 0]).p).toEqual([0.5, 14 / 16, 0.5]);
+    expect(armPointGeometry(st('create:mechanical_saw'), [0, 0, 0]).p).toEqual([0.5, 14 / 16, 0.5]);
+  });
+  it('top-face types (chute, crushing wheels, jukebox): (.5, 1, .5)', () => {
+    expect(armPointGeometry(st('create:chute'), [0, 0, 0]).p).toEqual([0.5, 1, 0.5]);
+    expect(armPointGeometry(st('create:crushing_wheel'), [0, 0, 0]).p).toEqual([0.5, 1, 0.5]);
+    expect(armPointGeometry(st('minecraft:jukebox'), [0, 0, 0]).p).toEqual([0.5, 1, 0.5]);
+  });
+  it('crafter: centre + normal(dir) * .5 with dir = facing.opposite; deployer: * .65', () => {
+    expect(armPointGeometry(st('create:mechanical_crafter', { facing: 'north' }), [0, 0, 0])).toEqual({ p: [0.5, 0.5, 1], dir: 'south' });
+    expect(armPointGeometry(st('create:deployer', { facing: 'east' }), [0, 0, 0])).toEqual({ p: [0.5 - 0.65, 0.5, 0.5], dir: 'west' });
   });
 });

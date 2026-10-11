@@ -17,6 +17,21 @@ const fail = (msg) => {
   process.exit(1);
 };
 
+if (args.includes('--dropped')) {
+  // dropped-call audit (G8): re-compiles every scene with the recorder on, writes tools/scenegen/DROPPED.md
+  const { runDropAudit, writeDroppedMd } = await import('./dropped.mjs');
+  const res = await runDropAudit();
+  const file = writeDroppedMd(res);
+  const classes = [...res.byClass].map(([c, n]) => `${c}=${n}`).join(' ');
+  console.log(`dropped events ${res.entries.length} in ${res.scenes} scenes: ${classes}; unclassified ${res.unclassified.length}; state ${res.state.length}; wrote ${path.relative(ROOT, file)}`);
+  if (res.unclassified.length || res.state.length) {
+    for (const u of [...res.unclassified, ...res.state].slice(0, 20)) console.log(`  ${u.scene} ${u.where} ${u.kind} ${u.owner}.${u.method} ${u.detail}`);
+    console.log(`DROPPED_PROBLEMS unclassified=${res.unclassified.length} state=${res.state.length}`);
+    process.exit(1);
+  }
+  console.log('DROPPED_OK');
+  process.exit(0);
+}
 if (args.includes('--texts')) {
   const lang = loadLang();
   const problems = [];
