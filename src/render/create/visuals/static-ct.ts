@@ -29,17 +29,28 @@ function worldFor(r: BlockRendererImpl, lookup: BlockModelProcessorContext['look
 const brackets = new WeakMap<object, Partial<Record<Dir, BakedQuad[]>>>();
 const bracketsWarned = new Set<string>();
 
-/** Load the connected sheets and the bracket partials of this renderer. Idempotent. */
+/**
+ * Load the connected sheets and the bracket partials of this renderer. Idempotent and never rejects: a failing sheet or partial
+ * is logged once and the block then draws without it (the processors skip missing sheets), so loadScene cannot fail here.
+ */
 const loaded = new WeakMap<object, Promise<void>>();
 export function preloadB6Static(r: BlockRendererImpl): Promise<void> {
   let p = loaded.get(r);
   if (!p) {
     p = (async () => {
-      await r.ensureTextures(b6TargetShifts().map((s) => s.target));
+      try {
+        await r.ensureTextures(b6TargetShifts().map((s) => s.target));
+      } catch (e) {
+        console.error('[create] B6 connected sheets failed to load', e);
+      }
       const map: Partial<Record<Dir, BakedQuad[]>> = {};
       for (const d of HORIZONTAL_DIRS) {
-        const m: BakedModel = await r.bakedPartial(BRACKET_MODEL(d));
-        map[d] = m.quads;
+        try {
+          const m: BakedModel = await r.bakedPartial(BRACKET_MODEL(d));
+          map[d] = m.quads;
+        } catch (e) {
+          console.error(`[create] bracket partial ${BRACKET_MODEL(d)} failed to load`, e);
+        }
       }
       brackets.set(r, map);
     })();

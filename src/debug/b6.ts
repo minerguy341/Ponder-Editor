@@ -164,9 +164,39 @@ async function audit(paths: string[]) {
   info.registered = registeredBlocks();
 }
 
+/** mode=sheet&file=<json>: every distinct state of one block id in its own cell (isolated: no neighbours), one row per 10 states. */
+async function sheet(file: string) {
+  const data = await (await fetch(file)).json() as { name: string; states: { props: Record<string, string> }[] };
+  const blocks: BlockInstance[] = data.states.map((s, i) => ({ pos: [(i % 10) * 2, 1, Math.floor(i / 10) * 2] as Vec3, state: { name: data.name, props: s.props } }));
+  const lookup = makeLookup(blocks);
+  const ctx: VisualContext = { renderer: block, lookup };
+  await block.prepare(blocks.map((b) => b.state));
+  const g = block.buildSection(blocks, { lookup });
+  world.add(g);
+  const visuals = [];
+  for (const b of blocks) {
+    if (!isEntityRendered(b.state)) continue;
+    const v = await createVisual(b, ctx);
+    if (!v) continue;
+    v.object.position.set(b.pos[0], b.pos[1], b.pos[2]);
+    world.add(v.object);
+    visuals.push(v);
+  }
+  for (const v of visuals) v.update(0);
+  ponderLight(world);
+  const maxX = Math.max(...blocks.map((b) => b.pos[0])), maxZ = Math.max(...blocks.map((b) => b.pos[2]));
+  info.states = blocks.length;
+  info.visuals = visuals.length;
+  return frameCamera([0, 0, 0], [Math.max(maxX, 1), 1, Math.max(maxZ, 1)]);
+}
+
 async function main() {
   await preloadVisuals({ renderer: block, lookup: { getState: () => undefined, getBlockEntity: () => undefined } });
-  if ((q.get('mode') ?? 'scene') === 'audit') {
+  if ((q.get('mode') ?? 'scene') === 'sheet') {
+    const cam = await sheet(q.get('file') ?? '');
+    (window as any).__b6.camera = cam;
+    renderer.render(scene, cam);
+  } else if ((q.get('mode') ?? 'scene') === 'audit') {
     await audit((q.get('paths') ?? '').split(',').filter(Boolean));
   } else {
     const path = q.get('path') ?? 'high_logistics/package_postbox';
