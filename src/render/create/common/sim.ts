@@ -3,7 +3,7 @@
 // while `update(ticks)` stays a pure function of (ticks, data timeline): the sim restarts from its initial state whenever it is
 // asked for an earlier tick than it has reached, or when `reset()` is called (data timeline changed).
 
-export type NumState = Record<string, number>;
+export type NumState = object;
 
 export interface Sample<S> {
   /** State after (whole - 1) ticks (BlockEntity "previous" values), or the initial state when whole == 0. */
