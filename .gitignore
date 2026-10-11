@@ -6,3 +6,4 @@ tools/.cache
 tools/verify/out
 public/scenes/.tmp
 tools/a1-out
+public/scenes/.tmp

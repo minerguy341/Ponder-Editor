@@ -8,9 +8,9 @@
 
 import * as THREE from 'three';
 import type { BlockInstance, Direction, Vec3, VisualContext } from '../../../contract';
-import { Axis, axisOf, directionOf, isDirection, stateAxis } from './dirs';
+import { Axis, axisOf, directionOf, getNearest, isDirection, stateAxis } from './dirs';
 import { DEG2RAD, DEG_PER_TICK_PER_RPM, axisVector, quatRotateToFace, quatRotateUpToAxis, rotationOffset } from './math';
-import { KineticData, readKinetic } from './nbt';
+import { KineticData, Nbt, getBlockPos, readKinetic } from './nbt';
 import { BaseVisual } from './visual';
 
 export interface RotatingPartOptions {
@@ -66,7 +66,12 @@ export class RotatingPart {
   }
 
   update(ticks: number): void {
-    this.object.quaternion.setFromAxisAngle(this.axisVec, this.angleDeg(ticks) * DEG2RAD).multiply(this.base);
+    this.setAngleDeg(this.angleDeg(ticks));
+  }
+
+  /** Apply an explicit kinetic angle in degrees (for parts driven by their own angle, e.g. hand crank handles, flywheels). */
+  setAngleDeg(deg: number): void {
+    this.object.quaternion.setFromAxisAngle(this.axisVec, deg * DEG2RAD).multiply(this.base);
   }
 }
 
@@ -125,7 +130,6 @@ export abstract class KineticVisual extends BaseVisual {
     this.kin = readKinetic(this.data);
     this.applyKinetic();
     this.onKinetic();
-    super.onData();
   }
 
   protected applyKinetic(): void {
@@ -135,15 +139,18 @@ export abstract class KineticVisual extends BaseVisual {
   protected override onUpdate(ticks: number): void {
     for (const p of this.parts) p.update(ticks);
   }
-
-  override async init(): Promise<this> {
-    await this.build();
-    this.applyKinetic();
-    this.onKinetic();
-    this.onUpdate(0);
-    return this;
-  }
 }
 
 /** Direction -> axis helper for models that point along a facing. */
 export function positiveDirection(axis: Axis): Direction { return directionOf(axis, true); }
+
+/**
+ * DirectionalShaftHalvesBlockEntity.getSourceFacing: direction towards the kinetic source (`Source` block pos, stored in the
+ * same coordinate frame as the schematic's original world - the game uses it raw, relative to the BE position in the
+ * ponder world, and so do we). undefined when the BE has no source (hasSource() == false).
+ */
+export function sourceFacing(data: Nbt, pos: Vec3): Direction | undefined {
+  const s = getBlockPos(data, 'Source');
+  if (!s) return undefined;
+  return getNearest(s[0] - pos[0], s[1] - pos[1], s[2] - pos[2]);
+}

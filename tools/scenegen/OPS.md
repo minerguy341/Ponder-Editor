@@ -24,6 +24,7 @@ shape, and the Ponder/Create source it mirrors (Ponder = `Creators-of-Create/Pon
 * `ItemStack` = `{ "id": "minecraft:iron_ingot", "count": 1, "nbt"?: {...plain JSON data components...} }`
   (`nbt` keys are data-component ids, e.g. `"create:package_contents"`, `"create:package_address"`).
 * `FluidStack` = `{ "fluid": "minecraft:water", "amount": 1000 }` (also `{amount}` alone when the fluid is irrelevant to the call).
+  Fluid ids: `minecraft:*` (Fluids.X), `create:*` (Create fluids, e.g. `create:chocolate`), `neoforge:milk` (`NeoForgeMod.MILK`, v1.3).
 * `Link` = `{ "link": "e3" }`; the instruction that creates an element carries `"out": "e3"` (ids `e1`, `e2`, ... unique per scene).
 * `Selection` = contract `Selection`, but the converter ALWAYS lowers to `pos` (`{t:"pos",pos}`), `box` (`{t:"box",from,to}`, inclusive
   corners, min<=max normalised) and `union` (`{t:"union",items:[...]}`). Output only ever contains those three kinds; `subtract`
@@ -67,7 +68,9 @@ Every Create scene calls `configureBasePlate(..)` itself (Ponder has no implicit
 The converter tracks the scene world exactly like Ponder's `PonderLevel` (schematic NBT + all earlier instructions) so that state
 lambdas (`s -> s.setValue(..)`, `cycle`, `getValue`) and block-entity-type filters (`modifyBlockEntityNBT(sel, KineticBlockEntity.class, ..)`)
 are RESOLVED at conversion time. Consequently:
-* `world.modifyBlocks` carries final states per position (not lambdas);
+* `world.modifyBlocks` carries final states per position (not lambdas). `toggleRedstonePower` (Ponder `PonderSceneBuilder.java:567`) cycles
+  `POWER` (0<->15), `POWERED` and `LIT` on any block that has them: `RedstoneTorchBlock.LIT` is `BlockStateProperties.LIT` ("lit") and
+  the redstone lamp shares it, so a lamp is lit by the toggle (v1.3 fix; the previous converter only cycled torch ids);
 * `world.modifyBlockEntityNBT` / `world.modifyBlockEntity` only list positions whose block entity really is an instance of the requested class at that moment.
 Block entity retention rule (Catnip `SchematicLevel.setBlock`): when a block is replaced, its BE (and nbt) is kept iff the BE type
 accepts the new state (e.g. shaft -> encased shaft keeps the kinetic BE and its `Speed`), otherwise it is dropped and a fresh BE is created if the new block has one.
@@ -174,6 +177,17 @@ Kinetic speed helpers are lowered by the converter to `world.modifyBlockEntityNB
 (`Phase` etc. enums as `name()` strings, `HeldItem`/`Filter` as `{id,count}`).
 `setCraftingResult`, `setDisplayBoardText`, `dyeDisplayBoard`, `flashDisplayLink`, `flapFunnel`, `animateTrainStation` helpers lower to `world.modifyBlockEntity` Calls (`setScriptedResult`, `applyTextManually`, `setColour`, `pulse`, `flap`).
 
+### 4.1 Helpers that lower to existing ops (not ops themselves)
+
+* `propagatePipeChange(pos)` (`CreateSceneBuilder.java:238`) is `modifyBlockEntity(pos, PumpBlockEntity.class, be -> be.onSpeedChanged(0))`.
+  It is emitted as `world.modifyBlockEntity {pos, beType:"PumpBlockEntity", calls:[{path:[{m:"onSpeedChanged",a:[0]}]}]}` and produces nothing
+  when no PumpBlockEntity is at `pos` (the Java instanceof test). `onSpeedChanged(0)` passes previousSpeed 0: the pump's flicker tally
+  and its fluid pressure update (`PumpBlockEntity.java:86-98`). The speed value itself is the preceding `world.modifyBlockEntityNBT` Speed patch.
+  Coverage (generated scenes): 33 `onSpeedChanged` ops in 12 scenes, 31 from `propagatePipeChange` call sites and 2 direct calls (fluid_valve).
+* `setKineticSpeed` / `multiplyKineticSpeed` / `modifyKineticSpeed` (`CreateSceneBuilder.java:220-236`): the gauge `Value` patch
+  (`getDialTarget`, which uses |speed|, so a sign flip leaves the gauge unchanged and emits no gauge patch) followed by the KineticBlockEntity Speed patch.
+* `markSmartBlockEntityVirtual` (`CreateSceneBuilder.java:324`) and `Pointing`/particle factories emit nothing by design (see `DROPPED.md`, class cosmetic).
+
 ## 5. Effects
 
 | op | args | mirrors |
@@ -257,3 +271,4 @@ Keys are exactly the NBT keys Create's `write`/`read` use; C2's `setData(nbt)` r
   (no scene uses it). No emitted op was renamed.
 * v1.1: `special.createBirb` and `special.createCart` gained `fadeFrom` (the `Direction` Ponder's `FadeIntoSceneInstruction` slides the element in from; `"down"` for every emitted birb and cart, `null` = no slide). Found by the C1 fidelity audit: the chain-conveyor `CreateParrotInstruction` direction was dropped. Additive; no op renamed.
 * v1.2: scene id rule made exact (one scene = one (path, scene function) pair; `~functionName` only for paths with several scene functions). The ids were already emitted this way; the change is documentation plus E's coverage.mjs counting rule (`foldScenes`). No scene file changed.
+* v1.3: no op names or arg shapes changed. `world.modifyBlocks` now lights redstone lamps through `toggleRedstonePower` (lit cycled on any block with the `lit` property; 8 scenes changed: analog_lever, powered_latch, powered_toggle_latch, pulse_extender, pulse_repeater, pulse_timer, redstone_link, train_observer). The milk fill in smart_pipe carries `fluid:"neoforge:milk"` instead of no fluid. Section 4.1 documents the helpers that lower to existing ops (propagatePipeChange). `tools/scenegen/DROPPED.md` lists every call the converter drops (generated by `report.mjs --dropped`; 0 state-affecting, 0 unclassified).

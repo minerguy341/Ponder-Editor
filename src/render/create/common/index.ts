@@ -26,7 +26,8 @@
 //  partials.ts  getPartial/peekPartial/preloadPartials/PartialSet (per-renderer cache), buildStateObject (static look of a blockstate)
 //  visual.ts    BaseVisual (merging setData, pure update, safe dispose), markOwned, disposeVisualObject
 //  kinetic.ts   RotatingPart (Flywheel RotatingInstance), KineticVisual (BaseVisual + readKinetic + offsets), rotationAxisOf
-//  anim.ts      Easing curves, LerpedFloat-style chase helpers expressed as pure functions of ticks
+//  anim.ts      closed-form LerpedFloat chasers (chaseValueAt)
+//  sim.ts       StepSim: cached tick-stepped simulation for BlockEntity.tick() state (chasers, dials, hand-crank velocity...)
 //  partialModels.ts  AllPartialModels id table
 
 export * from './dirs';
@@ -36,4 +37,5 @@ export * from './partials';
 export * from './visual';
 export * from './kinetic';
 export * from './anim';
+export * from './sim';
 export * from './partialModels';

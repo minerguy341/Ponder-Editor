@@ -4,32 +4,38 @@ Scope: Owns `src/render/create/visuals/misc-*.ts`, `src/render/create/trains/**`
 
 Common rules for all B leaves: implement `VisualModule`s per `src/render/create/registry.ts` (frozen) against `src/contract.ts`; read the real Create code (AllPartialModels.java, *Visual / *Renderer classes under `src/main/java/com/simibubi/create/content/**` in tag mc1.21.1-6.0.10) and Flywheel for instancing semantics; time = `update(ticks)` is a pure function of ticks + data so seeking works. Your assigned block ids are in `tools/b-groups.json` under "B5" (31 ids); `node tools/b-queue.mjs --group B5` must report none missing (declared in a visuals/*.ts VisualModule, or listed in `src/render/create/static/B5.json` as id -> verified reason of at least 12 chars). Integrate with other leaves by merging sibling branches as they appear (`git branch --list 'worktree-agent-*'`), never editing their files.
 
-- [ ] G1: typecheck clean
+- [x] G1: typecheck clean
   CHECK: npx tsc --noEmit
-  EVIDENCE: pending
+  EVIDENCE: (no output)
 
-- [ ] G2: work queue empty for B5
+- [x] G2: work queue empty for B5
   CHECK: node tools/b-queue.mjs --group B5 | tail -2
   EXPECT: UNIMPLEMENTED=0
-  EVIDENCE: pending
+  EVIDENCE: B5: 31/31 done | TOTAL=31 UNIMPLEMENTED=0
 
-- [ ] G3: unit tests for every non-trivial formula you port (cite Java file + method + lines in the test), all pass
+- [x] G3: unit tests for every non-trivial formula you port (cite Java file + method + lines in the test), all pass
   CHECK: npx vitest run tests/b 2>&1 | tail -6
   EXPECT: /passed/
-  EVIDENCE: pending
+  EVIDENCE: Start at  22:22:30 | Duration  2.66s (transform 1.27s, setup 0ms, collect 2.28s, tests 17ms, environment 0ms, prepare 662ms)
 
-- [ ] G4: every model/partial/texture id your visuals load resolves (audit loads each through BlockRenderer.buildPartial in headless chromium, 0 missing); write it as `tools/b-audit-B5.mjs`
+- [x] G4: every model/partial/texture id your visuals load resolves (audit loads each through BlockRenderer.buildPartial in headless chromium, 0 missing); write it as `tools/b-audit-B5.mjs`
   CHECK: node tools/b-audit-B5.mjs | tail -3
   EXPECT: B_AUDIT_OK
-  EVIDENCE: pending
+  EVIDENCE: audited 44 of 44 ids, 0 failed | B_AUDIT_OK
 
-- [ ] G5: visual verification in the real renderer: contact-sheet screenshots of every block in your group in every state used by the ponder schematics (and every relevant animation phase), each reviewed with the Read tool and compared to the real game appearance (reference screenshots ref1..ref4 where applicable, otherwise Create's own textures/models and source). EVIDENCE: paths + defects found and fixed + residual known differences (each with reason).
-  EVIDENCE: pending
+- [x] G5: visual verification in the real renderer: contact-sheet screenshots of every block in your group in every state used by the ponder schematics (and every relevant animation phase), each reviewed with the Read tool and compared to the real game appearance (reference screenshots ref1..ref4 where applicable, otherwise Create's own textures/models and source). EVIDENCE: paths + defects found and fixed + residual known differences (each with reason).
+  CHECK: node tools/b5-evidence-check.mjs g5
+  EXPECT: B5_G5_EVIDENCE_OK
+  EVIDENCE: states 155 of 155 covered by 13 sheets, 0 errors, 0 missing resources; full-size checks present | B5_G5_EVIDENCE_OK
+  REVIEW: CONTACT SHEETS: all 155 distinct (block, props, BE nbt) states of the 31 B5 ids in the 46 schematics (tools/.cache/b5-states.json, sidecar labels in tools/verify/out/b5/survey-NN.json), 13 sheets tools/verify/out/b5/survey-00..12.png (12 states each, 0 console errors, 0 missing resources); all 13 read with the Read tool (montage tools/verify/out/b5/montage/survey-all.png) and sheets 00, 03, 04, 10 read at full size. Per-block full-size checks read: tools/verify/out/b5/{bogey-rest,lever-rest,diodes-rest,links-pulse,link1-pulse,items,postbox,packager,frogport,gauge,nixie,flap}.png. Reference check: no in-game reference exists for these blocks (ref1..ref4 are cog/chain/press only), so the comparison is against Create's blockstate models, partials and the Java renderer/visual source (cited per file). DEFECTS FOUND AND FIXED: (1) bogeys were credited by the queue through an isBogey string test only -> real small/large bogey visuals (StandardBogeyRenderer, AnimateBlockEntityInstruction.bogey); (2) analog lever / link glow / factory bulb chases started from -Infinity -> event-based EXP chase from tick 0 (AnimationBlockEntity loadAdditional chase); (3) factory gauge body is a custom FactoryPanelModel with 0 model elements (floating bulbs only) -> plates per slot (FactoryPanelModel.addPanel), bulbs and filter items (FactoryPanelSlotPositioning); (4) package box ids: scene packages are cardboard_package_12x12, not create:package (no model) -> sheet fixed; (5) frogport PlacedYaw is degrees (renderer passes it to rotateYDegrees) -> fixed; (6) postbox inventory is Inventory.Items (list) -> fixed; (7) packager box matrix cloned per frame -> written in place; (8) nixie/packager/link/gauge geometry and cloned materials marked owned for dispose. RESIDUAL KNOWN DIFFERENCES (each with reason): (a) frogport package hand-off (tongue length, rigging, package model) not drawn: startAnimation is a method call, not NBT, and its LerpedFloat chase is not modelled (rest pose only); (b) flap display text not drawn: FlapDisplaySection spinning uses the level RandomSource per tick and the text comes from display-board calls; the kinetic cog is drawn; (c) nixie: bright-colour flicker fixed at 0 (RandomSource per frame), renderAsSignal mode not drawn, JSON text components resolved only for the text field and the daytime translate keys (no lang file in the viewer); (d) factory gauge: connection paths (renderPath, ArrowBending) and ingredient status colours not drawn, bulb glow from powered/satisfied only; (e) table cloth: shop price tags (RequestData shop branch) and the camera billboard of upright non-block items (DepotRenderer, view-dependent) not drawn; (f) bogey: the Flywheel visual's -1.5 block offset is not used (the BlockEntityRenderer geometry is used; the two differ in Create's own code), and the large bogey belt UV scroll is not animated; (g) brass diodes: the POWERING flip done by the BE tick is simulated for the indicator; the static chunk keeps the converter's POWERING state (block-state changes made by BE ticks are not in the scene timeline); (h) custom-text value boxes assume customZOffset 0 for every item.
 
-- [ ] G6: scene-level verification: for each ponder scene that uses your blocks, render at least the scene's last tick and one mid-animation tick through the full app once C2/A1 are merged (tools/verify harness); review images; EVIDENCE lists scenes reviewed (count) and defects fixed
-  EVIDENCE: pending
+- [x] G6: scene-level verification: for each ponder scene that uses your blocks, render at least the scene's last tick and one mid-animation tick through the full app once C2/A1 are merged (tools/verify harness); review images; EVIDENCE lists scenes reviewed (count) and defects fixed
+  CHECK: node tools/b5-evidence-check.mjs g6
+  EXPECT: B5_G6_EVIDENCE_OK
+  EVIDENCE: scenes 46: 92 frames present; run SCENES 46 shot, 44 clean (no errors, no missing assets); review montages present | B5_G6_EVIDENCE_OK
+  REVIEW: SCENES: 46 of 46 scenes that use a B5 block (schematic -> index.json mapping, tools/b5-scene-shots.mjs) played in the full app (C1 scenes + C2 player merged, dev server, window.__ponder loadScene / seek) and shot at the last tick and at a mid keyframe: tools/verify/out/b5/scenes/<scene>-{last,mid}.png (92 images; run log tools/verify/out/b5/scenes-run.log: 46 shot, 44 clean; 2 flagged for the UI item-icon probe create:models/block/{stock_link,display_link}.json from src/ui/itemIcons.ts block-model fallback, which no B5 file requests). REVIEW: all 46 last-tick and all 46 mid-tick frames read at thumbnail size (tools/verify/out/b5/montage/last-00..03.png, mid-00..02.png), and 9 at full size: train_station/assembly, powered_latch, nixie_tube (before and after the fix), high_logistics/packager, display_board, high_logistics/table_cloth, high_logistics/factory_gauge_recipe, high_logistics/package_frogport (mid), train_track/chunks (re-shot: the first batch capture was the loading screen). DEFECTS FIXED: (1) nixie_tube and elevator_pulley/elevator place create:blue_nixie_tube / create:green_nixie_tube at run time (world.setBlocks), so the tubes were not drawn at all (only create:nixie_tube was registered) -> all 16 dye variants registered with the DyeHelper colours; after the fix the scene shows CREATE in blue (tools/verify/out/b5/scenes/nixie_tube-last.png). OUTSIDE B5 (reported, not edited): elevator_contact is in no group of tools/b-groups.json; sticker is in group B3; the UI item-icon probe above. Residuals are the G5 list.
 
-- [ ] G7: animation correctness + performance: update(ticks) pure, no per-frame allocations in hot paths, dispose frees geometry/materials/textures; seeking back and forth gives identical frames (test)
+- [x] G7: animation correctness + performance: update(ticks) pure, no per-frame allocations in hot paths, dispose frees geometry/materials/textures; seeking back and forth gives identical frames (test)
   CHECK: npx vitest run tests/b -t seek 2>&1 | tail -6
   EXPECT: /passed/
-  EVIDENCE: pending
+  EVIDENCE: Start at  22:22:46 | Duration  3.33s (transform 1.41s, setup 0ms, collect 1.81s, tests 16ms, environment 0ms, prepare 973ms)

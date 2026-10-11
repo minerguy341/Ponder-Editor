@@ -1993,6 +1993,28 @@
    "src": "RedstoneScenes.java:590"
   },
   {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       4,
+       1,
+       0
+      ],
+      "state": {
+       "name": "minecraft:redstone_lamp",
+       "props": {
+        "lit": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:593"
+  },
+  {
    "op": "effects.createRedstoneParticles",
    "args": {
     "pos": [

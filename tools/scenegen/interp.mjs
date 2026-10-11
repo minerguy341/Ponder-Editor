@@ -1,5 +1,6 @@
 // Java-subset interpreter (tree walking) over the AST from javaast.mjs.
 // Runs real Create/Ponder source; everything that talks to Minecraft is provided by host classes (host/*.mjs).
+import { recordDrop } from './drops.mjs';
 import { Dbl, D, F, JChar, JArray, JObject, Lambda, MethodRef, ClassRef, JavaThrow, Unsupported, num, isNum, describe, javaDoubleToString } from './values.mjs';
 
 let CURRENT = null;
@@ -428,7 +429,7 @@ export class Interp {
 
   getStatic(cls, name) {
     if (!cls.isSource) {
-      if (cls.stubAll) return STUB();
+      if (cls.stubAll) { recordDrop('stubClass', cls.name, name); return STUB(); }
       const s = cls.statics?.[name];
       if (s !== undefined || (cls.statics && name in cls.statics)) return typeof s === 'function' && s.$lazy ? (cls.statics[name] = s()) : s;
       if (cls.staticGet) return cls.staticGet(this, name);
@@ -751,7 +752,7 @@ export class Interp {
   /** instantiate a class; args already evaluated */
   newObject(cls, args, fr, outerThis = null) {
     if (!cls.isSource) {
-      if (cls.stubAll) return STUB();
+      if (cls.stubAll) { recordDrop('stubClass', cls.name, '<new>'); return STUB(); }
       if (cls.construct) return cls.construct(this, args, fr);
       throw this.fail(`cannot instantiate ${cls.name}${cls.unknown ? ' (unknown class)' : ''}`);
     }
@@ -880,7 +881,7 @@ export class Interp {
 
   invokeStatic(cls, name, args) {
     if (!cls.isSource) {
-      if (cls.stubAll) return STUB();
+      if (cls.stubAll) { recordDrop('stubClass', cls.name, name); return STUB(); }
       const f = cls.statics && cls.statics[name];
       if (typeof f === 'function') return f(...args);
       if (cls.staticCall) return cls.staticCall(this, name, args);
@@ -1450,7 +1451,7 @@ export class Interp {
   }
 
   staticMember(cls, name) {
-    if (!cls.isSource && cls.stubAll) return { value: STUB() };
+    if (!cls.isSource && cls.stubAll) { recordDrop('stubClass', cls.name, name); return { value: STUB() }; }
     // nested type or static field
     if (cls.isSource) {
       const n = this.findNested(cls, name, new Set());
@@ -2035,9 +2036,11 @@ function makeStub() {
       if (name === 'toString') return 'Stub';
       if (name === 'equals') return this === args[0];
       if (name === 'hashCode') return 0;
+      recordDrop('stubCall', 'Stub', name);
       return this;
     },
-    $getField() {
+    $getField(rt, name) {
+      recordDrop('stubCall', 'Stub', 'field ' + name);
       return this;
     },
     $call() {

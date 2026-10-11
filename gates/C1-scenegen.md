@@ -38,3 +38,8 @@ Approach (mandated): a Java-subset interpreter that RUNS the actual Create scene
   CHECK: node tools/scenegen/report.mjs --schema
   EXPECT: SCHEMA_OK
   EVIDENCE: SCHEMA_OK
+
+- [x] G8: dropped-call audit: every call the converter accepts without emitting an op (stub classes/methods, host methods that emit nothing, block-entity classes it cannot decide, overrides, notes) is recorded per scene and classified in tools/scenegen/DROPPED.md; DROPPED.md has zero unclassified entries and zero state-affecting drops (state-affecting drops must become ops or Calls in OPS.md)
+  CHECK: node tools/scenegen/report.mjs --dropped
+  EXPECT: DROPPED_OK
+  EVIDENCE: dropped events 2326 in 169 scenes: metadata=804 cosmetic=150 legit-empty=1188 getter=183 link-binding=1; unclassified 0; state 0; wrote tools/scenegen/DROPPED.md | DROPPED_OK

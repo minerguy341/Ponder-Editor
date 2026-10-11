@@ -13,7 +13,9 @@ const declared = new Set();
 if (fs.existsSync(visDir))
   for (const f of fs.readdirSync(visDir)) if (f.endsWith('.ts')) {
     const src = fs.readFileSync(path.join(visDir, f), 'utf8');
-    for (const m of src.matchAll(/['"`]((?:create|minecraft):[a-z0-9_]+)['"`]/g)) declared.add(m[1]);
+    // any quoted id outside // comment lines (visual modules declare ids via helper calls like mod('create:x', ...))
+    const code = src.split('\n').filter((l) => !/^\s*(\/\/|\*|\/\*)/.test(l)).join('\n');
+    for (const m of code.matchAll(/['"`]((?:create|minecraft):[a-z0-9_]+)['"`]/g)) declared.add(m[1]);
   }
 const statics = new Map();
 if (fs.existsSync(statDir))
