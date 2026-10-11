@@ -130,10 +130,29 @@ async function sceneMode() {
   };
 }
 
+// audit: every model partial and texture id the B2 visuals use must resolve (tools/b-audit-B2.mjs posts the list)
+async function auditMode(ids: { partials: string[]; sprites: string[] }) {
+  const missing: string[] = [];
+  for (const id of ids.partials) {
+    try {
+      await renderer.buildPartial(id);
+    } catch (e) {
+      missing.push(`partial ${id}: ${String(e)}`);
+    }
+  }
+  await renderer.ensureTextures(ids.sprites);
+  for (const id of ids.sprites) if (renderer.atlas.get(id) == null) missing.push(`texture ${id}`);
+  for (const id of renderer.diagnostics.missingModels) missing.push(`model ${id}`);
+  for (const id of renderer.diagnostics.missingTextures) missing.push(`texture-of-model ${id}`);
+  info.audit = { partials: ids.partials.length, sprites: ids.sprites.length, missing };
+}
+w.__auditIds = (ids: { partials: string[]; sprites: string[] }) => auditMode(ids);
+
 async function main() {
   const mode = qs.get('mode') ?? 'items';
   if (mode === 'items') await itemsMode();
   if (mode === 'scene') await sceneMode();
+  if (mode === 'audit') { info.done = true; return; }
   viewer.start();
   info.done = true;
 }
