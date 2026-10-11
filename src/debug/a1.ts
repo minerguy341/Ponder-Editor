@@ -80,7 +80,8 @@ function fitCamera(min: Vec3, max: Vec3) {
   const yaw = Number(q.get('yaw') ?? 145), pitch = Number(q.get('pitch') ?? 35), zoom = Number(q.get('zoom') ?? 1);
   const c = new THREE.Vector3((min[0] + max[0] + 1) / 2, (min[1] + max[1] + 1) / 2, (min[2] + max[2] + 1) / 2);
   const size = new THREE.Vector3(max[0] - min[0] + 1, max[1] - min[1] + 1, max[2] - min[2] + 1);
-  const radius = size.length() / 2;
+  let radius = size.length() / 2;
+  if (q.get('cx')) { c.set(Number(q.get('cx')), Number(q.get('cy') ?? 1), Number(q.get('cz'))); radius = Number(q.get('r') ?? 3); }
   // Ponder: view = Rx(pitch) * Ry(yaw) * (p - center) in three's y-up eye space (see PonderScene.SceneTransform.apply)
   world.position.set(0, 0, 0);
   world.rotation.set(0, 0, 0);
