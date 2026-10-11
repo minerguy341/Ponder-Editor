@@ -3,7 +3,6 @@
 // Pure simulation: no three.js, no DOM.
 
 import type { Direction, Selection, Vec3 } from '../contract';
-import { findBeltItem, insertOnBelt, insertOnDepot, itemId, removeItemsNear, resyncBelt, tickBelt, controllerKeyOf, beltInfo } from './belts';
 import { addEntity, applyEntityCall, entityMatches, ITEM_TYPE, type Call } from './entities';
 import { addSel, copySel, subtractSel } from './selection';
 import type { ActorEl, BeltItemEl, EntityEl, OutlinerEl, OverlayEl, Section } from './simTypes';
@@ -455,57 +454,25 @@ export const OPS: Record<string, OpDef> = {
       h.set(next);
     },
   },
+  // Belt and depot items live in the logistics simulation (src/render/create/items/logisticsSim.ts, LogisticsWorld): the C2
+  // player keeps only the element for a link so later ops can address it. The item itself is not tracked here.
   'world.createItemOnBelt': {
     tick(o) {
       const pos = vec(o.args.pos);
-      const it = o.args.item as { id: string; count?: number; nbt?: unknown };
-      const side = DIR_OPPOSITE[o.args.insertionSide as Direction];
-      const id = insertOnBelt(o.st, pos, side, { id: it.id, count: it.count ?? 1, nbt: it.nbt });
-      if (id === null) return;
-      const info = beltInfo(o.st, pos);
-      if (!info) return;
-      tickBelt(o.st, info.controller); // controllerBE.tick()
-      const ck = controllerKeyOf(o.st, pos)!;
-      // handleProcessingOnAllItems: every item within one block of the segment centre is tracked, the last one wins the link
-      const ctrl = o.st.belts[ck];
-      const near = ctrl.items.filter((t) => Math.abs(info.index + 0.5 - t.pos) < 1);
-      const last = near[near.length - 1];
-      if (last && o.out) addElement(o.st, { kind: 'beltItem', id: o.out, visible: true, fade: lerped(1), controller: ck, item: last.id } satisfies BeltItemEl);
+      if (o.out) addElement(o.st, { kind: 'beltItem', id: o.out, visible: true, fade: lerped(1), controller: keyOf(pos), item: 0 } satisfies BeltItemEl);
     },
   },
   'world.createItemOnBeltLike': {
     tick(o) {
       const pos = vec(o.args.pos);
-      const it = o.args.item as { id: string; count?: number; nbt?: unknown };
-      const stack = { id: it.id, count: it.count ?? 1, nbt: it.nbt };
-      const side = DIR_OPPOSITE[o.args.insertionSide as Direction];
       const b = o.st.world.blocks.get(keyOf(pos));
-      if (!b) return;
-      if (b.state.name === 'create:belt') insertOnBelt(o.st, pos, side, stack);
-      else if (b.state.name === 'create:depot') insertOnDepot(o.st, pos, stack);
-      else logCall(o, pos, { path: [{ m: 'handleInsertion', a: [stack, side] }] });
+      if (b?.state.name === 'create:belt' || b?.state.name === 'create:depot') return;
+      logCall(o, pos, { path: [{ m: 'handleInsertion', a: [o.args.item, DIR_OPPOSITE[o.args.insertionSide as Direction]] }] });
     },
   },
-  'world.removeItemsFromBelt': { tick(o) { removeItemsNear(o.st, vec(o.args.pos)); } },
-  'world.stallBeltItem': {
-    tick(o) {
-      const el = resolveLink<BeltItemEl>(o.st, o.args.link, 'beltItem');
-      const t = el && (findBeltItem(o.st, el.controller, el.item) ?? itemId(o.st, el.item));
-      if (!el || !t) return;
-      t.locked = Boolean(o.args.stalled);
-      resyncBelt(o.st, el.controller);
-    },
-  },
-  'world.changeBeltItemTo': {
-    tick(o) {
-      const el = resolveLink<BeltItemEl>(o.st, o.args.link, 'beltItem');
-      const t = el && (findBeltItem(o.st, el.controller, el.item) ?? itemId(o.st, el.item));
-      if (!el || !t) return;
-      const it = o.args.item as { id: string; count?: number; nbt?: unknown };
-      t.stack = { id: it.id, count: it.count ?? 1, nbt: it.nbt };
-      resyncBelt(o.st, el.controller);
-    },
-  },
+  'world.removeItemsFromBelt': { tick() { /* logistics simulation */ } },
+  'world.stallBeltItem': { tick() { /* logistics simulation */ } },
+  'world.changeBeltItemTo': { tick() { /* logistics simulation */ } },
   'world.connectCrafterInvs': {
     tick(o) {
       logCall(o, vec(o.args.pos1), { path: [{ m: 'toggleConnection', a: [vec(o.args.pos2)] }] });

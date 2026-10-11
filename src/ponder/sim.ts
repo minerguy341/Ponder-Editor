@@ -2,13 +2,12 @@
 // nothing here reads clocks or random numbers, which is what makes seek() deterministic.
 
 import type { BlockInstance, SceneJson, Vec3 } from '../contract';
-import { tickBelt } from './belts';
 import { tickEntities } from './entities';
 import { isBlocking, OPS } from './ops';
 import type { Bounds } from './selection';
 import type { ActorEl, Chaser, InstrRT, Section, SimCtx, SimState } from './simTypes';
 import { lerpAabb, noteUnsupported, makeSelectionOutline, lerped, FADE_TICKS } from './simCore';
-import { keyOf, lerpV, parseKey } from './util';
+import { keyOf, lerpV } from './util';
 import { createWorld } from './world';
 import { resolveSelection } from './selection';
 
@@ -64,7 +63,7 @@ export function initState(ctx: SimCtx): SimState {
     elements: { base }, outlines: {},
     cam: { yaw: chaser(55 + 90), pitch: chaser(-35) },
     poi: { cur: [0, 4, 0], chase: [0, 4, 0] },
-    entities: [], nextEntityId: 1, belts: {}, nextItemId: 1, beRev: 0, animKeys: [], unsupported: [], errors: [],
+    entities: [], nextEntityId: 1, nextItemId: 1, beRev: 0, animKeys: [], unsupported: [], errors: [],
   };
 }
 
@@ -115,15 +114,6 @@ function tickActor(ctx: SimCtx, st: SimState, el: ActorEl): void {
   }
 }
 
-function visibleKeys(st: SimState): Set<string> | null {
-  let any = false;
-  const keys = new Set<string>();
-  for (const el of Object.values(st.elements)) {
-    if (el.kind === 'section' && el.visible && el.sel) { any = true; for (const k of el.sel.keys) keys.add(k); }
-  }
-  return any ? keys : null;
-}
-
 /** PonderScene.tick() */
 export function tickScene(ctx: SimCtx, st: SimState): void {
   const poi = st.poi;
@@ -141,7 +131,6 @@ export function tickScene(ctx: SimCtx, st: SimState): void {
   tickChaser(st.cam.pitch);
 
   // elements
-  const vis = visibleKeys(st);
   for (const el of Object.values(st.elements)) {
     switch (el.kind) {
       case 'section':
@@ -166,8 +155,7 @@ export function tickScene(ctx: SimCtx, st: SimState): void {
         break;
     }
   }
-  // block entities of visible sections (belt inventories) and animated BE values
-  if (vis) for (const k of Object.keys(st.belts)) if (vis.has(k)) tickBelt(st, parseKey(k));
+  // animated BE values of visible sections
   for (const k of st.animKeys) {
     const anim = st.world.blocks.get(k)?.nbt?.PonderAnim as Record<string, { p: number; c: number }> | undefined;
     if (anim) for (const v of Object.values(anim)) v.p = v.c;
