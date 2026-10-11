@@ -439,7 +439,8 @@
     ],
     "pose": {
      "type": "face_poi"
-    }
+    },
+    "fadeFrom": "down"
    },
    "src": "RollerScenes.java:342",
    "out": "e2"
@@ -1611,7 +1612,8 @@
     ],
     "pose": {
      "type": "face_poi"
-    }
+    },
+    "fadeFrom": "down"
    },
    "src": "RollerScenes.java:424",
    "out": "e3"
@@ -3267,7 +3269,8 @@
     ],
     "pose": {
      "type": "face_poi"
-    }
+    },
+    "fadeFrom": "down"
    },
    "src": "RollerScenes.java:488",
    "out": "e5"

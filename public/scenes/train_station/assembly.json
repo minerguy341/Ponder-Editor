@@ -2076,7 +2076,8 @@
     ],
     "pose": {
      "type": "face_poi"
-    }
+    },
+    "fadeFrom": "down"
    },
    "src": "TrainStationScenes.java:262",
    "out": "e4"

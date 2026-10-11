@@ -610,7 +610,8 @@
     ],
     "pose": {
      "type": "dance"
-    }
+    },
+    "fadeFrom": "down"
    },
    "src": "TrainSignalScenes.java:545",
    "out": "e2"

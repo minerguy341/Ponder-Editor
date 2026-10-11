@@ -302,7 +302,8 @@
      4.5
     ],
     "angle": 0,
-    "cartType": "Minecart"
+    "cartType": "Minecart",
+    "fadeFrom": "down"
    },
    "src": "CartAssemblerScenes.java:329",
    "out": "e1"
@@ -316,7 +317,8 @@
      4.5
     ],
     "angle": 0,
-    "cartType": "MinecartChest"
+    "cartType": "MinecartChest",
+    "fadeFrom": "down"
    },
    "src": "CartAssemblerScenes.java:331",
    "out": "e2"

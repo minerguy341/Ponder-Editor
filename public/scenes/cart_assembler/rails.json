@@ -267,7 +267,8 @@
      3.5
     ],
     "angle": 0,
-    "cartType": "Minecart"
+    "cartType": "Minecart",
+    "fadeFrom": "down"
    },
    "src": "CartAssemblerScenes.java:446",
    "out": "e1"
@@ -529,7 +530,8 @@
      3.5
     ],
     "angle": 0,
-    "cartType": "Minecart"
+    "cartType": "Minecart",
+    "fadeFrom": "down"
    },
    "src": "CartAssemblerScenes.java:479",
    "out": "e4"
@@ -851,7 +853,8 @@
      3.5
     ],
     "angle": 0,
-    "cartType": "MinecartFurnace"
+    "cartType": "MinecartFurnace",
+    "fadeFrom": "down"
    },
    "src": "CartAssemblerScenes.java:507",
    "out": "e7"

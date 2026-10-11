@@ -401,7 +401,8 @@
      4.5
     ],
     "angle": 90,
-    "cartType": "Minecart"
+    "cartType": "Minecart",
+    "fadeFrom": "down"
    },
    "src": "CartAssemblerScenes.java:74",
    "out": "e1"

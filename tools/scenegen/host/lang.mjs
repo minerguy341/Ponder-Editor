@@ -90,9 +90,13 @@ export class JList {
     for (let i = this.a.length - 1; i >= 0; i--) if (jeq(this.a[i], o)) return i;
     return -1;
   }
+  /** remove(int index) for primitive int arguments; the interpreter routes reference-typed arguments to removeObject */
   remove(x) {
     this.chk();
-    if (typeof x === 'number' && !this.boxedRemove) return this.a.splice(x, 1)[0];
+    return this.a.splice(num(x), 1)[0];
+  }
+  removeObject(x) {
+    this.chk();
     const i = this.indexOf(x);
     if (i >= 0) this.a.splice(i, 1);
     return i >= 0;
@@ -602,6 +606,15 @@ export function buildLang(R) {
   R.map.get('Comparator').statics = {
     comparingInt: (f) => new HostCmp((x, y) => cmpNum(rt().callFn(f, [x]), rt().callFn(f, [y]))),
     comparingDouble: (f) => new HostCmp((x, y) => cmpNum(rt().callFn(f, [x]), rt().callFn(f, [y]))),
+    // comparing(keyExtractor[, keyComparator]): natural order of the extracted keys unless a key comparator is given
+    comparing: (f, c) => new HostCmp((x, y) => {
+      const a = rt().callFn(f, [x]);
+      const b = rt().callFn(f, [y]);
+      if (c) return num(rt().callFn(c, [a, b]));
+      if (isNum(a) && isNum(b)) return cmpNum(a, b);
+      if (typeof a === 'string') return a < b ? -1 : a > b ? 1 : 0;
+      return num(rt().invoke(a, 'compareTo', [b]));
+    }),
     naturalOrder: () => new HostCmp((x, y) => cmpNum(x, y)),
     reverseOrder: () => new HostCmp((x, y) => cmpNum(y, x)),
   };
@@ -691,10 +704,32 @@ export function buildLang(R) {
   // guava
   R.add(hc('ImmutableList', { statics: { of: (...a) => mkImmList(a.length === 1 && a[0] instanceof JArray ? a[0].a.slice() : a), copyOf: (c) => mkImmList(rt().iterate(c)), builder: () => { const l = new JList(); l.build = () => mkImmList(l.a.slice()); return l; } } }));
   R.add(hc('ImmutableSet', { statics: { of: (...a) => new JSet(a), copyOf: (c) => new JSet(rt().iterate(c)) } }));
-  R.add(hc('ImmutableMap', { statics: { of: (...a) => R.map.get('Map').statics.of(...a) } }));
+  R.add(hc('ImmutableMap', { statics: { of: (...a) => R.map.get('Map').statics.of(...a), builder: () => new ImmutableMapBuilder() } }));
   R.add(hc('Lists', { statics: { newArrayList: (...a) => mkList(a.length === 1 && typeof a[0] === 'object' && a[0] !== null && !(a[0] instanceof Dbl) ? rt().iterate(a[0]) : a), reverse: (l) => mkList(l.a.slice().reverse()) } }));
   R.add(hc('Sets', { statics: { newHashSet: (...a) => new JSet(a) } }));
   R.add(hc('Maps', { statics: { newHashMap: () => new JMap() } }));
+}
+
+/** Guava ImmutableMap.builder(): put/putAll chain on the builder itself, build() yields an immutable map (entries kept in insertion order) */
+class ImmutableMapBuilder {
+  constructor() {
+    this.entries = [];
+  }
+  get $class() {
+    return 'ImmutableMap.Builder';
+  }
+  $invoke(rt, name, args) {
+    switch (name) {
+      case 'put': this.entries.push([args[0], args[1]]); return this;
+      case 'putAll': for (const [k, v] of args[0].m.values()) this.entries.push([k, v]); return this;
+      case 'build': {
+        const m = new JMap();
+        for (const [k, v] of this.entries) m.put(k, v);
+        return m;
+      }
+    }
+    throw new Unsupported(`ImmutableMap.Builder.${name}`);
+  }
 }
 
 class HostCmp {

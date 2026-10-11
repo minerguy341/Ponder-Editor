@@ -732,7 +732,8 @@
     ],
     "pose": {
      "type": "face_poi"
-    }
+    },
+    "fadeFrom": "down"
    },
    "src": "TrainScenes.java:232",
    "out": "e3"
