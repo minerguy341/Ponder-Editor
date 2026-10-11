@@ -42,8 +42,8 @@
   "texts": [
    {
     "key": "text_1",
-    "from": 44,
-    "to": 114
+    "at": 44,
+    "duration": 60
    }
   ]
  }

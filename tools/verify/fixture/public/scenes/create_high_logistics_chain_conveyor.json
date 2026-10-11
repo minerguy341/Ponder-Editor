@@ -4,11 +4,11 @@
  "schematicNamespace": "create",
  "title": "Fixture chain_conveyor",
  "texts": {
-  "text_1": "fixture text 1 of create:high_logistics/chain_conveyor",
-  "text_2": "fixture text 2 of create:high_logistics/chain_conveyor",
-  "text_3": "fixture text 3 of create:high_logistics/chain_conveyor",
-  "text_4": "fixture text 4 of create:high_logistics/chain_conveyor",
-  "text_5": "fixture text 5 of create:high_logistics/chain_conveyor"
+  "text_1": "fixture text 1",
+  "text_2": "fixture text 2",
+  "text_3": "fixture text 3",
+  "text_4": "fixture text 4",
+  "text_5": "fixture text 5"
  },
  "tags": [],
  "items": [
@@ -104,28 +104,28 @@
   "texts": [
    {
     "key": "text_1",
-    "from": 68,
-    "to": 138
+    "at": 68,
+    "duration": 80
    },
    {
     "key": "text_2",
-    "from": 205,
-    "to": 275
+    "at": 205,
+    "duration": 70
    },
    {
     "key": "text_3",
-    "from": 313,
-    "to": 383
+    "at": 313,
+    "duration": 60
    },
    {
     "key": "text_4",
-    "from": 398,
-    "to": 468
+    "at": 398,
+    "duration": 80
    },
    {
     "key": "text_5",
-    "from": 537,
-    "to": 607
+    "at": 537,
+    "duration": 60
    }
   ]
  }

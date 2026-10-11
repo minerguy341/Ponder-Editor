@@ -4,9 +4,10 @@
  "schematicNamespace": "create",
  "title": "Fixture pressing",
  "texts": {
-  "text_1": "fixture text 1 of create:mechanical_press/pressing",
-  "text_2": "fixture text 2 of create:mechanical_press/pressing",
-  "text_3": "fixture text 3 of create:mechanical_press/pressing"
+  "text_1": "fixture text 1",
+  "text_2": "fixture text 2",
+  "text_3": "fixture text 3",
+  "text_4": "fixture text 4"
  },
  "tags": [],
  "items": [
@@ -72,18 +73,23 @@
   "texts": [
    {
     "key": "text_1",
-    "from": 41,
-    "to": 111
+    "at": 41,
+    "duration": 60
    },
    {
     "key": "text_2",
-    "from": 306,
-    "to": 376
+    "at": 111,
+    "duration": 60
    },
    {
     "key": "text_3",
-    "from": 366,
-    "to": 436
+    "at": 306,
+    "duration": 40
+   },
+   {
+    "key": "text_4",
+    "at": 366,
+    "duration": 50
    }
   ]
  }

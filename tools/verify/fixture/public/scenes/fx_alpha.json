@@ -74,18 +74,18 @@
   "texts": [
    {
     "key": "text_1",
-    "from": 34,
-    "to": 104
+    "at": 34,
+    "duration": 60
    },
    {
     "key": "text_2",
-    "from": 94,
-    "to": 164
+    "at": 94,
+    "duration": 60
    },
    {
     "key": "text_3",
-    "from": 154,
-    "to": 224
+    "at": 154,
+    "duration": 60
    }
   ]
  }

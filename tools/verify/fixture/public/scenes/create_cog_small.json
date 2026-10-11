@@ -4,7 +4,8 @@
  "schematicNamespace": "create",
  "title": "Fixture cog/small",
  "texts": {
-  "text_1": "fixture text 1 of create:cog/small"
+  "text_1": "fixture text 1",
+  "text_2": "fixture text 2"
  },
  "tags": [
   "create:kinetic_relays"
@@ -42,8 +43,13 @@
   "texts": [
    {
     "key": "text_1",
-    "from": 135,
-    "to": 205
+    "at": 45,
+    "duration": 60
+   },
+   {
+    "key": "text_2",
+    "at": 135,
+    "duration": 100
    }
   ]
  }

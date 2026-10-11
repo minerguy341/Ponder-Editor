@@ -1,0 +1,111 @@
+{
+  "schema": 1,
+  "about": "Which scene and which timeline tick each of the four acceptance screenshots (user screenshots of the real game, 1920x1009) shows. Determined from the screenshots plus the Create scene Java sources (tag mc1.21.1-6.0.10) and the Ponder library (1.0.82, branch mc1.21.1/dev). Reproduce/verify with: node tools/verify/compare.mjs --verify-refs [--refs <dir with ref1..4.png>]. The screenshots themselves are never committed (default lookup: --refs <dir>, $PONDER_REFS, tools/verify/refs/).",
+  "viewport": { "width": 1920, "height": 1009, "deviceScaleFactor": 1 },
+  "ui": {
+    "guiScale": 4,
+    "guiScaleRule": "Minecraft auto GUI scale = largest integer s with 320*s <= width and 240*s <= height (here min(6, 4.2 -> 4) = 4): one GUI pixel = 4 screen pixels, GUI size 480 x 252.25",
+    "progressBar": {
+      "source": "PonderUI.java: pX = width/2 - 110, pW = width - 2*pX (GUI px); PonderProgressBar.java draws the fill from (pX-2) with width (pW+4)*progress and keyframe marks at (pX-2 + int(t/total*(pW+2)))",
+      "guiX": 130, "guiW": 220, "fillLeftPx": 512, "fillRightPx": 1408, "fillRowsPx": [900, 911], "markRowsPx": [900, 915],
+      "fillColors": ["rgb(85,86,111) upper band", "rgb(53,53,67) lower band"], "markColor": "rgb(112,112,112)",
+      "progressLag": "the shown progress chases the real one (LerpedFloat EXP .5) so it lags ~1 tick, plus 0..1 tick of partial-tick interpolation: tick ~= progress*total + 1.5 (+-1)"
+    }
+  },
+  "ignoreRegions": {
+    "why": "parts of the screenshots that cannot be reproduced by a web viewer: the OS mouse cursor, the blurred Minecraft hotbar and the blurred player hand/item in the world behind the Ponder GUI. Metrics are reported with and without them; the world background (sky/grass) is NOT masked, it is judged by eye.",
+    "common": [
+      { "name": "hotbar", "rect": [590, 925, 745, 84] },
+      { "name": "player-hand", "rect": [1320, 690, 600, 319] }
+    ]
+  },
+  "refs": [
+    {
+      "id": "ref1",
+      "image": "ref1.png",
+      "sceneId": "create:cog/small",
+      "title": "Relaying rotational force using Cogwheels",
+      "registration": "AllCreatePonderScenes.java: HELPER.forComponents(AllBlocks.COGWHEEL).addStoryBoard(\"cog/small\", KineticsScenes::cogAsRelay, AllCreatePonderTags.KINETIC_RELAYS)",
+      "source": { "file": "KineticsScenes.java", "method": "cogAsRelay" },
+      "timeline": { "totalTicks": 205, "keyframes": [141] },
+      "tick": 63,
+      "tickRange": [62, 64],
+      "anchor": { "after": "scene start", "plusTicks": 63 },
+      "visibleTextKeys": ["text_1"],
+      "bar": { "fillEndPx": 781, "progress": 0.3002, "marksPx": [1120] },
+      "cursorRect": [1640, 398, 26, 36],
+      "focusRect": [520, 100, 880, 720],
+      "reasoning": [
+        "Title 'Relaying rotational force using Cogwheels' + cogwheel item = scene cog/small (KineticsScenes.cogAsRelay).",
+        "Idle sum = 5+10+4*5+10+60+10+20+70 = 205 ticks; the only attachKeyFrame() is on text_2 (shown at idle-sum 135) => keyframe 135+6 = 141. Predicted mark x = 512 + 4*int(141/205*222) = 1120; measured mark at 1120 (the only mark).",
+        "Fill ends at x=781 => progress 0.3002 => 61.5 ticks + ~1.5 lag => tick ~63 (62..64).",
+        "Visual state agrees: text_1 (showText(60) at idle-sum 45, window 45+1 .. 45+1+70) is fully faded in and its leader line points at the west face of the cogwheel at (0,1,2); the gauge was set to speed 64 at tick ~36 (cogs turning); the shafts at (1,1,1),(2,1,1) are NOT shown yet (shown at idle-sum 115 => tick 116) and text_2 has not appeared."
+      ]
+    },
+    {
+      "id": "ref2",
+      "image": "ref2.png",
+      "sceneId": "create:high_logistics/chain_conveyor",
+      "title": "Relaying rotational force using Chain Conveyors",
+      "registration": "AllCreatePonderScenes.java: HELPER.forComponents(AllBlocks.CHAIN_CONVEYOR).addStoryBoard(\"high_logistics/chain_conveyor\", FrogAndConveyorScenes::conveyor)",
+      "source": { "file": "highLogistics/FrogAndConveyorScenes.java", "method": "conveyor" },
+      "timeline": { "totalTicks": 674, "keyframes": [74, 211, 319, 404, 543] },
+      "tick": 69,
+      "tickRange": [68, 70],
+      "anchor": { "after": "scene start", "plusTicks": 69, "note": "= idle-sum 68 (the instant of connection(conv1, conv2, true) + setKineticSpeed(conv2, -32) + showText #1) + 1 tick" },
+      "visibleTextKeys": [],
+      "bar": { "fillEndPx": 601, "progress": 0.0993, "marksPx": [608, 788, 932, 1044, 1224] },
+      "cursorRect": [376, 672, 26, 36],
+      "focusRect": [380, 90, 1160, 890],
+      "reasoning": [
+        "Title 'Relaying rotational force using Chain Conveyors' + chain conveyor item = high_logistics/chain_conveyor (FrogAndConveyorScenes.conveyor).",
+        "Idle sum = 674; 5 attachKeyFrame() at idle-sums 68, 205, 313, 398, 537 => keyframes 74, 211, 319, 404, 543. Predicted mark xs 608, 788, 932, 1044, 1224 = the five measured marks exactly (a unique fingerprint of this scene).",
+        "Fill ends at x=601 => progress 0.0993 => 66.9 ticks + ~1.5 lag => ~68.4 (66.3..70.6).",
+        "Visual state pins it to 69: both chain conveyors show their showControls popups (conv1 from tick 41 for 117+10 ticks, conv2 from tick 58 for 100+10) with the green outline boxes, and the two chain strands between them ALREADY exist, i.e. connection(conv1,conv2,true) (idle-sum 68) has run, but the first text window 'Right-click two conveyors...' (showText(80) in the same instruction pass) is not visible yet: its fade is (1/5)^2 = 0.04 on its first tick (tick 69) and rises to 0.16 at tick 70, which would be visible."
+      ]
+    },
+    {
+      "id": "ref3",
+      "image": "ref3.png",
+      "sceneId": "create:mechanical_press/pressing",
+      "title": "Processing Items with the Mechanical Press",
+      "registration": "AllCreatePonderScenes.java: HELPER.forComponents(AllBlocks.MECHANICAL_PRESS).addStoryBoard(\"mechanical_press/pressing\", ProcessingScenes::pressing)",
+      "source": { "file": "ProcessingScenes.java", "method": "pressing" },
+      "timeline": { "totalTicks": 471, "keyframes": [47, 312, 372] },
+      "tick": 471,
+      "tickRange": [471, 471],
+      "anchor": { "after": "scene end", "plusTicks": 0, "note": "currentTime == totalTime: the scene is finished" },
+      "visibleTextKeys": [],
+      "bar": { "fillEndPx": 1408, "progress": 1.0, "marksPx": [600, 1100, 1212] },
+      "cursorRect": [1628, 734, 26, 36],
+      "focusRect": [520, 100, 880, 720],
+      "reasoning": [
+        "Title 'Processing Items with the Mechanical Press' + press item = mechanical_press/pressing (ProcessingScenes.pressing); mechanical_press/compacting has its own title ('Compacting items ...', ref4).",
+        "Idle sum = 471; attachKeyFrame() at idle-sums 41, 306, 366 => keyframes 47, 312, 372 => predicted mark xs 600, 1100, 1212 = measured marks exactly.",
+        "The bar is completely full (fill reaches x=1408, progress 1.0000) => currentTime == totalTime => tick 471 (end of the scene). No text window is visible (the last showText(50) at idle-sum 366 ends at tick 366+1+60 = 427) and the 'next scene' button carries the white next-up highlight (PonderUI.nextUp is armed 50 ticks after the scene finished, so the screenshot was taken at the end state, not mid-scene); the depot was hidden at idle-sum 276 and the belt line with the press is the final layout."
+      ]
+    },
+    {
+      "id": "ref4",
+      "image": "ref4.png",
+      "sceneId": "create:mechanical_press/compacting",
+      "title": "Compacting items with the Mechanical Press",
+      "registration": "AllCreatePonderScenes.java: HELPER.forComponents(AllBlocks.MECHANICAL_PRESS).addStoryBoard(\"mechanical_press/compacting\", ProcessingScenes::compacting) (also registered for BASIN)",
+      "source": { "file": "ProcessingScenes.java", "method": "compacting" },
+      "timeline": { "totalTicks": 503, "keyframes": [51, 185, 429] },
+      "tick": 93,
+      "tickRange": [91, 95],
+      "anchor": { "after": "keyframe 0", "plusTicks": 42, "note": "keyframe 0 is tick 51" },
+      "visibleTextKeys": ["text_1"],
+      "bar": { "fillEndPx": 675, "progress": 0.1819, "marksPx": [600, 836, 1268] },
+      "cursorRect": [1469, 697, 26, 36],
+      "focusRect": [520, 100, 880, 720],
+      "reasoning": [
+        "Title 'Compacting items with the Mechanical Press' = mechanical_press/compacting (ProcessingScenes.compacting).",
+        "Idle sum = 503; attachKeyFrame() at idle-sums 45, 179, 423 => keyframes 51, 185, 429 => predicted mark xs 600, 836, 1268 = measured marks exactly.",
+        "Fill ends at x=675 => progress 0.1819 => 91.5 ticks + ~1.5 lag => ~93 (91.2..94.8).",
+        "Visual state agrees: text_1 (showText(60) at idle-sum 45) is fully shown with its leader line to the basin's west face; the showControls popup with the copper ingot (idle-sum 85, 30 ticks) is fully faded in (age ~7 >= 5); the press has not started yet (start(Mode.BASIN) at idle-sum 115) and the basin still holds nothing."
+      ]
+    }
+  ]
+}

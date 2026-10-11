@@ -9,7 +9,7 @@ import { fileURLToPath } from 'node:url';
 const dir = path.join(path.dirname(fileURLToPath(import.meta.url)), 'public', 'scenes');
 fs.mkdirSync(dir, { recursive: true });
 
-function scene({ id, title, total, keyframes, items = [], tags = [], behavior, texts, warnings }) {
+function scene({ id, title, total, keyframes, items = [], tags = [], behavior, texts, warnings, windows }) {
   const fileName = id.replace(/[:/]/g, '_') + '.json';
   const textKeys = {};
   const fx = { texts: [] };
@@ -23,8 +23,10 @@ function scene({ id, title, total, keyframes, items = [], tags = [], behavior, t
     if (showAt > t) instr.push({ op: 'idle', args: { ticks: showAt - t } });
     t = Math.max(t, showAt);
     instr.push({ op: 'overlay.showText', args: { text: key, duration: 60, keyframe: true } });
-    fx.texts.push({ key, from: showAt, to: showAt + 70 });
+    if (!windows) fx.texts.push({ key, at: showAt, duration: 60 });
   });
+  // explicit text windows (at = idle-sum when showText runs, as derived from the Create sources) for the reference scenes
+  if (windows) windows.forEach(([at, duration], i) => { textKeys[`text_${i + 1}`] = `fixture text ${i + 1}`; fx.texts.push({ key: `text_${i + 1}`, at, duration }); });
   if (total > t) instr.push({ op: 'idle', args: { ticks: total - t } });
   const json = {
     id,
@@ -48,10 +50,10 @@ function scene({ id, title, total, keyframes, items = [], tags = [], behavior, t
 const clean = [
   scene({ id: 'fx:alpha', title: 'Fixture Alpha', total: 200, keyframes: [40, 100, 160], items: ['fx:cube'], tags: ['fx:basics'] }),
   scene({ id: 'fx:beta-press', title: 'Fixture Beta Press', total: 120, keyframes: [50], items: ['fx:press'], tags: ['fx:basics'] }),
-  scene({ id: 'create:cog/small', title: 'Fixture cog/small', total: 205, keyframes: [141], items: ['create:cogwheel'], tags: ['create:kinetic_relays'] }),
-  scene({ id: 'create:high_logistics/chain_conveyor', title: 'Fixture chain_conveyor', total: 674, keyframes: [74, 211, 319, 404, 543], items: ['create:chain_conveyor'] }),
-  scene({ id: 'create:mechanical_press/pressing', title: 'Fixture pressing', total: 471, keyframes: [47, 312, 372], items: ['create:mechanical_press'] }),
-  scene({ id: 'create:mechanical_press/compacting', title: 'Fixture compacting', total: 503, keyframes: [51, 185, 429], items: ['create:mechanical_press', 'create:basin'] }),
+  scene({ id: 'create:cog/small', title: 'Fixture cog/small', total: 205, keyframes: [141], items: ['create:cogwheel'], tags: ['create:kinetic_relays'], windows: [[45, 60], [135, 100]] }),
+  scene({ id: 'create:high_logistics/chain_conveyor', title: 'Fixture chain_conveyor', total: 674, keyframes: [74, 211, 319, 404, 543], items: ['create:chain_conveyor'], windows: [[68, 80], [205, 70], [313, 60], [398, 80], [537, 60]] }),
+  scene({ id: 'create:mechanical_press/pressing', title: 'Fixture pressing', total: 471, keyframes: [47, 312, 372], items: ['create:mechanical_press'], windows: [[41, 60], [111, 60], [306, 40], [366, 50]] }),
+  scene({ id: 'create:mechanical_press/compacting', title: 'Fixture compacting', total: 503, keyframes: [51, 185, 429], items: ['create:mechanical_press', 'create:basin'], windows: [[45, 60], [179, 80], [323, 80], [423, 100]] }),
 ];
 fs.writeFileSync(path.join(dir, 'index.json'), JSON.stringify(clean, null, 1) + '\n');
 

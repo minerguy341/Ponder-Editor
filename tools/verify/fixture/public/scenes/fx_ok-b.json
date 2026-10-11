@@ -38,8 +38,8 @@
   "texts": [
    {
     "key": "text_1",
-    "from": 14,
-    "to": 84
+    "at": 14,
+    "duration": 60
    }
   ]
  }

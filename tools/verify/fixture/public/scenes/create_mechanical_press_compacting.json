@@ -4,9 +4,10 @@
  "schematicNamespace": "create",
  "title": "Fixture compacting",
  "texts": {
-  "text_1": "fixture text 1 of create:mechanical_press/compacting",
-  "text_2": "fixture text 2 of create:mechanical_press/compacting",
-  "text_3": "fixture text 3 of create:mechanical_press/compacting"
+  "text_1": "fixture text 1",
+  "text_2": "fixture text 2",
+  "text_3": "fixture text 3",
+  "text_4": "fixture text 4"
  },
  "tags": [],
  "items": [
@@ -73,18 +74,23 @@
   "texts": [
    {
     "key": "text_1",
-    "from": 45,
-    "to": 115
+    "at": 45,
+    "duration": 60
    },
    {
     "key": "text_2",
-    "from": 179,
-    "to": 249
+    "at": 179,
+    "duration": 80
    },
    {
     "key": "text_3",
-    "from": 423,
-    "to": 493
+    "at": 323,
+    "duration": 80
+   },
+   {
+    "key": "text_4",
+    "at": 423,
+    "duration": 100
    }
   ]
  }

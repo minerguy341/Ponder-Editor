@@ -106,10 +106,20 @@ function render() {
   ctx.fillText(`tick ${S.tick}/${S.total}`, 12 * dpr, H - 90 * dpr);
 }
 
+// Ponder's FadeInOutInstruction: a showText(duration) window lives duration+10 ticks, 5 in / 5 out, alpha squared.
+function textAlpha(t, tick) {
+  const total = t.duration + 10;
+  const elapsed = tick - t.at;
+  if (elapsed < 1 || elapsed >= total) return 0;
+  const remaining = total - elapsed;
+  if (elapsed < 5) return (elapsed / 5) ** 2;
+  if (remaining < 5) return (remaining / 5) ** 2;
+  return 1;
+}
 function visibleTexts() {
   const sc = S.scene;
   if (!sc || !sc.fixture || !sc.fixture.texts) return [];
-  return sc.fixture.texts.filter((t) => S.tick >= t.from && S.tick < t.to).map((t) => t.key);
+  return sc.fixture.texts.filter((t) => textAlpha(t, S.tick) >= 0.1).map((t) => t.key);
 }
 
 function updateChrome() {
