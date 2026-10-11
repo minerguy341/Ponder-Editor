@@ -43,9 +43,11 @@ describe('PressingBehaviour (Create 6.0.10, content/kinetics/press/PressingBehav
     pressStep(s, 512);
     expect(s.ticks).toBe(60);
     pressStep(s, 512);
-    expect(s.ticks).toBe(CYCLE / 2); // crossing CYCLE/2 clamps once (prev 60 < 120 <= 120)
+    expect(s.ticks).toBe(-(CYCLE / 2)); // crossing CYCLE/2 on the client pauses at -CYCLE/2 (Ponder BEs are not virtual; ref3/ref4)
     pressStep(s, 512);
-    expect(s.ticks).toBe(CYCLE / 2 + 60); // no client pause: virtual block entities keep counting
+    expect(s.ticks).toBe(-(CYCLE / 2)); // stays paused until a start() call (the server packet never arrives)
+    expect(s.prev).toBe(CYCLE / 2);
+    expect(pressRenderedHeadOffset(true, s.prev, s.ticks, 0)).toBe(1); // head fully depressed
   });
   it('start(Mode) (L104-L112) resets the cycle', () => {
     const s: PressState = { running: false, mode: 0, finished: false, prev: 50, ticks: 50 };
@@ -231,5 +233,17 @@ describe('seek: visuals are pure functions of scene time', () => {
     const a = [10, 40, 80].map(frame);
     const b = [80, 40, 10].map(frame);
     expect(b).toEqual([a[2], a[1], a[0]]);
+  });
+});
+
+describe('LerpedFloat LINEAR chase of the sticker piston (StickerBlockEntity.tick, L77-L93; LerpedFloat.tickChaser)', () => {
+  it('a state change at tick 5 starts the chase at tick 6 and reaches 1 after 3 steps of 0.4', async () => {
+    const { stickerPiston } = await import('../../../src/render/create/visuals/process-sticker');
+    const ch = [{ tick: 5, extended: true }];
+    expect(stickerPiston(false, ch, 5)[1]).toBe(0);
+    near(stickerPiston(false, ch, 6)[1], 0.4);
+    near(stickerPiston(false, ch, 7)[1], 0.8);
+    expect(stickerPiston(false, ch, 8)[1]).toBe(1);
+    const [pv, cv] = stickerPiston(false, ch, 8); near(pv, 0.8); expect(cv).toBe(1);
   });
 });
