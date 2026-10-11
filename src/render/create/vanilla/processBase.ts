@@ -95,6 +95,32 @@ export abstract class ProcessVisual extends BaseVisual {
 
   protected registerSim<T extends { invalidate(): void }>(s: T): T { this.sims.push(s); return s; }
 
+  /** Value of block-entity key `key` as of scene tick `tick` (initial nbt, then every data event at or before the tick). */
+  protected nbtAt(tick: number, key: string): unknown {
+    let v: unknown = this.block.nbt?.[key];
+    for (const ev of this.events) {
+      if (ev.tick > tick) break;
+      if (key in ev.patch) v = ev.patch[key];
+    }
+    return v;
+  }
+  /**
+   * Animated block-entity value written by the scene player: `PonderAnim.<kind>.c` (the current value, see the scene player's
+   * animateBlockEntity). Ponder's virtual BlockEntities read it through a LerpedFloat; we interpolate between the value of the
+   * previous and the current scene tick.
+   */
+  protected animAt(tick: number, kind: string): number {
+    const pa = this.nbtAt(tick, 'PonderAnim');
+    const c = isNbt(pa) && isNbt(pa[kind]) ? pa[kind].c : undefined;
+    return typeof c === 'number' ? c : 0;
+  }
+  /** LerpedFloat.getValue(partialTicks) of an animated value: lerp(pt, value(n-1), value(n)). */
+  protected animValue(whole: number, pt: number, kind: string): number {
+    const prev = this.animAt(Math.max(0, whole - 1), kind);
+    const cur = this.animAt(whole, kind);
+    return prev + (cur - prev) * pt;
+  }
+
   /** KineticBlockEntity.getSpeed() at game tick `tick` (0 while overstressed). */
   protected speedAt(tick: number): number {
     if (this.overstressed) return 0;
