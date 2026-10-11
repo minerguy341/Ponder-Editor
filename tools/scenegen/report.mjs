@@ -94,24 +94,37 @@ if (args.includes('--texts')) {
       else s.items.forEach((x) => checkSel(x, where));
     } else problems.push(`${where}: selection kind ${s.t} must be lowered`);
   };
+  // block-state property values are strings by contract (BlockState.props: Record<string,string>) and so are texts/slots
+  const STRINGY = new Set(['props', 'text', 'slot', 'key']);
   const walk = (v, where) => {
     if (typeof v === 'string' && /^-?\d+(\.\d+)?$/.test(v)) problems.push(`${where}: numeric string "${v}"`);
     else if (Array.isArray(v)) v.forEach((x, i) => walk(x, `${where}[${i}]`));
-    else if (v && typeof v === 'object') for (const [k, x] of Object.entries(v)) walk(x, `${where}.${k}`);
+    else if (v && typeof v === 'object') for (const [k, x] of Object.entries(v)) { if (!STRINGY.has(k)) walk(x, `${where}.${k}`); }
+  };
+  // every item stack ({id,count}) must carry a namespaced id and an integer count
+  const walkItems = (v, where) => {
+    if (Array.isArray(v)) v.forEach((x, i) => walkItems(x, `${where}[${i}]`));
+    else if (v && typeof v === 'object') {
+      if ('count' in v && 'id' in v && (typeof v.id !== 'string' || !v.id.includes(':') || !Number.isInteger(v.count))) problems.push(`${where}: bad item stack ${JSON.stringify(v)}`);
+      for (const [k, x] of Object.entries(v)) if (k !== 'props') walkItems(x, `${where}.${k}`);
+    }
   };
   for (const { scene } of scenes) {
     for (const k of ['id', 'schematic', 'schematicNamespace', 'title', 'texts', 'tags', 'items', 'keyframes', 'totalTicks', 'instructions']) if (!(k in scene)) problems.push(`${scene.id}: missing ${k}`);
+    if (scene.schematicNamespace !== 'create' || typeof scene.schematic !== 'string' || scene.schematic.includes('~') || !fs.existsSync(path.join(ROOT, 'tools/.cache/create/src/main/resources/assets/create/ponder', scene.schematic + '.nbt'))) problems.push(`${scene.id}: schematic ${scene.schematicNamespace}:${scene.schematic} does not resolve to a ponder .nbt`);
+    for (const it of scene.items) if (!/^[a-z0-9_.-]+:[a-z0-9_./-]+$/.test(it)) problems.push(`${scene.id}: item id ${it} not namespaced`);
     if (!Number.isInteger(scene.totalTicks)) problems.push(`${scene.id}: totalTicks not an int`);
     if (!scene.keyframes.every(Number.isInteger)) problems.push(`${scene.id}: keyframes not ints`);
     scene.instructions.forEach((op, i) => {
       const w = `${scene.id}#${i}(${op.op}@${op.src})`;
       const a = op.args || {};
       walk(a, w);
+      walkItems(a, w);
       if (a.selection) checkSel(a.selection, w);
       for (const k of ['pos', 'location', 'pointAt', 'start', 'end', 'offset', 'anchor', 'motion']) if (k in a && !isVec(a[k])) problems.push(`${w}: ${k} is not a [x,y,z] number triple`);
       if (op.op === 'world.setBlocks' || op.op === 'world.modifyBlocks') {
         const states = op.op === 'world.setBlocks' ? [a.state] : a.changes.map((c) => c.state);
-        for (const st of states) if (!st || typeof st.name !== 'string' || typeof st.props !== 'object') problems.push(`${w}: bad block state`);
+        for (const st of states) if (!st || typeof st.name !== 'string' || typeof st.props !== 'object' || Object.values(st.props).some((x) => typeof x !== 'string')) problems.push(`${w}: bad block state`);
       }
       if (op.op.startsWith('world.show') || op.op === 'world.makeSectionIndependent') if (op.op.includes('Independent') && !op.out) problems.push(`${w}: missing out link`);
       if (/createItem/.test(op.op) && a.item && (typeof a.item.id !== 'string' || !a.item.id.includes(':'))) problems.push(`${w}: item without namespaced id`);

@@ -56,8 +56,7 @@ scene-time + 6 for `addLazyKeyframe()` and for `showText(...).attachKeyFrame()` 
 
 Ponder applies these when the scene is *compiled*, not when it is played. C2 applies them once at load, in program order, ignoring
 their time: `configureBasePlate`, `scaleSceneView`, `setSceneOffsetY`, `removeShadow`, `setNextUpEnabled` (applies at its program time).
-`configureBasePlate` is emitted first in every scene (the Ponder default `0,0,5`-style call from the scene's registration or
-`CreateSceneBuilder` constructor, then overridden by explicit calls).
+Every Create scene calls `configureBasePlate(..)` itself (Ponder has no implicit default call), so every scene contains one; `showBasePlate()` uses the latest values.
 
 ### 0.3 World model notes (needed for the resolved lambdas)
 
