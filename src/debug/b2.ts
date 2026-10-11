@@ -130,10 +130,50 @@ async function sceneMode() {
   };
 }
 
+// audit: every model partial and texture id the B2 visuals use must resolve (tools/b-audit-B2.mjs posts the list)
+async function auditMode(ids: { partials: string[]; sprites: string[] }) {
+  const missing: string[] = [];
+  for (const id of ids.partials) {
+    try {
+      await renderer.buildPartial(id);
+    } catch (e) {
+      missing.push(`partial ${id}: ${String(e)}`);
+    }
+  }
+  await renderer.ensureTextures(ids.sprites);
+  for (const id of ids.sprites) if (renderer.atlas.get(id) == null) missing.push(`texture ${id}`);
+  for (const id of renderer.diagnostics.missingModels) missing.push(`model ${id}`);
+  for (const id of renderer.diagnostics.missingTextures) missing.push(`texture-of-model ${id}`);
+  info.audit = { partials: ids.partials.length, sprites: ids.sprites.length, missing };
+}
+// contact sheet (G5): every given block state placed on a grid with its visual; the driver screenshots the page
+w.__b2Contact = async (entries: { state: BlockState }[], cols: number) => {
+  // cells two blocks apart so sloped belts, tall tanks and pipes do not overlap their neighbours
+  const blocks: BlockInstance[] = entries.map((e, i) => ({ pos: [(i % cols) * 2, 0, Math.floor(i / cols) * 2] as Vec3, state: e.state }));
+  const lookupMap = new Map(blocks.map((b) => [b.pos.join(","), b]));
+  const lk = { getState: (p: readonly number[]) => lookupMap.get(p.join(","))?.state, getBlockEntity: (p: readonly number[]) => lookupMap.get(p.join(",")) };
+  renderer.setEntityBlockPredicate(isEntityRendered);
+  await renderer.prepare(blocks.map((b) => b.state));
+  const group = renderer.buildSection(blocks, { lookup: lk as never });
+  viewer.world.add(group);
+  const ctx = { renderer, lookup: lk as never };
+  for (const b of blocks) {
+    const v = await createVisual(b, ctx);
+    if (!v) continue;
+    v.object.position.set(b.pos[0], b.pos[1], b.pos[2]);
+    viewer.world.add(v.object);
+    visuals.push({ v, b });
+  }
+  viewer.setBounds(cols * 2, 2, Math.ceil(blocks.length / cols) * 2);
+  setTicks(0);
+};
+w.__auditIds = (ids: { partials: string[]; sprites: string[] }) => auditMode(ids);
+
 async function main() {
   const mode = qs.get('mode') ?? 'items';
   if (mode === 'items') await itemsMode();
   if (mode === 'scene') await sceneMode();
+  if (mode === 'audit') { info.done = true; return; }
   viewer.start();
   info.done = true;
 }
