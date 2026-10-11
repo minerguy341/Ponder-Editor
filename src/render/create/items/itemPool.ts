@@ -6,6 +6,7 @@
 import * as THREE from 'three';
 import type { ItemStackJson } from '../../../contract';
 import { createItemObjectSync, itemInfo, prepareItem, type ItemInfo } from './itemObject';
+import type { ItemContext } from './itemObject';
 
 interface Slot {
   group: THREE.Group;
@@ -29,7 +30,7 @@ export class ItemPool {
   begin(): void { this.used = 0; }
 
   /** Draws `stack` at `matrix` (copied). Returns false when the item model is not ready yet. */
-  draw(stack: ItemStackJson, matrix: THREE.Matrix4): boolean {
+  draw(stack: ItemStackJson, matrix: THREE.Matrix4, context: ItemContext = 'fixed'): boolean {
     const info = this.readyInfo(stack);
     if (!info) return false;
     if (info.entity) return true;
@@ -42,10 +43,10 @@ export class ItemPool {
       this.slots[this.used] = slot;
     }
     this.used++;
-    const key = `${stack.id}|${stack.count ?? 1}`;
+    const key = `${stack.id}|${stack.count ?? 1}|${context}`;
     if (slot.key !== key || !slot.item) {
       if (slot.item) slot.group.remove(slot.item);
-      const obj = createItemObjectSync({ id: stack.id, count: stack.count }, { context: 'fixed' });
+      const obj = createItemObjectSync({ id: stack.id, count: stack.count }, { context });
       slot.item = obj;
       slot.key = key;
       if (obj) slot.group.add(obj);

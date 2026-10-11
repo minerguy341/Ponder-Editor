@@ -109,6 +109,21 @@ async function sceneMode() {
   void ent;
   setTicks(Number(qs.get('t') ?? 0));
   Object.assign(w.__b2 as object, { visuals, setTicks, structure: st, lookup, ctx });
+  // probe(ticks): simulated logistics state (belt items, depot held items, basin slots) for verification
+  (w.__b2 as Record<string, unknown>).probe = (t: number) => {
+    const lw = getLogisticsWorld(lookup);
+    const belts = st.blocks.filter((b) => b.state.name === 'create:belt').map((b) => b.pos);
+    const chains = new Map<string, unknown>();
+    for (const p of belts) {
+      const ch = lw.chainAt(p);
+      if (!ch || chains.has(ch.key)) continue;
+      chains.set(ch.key, { controller: ch.controller, length: ch.segments.length, speed: lw.speedOf(ch), items: lw.itemsOf(ch, t).map((x) => ({ id: x.stack.id, n: x.stack.count, pos: +x.offset.toFixed(3), side: +x.sideOffset.toFixed(3), locked: x.locked })) });
+    }
+    const depots = st.blocks.filter((b) => b.state.name === 'create:depot').map((b) => { lw.advance(t); const v = lw.depotView(b.pos); return { pos: b.pos, held: v.held && { id: v.held.stack.id, pos: +v.held.beltPosition.toFixed(3) }, output: v.output.filter(Boolean) }; });
+    const basins = st.blocks.filter((b) => b.state.name === 'create:basin').map((b) => { lw.advance(t); return { pos: b.pos, slots: lw.basinView(b.pos).filter(Boolean) }; });
+    lw.advance(t);
+    return { t, chains: [...chains.values()], depots, basins };
+  };
 }
 
 async function main() {
