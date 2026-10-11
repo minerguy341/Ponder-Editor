@@ -26,8 +26,8 @@ Common rules for all B leaves: implement `VisualModule`s per `src/render/create/
 - [ ] G5: visual verification in the real renderer: contact-sheet screenshots of every block in your group in every state used by the ponder schematics (and every relevant animation phase), each reviewed with the Read tool and compared to the real game appearance (reference screenshots ref1..ref4 where applicable, otherwise Create's own textures/models and source). EVIDENCE: paths + defects found and fixed + residual known differences (each with reason).
   EVIDENCE: pending
 
-- [ ] G6: scene-level verification: for each ponder scene that uses your blocks, render at least the scene's last tick and one mid-animation tick through the full app once C2/A1 are merged (tools/verify harness); review images; EVIDENCE lists scenes reviewed (count) and defects fixed
-  EVIDENCE: pending
+- [x] G6: scene-level verification: for each ponder scene that uses your blocks, render at least the scene's last tick and one mid-animation tick through the full app once C2/A1 are merged (tools/verify harness); review images; EVIDENCE lists scenes reviewed (count) and defects fixed
+  EVIDENCE: tools/b3-g6.mjs over all 80 scenes from tools/.cache/b3-scenes.json: 80 scenes, 160 frames (end + mid) in tools/verify/out/b3-g6/ (g6-report.json). Each scene was Read by eye (2x2 grids). Findings per scene in tools/verify/out/b3-g6-review.md (80/80 logged). Runner flags: create:display_link and create:high_logistics/stock_link missing their block models (not B3 blocks; owners must add them). B3 defects: crafter cover lid never shown (Cover is a boolean nbt; fixed in 1d8ee0b); residuals: crafter grid items and connected inventories not drawn (ABANDON B3-crafter-connected-grid), saw top slot items not drawn by B3 (ABANDON B3-saw-top-items), fan air-flow particles not drawn, packager_address sign-on-post needs close-range check (open).
 
 - [x] G7: animation correctness + performance: update(ticks) pure, no per-frame allocations in hot paths, dispose frees geometry/materials/textures; seeking back and forth gives identical frames (test)
   CHECK: npx vitest run tests/b -t seek 2>&1 | tail -6
