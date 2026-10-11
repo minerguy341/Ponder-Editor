@@ -1,0 +1,179 @@
+# Scene JSON ops (C1 -> C2 contract detail)
+
+STATUS: DRAFT v0 (first publication). Op names below are frozen from now on; any later rename/removal is recorded in the
+CHANGELOG at the bottom. New ops and new optional args may be added (also recorded in the changelog).
+
+Producer: `tools/scenegen` (a Java-subset interpreter that runs Create's real scene methods against a recording
+implementation of Ponder's `SceneBuilder`). Consumer: `src/ponder/**` (C2).
+Types are in `src/contract.ts` (`SceneJson`, `TimelineInstruction`, `Selection`, ...). This file defines every `op`, its `args`
+shape, and the Ponder/Create source it mirrors (Ponder = `Creators-of-Create/Ponder@mc1.21.1/dev`, Create = tag `mc1.21.1-6.0.10`).
+
+## 0. Conventions
+
+* Numbers are JSON numbers. Positions (`BlockPos`, `Vec3`) are `[x,y,z]`. Block positions are ints, vectors are doubles.
+* `Direction`: `"down"|"up"|"north"|"south"|"west"|"east"`. `Axis`: `"x"|"y"|"z"`. `Pointing`: `"up"|"down"|"left"|"right"`.
+* `Palette` (PonderPalette): `"white"|"black"|"red"|"green"|"blue"|"slow"|"medium"|"fast"|"input"|"output"`;
+  colours (Ponder `PonderPalette.java`): white eeeeee, black 221111, red ff5d6c, green 8cba51, blue 5f6caf, slow 22ff22,
+  medium 0084ff, fast ff55ff, input 7fcde0, output ddc166.
+* `BlockState` = `{ "name": "create:shaft", "props": { "axis": "x", ... } }` with ALL properties of the block present
+  (defaults filled in by the converter from the Create sources / vanilla table), string values.
+* `ItemStack` = `{ "id": "minecraft:iron_ingot", "count": 1, "nbt"?: {...plain JSON data components...} }`.
+* `Link` = `{ "link": "e3" }`; the instruction that creates an element carries `"out": "e3"` (ids unique per scene).
+* `Selection` = contract `Selection`, but the converter ALWAYS lowers to `pos`, `box` (inclusive corners, min<=max normalised),
+  `union` and `subtract`. (`layer`/`layers`/`column`/`everywhere` are resolved against the scene bounds exactly like Ponder's
+  `PonderSceneBuildingUtil.PonderSelectionUtil`, including its quirks, so C2 never needs the scene bounds for that.)
+  C2 must still accept all contract variants.
+* `Box` (AABB) = `{ "min": [x,y,z], "max": [x,y,z] }`.
+* `src` is `"File.java:line"` of the scene-builder call that produced the instruction.
+
+### 0.1 Timing (mirror `PonderScene.tick`, `TickingInstruction`, `PonderInstruction`)
+
+Instructions are listed in program order. ONLY `idle` is blocking (`DelayInstruction`). Every other instruction is started in
+the tick after the previous `idle` finished and runs concurrently for its own duration (`duration` args below; text/input
+`duration` already excludes the 2x5 fade ticks: total = duration + 10). Emulate Ponder's loop exactly:
+each tick: iterate active instructions in order; call `tick`; remove when complete; stop iterating after a blocking one (complete or not).
+An instruction after an `idle(n)` therefore first ticks on the tick after the delay completed. `idle(0)` still consumes one tick of
+program flow but adds 0 to `totalTicks`.
+`SceneJson.totalTicks` = sum of all `idle` ticks before the first `markAsFinished` (Ponder `stopCounting`).
+`SceneJson.keyframes` = scene-time (sum of idles so far) at each `addKeyframe()` call, `+6` for `addLazyKeyframe()` and for
+`showText(...).attachKeyFrame()`; keyframes after `markAsFinished` are dropped. No instruction is emitted for keyframes.
+
+### 0.2 Build-time ops
+
+Ponder applies these when the scene is *compiled*, not when it is played. C2 applies them once at load, in program order, ignoring
+their time: `configureBasePlate`, `scaleSceneView`, `setSceneOffsetY`, `removeShadow`, `setNextUpEnabled` (applies at its program time; see below).
+
+### 0.3 World model notes (needed for the resolved lambdas)
+
+The converter tracks the scene world exactly like Ponder's `PonderLevel` (schematic NBT + all earlier instructions) so that state
+lambdas (`s -> s.setValue(..)`, `cycle`, `getValue`) and block-entity-type filters (`modifyBlockEntityNBT(sel, KineticBlockEntity.class, ..)`)
+are RESOLVED at conversion time. Consequently:
+* `world.modifyBlocks` carries final states per position (not lambdas);
+* `world.modifyBlockEntityNBT` / `world.modifyBlockEntity` only list positions whose block entity really is an instance of the requested class at that moment.
+Block entity retention rule (Catnip `SchematicLevel.setBlock`): when a block is replaced, its BE (and nbt) is kept iff the BE type
+accepts the new state (e.g. shaft -> encased shaft keeps the kinetic BE and its `Speed`), otherwise it is dropped and a fresh BE is created if the new block has one.
+
+## 1. General
+
+| op | args | mirrors |
+|---|---|---|
+| `idle` | `{ticks:int}` (`idleSeconds(n)` is emitted as `idle` with `ticks=n*20`) | `PonderSceneBuilder.idle` / `DelayInstruction` (blocking) |
+| `markAsFinished` | `{}` | `MarkAsFinishedInstruction` (sets finished at its time; later idles do not count) |
+| `setNextUpEnabled` | `{enabled:boolean}` | `scene.setNextUpEnabled` (program-time callback) |
+| `rotateCameraY` | `{degrees:number}` relative: target yRot = chaseTarget + degrees (x unchanged); `chase(target, .1, EXP)` | `RotateSceneInstruction(0, degrees, true)` |
+| `configureBasePlate` | `{xOffset:int, zOffset:int, size:int}` (build-time) | `PonderSceneBuilder.configureBasePlate` |
+| `scaleSceneView` | `{factor:number}` (build-time) | `scaleSceneView` |
+| `setSceneOffsetY` | `{yOffset:number}` (build-time) | `setSceneOffsetY` |
+| `removeShadow` | `{}` (build-time; hides platform shadow) | `removeShadow` |
+
+`showBasePlate()` is expanded to `world.showSection` over the box `[xOffset,0,zOffset]..[xOffset+size-1,0,zOffset+size-1]` direction `up`, using the base plate config in force at that program point (as Ponder does).
+Scene-level facts that are not instructions (`title`, tags, items, texts) live in `SceneJson` (`title`, `texts`, `tags`, `items`).
+
+## 2. Overlay
+
+| op | args | mirrors |
+|---|---|---|
+| `overlay.showText` | `{duration:int, text:string, key?:"text_N", sharedKey?:"ns:key", color:Palette, pointAt?:Vec3, independent?:int, placeNearTarget:boolean, keyframe:boolean}` | `TextInstruction` / `TextWindowElement`. `text` = resolved English (lang file preferred, `%s` params applied). `key` indexes `SceneJson.texts`. `independent` present only if `.independent(y)` was called (y px offset of the box; box is screen-centred when `pointAt` absent). |
+| `overlay.showOutlineWithText` | same as `overlay.showText` + `{selection:Selection}` | same instruction with outline of the selection (outline colour follows `color`, line width 1/16); `pointAt` defaults to the selection centre |
+| `overlay.showControls` | `{location:Vec3, direction:Pointing, duration:int, item?:ItemStack, icon?:"lmb"|"rmb"|"scroll"|string, sneak:boolean, ctrl:boolean}` | `InputWindowElement`; `icon` names: `lmb`,`rmb`,`scroll` (Ponder GUI textures) or a Create `AllIcons` constant name (e.g. `"I_MTD_SCROLL"`); `sneak` = `whileSneaking()` (shows shared text `create:ponder.shared`-`sneak_and`), `ctrl` = `whileCTRL()` |
+| `overlay.chaseBoundingBoxOutline` | `{color:Palette, slot:string, box:Box, duration:int}` | `ChaseAABBInstruction`: outline identified by `slot` chases to `box` (same slot => animated transition between boxes, lineWidth 1/16) |
+| `overlay.showOutline` | `{color:Palette, slot:string, selection:Selection, duration:int}` | `OutlineSelectionInstruction` (lineWidth 1/16) |
+| `overlay.showLine` | `{color:Palette, start:Vec3, end:Vec3, duration:int, big:boolean}` | `LineInstruction`; `showBigLine` => `big:true` (width 1/8 vs 1/16) |
+| `overlay.highlightValueBox` | `{location:Vec3, expands:Vec3, duration:int}` | `HighlightValueBoxInstruction`; produced by `showCenteredScrollInput`, `showScrollInput`, `showRepeaterScrollInput`, `showFilterSlotInput` (expansion vectors already computed as in `PonderOverlayInstructions`). First tick shows a point box, later ticks the expanded box; white, lineWidth 1/15 |
+
+`slot` serialisation: `BlockPos` => `"pos:x,y,z"`, string => itself, any other (e.g. `new Object()`, Selection, Vec3) => stable per-scene identity string (`"obj:N"`, `"vec:x,y,z"`).
+
+## 3. World (Ponder primitives)
+
+All `selection`s are lowered (see 0). `direction` is the fade-in/out direction.
+
+| op | args | out | mirrors |
+|---|---|---|---|
+| `world.showSection` | `{selection, direction}` | - | `DisplayWorldSectionInstruction(15, dir, sel, baseSection)`: reveals blocks in the *base* section (fade 15 ticks) |
+| `world.showSectionAndMerge` | `{selection, direction, link:Link}` | - | `DisplayWorldSectionInstruction(15, dir, sel, resolve(link))`: new element, merged into `link` when finished |
+| `world.glueBlockOnto` | `{pos, direction, link:Link}` | - | same with single position + glue particles (not rendered) |
+| `world.showIndependentSection` | `{selection, direction}` | `link` | independent section (fade 15 ticks) |
+| `world.showIndependentSectionImmediately` | `{selection}` | `link` | independent section, 0 fade ticks |
+| `world.makeSectionIndependent` | `{selection}` | `link` | erases selection from base section, new fully visible independent element, instant |
+| `world.hideSection` | `{selection, direction}` | - | erase selection from base section, then fade the new element out (`FadeOutOfSceneInstruction(15)`) |
+| `world.hideIndependentSection` | `{link, direction}` | - | `FadeOutOfSceneInstruction(15, dir, link)` |
+| `world.restoreBlocks` | `{selection}` | - | `PonderLevel.restoreBlocks` (blocks + BEs back to schematic originals) |
+| `world.moveSection` | `{link, offset:Vec3, duration:int}` | - | `AnimateWorldSectionInstruction.move` (relative, linear) |
+| `world.rotateSection` | `{link, rotation:[x,y,z] degrees, duration:int}` | - | `AnimateWorldSectionInstruction.rotate` (relative, linear) |
+| `world.configureCenterOfRotation` | `{link, anchor:Vec3}` | - | `WorldSectionElement.setCenterOfRotation` |
+| `world.configureStabilization` | `{link, anchor:Vec3}` | - | `WorldSectionElement.stabilizeRotation` |
+| `world.setBlocks` | `{selection, state:BlockState, particles:boolean}` | - | `ReplaceBlocksInstruction(sel, _ -> state, replaceAir=true)`; `setBlock`, `setBlocks`, `destroyBlock` (state = `minecraft:air`, particles true) all lower to this. Only positions inside scene bounds are touched. |
+| `world.modifyBlocks` | `{changes:[{pos, state:BlockState}], particles:boolean}` | - | `ReplaceBlocksInstruction(sel, fn, replaceAir=false)` with `fn` evaluated by the converter: `modifyBlock`, `modifyBlocks`, `replaceBlocks`, `cycleBlockProperty`, `toggleRedstonePower`, `toggleControls` all lower to this; `changes` lists every position the instruction affects (non-air only) with its final state; unchanged positions are omitted |
+| `world.incrementBlockBreakingProgress` | `{pos}` | - | stateful: progress counter per pos; at the 9th call the block is destroyed (with destroy particles) and the counter reset |
+| `world.modifyBlockEntityNBT` | `{beType:string, redraw:boolean, targets:[{pos, nbt:{...patch...}}]}` | - | `BlockEntityDataInstruction`. `nbt` is a PATCH merged into the BE's data (keys put by the lambda, plain JSON; enums as their `name()` string, item stacks as `{id,count}`); `beType` = Java simple class name (informational). Positions already filtered by `instanceof beType`. |
+| `world.modifyBlockEntity` | `{pos, beType:string, calls:[Call]}` | - | `modifyBlockEntity(pos, beClass, be -> ...)`; see "Calls" below |
+| `world.createItemEntity` | `{location:Vec3, motion:Vec3, item:ItemStack}` | `link` | `createItemEntity` |
+| `world.createEntity` | `{entity:{type:string, ...props}}` | `link` | `createEntity(level -> entity)`; `entity` = recorded construction (see below) |
+| `world.modifyEntity` | `{link, calls:[Call]}` | - | `modifyEntity(link, e -> ...)` |
+| `world.modifyEntities` | `{entityType:string, calls:[Call]}` | - | `modifyEntities(Class, e -> ...)` on all world entities of that class (`"ItemEntity"`, `"Entity"`, ...) |
+| `world.modifyEntitiesInside` | `{entityType:string, selection, calls:[Call]}` | - | same, restricted to `selection.test(e.blockPosition())` |
+
+### Calls
+
+A recorded lambda body on a block entity / entity: `Call = { path: [ {m:string, a:[args...]} , ... ] }` is ONE expression chain
+(`pte.getPressingBehaviour().start(Mode.BELT)` => `{path:[{m:"getPressingBehaviour",a:[]},{m:"start",a:[{enum:"Mode.BELT"}]}]}`).
+A lambda with several statements yields several Calls. Argument values: numbers, strings, booleans, `ItemStack`, `Vec3`, `{enum:"Type.CONST"}`, `{link}` etc.
+Method names are the real Create/Minecraft method names; C2 implements the subset used (listed in section 8 once generated).
+`Entity::discard` => `{path:[{m:"discard",a:[]}]}`.
+
+`world.createEntity.entity`: `{type:"minecraft:sheep", pos?:Vec3, calls?:[Call]}` where `calls` are the setters invoked inside the factory lambda
+(`entity.setColor(DyeColor.PINK)` => `{path:[{m:"setColor",a:[{enum:"DyeColor.PINK"}]}]}`), plus `pos` from `setPos(..)` if called.
+
+## 4. World (Create-specific, `CreateSceneBuilder`)
+
+| op | args | out | mirrors |
+|---|---|---|---|
+| `world.animateBlockEntity` | `{kind:"bearing"|"pulley"|"bogey"|"deployer", pos, distance:number, duration:int}` | - | `AnimateBlockEntityInstruction` (rotateBearing=>bearing(angle), movePulley=>pulley, animateBogey=>bogey (duration already +1), moveDeployer=>deployer). Relative linear animation of the BE angle/offset. |
+| `world.createItemOnBelt` | `{pos, insertionSide:Direction, item:ItemStack}` | `link` (belt item) | `CreateSceneBuilder.createItemOnBelt`: inserts item on the belt BE at `pos` via DirectBeltInput (from `insertionSide.opposite`) and tracks the new transported stack; also flaps a funnel above (`world.flapFunnel` is emitted separately right after, see below) |
+| `world.createItemOnBeltLike` | `{pos, insertionSide:Direction, item:ItemStack}` | - | `createItemOnBeltLike` (depot/basin/... DirectBeltInput) |
+| `world.removeItemsFromBelt` | `{pos}` | - | `removeItemsFromBelt` (removes items near belt centre, `.52`) |
+| `world.stallBeltItem` | `{link, stalled:boolean}` | - | `tis.locked = stalled` |
+| `world.changeBeltItemTo` | `{link, item:ItemStack}` | - | `tis.stack = newStack` |
+| `world.flapFunnel` | `{pos, outward:boolean}` | - | `FunnelBlockEntity.flap(!outward)` via `modifyBlockEntity` (emitted as this op; only when the BE at `pos` is a funnel) |
+| `world.connectCrafterInvs` | `{pos1, pos2}` | - | `ConnectedInputHandler.toggleConnection` |
+
+Kinetic speed helpers are lowered by the converter to `world.modifyBlockEntityNBT` (key `Speed` on `KineticBlockEntity`, plus `Value` (dial target) on `SpeedGaugeBlockEntity`), one patch per position resolved from the BE's tracked current speed.
+`instructArm`, `setFilterData`, `animateTrainStation`, `conductorBlaze`, `changeSignalState` also lower to `world.modifyBlockEntityNBT`
+(`Phase` etc. enums as `name()` strings, `HeldItem`/`Filter` as `{id,count}`).
+`setCraftingResult`, `setDisplayBoardText`, `dyeDisplayBoard`, `flashDisplayLink` lower to `world.modifyBlockEntity` Calls (`setScriptedResult`, `applyTextManually`, `setColour`, `pulse`).
+
+## 5. Effects
+
+| op | args | mirrors |
+|---|---|---|
+| `effects.createRedstoneParticles` | `{pos, color:int (0xRRGGBB), amount:number}` | `indicateRedstone` (0xFF0000, 10), `indicateSuccess` (0x80FFAA, 10), `createRedstoneParticles`; emits dust particles inside the block space, 2 cycles, `amount` per cycle |
+| `effects.emitParticles` | `{location:Vec3, emitter:{kind:"simple"|"withinBlock", particle:{type:string, ...}, motion:Vec3}, amountPerCycle:number, cycles:int}` | `EmitParticlesInstruction` |
+| `effects.rotationIndicator` | `{pos, direction:boolean}` | Create `rotationSpeedIndicator` (direction=false) / `rotationDirectionIndicator` (direction=true): spawns 20 `RotationIndicatorParticle`s at the BE speed at that time |
+| `effects.superGlue` | `{pos, side:Direction, fullBlock:boolean}` | `SuperGlueItem.spawnParticles` |
+
+## 6. Special (parrots, carts, point of interest)
+
+| op | args | out | mirrors |
+|---|---|---|---|
+| `special.movePointOfInterest` | `{location:Vec3}` | - | `MovePoiInstruction` (camera look-at chases, lerp .25/tick) |
+| `special.createBirb` | `{location:Vec3, pose:{type:"dance"|"face_poi"|"face_cursor"|"point"|"spin_on_component"|string, ...}}` | `link` | `createBirb` (fade-in 10 ticks); `birbOnTurntable`/`birbOnSpinnyShaft` => pose `spin_on_component {pos}` |
+| `special.changeBirbPose` | `{link, pose}` | - | |
+| `special.conductorBirb` | `{link, conductor:boolean}` | - | `ExpandedParrotElement.setConductor` |
+| `special.rotateParrot` | `{link, rotation:[x,y,z], duration}` | - | `AnimateParrotInstruction.rotate` |
+| `special.moveParrot` | `{link, offset:Vec3, duration}` | - | `AnimateParrotInstruction.move` |
+| `special.createCart` | `{location:Vec3, angle:number, cartType:string}` | `link` | `createCart` (fade-in 10 ticks) |
+| `special.rotateCart` | `{link, yRotation:number, duration}` | - | |
+| `special.moveCart` | `{link, offset:Vec3, duration}` | - | |
+| `special.hideElement` | `{link, direction}` | - | `FadeOutOfSceneInstruction(15, dir, link)` for parrots/carts |
+
+## 7. Not emitted
+
+`debug.*`, keyframe instructions, `addInstruction(callback)` with unknown Java bodies (reported as converter warnings), `title`.
+
+## 8. Tables generated from the run
+
+(Filled in automatically by `node tools/scenegen/report.mjs --ops` once the converter runs end to end.)
+
+## CHANGELOG
+
+* v0: first draft.
