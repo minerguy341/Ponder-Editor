@@ -11,13 +11,25 @@ import * as THREE from 'three';
 import type { BlockInstance, VisualContext } from '../../../contract';
 import type { VisualModule } from '../registry';
 import { resources } from '../../../assets/resources';
-import { BaseVisual, getNumber, getString, horizontalAngle, stateDirection, type Nbt } from '../common';
+import { BaseVisual, getNumber, getString, horizontalAngle, markOwned, stateDirection, type Nbt } from '../common';
 import { PoseStack } from '../items/pose';
 import { withMatrix } from '../trains/util';
 
 const TUBE_SCALE = 1 / 20;
-const BRIGHT = 0xee9246; // DyeHelper: ORANGE (NixieTubeBlock default colour)
-const DARK = 0xd94927;
+
+/** DyeHelper.addDye (bright, dark) per DyeColor (Create 6.0.10, foundation/utility/DyeHelper.java L44-L62). */
+export const DYE_TABLE: Record<string, [number, number]> = {
+  white: [0xedeae5, 0xbbb6b0], orange: [0xee9246, 0xd94927], magenta: [0xf062b0, 0xc04488], light_blue: [0x69ced2, 0x508aa5],
+  yellow: [0xe6d756, 0xe9ac29], lime: [0xa3df55, 0x4fb16f], pink: [0xd5a8cb, 0xb86b95], gray: [0x5d666f, 0x313538],
+  light_gray: [0x95969b, 0x707070], cyan: [0x3eabb4, 0x3c7872], purple: [0x9f54ae, 0x63366c], blue: [0x5391e1, 0x504b90],
+  brown: [0xac855c, 0x68533e], green: [0x208a46, 0x1d6045], red: [0xb13937, 0x632737], black: [0x45403b, 0x21201f],
+};
+/** NixieTubeBlock.colorOf: the colour is the block's DyeColor; the plain nixie tube is ORANGE. */
+export function nixieColorOf(blockName: string): string {
+  const m = /^create:(.*)_nixie_tube$/.exec(blockName);
+  return m && DYE_TABLE[m[1]] ? m[1] : 'orange';
+}
+export const NIXIE_BLOCKS = ['create:nixie_tube', ...Object.keys(DYE_TABLE).map((c) => `create:${c}_nixie_tube`)];
 
 // ------------------------------------------------------------------------------------------------ font
 
@@ -141,6 +153,13 @@ export function flattenComponent(json: string): string {
 
 class NixieVisual extends BaseVisual {
   private font!: VanillaFont;
+  private readonly bright: number;
+  private readonly dark: number;
+
+  constructor(block: BlockInstance, ctx: VisualContext) {
+    super(block, ctx);
+    [this.bright, this.dark] = DYE_TABLE[nixieColorOf(block.state.name)];
+  }
 
   protected async build(): Promise<void> {
     this.font = await loadVanillaFont();
@@ -167,18 +186,18 @@ class NixieVisual extends BaseVisual {
     const passes: { m: THREE.Matrix4; color: number }[] = [];
     // drawTube: translate((charWidth - shadowOffset) / -2, -height, 0) then bright text
     const t0 = new PoseStack().mulMatrix(tubeM).translate((W - shadow) / -2, -height, 0).matrix.clone();
-    passes.push({ m: t0, color: BRIGHT });
+    passes.push({ m: t0, color: this.bright });
     // shadow: translate(shadowOffset, shadowOffset, -1/16) of the same base
-    passes.push({ m: new PoseStack().mulMatrix(t0).translate(shadow, shadow, -1 / 16).matrix.clone(), color: DARK });
+    passes.push({ m: new PoseStack().mulMatrix(t0).translate(shadow, shadow, -1 / 16).matrix.clone(), color: this.dark });
     // mirrored copy: scale(-1, 1, 1), the same translate, dark text, and its shadow tinted towards black (mixColors(dark, 0, .35))
     const mir = new PoseStack().mulMatrix(tubeM).scale(-1, 1, 1).translate((W - shadow) / -2, -height, 0).matrix.clone();
-    passes.push({ m: mir, color: DARK });
-    passes.push({ m: new PoseStack().mulMatrix(mir).translate(-shadow, shadow, -1 / 16).matrix.clone(), color: mixDark(DARK) });
+    passes.push({ m: mir, color: this.dark });
+    passes.push({ m: new PoseStack().mulMatrix(mir).translate(-shadow, shadow, -1 / 16).matrix.clone(), color: mixDark(this.dark) });
     for (const p of passes) {
       if (!text) continue;
-      const mat = new THREE.MeshBasicMaterial({ map: this.font.texture, transparent: true, alphaTest: 0.5, side: THREE.DoubleSide });
+      const mat = markOwned(new THREE.MeshBasicMaterial({ map: this.font.texture, transparent: true, alphaTest: 0.5, side: THREE.DoubleSide }));
       mat.color.setHex(p.color);
-      const mesh = new THREE.Mesh(textGeometry(this.font, text), mat);
+      const mesh = new THREE.Mesh(markOwned(textGeometry(this.font, text)), mat);
       group.add(withMatrix(mesh, p.m));
     }
     return group;
@@ -195,7 +214,7 @@ function mixDark(c: number): number {
 }
 
 const nixieModule: VisualModule = {
-  blocks: ['create:nixie_tube'],
+  blocks: NIXIE_BLOCKS, // the plain tube and the 16 dye variants (scenes place blue_nixie_tube / green_nixie_tube at run time)
   entityRendered: () => false, // the tube body is the static block model; the glyph strings are drawn here
   create: (block: BlockInstance, ctx: VisualContext) => new NixieVisual(block, ctx).init(),
   async preload() { await loadVanillaFont(); },

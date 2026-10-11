@@ -61,6 +61,7 @@ class PackagerVisual extends SceneVisual {
   private readonly ps = new PoseStack();
   private readonly hatchM = new THREE.Matrix4();
   private readonly trayBase = new THREE.Matrix4();
+  private readonly boxM = new THREE.Matrix4();
   private readonly facing = opposite(stateDirection(this.block.state, 'facing') ?? 'north');
   private readonly normal: [number, number, number];
 
@@ -123,11 +124,12 @@ class PackagerVisual extends SceneVisual {
     }
   }
 
-  private boxMatrix(offset: number): THREE.Matrix4 {
-    const ps = this.ps.reset()
+  /** Box transform for this frame, written into `out` (no allocation per frame). */
+  private boxMatrix(offset: number, out: THREE.Matrix4): THREE.Matrix4 {
+    this.ps.reset()
       .translate(this.normal[0] * offset, this.normal[1] * offset, this.normal[2] * offset)
       .translate(0.5, 0.5, 0.5).rotateYDegrees(toYRot(this.facing)).translate(0, 2 / 16, 0).scale(1.49, 1.49, 1.49);
-    return ps.matrix.clone();
+    return out.copy(this.ps.matrix);
   }
 
   protected onUpdate(ticks: number): void {
@@ -146,11 +148,11 @@ class PackagerVisual extends SceneVisual {
     const showHeld = !s.inward && a < PACKAGER_CYCLE / 2 && !!s.held;
     if (this.insertedGroup) {
       setVisible(this.insertedGroup, showInserted);
-      if (showInserted) setMatrix(this.insertedGroup, this.boxMatrix(offset));
+      if (showInserted) setMatrix(this.insertedGroup, this.boxMatrix(offset, this.boxM));
     }
     if (this.heldGroup) {
       setVisible(this.heldGroup, showHeld);
-      if (showHeld) setMatrix(this.heldGroup, this.boxMatrix(offset));
+      if (showHeld) setMatrix(this.heldGroup, this.boxMatrix(offset, this.boxM));
     }
   }
 }
