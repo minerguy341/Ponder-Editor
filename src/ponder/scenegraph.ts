@@ -454,7 +454,8 @@ export class SceneGraph {
   /** Per-frame: section transforms, fades, visual animation, outline fades. `pt` = partial tick (1 = settled state). */
   frame(st: SimState, pt: number): void {
     if (this.disposed) return;
-    const ticks = st.tick - 1 + pt;
+    // the world clock (not the scene clock): belts and kinetics keep moving after the scene timeline ends
+    const ticks = st.worldTick - 1 + pt;
     for (const el of Object.values(st.elements)) {
       if (el.kind !== 'section') continue;
       const node = this.sections.get(el.id);

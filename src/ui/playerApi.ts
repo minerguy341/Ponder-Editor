@@ -21,6 +21,8 @@ export interface ViewerLike {
 
 export interface PlayerState {
   tick: number;
+  /** world clock: runs past total (see sim.ts WORLD_TAIL) */
+  worldTick?: number;
   total: number;
   sceneId?: string;
   playing?: boolean;
