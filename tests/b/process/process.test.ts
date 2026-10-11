@@ -43,9 +43,11 @@ describe('PressingBehaviour (Create 6.0.10, content/kinetics/press/PressingBehav
     pressStep(s, 512);
     expect(s.ticks).toBe(60);
     pressStep(s, 512);
-    expect(s.ticks).toBe(CYCLE / 2); // crossing CYCLE/2 clamps once (prev 60 < 120 <= 120)
+    expect(s.ticks).toBe(-(CYCLE / 2)); // crossing CYCLE/2 on the client pauses at -CYCLE/2 (Ponder BEs are not virtual; ref3/ref4)
     pressStep(s, 512);
-    expect(s.ticks).toBe(CYCLE / 2 + 60); // no client pause: virtual block entities keep counting
+    expect(s.ticks).toBe(-(CYCLE / 2)); // stays paused until a start() call (the server packet never arrives)
+    expect(s.prev).toBe(CYCLE / 2);
+    expect(pressRenderedHeadOffset(true, s.prev, s.ticks, 0)).toBe(1); // head fully depressed
   });
   it('start(Mode) (L104-L112) resets the cycle', () => {
     const s: PressState = { running: false, mode: 0, finished: false, prev: 50, ticks: 50 };

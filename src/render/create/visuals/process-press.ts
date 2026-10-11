@@ -42,10 +42,15 @@ export interface PressState { running: boolean; mode: number; finished: boolean;
 /** One PressingBehaviour.tick() on the virtual client level (the part that changes the animation state). */
 export function pressStep(s: PressState, speed: number): void {
   if (!s.running) return;
-  // runningTicks == CYCLE/2: applyInWorld/applyOnBasin are server only; sounds do not matter here.
+  // client side (Ponder's level is a client level): `if (level.isClientSide && runningTicks == -CYCLE/2) { prev = CYCLE/2; return; }`
+  if (s.ticks === -(CYCLE / 2)) { s.prev = CYCLE / 2; return; }
+  // runningTicks == CYCLE/2 on the server only applies the recipe; the client never finishes the cycle
   s.prev = s.ticks;
   s.ticks += pressRunningTickSpeed(speed);
-  if (s.prev < CYCLE / 2 && s.ticks >= CYCLE / 2) s.ticks = CYCLE / 2; // virtual BE: no pause for a server packet
+  // `if (prev < CYCLE/2 && runningTicks >= CYCLE/2) { runningTicks = CYCLE/2; if (client && !virtual) runningTicks = -CYCLE/2; }`
+  // The reference screenshots (ref3 end, ref4) show the head fully depressed = the client pause (abs(-CYCLE/2) = CYCLE/2 offset 1),
+  // so Ponder's press block entities are not virtual and the pause is kept: the head stays down until a start() call.
+  if (s.prev < CYCLE / 2 && s.ticks >= CYCLE / 2) s.ticks = -(CYCLE / 2);
 }
 
 export function pressApply(s: PressState, ev: BEvent): void {
