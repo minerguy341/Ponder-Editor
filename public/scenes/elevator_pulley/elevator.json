@@ -52,7 +52,7 @@
   {
    "op": "scaleSceneView",
    "args": {
-    "factor": 0.8500000238418579
+    "factor": 0.85
    },
    "src": "ElevatorScenes.java:32"
   },

@@ -67,7 +67,7 @@
   {
    "op": "scaleSceneView",
    "args": {
-    "factor": 0.925000011920929
+    "factor": 0.925
    },
    "src": "TableClothScenes.java:36"
   },

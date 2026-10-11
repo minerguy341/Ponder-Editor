@@ -30,7 +30,7 @@
   {
    "op": "scaleSceneView",
    "args": {
-    "factor": 0.550000011920929
+    "factor": 0.55
    },
    "src": "KineticsScenes.java:1378"
   },

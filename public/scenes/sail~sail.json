@@ -33,7 +33,7 @@
   {
    "op": "scaleSceneView",
    "args": {
-    "factor": 0.8999999761581421
+    "factor": 0.9
    },
    "src": "BearingScenes.java:649"
   },

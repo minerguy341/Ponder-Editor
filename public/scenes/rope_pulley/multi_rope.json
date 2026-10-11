@@ -34,7 +34,7 @@
   {
    "op": "scaleSceneView",
    "args": {
-    "factor": 0.949999988079071
+    "factor": 0.95
    },
    "src": "PulleyScenes.java:251"
   },
