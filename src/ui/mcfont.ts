@@ -4,6 +4,7 @@
 
 import { MINECRAFT_ROOTS } from '../config';
 import { resources } from '../assets/resources';
+import { textureBitmap } from './textureBitmap';
 import type { Color } from './color';
 import { css } from './color';
 
@@ -42,7 +43,7 @@ export class McFont {
       for (const def of defs) {
         const file = def.file ?? '';
         const path = file.replace(/^minecraft:/, '').replace(/\.png$/, '');
-        const bmp = await resources.textureBitmap({ ns: 'minecraft', path });
+        const bmp = await textureBitmap({ ns: 'minecraft', path });
         if (!bmp) throw new Error('font texture missing: ' + file);
         const img = document.createElement('canvas');
         img.width = bmp.width; img.height = bmp.height;
