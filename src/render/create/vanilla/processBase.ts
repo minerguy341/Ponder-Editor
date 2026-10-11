@@ -123,6 +123,7 @@ export abstract class ProcessVisual extends BaseVisual {
     for (const s of this.sims) s.invalidate();
     Object.assign(this.data, patch);
     this.onData();
+    this.onUpdate(this.lastTicks); // redraw a paused scene with the new data (BaseVisual no longer does)
   }
 }
 

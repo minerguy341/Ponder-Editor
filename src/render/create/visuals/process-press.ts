@@ -12,7 +12,7 @@ import * as THREE from 'three';
 import type { BlockInstance, BlockState, BlockVisual, VisualContext } from '../../../contract';
 import type { VisualModule } from '../registry';
 import {
-  PARTIAL, RotatingPart, axisOf, clamp, getBool, getNumber, getPartial, horizontalAngle, quatFacing, readKinetic,
+  PARTIAL, RotatingPart, axisOf, clamp, getBool, getNumber, getPartial, quatFacing,
   setRotationAboutCentre, stateDirection, lerp,
 } from '../common';
 import { type BEvent, ProcessVisual, TickSim, enumName, lastCall } from '../vanilla/processBase';
@@ -94,7 +94,6 @@ class PressVisual extends ProcessVisual {
     this.object.add(this.shaft.object);
     this.head = head;
     this.object.add(head);
-    void readKinetic;
   }
 
   private offsetFor(axis: 'x' | 'y' | 'z'): number {
