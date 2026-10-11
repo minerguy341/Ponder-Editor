@@ -33,5 +33,3 @@ Common rules for all B leaves: implement `VisualModule`s per `src/render/create/
   CHECK: npx vitest run tests/b -t seek 2>&1 | tail -6
   EXPECT: /passed/
   EVIDENCE: Start at  22:16:37 | Duration  3.13s (transform 2.11s, setup 0ms, collect 4.94s, tests 69ms, environment 0ms, prepare 516ms)
-
-ABANDON: G5 minecraft:spawner mob inside the cage: SpawnerRenderer draws the spawned mob with its entity model, which is not available offline (no vanilla entity models or assets in the repo or jsDelivr mirror); the cage is drawn from the blockstate, the visual declares the block and draws no mob
