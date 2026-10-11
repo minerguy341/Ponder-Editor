@@ -1,0 +1,2450 @@
+{
+ "id": "create:high_logistics/package_postbox",
+ "schematic": "high_logistics/package_postbox",
+ "schematicNamespace": "create",
+ "title": "Transporting packages between Postboxes",
+ "texts": {
+  "text_1": "Right-click a Train Station and place the Postbox nearby",
+  "text_2": "Assign it an address in the inventory UI",
+  "text_3": "If the address of an inserted package does not match it..",
+  "text_4": "Warehouse",
+  "text_5": "→ Outpost",
+  "text_6": "..trains stopping at the station will collect it as cargo",
+  "text_7": "Conversely, packages matching the address will be dropped off",
+  "text_8": "Packages that arrived by train can be extracted from the Postbox",
+  "text_9": "Warehouse",
+  "text_10": "→ Warehouse",
+  "text_11": "Just like trains, Postboxes maintain their behaviour in unloaded chunks",
+  "text_12": "Packages can still be delivered from or to their inventory"
+ },
+ "tags": [],
+ "items": [
+  "create:white_postbox",
+  "create:orange_postbox",
+  "create:magenta_postbox",
+  "create:light_blue_postbox",
+  "create:yellow_postbox",
+  "create:lime_postbox",
+  "create:pink_postbox",
+  "create:gray_postbox",
+  "create:light_gray_postbox",
+  "create:cyan_postbox",
+  "create:purple_postbox",
+  "create:blue_postbox",
+  "create:brown_postbox",
+  "create:green_postbox",
+  "create:red_postbox",
+  "create:black_postbox"
+ ],
+ "keyframes": [
+  77,
+  194,
+  309,
+  527,
+  622,
+  732,
+  1042
+ ],
+ "totalTicks": 1216,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 1,
+    "size": 9
+   },
+   "src": "PostboxScenes.java:32"
+  },
+  {
+   "op": "scaleSceneView",
+   "args": {
+    "factor": 0.875
+   },
+   "src": "PostboxScenes.java:33"
+  },
+  {
+   "op": "removeShadow",
+   "args": {},
+   "src": "PostboxScenes.java:34"
+  },
+  {
+   "op": "setSceneOffsetY",
+   "args": {
+    "yOffset": -0.5
+   },
+   "src": "PostboxScenes.java:35"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     6,
+     2,
+     4
+    ],
+    "insertionSide": "down",
+    "item": {
+     "id": "create:cardboard_package_10x12",
+     "count": 1,
+     "nbt": {
+      "create:package_contents": [],
+      "create:package_address": "Peter"
+     }
+    }
+   },
+   "src": "PostboxScenes.java:73"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       3,
+       5
+      ],
+      "state": {
+       "name": "create:controls",
+       "props": {
+        "facing": "east",
+        "open": "false",
+        "virtual": "true",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "PostboxScenes.java:77"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      1
+     ],
+     "to": [
+      8,
+      0,
+      9
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "PostboxScenes.java:79",
+   "out": "e1"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "PostboxScenes.java:81"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      8,
+      1,
+      5
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "PostboxScenes.java:84",
+   "out": "e2"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "PostboxScenes.java:86"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      7,
+      1,
+      5
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e2"
+    }
+   },
+   "src": "PostboxScenes.java:89"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "PostboxScenes.java:91"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      6,
+      1,
+      5
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e2"
+    }
+   },
+   "src": "PostboxScenes.java:89"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "PostboxScenes.java:91"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      5,
+      1,
+      5
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e2"
+    }
+   },
+   "src": "PostboxScenes.java:89"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "PostboxScenes.java:91"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      1,
+      5
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e2"
+    }
+   },
+   "src": "PostboxScenes.java:89"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "PostboxScenes.java:91"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      5
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e2"
+    }
+   },
+   "src": "PostboxScenes.java:89"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "PostboxScenes.java:91"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      5
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e2"
+    }
+   },
+   "src": "PostboxScenes.java:89"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "PostboxScenes.java:91"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      5
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e2"
+    }
+   },
+   "src": "PostboxScenes.java:89"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "PostboxScenes.java:91"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      1,
+      5
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e2"
+    }
+   },
+   "src": "PostboxScenes.java:89"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "PostboxScenes.java:91"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "PostboxScenes.java:93"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      8
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "PostboxScenes.java:96"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "PostboxScenes.java:97"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     1.5,
+     2,
+     8.5
+    ],
+    "direction": "down",
+    "duration": 50,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:white_postbox",
+     "count": 1
+    }
+   },
+   "src": "PostboxScenes.java:105"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "PostboxScenes.java:108"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "white",
+    "slot": "pos:1,2,2",
+    "box": {
+     "min": [
+      1.5,
+      2,
+      8.5
+     ],
+     "max": [
+      1.5,
+      2,
+      8.5
+     ]
+    },
+    "duration": 10
+   },
+   "src": "PostboxScenes.java:112"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "PostboxScenes.java:113"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "white",
+    "slot": "pos:1,2,2",
+    "box": {
+     "min": [
+      1.475,
+      1.975,
+      8.475
+     ],
+     "max": [
+      1.525,
+      2.025,
+      8.525
+     ]
+    },
+    "duration": 50
+   },
+   "src": "PostboxScenes.java:115"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 26
+   },
+   "src": "PostboxScenes.java:116"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_1",
+    "pointAt": [
+     1.5,
+     2,
+     8.5
+    ],
+    "text": "Right-click a Train Station and place the Postbox nearby"
+   },
+   "src": "PostboxScenes.java:119"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "PostboxScenes.java:125"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      2,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "PostboxScenes.java:128",
+   "out": "e3"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "offset": [
+     0,
+     -1,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "PostboxScenes.java:130"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "PostboxScenes.java:133"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "green",
+    "slot": "pos:1,2,2",
+    "box": {
+     "min": [
+      1.475,
+      1.975,
+      8.475
+     ],
+     "max": [
+      1.525,
+      2.025,
+      8.525
+     ]
+    },
+    "duration": 50
+   },
+   "src": "PostboxScenes.java:135"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "green",
+    "slot": "pos:3,1,8",
+    "box": {
+     "min": [
+      1.125,
+      0.875,
+      2
+     ],
+     "max": [
+      1.875,
+      2,
+      3
+     ]
+    },
+    "duration": 50
+   },
+   "src": "PostboxScenes.java:141"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "PostboxScenes.java:142"
+  },
+  {
+   "op": "overlay.showLine",
+   "args": {
+    "color": "green",
+    "start": [
+     1.5,
+     2,
+     2.5
+    ],
+    "end": [
+     1.5,
+     2,
+     8.5
+    ],
+    "duration": 40,
+    "big": false
+   },
+   "src": "PostboxScenes.java:144"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 45
+   },
+   "src": "PostboxScenes.java:146"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     1.5,
+     2,
+     2.5
+    ],
+    "direction": "down",
+    "duration": 40,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb"
+   },
+   "src": "PostboxScenes.java:149"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "PostboxScenes.java:152"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "blue",
+    "slot": "pos:2,2,2",
+    "box": {
+     "min": [
+      1.125,
+      0.875,
+      2
+     ],
+     "max": [
+      1.875,
+      2,
+      3
+     ]
+    },
+    "duration": 70
+   },
+   "src": "PostboxScenes.java:154"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "blue",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_2",
+    "pointAt": [
+     1.5,
+     2,
+     2.5
+    ],
+    "text": "Assign it an address in the inventory UI"
+   },
+   "src": "PostboxScenes.java:156"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "PostboxScenes.java:163"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "offset": [
+     0,
+     1,
+     0
+    ],
+    "duration": 10
+   },
+   "src": "PostboxScenes.java:166"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "PostboxScenes.java:168"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      2
+     ]
+    },
+    "direction": "north",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "PostboxScenes.java:170"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "PostboxScenes.java:171"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      5,
+      0,
+      0
+     ]
+    },
+    "direction": "up",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "PostboxScenes.java:173"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      1,
+      0
+     ],
+     "to": [
+      4,
+      1,
+      1
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "PostboxScenes.java:175"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      1,
+      2
+     ],
+     "to": [
+      4,
+      1,
+      2
+     ]
+    },
+    "direction": "west",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "PostboxScenes.java:177"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "PostboxScenes.java:178"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      2,
+      2
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "PostboxScenes.java:181"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "PostboxScenes.java:183"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ],
+    "insertionSide": "east",
+    "item": {
+     "id": "create:cardboard_package_12x12",
+     "count": 1,
+     "nbt": {
+      "create:package_address": "Peter"
+     }
+    }
+   },
+   "src": "PostboxScenes.java:190",
+   "out": "e4"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "PostboxScenes.java:192"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       5,
+       0,
+       0
+      ],
+      "nbt": {
+       "Speed": -0.5
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       0
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       1
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     }
+    ]
+   },
+   "src": "PostboxScenes.java:195"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_3",
+    "pointAt": [
+     3.5,
+     2.5,
+     2.5
+    ],
+    "text": "If the address of an inserted package does not match it.."
+   },
+   "src": "PostboxScenes.java:199"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "PostboxScenes.java:206"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 40,
+    "color": "blue",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_4",
+    "pointAt": [
+     1,
+     2.5,
+     2
+    ],
+    "text": "Warehouse"
+   },
+   "src": "PostboxScenes.java:209"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "PostboxScenes.java:216"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 40,
+    "color": "output",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_5",
+    "pointAt": [
+     3.5,
+     2.5,
+     2.5
+    ],
+    "text": "→ Outpost"
+   },
+   "src": "PostboxScenes.java:218"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "PostboxScenes.java:225"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       5,
+       0,
+       0
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       0
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       1
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     }
+    ]
+   },
+   "src": "PostboxScenes.java:228"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 17
+   },
+   "src": "PostboxScenes.java:230"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ]
+   },
+   "src": "PostboxScenes.java:232"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     2
+    ],
+    "beType": "PostboxBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "set": "forceFlag",
+        "v": true
+       }
+      ]
+     }
+    ]
+   },
+   "src": "PostboxScenes.java:475"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     2,
+     2,
+     2
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         true
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "PostboxScenes.java:236"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "PostboxScenes.java:237"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      2,
+      4
+     ],
+     "to": [
+      3,
+      3,
+      6
+     ]
+    },
+    "direction": null
+   },
+   "src": "PostboxScenes.java:240",
+   "out": "e5"
+  },
+  {
+   "op": "special.createBirb",
+   "args": {
+    "location": [
+     9.5,
+     3.5,
+     5.5
+    ],
+    "pose": {
+     "type": "face_poi"
+    }
+   },
+   "src": "PostboxScenes.java:242",
+   "out": "e6"
+  },
+  {
+   "op": "special.movePointOfInterest",
+   "args": {
+    "location": [
+     -4.5,
+     4.5,
+     5.5
+    ]
+   },
+   "src": "PostboxScenes.java:245"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e5"
+    },
+    "offset": [
+     6,
+     0,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "PostboxScenes.java:248"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "PostboxScenes.java:250"
+  },
+  {
+   "op": "special.moveParrot",
+   "args": {
+    "link": {
+     "link": "e6"
+    },
+    "offset": [
+     -5,
+     0,
+     0
+    ],
+    "duration": 25
+   },
+   "src": "PostboxScenes.java:252"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e5"
+    },
+    "offset": [
+     -5,
+     0,
+     0
+    ],
+    "duration": 25
+   },
+   "src": "PostboxScenes.java:255"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bogey",
+    "pos": [
+     2,
+     2,
+     5
+    ],
+    "distance": 6,
+    "duration": 26
+   },
+   "src": "PostboxScenes.java:258"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 14
+   },
+   "src": "PostboxScenes.java:260"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      2,
+      4
+     ],
+     "to": [
+      8,
+      3,
+      6
+     ]
+    },
+    "direction": null
+   },
+   "src": "PostboxScenes.java:262",
+   "out": "e7"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e7"
+    },
+    "offset": [
+     3,
+     0,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "PostboxScenes.java:264"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "PostboxScenes.java:266"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e7"
+    },
+    "offset": [
+     -2,
+     0,
+     0
+    ],
+    "duration": 10
+   },
+   "src": "PostboxScenes.java:268"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bogey",
+    "pos": [
+     6,
+     2,
+     5
+    ],
+    "distance": 2,
+    "duration": 11
+   },
+   "src": "PostboxScenes.java:271"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "PostboxScenes.java:274"
+  },
+  {
+   "op": "special.moveParrot",
+   "args": {
+    "link": {
+     "link": "e6"
+    },
+    "offset": [
+     -1,
+     0,
+     0
+    ],
+    "duration": 10
+   },
+   "src": "PostboxScenes.java:276"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e5"
+    },
+    "offset": [
+     -1,
+     0,
+     0
+    ],
+    "duration": 10
+   },
+   "src": "PostboxScenes.java:279"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bogey",
+    "pos": [
+     2,
+     2,
+     5
+    ],
+    "distance": 1,
+    "duration": 11
+   },
+   "src": "PostboxScenes.java:282"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e7"
+    },
+    "offset": [
+     -1,
+     0,
+     0
+    ],
+    "duration": 10
+   },
+   "src": "PostboxScenes.java:285"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bogey",
+    "pos": [
+     6,
+     2,
+     5
+    ],
+    "distance": 1,
+    "duration": 11
+   },
+   "src": "PostboxScenes.java:288"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "PostboxScenes.java:290"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "StationBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       1,
+       8
+      ],
+      "nbt": {
+       "ForceFlag": true
+      }
+     }
+    ]
+   },
+   "src": "PostboxScenes.java:292"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "PostboxScenes.java:293"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     1,
+     2,
+     2
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "PostboxScenes.java:295"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     5,
+     3,
+     4
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "PostboxScenes.java:297"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     5,
+     2,
+     4
+    ],
+    "insertionSide": "down",
+    "item": {
+     "id": "create:cardboard_package_12x12",
+     "count": 1,
+     "nbt": {
+      "create:package_address": "Peter"
+     }
+    }
+   },
+   "src": "PostboxScenes.java:300"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "PostboxScenes.java:303"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     2
+    ],
+    "beType": "PostboxBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "set": "forceFlag",
+        "v": false
+       }
+      ]
+     }
+    ]
+   },
+   "src": "PostboxScenes.java:475"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_6",
+    "pointAt": [
+     5.5,
+     3,
+     4.5
+    ],
+    "text": "..trains stopping at the station will collect it as cargo"
+   },
+   "src": "PostboxScenes.java:306"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 95
+   },
+   "src": "PostboxScenes.java:312"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_7",
+    "pointAt": [
+     6.5,
+     3,
+     4.5
+    ],
+    "text": "Conversely, packages matching the address will be dropped off"
+   },
+   "src": "PostboxScenes.java:315"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "PostboxScenes.java:321"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     6,
+     2,
+     4
+    ]
+   },
+   "src": "PostboxScenes.java:324"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     1,
+     2,
+     2
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "PostboxScenes.java:327"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     6,
+     2,
+     4
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "PostboxScenes.java:329"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     2
+    ],
+    "beType": "PostboxBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "set": "forceFlag",
+        "v": true
+       }
+      ]
+     }
+    ]
+   },
+   "src": "PostboxScenes.java:475"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "PostboxScenes.java:332"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 100,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_8",
+    "pointAt": [
+     1.5,
+     2.5,
+     2
+    ],
+    "text": "Packages that arrived by train can be extracted from the Postbox"
+   },
+   "src": "PostboxScenes.java:335"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "PostboxScenes.java:341"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       5,
+       0,
+       0
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       0
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       1
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     }
+    ]
+   },
+   "src": "PostboxScenes.java:344"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ],
+    "insertionSide": "west",
+    "item": {
+     "id": "create:cardboard_package_10x12",
+     "count": 1,
+     "nbt": {
+      "create:package_contents": [],
+      "create:package_address": "Peter"
+     }
+    }
+   },
+   "src": "PostboxScenes.java:347",
+   "out": "e8"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     2,
+     2,
+     2
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "PostboxScenes.java:347"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     2
+    ],
+    "beType": "PostboxBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "set": "forceFlag",
+        "v": false
+       }
+      ]
+     }
+    ]
+   },
+   "src": "PostboxScenes.java:475"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 25
+   },
+   "src": "PostboxScenes.java:350"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       5,
+       0,
+       0
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       0
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       1
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     }
+    ]
+   },
+   "src": "PostboxScenes.java:352"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 25
+   },
+   "src": "PostboxScenes.java:355"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 40,
+    "color": "blue",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_9",
+    "pointAt": [
+     1,
+     2.5,
+     2
+    ],
+    "text": "Warehouse"
+   },
+   "src": "PostboxScenes.java:357"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "PostboxScenes.java:364"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 40,
+    "color": "output",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_10",
+    "pointAt": [
+     3.5,
+     2.25,
+     2.5
+    ],
+    "text": "→ Warehouse"
+   },
+   "src": "PostboxScenes.java:366"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "PostboxScenes.java:374"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      9,
+      1,
+      5
+     ],
+     "to": [
+      30,
+      1,
+      5
+     ]
+    },
+    "direction": "east"
+   },
+   "src": "PostboxScenes.java:377",
+   "out": "e9"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e9"
+    },
+    "offset": [
+     -31,
+     0,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "PostboxScenes.java:379"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "PostboxScenes.java:382"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "StationBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       1,
+       8
+      ],
+      "nbt": {
+       "ForceFlag": false
+      }
+     }
+    ]
+   },
+   "src": "PostboxScenes.java:384"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     12,
+     0,
+     0
+    ],
+    "duration": 120
+   },
+   "src": "PostboxScenes.java:386"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e9"
+    },
+    "offset": [
+     12,
+     0,
+     0
+    ],
+    "duration": 120
+   },
+   "src": "PostboxScenes.java:389"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "offset": [
+     12,
+     0,
+     0
+    ],
+    "duration": 120
+   },
+   "src": "PostboxScenes.java:392"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     12,
+     0,
+     0
+    ],
+    "duration": 120
+   },
+   "src": "PostboxScenes.java:395"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bogey",
+    "pos": [
+     2,
+     2,
+     5
+    ],
+    "distance": 12,
+    "duration": 121
+   },
+   "src": "PostboxScenes.java:398"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bogey",
+    "pos": [
+     6,
+     2,
+     5
+    ],
+    "distance": 12,
+    "duration": 121
+   },
+   "src": "PostboxScenes.java:401"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "PostboxScenes.java:403"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "direction": null
+   },
+   "src": "PostboxScenes.java:405"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "direction": null
+   },
+   "src": "PostboxScenes.java:407"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "PostboxScenes.java:408"
+  },
+  {
+   "op": "special.hideElement",
+   "args": {
+    "link": {
+     "link": "e6"
+    },
+    "direction": null
+   },
+   "src": "PostboxScenes.java:410"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e5"
+    },
+    "direction": null
+   },
+   "src": "PostboxScenes.java:412"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e7"
+    },
+    "direction": null
+   },
+   "src": "PostboxScenes.java:414"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "PostboxScenes.java:415"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "blue",
+    "slot": "obj:1",
+    "box": {
+     "min": [
+      0,
+      2.25,
+      3.5
+     ],
+     "max": [
+      3,
+      4.75,
+      5.5
+     ]
+    },
+    "duration": 280
+   },
+   "src": "PostboxScenes.java:417"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "blue",
+    "slot": "obj:2",
+    "box": {
+     "min": [
+      4,
+      2.25,
+      3.5
+     ],
+     "max": [
+      7,
+      4.75,
+      5.5
+     ]
+    },
+    "duration": 280
+   },
+   "src": "PostboxScenes.java:420"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 19
+   },
+   "src": "PostboxScenes.java:422"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      1,
+      9
+     ],
+     "to": [
+      3,
+      1,
+      9
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "PostboxScenes.java:425",
+   "out": "e10"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e10"
+    },
+    "offset": [
+     -4,
+     -1,
+     -1
+    ],
+    "duration": 0
+   },
+   "src": "PostboxScenes.java:427"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "PostboxScenes.java:429"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e10"
+    },
+    "offset": [
+     4,
+     0,
+     0
+    ],
+    "duration": 40
+   },
+   "src": "PostboxScenes.java:431"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 9
+   },
+   "src": "PostboxScenes.java:433"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "pos",
+       "pos": [
+        1,
+        1,
+        8
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        3,
+        1,
+        8
+       ]
+      }
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "PostboxScenes.java:435",
+   "out": "e11"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e11"
+    },
+    "offset": [
+     -3,
+     0,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "PostboxScenes.java:437"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "PostboxScenes.java:439"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e11"
+    },
+    "offset": [
+     3,
+     0,
+     0
+    ],
+    "duration": 30
+   },
+   "src": "PostboxScenes.java:441"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "PostboxScenes.java:443"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "StationBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       1,
+       8
+      ],
+      "nbt": {
+       "ForceFlag": true
+      }
+     }
+    ]
+   },
+   "src": "PostboxScenes.java:445"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "PostboxScenes.java:447"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 90,
+    "color": "blue",
+    "placeNearTarget": false,
+    "keyframe": true,
+    "key": "text_11",
+    "independent": 30,
+    "text": "Just like trains, Postboxes maintain their behaviour in unloaded chunks"
+   },
+   "src": "PostboxScenes.java:450"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 100
+   },
+   "src": "PostboxScenes.java:455"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     3,
+     1,
+     8
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "PostboxScenes.java:457"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     1,
+     8
+    ],
+    "beType": "PostboxBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "set": "forceFlag",
+        "v": true
+       }
+      ]
+     }
+    ]
+   },
+   "src": "PostboxScenes.java:475"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 90,
+    "color": "blue",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_12",
+    "pointAt": [
+     3.5,
+     1.5,
+     8
+    ],
+    "text": "Packages can still be delivered from or to their inventory"
+   },
+   "src": "PostboxScenes.java:463"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "PostboxScenes.java:470"
+  }
+ ]
+}

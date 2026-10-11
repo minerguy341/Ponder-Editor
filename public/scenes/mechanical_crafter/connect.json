@@ -1,0 +1,1096 @@
+{
+ "id": "create:mechanical_crafter/connect",
+ "schematic": "mechanical_crafter/connect",
+ "schematicNamespace": "create",
+ "title": "Connecting Inventories of Crafters",
+ "texts": {
+  "text_1": "Items can be inserted to Crafters automatically",
+  "text_2": "Using the Wrench at their backs, Mechanical Crafter inputs can be combined",
+  "text_3": "All connected Crafters can now be accessed by the same input location"
+ },
+ "tags": [],
+ "items": [
+  "create:mechanical_crafter"
+ ],
+ "keyframes": [
+  60,
+  227,
+  445
+ ],
+ "totalTicks": 533,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "CrafterScenes.java:235"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      4,
+      0,
+      5
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "CrafterScenes.java:236"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "CrafterScenes.java:240"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "CrafterScenes.java:241"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "CrafterScenes.java:240"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "CrafterScenes.java:241"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      2,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "CrafterScenes.java:240"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "CrafterScenes.java:241"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      2,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "CrafterScenes.java:240"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "CrafterScenes.java:241"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      3,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "CrafterScenes.java:240"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "CrafterScenes.java:241"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      3,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "CrafterScenes.java:240"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "CrafterScenes.java:241"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "CrafterScenes.java:251"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        3,
+        1,
+        3
+       ],
+       "to": [
+        3,
+        2,
+        3
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        3,
+        3,
+        2
+       ],
+       "to": [
+        3,
+        3,
+        3
+       ]
+      }
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "CrafterScenes.java:253"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "CrafterScenes.java:254"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      1,
+      2
+     ]
+    },
+    "direction": "east"
+   },
+   "src": "CrafterScenes.java:255"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "CrafterScenes.java:256"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        3,
+        1,
+        2
+       ],
+       "to": [
+        4,
+        1,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        4,
+        1,
+        3
+       ],
+       "to": [
+        4,
+        1,
+        5
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        3,
+        2,
+        2
+       ]
+      }
+     ]
+    },
+    "direction": "west"
+   },
+   "src": "CrafterScenes.java:257"
+  },
+  {
+   "op": "rotateCameraY",
+   "args": {
+    "degrees": 60
+   },
+   "src": "CrafterScenes.java:258"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     4,
+     1,
+     2
+    ],
+    "insertionSide": "east",
+    "item": {
+     "id": "minecraft:oak_planks",
+     "count": 1
+    }
+   },
+   "src": "CrafterScenes.java:260",
+   "out": "e1"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 22
+   },
+   "src": "CrafterScenes.java:261"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     2,
+     2,
+     2
+    ],
+    "beType": "MechanicalCrafterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getInventory",
+        "a": []
+       },
+       {
+        "m": "insertItem",
+        "a": [
+         0,
+         {
+          "id": "minecraft:oak_planks",
+          "count": 1
+         },
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "CrafterScenes.java:263"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ]
+   },
+   "src": "CrafterScenes.java:265"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     2,
+     2
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         true
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "CrafterScenes.java:266"
+  },
+  {
+   "op": "overlay.showOutlineWithText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      2,
+      2
+     ]
+    },
+    "pointAt": [
+     2.5,
+     2.5,
+     2
+    ],
+    "key": "text_1",
+    "text": "Items can be inserted to Crafters automatically"
+   },
+   "src": "CrafterScenes.java:268"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "CrafterScenes.java:273"
+  },
+  {
+   "op": "rotateCameraY",
+   "args": {
+    "degrees": -180
+   },
+   "src": "CrafterScenes.java:275"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "CrafterScenes.java:276"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "white",
+    "slot": "obj:1",
+    "box": {
+     "min": [
+      1.875,
+      2,
+      2
+     ],
+     "max": [
+      2.125,
+      3,
+      3
+     ]
+    },
+    "duration": 45
+   },
+   "src": "CrafterScenes.java:282"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2,
+     2.5,
+     3
+    ],
+    "direction": "left",
+    "duration": 40,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:wrench",
+     "count": 1
+    }
+   },
+   "src": "CrafterScenes.java:283"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "CrafterScenes.java:285"
+  },
+  {
+   "op": "world.connectCrafterInvs",
+   "args": {
+    "pos1": [
+     2,
+     2,
+     2
+    ],
+    "pos2": [
+     1,
+     2,
+     2
+    ]
+   },
+   "src": "CrafterScenes.java:286"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "CrafterScenes.java:287"
+  },
+  {
+   "op": "overlay.showOutlineWithText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      2,
+      2
+     ],
+     "to": [
+      2,
+      2,
+      2
+     ]
+    },
+    "pointAt": [
+     2,
+     2.5,
+     3
+    ],
+    "key": "text_2",
+    "text": "Using the Wrench at their backs, Mechanical Crafter inputs can be combined"
+   },
+   "src": "CrafterScenes.java:288"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "CrafterScenes.java:293"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2,
+     3.5,
+     3
+    ],
+    "direction": "left",
+    "duration": 20,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:wrench",
+     "count": 1
+    }
+   },
+   "src": "CrafterScenes.java:294"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "CrafterScenes.java:296"
+  },
+  {
+   "op": "world.connectCrafterInvs",
+   "args": {
+    "pos1": [
+     2,
+     3,
+     2
+    ],
+    "pos2": [
+     1,
+     3,
+     2
+    ]
+   },
+   "src": "CrafterScenes.java:297"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "CrafterScenes.java:298"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2,
+     1.5,
+     3
+    ],
+    "direction": "left",
+    "duration": 20,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:wrench",
+     "count": 1
+    }
+   },
+   "src": "CrafterScenes.java:299"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "CrafterScenes.java:301"
+  },
+  {
+   "op": "world.connectCrafterInvs",
+   "args": {
+    "pos1": [
+     2,
+     1,
+     2
+    ],
+    "pos2": [
+     1,
+     1,
+     2
+    ]
+   },
+   "src": "CrafterScenes.java:302"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "CrafterScenes.java:303"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     2,
+     3
+    ],
+    "direction": "left",
+    "duration": 20,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:wrench",
+     "count": 1
+    }
+   },
+   "src": "CrafterScenes.java:304"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "CrafterScenes.java:306"
+  },
+  {
+   "op": "world.connectCrafterInvs",
+   "args": {
+    "pos1": [
+     2,
+     1,
+     2
+    ],
+    "pos2": [
+     2,
+     2,
+     2
+    ]
+   },
+   "src": "CrafterScenes.java:307"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "CrafterScenes.java:308"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     3,
+     3
+    ],
+    "direction": "left",
+    "duration": 20,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:wrench",
+     "count": 1
+    }
+   },
+   "src": "CrafterScenes.java:309"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "CrafterScenes.java:311"
+  },
+  {
+   "op": "world.connectCrafterInvs",
+   "args": {
+    "pos1": [
+     2,
+     2,
+     2
+    ],
+    "pos2": [
+     2,
+     3,
+     2
+    ]
+   },
+   "src": "CrafterScenes.java:312"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "CrafterScenes.java:313"
+  },
+  {
+   "op": "rotateCameraY",
+   "args": {
+    "degrees": 120
+   },
+   "src": "CrafterScenes.java:315"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "CrafterScenes.java:316"
+  },
+  {
+   "op": "overlay.showOutlineWithText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      1,
+      2
+     ],
+     "to": [
+      2,
+      3,
+      2
+     ]
+    },
+    "pointAt": [
+     2,
+     2.5,
+     2.5
+    ],
+    "key": "text_3",
+    "text": "All connected Crafters can now be accessed by the same input location"
+   },
+   "src": "CrafterScenes.java:317"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "CrafterScenes.java:321"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     4.5,
+     2.5,
+     2.5
+    ],
+    "direction": "down",
+    "duration": 40,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "minecraft:oak_planks",
+     "count": 1
+    }
+   },
+   "src": "CrafterScenes.java:322"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "CrafterScenes.java:323"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     4,
+     1,
+     2
+    ],
+    "insertionSide": "east",
+    "item": {
+     "id": "minecraft:oak_planks",
+     "count": 16
+    }
+   },
+   "src": "CrafterScenes.java:324",
+   "out": "e2"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 22
+   },
+   "src": "CrafterScenes.java:325"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ]
+   },
+   "src": "CrafterScenes.java:327"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     1,
+     2
+    ],
+    "beType": "MechanicalCrafterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "setScriptedResult",
+        "a": [
+         {
+          "id": "minecraft:oak_door",
+          "count": 3
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "CrafterScenes.java:331"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     2,
+     3,
+     2
+    ],
+    "beType": "MechanicalCrafterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getInventory",
+        "a": []
+       },
+       {
+        "m": "insertItem",
+        "a": [
+         0,
+         {
+          "id": "minecraft:oak_planks",
+          "count": 1
+         },
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "CrafterScenes.java:333"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "CrafterScenes.java:335"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     3,
+     2
+    ],
+    "beType": "MechanicalCrafterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getInventory",
+        "a": []
+       },
+       {
+        "m": "insertItem",
+        "a": [
+         0,
+         {
+          "id": "minecraft:oak_planks",
+          "count": 1
+         },
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "CrafterScenes.java:333"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "CrafterScenes.java:335"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     2
+    ],
+    "beType": "MechanicalCrafterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getInventory",
+        "a": []
+       },
+       {
+        "m": "insertItem",
+        "a": [
+         0,
+         {
+          "id": "minecraft:oak_planks",
+          "count": 1
+         },
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "CrafterScenes.java:333"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "CrafterScenes.java:335"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ],
+    "beType": "MechanicalCrafterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getInventory",
+        "a": []
+       },
+       {
+        "m": "insertItem",
+        "a": [
+         0,
+         {
+          "id": "minecraft:oak_planks",
+          "count": 1
+         },
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "CrafterScenes.java:333"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "CrafterScenes.java:335"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     1,
+     2
+    ],
+    "beType": "MechanicalCrafterBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getInventory",
+        "a": []
+       },
+       {
+        "m": "insertItem",
+        "a": [
+         0,
+         {
+          "id": "minecraft:oak_planks",
+          "count": 1
+         },
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "CrafterScenes.java:333"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "CrafterScenes.java:335"
+  }
+ ]
+}

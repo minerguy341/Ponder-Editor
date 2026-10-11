@@ -1,0 +1,1282 @@
+{
+ "id": "create:funnels/intro",
+ "schematic": "funnels/intro",
+ "schematicNamespace": "create",
+ "title": "Using funnels",
+ "texts": {
+  "text_1": "Funnels are ideal for transferring items from and to inventories."
+ },
+ "tags": [
+  "create:logistics"
+ ],
+ "items": [
+  "create:andesite_funnel",
+  "create:brass_funnel"
+ ],
+ "keyframes": [],
+ "totalTicks": 178,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 1,
+    "size": 5
+   },
+   "src": "FunnelScenes.java:37"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      5,
+      0,
+      5
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "FunnelScenes.java:38"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       0,
+       0
+      ],
+      "nbt": {
+       "Speed": -40
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       0
+      ],
+      "nbt": {
+       "Speed": 80
+      }
+     },
+     {
+      "pos": [
+       5,
+       0,
+       1
+      ],
+      "nbt": {
+       "Speed": -40
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       1
+      ],
+      "nbt": {
+       "Speed": 80
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 80
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 80
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 80
+      }
+     }
+    ]
+   },
+   "src": "FunnelScenes.java:39"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "FunnelScenes.java:41"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        0,
+        1,
+        0
+       ],
+       "to": [
+        5,
+        1,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        0
+       ],
+       "to": [
+        5,
+        2,
+        1
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        0,
+        2,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        4,
+        2,
+        2
+       ],
+       "to": [
+        5,
+        2,
+        2
+       ]
+      }
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "FunnelScenes.java:49"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "FunnelScenes.java:51"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      2,
+      2
+     ],
+     "to": [
+      3,
+      2,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "FunnelScenes.java:52"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 8
+   },
+   "src": "FunnelScenes.java:59"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     2
+    ]
+   },
+   "src": "FunnelScenes.java:60"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     2
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         true
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FunnelScenes.java:61"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ],
+    "insertionSide": "east",
+    "item": {
+     "id": "create:brass_block",
+     "count": 1
+    }
+   },
+   "src": "FunnelScenes.java:65",
+   "out": "e1"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     2,
+     2
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FunnelScenes.java:65"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 8
+   },
+   "src": "FunnelScenes.java:59"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     2
+    ]
+   },
+   "src": "FunnelScenes.java:60"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     2
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         true
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FunnelScenes.java:61"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ],
+    "insertionSide": "east",
+    "item": {
+     "id": "create:brass_block",
+     "count": 1
+    }
+   },
+   "src": "FunnelScenes.java:65",
+   "out": "e2"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     2,
+     2
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FunnelScenes.java:65"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 8
+   },
+   "src": "FunnelScenes.java:59"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     2
+    ]
+   },
+   "src": "FunnelScenes.java:60"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     2
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         true
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FunnelScenes.java:61"
+  },
+  {
+   "op": "rotateCameraY",
+   "args": {
+    "degrees": 70
+   },
+   "src": "FunnelScenes.java:63"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ],
+    "insertionSide": "east",
+    "item": {
+     "id": "create:brass_block",
+     "count": 1
+    }
+   },
+   "src": "FunnelScenes.java:65",
+   "out": "e3"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     2,
+     2
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FunnelScenes.java:65"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 8
+   },
+   "src": "FunnelScenes.java:59"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     2
+    ]
+   },
+   "src": "FunnelScenes.java:60"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     2
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         true
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FunnelScenes.java:61"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ],
+    "insertionSide": "east",
+    "item": {
+     "id": "create:brass_block",
+     "count": 1
+    }
+   },
+   "src": "FunnelScenes.java:65",
+   "out": "e4"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     2,
+     2
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FunnelScenes.java:65"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 8
+   },
+   "src": "FunnelScenes.java:59"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     2
+    ]
+   },
+   "src": "FunnelScenes.java:60"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     2
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         true
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FunnelScenes.java:61"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ],
+    "insertionSide": "east",
+    "item": {
+     "id": "create:brass_block",
+     "count": 1
+    }
+   },
+   "src": "FunnelScenes.java:65",
+   "out": "e5"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     2,
+     2
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FunnelScenes.java:65"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 8
+   },
+   "src": "FunnelScenes.java:59"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     2
+    ]
+   },
+   "src": "FunnelScenes.java:60"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     2
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         true
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FunnelScenes.java:61"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ],
+    "insertionSide": "east",
+    "item": {
+     "id": "create:brass_block",
+     "count": 1
+    }
+   },
+   "src": "FunnelScenes.java:65",
+   "out": "e6"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     2,
+     2
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FunnelScenes.java:65"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 8
+   },
+   "src": "FunnelScenes.java:59"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     2
+    ]
+   },
+   "src": "FunnelScenes.java:60"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     2
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         true
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FunnelScenes.java:61"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 8
+   },
+   "src": "FunnelScenes.java:59"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     2
+    ]
+   },
+   "src": "FunnelScenes.java:60"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     2
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         true
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FunnelScenes.java:61"
+  },
+  {
+   "op": "rotateCameraY",
+   "args": {
+    "degrees": -70
+   },
+   "src": "FunnelScenes.java:68"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "FunnelScenes.java:69"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      2,
+      4
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": false
+   },
+   "src": "FunnelScenes.java:72"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      -1,
+      4
+     ],
+     "to": [
+      2,
+      0,
+      4
+     ]
+    },
+    "state": {
+     "name": "create:andesite_casing",
+     "props": {}
+    },
+    "particles": true
+   },
+   "src": "FunnelScenes.java:73"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        2,
+        -1,
+        4
+       ],
+       "to": [
+        2,
+        0,
+        4
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        1,
+        1,
+        4
+       ],
+       "to": [
+        2,
+        4,
+        4
+       ]
+      }
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "FunnelScenes.java:75",
+   "out": "e7"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     6.5,
+     4.5
+    ],
+    "motion": [
+     0,
+     -0.4,
+     0
+    ],
+    "item": {
+     "id": "create:brass_block",
+     "count": 1
+    }
+   },
+   "src": "FunnelScenes.java:86",
+   "out": "e8"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 8
+   },
+   "src": "FunnelScenes.java:87"
+  },
+  {
+   "op": "world.modifyEntity",
+   "args": {
+    "link": {
+     "link": "e8"
+    },
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "discard",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FunnelScenes.java:84"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     6.5,
+     4.5
+    ],
+    "motion": [
+     0,
+     -0.4,
+     0
+    ],
+    "item": {
+     "id": "create:brass_block",
+     "count": 1
+    }
+   },
+   "src": "FunnelScenes.java:86",
+   "out": "e9"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 8
+   },
+   "src": "FunnelScenes.java:87"
+  },
+  {
+   "op": "world.modifyEntity",
+   "args": {
+    "link": {
+     "link": "e9"
+    },
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "discard",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FunnelScenes.java:84"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     6.5,
+     4.5
+    ],
+    "motion": [
+     0,
+     -0.4,
+     0
+    ],
+    "item": {
+     "id": "create:brass_block",
+     "count": 1
+    }
+   },
+   "src": "FunnelScenes.java:86",
+   "out": "e10"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 8
+   },
+   "src": "FunnelScenes.java:87"
+  },
+  {
+   "op": "world.modifyEntity",
+   "args": {
+    "link": {
+     "link": "e10"
+    },
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "discard",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FunnelScenes.java:84"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 8
+   },
+   "src": "FunnelScenes.java:87"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e7"
+    },
+    "offset": [
+     0,
+     1,
+     0
+    ],
+    "duration": 15
+   },
+   "src": "FunnelScenes.java:90"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "FunnelScenes.java:91"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      2,
+      4
+     ]
+    },
+    "state": {
+     "name": "create:andesite_funnel",
+     "props": {
+      "extracting": "true",
+      "facing": "west",
+      "powered": "false",
+      "waterlogged": "false"
+     }
+    },
+    "particles": false
+   },
+   "src": "FunnelScenes.java:92"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 8
+   },
+   "src": "FunnelScenes.java:97"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     4
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         true
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FunnelScenes.java:98"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.6500000059604645,
+     3.050000011920929,
+     4.5
+    ],
+    "motion": [
+     -0.05,
+     0,
+     0
+    ],
+    "item": {
+     "id": "create:brass_block",
+     "count": 1
+    }
+   },
+   "src": "FunnelScenes.java:99",
+   "out": "e11"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 8
+   },
+   "src": "FunnelScenes.java:97"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     4
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         true
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FunnelScenes.java:98"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.6500000059604645,
+     3.050000011920929,
+     4.5
+    ],
+    "motion": [
+     -0.05,
+     0,
+     0
+    ],
+    "item": {
+     "id": "create:brass_block",
+     "count": 1
+    }
+   },
+   "src": "FunnelScenes.java:99",
+   "out": "e12"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 8
+   },
+   "src": "FunnelScenes.java:97"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     4
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         true
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FunnelScenes.java:98"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.6500000059604645,
+     3.050000011920929,
+     4.5
+    ],
+    "motion": [
+     -0.05,
+     0,
+     0
+    ],
+    "item": {
+     "id": "create:brass_block",
+     "count": 1
+    }
+   },
+   "src": "FunnelScenes.java:99",
+   "out": "e13"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 8
+   },
+   "src": "FunnelScenes.java:102"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 360,
+    "color": "white",
+    "placeNearTarget": false,
+    "keyframe": false,
+    "key": "text_1",
+    "independent": 0,
+    "text": "Funnels are ideal for transferring items from and to inventories."
+   },
+   "src": "FunnelScenes.java:103"
+  },
+  {
+   "op": "markAsFinished",
+   "args": {},
+   "src": "FunnelScenes.java:106"
+  }
+ ]
+}

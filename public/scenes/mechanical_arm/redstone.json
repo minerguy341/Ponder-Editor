@@ -1,0 +1,1118 @@
+{
+ "id": "create:mechanical_arm/redstone",
+ "schematic": "mechanical_arm/redstone",
+ "schematicNamespace": "create",
+ "title": "Controlling Mechanical Arms with Redstone",
+ "texts": {
+  "text_1": "When powered by Redstone, Mechanical Arms will not activate",
+  "text_2": "Before stopping, it will finish any started cycles",
+  "text_3": "Thus, a negative pulse can be used to trigger exactly one activation cycle"
+ },
+ "tags": [],
+ "items": [
+  "create:mechanical_arm"
+ ],
+ "keyframes": [
+  121,
+  350
+ ],
+ "totalTicks": 367,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "ArmScenes.java:531"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      4,
+      0,
+      5
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "ArmScenes.java:532"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ArmScenes.java:533"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      1,
+      3
+     ],
+     "to": [
+      2,
+      1,
+      4
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ArmScenes.java:534"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ArmScenes.java:535"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      1,
+      3
+     ],
+     "to": [
+      4,
+      1,
+      5
+     ]
+    },
+    "direction": "west"
+   },
+   "src": "ArmScenes.java:536"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ArmScenes.java:537"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      1,
+      2
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "ArmScenes.java:538"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ArmScenes.java:539"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      1,
+      1
+     ],
+     "to": [
+      4,
+      1,
+      1
+     ]
+    },
+    "direction": "east"
+   },
+   "src": "ArmScenes.java:540"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ArmScenes.java:541"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      1,
+      0
+     ],
+     "to": [
+      1,
+      1,
+      2
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "ArmScenes.java:543"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     4,
+     1,
+     1
+    ],
+    "insertionSide": "south",
+    "item": {
+     "id": "minecraft:redstone_ore",
+     "count": 1
+    }
+   },
+   "src": "ArmScenes.java:549"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "ArmScenes.java:552"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       1,
+       3
+      ],
+      "nbt": {
+       "HeldItem": {},
+       "MovementProgress": 0,
+       "Phase": "MOVE_TO_INPUT",
+       "TargetPointIndex": 0
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:577"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 18
+   },
+   "src": "ArmScenes.java:578"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       1,
+       3
+      ],
+      "nbt": {
+       "HeldItem": {
+        "id": "minecraft:redstone_ore",
+        "count": 1
+       },
+       "Phase": "SEARCH_OUTPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:579"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     3,
+     1,
+     1
+    ]
+   },
+   "src": "ArmScenes.java:580"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ArmScenes.java:581"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ArmScenes.java:592"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       1,
+       3
+      ],
+      "nbt": {
+       "Phase": "MOVE_TO_OUTPUT",
+       "TargetPointIndex": 0
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:603"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     4,
+     1,
+     1
+    ],
+    "insertionSide": "south",
+    "item": {
+     "id": "minecraft:redstone_ore",
+     "count": 1
+    }
+   },
+   "src": "ArmScenes.java:604"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 18
+   },
+   "src": "ArmScenes.java:605"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       1,
+       3
+      ],
+      "nbt": {
+       "HeldItem": {},
+       "Phase": "SEARCH_INPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:606"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     3,
+     1,
+     3
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:redstone_ore",
+     "count": 1
+    }
+   },
+   "src": "ArmScenes.java:607",
+   "out": "e1"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "ArmScenes.java:552"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       0
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "floor",
+        "facing": "east",
+        "powered": "true"
+       }
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "15",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "15",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ArmScenes.java:555"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     1,
+     1,
+     0
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "ArmScenes.java:556"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ArmScenes.java:557"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "red",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     1.5,
+     2,
+     3.5
+    ],
+    "key": "text_1",
+    "text": "When powered by Redstone, Mechanical Arms will not activate"
+   },
+   "src": "ArmScenes.java:559"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "ArmScenes.java:565"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       0
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "floor",
+        "facing": "east",
+        "powered": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "0",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "0",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ArmScenes.java:566"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       1,
+       3
+      ],
+      "nbt": {
+       "Phase": "MOVE_TO_INPUT",
+       "TargetPointIndex": 0
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:577"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 18
+   },
+   "src": "ArmScenes.java:578"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       1,
+       3
+      ],
+      "nbt": {
+       "HeldItem": {
+        "id": "minecraft:redstone_ore",
+        "count": 1
+       },
+       "Phase": "SEARCH_OUTPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:579"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     3,
+     1,
+     1
+    ]
+   },
+   "src": "ArmScenes.java:580"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ArmScenes.java:581"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       0
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "floor",
+        "facing": "east",
+        "powered": "true"
+       }
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "15",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "15",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ArmScenes.java:584"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     1,
+     1,
+     0
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "ArmScenes.java:585"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     1.5,
+     2,
+     3.5
+    ],
+    "key": "text_2",
+    "text": "Before stopping, it will finish any started cycles"
+   },
+   "src": "ArmScenes.java:586"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ArmScenes.java:592"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       1,
+       3
+      ],
+      "nbt": {
+       "Phase": "MOVE_TO_OUTPUT",
+       "TargetPointIndex": 0
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:603"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     4,
+     1,
+     1
+    ],
+    "insertionSide": "south",
+    "item": {
+     "id": "minecraft:redstone_ore",
+     "count": 1
+    }
+   },
+   "src": "ArmScenes.java:604"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 18
+   },
+   "src": "ArmScenes.java:605"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       1,
+       3
+      ],
+      "nbt": {
+       "HeldItem": {},
+       "Phase": "SEARCH_INPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:606"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     3,
+     1,
+     3
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:redstone_ore",
+     "count": 1
+    }
+   },
+   "src": "ArmScenes.java:607",
+   "out": "e2"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "ArmScenes.java:552"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "ArmScenes.java:570"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       0
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "floor",
+        "facing": "east",
+        "powered": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "0",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "0",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ArmScenes.java:571"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "ArmScenes.java:572"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       0
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "floor",
+        "facing": "east",
+        "powered": "true"
+       }
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "15",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "15",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ArmScenes.java:573"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     1,
+     1,
+     0
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "ArmScenes.java:574"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       1,
+       3
+      ],
+      "nbt": {
+       "Phase": "MOVE_TO_INPUT",
+       "TargetPointIndex": 0
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:577"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 18
+   },
+   "src": "ArmScenes.java:578"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       1,
+       3
+      ],
+      "nbt": {
+       "HeldItem": {
+        "id": "minecraft:redstone_ore",
+        "count": 1
+       },
+       "Phase": "SEARCH_OUTPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:579"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     3,
+     1,
+     1
+    ]
+   },
+   "src": "ArmScenes.java:580"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ArmScenes.java:581"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ArmScenes.java:592"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 100,
+    "color": "green",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     1.5,
+     2,
+     3.5
+    ],
+    "key": "text_3",
+    "text": "Thus, a negative pulse can be used to trigger exactly one activation cycle"
+   },
+   "src": "ArmScenes.java:595"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       1,
+       3
+      ],
+      "nbt": {
+       "Phase": "MOVE_TO_OUTPUT",
+       "TargetPointIndex": 0
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:603"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     4,
+     1,
+     1
+    ],
+    "insertionSide": "south",
+    "item": {
+     "id": "minecraft:redstone_ore",
+     "count": 1
+    }
+   },
+   "src": "ArmScenes.java:604"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 18
+   },
+   "src": "ArmScenes.java:605"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       1,
+       3
+      ],
+      "nbt": {
+       "HeldItem": {},
+       "Phase": "SEARCH_INPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:606"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     3,
+     1,
+     3
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:redstone_ore",
+     "count": 1
+    }
+   },
+   "src": "ArmScenes.java:607",
+   "out": "e3"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ArmScenes.java:610"
+  }
+ ]
+}

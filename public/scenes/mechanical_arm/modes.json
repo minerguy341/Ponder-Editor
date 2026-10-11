@@ -1,0 +1,4263 @@
+{
+ "id": "create:mechanical_arm/modes",
+ "schematic": "mechanical_arm/modes",
+ "schematicNamespace": "create",
+ "title": "Distribution modes of the Mechanical Arm",
+ "texts": {
+  "text_1": "Input",
+  "text_2": "Outputs",
+  "text_3": "Whenever an Arm has to choose between multiple valid outputs...",
+  "text_4": "...it will act according to its setting",
+  "text_5": "The value panel will allow you to configure it",
+  "text_6": "Round Robin mode simply cycles through all outputs that are available",
+  "text_7": "If an output is unable to take more items, it will be skipped",
+  "text_8": "Forced Round Robin mode will never skip outputs, and instead wait until they are free",
+  "text_9": "Prefer First prioritizes the outputs selected earliest when configuring this Arm"
+ },
+ "tags": [],
+ "items": [
+  "create:mechanical_arm"
+ ],
+ "keyframes": [
+  121,
+  389,
+  525,
+  615,
+  819
+ ],
+ "totalTicks": 1051,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 1,
+    "size": 5
+   },
+   "src": "ArmScenes.java:384"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      0
+     ]
+    },
+    "state": {
+     "name": "minecraft:barrier",
+     "props": {
+      "waterlogged": "false"
+     }
+    },
+    "particles": false
+   },
+   "src": "ArmScenes.java:385"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      5,
+      0,
+      6
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "ArmScenes.java:387"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ArmScenes.java:388"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      1,
+      4
+     ],
+     "to": [
+      4,
+      1,
+      5
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ArmScenes.java:389"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ArmScenes.java:390"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      1,
+      4
+     ],
+     "to": [
+      1,
+      2,
+      5
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "ArmScenes.java:391"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ArmScenes.java:392"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      1,
+      1
+     ],
+     "to": [
+      5,
+      1,
+      2
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "ArmScenes.java:393"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ArmScenes.java:394"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "input",
+    "slot": "obj:1",
+    "box": {
+     "min": [
+      1,
+      1,
+      4
+     ],
+     "max": [
+      2,
+      1.8125,
+      5
+     ]
+    },
+    "duration": 60
+   },
+   "src": "ArmScenes.java:403"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 30,
+    "color": "input",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_1",
+    "pointAt": [
+     1,
+     1.5,
+     4.5
+    ],
+    "text": "Input"
+   },
+   "src": "ArmScenes.java:404"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "ArmScenes.java:409"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "output",
+    "slot": "obj:1",
+    "box": {
+     "min": [
+      1,
+      1,
+      2
+     ],
+     "max": [
+      4,
+      2,
+      3
+     ]
+    },
+    "duration": 40
+   },
+   "src": "ArmScenes.java:410"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 40,
+    "color": "output",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_2",
+    "pointAt": [
+     1,
+     1.5,
+     2.5
+    ],
+    "text": "Outputs"
+   },
+   "src": "ArmScenes.java:411"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "ArmScenes.java:416"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ],
+    "insertionSide": "south",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 1
+    }
+   },
+   "src": "ArmScenes.java:420"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     4
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ArmScenes.java:420"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "output",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_3",
+    "pointAt": [
+     2.5,
+     2,
+     2.5
+    ],
+    "text": "Whenever an Arm has to choose between multiple valid outputs..."
+   },
+   "src": "ArmScenes.java:421"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "ArmScenes.java:427"
+  },
+  {
+   "op": "overlay.highlightValueBox",
+   "args": {
+    "location": [
+     3.5,
+     1.1875,
+     4.0234375
+    ],
+    "expands": [
+     0.0859375,
+     0.0859375,
+     0
+    ],
+    "duration": 120
+   },
+   "src": "ArmScenes.java:430"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 50,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_4",
+    "pointAt": [
+     3.5,
+     1.1875,
+     4
+    ],
+    "text": "...it will act according to its setting"
+   },
+   "src": "ArmScenes.java:431"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "ArmScenes.java:435"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3.5,
+     1.1875,
+     4
+    ],
+    "direction": "right",
+    "duration": 40,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb"
+   },
+   "src": "ArmScenes.java:437"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ArmScenes.java:438"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 50,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_5",
+    "pointAt": [
+     3.5,
+     1.1875,
+     4
+    ],
+    "text": "The value panel will allow you to configure it"
+   },
+   "src": "ArmScenes.java:439"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "ArmScenes.java:443"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      1,
+      0
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "ArmScenes.java:446",
+   "out": "e1"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     -1,
+     0,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "ArmScenes.java:447"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ArmScenes.java:498"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "HeldItem": {},
+       "MovementProgress": 0,
+       "Phase": "MOVE_TO_INPUT",
+       "TargetPointIndex": 0
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:499"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "ArmScenes.java:500"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "HeldItem": {
+        "id": "minecraft:snowball",
+        "count": 1
+       },
+       "Phase": "SEARCH_OUTPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:501"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ]
+   },
+   "src": "ArmScenes.java:502"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ArmScenes.java:503"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "MOVE_TO_OUTPUT",
+       "TargetPointIndex": 0
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:519"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ],
+    "insertionSide": "south",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 1
+    }
+   },
+   "src": "ArmScenes.java:520"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     4
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ArmScenes.java:520"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "ArmScenes.java:521"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "HeldItem": {},
+       "Phase": "SEARCH_INPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:522"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 1
+    }
+   },
+   "src": "ArmScenes.java:523",
+   "out": "e2"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ArmScenes.java:498"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "MOVE_TO_INPUT",
+       "TargetPointIndex": 0
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:499"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "ArmScenes.java:500"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "HeldItem": {
+        "id": "minecraft:snowball",
+        "count": 1
+       },
+       "Phase": "SEARCH_OUTPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:501"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ]
+   },
+   "src": "ArmScenes.java:502"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ArmScenes.java:503"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "MOVE_TO_OUTPUT",
+       "TargetPointIndex": 1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:519"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ],
+    "insertionSide": "south",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 1
+    }
+   },
+   "src": "ArmScenes.java:520"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     4
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ArmScenes.java:520"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "ArmScenes.java:521"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "HeldItem": {},
+       "Phase": "SEARCH_INPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:522"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 1
+    }
+   },
+   "src": "ArmScenes.java:523",
+   "out": "e3"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "output",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_6",
+    "pointAt": [
+     2.5,
+     2,
+     2.5
+    ],
+    "text": "Round Robin mode simply cycles through all outputs that are available"
+   },
+   "src": "ArmScenes.java:452"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ArmScenes.java:498"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "MOVE_TO_INPUT",
+       "TargetPointIndex": 0
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:499"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "ArmScenes.java:500"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "HeldItem": {
+        "id": "minecraft:snowball",
+        "count": 1
+       },
+       "Phase": "SEARCH_OUTPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:501"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ]
+   },
+   "src": "ArmScenes.java:502"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ArmScenes.java:503"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "MOVE_TO_OUTPUT",
+       "TargetPointIndex": 2
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:519"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ],
+    "insertionSide": "south",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 1
+    }
+   },
+   "src": "ArmScenes.java:520"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     4
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ArmScenes.java:520"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "ArmScenes.java:521"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "HeldItem": {},
+       "Phase": "SEARCH_INPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:522"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 1
+    }
+   },
+   "src": "ArmScenes.java:523",
+   "out": "e4"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ArmScenes.java:498"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "MOVE_TO_INPUT",
+       "TargetPointIndex": 0
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:499"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "ArmScenes.java:500"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "HeldItem": {
+        "id": "minecraft:snowball",
+        "count": 1
+       },
+       "Phase": "SEARCH_OUTPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:501"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ]
+   },
+   "src": "ArmScenes.java:502"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ArmScenes.java:503"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "MOVE_TO_OUTPUT",
+       "TargetPointIndex": 0
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:519"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ],
+    "insertionSide": "south",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 1
+    }
+   },
+   "src": "ArmScenes.java:520"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     4
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ArmScenes.java:520"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "ArmScenes.java:521"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "HeldItem": {},
+       "Phase": "SEARCH_INPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:522"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 1
+    }
+   },
+   "src": "ArmScenes.java:523",
+   "out": "e5"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ArmScenes.java:498"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "MOVE_TO_INPUT",
+       "TargetPointIndex": 0
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:499"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "ArmScenes.java:500"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "HeldItem": {
+        "id": "minecraft:snowball",
+        "count": 1
+       },
+       "Phase": "SEARCH_OUTPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:501"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ]
+   },
+   "src": "ArmScenes.java:502"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ArmScenes.java:503"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "MOVE_TO_OUTPUT",
+       "TargetPointIndex": 1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:519"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ],
+    "insertionSide": "south",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 1
+    }
+   },
+   "src": "ArmScenes.java:520"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     4
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ArmScenes.java:520"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "ArmScenes.java:521"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "HeldItem": {},
+       "Phase": "SEARCH_INPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:522"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 1
+    }
+   },
+   "src": "ArmScenes.java:523",
+   "out": "e6"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ArmScenes.java:498"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "MOVE_TO_INPUT",
+       "TargetPointIndex": 0
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:499"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "ArmScenes.java:500"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "HeldItem": {
+        "id": "minecraft:snowball",
+        "count": 1
+       },
+       "Phase": "SEARCH_OUTPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:501"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ]
+   },
+   "src": "ArmScenes.java:502"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ArmScenes.java:503"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "MOVE_TO_OUTPUT",
+       "TargetPointIndex": 2
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:519"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ],
+    "insertionSide": "south",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 1
+    }
+   },
+   "src": "ArmScenes.java:520"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     4
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ArmScenes.java:520"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "ArmScenes.java:521"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "HeldItem": {},
+       "Phase": "SEARCH_INPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:522"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 1
+    }
+   },
+   "src": "ArmScenes.java:523",
+   "out": "e7"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "green",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_7",
+    "pointAt": [
+     3.5,
+     2,
+     2.5
+    ],
+    "text": "If an output is unable to take more items, it will be skipped"
+   },
+   "src": "ArmScenes.java:462"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ArmScenes.java:498"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "MOVE_TO_INPUT",
+       "TargetPointIndex": 0
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:499"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "ArmScenes.java:500"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "HeldItem": {
+        "id": "minecraft:snowball",
+        "count": 1
+       },
+       "Phase": "SEARCH_OUTPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:501"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ]
+   },
+   "src": "ArmScenes.java:502"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ArmScenes.java:503"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "MOVE_TO_OUTPUT",
+       "TargetPointIndex": 1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:519"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ],
+    "insertionSide": "south",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 1
+    }
+   },
+   "src": "ArmScenes.java:520"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     4
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ArmScenes.java:520"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "ArmScenes.java:521"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "HeldItem": {},
+       "Phase": "SEARCH_INPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:522"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 1
+    }
+   },
+   "src": "ArmScenes.java:523",
+   "out": "e8"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ArmScenes.java:498"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "MOVE_TO_INPUT",
+       "TargetPointIndex": 0
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:499"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "ArmScenes.java:500"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "HeldItem": {
+        "id": "minecraft:snowball",
+        "count": 1
+       },
+       "Phase": "SEARCH_OUTPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:501"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ]
+   },
+   "src": "ArmScenes.java:502"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ArmScenes.java:503"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "MOVE_TO_OUTPUT",
+       "TargetPointIndex": 2
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:519"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ],
+    "insertionSide": "south",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 1
+    }
+   },
+   "src": "ArmScenes.java:520"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     4
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ArmScenes.java:520"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "ArmScenes.java:521"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "HeldItem": {},
+       "Phase": "SEARCH_INPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:522"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 1
+    }
+   },
+   "src": "ArmScenes.java:523",
+   "out": "e9"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ArmScenes.java:498"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "MOVE_TO_INPUT",
+       "TargetPointIndex": 0
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:499"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "ArmScenes.java:500"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "HeldItem": {
+        "id": "minecraft:snowball",
+        "count": 1
+       },
+       "Phase": "SEARCH_OUTPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:501"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ]
+   },
+   "src": "ArmScenes.java:502"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ArmScenes.java:503"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "red",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_8",
+    "pointAt": [
+     3.5,
+     2,
+     2.5
+    ],
+    "text": "Forced Round Robin mode will never skip outputs, and instead wait until they are free"
+   },
+   "src": "ArmScenes.java:506"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "ArmScenes.java:512"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     1,
+     0,
+     0
+    ],
+    "duration": 10
+   },
+   "src": "ArmScenes.java:513"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      0
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": false
+   },
+   "src": "ArmScenes.java:514"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "ArmScenes.java:515"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       1,
+       1
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       1
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       1
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     },
+     {
+      "pos": [
+       5,
+       0,
+       3
+      ],
+      "nbt": {
+       "Speed": 8
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:516"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "MOVE_TO_OUTPUT",
+       "TargetPointIndex": 0
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:519"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ],
+    "insertionSide": "south",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 1
+    }
+   },
+   "src": "ArmScenes.java:520"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     4
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ArmScenes.java:520"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "ArmScenes.java:521"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "HeldItem": {},
+       "Phase": "SEARCH_INPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:522"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 1
+    }
+   },
+   "src": "ArmScenes.java:523",
+   "out": "e10"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ArmScenes.java:498"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "MOVE_TO_INPUT",
+       "TargetPointIndex": 0
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:499"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "ArmScenes.java:500"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "HeldItem": {
+        "id": "minecraft:snowball",
+        "count": 1
+       },
+       "Phase": "SEARCH_OUTPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:501"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ]
+   },
+   "src": "ArmScenes.java:502"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ArmScenes.java:503"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "MOVE_TO_OUTPUT",
+       "TargetPointIndex": 1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:519"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ],
+    "insertionSide": "south",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 1
+    }
+   },
+   "src": "ArmScenes.java:520"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     4
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ArmScenes.java:520"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "ArmScenes.java:521"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "HeldItem": {},
+       "Phase": "SEARCH_INPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:522"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 1
+    }
+   },
+   "src": "ArmScenes.java:523",
+   "out": "e11"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ArmScenes.java:498"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "MOVE_TO_INPUT",
+       "TargetPointIndex": 0
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:499"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "ArmScenes.java:500"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "HeldItem": {
+        "id": "minecraft:snowball",
+        "count": 1
+       },
+       "Phase": "SEARCH_OUTPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:501"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ]
+   },
+   "src": "ArmScenes.java:502"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ArmScenes.java:503"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "MOVE_TO_OUTPUT",
+       "TargetPointIndex": 2
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:519"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ],
+    "insertionSide": "south",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 1
+    }
+   },
+   "src": "ArmScenes.java:520"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     4
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ArmScenes.java:520"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "ArmScenes.java:521"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "HeldItem": {},
+       "Phase": "SEARCH_INPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:522"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 1
+    }
+   },
+   "src": "ArmScenes.java:523",
+   "out": "e12"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     -1,
+     0,
+     0
+    ],
+    "duration": 10
+   },
+   "src": "ArmScenes.java:471"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      0
+     ]
+    },
+    "state": {
+     "name": "minecraft:barrier",
+     "props": {
+      "waterlogged": "false"
+     }
+    },
+    "particles": false
+   },
+   "src": "ArmScenes.java:472"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ArmScenes.java:498"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "MOVE_TO_INPUT",
+       "TargetPointIndex": 0
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:499"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "ArmScenes.java:500"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "HeldItem": {
+        "id": "minecraft:snowball",
+        "count": 1
+       },
+       "Phase": "SEARCH_OUTPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:501"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ]
+   },
+   "src": "ArmScenes.java:502"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ArmScenes.java:503"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "MOVE_TO_OUTPUT",
+       "TargetPointIndex": 0
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:519"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ],
+    "insertionSide": "south",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 1
+    }
+   },
+   "src": "ArmScenes.java:520"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     4
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ArmScenes.java:520"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "ArmScenes.java:521"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "HeldItem": {},
+       "Phase": "SEARCH_INPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:522"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 1
+    }
+   },
+   "src": "ArmScenes.java:523",
+   "out": "e13"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      0
+     ]
+    },
+    "state": {
+     "name": "minecraft:barrier",
+     "props": {
+      "waterlogged": "false"
+     }
+    },
+    "particles": false
+   },
+   "src": "ArmScenes.java:478"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      1,
+      0
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "ArmScenes.java:480",
+   "out": "e14"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e14"
+    },
+    "offset": [
+     -2,
+     0,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "ArmScenes.java:481"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "green",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_9",
+    "pointAt": [
+     3.5,
+     2,
+     2.5
+    ],
+    "text": "Prefer First prioritizes the outputs selected earliest when configuring this Arm"
+   },
+   "src": "ArmScenes.java:482"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ArmScenes.java:498"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "MOVE_TO_INPUT",
+       "TargetPointIndex": 0
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:499"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "ArmScenes.java:500"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "HeldItem": {
+        "id": "minecraft:snowball",
+        "count": 1
+       },
+       "Phase": "SEARCH_OUTPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:501"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ]
+   },
+   "src": "ArmScenes.java:502"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ArmScenes.java:503"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "MOVE_TO_OUTPUT",
+       "TargetPointIndex": 0
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:519"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ],
+    "insertionSide": "south",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 1
+    }
+   },
+   "src": "ArmScenes.java:520"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     4
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ArmScenes.java:520"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "ArmScenes.java:521"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "HeldItem": {},
+       "Phase": "SEARCH_INPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:522"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 1
+    }
+   },
+   "src": "ArmScenes.java:523",
+   "out": "e15"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ArmScenes.java:498"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "MOVE_TO_INPUT",
+       "TargetPointIndex": 0
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:499"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "ArmScenes.java:500"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "HeldItem": {
+        "id": "minecraft:snowball",
+        "count": 1
+       },
+       "Phase": "SEARCH_OUTPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:501"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ]
+   },
+   "src": "ArmScenes.java:502"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ArmScenes.java:503"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "MOVE_TO_OUTPUT",
+       "TargetPointIndex": 1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:519"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ],
+    "insertionSide": "south",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 1
+    }
+   },
+   "src": "ArmScenes.java:520"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     4
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ArmScenes.java:520"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "ArmScenes.java:521"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "HeldItem": {},
+       "Phase": "SEARCH_INPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:522"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 1
+    }
+   },
+   "src": "ArmScenes.java:523",
+   "out": "e16"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ArmScenes.java:498"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "MOVE_TO_INPUT",
+       "TargetPointIndex": 0
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:499"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "ArmScenes.java:500"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "HeldItem": {
+        "id": "minecraft:snowball",
+        "count": 1
+       },
+       "Phase": "SEARCH_OUTPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:501"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ]
+   },
+   "src": "ArmScenes.java:502"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ArmScenes.java:503"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "MOVE_TO_OUTPUT",
+       "TargetPointIndex": 1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:519"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ],
+    "insertionSide": "south",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 1
+    }
+   },
+   "src": "ArmScenes.java:520"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     4
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ArmScenes.java:520"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "ArmScenes.java:521"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "HeldItem": {},
+       "Phase": "SEARCH_INPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:522"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 1
+    }
+   },
+   "src": "ArmScenes.java:523",
+   "out": "e17"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ArmScenes.java:498"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "MOVE_TO_INPUT",
+       "TargetPointIndex": 0
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:499"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "ArmScenes.java:500"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "HeldItem": {
+        "id": "minecraft:snowball",
+        "count": 1
+       },
+       "Phase": "SEARCH_OUTPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:501"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ]
+   },
+   "src": "ArmScenes.java:502"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ArmScenes.java:503"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "MOVE_TO_OUTPUT",
+       "TargetPointIndex": 2
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:519"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ],
+    "insertionSide": "south",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 1
+    }
+   },
+   "src": "ArmScenes.java:520"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     4
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ArmScenes.java:520"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "ArmScenes.java:521"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "HeldItem": {},
+       "Phase": "SEARCH_INPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:522"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 1
+    }
+   },
+   "src": "ArmScenes.java:523",
+   "out": "e18"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ArmScenes.java:498"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "MOVE_TO_INPUT",
+       "TargetPointIndex": 0
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:499"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "ArmScenes.java:500"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "HeldItem": {
+        "id": "minecraft:snowball",
+        "count": 1
+       },
+       "Phase": "SEARCH_OUTPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:501"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ]
+   },
+   "src": "ArmScenes.java:502"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ArmScenes.java:503"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "MOVE_TO_OUTPUT",
+       "TargetPointIndex": 2
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:519"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ],
+    "insertionSide": "south",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 1
+    }
+   },
+   "src": "ArmScenes.java:520"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     4
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ArmScenes.java:520"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "ArmScenes.java:521"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "HeldItem": {},
+       "Phase": "SEARCH_INPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:522"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 1
+    }
+   },
+   "src": "ArmScenes.java:523",
+   "out": "e19"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ArmScenes.java:498"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "MOVE_TO_INPUT",
+       "TargetPointIndex": 0
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:499"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "ArmScenes.java:500"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "HeldItem": {
+        "id": "minecraft:snowball",
+        "count": 1
+       },
+       "Phase": "SEARCH_OUTPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:501"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ]
+   },
+   "src": "ArmScenes.java:502"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ArmScenes.java:503"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "MOVE_TO_OUTPUT",
+       "TargetPointIndex": 2
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:519"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ],
+    "insertionSide": "south",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 1
+    }
+   },
+   "src": "ArmScenes.java:520"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     4
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ArmScenes.java:520"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "ArmScenes.java:521"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "HeldItem": {},
+       "Phase": "SEARCH_INPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:522"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 1
+    }
+   },
+   "src": "ArmScenes.java:523",
+   "out": "e20"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ArmScenes.java:498"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "MOVE_TO_INPUT",
+       "TargetPointIndex": 0
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:499"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "ArmScenes.java:500"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "HeldItem": {
+        "id": "minecraft:snowball",
+        "count": 1
+       },
+       "Phase": "SEARCH_OUTPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:501"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ]
+   },
+   "src": "ArmScenes.java:502"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ArmScenes.java:503"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Phase": "MOVE_TO_OUTPUT",
+       "TargetPointIndex": 2
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:519"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     1,
+     1,
+     4
+    ],
+    "insertionSide": "south",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 1
+    }
+   },
+   "src": "ArmScenes.java:520"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     4
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ArmScenes.java:520"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "ArmScenes.java:521"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "ArmBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "HeldItem": {},
+       "Phase": "SEARCH_INPUTS",
+       "TargetPointIndex": -1
+      }
+     }
+    ]
+   },
+   "src": "ArmScenes.java:522"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:snowball",
+     "count": 1
+    }
+   },
+   "src": "ArmScenes.java:523",
+   "out": "e21"
+  }
+ ]
+}

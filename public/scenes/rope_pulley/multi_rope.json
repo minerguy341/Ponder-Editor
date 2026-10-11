@@ -1,0 +1,876 @@
+{
+ "id": "create:rope_pulley/multi_rope",
+ "schematic": "rope_pulley/multi_rope",
+ "schematicNamespace": "create",
+ "title": "Synchronised Pulley Movement",
+ "texts": {
+  "text_1": "Whenever a pulley assembles a contraption...",
+  "text_2": "...other pulleys on the same layer will connect to the structure",
+  "text_3": "They do not require to be powered, the effect is purely cosmetic"
+ },
+ "tags": [],
+ "items": [
+  "create:rope_pulley"
+ ],
+ "keyframes": [],
+ "totalTicks": 353,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "PulleyScenes.java:249"
+  },
+  {
+   "op": "setSceneOffsetY",
+   "args": {
+    "yOffset": -1
+   },
+   "src": "PulleyScenes.java:250"
+  },
+  {
+   "op": "scaleSceneView",
+   "args": {
+    "factor": 0.95
+   },
+   "src": "PulleyScenes.java:251"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      4,
+      0,
+      4
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "PulleyScenes.java:252"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "PulleyScenes.java:253"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      1,
+      1
+     ],
+     "to": [
+      3,
+      1,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "PulleyScenes.java:262",
+   "out": "e1"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "PulleyScenes.java:263"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      4,
+      1
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "PulleyScenes.java:264"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "PulleyScenes.java:265"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      4,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "PulleyScenes.java:266"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "PulleyScenes.java:267"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      4,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "PulleyScenes.java:268"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "PulleyScenes.java:269"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      4,
+      0
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "PulleyScenes.java:270"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "PulleyScenes.java:271"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       4,
+       0
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       3,
+       4,
+       1
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     }
+    ]
+   },
+   "src": "PulleyScenes.java:273"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "pulley",
+    "pos": [
+     3,
+     4,
+     1
+    ],
+    "distance": 2,
+    "duration": 20
+   },
+   "src": "PulleyScenes.java:274"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "PulleyScenes.java:275"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       4,
+       0
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       3,
+       4,
+       1
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     }
+    ]
+   },
+   "src": "PulleyScenes.java:277"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     3.5,
+     2,
+     1.5
+    ],
+    "key": "text_1",
+    "text": "Whenever a pulley assembles a contraption..."
+   },
+   "src": "PulleyScenes.java:278"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "PulleyScenes.java:282"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "pulley",
+    "pos": [
+     3,
+     4,
+     3
+    ],
+    "distance": 2,
+    "duration": 0
+   },
+   "src": "PulleyScenes.java:284"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "pulley",
+    "pos": [
+     1,
+     4,
+     3
+    ],
+    "distance": 2,
+    "duration": 0
+   },
+   "src": "PulleyScenes.java:285"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "PulleyScenes.java:286"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       4,
+       0
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       3,
+       4,
+       1
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     }
+    ]
+   },
+   "src": "PulleyScenes.java:287"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "pulley",
+    "pos": [
+     3,
+     4,
+     1
+    ],
+    "distance": -2,
+    "duration": 20
+   },
+   "src": "PulleyScenes.java:288"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "pulley",
+    "pos": [
+     3,
+     4,
+     3
+    ],
+    "distance": -2,
+    "duration": 20
+   },
+   "src": "PulleyScenes.java:289"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "pulley",
+    "pos": [
+     1,
+     4,
+     3
+    ],
+    "distance": -2,
+    "duration": 20
+   },
+   "src": "PulleyScenes.java:290"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     2,
+     0
+    ],
+    "duration": 20
+   },
+   "src": "PulleyScenes.java:291"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "PulleyScenes.java:292"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       4,
+       0
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       3,
+       4,
+       1
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     }
+    ]
+   },
+   "src": "PulleyScenes.java:293"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     1,
+     4.5,
+     3.5
+    ],
+    "key": "text_2",
+    "text": "...other pulleys on the same layer will connect to the structure"
+   },
+   "src": "PulleyScenes.java:295"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "PulleyScenes.java:299"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       4,
+       0
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       3,
+       4,
+       1
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     }
+    ]
+   },
+   "src": "PulleyScenes.java:301"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "pulley",
+    "pos": [
+     3,
+     4,
+     1
+    ],
+    "distance": 2,
+    "duration": 20
+   },
+   "src": "PulleyScenes.java:302"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "pulley",
+    "pos": [
+     3,
+     4,
+     3
+    ],
+    "distance": 2,
+    "duration": 20
+   },
+   "src": "PulleyScenes.java:303"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "pulley",
+    "pos": [
+     1,
+     4,
+     3
+    ],
+    "distance": 2,
+    "duration": 20
+   },
+   "src": "PulleyScenes.java:304"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     -2,
+     0
+    ],
+    "duration": 20
+   },
+   "src": "PulleyScenes.java:305"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "PulleyScenes.java:306"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       4,
+       0
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       3,
+       4,
+       1
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     }
+    ]
+   },
+   "src": "PulleyScenes.java:307"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "PulleyScenes.java:309"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       4,
+       0
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       3,
+       4,
+       1
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     }
+    ]
+   },
+   "src": "PulleyScenes.java:310"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "pulley",
+    "pos": [
+     3,
+     4,
+     1
+    ],
+    "distance": -2,
+    "duration": 20
+   },
+   "src": "PulleyScenes.java:311"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "pulley",
+    "pos": [
+     3,
+     4,
+     3
+    ],
+    "distance": -2,
+    "duration": 20
+   },
+   "src": "PulleyScenes.java:312"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "pulley",
+    "pos": [
+     1,
+     4,
+     3
+    ],
+    "distance": -2,
+    "duration": 20
+   },
+   "src": "PulleyScenes.java:313"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     2,
+     0
+    ],
+    "duration": 20
+   },
+   "src": "PulleyScenes.java:314"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "PulleyScenes.java:315"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       4,
+       0
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       3,
+       4,
+       1
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     }
+    ]
+   },
+   "src": "PulleyScenes.java:316"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     1,
+     4.5,
+     3.5
+    ],
+    "key": "text_3",
+    "text": "They do not require to be powered, the effect is purely cosmetic"
+   },
+   "src": "PulleyScenes.java:318"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "PulleyScenes.java:322"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       4,
+       0
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       3,
+       4,
+       1
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     }
+    ]
+   },
+   "src": "PulleyScenes.java:324"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "pulley",
+    "pos": [
+     3,
+     4,
+     1
+    ],
+    "distance": 2,
+    "duration": 20
+   },
+   "src": "PulleyScenes.java:325"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "pulley",
+    "pos": [
+     3,
+     4,
+     3
+    ],
+    "distance": 2,
+    "duration": 20
+   },
+   "src": "PulleyScenes.java:326"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "pulley",
+    "pos": [
+     1,
+     4,
+     3
+    ],
+    "distance": 2,
+    "duration": 20
+   },
+   "src": "PulleyScenes.java:327"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     -2,
+     0
+    ],
+    "duration": 20
+   },
+   "src": "PulleyScenes.java:328"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "PulleyScenes.java:329"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       4,
+       0
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       3,
+       4,
+       1
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     }
+    ]
+   },
+   "src": "PulleyScenes.java:330"
+  }
+ ]
+}

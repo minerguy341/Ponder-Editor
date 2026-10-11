@@ -1,0 +1,1463 @@
+{
+ "id": "create:basin",
+ "schematic": "basin",
+ "schematicNamespace": "create",
+ "title": "Processing Items in the Basin",
+ "texts": {
+  "text_1": "A Basin can hold Items and Fluids for Processing",
+  "text_2": "After a processing step, basins try to output below to the side of them",
+  "text_3": "When a valid component is present, the Basin will show an output faucet",
+  "text_4": "A number of options are applicable here",
+  "text_5": "Outputs will be caught by the inventory below",
+  "text_6": "Without output faucet, the Basin will retain items created in its processing",
+  "text_7": "This can be useful if outputs should be re-used as ingredients",
+  "text_8": "Desired outputs will then have to be extracted from the basin",
+  "text_9": "A Filter might be necessary to avoid pulling out un-processed items"
+ },
+ "tags": [],
+ "items": [
+  "create:basin"
+ ],
+ "keyframes": [
+  31,
+  137,
+  247,
+  566,
+  666,
+  896
+ ],
+ "totalTicks": 1130,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "ProcessingScenes.java:723"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      4,
+      0,
+      5
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "ProcessingScenes.java:724"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ProcessingScenes.java:725"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ProcessingScenes.java:727"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ProcessingScenes.java:728"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       2,
+       2
+      ],
+      "state": {
+       "name": "create:basin",
+       "props": {
+        "facing": "down"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ProcessingScenes.java:730"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      2,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ProcessingScenes.java:731"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ProcessingScenes.java:732"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_1",
+    "pointAt": [
+     1,
+     2.5,
+     2.5
+    ],
+    "text": "A Basin can hold Items and Fluids for Processing"
+   },
+   "src": "ProcessingScenes.java:734"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ProcessingScenes.java:739"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     5.5,
+     2.5
+    ],
+    "motion": [
+     0,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:brick",
+     "count": 1
+    }
+   },
+   "src": "ProcessingScenes.java:743",
+   "out": "e1"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ProcessingScenes.java:744"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     5.5,
+     2.5
+    ],
+    "motion": [
+     0,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:brick",
+     "count": 1
+    }
+   },
+   "src": "ProcessingScenes.java:743",
+   "out": "e2"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ProcessingScenes.java:744"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     5.5,
+     2.5
+    ],
+    "motion": [
+     0,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:brick",
+     "count": 1
+    }
+   },
+   "src": "ProcessingScenes.java:743",
+   "out": "e3"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ProcessingScenes.java:744"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     1.5,
+     5.5,
+     2.5
+    ],
+    "motion": [
+     0,
+     0,
+     0
+    ],
+    "item": {
+     "id": "minecraft:brick",
+     "count": 1
+    }
+   },
+   "src": "ProcessingScenes.java:743",
+   "out": "e4"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ProcessingScenes.java:744"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ProcessingScenes.java:746"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     1.5,
+     3,
+     2.5
+    ],
+    "direction": "down",
+    "duration": 30,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "minecraft:brick",
+     "count": 1
+    }
+   },
+   "src": "ProcessingScenes.java:747"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "ProcessingScenes.java:748"
+  },
+  {
+   "op": "overlay.showOutline",
+   "args": {
+    "color": "green",
+    "slot": "obj:1",
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      3
+     ]
+    },
+    "duration": 60
+   },
+   "src": "ProcessingScenes.java:751"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "ProcessingScenes.java:753"
+  },
+  {
+   "op": "overlay.showOutline",
+   "args": {
+    "color": "green",
+    "slot": "obj:2",
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      1,
+      2
+     ]
+    },
+    "duration": 60
+   },
+   "src": "ProcessingScenes.java:751"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "ProcessingScenes.java:753"
+  },
+  {
+   "op": "overlay.showOutline",
+   "args": {
+    "color": "green",
+    "slot": "obj:3",
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      1
+     ]
+    },
+    "duration": 60
+   },
+   "src": "ProcessingScenes.java:751"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "ProcessingScenes.java:753"
+  },
+  {
+   "op": "overlay.showOutline",
+   "args": {
+    "color": "green",
+    "slot": "obj:4",
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      2
+     ]
+    },
+    "duration": 60
+   },
+   "src": "ProcessingScenes.java:751"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "ProcessingScenes.java:753"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "green",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_2",
+    "pointAt": [
+     1,
+     2.5,
+     2.5
+    ],
+    "text": "After a processing step, basins try to output below to the side of them"
+   },
+   "src": "ProcessingScenes.java:756"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "ProcessingScenes.java:762"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      1
+     ]
+    },
+    "direction": "east"
+   },
+   "src": "ProcessingScenes.java:765",
+   "out": "e5"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e5"
+    },
+    "offset": [
+     -2,
+     0,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "ProcessingScenes.java:766"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ProcessingScenes.java:767"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       2,
+       2
+      ],
+      "state": {
+       "name": "create:basin",
+       "props": {
+        "facing": "north"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ProcessingScenes.java:768"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ProcessingScenes.java:769"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "green",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_3",
+    "pointAt": [
+     1.15,
+     2.5,
+     2
+    ],
+    "text": "When a valid component is present, the Basin will show an output faucet"
+   },
+   "src": "ProcessingScenes.java:771"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "ProcessingScenes.java:777"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e5"
+    },
+    "direction": "east"
+   },
+   "src": "ProcessingScenes.java:779"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "ProcessingScenes.java:780"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      1,
+      1
+     ]
+    },
+    "direction": "east"
+   },
+   "src": "ProcessingScenes.java:781",
+   "out": "e6"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e6"
+    },
+    "offset": [
+     1,
+     0,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "ProcessingScenes.java:782"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "ProcessingScenes.java:783"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e6"
+    },
+    "direction": "east"
+   },
+   "src": "ProcessingScenes.java:784"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_4",
+    "pointAt": [
+     1.5,
+     1.5,
+     1.5
+    ],
+    "text": "A number of options are applicable here"
+   },
+   "src": "ProcessingScenes.java:786"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "ProcessingScenes.java:791"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      0
+     ]
+    },
+    "direction": "east"
+   },
+   "src": "ProcessingScenes.java:792",
+   "out": "e7"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e7"
+    },
+    "offset": [
+     0,
+     0,
+     1
+    ],
+    "duration": 0
+   },
+   "src": "ProcessingScenes.java:793"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "ProcessingScenes.java:794"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e7"
+    },
+    "direction": "east"
+   },
+   "src": "ProcessingScenes.java:795"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "ProcessingScenes.java:796"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      1
+     ]
+    },
+    "direction": "east"
+   },
+   "src": "ProcessingScenes.java:797",
+   "out": "e8"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "ProcessingScenes.java:798"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e8"
+    },
+    "direction": "east"
+   },
+   "src": "ProcessingScenes.java:799"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "ProcessingScenes.java:800"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      1,
+      0
+     ],
+     "to": [
+      3,
+      1,
+      0
+     ]
+    },
+    "direction": "east"
+   },
+   "src": "ProcessingScenes.java:801",
+   "out": "e9"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e9"
+    },
+    "offset": [
+     -2,
+     0,
+     1
+    ],
+    "duration": 0
+   },
+   "src": "ProcessingScenes.java:802"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "ProcessingScenes.java:803"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e9"
+    },
+    "direction": "east"
+   },
+   "src": "ProcessingScenes.java:804"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "ProcessingScenes.java:805"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      1
+     ]
+    },
+    "direction": "east"
+   },
+   "src": "ProcessingScenes.java:806",
+   "out": "e10"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e10"
+    },
+    "offset": [
+     -1,
+     0,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "ProcessingScenes.java:807"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 25
+   },
+   "src": "ProcessingScenes.java:809"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      4,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ProcessingScenes.java:812"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ProcessingScenes.java:813"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      1,
+      3
+     ],
+     "to": [
+      1,
+      4,
+      5
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "ProcessingScenes.java:814"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ProcessingScenes.java:815"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     4,
+     2
+    ],
+    "beType": "MechanicalPressBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getPressingBehaviour",
+        "a": []
+       },
+       {
+        "m": "start",
+        "a": [
+         {
+          "enum": "Mode.BASIN"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ProcessingScenes.java:818"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "ProcessingScenes.java:820"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     4,
+     2
+    ],
+    "beType": "MechanicalPressBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getPressingBehaviour",
+        "a": []
+       },
+       {
+        "m": "makeCompactingParticleEffect",
+        "a": [
+         [
+          1.5,
+          2.5,
+          2.5
+         ],
+         {
+          "id": "minecraft:brick",
+          "count": 1
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ProcessingScenes.java:821"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "BasinBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       2,
+       2
+      ],
+      "nbt": {
+       "VisualizedItems": [
+        {
+         "id": "minecraft:bricks",
+         "count": 1
+        }
+       ]
+      }
+     }
+    ]
+   },
+   "src": "ProcessingScenes.java:823"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "ProcessingScenes.java:828"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     1.5,
+     2,
+     1.5
+    ],
+    "direction": "right",
+    "duration": 30,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "minecraft:bricks",
+     "count": 1
+    }
+   },
+   "src": "ProcessingScenes.java:829"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "green",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_5",
+    "pointAt": [
+     1,
+     1.5,
+     1.5
+    ],
+    "text": "Outputs will be caught by the inventory below"
+   },
+   "src": "ProcessingScenes.java:831"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "ProcessingScenes.java:837"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e10"
+    },
+    "direction": "north"
+   },
+   "src": "ProcessingScenes.java:839"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ProcessingScenes.java:840"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       2,
+       2
+      ],
+      "state": {
+       "name": "create:basin",
+       "props": {
+        "facing": "down"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ProcessingScenes.java:841"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "ProcessingScenes.java:842"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_6",
+    "pointAt": [
+     1,
+     2.5,
+     2.5
+    ],
+    "text": "Without output faucet, the Basin will retain items created in its processing"
+   },
+   "src": "ProcessingScenes.java:844"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "ProcessingScenes.java:849"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     1.5,
+     3,
+     2.5
+    ],
+    "direction": "right",
+    "duration": 30,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "create:copper_nugget",
+     "count": 1
+    }
+   },
+   "src": "ProcessingScenes.java:852"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "ProcessingScenes.java:853"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     4,
+     2
+    ],
+    "beType": "MechanicalPressBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getPressingBehaviour",
+        "a": []
+       },
+       {
+        "m": "start",
+        "a": [
+         {
+          "enum": "Mode.BASIN"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ProcessingScenes.java:854"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "ProcessingScenes.java:856"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     4,
+     2
+    ],
+    "beType": "MechanicalPressBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getPressingBehaviour",
+        "a": []
+       },
+       {
+        "m": "makeCompactingParticleEffect",
+        "a": [
+         [
+          1.5,
+          2.5,
+          2.5
+         ],
+         {
+          "id": "create:copper_nugget",
+          "count": 1
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ProcessingScenes.java:857"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "ProcessingScenes.java:861"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     1.5,
+     3,
+     2.5
+    ],
+    "direction": "right",
+    "duration": 30,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "minecraft:copper_ingot",
+     "count": 1
+    }
+   },
+   "src": "ProcessingScenes.java:862"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "ProcessingScenes.java:863"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     4,
+     2
+    ],
+    "beType": "MechanicalPressBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getPressingBehaviour",
+        "a": []
+       },
+       {
+        "m": "start",
+        "a": [
+         {
+          "enum": "Mode.BASIN"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ProcessingScenes.java:864"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "ProcessingScenes.java:866"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     4,
+     2
+    ],
+    "beType": "MechanicalPressBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "getPressingBehaviour",
+        "a": []
+       },
+       {
+        "m": "makeCompactingParticleEffect",
+        "a": [
+         [
+          1.5,
+          2.5,
+          2.5
+         ],
+         {
+          "id": "minecraft:copper_ingot",
+          "count": 1
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ProcessingScenes.java:867"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "ProcessingScenes.java:871"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     1.5,
+     3,
+     2.5
+    ],
+    "direction": "right",
+    "duration": 30,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "minecraft:copper_block",
+     "count": 1
+    }
+   },
+   "src": "ProcessingScenes.java:872"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "green",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_7",
+    "pointAt": [
+     1,
+     2.5,
+     2.5
+    ],
+    "text": "This can be useful if outputs should be re-used as ingredients"
+   },
+   "src": "ProcessingScenes.java:873"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "ProcessingScenes.java:879"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      1,
+      2
+     ],
+     "to": [
+      4,
+      2,
+      5
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ProcessingScenes.java:881"
+  },
+  {
+   "op": "rotateCameraY",
+   "args": {
+    "degrees": 70
+   },
+   "src": "ProcessingScenes.java:882"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ],
+    "insertionSide": "west",
+    "item": {
+     "id": "minecraft:copper_block",
+     "count": 1
+    }
+   },
+   "src": "ProcessingScenes.java:883",
+   "out": "e11"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     2,
+     2,
+     2
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ProcessingScenes.java:883"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "ProcessingScenes.java:884"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_8",
+    "pointAt": [
+     3.5,
+     1.8125,
+     2.5
+    ],
+    "text": "Desired outputs will then have to be extracted from the basin"
+   },
+   "src": "ProcessingScenes.java:885"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "ProcessingScenes.java:890"
+  },
+  {
+   "op": "overlay.highlightValueBox",
+   "args": {
+    "location": [
+     2.4765625,
+     2.825,
+     2.5
+    ],
+    "expands": [
+     0,
+     0.0859375,
+     0.0859375
+    ],
+    "duration": 80
+   },
+   "src": "ProcessingScenes.java:893"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_9",
+    "pointAt": [
+     2.5,
+     2.825,
+     2.5
+    ],
+    "text": "A Filter might be necessary to avoid pulling out un-processed items"
+   },
+   "src": "ProcessingScenes.java:894"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "ProcessingScenes.java:898"
+  },
+  {
+   "op": "markAsFinished",
+   "args": {},
+   "src": "ProcessingScenes.java:899"
+  }
+ ]
+}

@@ -1,0 +1,918 @@
+{
+ "id": "create:portable_interface/transfer",
+ "schematic": "portable_interface/transfer",
+ "schematicNamespace": "create",
+ "title": "Contraption Storage Exchange",
+ "texts": {
+  "text_1": "Moving inventories can be tricky to access with automation.",
+  "text_2": "This component can interact with storage without the need to stop the contraption.",
+  "text_3": "Place a second one with a gap of 1 or 2 blocks inbetween",
+  "text_4": "Whenever they pass by each other, they will engage in a connection",
+  "text_5": "While engaged, the stationary interface will represent ALL inventories on the contraption",
+  "text_6": "Items can now be inserted...",
+  "text_7": "...or extracted from the contraption",
+  "text_8": "After no items have been exchanged for a while, the contraption will continue on its way"
+ },
+ "tags": [
+  "create:contraption_actor"
+ ],
+ "items": [
+  "create:portable_storage_interface"
+ ],
+ "keyframes": [
+  26,
+  109,
+  199,
+  339,
+  419
+ ],
+ "totalTicks": 563,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 6
+   },
+   "src": "MovementActorScenes.java:37"
+  },
+  {
+   "op": "scaleSceneView",
+   "args": {
+    "factor": 0.95
+   },
+   "src": "MovementActorScenes.java:38"
+  },
+  {
+   "op": "setSceneOffsetY",
+   "args": {
+    "yOffset": -1
+   },
+   "src": "MovementActorScenes.java:39"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      6,
+      0,
+      6
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "MovementActorScenes.java:40"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "MovementActorScenes.java:41"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      5,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "MovementActorScenes.java:44"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "MovementActorScenes.java:45"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      5,
+      2,
+      2
+     ],
+     "to": [
+      6,
+      3,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "MovementActorScenes.java:47",
+   "out": "e1"
+  },
+  {
+   "op": "world.configureCenterOfRotation",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "anchor": [
+     5.5,
+     1.5,
+     2.5
+    ]
+   },
+   "src": "MovementActorScenes.java:48"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "MovementActorScenes.java:49"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bearing",
+    "pos": [
+     5,
+     1,
+     2
+    ],
+    "distance": 360,
+    "duration": 70
+   },
+   "src": "MovementActorScenes.java:50"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "rotation": [
+     0,
+     360,
+     0
+    ],
+    "duration": 70
+   },
+   "src": "MovementActorScenes.java:51"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "red",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     5.5,
+     4,
+     2.5
+    ],
+    "key": "text_1",
+    "text": "Moving inventories can be tricky to access with automation."
+   },
+   "src": "MovementActorScenes.java:52"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "MovementActorScenes.java:59"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      2,
+      2
+     ]
+    },
+    "direction": "east",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "MovementActorScenes.java:61"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 13
+   },
+   "src": "MovementActorScenes.java:62"
+  },
+  {
+   "op": "effects.superGlue",
+   "args": {
+    "pos": [
+     4,
+     2,
+     2
+    ],
+    "side": "east",
+    "fullBlock": true
+   },
+   "src": "MovementActorScenes.java:63"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "green",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     4.5,
+     3,
+     2.5
+    ],
+    "key": "text_2",
+    "text": "This component can interact with storage without the need to stop the contraption."
+   },
+   "src": "MovementActorScenes.java:65"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "MovementActorScenes.java:71"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      2,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "MovementActorScenes.java:74"
+  },
+  {
+   "op": "overlay.showOutlineWithText",
+   "args": {
+    "duration": 50,
+    "color": "red",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      2,
+      2
+     ]
+    },
+    "pointAt": [
+     3.5,
+     2.5,
+     2.5
+    ],
+    "key": "text_3",
+    "text": "Place a second one with a gap of 1 or 2 blocks inbetween"
+   },
+   "src": "MovementActorScenes.java:75"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 55
+   },
+   "src": "MovementActorScenes.java:80"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bearing",
+    "pos": [
+     5,
+     1,
+     2
+    ],
+    "distance": 360,
+    "duration": 60
+   },
+   "src": "MovementActorScenes.java:82"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "rotation": [
+     0,
+     360,
+     0
+    ],
+    "duration": 60
+   },
+   "src": "MovementActorScenes.java:83"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "MovementActorScenes.java:84"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 40,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     3,
+     3,
+     2.5
+    ],
+    "key": "text_4",
+    "text": "Whenever they pass by each other, they will engage in a connection"
+   },
+   "src": "MovementActorScenes.java:86"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 38
+   },
+   "src": "MovementActorScenes.java:90"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "PortableItemInterfaceBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       2,
+       2
+      ],
+      "nbt": {
+       "Timer": 12,
+       "Distance": 1
+      }
+     },
+     {
+      "pos": [
+       4,
+       2,
+       2
+      ],
+      "nbt": {
+       "Timer": 12,
+       "Distance": 1
+      }
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:95"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 17
+   },
+   "src": "MovementActorScenes.java:100"
+  },
+  {
+   "op": "overlay.showOutline",
+   "args": {
+    "color": "green",
+    "slot": "pos:4,2,2",
+    "selection": {
+     "t": "box",
+     "from": [
+      5,
+      3,
+      2
+     ],
+     "to": [
+      6,
+      3,
+      2
+     ]
+    },
+    "duration": 80
+   },
+   "src": "MovementActorScenes.java:101"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "MovementActorScenes.java:102"
+  },
+  {
+   "op": "overlay.showOutlineWithText",
+   "args": {
+    "duration": 70,
+    "color": "green",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      2,
+      2
+     ]
+    },
+    "pointAt": [
+     2.5,
+     2.5,
+     2.5
+    ],
+    "key": "text_5",
+    "text": "While engaged, the stationary interface will represent ALL inventories on the contraption"
+   },
+   "src": "MovementActorScenes.java:104"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "MovementActorScenes.java:110"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      3,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "MovementActorScenes.java:113"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     2.5,
+     4,
+     2.5
+    ],
+    "key": "text_6",
+    "text": "Items can now be inserted..."
+   },
+   "src": "MovementActorScenes.java:114"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     7,
+     2.5
+    ],
+    "motion": [
+     0,
+     0.2,
+     0
+    ],
+    "item": {
+     "id": "minecraft:copper_ingot",
+     "count": 1
+    }
+   },
+   "src": "MovementActorScenes.java:124",
+   "out": "e2"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "MovementActorScenes.java:125"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     7,
+     2.5
+    ],
+    "motion": [
+     0,
+     0.2,
+     0
+    ],
+    "item": {
+     "id": "minecraft:copper_ingot",
+     "count": 1
+    }
+   },
+   "src": "MovementActorScenes.java:127",
+   "out": "e3"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "MovementActorScenes.java:128"
+  },
+  {
+   "op": "world.modifyEntity",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "discard",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:129"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "MovementActorScenes.java:130"
+  },
+  {
+   "op": "world.modifyEntity",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "discard",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:131"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     5.5,
+     4,
+     2.5
+    ],
+    "direction": "down",
+    "duration": 40,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "minecraft:copper_ingot",
+     "count": 1
+    }
+   },
+   "src": "MovementActorScenes.java:133"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "MovementActorScenes.java:135"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      3,
+      2
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "MovementActorScenes.java:136"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "MovementActorScenes.java:137"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      1,
+      0
+     ],
+     "to": [
+      1,
+      2,
+      6
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "MovementActorScenes.java:140"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "MovementActorScenes.java:141"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     2
+    ],
+    "insertionSide": "east",
+    "item": {
+     "id": "minecraft:copper_ingot",
+     "count": 1
+    }
+   },
+   "src": "MovementActorScenes.java:142",
+   "out": "e4"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     2
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:142"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 40,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     1.5,
+     3,
+     2.5
+    ],
+    "key": "text_7",
+    "text": "...or extracted from the contraption"
+   },
+   "src": "MovementActorScenes.java:143"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "MovementActorScenes.java:147"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     2
+    ],
+    "insertionSide": "east",
+    "item": {
+     "id": "minecraft:copper_ingot",
+     "count": 1
+    }
+   },
+   "src": "MovementActorScenes.java:148",
+   "out": "e5"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     2,
+     2
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:148"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "MovementActorScenes.java:150"
+  },
+  {
+   "op": "world.modifyEntities",
+   "args": {
+    "entityType": "ItemEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "discard",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:151"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "MovementActorScenes.java:152"
+  },
+  {
+   "op": "world.modifyEntities",
+   "args": {
+    "entityType": "ItemEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "discard",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:153"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 120,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     2.5,
+     3,
+     2.5
+    ],
+    "key": "text_8",
+    "text": "After no items have been exchanged for a while, the contraption will continue on its way"
+   },
+   "src": "MovementActorScenes.java:155"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "PortableItemInterfaceBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       2,
+       2
+      ],
+      "nbt": {
+       "Timer": 2
+      }
+     },
+     {
+      "pos": [
+       4,
+       2,
+       2
+      ],
+      "nbt": {
+       "Timer": 2
+      }
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:159"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "MovementActorScenes.java:161"
+  },
+  {
+   "op": "markAsFinished",
+   "args": {},
+   "src": "MovementActorScenes.java:162"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bearing",
+    "pos": [
+     5,
+     1,
+     2
+    ],
+    "distance": 270,
+    "duration": 120
+   },
+   "src": "MovementActorScenes.java:163"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "rotation": [
+     0,
+     270,
+     0
+    ],
+    "duration": 120
+   },
+   "src": "MovementActorScenes.java:164"
+  }
+ ]
+}

@@ -1,0 +1,404 @@
+{
+ "id": "create:funnels/redstone",
+ "schematic": "funnels/redstone",
+ "schematicNamespace": "create",
+ "title": "Redstone control",
+ "texts": {
+  "text_1": "Redstone power will prevent any funnel from acting"
+ },
+ "tags": [],
+ "items": [
+  "create:andesite_funnel",
+  "create:brass_funnel"
+ ],
+ "keyframes": [],
+ "totalTicks": 113,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "FunnelScenes.java:312"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      4,
+      0,
+      4
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "FunnelScenes.java:313"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "FunnelScenes.java:314"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      1,
+      0
+     ],
+     "to": [
+      4,
+      2,
+      4
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "FunnelScenes.java:315"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     3.5,
+     6.5,
+     2.5
+    ],
+    "motion": [
+     0,
+     -0.2,
+     0
+    ],
+    "item": {
+     "id": "create:brass_block",
+     "count": 1
+    }
+   },
+   "src": "FunnelScenes.java:331",
+   "out": "e1"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 8
+   },
+   "src": "FunnelScenes.java:332"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "FunnelScenes.java:346"
+  },
+  {
+   "op": "world.modifyEntity",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "discard",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FunnelScenes.java:330"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     3.5,
+     6.5,
+     2.5
+    ],
+    "motion": [
+     0,
+     -0.2,
+     0
+    ],
+    "item": {
+     "id": "create:brass_block",
+     "count": 1
+    }
+   },
+   "src": "FunnelScenes.java:331",
+   "out": "e2"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 8
+   },
+   "src": "FunnelScenes.java:332"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "FunnelScenes.java:346"
+  },
+  {
+   "op": "world.modifyEntity",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "discard",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FunnelScenes.java:330"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     3.5,
+     6.5,
+     2.5
+    ],
+    "motion": [
+     0,
+     -0.2,
+     0
+    ],
+    "item": {
+     "id": "create:brass_block",
+     "count": 1
+    }
+   },
+   "src": "FunnelScenes.java:331",
+   "out": "e3"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 8
+   },
+   "src": "FunnelScenes.java:332"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "FunnelScenes.java:346"
+  },
+  {
+   "op": "world.modifyEntity",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "discard",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "FunnelScenes.java:330"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     3.5,
+     6.5,
+     2.5
+    ],
+    "motion": [
+     0,
+     -0.2,
+     0
+    ],
+    "item": {
+     "id": "create:brass_block",
+     "count": 1
+    }
+   },
+   "src": "FunnelScenes.java:331",
+   "out": "e4"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 8
+   },
+   "src": "FunnelScenes.java:332"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       2,
+       2
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "floor",
+        "facing": "south",
+        "powered": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "FunnelScenes.java:335"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       2,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "none",
+        "power": "15",
+        "south": "none",
+        "west": "side"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "FunnelScenes.java:336"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       2,
+       2
+      ],
+      "state": {
+       "name": "create:andesite_funnel",
+       "props": {
+        "extracting": "false",
+        "facing": "up",
+        "powered": "true",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "FunnelScenes.java:337"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     1,
+     2,
+     2
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "FunnelScenes.java:338"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "FunnelScenes.java:339"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "red",
+    "slot": "pos:3,2,2",
+    "box": {
+     "min": [
+      3.0625,
+      2.0625,
+      2.0625
+     ],
+     "max": [
+      3.9375,
+      2.3125,
+      2.9375
+     ]
+    },
+    "duration": 80
+   },
+   "src": "FunnelScenes.java:340"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "red",
+    "placeNearTarget": false,
+    "keyframe": false,
+    "key": "text_1",
+    "pointAt": [
+     3.5,
+     2,
+     2.5
+    ],
+    "text": "Redstone power will prevent any funnel from acting"
+   },
+   "src": "FunnelScenes.java:341"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "FunnelScenes.java:350"
+  }
+ ]
+}

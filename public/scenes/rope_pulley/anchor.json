@@ -1,0 +1,1097 @@
+{
+ "id": "create:rope_pulley/anchor",
+ "schematic": "rope_pulley/anchor",
+ "schematicNamespace": "create",
+ "title": "Moving Structures using Rope Pulleys",
+ "texts": {
+  "text_1": "Rope Pulleys can move blocks vertically when given Rotational Force",
+  "text_2": "Direction and Speed of movement depend on the Rotational Input"
+ },
+ "tags": [
+  "create:kinetic_appliances",
+  "create:movement_anchor"
+ ],
+ "items": [
+  "create:rope_pulley"
+ ],
+ "keyframes": [
+  86,
+  301
+ ],
+ "totalTicks": 485,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "PulleyScenes.java:22"
+  },
+  {
+   "op": "scaleSceneView",
+   "args": {
+    "factor": 0.95
+   },
+   "src": "PulleyScenes.java:23"
+  },
+  {
+   "op": "setSceneOffsetY",
+   "args": {
+    "yOffset": -1
+   },
+   "src": "PulleyScenes.java:24"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      4,
+      0,
+      5
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "PulleyScenes.java:31"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      2
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "PulleyScenes.java:33",
+   "out": "e1"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "PulleyScenes.java:34"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      1,
+      3
+     ],
+     "to": [
+      2,
+      4,
+      4
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "PulleyScenes.java:35"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "PulleyScenes.java:36"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      4,
+      2
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "PulleyScenes.java:38"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "PulleyScenes.java:39"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       2,
+       4
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "wall",
+        "facing": "west",
+        "powered": "true"
+       }
+      }
+     },
+     {
+      "pos": [
+       2,
+       2,
+       4
+      ],
+      "state": {
+       "name": "create:gearshift",
+       "props": {
+        "axis": "y",
+        "powered": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "PulleyScenes.java:41"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     1,
+     2,
+     4
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "PulleyScenes.java:42"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       4,
+       2
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       2,
+       4,
+       3
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       2,
+       3,
+       4
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     }
+    ]
+   },
+   "src": "PulleyScenes.java:43"
+  },
+  {
+   "op": "effects.rotationIndicator",
+   "args": {
+    "pos": [
+     2,
+     4,
+     3
+    ],
+    "direction": true
+   },
+   "src": "PulleyScenes.java:44"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "pulley",
+    "pos": [
+     2,
+     4,
+     2
+    ],
+    "distance": 2,
+    "duration": 40
+   },
+   "src": "PulleyScenes.java:45"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 45
+   },
+   "src": "PulleyScenes.java:47"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     2,
+     4.5,
+     2.5
+    ],
+    "key": "text_1",
+    "text": "Rope Pulleys can move blocks vertically when given Rotational Force"
+   },
+   "src": "PulleyScenes.java:48"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "PulleyScenes.java:53"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       2,
+       4
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "wall",
+        "facing": "west",
+        "powered": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       2,
+       2,
+       4
+      ],
+      "state": {
+       "name": "create:gearshift",
+       "props": {
+        "axis": "y",
+        "powered": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "PulleyScenes.java:55"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     1,
+     2,
+     4
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "PulleyScenes.java:56"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       4,
+       2
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     },
+     {
+      "pos": [
+       2,
+       4,
+       3
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     },
+     {
+      "pos": [
+       2,
+       3,
+       4
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     }
+    ]
+   },
+   "src": "PulleyScenes.java:57"
+  },
+  {
+   "op": "effects.rotationIndicator",
+   "args": {
+    "pos": [
+     2,
+     4,
+     3
+    ],
+    "direction": true
+   },
+   "src": "PulleyScenes.java:58"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "pulley",
+    "pos": [
+     2,
+     4,
+     2
+    ],
+    "distance": -2,
+    "duration": 40
+   },
+   "src": "PulleyScenes.java:59"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     2,
+     0
+    ],
+    "duration": 40
+   },
+   "src": "PulleyScenes.java:60"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "PulleyScenes.java:61"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     2.5,
+     4.5,
+     3
+    ],
+    "key": "text_2",
+    "text": "Direction and Speed of movement depend on the Rotational Input"
+   },
+   "src": "PulleyScenes.java:63"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       2,
+       4
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "wall",
+        "facing": "west",
+        "powered": "true"
+       }
+      }
+     },
+     {
+      "pos": [
+       2,
+       2,
+       4
+      ],
+      "state": {
+       "name": "create:gearshift",
+       "props": {
+        "axis": "y",
+        "powered": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "PulleyScenes.java:68"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     1,
+     2,
+     4
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "PulleyScenes.java:69"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       4,
+       2
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       2,
+       4,
+       3
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       2,
+       3,
+       4
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     }
+    ]
+   },
+   "src": "PulleyScenes.java:70"
+  },
+  {
+   "op": "effects.rotationIndicator",
+   "args": {
+    "pos": [
+     2,
+     4,
+     3
+    ],
+    "direction": true
+   },
+   "src": "PulleyScenes.java:71"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "pulley",
+    "pos": [
+     2,
+     4,
+     2
+    ],
+    "distance": 2,
+    "duration": 40
+   },
+   "src": "PulleyScenes.java:72"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     -2,
+     0
+    ],
+    "duration": 40
+   },
+   "src": "PulleyScenes.java:73"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "PulleyScenes.java:74"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "direction": "north"
+   },
+   "src": "PulleyScenes.java:76"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "PulleyScenes.java:77"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      1,
+      1
+     ],
+     "to": [
+      2,
+      2,
+      1
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "PulleyScenes.java:79",
+   "out": "e2"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     1,
+     0,
+     1
+    ],
+    "duration": 0
+   },
+   "src": "PulleyScenes.java:80"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       0,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:oak_planks",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:oak_planks",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:oak_planks",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       0,
+       2,
+       1
+      ],
+      "state": {
+       "name": "minecraft:oak_planks",
+       "props": {}
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "PulleyScenes.java:81"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "PulleyScenes.java:83"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      0
+     ]
+    },
+    "direction": "south",
+    "link": {
+     "link": "e2"
+    }
+   },
+   "src": "PulleyScenes.java:84"
+  },
+  {
+   "op": "overlay.showOutline",
+   "args": {
+    "color": "green",
+    "slot": "glue",
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "pos",
+       "pos": [
+        3,
+        1,
+        1
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        1,
+        1,
+        2
+       ],
+       "to": [
+        3,
+        1,
+        2
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        1,
+        2,
+        2
+       ]
+      }
+     ]
+    },
+    "duration": 40
+   },
+   "src": "PulleyScenes.java:85"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     2.5,
+     0.5
+    ],
+    "direction": "right",
+    "duration": 40,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "create:super_glue",
+     "count": 1
+    }
+   },
+   "src": "PulleyScenes.java:88"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "PulleyScenes.java:90"
+  },
+  {
+   "op": "effects.superGlue",
+   "args": {
+    "pos": [
+     3,
+     1,
+     1
+    ],
+    "side": "south",
+    "fullBlock": true
+   },
+   "src": "PulleyScenes.java:91"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     1.5,
+     2.5,
+     2
+    ],
+    "sharedKey": "create:movement_anchors",
+    "text": "With the help of Super Glue, larger structures can be moved."
+   },
+   "src": "PulleyScenes.java:92"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "PulleyScenes.java:97"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       2,
+       4
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "wall",
+        "facing": "west",
+        "powered": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       2,
+       2,
+       4
+      ],
+      "state": {
+       "name": "create:gearshift",
+       "props": {
+        "axis": "y",
+        "powered": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "PulleyScenes.java:99"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     1,
+     2,
+     4
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "PulleyScenes.java:100"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       4,
+       2
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     },
+     {
+      "pos": [
+       2,
+       4,
+       3
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     },
+     {
+      "pos": [
+       2,
+       3,
+       4
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     }
+    ]
+   },
+   "src": "PulleyScenes.java:101"
+  },
+  {
+   "op": "effects.rotationIndicator",
+   "args": {
+    "pos": [
+     2,
+     4,
+     3
+    ],
+    "direction": true
+   },
+   "src": "PulleyScenes.java:102"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "pulley",
+    "pos": [
+     2,
+     4,
+     2
+    ],
+    "distance": -2,
+    "duration": 40
+   },
+   "src": "PulleyScenes.java:103"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     0,
+     2,
+     0
+    ],
+    "duration": 40
+   },
+   "src": "PulleyScenes.java:104"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "PulleyScenes.java:105"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       2,
+       4
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "wall",
+        "facing": "west",
+        "powered": "true"
+       }
+      }
+     },
+     {
+      "pos": [
+       2,
+       2,
+       4
+      ],
+      "state": {
+       "name": "create:gearshift",
+       "props": {
+        "axis": "y",
+        "powered": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "PulleyScenes.java:107"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     1,
+     2,
+     4
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "PulleyScenes.java:108"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       4,
+       2
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       2,
+       4,
+       3
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       2,
+       3,
+       4
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     }
+    ]
+   },
+   "src": "PulleyScenes.java:109"
+  },
+  {
+   "op": "effects.rotationIndicator",
+   "args": {
+    "pos": [
+     2,
+     4,
+     3
+    ],
+    "direction": true
+   },
+   "src": "PulleyScenes.java:110"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "pulley",
+    "pos": [
+     2,
+     4,
+     2
+    ],
+    "distance": 2,
+    "duration": 40
+   },
+   "src": "PulleyScenes.java:111"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     0,
+     -2,
+     0
+    ],
+    "duration": 40
+   },
+   "src": "PulleyScenes.java:112"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "PulleyScenes.java:113"
+  }
+ ]
+}

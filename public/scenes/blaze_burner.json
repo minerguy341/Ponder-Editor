@@ -1,0 +1,467 @@
+{
+ "id": "create:blaze_burner",
+ "schematic": "blaze_burner",
+ "schematicNamespace": "create",
+ "title": "Feeding Blaze Burners",
+ "texts": {
+  "text_1": "Blaze Burners can provide Heat to Items processed in a Basin",
+  "text_2": "For this, the Blaze has to be fed with flammable items",
+  "text_3": "With a Blaze Cake, the Burner can reach an even stronger level of heat",
+  "text_4": "The feeding process can be automated using Deployers or Mechanical Arms"
+ },
+ "tags": [],
+ "items": [
+  "create:blaze_burner"
+ ],
+ "keyframes": [
+  36,
+  163,
+  290,
+  400
+ ],
+ "totalTicks": 484,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "ProcessingScenes.java:654"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      4,
+      0,
+      4
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "ProcessingScenes.java:655"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ProcessingScenes.java:656"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ProcessingScenes.java:659"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ProcessingScenes.java:660"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      2,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ProcessingScenes.java:661"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ProcessingScenes.java:662"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_1",
+    "pointAt": [
+     2,
+     1.5,
+     2.5
+    ],
+    "text": "Blaze Burners can provide Heat to Items processed in a Basin"
+   },
+   "src": "ProcessingScenes.java:664"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "ProcessingScenes.java:669"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      2,
+      2
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "ProcessingScenes.java:671"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "ProcessingScenes.java:672"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      2,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": false
+   },
+   "src": "ProcessingScenes.java:673"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     2,
+     2.5
+    ],
+    "direction": "down",
+    "duration": 15,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "minecraft:oak_planks",
+     "count": 1
+    }
+   },
+   "src": "ProcessingScenes.java:674"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "ProcessingScenes.java:676"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "state": {
+       "name": "create:blaze_burner",
+       "props": {
+        "blaze": "kindled",
+        "facing": "north"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ProcessingScenes.java:677"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "ProcessingScenes.java:678"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_2",
+    "pointAt": [
+     2,
+     1.5,
+     2.5
+    ],
+    "text": "For this, the Blaze has to be fed with flammable items"
+   },
+   "src": "ProcessingScenes.java:680"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "ProcessingScenes.java:685"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "ProcessingScenes.java:687"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     2,
+     2.5
+    ],
+    "direction": "down",
+    "duration": 30,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:blaze_cake",
+     "count": 1
+    }
+   },
+   "src": "ProcessingScenes.java:688"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "ProcessingScenes.java:690"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "state": {
+       "name": "create:blaze_burner",
+       "props": {
+        "blaze": "seething",
+        "facing": "north"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ProcessingScenes.java:691"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "ProcessingScenes.java:692"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "medium",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_3",
+    "pointAt": [
+     2,
+     1.5,
+     2.5
+    ],
+    "text": "With a Blaze Cake, the Burner can reach an even stronger level of heat"
+   },
+   "src": "ProcessingScenes.java:694"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "ProcessingScenes.java:700"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "DeployerBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       2
+      ],
+      "nbt": {
+       "HeldItem": {
+        "id": "create:blaze_cake",
+        "count": 1
+       }
+      }
+     }
+    ]
+   },
+   "src": "ProcessingScenes.java:703"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      0,
+      5
+     ],
+     "to": [
+      3,
+      0,
+      5
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "ProcessingScenes.java:706"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ProcessingScenes.java:707"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      1,
+      2
+     ],
+     "to": [
+      4,
+      1,
+      5
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ProcessingScenes.java:708"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ProcessingScenes.java:709"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      1,
+      4
+     ],
+     "to": [
+      2,
+      1,
+      5
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ProcessingScenes.java:710"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ProcessingScenes.java:711"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": false,
+    "keyframe": true,
+    "key": "text_4",
+    "pointAt": [
+     4.5,
+     2,
+     2.5
+    ],
+    "text": "The feeding process can be automated using Deployers or Mechanical Arms"
+   },
+   "src": "ProcessingScenes.java:713"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "ProcessingScenes.java:717"
+  }
+ ]
+}

@@ -1,0 +1,3123 @@
+{
+ "id": "create:high_logistics/packager_address",
+ "schematic": "high_logistics/packager_address",
+ "schematicNamespace": "create",
+ "title": "Routing packages with an address",
+ "texts": {
+  "text_1": "Warehouse",
+  "text_2": "When a sign is placed on a packager..",
+  "text_3": "→ Warehouse",
+  "text_4": "Created packages will carry the written lines of text as their address",
+  "text_5": "Package filters route packages based on their address",
+  "text_6": "→ Warehouse",
+  "text_7": "Factory",
+  "text_8": "→ Factory",
+  "text_9": "Factory",
+  "text_10": "For compactness, mechanical saws can unpack straight onto a belt",
+  "text_11": "Aside from filters, Frogports and Postboxes have package routing abilities",
+  "text_12": "Inspect them to find out more about their behaviour"
+ },
+ "tags": [],
+ "items": [
+  "create:packager"
+ ],
+ "keyframes": [
+  106,
+  276,
+  496,
+  846,
+  1031
+ ],
+ "totalTicks": 1225,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 9
+   },
+   "src": "PackagerScenes.java:261"
+  },
+  {
+   "op": "scaleSceneView",
+   "args": {
+    "factor": 0.875
+   },
+   "src": "PackagerScenes.java:262"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      8,
+      0,
+      8
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "PackagerScenes.java:263"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "PackagerScenes.java:296"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      7,
+      2,
+      7
+     ],
+     "to": [
+      7,
+      2,
+      8
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "PackagerScenes.java:298",
+   "out": "e1"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     -2,
+     -1,
+     -2
+    ],
+    "duration": 0
+   },
+   "src": "PackagerScenes.java:300"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "PackagerScenes.java:302"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      7,
+      2,
+      6
+     ],
+     "to": [
+      7,
+      3,
+      6
+     ]
+    },
+    "direction": "south",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "PackagerScenes.java:304"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "PackagerScenes.java:305"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      7,
+      2,
+      5
+     ]
+    },
+    "direction": "south",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "PackagerScenes.java:308"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "PackagerScenes.java:309"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 40,
+    "color": "output",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_1",
+    "pointAt": [
+     5,
+     1.5,
+     4
+    ],
+    "text": "Warehouse"
+   },
+   "src": "PackagerScenes.java:312"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "PackagerScenes.java:320"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_2",
+    "pointAt": [
+     5,
+     1.5,
+     4
+    ],
+    "text": "When a sign is placed on a packager.."
+   },
+   "src": "PackagerScenes.java:323"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "PackagerScenes.java:331"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       7,
+       2,
+       6
+      ],
+      "state": {
+       "name": "create:packager",
+       "props": {
+        "facing": "north",
+        "linked": "false",
+        "powered": "true"
+       }
+      }
+     },
+     {
+      "pos": [
+       7,
+       3,
+       6
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "floor",
+        "facing": "east",
+        "powered": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "PackagerScenes.java:334"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     5,
+     1,
+     4
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "PackagerScenes.java:336"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     7,
+     2,
+     6
+    ],
+    "beType": "PackagerBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "set": "animationTicks",
+        "v": 20
+       }
+      ]
+     },
+     {
+      "path": [
+       {
+        "set": "animationInward",
+        "v": false
+       }
+      ]
+     },
+     {
+      "path": [
+       {
+        "set": "heldBox",
+        "v": {
+         "id": "create:cardboard_package_12x12",
+         "count": 1
+        }
+       }
+      ]
+     }
+    ]
+   },
+   "src": "PonderHilo.java:19"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "PackagerScenes.java:342"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     1,
+     0
+    ],
+    "duration": 10
+   },
+   "src": "PackagerScenes.java:344"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "PackagerScenes.java:346"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      7,
+      1,
+      7
+     ],
+     "to": [
+      7,
+      1,
+      8
+     ]
+    },
+    "direction": "north",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "PackagerScenes.java:348"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      0,
+      9
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "PackagerScenes.java:350"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      1,
+      5
+     ],
+     "to": [
+      3,
+      1,
+      9
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "PackagerScenes.java:352"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      1,
+      6
+     ],
+     "to": [
+      7,
+      1,
+      6
+     ]
+    },
+    "direction": "south",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "PackagerScenes.java:354"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "PackagerScenes.java:355"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      6,
+      2,
+      6
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "PackagerScenes.java:357"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "PackagerScenes.java:359"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     7,
+     2,
+     6
+    ],
+    "beType": "PackagerBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "set": "heldBox",
+        "v": {
+         "id": "minecraft:air",
+         "count": 0
+        }
+       }
+      ]
+     }
+    ]
+   },
+   "src": "PonderHilo.java:37"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     6,
+     1,
+     6
+    ],
+    "insertionSide": "east",
+    "item": {
+     "id": "create:cardboard_package_12x12",
+     "count": 1
+    }
+   },
+   "src": "PackagerScenes.java:363",
+   "out": "e2"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     6,
+     2,
+     6
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "PackagerScenes.java:363"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "PackagerScenes.java:365"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       0
+      ],
+      "nbt": {
+       "Speed": -1
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       1
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       1
+      ],
+      "nbt": {
+       "Speed": -1
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -1
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": -1
+      }
+     },
+     {
+      "pos": [
+       0,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": -1
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       6,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       7,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       8,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": -1
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       6
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       6
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       6
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       6,
+       1,
+       6
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       7,
+       1,
+       6
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       7
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       7
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       8
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       2,
+       0,
+       9
+      ],
+      "nbt": {
+       "Speed": -0.5
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       9
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     }
+    ]
+   },
+   "src": "PackagerScenes.java:368"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 40,
+    "color": "output",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_3",
+    "pointAt": [
+     3.5,
+     2.5,
+     4
+    ],
+    "text": "→ Warehouse"
+   },
+   "src": "PackagerScenes.java:371"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "PackagerScenes.java:378"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 100,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_4",
+    "pointAt": [
+     3,
+     2.5,
+     4
+    ],
+    "text": "Created packages will carry the written lines of text as their address"
+   },
+   "src": "PackagerScenes.java:381"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 120
+   },
+   "src": "PackagerScenes.java:389"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "direction": "north"
+   },
+   "src": "PackagerScenes.java:392"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "PackagerScenes.java:393"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     5,
+     1,
+     6
+    ]
+   },
+   "src": "PackagerScenes.java:395"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     4,
+     1,
+     6
+    ]
+   },
+   "src": "PackagerScenes.java:398"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "PackagerScenes.java:400"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      1,
+      4
+     ],
+     "to": [
+      8,
+      1,
+      4
+     ]
+    },
+    "direction": "west"
+   },
+   "src": "PackagerScenes.java:403"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "PackagerScenes.java:404"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      2,
+      4
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "PackagerScenes.java:406"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "PackagerScenes.java:407"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      1,
+      4
+     ],
+     "to": [
+      2,
+      1,
+      5
+     ]
+    },
+    "direction": "east"
+   },
+   "src": "PackagerScenes.java:409"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "PackagerScenes.java:410"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      1,
+      0
+     ],
+     "to": [
+      4,
+      1,
+      3
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "PackagerScenes.java:412"
+  },
+  {
+   "op": "rotateCameraY",
+   "args": {
+    "degrees": -15
+   },
+   "src": "PackagerScenes.java:413"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "PackagerScenes.java:414"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     4,
+     2.825,
+     4.5
+    ],
+    "direction": "down",
+    "duration": 60,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "create:package_filter",
+     "count": 1
+    }
+   },
+   "src": "PackagerScenes.java:417"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "PackagerScenes.java:420"
+  },
+  {
+   "op": "overlay.highlightValueBox",
+   "args": {
+    "location": [
+     4.1,
+     2.825,
+     4.5
+    ],
+    "expands": [
+     0.10000000149011612,
+     0.10000000149011612,
+     0.10000000149011612
+    ],
+    "duration": 50
+   },
+   "src": "PackagerScenes.java:422"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "PackagerScenes.java:424"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_5",
+    "pointAt": [
+     4,
+     2.825,
+     4.5
+    ],
+    "text": "Package filters route packages based on their address"
+   },
+   "src": "PackagerScenes.java:427"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "PackagerScenes.java:433"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     6,
+     1,
+     4
+    ],
+    "insertionSide": "east",
+    "item": {
+     "id": "create:cardboard_package_12x12",
+     "count": 1,
+     "nbt": {
+      "create:package_address": "Warehouse"
+     }
+    }
+   },
+   "src": "PackagerScenes.java:442",
+   "out": "e3"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "PackagerScenes.java:444"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 50,
+    "color": "output",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_6",
+    "pointAt": [
+     7,
+     2.5,
+     4.5
+    ],
+    "text": "→ Warehouse"
+   },
+   "src": "PackagerScenes.java:447"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 50,
+    "color": "blue",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_7",
+    "pointAt": [
+     4,
+     2.825,
+     4.5
+    ],
+    "text": "Factory"
+   },
+   "src": "PackagerScenes.java:455"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "PackagerScenes.java:461"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       0
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       1
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       1
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       0,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       6,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       7,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       8,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       6
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       6
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       6
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       6,
+       1,
+       6
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       7,
+       1,
+       6
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       7
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       7
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       8
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       2,
+       0,
+       9
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       9
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     }
+    ]
+   },
+   "src": "PackagerScenes.java:464"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "PackagerScenes.java:467"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     6,
+     1,
+     4
+    ],
+    "insertionSide": "east",
+    "item": {
+     "id": "create:cardboard_package_10x12",
+     "count": 1,
+     "nbt": {
+      "create:package_contents": [
+       {
+        "slot": 0,
+        "item": {
+         "id": "minecraft:iron_ingot",
+         "count": 1
+        }
+       }
+      ],
+      "create:package_address": "Factory"
+     }
+    }
+   },
+   "src": "PackagerScenes.java:470",
+   "out": "e4"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       0
+      ],
+      "nbt": {
+       "Speed": -1
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       1
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       1
+      ],
+      "nbt": {
+       "Speed": -1
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -1
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": -1
+      }
+     },
+     {
+      "pos": [
+       0,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": -1
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       6,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       7,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       8,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": -1
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       6
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       6
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       6
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       6,
+       1,
+       6
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       7,
+       1,
+       6
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       7
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       7
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       8
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       2,
+       0,
+       9
+      ],
+      "nbt": {
+       "Speed": -0.5
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       9
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     }
+    ]
+   },
+   "src": "PackagerScenes.java:473"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "PackagerScenes.java:475"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 50,
+    "color": "output",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_8",
+    "pointAt": [
+     7,
+     2.5,
+     4.5
+    ],
+    "text": "→ Factory"
+   },
+   "src": "PackagerScenes.java:478"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 50,
+    "color": "blue",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_9",
+    "pointAt": [
+     4,
+     2.825,
+     4.5
+    ],
+    "text": "Factory"
+   },
+   "src": "PackagerScenes.java:486"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "PackagerScenes.java:492"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       0
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       1
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       1
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       0,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       6,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       7,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       8,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       6
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       6
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       6
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       6,
+       1,
+       6
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       7,
+       1,
+       6
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       7
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       7
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       8
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       2,
+       0,
+       9
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       9
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     }
+    ]
+   },
+   "src": "PackagerScenes.java:495"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "PackagerScenes.java:498"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     4,
+     1,
+     0
+    ]
+   },
+   "src": "PonderHilo.java:43"
+  },
+  {
+   "op": "world.createEntity",
+   "args": {
+    "entity": {
+     "type": "create:package",
+     "ctor": [
+      4.5,
+      1.875,
+      -0.17500000000000004
+     ],
+     "calls": [
+      {
+       "path": [
+        {
+         "m": "setDeltaMovement",
+         "a": [
+          [
+           0,
+           0.125,
+           -0.125
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "path": [
+        {
+         "set": "box",
+         "v": {
+          "id": "create:cardboard_package_12x12",
+          "count": 1,
+          "nbt": {
+           "create:package_address": "Warehouse"
+          }
+         }
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "src": "PonderHilo.java:45",
+   "out": "e5"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "PackagerScenes.java:501"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       0
+      ],
+      "nbt": {
+       "Speed": -1
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       1
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       1
+      ],
+      "nbt": {
+       "Speed": -1
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -1
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": -1
+      }
+     },
+     {
+      "pos": [
+       0,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": -1
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       6,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       7,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       8,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": -1
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       6
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       6
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       6
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       6,
+       1,
+       6
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       7,
+       1,
+       6
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       7
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       7
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       8
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     },
+     {
+      "pos": [
+       2,
+       0,
+       9
+      ],
+      "nbt": {
+       "Speed": -0.5
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       9
+      ],
+      "nbt": {
+       "Speed": 1
+      }
+     }
+    ]
+   },
+   "src": "PackagerScenes.java:503"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 100,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_10",
+    "pointAt": [
+     2.5,
+     2,
+     4.5
+    ],
+    "text": "For compactness, mechanical saws can unpack straight onto a belt"
+   },
+   "src": "PackagerScenes.java:506"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 110
+   },
+   "src": "PackagerScenes.java:513"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       0
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       1
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       1
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       0,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       6,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       7,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       8,
+       1,
+       4
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       5
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       6
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       6
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       6
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       6,
+       1,
+       6
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       7,
+       1,
+       6
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       7
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       7
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       8
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       2,
+       0,
+       9
+      ],
+      "nbt": {
+       "Speed": -16
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       9
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     }
+    ]
+   },
+   "src": "PackagerScenes.java:516"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "PackagerScenes.java:519"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      1,
+      4
+     ],
+     "to": [
+      8,
+      1,
+      4
+     ]
+    },
+    "direction": "east"
+   },
+   "src": "PackagerScenes.java:521"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "PackagerScenes.java:522"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      2,
+      4
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "PackagerScenes.java:524"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "PackagerScenes.java:525"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      1,
+      4
+     ],
+     "to": [
+      2,
+      1,
+      5
+     ]
+    },
+    "direction": "west"
+   },
+   "src": "PackagerScenes.java:527"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "PackagerScenes.java:528"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      1,
+      5
+     ],
+     "to": [
+      3,
+      1,
+      9
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "PackagerScenes.java:530"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      0,
+      9
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "PackagerScenes.java:532"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      1,
+      0
+     ],
+     "to": [
+      4,
+      1,
+      3
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "PackagerScenes.java:534"
+  },
+  {
+   "op": "rotateCameraY",
+   "args": {
+    "degrees": 15
+   },
+   "src": "PackagerScenes.java:535"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "PackagerScenes.java:536"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      6,
+      1,
+      2
+     ],
+     "to": [
+      6,
+      2,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "PackagerScenes.java:539",
+   "out": "e6"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e6"
+    },
+    "offset": [
+     -3,
+     0,
+     2
+    ],
+    "duration": 0
+   },
+   "src": "PackagerScenes.java:541"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "PackagerScenes.java:543"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      7,
+      1,
+      1
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e6"
+    }
+   },
+   "src": "PackagerScenes.java:545"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "PackagerScenes.java:546"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 100,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_11",
+    "pointAt": [
+     3.5,
+     2.5,
+     4
+    ],
+    "text": "Aside from filters, Frogports and Postboxes have package routing abilities"
+   },
+   "src": "PackagerScenes.java:549"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 110
+   },
+   "src": "PackagerScenes.java:556"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_12",
+    "pointAt": [
+     3.5,
+     2.5,
+     4
+    ],
+    "text": "Inspect them to find out more about their behaviour"
+   },
+   "src": "PackagerScenes.java:559"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "PackagerScenes.java:565"
+  }
+ ]
+}

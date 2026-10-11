@@ -1,0 +1,552 @@
+{
+ "id": "create:mechanical_mixer/mixing",
+ "schematic": "mechanical_mixer/mixing",
+ "schematicNamespace": "create",
+ "title": "Processing Items with the Mechanical Mixer",
+ "texts": {
+  "text_1": "With a Mixer and Basin, some Crafting Recipes can be automated",
+  "text_2": "Available recipes include any Shapeless Crafting Recipe, plus a couple extra ones",
+  "text_3": "Some of those recipes may require the heat of a Blaze Burner",
+  "text_4": "The filter slot can be used in case two recipes are conflicting."
+ },
+ "tags": [],
+ "items": [
+  "create:mechanical_mixer",
+  "create:basin"
+ ],
+ "keyframes": [
+  51,
+  235,
+  435
+ ],
+ "totalTicks": 509,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "ProcessingScenes.java:385"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      2
+     ]
+    },
+    "state": {
+     "name": "create:andesite_casing",
+     "props": {}
+    },
+    "particles": false
+   },
+   "src": "ProcessingScenes.java:386"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      4,
+      0,
+      5
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "ProcessingScenes.java:387"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ProcessingScenes.java:388"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      1,
+      3
+     ],
+     "to": [
+      1,
+      4,
+      5
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ProcessingScenes.java:389"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ProcessingScenes.java:390"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ProcessingScenes.java:391"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ProcessingScenes.java:392"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      2,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ProcessingScenes.java:393"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ProcessingScenes.java:394"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      4,
+      2
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "ProcessingScenes.java:395"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ProcessingScenes.java:396"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      1,
+      1
+     ],
+     "to": [
+      3,
+      1,
+      1
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "ProcessingScenes.java:397"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      1,
+      2
+     ],
+     "to": [
+      3,
+      1,
+      5
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "ProcessingScenes.java:398"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "ProcessingScenes.java:399"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     1,
+     2.5,
+     2.5
+    ],
+    "key": "text_1",
+    "text": "With a Mixer and Basin, some Crafting Recipes can be automated"
+   },
+   "src": "ProcessingScenes.java:409"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "ProcessingScenes.java:414"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     1.5,
+     3,
+     2.5
+    ],
+    "direction": "left",
+    "duration": 30,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "minecraft:blue_dye",
+     "count": 1
+    }
+   },
+   "src": "ProcessingScenes.java:416"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     1.5,
+     3,
+     2.5
+    ],
+    "direction": "right",
+    "duration": 30,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "minecraft:red_dye",
+     "count": 1
+    }
+   },
+   "src": "ProcessingScenes.java:417"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "ProcessingScenes.java:418"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     1,
+     4,
+     2
+    ],
+    "beType": "MechanicalMixerBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "startProcessingBasin",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ProcessingScenes.java:420"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     1,
+     2,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:red_dye",
+     "count": 1
+    }
+   },
+   "src": "ProcessingScenes.java:421"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     1,
+     2,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:blue_dye",
+     "count": 1
+    }
+   },
+   "src": "ProcessingScenes.java:422"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "ProcessingScenes.java:423"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "BasinBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       2,
+       2
+      ],
+      "nbt": {
+       "VisualizedItems": [
+        {
+         "id": "minecraft:purple_dye",
+         "count": 1
+        }
+       ]
+      }
+     }
+    ]
+   },
+   "src": "ProcessingScenes.java:424"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "ProcessingScenes.java:428"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     1,
+     1,
+     1
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:purple_dye",
+     "count": 1
+    }
+   },
+   "src": "ProcessingScenes.java:429",
+   "out": "e1"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "ProcessingScenes.java:430"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     1,
+     2.5,
+     2.5
+    ],
+    "key": "text_2",
+    "text": "Available recipes include any Shapeless Crafting Recipe, plus a couple extra ones"
+   },
+   "src": "ProcessingScenes.java:432"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "ProcessingScenes.java:437"
+  },
+  {
+   "op": "rotateCameraY",
+   "args": {
+    "degrees": -30
+   },
+   "src": "ProcessingScenes.java:439"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ProcessingScenes.java:440"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      2
+     ]
+    },
+    "state": {
+     "name": "create:blaze_burner",
+     "props": {
+      "blaze": "kindled",
+      "facing": "north"
+     }
+    },
+    "particles": true
+   },
+   "src": "ProcessingScenes.java:441"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ProcessingScenes.java:443"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     1,
+     1.5,
+     2.5
+    ],
+    "key": "text_3",
+    "text": "Some of those recipes may require the heat of a Blaze Burner"
+   },
+   "src": "ProcessingScenes.java:445"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "ProcessingScenes.java:449"
+  },
+  {
+   "op": "rotateCameraY",
+   "args": {
+    "degrees": 30
+   },
+   "src": "ProcessingScenes.java:451"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "ProcessingScenes.java:453"
+  },
+  {
+   "op": "overlay.highlightValueBox",
+   "args": {
+    "location": [
+     1.0234375,
+     2.75,
+     2.5
+    ],
+    "expands": [
+     0,
+     0.0859375,
+     0.0859375
+    ],
+    "duration": 100
+   },
+   "src": "ProcessingScenes.java:455"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 100,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     1,
+     2.75,
+     2.5
+    ],
+    "key": "text_4",
+    "text": "The filter slot can be used in case two recipes are conflicting."
+   },
+   "src": "ProcessingScenes.java:456"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "ProcessingScenes.java:461"
+  }
+ ]
+}
