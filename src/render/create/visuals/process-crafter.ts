@@ -11,7 +11,7 @@
 // (INSERTING / ASSEMBLING / CRAFTING / EXPORTING), setScriptedResult, and the shared inventories of connected crafters
 // (connectCrafterInvs is a toggle recorded on both crafters; this visual sees only its own block entity).
 import * as THREE from 'three';
-import type { BlockInstance, BlockState, BlockVisual, Direction, ItemStackJson, VisualContext } from '../../../contract';
+import type { BlockInstance, BlockState, BlockVisual, Direction, ItemStackJson, Vec3, VisualContext } from '../../../contract';
 import type { VisualModule } from '../registry';
 import { AXIS, axisDegMatrix, centredMatrix, mulInto } from '../vanilla/scratch';
 import { ItemSlot } from '../vanilla/itemSlot';
@@ -112,6 +112,43 @@ export function crafterSlot0At(initial: ItemStackJson | undefined, calls: unknow
   return item;
 }
 
+/** A crafter in a connection group: its position and block entity nbt (PonderCalls drive the timeline). */
+export interface CrafterNode { pos: readonly number[]; nbt: Nbt }
+
+/**
+ * The other crafters this crafter is connected to at `tick`: connectCrafterInvs toggles the connection on both ends
+ * (logCall toggleConnection with the other position), so an odd number of toggles up to the tick means connected.
+ */
+export function crafterLinksAt(calls: unknown, tick: number): number[][] {
+  if (!Array.isArray(calls)) return [];
+  const parity = new Map<string, { pos: number[]; on: boolean }>();
+  for (const c of calls as { t?: unknown; path?: { m?: unknown; a?: unknown[] }[] }[]) {
+    if (!c || typeof c.t !== 'number' || c.t > tick || !Array.isArray(c.path)) continue;
+    for (const step of c.path) {
+      const other = step.m === 'toggleConnection' ? step.a?.[0] : undefined;
+      if (!Array.isArray(other) || other.length !== 3) continue;
+      const k = other.join(',');
+      const e = parity.get(k) ?? { pos: other as number[], on: false };
+      e.on = !e.on;
+      parity.set(k, e);
+    }
+  }
+  return [...parity.values()].filter((e) => e.on).map((e) => e.pos);
+}
+
+/**
+ * Slot 0 of a connected group at `tick`: the group shares one inventory, so every member's insertItem / setItem / eject calls
+ * act on the same slot. Initial contents come from the first member that has an Inventory.
+ */
+export function crafterGroupSlot0(members: readonly CrafterNode[], tick: number): ItemStackJson | undefined {
+  let initial: ItemStackJson | undefined;
+  for (const m of members) { initial = crafterInitialSlot0(m.nbt.Inventory); if (initial) break; }
+  const calls: unknown[] = [];
+  for (const m of members) if (Array.isArray(m.nbt.PonderCalls)) calls.push(...(m.nbt.PonderCalls as unknown[]));
+  calls.sort((a, b) => ((a as { t?: number })?.t ?? 0) - ((b as { t?: number })?.t ?? 0));
+  return crafterSlot0At(initial, calls, tick);
+}
+
 class CrafterVisual extends KineticVisual {
   private facing: Direction;
   private pointing: string;
@@ -176,6 +213,28 @@ class CrafterVisual extends KineticVisual {
 
   protected override onKinetic(): void {}
 
+  /**
+   * The crafters connected to this one at `tick` (connectCrafterInvs is a toggle recorded on both crafters). Neighbours are
+   * read through ctx.lookup; their recorded calls are as current as the scene world the lookup sees.
+   */
+  private connectedMembers(own: Nbt, tick: number): CrafterNode[] {
+    const key = (v: readonly number[]) => v.join(',');
+    const start: CrafterNode = { pos: this.block.pos, nbt: own };
+    const members: CrafterNode[] = [start];
+    const seen = new Set([key(start.pos)]);
+    for (let i = 0; i < members.length; i++) {
+      for (const q of crafterLinksAt(members[i].nbt.PonderCalls, tick)) {
+        const k = key(q);
+        if (seen.has(k)) continue;
+        seen.add(k);
+        const qv = [q[0], q[1], q[2]] as Vec3;
+        if (this.ctx.lookup.getState(qv)?.name !== CRAFTER) continue;
+        members.push({ pos: q, nbt: this.ctx.lookup.getBlockEntity(qv)?.nbt ?? {} });
+      }
+    }
+    return members;
+  }
+
   protected override onUpdate(ticks: number): void {
     super.onUpdate(ticks);
     const tick = Math.floor(ticks);
@@ -184,7 +243,8 @@ class CrafterVisual extends KineticVisual {
       this.lastData = d;
       this.lastTick = tick;
       this.lidNode.visible = d.Cover === true; // Cover is the block entity's boolean `covered`
-      this.itemNode.set(crafterSlot0At(crafterInitialSlot0(d.Inventory), d.PonderCalls, tick), 'fixed');
+      const members = this.connectedMembers(d, tick);
+      this.itemNode.set(crafterGroupSlot0(members, tick), 'fixed');
     }
     const axis = this.axis;
     const angle = (ticks * this.kin.effectiveSpeed * 3 / 10 + this.cogOffset) % 360;

@@ -16,7 +16,7 @@ import { armPointGeometry, armTargetAngles, ARM_NO_TARGET } from '../../../src/r
 import { signLineText, signMessages } from '../../../src/render/create/visuals/process-signs';
 import { CHEST_PARTS, CHEST_HINGE } from '../../../src/render/create/visuals/process-vanilla-chest';
 import { cubesGeometry } from '../../../src/render/create/vanilla/entityModel';
-import { crafterBeltValid, crafterInitialSlot0, crafterPointingX, crafterSlot0At, crafterTargetDirection } from '../../../src/render/create/visuals/process-crafter';
+import { crafterBeltValid, crafterGroupSlot0, crafterInitialSlot0, crafterLinksAt, crafterPointingX, crafterSlot0At, crafterTargetDirection } from '../../../src/render/create/visuals/process-crafter';
 import { TickSim, type BEvent } from '../../../src/render/create/vanilla/processBase';
 
 const near = (a: number, b: number, eps = 1e-6) => expect(Math.abs(a - b)).toBeLessThan(eps);
@@ -333,5 +333,25 @@ describe('Sign text components as stored in the scenes (wall and hanging signs)'
     expect(signLineText('"Warehouse"')).toBe('Warehouse');
     expect(signLineText('{"text":"Storage"}')).toBe('Storage');
     expect(signLineText('{"text":""}')).toBe('');
+  });
+});
+
+describe('Crafter connections and shared inventory (MechanicalCrafterBlockEntity; connectCrafterInvs is a toggle on both ends)', () => {
+  it('a connection is on after an odd number of toggles up to the tick, and off again after the second toggle', () => {
+    const calls = [
+      { t: 10, path: [{ m: 'toggleConnection', a: [[1, 2, 2]] }] },
+      { t: 20, path: [{ m: 'toggleConnection', a: [[1, 2, 2]] }] },
+    ];
+    expect(crafterLinksAt(calls, 9)).toEqual([]);
+    expect(crafterLinksAt(calls, 10)).toEqual([[1, 2, 2]]);
+    expect(crafterLinksAt(calls, 20)).toEqual([]);
+  });
+  it('a connected group shares slot 0: an insert on the partner shows on this crafter too, and eject clears the group', () => {
+    const own = { PonderCalls: [{ t: 0, path: [{ m: 'toggleConnection', a: [[1, 2, 2]] }] }] };
+    const partner = { PonderCalls: [{ t: 0, path: [{ m: 'toggleConnection', a: [[2, 2, 2]] }] }, { t: 5, path: [{ m: 'getInventory', a: [] }, { m: 'insertItem', a: [0, { id: 'minecraft:oak_planks', count: 1 }, false] }] }, { t: 9, path: [{ m: 'ejectWholeGrid', a: [] }] }] };
+    const members = [{ pos: [2, 2, 2], nbt: own }, { pos: [1, 2, 2], nbt: partner }];
+    expect(crafterGroupSlot0(members, 4)).toBeUndefined();
+    expect(crafterGroupSlot0(members, 5)?.id).toBe('minecraft:oak_planks');
+    expect(crafterGroupSlot0(members, 9)).toBeUndefined();
   });
 });
