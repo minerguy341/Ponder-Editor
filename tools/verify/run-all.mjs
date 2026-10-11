@@ -51,6 +51,8 @@ export async function runScene(p, entry, opts) {
   };
   try {
     await guard(ponder.loadScene(page, entry.id, opts.sceneTimeout), 'loadScene');
+    // the README contract is loadScene; pause; seek (seek must stay paused): loadScene starts playback otherwise
+    await guard(ponder.pause(page), 'pause');
     let st = await ponder.state(page);
     merge(st);
     if (st.sceneId !== entry.id) res.problems.push(`getState().sceneId is ${st.sceneId} after loadScene(${entry.id})`);
