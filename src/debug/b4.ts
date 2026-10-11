@@ -77,10 +77,38 @@ async function singleMode(id: string, props: Record<string, string>, nbt: Record
   viewer.setBasePlate({ x: 0, z: 0, size: 5 });
 }
 
+/**
+ * G4 audit (node tools/b-audit-B4.mjs): every partial the B4 visuals load and every scene block state of the B4 group goes
+ * through BlockRenderer.buildPartial / the visual factory; any missing resource or visual error is reported.
+ */
+async function auditMode() {
+  const partials = (await (await fetch('/tools/.cache/b4-partials.json')).json()) as string[];
+  const states = (await (await fetch('/tools/.cache/b4-states.json')).json()) as { name: string; props: Record<string, string>; nbt: Record<string, unknown> }[];
+  const failed: string[] = [];
+  for (const id of partials) {
+    try {
+      const o = await renderer.buildPartial(id);
+      if (!o || o.children.length === 0) failed.push(`empty partial ${id}`);
+    } catch (e) { failed.push(`partial ${id}: ${String(e)}`); }
+  }
+  let visuals = 0;
+  for (const st of states) {
+    const block: BlockInstance = { pos: [0, 0, 0], state: { name: st.name, props: st.props }, nbt: st.nbt };
+    const lookup = makeLookup([block]);
+    await renderer.prepare([block.state]);
+    const v = await createVisual(block, { renderer, lookup });
+    if (v) { visuals++; v.update(37.5); v.dispose(); }
+    renderer.buildSection([block], { lookup });
+  }
+  const missing = [...missingResources];
+  info.audit = { partials: partials.length, states: states.length, visuals, failed, missing };
+}
+
 async function main() {
   const mode = qs.get('mode') ?? 'scene';
   const ticks = Number(qs.get('t') ?? 0);
   if (mode === 'scene') await sceneMode(qs.get('path') ?? 'high_logistics/chain_conveyor', ticks);
+  if (mode === 'audit') await auditMode();
   if (mode === 'single') {
     const props = JSON.parse(qs.get('props') ?? '{}') as Record<string, string>;
     const nbt = JSON.parse(qs.get('nbt') ?? '{}') as Record<string, unknown>;
