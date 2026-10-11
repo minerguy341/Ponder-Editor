@@ -32,44 +32,84 @@ export function disposeVisualObject(root: THREE.Object3D): void {
 /**
  * Convenience base class implementing the BlockVisual contract.
  *  - `object` is a Group placed at the block origin by the player; build your parts into it (block-local 0..1 space).
- *  - `data` is the block entity nbt; `setData` MERGES the keys it receives over it (the player sends changed fields, e.g.
- *    {Speed: 32}) and calls `onData()` so you can re-derive anything cached from it.
- *  - `update(ticks)` must be a PURE function of (ticks, data, state): seeking and replay rely on it. No per-frame allocation.
- * Subclasses usually override `build()` (async, called once by `create`) and `onUpdate`.
+ *  - `data` is the block entity nbt AT THE CURRENT TIME. `setData` merges the keys it receives (the player sends changed
+ *    fields, e.g. {Speed: 32}) into a snapshot stamped with the scene time of the last update(); update(ticks) then selects the
+ *    snapshot valid at `ticks`, so seeking backwards/forwards and replay give identical frames without re-creating the visual.
+ *    `onData()` runs whenever the active snapshot changes (re-derive anything cached from `data` there).
+ *  - `update(ticks)` must be a PURE function of (ticks, data timeline, state). No per-frame allocation.
+ *  - `dataAt(tick)` gives the snapshot valid at a tick (for tick-stepped simulations, see sim.ts StepSim).
+ * Subclasses override `build()` (async, called once by `init`) and `onUpdate`.
  */
 export abstract class BaseVisual implements BlockVisual {
   readonly object = new THREE.Group();
   protected data: Nbt;
-  /** Last tick passed to update() (for code that needs to redraw after setData without waiting for the next frame). */
+  /** Last tick passed to update() (the time at which a setData happens). */
   protected lastTicks = 0;
+  private timeline: { tick: number; data: Nbt }[];
+  private active = 0;
   private disposed = false;
 
   constructor(readonly block: BlockInstance, readonly ctx: VisualContext) {
     this.data = { ...(block.nbt ?? {}) };
+    this.timeline = [{ tick: -Infinity, data: this.data }];
     this.object.name = `visual:${block.state.name}@${block.pos.join(',')}`;
   }
 
   /** Create the parts. Called once, before the first update. */
   protected abstract build(): Promise<void>;
-  /** Called after setData merged new keys. Default: re-run the last update so a paused scene shows the change. */
-  protected onData(): void { this.onUpdate(this.lastTicks); }
+  /** The active data snapshot changed (setData, or a seek crossed a data change). Default: nothing. */
+  protected onData(): void {}
   protected abstract onUpdate(ticks: number): void;
+  /** Called when the data timeline was edited (sims keyed on it must restart). */
+  protected onTimelineChanged(): void {}
 
-  /** Run the async build and return this (or null when `build` throws, after logging). */
+  /** The data snapshot valid at `tick` (continuous ticks; entries are stamped with the time of setData). */
+  protected dataAt(tick: number): Nbt {
+    return this.timeline[this.indexAt(tick)].data;
+  }
+  /** Scene tick at which the snapshot valid at `tick` was recorded (0 for the data the block was created with). */
+  protected dataTickAt(tick: number): number {
+    const t = this.timeline[this.indexAt(tick)].tick;
+    return t === -Infinity ? 0 : t;
+  }
+  private indexAt(tick: number): number {
+    let i = this.timeline.length - 1;
+    while (i > 0 && this.timeline[i].tick > tick) i--;
+    return i;
+  }
+
+  /** Run the async build and return this. */
   async init(): Promise<this> {
     await this.build();
+    this.onData();
     this.onUpdate(0);
     return this;
   }
 
   update(ticks: number): void {
     this.lastTicks = ticks;
+    const i = this.indexAt(ticks);
+    if (i !== this.active) {
+      this.active = i;
+      this.data = this.timeline[i].data;
+      this.onData();
+    }
     this.onUpdate(ticks);
   }
 
   setData(nbt: Record<string, unknown>): void {
-    Object.assign(this.data, nbt);
+    const t = this.lastTicks;
+    // a setData at time t invalidates every later snapshot (the timeline is being re-applied after a rewind)
+    while (this.timeline.length > 1 && this.timeline[this.timeline.length - 1].tick > t) this.timeline.pop();
+    const prev = this.timeline[this.timeline.length - 1];
+    const merged = { ...prev.data, ...nbt };
+    if (prev.tick === t && this.timeline.length > 1) prev.data = merged;
+    else this.timeline.push({ tick: t, data: merged });
+    this.active = this.timeline.length - 1;
+    this.data = this.timeline[this.active].data;
+    this.onTimelineChanged();
     this.onData();
+    this.onUpdate(t);
   }
 
   dispose(): void {

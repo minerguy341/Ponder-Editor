@@ -75,3 +75,15 @@ export function horizontalAngle(facing: Direction): number {
 export function verticalAngle(facing: Direction): number {
   return facing === 'up' ? -90 : facing === 'down' ? 90 : 0;
 }
+
+/** Direction.getNearest(x, y, z): the direction whose step has the largest dot product (ties: first in DIRECTIONS order; zero vector: NORTH). */
+export function getNearest(x: number, y: number, z: number): Direction {
+  let best: Direction = 'north';
+  let f = Number.MIN_VALUE;
+  for (const d of DIRECTIONS) {
+    const s = DIR_STEP[d];
+    const dot = x * s[0] + y * s[1] + z * s[2];
+    if (dot > f) { f = dot; best = d; }
+  }
+  return best;
+}
