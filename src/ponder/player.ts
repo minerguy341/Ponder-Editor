@@ -5,6 +5,7 @@
 import * as THREE from 'three';
 import { setItemCameraSource } from '../render/create/items/cameraFacing';
 import { bindLogisticsScene, lookupOfBlocks, logisticsEventsOf, LOGISTICS_TEXTURES } from '../render/create/items/logisticsSim';
+import { bindFluidScene, fluidEventsOf } from '../render/create/fluidnet/events';
 import type { BlockState, SceneJson, Vec3, BlockRenderer, CreateVisualFactory } from '../contract';
 import { loadStructure } from '../assets/structure';
 import { missingResources } from '../assets/resources';
@@ -110,6 +111,8 @@ export class PonderPlayer implements PlayerLike {
       this.viewer.setShadowHidden(ctx.config.hideShadow);
       this.graph = new SceneGraph(this.viewer.world, this.renderer, this.viewer.lighting, this.visualFactory, (m) => this.playerErrors.push(m));
       bindLogisticsScene(this.graph.worldLookup, lookupOfBlocks(structure.blocks), logisticsEventsOf(scene.instructions));
+      // Create fluid networks (pipes, pumps, valves, tanks, spouts, drains, hose pulleys): the scene's fluid world (F1)
+      bindFluidScene(this.graph.worldLookup, structure.blocks, fluidEventsOf(scene.instructions));
       this.emit('keyframes', scene.keyframes);
       this.syncAndEmit(true);
       await this.settle();

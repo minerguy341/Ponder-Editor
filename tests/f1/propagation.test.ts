@@ -215,3 +215,24 @@ describe('open ends (OpenEndedPipe / FluidPropagator.isOpenEnd)', () => {
     expect(amountAt(w, [2, 0, 0])).toBeGreaterThan(0);
   });
 });
+
+describe('hose pulley rope (HosePulleyBlockEntity.tick, KineticBlockEntity.convertToLinear = speed / 512)', () => {
+  const hose = (y: number, speed: number): InitialBlock => ({
+    pos: [0, y, 0],
+    state: st('create:hose_pulley', { horizontal_facing: 'north', waterlogged: 'false' }),
+    nbt: { Speed: speed, Offset: { Value: 0, Speed: 0, Target: 0, Force: 1 } },
+  });
+
+  it('the rope grows by speed / 512 blocks per tick: 50 ticks at 32 rpm is 50 / 16 = 3.125 blocks', () => {
+    const w = new FluidWorld([hose(5, 32)], []);
+    w.advance(50);
+    expect(w.hoseOffset([0, 5, 0]).value).toBeCloseTo(3.125, 9);
+  });
+
+  it('a solid block stops the rope and snaps it to a whole block (HosePulleyBlockEntity.java:tick, (int) newOffset)', () => {
+    // solid stone at y = 2: the rope may pass y = 3 but not the block below the rope end at y = 2
+    const w = new FluidWorld([hose(5, 32), { pos: [0, 2, 0], state: st('minecraft:stone') }], []);
+    w.advance(200);
+    expect(w.hoseOffset([0, 5, 0]).value).toBe(2);
+  });
+});

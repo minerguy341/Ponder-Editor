@@ -107,7 +107,8 @@ export function canHaveFlowToward(s: BlockState, d: Direction): boolean {
 export function straightPipeAxis(s: BlockState): Axis | null {
   if (s.name === PUMP) return axisOf((s.props.facing ?? 'north') as Direction);
   if (s.name === PIPE_GLASS || s.name === VALVE || s.name === PIPE_SMART) return axisPipeAxis(s);
-  if (!isFluidPipeState(s)) return null;
+  // FluidPipeBlock.isPipe: the plain fluid pipe only (encased pipes are EncasedPipeBlock)
+  if (s.name !== PIPE_FLUID) return null;
   let axisFound: Axis | null = null;
   let connections = 0;
   for (const axis of ['x', 'y', 'z'] as Axis[]) {
@@ -130,7 +131,7 @@ function positiveOf(a: Axis): Direction { return a === 'x' ? 'east' : a === 'y' 
 
 /** FluidPipeBlock.shouldDrawCasing: more than two open sides on one axis-pair (FluidPipeBlock.java:172-184). */
 export function shouldDrawCasing(s: BlockState): boolean {
-  if (!isFluidPipeState(s)) return false;
+  if (s.name !== PIPE_FLUID) return false;
   for (const axis of ['x', 'y', 'z'] as Axis[]) {
     let connections = 0;
     for (const d of DIRECTIONS) if (axisOf(d) !== axis && isOpenAt(s, d)) connections++;

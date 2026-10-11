@@ -203,6 +203,7 @@ export class PipeConnection {
     const flow = this.flow;
     if (isEmptyFluid(flow.fluid)) return;
     const flowSpeed = 1 / 32 + clamp01(this.getPressure(flow.inbound) / 128) * 31 / 32;
+    flow.progressPrev = flow.progress;
     flow.progress = Math.min(flow.progress + flowSpeed, 1);
     if (flow.progress >= 1) flow.complete = true;
   }
