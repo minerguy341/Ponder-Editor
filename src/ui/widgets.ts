@@ -275,6 +275,8 @@ export interface ButtonContent { sprite?: SpriteName; node?: HTMLElement; shortc
  * border colours animated idle/hover/click, flash pulse, slide-up fade (enableFade(0, 5)).
  */
 export class PonderButton {
+  /** css px per GUI px of the screen the buttons are built for (set by the screen before it creates widgets) */
+  static guiScale = 1;
   readonly el = div('pd-widget');
   readonly hit = div('pd-hit', this.el);
   private box: Box;
@@ -301,7 +303,9 @@ export class PonderButton {
     if (opts.fadeModY !== undefined) this.fadeModY = opts.fadeModY;
     this.box = new Box(this.el, x, y, w, h, { bg: this.bg, top: BTN_IDLE[0], bot: BTN_IDLE[1] });
     // BoxWidget#isMouseOver: padX = 2 + paddingX(2)
-    place(this.hit, x - 4, y - 4, w + 8, h + 8);
+    // touch: at least 44 css px (the Ponder hit box is 28 GUI px, i.e. only 42 px at the phone scale of 1.5)
+    const extra = Math.max(0, (44 / PonderButton.guiScale - (w + 8)) / 2);
+    place(this.hit, x - 4 - extra, y - 4 - extra, w + 8 + 2 * extra, h + 8 + 2 * extra);
     this.el.insertBefore(this.box.el, this.hit);
     this.hit.addEventListener('pointerenter', () => { if (this.visible) this.hovered = true; });
     this.hit.addEventListener('pointerleave', () => { this.hovered = false; });
@@ -318,7 +322,7 @@ export class PonderButton {
       s.at(this.x + 2, this.y + 2);
     }
     if (c.node) { c.node.style.position = 'absolute'; this.content.appendChild(c.node); }
-    if (c.shortcut && gui) {
+    if (c.shortcut && gui && !(typeof matchMedia === 'function' && matchMedia('(pointer: coarse)').matches)) {
       this.keyLabel = new Label(this.content, gui.font, 'center');
       this.shortcutText = c.shortcut;
     }

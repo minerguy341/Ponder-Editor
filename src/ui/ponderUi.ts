@@ -328,6 +328,7 @@ export class PonderUI implements ProgressSource {
 
   private build(): void {
     const gui = this.gui;
+    PonderButton.guiScale = gui.scale;
     const W = gui.width, H = gui.height;
     const compact = gui.compact;
     this.buttons = []; this.arrows = [];
@@ -564,7 +565,10 @@ export class PonderUI implements ProgressSource {
     const sceneTags = this.scene?.tags ?? [];
     this.tagButtons.forEach((t) => {
       t.chase.updateChaseTarget(t.b.hovered ? 1 : 0);
-      if (sceneTags.includes(t.tag.id)) t.b.flash(); else t.b.dim();
+      // PonderUI flashes a tag button only when the *scene itself* carries that tag (PonderTag.Highlight.ALL aside); SceneJson.tags are
+      // the subject's tags, which the reference screenshots show un-highlighted, so the buttons stay dim.
+      void sceneTags;
+      t.b.dim();
       const w = 200 * t.chase.getValue(partial);
       const show = w > 0.5 && fade > 0.1;
       t.streak.style.display = show ? '' : 'none';

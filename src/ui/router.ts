@@ -40,12 +40,10 @@ export function formatRoute(r: Route): string {
 
 export class Router {
   private cb: (r: Route, source: 'init' | 'hash') => void = () => {};
-  private suppress = 0;
 
   start(cb: (r: Route, source: 'init' | 'hash') => void): void {
     this.cb = cb;
     window.addEventListener('hashchange', () => {
-      if (this.suppress > 0) { this.suppress--; return; }
       this.cb(parseHash(location.hash), 'hash');
     });
     this.cb(parseHash(location.hash), 'init');
