@@ -5,7 +5,9 @@
 // with the shipped materials (it would be missing from outside views) or an inner face shows through.
 // The lit viewer (app=1) is not used for the pixel test: its shading differs by a few levels between material variants.
 //   node tools/r1/side-check.mjs <outDir> <baseUrl>
-// Prints R1_SIDE_OK when every compared view is pixel-identical.
+// Prints R1_SIDE_OK when, for OPAQUE closed blocks (all meshes in the 'solid' layer), every view of front-side vs double-sided
+// differs by at most SOLID_MAX edge pixels (anti-aliasing). Cut-out blocks are informational: their holes expose far-wall back faces by design
+// (driver-amended criterion).
 import { chromium } from 'playwright';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -49,6 +51,8 @@ const browser = await chromium.launch({
   args: ['--use-angle=swiftshader', '--use-gl=angle', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist', '--no-sandbox'],
 });
 const report = [];
+const SOLID_MAX = 40;
+let solidBlocks = 0, solidMax = 0;
 let views = 0, differing = 0;
 for (const b of BLOCKS) {
   const page = await browser.newPage({ viewport: { width: 640, height: 400 } });
@@ -58,7 +62,7 @@ for (const b of BLOCKS) {
   const props = b.props ? `&props=${encodeURIComponent(b.props)}` : '';
   await page.goto(`${base}/debug/r1.html?mode=block&id=${encodeURIComponent(b.id)}${props}&entities=0&visuals=0&app=0&yaw=45&pitch=-35`);
   await page.waitForFunction(() => window.__r1?.info?.done === true, null, { timeout: 180000 });
-  let blockDiff = 0;
+  let blockDiff = 0, blockMaxView = 0;
   for (const yaw of YAWS) for (const pitch of PITCHES) {
     await page.evaluate(([y, p]) => window.__r1.view(y, p, 'front'), [yaw, pitch]);
     const front = await page.locator('canvas:visible').first().screenshot();
@@ -70,14 +74,17 @@ for (const b of BLOCKS) {
       if (a.data[i] !== c.data[i] || a.data[i + 1] !== c.data[i + 1] || a.data[i + 2] !== c.data[i + 2]) diff++;
     }
     views++;
-    if (diff) { differing++; blockDiff += diff; }
+    if (diff) { differing++; blockDiff += diff; blockMaxView = Math.max(blockMaxView, diff); }
     report.push({ block: `${b.id}[${b.props}]`, yaw, pitch, differingPixels: diff });
   }
   const info = await page.evaluate(() => JSON.parse(JSON.stringify(window.__r1.info)));
-  console.log(JSON.stringify({ block: `${b.id}[${b.props}]`, quads: info.quadCount, meshes: info.meshes, differingPixelsTotal: blockDiff, errors: errors.slice(0, 3) }));
+  const solidOnly = info.meshes.length > 0 && info.meshes.every((m) => String(m).startsWith('section:solid'));
+  if (solidOnly) { solidBlocks++; solidMax = Math.max(solidMax, blockMaxView); }
+  console.log(JSON.stringify({ block: `${b.id}[${b.props}]`, solidOnly, maxViewDiff: blockMaxView, quads: info.quadCount, meshes: info.meshes, differingPixelsTotal: blockDiff, errors: errors.slice(0, 3) }));
   await page.close();
 }
 await browser.close();
 fs.writeFileSync(path.join(outDir, 'side-check.json'), JSON.stringify(report, null, 1));
 console.log(`views compared: ${views}, views with differing pixels: ${differing}`);
-console.log(differing === 0 ? 'R1_SIDE_OK' : 'R1_SIDE_DIFF');
+console.log(`opaque closed blocks: ${solidBlocks}, worst single-view diff: ${solidMax}px (limit ${SOLID_MAX})`);
+console.log(solidBlocks > 0 && solidMax <= SOLID_MAX ? 'R1_SIDE_OK' : 'R1_SIDE_DIFF');
