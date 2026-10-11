@@ -527,7 +527,8 @@
     ],
     "pose": {
      "type": "face_cursor"
-    }
+    },
+    "fadeFrom": "down"
    },
    "src": "PistonScenes.java:200",
    "out": "e2"

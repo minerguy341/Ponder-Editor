@@ -361,7 +361,8 @@
     ],
     "pose": {
      "type": "face_poi"
-    }
+    },
+    "fadeFrom": "down"
    },
    "src": "TrackScenes.java:376",
    "out": "e3"
@@ -847,7 +848,8 @@
     ],
     "pose": {
      "type": "face_poi"
-    }
+    },
+    "fadeFrom": "down"
    },
    "src": "TrackScenes.java:443",
    "out": "e8"
