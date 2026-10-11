@@ -125,7 +125,6 @@ export abstract class KineticVisual extends BaseVisual {
     this.kin = readKinetic(this.data);
     this.applyKinetic();
     this.onKinetic();
-    super.onData();
   }
 
   protected applyKinetic(): void {
@@ -134,14 +133,6 @@ export abstract class KineticVisual extends BaseVisual {
 
   protected override onUpdate(ticks: number): void {
     for (const p of this.parts) p.update(ticks);
-  }
-
-  override async init(): Promise<this> {
-    await this.build();
-    this.applyKinetic();
-    this.onKinetic();
-    this.onUpdate(0);
-    return this;
   }
 }
 
