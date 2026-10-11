@@ -118,7 +118,7 @@ export class ScrollMesh {
     this.uv.needsUpdate = true;
   }
 
-  apply(o: { u0: number; v0: number }, t: { u0: number; v0: number }, scrollV: number): void {
+  apply(o: { u0: number; v0: number }, t: { u0: number; v0: number; v1: number }, scrollV: number): void {
     const a = this.uv.array as Float32Array;
     const b = this.base;
     // the scrolled coordinate wraps inside the target sprite (Flywheel scrolls within the sprite, never into the atlas padding)
