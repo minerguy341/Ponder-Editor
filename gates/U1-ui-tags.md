@@ -17,11 +17,11 @@ Facts established from the sources (evidence for the design):
 
 Ledger (N of N to be re-measured with gate-check --status):
 
-- [ ] U1-G1: converter tag membership: tags.json lists every AllCreatePonderTags registration (id, title, description, icon, mainItem,
+- [x] U1-G1: converter tag membership: tags.json lists every AllCreatePonderTags registration (id, title, description, icon, mainItem,
   index, items in add order) exactly as the Java; every scene item id resolves to its tags; 0 unresolved; OPS.md section 7 documents it
   CHECK: node tools/scenegen/report.mjs --tags 2>&1 | tail -4
   EXPECT: TAGS_OK
-  EVIDENCE: pending
+  EVIDENCE: tags=18 listings=198 sceneItems=161 taggedSceneItems=104 unresolved=0 | TAGS_OK
 
 - [ ] U1-G2: UI left column shows the SUBJECT ITEM's tag buttons (order = registration order, icon from tag icon item, tooltip title and
   description, click opens the tag screen listing the items with scenes and chapters), index screen (tag index: listed tags, item grid
@@ -36,20 +36,20 @@ Ledger (N of N to be re-measured with gate-check --status):
   hint auto-hides after first interaction or 4 s
   EVIDENCE: pending
 
-- [ ] U1-G4: whole-repo vitest green
+- [x] U1-G4: whole-repo vitest green
   CHECK: npx vitest run 2>&1 | tail -5
   EXPECT: Tests
-  EVIDENCE: pending
+  EVIDENCE: Start at  23:41:44 | Duration  19.81s (transform 5.58s, setup 0ms, collect 13.77s, tests 15.91s, environment 5ms, prepare 3.15s)
 
-- [ ] U1-G5: typecheck clean
+- [x] U1-G5: typecheck clean
   CHECK: npx tsc --noEmit 2>&1 | tail -3; echo TSC_EXIT=$?
   EXPECT: TSC_EXIT=0
-  EVIDENCE: pending
+  EVIDENCE: TSC_EXIT=0
 
-- [ ] U1-G6: production build
+- [x] U1-G6: production build
   CHECK: npm run build 2>&1 | tail -4
   EXPECT: built in
-  EVIDENCE: pending
+  EVIDENCE: - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit. | ✓ built in 6.54s
 
 - [ ] U1-G7: browser test updated for tags.json and the new screens
   CHECK: node tools/d-browser-test.mjs 2>&1 | tail -3
@@ -61,10 +61,10 @@ Ledger (N of N to be re-measured with gate-check --status):
   EXPECT: PONDER_API_OK
   EVIDENCE: pending
 
-- [ ] U1-G9: scene coverage unchanged
+- [x] U1-G9: scene coverage unchanged
   CHECK: node tools/verify/coverage.mjs --scenes 2>&1 | tail -2
   EXPECT: SCENES_OK
-  EVIDENCE: pending
+  EVIDENCE: index public/scenes/index.json: 169 scenes; expected 169 | SCENES_OK (169 scenes, 179 registrations)
 
 - [ ] U1-G10: D and C1 regression gates stay green (icons, workflow, scenegen report variants)
   CHECK: node tools/d-icons-test.mjs 2>&1 | tail -1; node tools/d-workflow-check.mjs 2>&1 | tail -1; node tools/scenegen/report.mjs --texts 2>&1 | tail -1; node tools/scenegen/report.mjs --ops 2>&1 | tail -1; node tools/scenegen/report.mjs --schema 2>&1 | tail -1; node tools/scenegen/report.mjs --dropped 2>&1 | tail -1
