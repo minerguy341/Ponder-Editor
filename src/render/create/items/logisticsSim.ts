@@ -1,27 +1,31 @@
-// Belt item simulation for Ponder scenes (leaf B2). Port of Create 6.0.10 BeltInventory.tick() (kinetics/belt/transport/
-// BeltInventory.java:43-180) with the insertion path of BeltBlockEntity.tryInsertingFromSide (BeltBlockEntity.java:475-541)
-// and the scene ops of CreateSceneBuilder (createItemOnBelt, removeItemsFromBelt, stallBeltItem, changeBeltItemTo).
+// Logistics simulation for Ponder scenes (leaf B2): belts, depots and basins.
 //
-// Ponder runs the scene level with isClientSide = true, so the game takes its CLIENT path: processing (press/mixer/saw holds),
-// belt funnels and tunnels, crushers, and the server-side insertion into a neighbouring block are all skipped there. What
-// remains, and what this file simulates, is: the speed-driven motion with spacing, the reversal of the list when the belt
-// changes direction, the stop margins at the chain end (Ending.INSERT .25, BLOCKED .45, EJECT 0), locking (`locked` = stalled
-// by a scene instruction) and the side offset that eases items to the belt centre.
+// Ponder block entities are "virtual" (SchematicLevel.markVirtual, catnip SchematicLevel.java): BeltInventory.tick and
+// DepotBehaviour.tick therefore take the SERVER branch even though the level reports isClientSide. This file ports that path:
+//   * BeltInventory.tick (kinetics/belt/transport/BeltInventory.java:43-180): speed-driven motion with spacing, reversal of the
+//     item list when the belt changes direction, stop margins at the chain end, belt-end hand-over to a DirectBeltInput block
+//     (depot, basin) with Ending.INSERT, Ending.BLOCKED and Ending.EJECT (the item leaves the scene).
+//   * BeltBlockEntity.tryInsertingFromSide (BeltBlockEntity.java:475-541) for createItemOnBelt.
+//   * DepotBehaviour.tick / insert / tryInsertingFromSide / applyToAllItems (logistics/depot/DepotBehaviour.java): held item
+//     easing to the centre, insertion into an empty depot, removal by removeItemsFromBelt.
+//   * BasinBlockEntity's DirectBeltInputBehaviour: ItemHandlerHelper.insertItemStacked into the 9 input slots.
+// Not simulated here: belt funnels (BeltFunnelInteractionHandler), tunnels (flaps), crushing wheels, and the processing that
+// BeltProcessingBehaviour runs for presses / mixers / saws. Processing blocks register a BeltProcessor (registerProcessor);
+// without one, a stalled item stays where it is until a scene op releases it.
 //
 // Time: one simulation step is one game tick. Events are stamped with the scene tick at which their instruction runs; an
-// event at tick T is applied before the step T -> T+1, so the state sampled at T already contains it. Insertions run the belt
-// once more immediately (CreateSceneBuilder.createItemOnBelt calls controllerBE.tick()).
+// event at tick T is applied before the step T -> T+1, so the state sampled at T already contains it. createItemOnBelt runs
+// the belt once more right after inserting (CreateSceneBuilder.createItemOnBelt calls controllerBE.tick()).
 
 import type { BlockState, Direction, ItemStackJson, Vec3, WorldLookup } from '../../../contract';
 import { axisDirectionStep, axisOf, isVertical, opposite } from '../common/dirs';
-import { getNumber } from '../common/nbt';
 import { posKey } from '../common/math';
 import { beltShape, canTransportObjects, directionAwareSpeed, movementFacing, nextSegmentPosition, positionForOffset, type BeltShape } from './beltMath';
 import { JavaRandom } from './random';
 import { isItemUpright } from './upright';
 import type { LogisticsEvent } from './protocol';
 
-/** One item on a belt: TransportedItemStack (kinetics/belt/transport/TransportedItemStack.java). */
+/** One item on a belt or in a depot: TransportedItemStack (kinetics/belt/transport/TransportedItemStack.java). */
 export interface SimItem {
   id: number;
   stack: ItemStackJson;
@@ -32,8 +36,10 @@ export interface SimItem {
   angle: number;
   insertedAt: number;
   insertedFrom: Direction;
+  /** `locked`: held by a processing block or a scene instruction (stallBeltItem) */
   locked: boolean;
   lockedExternally: boolean;
+  /** scene element link of the item (createItemOnBelt `out`) */
   link?: string;
 }
 
@@ -46,7 +52,7 @@ export interface BeltChain {
   index: Map<string, number>;
 }
 
-/** What a renderer needs from one item (already interpolated with the partial tick). */
+/** What a renderer needs from one belt item (already interpolated with the partial tick). */
 export interface ItemPose {
   item: SimItem;
   stack: ItemStackJson;
@@ -58,10 +64,17 @@ export interface ItemPose {
   locked: boolean;
 }
 
-/** Blocks that carry a DirectBeltInputBehaviour (a belt hands its last item to them): Ending.INSERT. */
-const DIRECT_INPUT = new Set(['create:depot', 'create:basin', 'create:mechanical_saw']);
-/** Blocks that do not make a belt end "BLOCKED" (approximation of BlockHelper.hasBlockSolidSide). */
-const NOT_SOLID = /^(minecraft:air|create:belt|create:.*funnel|create:.*tunnel|create:.*chute|create:.*pipe|create:.*valve|create:.*pump|create:depot|create:basin|create:item_drain|create:spout|create:hose_pulley)$/;
+/** A block a belt hands items to (DirectBeltInputBehaviour). */
+export interface BeltReceiver {
+  canInsertFromSide(side: Direction): boolean;
+  /** Returns the remainder (null when everything was taken). */
+  insert(stack: ItemStackJson, side: Direction): ItemStackJson | null;
+}
+
+/** Blocks with a DirectBeltInputBehaviour (Ending.INSERT margin). */
+const RECEIVER_BLOCKS = new Set(['create:depot', 'create:basin']);
+/** Blocks that do not make a belt end BLOCKED (approximation of BlockHelper.hasBlockSolidSide). */
+const NOT_SOLID = /^(minecraft:air|minecraft:(water|lava)|create:belt|create:.*funnel|create:.*tunnel|create:.*chute|create:.*pipe|create:.*valve|create:.*pump|create:depot|create:item_drain|create:spout|create:hose_pulley|create:.*fluid_tank|create:.*interface)$/;
 
 const enum Ending { Unresolved, Eject, Insert, Blocked }
 const MARGIN: Record<Ending, number> = { [Ending.Unresolved]: 0, [Ending.Eject]: 0, [Ending.Insert]: 0.25, [Ending.Blocked]: 0.45 };
@@ -73,14 +86,38 @@ interface ChainState {
   positive: boolean;
 }
 
-/** Scene belts: controller discovery and the per-chain state, advanced one tick at a time. */
+export interface DepotState {
+  key: string;
+  pos: Vec3;
+  /** DepotBehaviour.heldItem */
+  held: SimItem | null;
+  /** processingOutputBuffer (8 slots) */
+  output: (ItemStackJson | null)[];
+}
+
+export interface BasinState {
+  key: string;
+  pos: Vec3;
+  /** inputInventory (9 slots) */
+  inputs: (ItemStackJson | null)[];
+  /** outputInventory (9 slots, extract only) */
+  outputs: (ItemStackJson | null)[];
+}
+
+const DEPOT_SLOTS = 8;
+const BASIN_SLOTS = 9;
+const STACK_LIMIT = 64;
+
+/** Scene belts, depots and basins, advanced one tick at a time. */
 export class LogisticsWorld {
-  private chainsByKey = new Map<string, BeltChain | null>();
+  private chainsByKey = new Map<string, BeltChain>();
   private byPos = new Map<string, BeltChain | null>();
   private states = new Map<string, ChainState>();
   private speeds = new Map<string, number>();
+  private initialSpeed = new Map<string, number>();
+  private depots = new Map<string, DepotState>();
+  private basins = new Map<string, BasinState>();
   private events: LogisticsEvent[] = [];
-  private eventsSorted = true;
   private cursor = 0;
   /** scene tick the state corresponds to */
   private now = 0;
@@ -89,11 +126,10 @@ export class LogisticsWorld {
   private nextId = 1;
   private rng = new JavaRandom(0x2f6f_3c1d);
   private linkOf = new Map<string, SimItem>();
-  private readonly initialSpeed = new Map<string, number>();
 
   constructor(readonly lookup: WorldLookup) {}
 
-  // ----------------------------------------------------------------- chains
+  // ----------------------------------------------------------------- belt chains
 
   /** Chain containing the belt at `pos` (null if the block is not a belt). */
   chainAt(pos: Vec3): BeltChain | null {
@@ -104,10 +140,8 @@ export class LogisticsWorld {
     // BeltBlock.initBelt: walk back to the start of the chain
     let cur: Vec3 = pos;
     for (let i = 0; i < 1000; i++) {
-      const st = this.lookup.getState(cur)!;
-      const prev = nextSegmentPosition(st, cur, false);
-      if (!prev) break;
-      if (!isBeltState(this.lookup.getState(prev))) break;
+      const prev = nextSegmentPosition(this.lookup.getState(cur)!, cur, false);
+      if (!prev || !isBeltState(this.lookup.getState(prev))) break;
       cur = prev;
     }
     // getBeltChain: walk forward from the controller
@@ -121,13 +155,12 @@ export class LogisticsWorld {
     }
     const ckey = posKey(cur);
     let chain = this.chainsByKey.get(ckey);
-    if (chain === undefined) {
+    if (!chain) {
       const index = new Map<string, number>();
       segments.forEach((s, i) => index.set(posKey(s), i));
       chain = { key: ckey, controller: cur, shape: beltShape(this.lookup.getState(cur)!), segments, index };
       this.chainsByKey.set(ckey, chain);
-      const be = this.lookup.getBlockEntity(cur);
-      this.initialSpeed.set(ckey, speedFromNbt(be?.nbt, segments, this.lookup));
+      this.initialSpeed.set(ckey, speedFromNbt(this.lookup, segments));
     }
     for (const s of segments) this.byPos.set(posKey(s), chain);
     this.byPos.set(k, chain);
@@ -140,21 +173,20 @@ export class LogisticsWorld {
   apply(ev: LogisticsEvent & { tick?: number }): void {
     const tick = ev.tick ?? this.lastTicks;
     const stamped = { ...ev, tick } as LogisticsEvent;
-    const last = this.events[this.events.length - 1];
-    if (last && tick < (last.tick ?? 0)) this.eventsSorted = false;
-    this.events.push(stamped);
-    if (!this.eventsSorted) {
-      this.events.sort((a, b) => (a.tick ?? 0) - (b.tick ?? 0)); // stable: equal ticks keep insertion order
-      this.eventsSorted = true;
-    }
-    // a late event (before the simulated time) forces a replay
-    if (tick <= this.now) this.reset();
+    // stable insertion by tick (equal ticks keep insertion order)
+    let i = this.events.length;
+    while (i > 0 && (this.events[i - 1].tick ?? 0) > tick) i--;
+    this.events.splice(i, 0, stamped);
+    // an event at or before the simulated time forces a replay
+    if (i < this.cursor || tick <= this.now) this.reset();
   }
 
   private reset(): void {
     this.states.clear();
     this.speeds.clear();
     this.linkOf.clear();
+    this.depots.clear();
+    this.basins.clear();
     this.cursor = 0;
     this.now = 0;
     this.rng.setSeed(0x2f6f_3c1d);
@@ -172,29 +204,28 @@ export class LogisticsWorld {
       this.applyDue(this.now);
       if (this.now === target) break;
       for (const st of this.states.values()) this.stepChain(st);
+      for (const d of this.depots.values()) if (d.held) easeToCentre(d.held);
       this.now++;
     }
   }
 
   private applyDue(t: number): void {
     while (this.cursor < this.events.length && (this.events[this.cursor].tick ?? 0) <= t) {
-      const ev = this.events[this.cursor++];
-      this.run(ev);
+      this.run(this.events[this.cursor++]);
     }
   }
 
   // ----------------------------------------------------------------- queries
 
-  /** Items of a chain at scene time `ticks` (call advance first, or pass ticks to advance). */
+  /** Items of a chain at scene time `ticks` (advances the simulation). */
   itemsOf(chain: BeltChain, ticks: number): ItemPose[] {
     this.advance(ticks);
     const pt = Math.max(0, ticks) - Math.floor(Math.max(0, ticks));
     const st = this.states.get(chain.key);
     if (!st) return [];
-    const speed = this.speedOf(chain);
+    const interp = this.speedOf(chain) !== 0;
     const out: ItemPose[] = [];
     for (const it of st.items) {
-      const interp = speed !== 0;
       out.push({
         item: it,
         stack: it.stack,
@@ -212,13 +243,51 @@ export class LogisticsWorld {
     return this.speeds.get(chain.key) ?? this.initialSpeed.get(chain.key) ?? 0;
   }
 
+  /** Depot state (created from the block entity nbt on first use). */
+  depotAt(pos: Vec3): DepotState {
+    const k = posKey(pos);
+    let d = this.depots.get(k);
+    if (!d) {
+      const nbt = this.lookup.getBlockEntity(pos)?.nbt;
+      d = { key: k, pos, held: null, output: new Array(DEPOT_SLOTS).fill(null) };
+      if (nbt) {
+        if (isStackLike(nbt.HeldItem)) d.held = this.newItem(stackOf(nbt.HeldItem), 0.5);
+        readSlots(nbt.OutputBuffer, d.output);
+      }
+      this.depots.set(k, d);
+    }
+    return d;
+  }
+
+  /** Basin state (created from the block entity nbt on first use). */
+  basinAt(pos: Vec3): BasinState {
+    const k = posKey(pos);
+    let b = this.basins.get(k);
+    if (!b) {
+      const nbt = this.lookup.getBlockEntity(pos)?.nbt;
+      b = { key: k, pos, inputs: new Array(BASIN_SLOTS).fill(null), outputs: new Array(BASIN_SLOTS).fill(null) };
+      readSlots(nbt?.InputItems, b.inputs);
+      readSlots(nbt?.OutputItems, b.outputs);
+      this.basins.set(k, b);
+    }
+    return b;
+  }
+
   /** Every item stack referenced by the event log (so renderers can prepare their models ahead of time). */
   stacksInEvents(): ItemStackJson[] {
     const out: ItemStackJson[] = [];
-    for (const e of this.events) {
-      if ('item' in e && e.item) out.push(e.item);
-    }
+    for (const e of this.events) if ('item' in e && e.item) out.push(e.item);
     return out;
+  }
+
+  /** Seeds the depot and basin states of every position the event log refers to (initial content from tick 0). */
+  prepare(): void {
+    for (const e of this.events) {
+      if (!('pos' in e) || !e.pos) continue;
+      const name = this.lookup.getState(e.pos)?.name;
+      if (name === 'create:depot') this.depotAt(e.pos);
+      else if (name === 'create:basin') this.basinAt(e.pos);
+    }
   }
 
   // ----------------------------------------------------------------- ops
@@ -226,21 +295,14 @@ export class LogisticsWorld {
   private run(ev: LogisticsEvent): void {
     switch (ev.op) {
       case 'createItemOnBelt':
-        this.insertFromSide(ev.pos, opposite(ev.insertionSide), ev.item, ev.link, true);
+        this.insertOnBelt(ev.pos, opposite(ev.insertionSide), ev.item, ev.link, true);
         break;
       case 'createItemOnBeltLike':
-        this.insertFromSide(ev.pos, opposite(ev.insertionSide), ev.item, undefined, false);
+        this.insertOnBelt(ev.pos, opposite(ev.insertionSide), ev.item, undefined, false);
         break;
-      case 'removeItemsFromBelt': {
-        const chain = this.chainAt(ev.pos);
-        if (!chain) break;
-        const st = this.stateOf(chain);
-        const idx = chain.index.get(posKey(ev.pos));
-        if (idx === undefined) break;
-        const centre = idx + 0.5;
-        st.items = st.items.filter((it) => Math.abs(centre - it.beltPosition) >= 0.52);
+      case 'removeItemsFromBelt':
+        this.removeAt(ev.pos);
         break;
-      }
       case 'stallBeltItem': {
         const it = ev.link ? this.linkOf.get(ev.link) : undefined;
         if (it) it.locked = ev.stalled;
@@ -251,15 +313,47 @@ export class LogisticsWorld {
         if (it) it.stack = ev.item;
         break;
       }
-      case 'nbt': {
-        if (typeof ev.patch?.Speed !== 'number') break;
-        const chain = this.chainAt(ev.pos);
-        if (chain) this.speeds.set(chain.key, ev.patch.Speed as number);
+      case 'nbt':
+        this.patchNbt(ev.pos, ev.patch);
         break;
-      }
       case 'flap':
         break;
     }
+  }
+
+  /** modifyBlockEntityNBT on the blocks this simulation owns (belt speed, depot and basin contents). */
+  private patchNbt(pos: Vec3, patch: Record<string, unknown>): void {
+    if (typeof patch.Speed === 'number') {
+      const chain = this.chainAt(pos);
+      if (chain) this.speeds.set(chain.key, patch.Speed as number);
+    }
+    const name = this.lookup.getState(pos)?.name;
+    if (name === 'create:depot') {
+      const d = this.depotAt(pos);
+      if ('HeldItem' in patch) d.held = isStackLike(patch.HeldItem) ? this.newItem(stackOf(patch.HeldItem), 0.5) : null;
+      if ('OutputBuffer' in patch) readSlots(patch.OutputBuffer, d.output, true);
+    } else if (name === 'create:basin') {
+      const b = this.basinAt(pos);
+      if ('InputItems' in patch) readSlots(patch.InputItems, b.inputs, true);
+      if ('OutputItems' in patch) readSlots(patch.OutputItems, b.outputs, true);
+    }
+  }
+
+  /** removeItemsFromBelt: TransportedItemStackHandlerBehaviour.handleCenteredProcessingOnAllItems(.52, removeItem) */
+  private removeAt(pos: Vec3): void {
+    const name = this.lookup.getState(pos)?.name;
+    if (name === 'create:depot') {
+      const d = this.depotAt(pos);
+      if (d.held && 0.5 - d.held.beltPosition <= 0.52) d.held = null; // DepotBehaviour.applyToAllItems: held item only
+      return;
+    }
+    const chain = this.chainAt(pos);
+    if (!chain) return;
+    const idx = chain.index.get(posKey(pos));
+    if (idx === undefined) return;
+    const st = this.stateOf(chain);
+    const centre = idx + 0.5;
+    st.items = st.items.filter((it) => Math.abs(centre - it.beltPosition) >= 0.52);
   }
 
   private stateOf(chain: BeltChain): ChainState {
@@ -272,12 +366,18 @@ export class LogisticsWorld {
   }
 
   /**
-   * BeltBlockEntity.tryInsertingFromSide (non-simulated path) followed, for createItemOnBelt, by the extra controller tick.
-   * `side` is the side the item enters from (already the opposite of the scene's insertionSide).
+   * DirectBeltInputBehaviour.handleInsertion on a belt (BeltBlockEntity.tryInsertingFromSide, non-simulated path); for
+   * createItemOnBelt the controller then ticks once more. `side` is the side the item enters from. A depot or basin at `pos`
+   * takes the item through its own DirectBeltInputBehaviour (createItemOnBeltLike).
    */
-  private insertFromSide(pos: Vec3, side: Direction, stack: ItemStackJson, link: string | undefined, extraTick: boolean): void {
+  private insertOnBelt(pos: Vec3, side: Direction, stack: ItemStackJson, link: string | undefined, extraTick: boolean): void {
     const chain = this.chainAt(pos);
-    if (!chain) return;
+    if (!chain) {
+      const name = this.lookup.getState(pos)?.name;
+      if (name === 'create:depot') this.depotInsert(this.depotAt(pos), stack, side);
+      else if (name === 'create:basin') this.basinInsert(this.basinAt(pos), stack);
+      return;
+    }
     const belt = this.lookup.getState(pos)!;
     if (!canTransportObjects(belt)) return;
     const idx = chain.index.get(posKey(pos));
@@ -290,16 +390,15 @@ export class LogisticsWorld {
     if (speed === 0) return;
     if (mf === opposite(side)) return;
     if (!this.canInsertAt(st, idx, side)) return;
-
     const dirSpeed = directionAwareSpeed(facing, speed);
-    const item = this.newItem(stack);
+    const item = this.newItem(stack, 0);
     item.beltPosition = idx + 0.5 - Math.sign(dirSpeed) / 16;
     if (!isVertical(side)) {
       if (mf !== side) {
         item.sideOffset = axisDirectionStep(side) * 0.675;
         if (axisOf(side) === 'x') item.sideOffset *= -1;
       } else {
-        // belt-to-belt smoothing needs the previous position of a copy (0 for a new stack)
+        // a new stack has prevBeltPosition 0, so the belt-to-belt smoothing offset is 0
         item.beltPosition = dirSpeed > 0 ? idx : idx + 1;
       }
     }
@@ -312,15 +411,15 @@ export class LogisticsWorld {
     if (extraTick) this.stepChain(st);
   }
 
-  private newItem(stack: ItemStackJson): SimItem {
+  private newItem(stack: ItemStackJson, centre: number): SimItem {
     const upright = isItemUpright(stack.id);
     const angle = upright ? 180 : this.rng.nextInt(360);
-    const side = (angle - 180) / (360 * 3);
+    const side = targetSideOffset(angle);
     return {
       id: this.nextId++,
       stack,
-      beltPosition: 0,
-      prevBeltPosition: 0,
+      beltPosition: centre,
+      prevBeltPosition: centre,
       sideOffset: side,
       prevSideOffset: side,
       angle,
@@ -353,7 +452,7 @@ export class LogisticsWorld {
     st.items.splice(index, 0, item);
   }
 
-  // ----------------------------------------------------------------- BeltInventory.tick (client path)
+  // ----------------------------------------------------------------- BeltInventory.tick (server path)
 
   private stepChain(st: ChainState): void {
     const chain = st.chain;
@@ -366,20 +465,19 @@ export class LogisticsWorld {
       st.items.reverse();
     }
     const positive = st.positive;
-    const movement0 = beltSpeed;
     const length = chain.segments.length;
     const mf = movementFacing(facing, speed);
     let ending: Ending = Ending.Unresolved;
     let front: SimItem | null = null;
     let cur: SimItem | null = null;
-    for (let i = 0; i < st.items.length; i++) {
-      const item = st.items[i];
+    const removed: SimItem[] = [];
+    for (const item of [...st.items]) {
       front = cur;
       cur = item;
       item.prevBeltPosition = item.beltPosition;
       item.prevSideOffset = item.sideOffset;
-      let movement = movement0;
-      // held by a scene instruction (client path: "Don't move if held by processing")
+      let movement = beltSpeed;
+      // held by processing or by a scene instruction until released
       if (item.locked) continue;
       if (item.lockedExternally) { item.lockedExternally = false; continue; }
 
@@ -392,42 +490,115 @@ export class LogisticsWorld {
       }
       let diffToEnd = positive ? length - currentPos : -currentPos;
       if (Math.abs(diffToEnd) < Math.abs(movement) + 1) {
-        if (ending === Ending.Unresolved) ending = this.resolveEnding(chain, positive, mf);
+        if (ending === Ending.Unresolved) ending = this.resolveEnding(chain, positive);
         diffToEnd += positive ? -MARGIN[ending] : MARGIN[ending];
       }
       const limited = positive ? Math.min(movement, diffToEnd) : Math.max(movement, diffToEnd);
       if (noMovement) continue;
       item.beltPosition += limited;
-      const target = targetSideOffset(item);
+      const target = targetSideOffset(item.angle);
       const diffToMiddle = target - item.sideOffset;
       const bound = Math.abs(diffToMiddle);
       item.sideOffset += clamp(diffToMiddle * Math.abs(limited) * 6, -bound, bound);
+      // movement successful
+      if (limited === movement) continue;
+      // end reached
+      if (ending === Ending.Insert) {
+        const nextPos = positionForOffset(chain.controller, chain.shape, length, positive ? length : -1);
+        const recv = this.receiverAt(nextPos);
+        if (!recv || !recv.canInsertFromSide(mf)) continue;
+        const rem = recv.insert(item.stack, mf);
+        if (rem && rem.id === item.stack.id && (rem.count ?? 1) === (item.stack.count ?? 1)) continue;
+        if (!rem) removed.push(item);
+        else item.stack = rem;
+        continue;
+      }
+      if (ending === Ending.Blocked) continue;
+      if (ending === Ending.Eject) removed.push(item); // the item leaves the scene (an ItemEntity in Create)
     }
+    if (removed.length) st.items = st.items.filter((it) => !removed.includes(it));
   }
 
   /** BeltInventory.resolveEnding, for the block one step past the chain end. */
-  private resolveEnding(chain: BeltChain, positive: boolean, mf: Direction): Ending {
-    const offset = positive ? chain.segments.length : -1;
-    const next = positionForOffset(chain.controller, chain.shape, chain.segments.length, offset);
+  private resolveEnding(chain: BeltChain, positive: boolean): Ending {
+    const next = positionForOffset(chain.controller, chain.shape, chain.segments.length, positive ? chain.segments.length : -1);
     const st = this.lookup.getState(next);
-    if (st && DIRECT_INPUT.has(st.name)) return Ending.Insert;
-    const solid = st && !NOT_SOLID.test(st.name);
-    if (solid) return Ending.Blocked;
-    void mf;
+    if (st && RECEIVER_BLOCKS.has(st.name)) return Ending.Insert;
+    if (st && !NOT_SOLID.test(st.name)) return Ending.Blocked;
     return Ending.Eject;
   }
 
+  private receiverAt(pos: Vec3): BeltReceiver | undefined {
+    const name = this.lookup.getState(pos)?.name;
+    if (name === 'create:depot') {
+      const d = this.depotAt(pos);
+      return { canInsertFromSide: () => true, insert: (stack, side) => this.depotInsert(d, stack, side) };
+    }
+    if (name === 'create:basin') {
+      const b = this.basinAt(pos);
+      return { canInsertFromSide: () => true, insert: (stack) => this.basinInsert(b, stack) };
+    }
+    return undefined;
+  }
+
+  // ----------------------------------------------------------------- DepotBehaviour
+
+  /** DepotBehaviour.tryInsertingFromSide + insert (no merging): the item becomes the held item when the depot is free. */
+  private depotInsert(d: DepotState, stack: ItemStackJson, side: Direction): ItemStackJson | null {
+    if (d.held) return stack;
+    if (d.output.some((s) => s)) return stack;
+    const item = this.newItem(stack, isVertical(side) ? 0.5 : 0);
+    item.insertedFrom = side;
+    item.prevBeltPosition = item.beltPosition;
+    item.prevSideOffset = item.sideOffset;
+    d.held = item;
+    return null;
+  }
+
+  /** Items of a depot as DepotRenderer draws them: the held item and the output slots. */
+  depotView(pos: Vec3): { held: SimItem | null; output: (ItemStackJson | null)[] } {
+    const d = this.depotAt(pos);
+    return { held: d.held, output: d.output };
+  }
+
+  // ----------------------------------------------------------------- basin
+
+  /** DirectBeltInputBehaviour default insertion: ItemHandlerHelper.insertItemStacked into the input slots. */
+  private basinInsert(b: BasinState, stack: ItemStackJson): ItemStackJson | null {
+    let count = stack.count ?? 1;
+    for (let i = 0; i < b.inputs.length && count > 0; i++) {
+      const s = b.inputs[i];
+      if (s && s.id === stack.id && (s.count ?? 1) < STACK_LIMIT) {
+        const put = Math.min(STACK_LIMIT - (s.count ?? 1), count);
+        b.inputs[i] = { ...s, count: (s.count ?? 1) + put };
+        count -= put;
+      }
+    }
+    for (let i = 0; i < b.inputs.length && count > 0; i++) {
+      if (!b.inputs[i]) {
+        const put = Math.min(STACK_LIMIT, count);
+        b.inputs[i] = { id: stack.id, count: put };
+        count -= put;
+      }
+    }
+    return count > 0 ? { ...stack, count } : null;
+  }
+
+  /** Items of a basin in CombinedInvWrapper order (inputs, then outputs). */
+  basinView(pos: Vec3): (ItemStackJson | null)[] {
+    const b = this.basinAt(pos);
+    return [...b.inputs, ...b.outputs];
+  }
 }
 
 // ----------------------------------------------------------------- helpers
 
 function isBeltState(s: BlockState | undefined): boolean { return s?.name === 'create:belt'; }
 
-function speedFromNbt(nbt: Record<string, unknown> | undefined, segments: Vec3[], lookup: WorldLookup): number {
-  if (nbt && typeof nbt.Speed === 'number') return nbt.Speed as number;
+function speedFromNbt(lookup: WorldLookup, segments: Vec3[]): number {
   for (const s of segments) {
     const be = lookup.getBlockEntity(s);
-    if (be?.nbt && typeof be.nbt.Speed === 'number') return getNumber(be.nbt, 'Speed');
+    if (be?.nbt && typeof be.nbt.Speed === 'number') return be.nbt.Speed as number;
   }
   return 0;
 }
@@ -437,9 +608,9 @@ function compareTo(a: SimItem, b: SimItem): number {
   return a.beltPosition < b.beltPosition ? 1 : a.beltPosition > b.beltPosition ? -1 : 0;
 }
 
-/** TransportedItemStack.getTargetSideOffset */
-export function targetSideOffset(item: Pick<SimItem, 'angle'>): number {
-  return (item.angle - 180) / (360 * 3);
+/** TransportedItemStack.getTargetSideOffset: (angle - 180) / (360 * 3) */
+export function targetSideOffset(angle: number): number {
+  return (angle - 180) / (360 * 3);
 }
 
 /** BeltInventory.isBlocking */
@@ -448,11 +619,46 @@ function isBlocking(st: ChainState, segment: number, side: Direction, segmentPos
   return it.insertedAt === segment && it.insertedFrom === side && (st.positive ? cur <= segmentPos + 1 : cur >= segmentPos - 1);
 }
 
+/** DepotBehaviour.tick(TransportedItemStack): eases the item to the centre; returns true once it has arrived */
+function easeToCentre(t: SimItem): boolean {
+  t.prevBeltPosition = t.beltPosition;
+  t.prevSideOffset = t.sideOffset;
+  const diff = 0.5 - t.beltPosition;
+  if (diff > 1 / 512) {
+    if (diff > 1 / 32 && !isItemUpright(t.stack.id)) t.angle += 1;
+    t.beltPosition += diff / 4;
+  }
+  return diff < 1 / 16;
+}
+
 function clamp(v: number, lo: number, hi: number): number { return v < lo ? lo : v > hi ? hi : v; }
 
+function isStackLike(v: unknown): boolean {
+  if (!v || typeof v !== 'object') return false;
+  const o = v as { id?: unknown; Item?: unknown };
+  return typeof o.id === 'string' || (!!o.Item && typeof o.Item === 'object');
+}
+
+/** A stack from a plain {id, count} or a TransportedItemStack compound ({Item: {...}}). */
+function stackOf(v: unknown): ItemStackJson {
+  const o = v as { id?: string; count?: number; Item?: { id?: string; count?: number } };
+  const src = o.id !== undefined ? o : (o.Item ?? {});
+  return { id: String(src.id), count: Number(src.count ?? 1) };
+}
+
+/** Slot list ([{Slot, id, count}], an ItemStackHandler {Items: [...]}) into a slot array. */
+function readSlots(v: unknown, slots: (ItemStackJson | null)[], reset = false): void {
+  if (reset) slots.fill(null);
+  const list = Array.isArray(v) ? v : v && typeof v === 'object' && Array.isArray((v as { Items?: unknown }).Items) ? (v as { Items: unknown[] }).Items : [];
+  list.forEach((e, i) => {
+    if (!isStackLike(e)) return;
+    const slot = Number((e as { Slot?: number }).Slot ?? i);
+    if (slot >= 0 && slot < slots.length) slots[slot] = stackOf(e);
+  });
+}
 
 const worlds = new WeakMap<WorldLookup, LogisticsWorld>();
-/** The belt simulation of one scene (keyed by the lookup the visuals receive in their VisualContext). */
+/** The logistics simulation of one scene (keyed by the lookup the visuals receive in their VisualContext). */
 export function getLogisticsWorld(lookup: WorldLookup): LogisticsWorld {
   let w = worlds.get(lookup);
   if (!w) { w = new LogisticsWorld(lookup); worlds.set(lookup, w); }
@@ -466,7 +672,7 @@ export function getLogisticsWorld(lookup: WorldLookup): LogisticsWorld {
 export function logisticsEventsOf(instructions: { op: string; args?: Record<string, unknown>; out?: string }[]): LogisticsEvent[] {
   const out: LogisticsEvent[] = [];
   let t = 0;
-  const linkId = (v: unknown): string | undefined => (v && typeof v === 'object' ? (v as { link?: string }).link : (v as string | undefined));
+  const linkId = (v: unknown): string => (v && typeof v === 'object' ? (v as { link?: string }).link ?? '' : String(v ?? ''));
   for (const ins of instructions) {
     if (ins.op === 'idle') { t += Number((ins.args as { ticks?: number } | undefined)?.ticks ?? 0); continue; }
     const a = (ins.args ?? {}) as Record<string, unknown>;
@@ -481,10 +687,10 @@ export function logisticsEventsOf(instructions: { op: string; args?: Record<stri
         out.push({ tick: t, op: 'removeItemsFromBelt', pos: a.pos as Vec3 });
         break;
       case 'world.stallBeltItem':
-        out.push({ tick: t, op: 'stallBeltItem', link: linkId(a.link) ?? '', stalled: !!a.stalled });
+        out.push({ tick: t, op: 'stallBeltItem', link: linkId(a.link), stalled: !!a.stalled });
         break;
       case 'world.changeBeltItemTo':
-        out.push({ tick: t, op: 'changeBeltItemTo', link: linkId(a.link) ?? '', item: a.item as ItemStackJson });
+        out.push({ tick: t, op: 'changeBeltItemTo', link: linkId(a.link), item: a.item as ItemStackJson });
         break;
       case 'world.modifyBlockEntityNBT':
         for (const target of (a.targets as { pos: Vec3; nbt: Record<string, unknown> }[] | undefined) ?? []) {
