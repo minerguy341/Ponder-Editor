@@ -43,14 +43,14 @@ export interface PressState { running: boolean; mode: number; finished: boolean;
 export function pressStep(s: PressState, speed: number): void {
   if (!s.running) return;
   // client side (Ponder's level is a client level): `if (level.isClientSide && runningTicks == -CYCLE/2) { prev = CYCLE/2; return; }`
-  if (s.ticks === -(CYCLE / 2)) { s.prev = CYCLE / 2; return; }
   // runningTicks == CYCLE/2 on the server only applies the recipe; the client never finishes the cycle
   s.prev = s.ticks;
   s.ticks += pressRunningTickSpeed(speed);
   // `if (prev < CYCLE/2 && runningTicks >= CYCLE/2) { runningTicks = CYCLE/2; if (client && !virtual) runningTicks = -CYCLE/2; }`
-  // The reference screenshots (ref3 end, ref4) show the head fully depressed = the client pause (abs(-CYCLE/2) = CYCLE/2 offset 1),
-  // so Ponder's press block entities are not virtual and the pause is kept: the head stays down until a start() call.
-  if (s.prev < CYCLE / 2 && s.ticks >= CYCLE / 2) s.ticks = -(CYCLE / 2);
+  // Ponder's scene block entities are virtual (BlockEntity.getHandOffset checks isVirtual(); the mechanical press scene ref3 is
+  // consistent with the cycle running on: started at tick 426 with speed -32, at tick 471 runningTicks = 180, head offset 0.75),
+  // so the client pause is not applied.
+  if (s.prev < CYCLE / 2 && s.ticks >= CYCLE / 2) s.ticks = CYCLE / 2;
 }
 
 export function pressApply(s: PressState, ev: BEvent): void {
