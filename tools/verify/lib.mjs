@@ -485,12 +485,32 @@ export const HIDE_UI_CSS =
 
 /** Screenshot of an element (default: the scene canvas) as a PNG Buffer. `canvasOnly` hides the UI chrome first. */
 export async function shotElement(page, selector = '[data-testid="scene-canvas"]', { canvasOnly = false } = {}) {
-  // Page-level screenshot of the viewport instead of a locator screenshot: under swiftshader the page's main thread is busy
-  // with WebGL frames, so every element call (screenshot, boundingBox, evaluate) waits and times out (see the B4 report).
-  // The scene canvas fills the viewport in the app, so the viewport is the element. `selector` is kept for the contract.
-  void selector;
-  void canvasOnly; // the UI chrome is not hidden in this path (no page evaluate is possible while rendering)
-  return page.screenshot({ type: 'png', animations: 'allow' });
+  // Page-level clip of the element's box instead of a locator screenshot: under swiftshader the page's main thread is busy with
+  // WebGL frames, so locator calls (screenshot, boundingBox) wait and time out (see the B4 report). Box and UI hiding go through
+  // page.evaluate (not blocked by the render loop); the screenshot itself is a compositor-level capture of the clip.
+  let box = null;
+  let hid = false;
+  try {
+    box = await page.evaluate(({ sel, css }) => {
+      const el = document.querySelector(sel);
+      if (!el) return null;
+      const r = el.getBoundingClientRect();
+      if (css) {
+        const st = document.createElement('style');
+        st.setAttribute('data-verify-hide', '1');
+        st.textContent = css;
+        document.head.appendChild(st);
+      }
+      return { x: r.left, y: r.top, width: r.width, height: r.height };
+    }, { sel: selector, css: canvasOnly ? HIDE_UI_CSS : null });
+    hid = canvasOnly;
+  } catch { box = null; }
+  const clip = box && box.width > 0 && box.height > 0 ? box : null;
+  try {
+    return await page.screenshot({ type: 'png', animations: 'allow', ...(clip ? { clip } : {}) });
+  } finally {
+    if (hid) await page.evaluate(() => document.querySelectorAll('style[data-verify-hide]').forEach((n) => n.remove())).catch(() => {});
+  }
 }
 
 // ------------------------------------------------------------------ network fetch with disk cache (Node side)
