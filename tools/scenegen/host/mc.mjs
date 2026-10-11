@@ -732,9 +732,10 @@ export const DYECOLOR = hostEnum('DyeColor', DYES, (cls, n, i) => {
   return e;
 });
 DYECOLOR.statics.byId = (i) => DYECOLOR.values_[num(i)];
+export const WEATHERSTATE = hostEnum('WeatherState', ['UNAFFECTED', 'EXPOSED', 'WEATHERED', 'OXIDIZED'], undefined, { nestedOf: 'WeatheringCopper' });
 
 export function buildMc(R) {
-  for (const c of [DIRECTION, AXISDIR, AXIS, PLANE, VEC3I, BLOCKPOS, VEC3, AABB_C, BOUNDINGBOX, MTH, DYECOLOR]) R.add(c);
+  for (const c of [DIRECTION, AXISDIR, AXIS, PLANE, VEC3I, BLOCKPOS, VEC3, AABB_C, BOUNDINGBOX, MTH, DYECOLOR, WEATHERSTATE]) R.add(c);
   R.add(hc('Vec3i', R.map.get('Vec3i')));
   R.add(hc('Rotation', { statics: {} }));
 }

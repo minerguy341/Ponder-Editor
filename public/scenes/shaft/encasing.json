@@ -1,0 +1,251 @@
+{
+ "id": "create:shaft/encasing",
+ "schematic": "shaft/encasing",
+ "schematicNamespace": "create",
+ "title": "Encasing Shafts",
+ "texts": {
+  "text_1": "Brass or Andesite Casing can be used to decorate Shafts"
+ },
+ "tags": [],
+ "items": [
+  "create:shaft",
+  "create:andesite_encased_shaft",
+  "create:brass_encased_shaft",
+  "create:andesite_casing",
+  "create:brass_casing"
+ ],
+ "keyframes": [],
+ "totalTicks": 124,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "KineticsScenes.java:78"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      5,
+      0,
+      4
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "KineticsScenes.java:79"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      1,
+      2
+     ],
+     "to": [
+      5,
+      1,
+      4
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "KineticsScenes.java:85"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "KineticsScenes.java:86"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3.5,
+     2,
+     2.5
+    ],
+    "direction": "down",
+    "duration": 60,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:andesite_casing",
+     "count": 1
+    }
+   },
+   "src": "KineticsScenes.java:91"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "KineticsScenes.java:93"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      2
+     ]
+    },
+    "state": {
+     "name": "create:andesite_encased_shaft",
+     "props": {
+      "axis": "x"
+     }
+    },
+    "particles": true
+   },
+   "src": "KineticsScenes.java:94"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     }
+    ]
+   },
+   "src": "KineticsScenes.java:96"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "KineticsScenes.java:97"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     1.5,
+     1,
+     2.5
+    ],
+    "direction": "up",
+    "duration": 60,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:brass_casing",
+     "count": 1
+    }
+   },
+   "src": "KineticsScenes.java:102"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "KineticsScenes.java:104"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      2
+     ]
+    },
+    "state": {
+     "name": "create:brass_encased_shaft",
+     "props": {
+      "axis": "x"
+     }
+    },
+    "particles": true
+   },
+   "src": "KineticsScenes.java:105"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     }
+    ]
+   },
+   "src": "KineticsScenes.java:107"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "KineticsScenes.java:109"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 100,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_1",
+    "pointAt": [
+     1.5,
+     2,
+     2.5
+    ],
+    "text": "Brass or Andesite Casing can be used to decorate Shafts"
+   },
+   "src": "KineticsScenes.java:110"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "KineticsScenes.java:114"
+  }
+ ]
+}

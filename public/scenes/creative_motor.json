@@ -1,0 +1,310 @@
+{
+ "id": "create:creative_motor",
+ "schematic": "creative_motor",
+ "schematicNamespace": "create",
+ "title": "Generating Rotational Force using Creative Motors",
+ "texts": {
+  "text_1": "Creative motors are a compact and configurable source of Rotational Force",
+  "text_2": "The generated speed can be configured on its input panels"
+ },
+ "tags": [
+  "create:kinetic_sources"
+ ],
+ "items": [
+  "create:creative_motor"
+ ],
+ "keyframes": [
+  121
+ ],
+ "totalTicks": 185,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "KineticsScenes.java:593"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      4,
+      0,
+      4
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "KineticsScenes.java:594"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "KineticsScenes.java:599"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "KineticsScenes.java:600"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "KineticsScenes.java:599"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "KineticsScenes.java:600"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "KineticsScenes.java:599"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "KineticsScenes.java:600"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "KineticsScenes.java:603"
+  },
+  {
+   "op": "effects.rotationIndicator",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ],
+    "direction": false
+   },
+   "src": "KineticsScenes.java:604"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 50,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_1",
+    "pointAt": [
+     3.5,
+     2,
+     2.5
+    ],
+    "text": "Creative motors are a compact and configurable source of Rotational Force"
+   },
+   "src": "KineticsScenes.java:605"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "KineticsScenes.java:609"
+  },
+  {
+   "op": "overlay.highlightValueBox",
+   "args": {
+    "location": [
+     3.5625,
+     1.5,
+     2.2109375
+    ],
+    "expands": [
+     0.0859375,
+     0.0859375,
+     0
+    ],
+    "duration": 80
+   },
+   "src": "KineticsScenes.java:613"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3.5625,
+     1.5,
+     2.1875
+    ],
+    "direction": "down",
+    "duration": 60,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb"
+   },
+   "src": "KineticsScenes.java:614"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "KineticsScenes.java:615"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_2",
+    "pointAt": [
+     3.5625,
+     1.5,
+     2.1875
+    ],
+    "text": "The generated speed can be configured on its input panels"
+   },
+   "src": "KineticsScenes.java:617"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "KineticsScenes.java:622"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "KineticsScenes.java:623"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "SpeedGaugeBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       1,
+       2
+      ],
+      "nbt": {
+       "Value": 0.5957143
+      }
+     }
+    ]
+   },
+   "src": "KineticsScenes.java:624"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -64
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -64
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -64
+      }
+     }
+    ]
+   },
+   "src": "KineticsScenes.java:624"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "KineticsScenes.java:625"
+  },
+  {
+   "op": "effects.rotationIndicator",
+   "args": {
+    "pos": [
+     3,
+     1,
+     2
+    ],
+    "direction": false
+   },
+   "src": "KineticsScenes.java:627"
+  }
+ ]
+}

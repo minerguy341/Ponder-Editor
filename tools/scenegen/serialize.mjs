@@ -1,5 +1,5 @@
 // Host value -> plain JSON (as documented in OPS.md).
-import { Dbl, JChar, JArray, JObject, Lambda, MethodRef, ClassRef, Unsupported, num, describe } from './values.mjs';
+import { f32short, Dbl, JChar, JArray, JObject, Lambda, MethodRef, ClassRef, Unsupported, num, describe } from './values.mjs';
 import { Vec3i, Vec3, AABB, HEnum, DIRECTION, AXIS } from './host/mc.mjs';
 import { JState, JBlock, JItemStack, HItem } from './host/blocks.mjs';
 import { JCompound, JListTag, JComponent, jsonOf } from './host/nbtobj.mjs';
@@ -19,7 +19,7 @@ export function ser(v) {
   if (v === null || v === undefined) return null;
   if (typeof v === 'string' || typeof v === 'boolean') return v;
   if (typeof v === 'number') return v;
-  if (v instanceof Dbl) return v.v;
+  if (v instanceof Dbl) return v.f ? f32short(v.v) : v.v;
   if (v instanceof JChar) return v.toString();
   if (v instanceof Vec3i || v instanceof Vec3) return [v.x, v.y, v.z];
   if (v instanceof AABB) return { min: [v.minX, v.minY, v.minZ], max: [v.maxX, v.maxY, v.maxZ] };

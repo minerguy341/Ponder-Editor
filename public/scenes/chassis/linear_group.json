@@ -1,0 +1,478 @@
+{
+ "id": "create:chassis/linear_group",
+ "schematic": "chassis/linear_group",
+ "schematicNamespace": "create",
+ "title": "Moving Linear Chassis in groups",
+ "texts": {
+  "text_1": "Linear Chassis connect to identical Chassis blocks next to them",
+  "text_2": "When one is moved by a Contraption, the others are dragged with it",
+  "text_3": "Chassis of a different type or facing another direction will not attach"
+ },
+ "tags": [
+  "create:contraption_assembly"
+ ],
+ "items": [
+  "create:linear_chassis",
+  "create:secondary_linear_chassis"
+ ],
+ "keyframes": [
+  55,
+  249
+ ],
+ "totalTicks": 359,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "ChassisScenes.java:30"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      4,
+      0,
+      4
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "ChassisScenes.java:31"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ChassisScenes.java:32"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      1,
+      0
+     ],
+     "to": [
+      4,
+      1,
+      4
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ChassisScenes.java:33"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChassisScenes.java:34"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      2,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ChassisScenes.java:38",
+   "out": "e1"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChassisScenes.java:39"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      2,
+      2
+     ]
+    },
+    "direction": "east",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "ChassisScenes.java:40"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ChassisScenes.java:41"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      2,
+      2
+     ]
+    },
+    "direction": "west",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "ChassisScenes.java:42"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "ChassisScenes.java:43"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      2,
+      1
+     ]
+    },
+    "direction": "south",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "ChassisScenes.java:44"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "ChassisScenes.java:46"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      3,
+      2
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "ChassisScenes.java:47"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "ChassisScenes.java:48"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      3,
+      2
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "ChassisScenes.java:49"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChassisScenes.java:51"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_1",
+    "pointAt": [
+     2.5,
+     4,
+     2.5
+    ],
+    "text": "Linear Chassis connect to identical Chassis blocks next to them"
+   },
+   "src": "ChassisScenes.java:53"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "ChassisScenes.java:58"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     -0.0009765625,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "ChassisScenes.java:61"
+  },
+  {
+   "op": "world.configureCenterOfRotation",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "anchor": [
+     2.5,
+     1.5,
+     2.5
+    ]
+   },
+   "src": "ChassisScenes.java:62"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bearing",
+    "pos": [
+     2,
+     1,
+     2
+    ],
+    "distance": 360,
+    "duration": 80
+   },
+   "src": "ChassisScenes.java:63"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "rotation": [
+     0,
+     360,
+     0
+    ],
+    "duration": 80
+   },
+   "src": "ChassisScenes.java:64"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "ChassisScenes.java:66"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_2",
+    "pointAt": [
+     2.5,
+     4,
+     2.5
+    ],
+    "text": "When one is moved by a Contraption, the others are dragged with it"
+   },
+   "src": "ChassisScenes.java:67"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "ChassisScenes.java:71"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      2,
+      2
+     ]
+    },
+    "direction": "east"
+   },
+   "src": "ChassisScenes.java:77"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChassisScenes.java:78"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      4,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ChassisScenes.java:79"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChassisScenes.java:80"
+  },
+  {
+   "op": "overlay.showOutline",
+   "args": {
+    "color": "red",
+    "slot": "obj:1",
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      2,
+      2
+     ]
+    },
+    "duration": 80
+   },
+   "src": "ChassisScenes.java:81"
+  },
+  {
+   "op": "overlay.showOutlineWithText",
+   "args": {
+    "duration": 80,
+    "color": "red",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      4,
+      2
+     ]
+    },
+    "pointAt": [
+     2.5,
+     4.5,
+     2.5
+    ],
+    "key": "text_3",
+    "text": "Chassis of a different type or facing another direction will not attach"
+   },
+   "src": "ChassisScenes.java:82"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "ChassisScenes.java:86"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bearing",
+    "pos": [
+     2,
+     1,
+     2
+    ],
+    "distance": 360,
+    "duration": 80
+   },
+   "src": "ChassisScenes.java:88"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "rotation": [
+     0,
+     360,
+     0
+    ],
+    "duration": 80
+   },
+   "src": "ChassisScenes.java:89"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "ChassisScenes.java:90"
+  }
+ ]
+}

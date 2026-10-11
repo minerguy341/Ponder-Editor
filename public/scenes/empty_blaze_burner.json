@@ -1,0 +1,549 @@
+{
+ "id": "create:empty_blaze_burner",
+ "schematic": "empty_blaze_burner",
+ "schematicNamespace": "create",
+ "title": "Using Empty Blaze Burners",
+ "texts": {
+  "text_1": "Right-click a Blaze with the empty burner to capture it",
+  "text_2": "Alternatively, Blazes can be collected from their Spawners directly",
+  "text_3": "You now have an ideal heat source for various machines",
+  "text_4": "For Aesthetic purposes, Empty Blaze Burners can also be lit using Flint and Steel",
+  "text_5": "The flame can be transformed using a soul-infused item",
+  "text_6": "However, without a blaze they are not suitable for industrial heating"
+ },
+ "tags": [],
+ "items": [
+  "create:empty_blaze_burner"
+ ],
+ "keyframes": [
+  46,
+  146,
+  236,
+  353
+ ],
+ "totalTicks": 584,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "ProcessingScenes.java:565"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      4,
+      0,
+      4
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "ProcessingScenes.java:566"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ProcessingScenes.java:567"
+  },
+  {
+   "op": "world.createEntity",
+   "args": {
+    "entity": {
+     "type": "minecraft:blaze",
+     "calls": [
+      {
+       "path": [
+        {
+         "m": "setPosRaw",
+         "a": [
+          2.5,
+          1,
+          2.5
+         ]
+        }
+       ]
+      },
+      {
+       "path": [
+        {
+         "set": "yRotO",
+         "v": 180
+        }
+       ]
+      },
+      {
+       "path": [
+        {
+         "m": "setYRot",
+         "a": [
+          180
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "src": "ProcessingScenes.java:570",
+   "out": "e1"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "ProcessingScenes.java:578"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     2.5,
+     2.5
+    ],
+    "direction": "down",
+    "duration": 40,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:empty_blaze_burner",
+     "count": 1
+    }
+   },
+   "src": "ProcessingScenes.java:579"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ProcessingScenes.java:581"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_1",
+    "pointAt": [
+     2,
+     2.5,
+     2.5
+    ],
+    "text": "Right-click a Blaze with the empty burner to capture it"
+   },
+   "src": "ProcessingScenes.java:582"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "ProcessingScenes.java:587"
+  },
+  {
+   "op": "world.modifyEntities",
+   "args": {
+    "entityType": "Blaze",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "discard",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "ProcessingScenes.java:589"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "ProcessingScenes.java:590"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ProcessingScenes.java:592"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "ProcessingScenes.java:593"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     2,
+     2.5
+    ],
+    "direction": "down",
+    "duration": 40,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:empty_blaze_burner",
+     "count": 1
+    }
+   },
+   "src": "ProcessingScenes.java:594"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ProcessingScenes.java:596"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_2",
+    "pointAt": [
+     2,
+     1.5,
+     2.5
+    ],
+    "text": "Alternatively, Blazes can be collected from their Spawners directly"
+   },
+   "src": "ProcessingScenes.java:597"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "ProcessingScenes.java:602"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      2
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "ProcessingScenes.java:603"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "ProcessingScenes.java:604"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ProcessingScenes.java:605"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "ProcessingScenes.java:606"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       2
+      ],
+      "state": {
+       "name": "create:blaze_burner",
+       "props": {
+        "blaze": "kindled",
+        "facing": "north"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ProcessingScenes.java:608"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_3",
+    "pointAt": [
+     1,
+     1.5,
+     2.5
+    ],
+    "text": "You now have an ideal heat source for various machines"
+   },
+   "src": "ProcessingScenes.java:610"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "ProcessingScenes.java:616"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ProcessingScenes.java:618"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "ProcessingScenes.java:619"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3.5,
+     2,
+     2.5
+    ],
+    "direction": "down",
+    "duration": 40,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "minecraft:flint_and_steel",
+     "count": 1
+    }
+   },
+   "src": "ProcessingScenes.java:620"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "ProcessingScenes.java:622"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      2
+     ]
+    },
+    "state": {
+     "name": "create:lit_blaze_burner",
+     "props": {
+      "flame_type": "regular"
+     }
+    },
+    "particles": false
+   },
+   "src": "ProcessingScenes.java:623"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ProcessingScenes.java:624"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_4",
+    "pointAt": [
+     3.5,
+     2,
+     2.5
+    ],
+    "text": "For Aesthetic purposes, Empty Blaze Burners can also be lit using Flint and Steel"
+   },
+   "src": "ProcessingScenes.java:625"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "ProcessingScenes.java:631"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3.5,
+     2,
+     2.5
+    ],
+    "direction": "down",
+    "duration": 40,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "minecraft:soul_sand",
+     "count": 1
+    }
+   },
+   "src": "ProcessingScenes.java:632"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "ProcessingScenes.java:634"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "state": {
+       "name": "create:lit_blaze_burner",
+       "props": {
+        "flame_type": "soul"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "ProcessingScenes.java:635"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_5",
+    "pointAt": [
+     3.5,
+     2,
+     2.5
+    ],
+    "text": "The flame can be transformed using a soul-infused item"
+   },
+   "src": "ProcessingScenes.java:637"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "ProcessingScenes.java:642"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 90,
+    "color": "red",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_6",
+    "pointAt": [
+     3.5,
+     2,
+     2.5
+    ],
+    "text": "However, without a blaze they are not suitable for industrial heating"
+   },
+   "src": "ProcessingScenes.java:643"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "ProcessingScenes.java:649"
+  }
+ ]
+}

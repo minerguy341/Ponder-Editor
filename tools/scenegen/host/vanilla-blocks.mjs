@@ -26,6 +26,8 @@ const BASES = [
   ['CrossCollisionBlock', { props: [], statics: { NORTH: 'NORTH', EAST: 'EAST', SOUTH: 'SOUTH', WEST: 'WEST', WATERLOGGED: 'WATERLOGGED' } }],
   ['SlabBlock', { ref: 'oak_slab', statics: { TYPE: 'SLAB_TYPE', WATERLOGGED: 'WATERLOGGED' } }],
   ['StairBlock', { ref: 'oak_stairs', statics: { FACING: 'HORIZONTAL_FACING', HALF: 'HALF', SHAPE: 'STAIRS_SHAPE', WATERLOGGED: 'WATERLOGGED' } }],
+  ['WeatheringCopperSlabBlock', { ref: 'oak_slab', extends: 'SlabBlock', statics: { TYPE: 'SLAB_TYPE', WATERLOGGED: 'WATERLOGGED' } }],
+  ['WeatheringCopperFullBlock', { props: [], statics: {} }],
   ['WallBlock', { ref: 'cobblestone_wall', statics: { UP: 'UP', NORTH_WALL: 'NORTH_WALL', EAST_WALL: 'EAST_WALL', SOUTH_WALL: 'SOUTH_WALL', WEST_WALL: 'WEST_WALL', WATERLOGGED: 'WATERLOGGED' } }],
   ['LeverBlock', { ref: 'lever', statics: { POWERED: 'POWERED' } }],
   ['ButtonBlock', { ref: 'stone_button', statics: { POWERED: 'POWERED' } }],

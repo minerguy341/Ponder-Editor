@@ -1881,7 +1881,7 @@ export class Interp {
       if (n.value.k === 'arraylit') v = this.evalArrayLit(n.value, null, fr);
       else v = this.evalExpr(n.value, fr);
       this.assignTo(n.target, v, fr);
-      return n.target.k === 'name' || n.target.k === 'field' ? this.evalExpr(n.target, fr) : v;
+      return v;
     }
     const op = n.op.slice(0, -1);
     const cur = this.evalExpr(n.target, fr);

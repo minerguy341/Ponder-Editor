@@ -673,6 +673,8 @@ export function buildLang(R) {
   for (const n of ['Object2BooleanOpenHashMap', 'Object2ObjectOpenHashMap', 'Object2IntOpenHashMap', 'Int2ObjectOpenHashMap', 'Object2FloatOpenHashMap', 'Long2ObjectOpenHashMap', 'Object2LongOpenHashMap', 'Int2IntOpenHashMap']) {
     R.add(hc(n, { construct: () => { const m = new JMap(); m.getBoolean = (k) => m.get(k) === true; m.getInt = (k) => (m.get(k) === null ? 0 : m.get(k)); m.defaultReturnValue = () => undefined; return m; }, is: (v) => v instanceof JMap }));
   }
+  R.add(hc('HashBiMap', { statics: { create: () => new JMap() }, is: (v) => v instanceof JMap }));
+  R.add(hc('ArrayUtils', { statics: { contains: (a, v) => a.a.some((x) => x === v || (x && x.equals && x.equals(v))) } }));
   R.add(hc('Optional', { statics: { of: (v) => new JOptional(v), ofNullable: (v) => new JOptional(v), empty: () => new JOptional(null) } }));
   R.add(hc('Random', { construct: (r, a) => new JRandom(a.length ? num(a[0]) : 0) }));
   R.add(hc('RandomSource', { statics: { create: (seed) => new JRandom(seed === undefined ? 0 : num(seed)), createNewThreadLocalInstance: () => new JRandom(0) } }));

@@ -1,0 +1,752 @@
+{
+ "id": "create:gantry/intro~introForPinion",
+ "schematic": "gantry/intro",
+ "schematicNamespace": "create",
+ "title": "Using Gantry Carriages",
+ "texts": {
+  "text_1": "Gantry Carriages can mount to and slide along a Gantry Shaft.",
+  "text_2": "Gantry setups can move attached Blocks."
+ },
+ "tags": [
+  "create:kinetic_appliances",
+  "create:movement_anchor"
+ ],
+ "items": [
+  "create:gantry_carriage"
+ ],
+ "keyframes": [
+  36,
+  126,
+  196
+ ],
+ "totalTicks": 290,
+ "instructions": [
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       5,
+       0,
+       1
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     },
+     {
+      "pos": [
+       0,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -64
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -64
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -64
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -64
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -64
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -64
+      }
+     }
+    ]
+   },
+   "src": "GantryScenes.java:37"
+  },
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "GantryScenes.java:38"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      5,
+      0,
+      4
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "GantryScenes.java:39"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "GantryScenes.java:40"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      1,
+      0
+     ],
+     "to": [
+      5,
+      1,
+      4
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "GantryScenes.java:41"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "GantryScenes.java:42"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      2,
+      0
+     ],
+     "to": [
+      5,
+      2,
+      4
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "GantryScenes.java:44",
+   "out": "e1"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "GantryScenes.java:45"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     -4,
+     0,
+     0
+    ],
+    "duration": 60
+   },
+   "src": "GantryScenes.java:49"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": false,
+    "keyframe": true,
+    "key": "text_1",
+    "pointAt": [
+     2.5,
+     1.5,
+     2.5
+    ],
+    "text": "Gantry Carriages can mount to and slide along a Gantry Shaft."
+   },
+   "src": "GantryScenes.java:54"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "GantryScenes.java:58"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "direction": "up"
+   },
+   "src": "GantryScenes.java:60"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "GantryScenes.java:61"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      2,
+      0
+     ],
+     "to": [
+      5,
+      2,
+      4
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "GantryScenes.java:62",
+   "out": "e2"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       5,
+       0,
+       1
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       0,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     }
+    ]
+   },
+   "src": "GantryScenes.java:64"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 40,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_2",
+    "pointAt": [
+     4.5,
+     3,
+     2.5
+    ],
+    "text": "Gantry setups can move attached Blocks."
+   },
+   "src": "GantryScenes.java:65"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "GantryScenes.java:70"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        0,
+        3,
+        0
+       ],
+       "to": [
+        5,
+        3,
+        0
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        3,
+        1
+       ],
+       "to": [
+        4,
+        3,
+        1
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        3,
+        2
+       ],
+       "to": [
+        5,
+        3,
+        4
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        4,
+        0
+       ],
+       "to": [
+        5,
+        4,
+        4
+       ]
+      }
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e2"
+    }
+   },
+   "src": "GantryScenes.java:74"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       3,
+       2
+      ],
+      "state": {
+       "name": "minecraft:oak_planks",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       4,
+       3,
+       2
+      ],
+      "state": {
+       "name": "minecraft:oak_planks",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       5,
+       3,
+       2
+      ],
+      "state": {
+       "name": "minecraft:oak_planks",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       3,
+       4,
+       2
+      ],
+      "state": {
+       "name": "minecraft:oak_planks",
+       "props": {}
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "GantryScenes.java:76"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "GantryScenes.java:77"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      5,
+      3,
+      1
+     ]
+    },
+    "direction": "south",
+    "link": {
+     "link": "e2"
+    }
+   },
+   "src": "GantryScenes.java:78"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "GantryScenes.java:80"
+  },
+  {
+   "op": "overlay.showOutline",
+   "args": {
+    "color": "green",
+    "slot": "glue",
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "pos",
+       "pos": [
+        5,
+        3,
+        1
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        3,
+        3,
+        2
+       ],
+       "to": [
+        5,
+        3,
+        2
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        3,
+        4,
+        2
+       ]
+      }
+     ]
+    },
+    "duration": 40
+   },
+   "src": "GantryScenes.java:81"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3.5,
+     3.5,
+     2.5
+    ],
+    "direction": "up",
+    "duration": 40,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "create:super_glue",
+     "count": 1
+    }
+   },
+   "src": "GantryScenes.java:84"
+  },
+  {
+   "op": "effects.superGlue",
+   "args": {
+    "pos": [
+     5,
+     3,
+     1
+    ],
+    "side": "south",
+    "fullBlock": true
+   },
+   "src": "GantryScenes.java:86"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "GantryScenes.java:87"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "sharedKey": "create:movement_anchors",
+    "pointAt": [
+     3,
+     3.5,
+     2.5
+    ],
+    "text": "With the help of Super Glue, larger structures can be moved."
+   },
+   "src": "GantryScenes.java:88"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "GantryScenes.java:93"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       5,
+       0,
+       1
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     }
+    ]
+   },
+   "src": "GantryScenes.java:95"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       0,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -64
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -64
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -64
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -64
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -64
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": -64
+      }
+     }
+    ]
+   },
+   "src": "GantryScenes.java:96"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     -4,
+     0,
+     0
+    ],
+    "duration": 60
+   },
+   "src": "GantryScenes.java:98"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "GantryScenes.java:99"
+  },
+  {
+   "op": "markAsFinished",
+   "args": {},
+   "src": "GantryScenes.java:100"
+  }
+ ]
+}

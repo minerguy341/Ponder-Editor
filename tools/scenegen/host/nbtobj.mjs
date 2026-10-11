@@ -1,6 +1,7 @@
 // CompoundTag / ListTag and friends. Values are kept as plain numbers/strings/JCompound/JListTag; toJSON() gives plain JSON.
 import { hc, Dbl, D, F, JChar, JArray, JObject, JavaThrow, Unsupported, num, isNum, describe, getRT, keyOf, jeq, throwJava } from './base.mjs';
 import { JSet, JList, mkList } from './lang.mjs';
+import { f32short } from '../values.mjs';
 import { JItemStack, JState, JBlock } from './blocks.mjs';
 
 /** NBT primitive wrapper keeping the tag type for getX() conversions */
@@ -20,7 +21,7 @@ class PTag {
   getAsLong() { return this.v; }
   getAsShort() { return this.v; }
   getAsNumber() { return this.v; }
-  toJSON() { return this.v; }
+  toJSON() { return this.kind === 'float' ? f32short(this.v) : this.v; }
 }
 const mkP = (kind) => (x) => new PTag(kind, typeof x === 'boolean' ? (x ? 1 : 0) : x instanceof Dbl ? x.v : x);
 
@@ -166,7 +167,7 @@ const numOf = (v) => (v === undefined || v === null ? 0 : v instanceof PTag ? v.
 const copyVal = (v) => (v instanceof JCompound || v instanceof JListTag ? v.copy() : v);
 export function jsonOf(v) {
   if (v instanceof JCompound || v instanceof JListTag) return v.toJSON();
-  if (v instanceof PTag) return v.v;
+  if (v instanceof PTag) return v.toJSON();
   if (v instanceof Dbl) return v.v;
   if (v instanceof JItemStack) return v.toNbt();
   if (Array.isArray(v)) return v.map(jsonOf);

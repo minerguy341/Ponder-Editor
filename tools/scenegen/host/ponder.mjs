@@ -1,7 +1,7 @@
 // Recording implementation of the Ponder API (SceneBuilder & friends). Scene code (interpreted Java) calls into this; the result is the
 // instruction list documented in tools/scenegen/OPS.md.
 import { hc, Dbl, D, F, JChar, JArray, JObject, JavaThrow, Unsupported, num, isNum, describe, getRT, keyOf, jeq, throwJava } from './base.mjs';
-import { Lambda, MethodRef, ClassRef } from '../values.mjs';
+import { Lambda, MethodRef, ClassRef, f32short } from '../values.mjs';
 import { Vec3i, BlockPos, Vec3, AABB, BoundingBox, HEnum, hostEnum, DIRECTION, AXIS } from './mc.mjs';
 import { JList, JSet, JMap, mkList } from './lang.mjs';
 import { JState, JBlock, JItemStack, HItem, EMPTY_STACK, vanillaBlock, itemIdOf, itemLike, vanillaProperty } from './blocks.mjs';
@@ -919,11 +919,11 @@ export const SPECIAL = {
   createCart(rec, loc, angle, type) {
     const l = rec.newLink('Minecart');
     let name = type instanceof MethodRef ? (type.cls ? type.cls.name : type.name) : describe(type);
-    rec.emit('special.createCart', { location: v3(loc), angle: num(angle), cartType: name }, l.id);
+    rec.emit('special.createCart', { location: v3(loc), angle: f32short(num(angle)), cartType: name }, l.id);
     return l;
   },
   rotateCart(rec, link, yRot, duration) {
-    rec.emit('special.rotateCart', { link: HOOKS.linkJSON(link), yRotation: num(yRot), duration: num(duration) });
+    rec.emit('special.rotateCart', { link: HOOKS.linkJSON(link), yRotation: f32short(num(yRot)), duration: num(duration) });
   },
   moveCart(rec, link, offset, duration) {
     rec.emit('special.moveCart', { link: HOOKS.linkJSON(link), offset: v3(offset), duration: num(duration) });
@@ -961,13 +961,13 @@ export const BASE = {
     rec.emit('configureBasePlate', { xOffset: num(x), zOffset: num(z), size: num(size) });
   },
   scaleSceneView(rec, f) {
-    rec.emit('scaleSceneView', { factor: num(f) });
+    rec.emit('scaleSceneView', { factor: f32short(num(f)) });
   },
   removeShadow(rec) {
     rec.emit('removeShadow', {});
   },
   setSceneOffsetY(rec, y) {
-    rec.emit('setSceneOffsetY', { yOffset: num(y) });
+    rec.emit('setSceneOffsetY', { yOffset: f32short(num(y)) });
   },
   showBasePlate(rec) {
     const b = rec.basePlate;
@@ -1003,7 +1003,7 @@ export const BASE = {
     rec.emit('setNextUpEnabled', { enabled: !!enabled });
   },
   rotateCameraY(rec, deg) {
-    rec.emit('rotateCameraY', { degrees: num(deg) });
+    rec.emit('rotateCameraY', { degrees: f32short(num(deg)) });
   },
   addKeyframe(rec) {
     if (!rec.stopped) rec.keyframes.push(rec.totalTime);

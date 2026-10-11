@@ -1,0 +1,1375 @@
+{
+ "id": "create:weighted_ejector/eject",
+ "schematic": "weighted_ejector/eject",
+ "schematicNamespace": "create",
+ "title": "Using Weighted Ejectors",
+ "texts": {
+  "text_1": "Sneak and Right-Click holding an Ejector to select its target location",
+  "text_2": "The placed ejector will now launch objects to the marked location",
+  "text_3": "A valid target can be at any height or distance within range",
+  "text_4": "They cannot however be off to a side",
+  "text_5": "If no valid Target was selected, it will simply target the block directly in front",
+  "text_6": "Supply Rotational Force in order to charge it up",
+  "text_7": "Items placed on the ejector cause it to trigger",
+  "text_8": "If Inventories are targeted, the ejector will wait until there is space",
+  "text_9": "Using the value panel, a required Stack Size can be configured",
+  "text_10": "It is now limited to this stack size, and only activates when its held stack reaches this amount",
+  "text_11": "Mobs and Players will always trigger an Ejector when stepping on it"
+ },
+ "tags": [],
+ "items": [
+  "create:weighted_ejector"
+ ],
+ "keyframes": [
+  28,
+  215,
+  467,
+  659,
+  794,
+  1103
+ ],
+ "totalTicks": 1197,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "EjectorScenes.java:33"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      4,
+      0,
+      4
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "EjectorScenes.java:34"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      1,
+      2
+     ]
+    },
+    "state": {
+     "name": "create:andesite_casing",
+     "props": {}
+    },
+    "particles": false
+   },
+   "src": "EjectorScenes.java:41"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "EjectorScenes.java:42"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "EjectorScenes.java:43"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "EjectorScenes.java:45"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     0.5,
+     2,
+     2.5
+    ],
+    "direction": "down",
+    "duration": 50,
+    "sneak": true,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:weighted_ejector",
+     "count": 1
+    }
+   },
+   "src": "EjectorScenes.java:47"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "EjectorScenes.java:50"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "output",
+    "slot": "obj:1",
+    "box": {
+     "min": [
+      0,
+      1,
+      2
+     ],
+     "max": [
+      1,
+      2,
+      3
+     ]
+    },
+    "duration": 160
+   },
+   "src": "EjectorScenes.java:52"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "output",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_1",
+    "pointAt": [
+     0,
+     1.5,
+     2.5
+    ],
+    "text": "Sneak and Right-Click holding an Ejector to select its target location"
+   },
+   "src": "EjectorScenes.java:54"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "EjectorScenes.java:60"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     4.5,
+     2,
+     2.5
+    ],
+    "direction": "down",
+    "duration": 50,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:weighted_ejector",
+     "count": 1
+    }
+   },
+   "src": "EjectorScenes.java:61"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "EjectorScenes.java:63"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     }
+    ]
+   },
+   "src": "EjectorScenes.java:64"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "EjectorBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       2
+      ],
+      "nbt": {
+       "State": "RETRACTING",
+       "ForceAngle": 1
+      }
+     }
+    ]
+   },
+   "src": "EjectorScenes.java:65"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "EjectorScenes.java:69"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "EjectorScenes.java:70"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "output",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_2",
+    "pointAt": [
+     4,
+     1.5,
+     2.5
+    ],
+    "text": "The placed ejector will now launch objects to the marked location"
+   },
+   "src": "EjectorScenes.java:72"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "EjectorScenes.java:77"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "output",
+    "slot": "obj:2",
+    "box": {
+     "min": [
+      3,
+      1,
+      2
+     ],
+     "max": [
+      4,
+      2,
+      3
+     ]
+    },
+    "duration": 20
+   },
+   "src": "EjectorScenes.java:81"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "EjectorScenes.java:82"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "green",
+    "slot": "obj:2",
+    "box": {
+     "min": [
+      -12,
+      1,
+      2
+     ],
+     "max": [
+      4,
+      17,
+      3
+     ]
+    },
+    "duration": 100
+   },
+   "src": "EjectorScenes.java:83"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "EjectorScenes.java:84"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "green",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_3",
+    "pointAt": [
+     0,
+     1.5,
+     2.5
+    ],
+    "text": "A valid target can be at any height or distance within range"
+   },
+   "src": "EjectorScenes.java:86"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "EjectorScenes.java:92"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "red",
+    "slot": "obj:3",
+    "box": {
+     "min": [
+      1,
+      1,
+      1
+     ],
+     "max": [
+      2,
+      2,
+      2
+     ]
+    },
+    "duration": 60
+   },
+   "src": "EjectorScenes.java:93"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "EjectorScenes.java:94"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 50,
+    "color": "red",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_4",
+    "pointAt": [
+     1,
+     1.5,
+     1.5
+    ],
+    "text": "They cannot however be off to a side"
+   },
+   "src": "EjectorScenes.java:95"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "EjectorScenes.java:101"
+  },
+  {
+   "op": "overlay.showOutlineWithText",
+   "args": {
+    "duration": 70,
+    "color": "output",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      2
+     ]
+    },
+    "pointAt": [
+     3.5,
+     1.5,
+     2.5
+    ],
+    "key": "text_5",
+    "text": "If no valid Target was selected, it will simply target the block directly in front"
+   },
+   "src": "EjectorScenes.java:102"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "EjectorScenes.java:106"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      0,
+      5
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "EjectorScenes.java:108"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      1,
+      3
+     ],
+     "to": [
+      4,
+      1,
+      5
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "EjectorScenes.java:109"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 12
+   },
+   "src": "EjectorScenes.java:110"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     }
+    ]
+   },
+   "src": "EjectorScenes.java:111"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "EjectorScenes.java:112"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 50,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_6",
+    "pointAt": [
+     4.5,
+     2,
+     3.5
+    ],
+    "text": "Supply Rotational Force in order to charge it up"
+   },
+   "src": "EjectorScenes.java:113"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "EjectorScenes.java:118"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     5,
+     2,
+     2.5
+    ],
+    "direction": "right",
+    "duration": 30,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "minecraft:copper_block",
+     "count": 1
+    }
+   },
+   "src": "EjectorScenes.java:122"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "EjectorScenes.java:123"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     4,
+     1,
+     2
+    ],
+    "insertionSide": "north",
+    "item": {
+     "id": "minecraft:copper_block",
+     "count": 1
+    }
+   },
+   "src": "EjectorScenes.java:124"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "EjectorScenes.java:125"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 50,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_7",
+    "pointAt": [
+     4.5,
+     2,
+     2.5
+    ],
+    "text": "Items placed on the ejector cause it to trigger"
+   },
+   "src": "EjectorScenes.java:126"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "EjectorScenes.java:130"
+  },
+  {
+   "op": "world.modifyEntities",
+   "args": {
+    "entityType": "ItemEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "discard",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "EjectorScenes.java:132"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      1,
+      2
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "EjectorScenes.java:133"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "EjectorScenes.java:134"
+  },
+  {
+   "op": "world.restoreBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      1,
+      2
+     ]
+    }
+   },
+   "src": "EjectorScenes.java:135"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      1,
+      2
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "EjectorScenes.java:136"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "EjectorScenes.java:137"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     0,
+     1,
+     2
+    ],
+    "insertionSide": "south",
+    "item": {
+     "id": "minecraft:copper_ingot",
+     "count": 1
+    }
+   },
+   "src": "EjectorScenes.java:138"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "EjectorScenes.java:139"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     4,
+     1,
+     2
+    ],
+    "insertionSide": "south",
+    "item": {
+     "id": "minecraft:copper_block",
+     "count": 1
+    }
+   },
+   "src": "EjectorScenes.java:140"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_8",
+    "pointAt": [
+     0.5,
+     2,
+     2.5
+    ],
+    "text": "If Inventories are targeted, the ejector will wait until there is space"
+   },
+   "src": "EjectorScenes.java:141"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "EjectorScenes.java:146"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     0,
+     1,
+     2
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "EjectorScenes.java:147"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     0,
+     1,
+     2
+    ]
+   },
+   "src": "EjectorScenes.java:148"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "EjectorScenes.java:149"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      1,
+      2
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "EjectorScenes.java:150"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "EjectorScenes.java:151"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      1,
+      2
+     ]
+    },
+    "state": {
+     "name": "create:andesite_casing",
+     "props": {}
+    },
+    "particles": false
+   },
+   "src": "EjectorScenes.java:152"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      1,
+      2
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "EjectorScenes.java:153"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     4,
+     1.5,
+     2.5
+    ],
+    "direction": "down",
+    "duration": 60,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb"
+   },
+   "src": "EjectorScenes.java:158"
+  },
+  {
+   "op": "overlay.highlightValueBox",
+   "args": {
+    "location": [
+     4.0234375,
+     1.375,
+     2.5
+    ],
+    "expands": [
+     0,
+     0.0859375,
+     0.0859375
+    ],
+    "duration": 80
+   },
+   "src": "EjectorScenes.java:159"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "EjectorScenes.java:160"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_9",
+    "pointAt": [
+     4,
+     1.375,
+     2.625
+    ],
+    "text": "Using the value panel, a required Stack Size can be configured"
+   },
+   "src": "EjectorScenes.java:161"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "EjectorBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       2
+      ],
+      "nbt": {
+       "ScrollValue": 10
+      }
+     }
+    ]
+   },
+   "src": "EjectorScenes.java:166"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "EjectorScenes.java:169"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      1,
+      0
+     ],
+     "to": [
+      5,
+      1,
+      1
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "EjectorScenes.java:171"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      5,
+      0,
+      1
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "EjectorScenes.java:172"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "EjectorScenes.java:173"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     4,
+     1,
+     0
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:copper_block",
+     "count": 1
+    }
+   },
+   "src": "EjectorScenes.java:176"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 100,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_10",
+    "pointAt": [
+     4.5,
+     2,
+     2.5
+    ],
+    "text": "It is now limited to this stack size, and only activates when its held stack reaches this amount"
+   },
+   "src": "EjectorScenes.java:177"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "EjectorScenes.java:182"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     4,
+     1,
+     0
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:copper_block",
+     "count": 1
+    }
+   },
+   "src": "EjectorScenes.java:183"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "EjectorScenes.java:182"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     4,
+     1,
+     0
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:copper_block",
+     "count": 1
+    }
+   },
+   "src": "EjectorScenes.java:183"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "EjectorScenes.java:182"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     4,
+     1,
+     0
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:copper_block",
+     "count": 1
+    }
+   },
+   "src": "EjectorScenes.java:183"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "EjectorScenes.java:182"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     4,
+     1,
+     0
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:copper_block",
+     "count": 1
+    }
+   },
+   "src": "EjectorScenes.java:183"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "EjectorScenes.java:185"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     4,
+     1,
+     0
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:copper_block",
+     "count": 15
+    }
+   },
+   "src": "EjectorScenes.java:186"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "EjectorScenes.java:187"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      1,
+      0
+     ],
+     "to": [
+      5,
+      1,
+      1
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "EjectorScenes.java:189"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      5,
+      0,
+      1
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "EjectorScenes.java:190"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "EjectorScenes.java:191"
+  },
+  {
+   "op": "world.modifyEntities",
+   "args": {
+    "entityType": "ItemEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "discard",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "EjectorScenes.java:192"
+  },
+  {
+   "op": "special.createBirb",
+   "args": {
+    "location": [
+     4.5,
+     1.8125,
+     2.5
+    ],
+    "pose": {
+     "type": "flappy"
+    }
+   },
+   "src": "EjectorScenes.java:195",
+   "out": "e1"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "EjectorScenes.java:197"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     4,
+     1,
+     2
+    ],
+    "beType": "EjectorBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "activateDeferred",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "EjectorScenes.java:198"
+  },
+  {
+   "op": "special.moveParrot",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     -2,
+     3,
+     0
+    ],
+    "duration": 5
+   },
+   "src": "EjectorScenes.java:199"
+  },
+  {
+   "op": "special.rotateParrot",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "rotation": [
+     0,
+     720,
+     0
+    ],
+    "duration": 21
+   },
+   "src": "EjectorScenes.java:200"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "EjectorScenes.java:201"
+  },
+  {
+   "op": "special.moveParrot",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     -1,
+     0,
+     0
+    ],
+    "duration": 3
+   },
+   "src": "EjectorScenes.java:202"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "EjectorScenes.java:203"
+  },
+  {
+   "op": "special.moveParrot",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     -0.75,
+     -1,
+     0
+    ],
+    "duration": 6
+   },
+   "src": "EjectorScenes.java:204"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 6
+   },
+   "src": "EjectorScenes.java:205"
+  },
+  {
+   "op": "special.moveParrot",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     -0.25,
+     -1.8125,
+     0
+    ],
+    "duration": 12
+   },
+   "src": "EjectorScenes.java:206"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "EjectorScenes.java:207"
+  },
+  {
+   "op": "special.changeBirbPose",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "pose": {
+     "type": "face_cursor"
+    }
+   },
+   "src": "EjectorScenes.java:208"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_11",
+    "pointAt": [
+     0.5,
+     2,
+     2.5
+    ],
+    "text": "Mobs and Players will always trigger an Ejector when stepping on it"
+   },
+   "src": "EjectorScenes.java:209"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "EjectorScenes.java:213"
+  }
+ ]
+}

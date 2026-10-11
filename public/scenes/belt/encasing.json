@@ -1,0 +1,705 @@
+{
+ "id": "create:belt/encasing",
+ "schematic": "belt/encasing",
+ "schematicNamespace": "create",
+ "title": "Encasing Belts",
+ "texts": {
+  "text_1": "Brass or Andesite Casing can be used to decorate Mechanical Belts",
+  "text_2": "A wrench can be used to remove the casing"
+ },
+ "tags": [],
+ "items": [
+  "create:belt_connector",
+  "create:andesite_casing",
+  "create:brass_casing"
+ ],
+ "keyframes": [
+  112,
+  212
+ ],
+ "totalTicks": 219,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "BeltScenes.java:403"
+  },
+  {
+   "op": "setSceneOffsetY",
+   "args": {
+    "yOffset": -1
+   },
+   "src": "BeltScenes.java:404"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      4,
+      0,
+      4
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "BeltScenes.java:405"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "BeltScenes.java:406"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      1,
+      0
+     ],
+     "to": [
+      5,
+      4,
+      4
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "BeltScenes.java:407"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "BeltScenes.java:408"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3.5,
+     2,
+     0.5
+    ],
+    "direction": "down",
+    "duration": 20,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:brass_casing",
+     "count": 1
+    }
+   },
+   "src": "BeltScenes.java:417"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "BeltScenes.java:419"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       1,
+       0
+      ],
+      "state": {
+       "name": "create:belt",
+       "props": {
+        "casing": "true",
+        "facing": "north",
+        "part": "end",
+        "slope": "horizontal",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": true
+   },
+   "src": "BeltScenes.java:420"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "BeltScenes.java:421"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     0.5,
+     3,
+     3.5
+    ],
+    "direction": "down",
+    "duration": 20,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:andesite_casing",
+     "count": 1
+    }
+   },
+   "src": "BeltScenes.java:423"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "BeltScenes.java:425"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       0,
+       2,
+       3
+      ],
+      "state": {
+       "name": "create:belt",
+       "props": {
+        "casing": "true",
+        "facing": "west",
+        "part": "end",
+        "slope": "sideways",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": true
+   },
+   "src": "BeltScenes.java:426"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "BeltBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       0,
+       2,
+       3
+      ],
+      "nbt": {
+       "Casing": "ANDESITE"
+      }
+     }
+    ]
+   },
+   "src": "BeltScenes.java:427"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "BeltScenes.java:430"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2,
+     4.5,
+     4.5
+    ],
+    "direction": "right",
+    "duration": 20,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:brass_casing",
+     "count": 1
+    }
+   },
+   "src": "BeltScenes.java:432"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "BeltScenes.java:434"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       4,
+       4
+      ],
+      "state": {
+       "name": "create:belt",
+       "props": {
+        "casing": "true",
+        "facing": "west",
+        "part": "end",
+        "slope": "upward",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": true
+   },
+   "src": "BeltScenes.java:435"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "BeltScenes.java:436"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": false,
+    "keyframe": true,
+    "key": "text_1",
+    "pointAt": [
+     0.5,
+     2.5,
+     3.5
+    ],
+    "text": "Brass or Andesite Casing can be used to decorate Mechanical Belts"
+   },
+   "src": "BeltScenes.java:438"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "BeltScenes.java:443"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "BeltScenes.java:460"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "BeltScenes.java:460"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       2,
+       3
+      ],
+      "state": {
+       "name": "create:belt",
+       "props": {
+        "casing": "true",
+        "facing": "west",
+        "part": "start",
+        "slope": "sideways",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": true
+   },
+   "src": "BeltScenes.java:461"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "BeltBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       2,
+       3
+      ],
+      "nbt": {
+       "Casing": "ANDESITE"
+      }
+     }
+    ]
+   },
+   "src": "BeltScenes.java:462"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "BeltScenes.java:460"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       2,
+       3
+      ],
+      "state": {
+       "name": "create:belt",
+       "props": {
+        "casing": "true",
+        "facing": "west",
+        "part": "middle",
+        "slope": "sideways",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": true
+   },
+   "src": "BeltScenes.java:461"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "BeltBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       2,
+       3
+      ],
+      "nbt": {
+       "Casing": "ANDESITE"
+      }
+     }
+    ]
+   },
+   "src": "BeltScenes.java:462"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "BeltScenes.java:467"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       2,
+       4
+      ],
+      "state": {
+       "name": "create:belt",
+       "props": {
+        "casing": "true",
+        "facing": "west",
+        "part": "middle",
+        "slope": "upward",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": true
+   },
+   "src": "BeltScenes.java:468"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "BeltScenes.java:467"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       4,
+       1,
+       4
+      ],
+      "state": {
+       "name": "create:belt",
+       "props": {
+        "casing": "true",
+        "facing": "west",
+        "part": "start",
+        "slope": "upward",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": true
+   },
+   "src": "BeltScenes.java:468"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "BeltScenes.java:467"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       1,
+       3
+      ],
+      "state": {
+       "name": "create:belt",
+       "props": {
+        "casing": "true",
+        "facing": "north",
+        "part": "start",
+        "slope": "horizontal",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": true
+   },
+   "src": "BeltScenes.java:468"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "BeltScenes.java:467"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "state": {
+       "name": "create:belt",
+       "props": {
+        "casing": "true",
+        "facing": "north",
+        "part": "pulley",
+        "slope": "horizontal",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": true
+   },
+   "src": "BeltScenes.java:468"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "BeltScenes.java:467"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       1,
+       1
+      ],
+      "state": {
+       "name": "create:belt",
+       "props": {
+        "casing": "true",
+        "facing": "north",
+        "part": "middle",
+        "slope": "horizontal",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": true
+   },
+   "src": "BeltScenes.java:468"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "BeltScenes.java:467"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       3,
+       4
+      ],
+      "state": {
+       "name": "create:belt",
+       "props": {
+        "casing": "true",
+        "facing": "west",
+        "part": "middle",
+        "slope": "upward",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": true
+   },
+   "src": "BeltScenes.java:468"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "BeltScenes.java:470"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3.5,
+     2,
+     1.5
+    ],
+    "direction": "down",
+    "duration": 40,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:wrench",
+     "count": 1
+    }
+   },
+   "src": "BeltScenes.java:473"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "BeltScenes.java:475"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       1,
+       1
+      ],
+      "state": {
+       "name": "create:belt",
+       "props": {
+        "casing": "false",
+        "facing": "north",
+        "part": "middle",
+        "slope": "horizontal",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": true
+   },
+   "src": "BeltScenes.java:476"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_2",
+    "pointAt": [
+     3,
+     1.5,
+     1.5
+    ],
+    "text": "A wrench can be used to remove the casing"
+   },
+   "src": "BeltScenes.java:477"
+  }
+ ]
+}

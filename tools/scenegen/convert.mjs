@@ -117,6 +117,8 @@ export function compileScene(env, group, lang) {
   for (const n of rec.notes) warnings.push(n);
   const res = finalize(env, group, rec, world, lang, warnings);
   res.notes = notes;
+  res.titleId = res.scene.titleId;
+  delete res.scene.titleId;
   return res;
 }
 
@@ -160,6 +162,7 @@ function finalize(env, group, rec, world, lang, warnings) {
   }
   const tags = group.tags.filter((t) => t !== 'ALL');
   const scene = {
+    titleId,
     id: group.id,
     schematic: group.schematic,
     schematicNamespace: 'create',

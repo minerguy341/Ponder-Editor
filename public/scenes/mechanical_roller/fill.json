@@ -1,0 +1,4145 @@
+{
+ "id": "create:mechanical_roller/fill",
+ "schematic": "mechanical_roller/fill",
+ "schematicNamespace": "create",
+ "title": "Filling terrain with the Roller",
+ "texts": {
+  "text_1": "While disassembled, rollers can be set to other modes",
+  "text_2": "The 'fill' modes can help to bridge gaps between pavement and terrain",
+  "text_3": "On 'straight fill', they will place simple columns down to the surface",
+  "text_4": "On 'sloped fill', layers placed further down will increase in size",
+  "text_5": "As opposed to 'clear & pave', neither of these modes will cause the rollers to break existing blocks"
+ },
+ "tags": [],
+ "items": [
+  "create:mechanical_roller"
+ ],
+ "keyframes": [
+  55,
+  125,
+  323,
+  573,
+  732
+ ],
+ "totalTicks": 836,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 9
+   },
+   "src": "RollerScenes.java:311"
+  },
+  {
+   "op": "scaleSceneView",
+   "args": {
+    "factor": 0.625
+   },
+   "src": "RollerScenes.java:312"
+  },
+  {
+   "op": "setSceneOffsetY",
+   "args": {
+    "yOffset": -3
+   },
+   "src": "RollerScenes.java:313"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      8,
+      0,
+      8
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "RollerScenes.java:314"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "RollerScenes.java:315"
+  },
+  {
+   "op": "special.movePointOfInterest",
+   "args": {
+    "location": [
+     0.5,
+     7.5,
+     4.5
+    ]
+   },
+   "src": "RollerScenes.java:323"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      8,
+      4,
+      3
+     ],
+     "to": [
+      8,
+      5,
+      5
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "RollerScenes.java:326"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "RollerScenes.java:327"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      7,
+      4,
+      3
+     ],
+     "to": [
+      7,
+      5,
+      5
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "RollerScenes.java:326"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "RollerScenes.java:327"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      6,
+      4,
+      3
+     ],
+     "to": [
+      6,
+      5,
+      5
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "RollerScenes.java:326"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "RollerScenes.java:327"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      5,
+      4,
+      3
+     ],
+     "to": [
+      5,
+      5,
+      5
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "RollerScenes.java:326"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "RollerScenes.java:327"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      4,
+      3
+     ],
+     "to": [
+      4,
+      5,
+      5
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "RollerScenes.java:326"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "RollerScenes.java:327"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      4,
+      3
+     ],
+     "to": [
+      3,
+      5,
+      5
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "RollerScenes.java:326"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "RollerScenes.java:327"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      4,
+      3
+     ],
+     "to": [
+      2,
+      5,
+      5
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "RollerScenes.java:326"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "RollerScenes.java:327"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      4,
+      3
+     ],
+     "to": [
+      1,
+      5,
+      5
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "RollerScenes.java:326"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "RollerScenes.java:327"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      4,
+      3
+     ],
+     "to": [
+      0,
+      5,
+      5
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "RollerScenes.java:326"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "RollerScenes.java:327"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "RollerScenes.java:332"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      6,
+      1,
+      2
+     ],
+     "to": [
+      8,
+      4,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "RollerScenes.java:333"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      6,
+      1,
+      6
+     ],
+     "to": [
+      8,
+      4,
+      6
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "RollerScenes.java:334"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "RollerScenes.java:335"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      7,
+      4,
+      1
+     ],
+     "to": [
+      7,
+      5,
+      1
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "RollerScenes.java:337"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "RollerScenes.java:338"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      7,
+      6,
+      4
+     ],
+     "to": [
+      8,
+      7,
+      5
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "RollerScenes.java:340",
+   "out": "e1"
+  },
+  {
+   "op": "special.createBirb",
+   "args": {
+    "location": [
+     8.5,
+     7.5,
+     4.5
+    ],
+    "pose": {
+     "type": "face_poi"
+    }
+   },
+   "src": "RollerScenes.java:342",
+   "out": "e2"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "RollerScenes.java:343"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      6,
+      6,
+      3
+     ],
+     "to": [
+      6,
+      6,
+      5
+     ]
+    },
+    "direction": "east",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "RollerScenes.java:344"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "RollerScenes.java:345"
+  },
+  {
+   "op": "overlay.highlightValueBox",
+   "args": {
+    "location": [
+     6.6875,
+     6.9765625,
+     3.6875
+    ],
+    "expands": [
+     0.0859375,
+     0,
+     0.0859375
+    ],
+    "duration": 60
+   },
+   "src": "RollerScenes.java:348"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     6.5625,
+     7,
+     3.6875
+    ],
+    "key": "text_1",
+    "text": "While disassembled, rollers can be set to other modes"
+   },
+   "src": "RollerScenes.java:349"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "RollerScenes.java:354"
+  },
+  {
+   "op": "overlay.showOutlineWithText",
+   "args": {
+    "duration": 90,
+    "color": "blue",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      1,
+      3
+     ],
+     "to": [
+      5,
+      3,
+      5
+     ]
+    },
+    "pointAt": [
+     3,
+     2.5,
+     4.5
+    ],
+    "key": "text_2",
+    "text": "The 'fill' modes can help to bridge gaps between pavement and terrain"
+   },
+   "src": "RollerScenes.java:356"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 100
+   },
+   "src": "RollerScenes.java:361"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     6.6875,
+     7,
+     3.6875
+    ],
+    "direction": "down",
+    "duration": 50,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "[object Object]"
+   },
+   "src": "RollerScenes.java:363"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "RollerScenes.java:364"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     6.6875,
+     7,
+     3.3125
+    ],
+    "direction": "up",
+    "duration": 35,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "minecraft:coarse_dirt",
+     "count": 1
+    }
+   },
+   "src": "RollerScenes.java:367"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "RollerScenes.java:368"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "RollerBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       6,
+       6,
+       3
+      ],
+      "nbt": {
+       "Filter": {
+        "id": "minecraft:coarse_dirt",
+        "count": 1
+       }
+      }
+     },
+     {
+      "pos": [
+       6,
+       6,
+       4
+      ],
+      "nbt": {
+       "Filter": {
+        "id": "minecraft:coarse_dirt",
+        "count": 1
+       }
+      }
+     },
+     {
+      "pos": [
+       6,
+       6,
+       5
+      ],
+      "nbt": {
+       "Filter": {
+        "id": "minecraft:coarse_dirt",
+        "count": 1
+       }
+      }
+     }
+    ]
+   },
+   "src": "RollerScenes.java:369"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "RollerScenes.java:370"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       7,
+       5,
+       1
+      ],
+      "state": {
+       "name": "create:track_station",
+       "props": {
+        "assembling": "false",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RollerScenes.java:371"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "StationBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       7,
+       5,
+       1
+      ],
+      "nbt": {
+       "ForceFlag": false
+      }
+     }
+    ]
+   },
+   "src": "RollerScenes.java:372"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       7,
+       7,
+       4
+      ],
+      "state": {
+       "name": "create:controls",
+       "props": {
+        "facing": "east",
+        "open": "false",
+        "virtual": "true",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RollerScenes.java:373"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "RollerScenes.java:374"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     -5.5,
+     0,
+     0
+    ],
+    "duration": 110
+   },
+   "src": "RollerScenes.java:376"
+  },
+  {
+   "op": "special.moveParrot",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     -5.5,
+     0,
+     0
+    ],
+    "duration": 110
+   },
+   "src": "RollerScenes.java:377"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bogey",
+    "pos": [
+     7,
+     6,
+     4
+    ],
+    "distance": 5.5,
+    "duration": 111
+   },
+   "src": "RollerScenes.java:378"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     6,
+     6,
+     3
+    ],
+    "beType": "RollerBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "setAnimatedSpeed",
+        "a": [
+         -100
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "RollerScenes.java:381"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     6,
+     6,
+     4
+    ],
+    "beType": "RollerBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "setAnimatedSpeed",
+        "a": [
+         -100
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "RollerScenes.java:381"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     6,
+     6,
+     5
+    ],
+    "beType": "RollerBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "setAnimatedSpeed",
+        "a": [
+         -100
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "RollerScenes.java:381"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      5,
+      3,
+      3
+     ],
+     "to": [
+      5,
+      3,
+      5
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:386"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:387"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      5,
+      2,
+      3
+     ],
+     "to": [
+      5,
+      2,
+      5
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:386"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:387"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      5,
+      1,
+      3
+     ],
+     "to": [
+      5,
+      1,
+      5
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:386"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:387"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 14
+   },
+   "src": "RollerScenes.java:397"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      3,
+      3
+     ],
+     "to": [
+      4,
+      3,
+      5
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:386"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:387"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      2,
+      3
+     ],
+     "to": [
+      4,
+      2,
+      5
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:386"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:387"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      1,
+      3
+     ],
+     "to": [
+      4,
+      1,
+      5
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:386"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:387"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 14
+   },
+   "src": "RollerScenes.java:397"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      3,
+      3
+     ],
+     "to": [
+      3,
+      3,
+      5
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:386"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:387"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      2,
+      3
+     ],
+     "to": [
+      3,
+      2,
+      5
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:386"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:387"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      1,
+      3
+     ],
+     "to": [
+      3,
+      1,
+      5
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:386"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:387"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 90,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     3.5,
+     2.5,
+     3
+    ],
+    "key": "text_3",
+    "text": "On 'straight fill', they will place simple columns down to the surface"
+   },
+   "src": "RollerScenes.java:391"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 14
+   },
+   "src": "RollerScenes.java:397"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      3,
+      3
+     ],
+     "to": [
+      2,
+      3,
+      5
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:386"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:387"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      2,
+      3
+     ],
+     "to": [
+      2,
+      2,
+      5
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:386"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:387"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      1,
+      3
+     ],
+     "to": [
+      2,
+      1,
+      5
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:386"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:387"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 14
+   },
+   "src": "RollerScenes.java:397"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      3,
+      3
+     ],
+     "to": [
+      1,
+      3,
+      5
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:386"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:387"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      2,
+      3
+     ],
+     "to": [
+      1,
+      2,
+      5
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:386"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:387"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      1,
+      3
+     ],
+     "to": [
+      1,
+      1,
+      5
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:386"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:387"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 14
+   },
+   "src": "RollerScenes.java:397"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      3,
+      3
+     ],
+     "to": [
+      0,
+      3,
+      5
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:401"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:402"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      2,
+      3
+     ],
+     "to": [
+      0,
+      2,
+      5
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:401"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:402"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      1,
+      3
+     ],
+     "to": [
+      0,
+      1,
+      5
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:401"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:402"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "RollerScenes.java:405"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     6,
+     6,
+     3
+    ],
+    "beType": "RollerBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "setAnimatedSpeed",
+        "a": [
+         0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "RollerScenes.java:408"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     6,
+     6,
+     4
+    ],
+    "beType": "RollerBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "setAnimatedSpeed",
+        "a": [
+         0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "RollerScenes.java:408"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     6,
+     6,
+     5
+    ],
+    "beType": "RollerBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "setAnimatedSpeed",
+        "a": [
+         0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "RollerScenes.java:408"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "RollerScenes.java:411"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      1,
+      3
+     ],
+     "to": [
+      5,
+      3,
+      5
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "RollerScenes.java:412"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "direction": "up"
+   },
+   "src": "RollerScenes.java:413"
+  },
+  {
+   "op": "special.hideElement",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "direction": "up"
+   },
+   "src": "RollerScenes.java:414"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "RollerScenes.java:415"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       7,
+       7,
+       4
+      ],
+      "state": {
+       "name": "create:controls",
+       "props": {
+        "facing": "east",
+        "open": "false",
+        "virtual": "false",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RollerScenes.java:417"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "RollerScenes.java:418"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       7,
+       5,
+       1
+      ],
+      "state": {
+       "name": "create:track_station",
+       "props": {
+        "assembling": "true",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RollerScenes.java:422"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "StationBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       7,
+       5,
+       1
+      ],
+      "nbt": {
+       "ForceFlag": true
+      }
+     }
+    ]
+   },
+   "src": "RollerScenes.java:423"
+  },
+  {
+   "op": "special.createBirb",
+   "args": {
+    "location": [
+     8.5,
+     7.5,
+     4.5
+    ],
+    "pose": {
+     "type": "face_poi"
+    }
+   },
+   "src": "RollerScenes.java:424",
+   "out": "e3"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      7,
+      6,
+      4
+     ],
+     "to": [
+      8,
+      7,
+      5
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "RollerScenes.java:425",
+   "out": "e4"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "RollerScenes.java:426"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      6,
+      6,
+      3
+     ],
+     "to": [
+      6,
+      6,
+      5
+     ]
+    },
+    "direction": "east",
+    "link": {
+     "link": "e4"
+    }
+   },
+   "src": "RollerScenes.java:427"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 25
+   },
+   "src": "RollerScenes.java:428"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     6.6875,
+     7,
+     3.6875
+    ],
+    "direction": "down",
+    "duration": 40,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "[object Object]"
+   },
+   "src": "RollerScenes.java:430"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 45
+   },
+   "src": "RollerScenes.java:431"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       7,
+       5,
+       1
+      ],
+      "state": {
+       "name": "create:track_station",
+       "props": {
+        "assembling": "false",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RollerScenes.java:433"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "StationBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       7,
+       5,
+       1
+      ],
+      "nbt": {
+       "ForceFlag": false
+      }
+     }
+    ]
+   },
+   "src": "RollerScenes.java:434"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       7,
+       7,
+       4
+      ],
+      "state": {
+       "name": "create:controls",
+       "props": {
+        "facing": "east",
+        "open": "false",
+        "virtual": "true",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RollerScenes.java:435"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "RollerScenes.java:436"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e4"
+    },
+    "offset": [
+     -5.5,
+     0,
+     0
+    ],
+    "duration": 110
+   },
+   "src": "RollerScenes.java:438"
+  },
+  {
+   "op": "special.moveParrot",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "offset": [
+     -5.5,
+     0,
+     0
+    ],
+    "duration": 110
+   },
+   "src": "RollerScenes.java:439"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bogey",
+    "pos": [
+     7,
+     6,
+     4
+    ],
+    "distance": 5.5,
+    "duration": 111
+   },
+   "src": "RollerScenes.java:440"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     6,
+     6,
+     3
+    ],
+    "beType": "RollerBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "setAnimatedSpeed",
+        "a": [
+         -100
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "RollerScenes.java:443"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     6,
+     6,
+     4
+    ],
+    "beType": "RollerBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "setAnimatedSpeed",
+        "a": [
+         -100
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "RollerScenes.java:443"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     6,
+     6,
+     5
+    ],
+    "beType": "RollerBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "setAnimatedSpeed",
+        "a": [
+         -100
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "RollerScenes.java:443"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      5,
+      3,
+      1
+     ],
+     "to": [
+      5,
+      3,
+      7
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:448"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:449"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      5,
+      2,
+      1
+     ],
+     "to": [
+      5,
+      2,
+      7
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:448"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:449"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      5,
+      1,
+      1
+     ],
+     "to": [
+      5,
+      1,
+      7
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:448"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:449"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 14
+   },
+   "src": "RollerScenes.java:459"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      3,
+      1
+     ],
+     "to": [
+      4,
+      3,
+      7
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:448"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:449"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      2,
+      1
+     ],
+     "to": [
+      4,
+      2,
+      7
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:448"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:449"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      1,
+      1
+     ],
+     "to": [
+      4,
+      1,
+      7
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:448"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:449"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 14
+   },
+   "src": "RollerScenes.java:459"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      3,
+      1
+     ],
+     "to": [
+      3,
+      3,
+      7
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:448"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:449"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      2,
+      1
+     ],
+     "to": [
+      3,
+      2,
+      7
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:448"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:449"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      1,
+      1
+     ],
+     "to": [
+      3,
+      1,
+      7
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:448"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:449"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 90,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     3.5,
+     2.5,
+     3
+    ],
+    "key": "text_4",
+    "text": "On 'sloped fill', layers placed further down will increase in size"
+   },
+   "src": "RollerScenes.java:453"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 14
+   },
+   "src": "RollerScenes.java:459"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      3,
+      1
+     ],
+     "to": [
+      2,
+      3,
+      7
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:448"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:449"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      2,
+      1
+     ],
+     "to": [
+      2,
+      2,
+      7
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:448"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:449"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      1,
+      1
+     ],
+     "to": [
+      2,
+      1,
+      7
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:448"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:449"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 14
+   },
+   "src": "RollerScenes.java:459"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      3,
+      1
+     ],
+     "to": [
+      1,
+      3,
+      7
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:448"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:449"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      2,
+      1
+     ],
+     "to": [
+      1,
+      2,
+      7
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:448"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:449"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      1,
+      1
+     ],
+     "to": [
+      1,
+      1,
+      7
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:448"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:449"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 14
+   },
+   "src": "RollerScenes.java:459"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      3,
+      1
+     ],
+     "to": [
+      0,
+      3,
+      7
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:463"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:464"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      2,
+      1
+     ],
+     "to": [
+      0,
+      2,
+      7
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:463"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:464"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      1,
+      1
+     ],
+     "to": [
+      0,
+      1,
+      7
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:463"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:464"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "RollerScenes.java:467"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     6,
+     6,
+     3
+    ],
+    "beType": "RollerBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "setAnimatedSpeed",
+        "a": [
+         0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "RollerScenes.java:470"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     6,
+     6,
+     4
+    ],
+    "beType": "RollerBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "setAnimatedSpeed",
+        "a": [
+         0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "RollerScenes.java:470"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     6,
+     6,
+     5
+    ],
+    "beType": "RollerBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "setAnimatedSpeed",
+        "a": [
+         0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "RollerScenes.java:470"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "RollerScenes.java:473"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      1,
+      1
+     ],
+     "to": [
+      5,
+      3,
+      7
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "RollerScenes.java:474"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e4"
+    },
+    "direction": "up"
+   },
+   "src": "RollerScenes.java:475"
+  },
+  {
+   "op": "special.hideElement",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "direction": "up"
+   },
+   "src": "RollerScenes.java:476"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "RollerScenes.java:477"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       7,
+       7,
+       4
+      ],
+      "state": {
+       "name": "create:controls",
+       "props": {
+        "facing": "east",
+        "open": "false",
+        "virtual": "false",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RollerScenes.java:479"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       0,
+       1,
+       3
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       3
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       3
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       3
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       3
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       3
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       0,
+       2,
+       3
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       1,
+       2,
+       3
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       2,
+       3
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       3,
+       2,
+       3
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       4,
+       2,
+       3
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       5,
+       2,
+       3
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       0,
+       3,
+       3
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       1,
+       3,
+       3
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       3,
+       3
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       3,
+       3,
+       3
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       4,
+       3,
+       3
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       5,
+       3,
+       3
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       0,
+       1,
+       4
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       4
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       4
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       4
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       4
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       4
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       0,
+       2,
+       4
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       1,
+       2,
+       4
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       2,
+       4
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       3,
+       2,
+       4
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       4,
+       2,
+       4
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       5,
+       2,
+       4
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       0,
+       3,
+       4
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       1,
+       3,
+       4
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       3,
+       4
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       3,
+       3,
+       4
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       4,
+       3,
+       4
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       5,
+       3,
+       4
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       0,
+       1,
+       5
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       5
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       5
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       5
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       5
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       5
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       0,
+       2,
+       5
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       1,
+       2,
+       5
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       2,
+       5
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       3,
+       2,
+       5
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       4,
+       2,
+       5
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       5,
+       2,
+       5
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       0,
+       3,
+       5
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       1,
+       3,
+       5
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       2,
+       3,
+       5
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       3,
+       3,
+       5
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       4,
+       3,
+       5
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     },
+     {
+      "pos": [
+       5,
+       3,
+       5
+      ],
+      "state": {
+       "name": "minecraft:cobblestone",
+       "props": {}
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RollerScenes.java:480"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "RollerScenes.java:481"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       7,
+       5,
+       1
+      ],
+      "state": {
+       "name": "create:track_station",
+       "props": {
+        "assembling": "true",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RollerScenes.java:485"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "StationBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       7,
+       5,
+       1
+      ],
+      "nbt": {
+       "ForceFlag": true
+      }
+     }
+    ]
+   },
+   "src": "RollerScenes.java:486"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      1,
+      3
+     ],
+     "to": [
+      5,
+      3,
+      5
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "RollerScenes.java:487"
+  },
+  {
+   "op": "special.createBirb",
+   "args": {
+    "location": [
+     8.5,
+     7.5,
+     4.5
+    ],
+    "pose": {
+     "type": "face_poi"
+    }
+   },
+   "src": "RollerScenes.java:488",
+   "out": "e5"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      7,
+      6,
+      4
+     ],
+     "to": [
+      8,
+      7,
+      5
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "RollerScenes.java:489",
+   "out": "e6"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "RollerScenes.java:490"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      6,
+      6,
+      3
+     ],
+     "to": [
+      6,
+      6,
+      5
+     ]
+    },
+    "direction": "east",
+    "link": {
+     "link": "e6"
+    }
+   },
+   "src": "RollerScenes.java:491"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 25
+   },
+   "src": "RollerScenes.java:492"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       7,
+       5,
+       1
+      ],
+      "state": {
+       "name": "create:track_station",
+       "props": {
+        "assembling": "false",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RollerScenes.java:494"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "StationBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       7,
+       5,
+       1
+      ],
+      "nbt": {
+       "ForceFlag": false
+      }
+     }
+    ]
+   },
+   "src": "RollerScenes.java:495"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       7,
+       7,
+       4
+      ],
+      "state": {
+       "name": "create:controls",
+       "props": {
+        "facing": "east",
+        "open": "false",
+        "virtual": "true",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RollerScenes.java:496"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "RollerScenes.java:497"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e6"
+    },
+    "offset": [
+     -5.5,
+     0,
+     0
+    ],
+    "duration": 110
+   },
+   "src": "RollerScenes.java:499"
+  },
+  {
+   "op": "special.moveParrot",
+   "args": {
+    "link": {
+     "link": "e5"
+    },
+    "offset": [
+     -5.5,
+     0,
+     0
+    ],
+    "duration": 110
+   },
+   "src": "RollerScenes.java:500"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bogey",
+    "pos": [
+     7,
+     6,
+     4
+    ],
+    "distance": 5.5,
+    "duration": 111
+   },
+   "src": "RollerScenes.java:501"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     6,
+     6,
+     3
+    ],
+    "beType": "RollerBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "setAnimatedSpeed",
+        "a": [
+         -100
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "RollerScenes.java:504"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     6,
+     6,
+     4
+    ],
+    "beType": "RollerBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "setAnimatedSpeed",
+        "a": [
+         -100
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "RollerScenes.java:504"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     6,
+     6,
+     5
+    ],
+    "beType": "RollerBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "setAnimatedSpeed",
+        "a": [
+         -100
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "RollerScenes.java:504"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 110,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "independent": 0,
+    "key": "text_5",
+    "text": "As opposed to 'clear & pave', neither of these modes will cause the rollers to break existing blocks"
+   },
+   "src": "RollerScenes.java:507"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      5,
+      3,
+      1
+     ],
+     "to": [
+      5,
+      3,
+      7
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:516"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:517"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      5,
+      2,
+      1
+     ],
+     "to": [
+      5,
+      2,
+      7
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:516"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:517"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      5,
+      1,
+      1
+     ],
+     "to": [
+      5,
+      1,
+      7
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:516"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:517"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 14
+   },
+   "src": "RollerScenes.java:520"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      3,
+      1
+     ],
+     "to": [
+      4,
+      3,
+      7
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:516"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:517"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      2,
+      1
+     ],
+     "to": [
+      4,
+      2,
+      7
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:516"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:517"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      1,
+      1
+     ],
+     "to": [
+      4,
+      1,
+      7
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:516"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:517"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 14
+   },
+   "src": "RollerScenes.java:520"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      3,
+      1
+     ],
+     "to": [
+      3,
+      3,
+      7
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:516"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:517"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      2,
+      1
+     ],
+     "to": [
+      3,
+      2,
+      7
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:516"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:517"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      1,
+      1
+     ],
+     "to": [
+      3,
+      1,
+      7
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:516"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:517"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 14
+   },
+   "src": "RollerScenes.java:520"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      3,
+      1
+     ],
+     "to": [
+      2,
+      3,
+      7
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:516"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:517"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      2,
+      1
+     ],
+     "to": [
+      2,
+      2,
+      7
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:516"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:517"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      1,
+      1
+     ],
+     "to": [
+      2,
+      1,
+      7
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:516"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:517"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 14
+   },
+   "src": "RollerScenes.java:520"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      3,
+      1
+     ],
+     "to": [
+      1,
+      3,
+      7
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:516"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:517"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      2,
+      1
+     ],
+     "to": [
+      1,
+      2,
+      7
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:516"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:517"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      1,
+      1
+     ],
+     "to": [
+      1,
+      1,
+      7
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:516"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:517"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 14
+   },
+   "src": "RollerScenes.java:520"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      3,
+      1
+     ],
+     "to": [
+      0,
+      3,
+      7
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:524"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:525"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      2,
+      1
+     ],
+     "to": [
+      0,
+      2,
+      7
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:524"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:525"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      1,
+      1
+     ],
+     "to": [
+      0,
+      1,
+      7
+     ]
+    },
+    "direction": null
+   },
+   "src": "RollerScenes.java:524"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RollerScenes.java:525"
+  },
+  {
+   "op": "rotateCameraY",
+   "args": {
+    "degrees": -30
+   },
+   "src": "RollerScenes.java:528"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 4
+   },
+   "src": "RollerScenes.java:530"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     6,
+     6,
+     3
+    ],
+    "beType": "RollerBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "setAnimatedSpeed",
+        "a": [
+         0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "RollerScenes.java:533"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     6,
+     6,
+     4
+    ],
+    "beType": "RollerBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "setAnimatedSpeed",
+        "a": [
+         0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "RollerScenes.java:533"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     6,
+     6,
+     5
+    ],
+    "beType": "RollerBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "setAnimatedSpeed",
+        "a": [
+         0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "RollerScenes.java:533"
+  }
+ ]
+}

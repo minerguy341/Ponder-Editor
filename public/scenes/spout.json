@@ -1,0 +1,1704 @@
+{
+ "id": "create:spout",
+ "schematic": "spout",
+ "schematicNamespace": "create",
+ "title": "Filling Items using a Spout",
+ "texts": {
+  "text_1": "The Spout can fill fluid holding items provided beneath it",
+  "text_2": "The content of a Spout cannot be accessed manually",
+  "text_3": "Instead, Pipes can be used to supply it with fluids",
+  "text_4": "The Input items can be placed on a Depot under the Spout",
+  "text_5": "When items are provided on a belt...",
+  "text_6": "The Spout will hold and process them automatically"
+ },
+ "tags": [
+  "create:fluids"
+ ],
+ "items": [
+  "create:spout"
+ ],
+ "keyframes": [
+  31,
+  113,
+  263,
+  468,
+  528
+ ],
+ "totalTicks": 587,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "SpoutScenes.java:36"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      4,
+      0,
+      4
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "SpoutScenes.java:37"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "SpoutScenes.java:38"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      1
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "SpoutScenes.java:41",
+   "out": "e1"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     0,
+     1
+    ],
+    "duration": 0
+   },
+   "src": "SpoutScenes.java:42"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "SpoutScenes.java:43"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       3,
+       3
+      ],
+      "state": {
+       "name": "create:mechanical_pump",
+       "props": {
+        "facing": "north",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "SpoutScenes.java:45"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      3,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "SpoutScenes.java:55"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "SpoutScenes.java:56"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     2,
+     3.5,
+     2.5
+    ],
+    "key": "text_1",
+    "text": "The Spout can fill fluid holding items provided beneath it"
+   },
+   "src": "SpoutScenes.java:59"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "SpoutScenes.java:65"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      1,
+      4
+     ],
+     "to": [
+      1,
+      2,
+      4
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "SpoutScenes.java:67"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "SpoutScenes.java:68"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      0,
+      5
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "SpoutScenes.java:69"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      1,
+      3
+     ],
+     "to": [
+      2,
+      2,
+      5
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "SpoutScenes.java:70"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      3,
+      3
+     ],
+     "to": [
+      2,
+      3,
+      4
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "SpoutScenes.java:71"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "SpoutScenes.java:73"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     3.5,
+     2
+    ],
+    "direction": "right",
+    "duration": 40,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "[object Object]",
+    "item": {
+     "id": "create:honey_bucket",
+     "count": 1
+    }
+   },
+   "src": "SpoutScenes.java:78"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "SpoutScenes.java:81"
+  },
+  {
+   "op": "overlay.showOutlineWithText",
+   "args": {
+    "duration": 50,
+    "color": "red",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      3,
+      2
+     ]
+    },
+    "pointAt": [
+     2,
+     3.5,
+     2.5
+    ],
+    "key": "text_2",
+    "text": "The content of a Spout cannot be accessed manually"
+   },
+   "src": "SpoutScenes.java:82"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "SpoutScenes.java:88"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "green",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     2,
+     3.5,
+     3.5
+    ],
+    "key": "text_3",
+    "text": "Instead, Pipes can be used to supply it with fluids"
+   },
+   "src": "SpoutScenes.java:89"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "SpoutScenes.java:95"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     2,
+     1.5,
+     2.5
+    ],
+    "key": "text_4",
+    "text": "The Input items can be placed on a Depot under the Spout"
+   },
+   "src": "SpoutScenes.java:96"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "SpoutScenes.java:101"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     2,
+     1,
+     1
+    ],
+    "insertionSide": "north",
+    "item": {
+     "id": "minecraft:glass_bottle",
+     "count": 1
+    }
+   },
+   "src": "SpoutScenes.java:103"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     1.5,
+     2.5
+    ],
+    "direction": "up",
+    "duration": 30,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "minecraft:glass_bottle",
+     "count": 1
+    }
+   },
+   "src": "SpoutScenes.java:105"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "SpoutScenes.java:106"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "SpoutScenes.java:108"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "SpoutBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       2,
+       3,
+       2
+      ],
+      "nbt": {
+       "ProcessingTicks": 20
+      }
+     }
+    ]
+   },
+   "src": "SpoutScenes.java:109"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "SpoutScenes.java:110"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     2,
+     1,
+     1
+    ]
+   },
+   "src": "SpoutScenes.java:111"
+  },
+  {
+   "op": "world.createItemOnBeltLike",
+   "args": {
+    "pos": [
+     2,
+     1,
+     1
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:honey_bottle",
+     "count": 1
+    }
+   },
+   "src": "SpoutScenes.java:113"
+  },
+  {
+   "op": "effects.emitParticles",
+   "args": {
+    "location": [
+     2.5,
+     2.0625,
+     2.5
+    ],
+    "emitter": {
+     "kind": "simple",
+     "particle": {
+      "type": "create:fluid_particle",
+      "fluid": {
+       "fluid": "create:honey",
+       "amount": 1000
+      }
+     },
+     "motion": [
+      0.046193551272153854,
+      0.06628819555044174,
+      -0.0518927238881588
+     ]
+    },
+    "amountPerCycle": 1,
+    "cycles": 1
+   },
+   "src": "SpoutScenes.java:116"
+  },
+  {
+   "op": "effects.emitParticles",
+   "args": {
+    "location": [
+     2.5,
+     2.0625,
+     2.5
+    ],
+    "emitter": {
+     "kind": "simple",
+     "particle": {
+      "type": "create:fluid_particle",
+      "fluid": {
+       "fluid": "create:honey",
+       "amount": 1000
+      }
+     },
+     "motion": [
+      0.02126903645694256,
+      0.02748347632586956,
+      -0.03818988800048828
+     ]
+    },
+    "amountPerCycle": 1,
+    "cycles": 1
+   },
+   "src": "SpoutScenes.java:116"
+  },
+  {
+   "op": "effects.emitParticles",
+   "args": {
+    "location": [
+     2.5,
+     2.0625,
+     2.5
+    ],
+    "emitter": {
+     "kind": "simple",
+     "particle": {
+      "type": "create:fluid_particle",
+      "fluid": {
+       "fluid": "create:honey",
+       "amount": 1000
+      }
+     },
+     "motion": [
+      0.010087395086884499,
+      -0.07659868150949478,
+      0.019509052857756615
+     ]
+    },
+    "amountPerCycle": 1,
+    "cycles": 1
+   },
+   "src": "SpoutScenes.java:116"
+  },
+  {
+   "op": "effects.emitParticles",
+   "args": {
+    "location": [
+     2.5,
+     2.0625,
+     2.5
+    ],
+    "emitter": {
+     "kind": "simple",
+     "particle": {
+      "type": "create:fluid_particle",
+      "fluid": {
+       "fluid": "create:honey",
+       "amount": 1000
+      }
+     },
+     "motion": [
+      0.05630692467093468,
+      -0.03335632011294365,
+      -0.0494447723031044
+     ]
+    },
+    "amountPerCycle": 1,
+    "cycles": 1
+   },
+   "src": "SpoutScenes.java:116"
+  },
+  {
+   "op": "effects.emitParticles",
+   "args": {
+    "location": [
+     2.5,
+     2.0625,
+     2.5
+    ],
+    "emitter": {
+     "kind": "simple",
+     "particle": {
+      "type": "create:fluid_particle",
+      "fluid": {
+       "fluid": "create:honey",
+       "amount": 1000
+      }
+     },
+     "motion": [
+      -0.022962165996432304,
+      0.022607147693634033,
+      0.09696830809116364
+     ]
+    },
+    "amountPerCycle": 1,
+    "cycles": 1
+   },
+   "src": "SpoutScenes.java:116"
+  },
+  {
+   "op": "effects.emitParticles",
+   "args": {
+    "location": [
+     2.5,
+     2.0625,
+     2.5
+    ],
+    "emitter": {
+     "kind": "simple",
+     "particle": {
+      "type": "create:fluid_particle",
+      "fluid": {
+       "fluid": "create:honey",
+       "amount": 1000
+      }
+     },
+     "motion": [
+      0.0965638980269432,
+      0.07583650201559067,
+      -0.09538363665342331
+     ]
+    },
+    "amountPerCycle": 1,
+    "cycles": 1
+   },
+   "src": "SpoutScenes.java:116"
+  },
+  {
+   "op": "effects.emitParticles",
+   "args": {
+    "location": [
+     2.5,
+     2.0625,
+     2.5
+    ],
+    "emitter": {
+     "kind": "simple",
+     "particle": {
+      "type": "create:fluid_particle",
+      "fluid": {
+       "fluid": "create:honey",
+       "amount": 1000
+      }
+     },
+     "motion": [
+      0.0882498249411583,
+      -0.06480465084314346,
+      -0.04500920698046684
+     ]
+    },
+    "amountPerCycle": 1,
+    "cycles": 1
+   },
+   "src": "SpoutScenes.java:116"
+  },
+  {
+   "op": "effects.emitParticles",
+   "args": {
+    "location": [
+     2.5,
+     2.0625,
+     2.5
+    ],
+    "emitter": {
+     "kind": "simple",
+     "particle": {
+      "type": "create:fluid_particle",
+      "fluid": {
+       "fluid": "create:honey",
+       "amount": 1000
+      }
+     },
+     "motion": [
+      -0.03741281107068062,
+      -0.07422057539224625,
+      -0.026404857635498047
+     ]
+    },
+    "amountPerCycle": 1,
+    "cycles": 1
+   },
+   "src": "SpoutScenes.java:116"
+  },
+  {
+   "op": "effects.emitParticles",
+   "args": {
+    "location": [
+     2.5,
+     2.0625,
+     2.5
+    ],
+    "emitter": {
+     "kind": "simple",
+     "particle": {
+      "type": "create:fluid_particle",
+      "fluid": {
+       "fluid": "create:honey",
+       "amount": 1000
+      }
+     },
+     "motion": [
+      -0.0706796795129776,
+      0.04103494808077812,
+      -0.09535237401723862
+     ]
+    },
+    "amountPerCycle": 1,
+    "cycles": 1
+   },
+   "src": "SpoutScenes.java:116"
+  },
+  {
+   "op": "effects.emitParticles",
+   "args": {
+    "location": [
+     2.5,
+     2.0625,
+     2.5
+    ],
+    "emitter": {
+     "kind": "simple",
+     "particle": {
+      "type": "create:fluid_particle",
+      "fluid": {
+       "fluid": "create:honey",
+       "amount": 1000
+      }
+     },
+     "motion": [
+      -0.09972267597913742,
+      0.009347951970994473,
+      -0.09815503656864166
+     ]
+    },
+    "amountPerCycle": 1,
+    "cycles": 1
+   },
+   "src": "SpoutScenes.java:116"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "SpoutScenes.java:120"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     1.5,
+     2.5
+    ],
+    "direction": "up",
+    "duration": 50,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "minecraft:honey_bottle",
+     "count": 1
+    }
+   },
+   "src": "SpoutScenes.java:121"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "SpoutScenes.java:122"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "direction": "north"
+   },
+   "src": "SpoutScenes.java:124"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "SpoutScenes.java:125"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      1,
+      3
+     ],
+     "to": [
+      0,
+      2,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "SpoutScenes.java:126"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "SpoutScenes.java:127"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      1,
+      2
+     ],
+     "to": [
+      4,
+      2,
+      2
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "SpoutScenes.java:128"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "SpoutScenes.java:129"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 40,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     0,
+     1.5,
+     2.5
+    ],
+    "key": "text_5",
+    "text": "When items are provided on a belt..."
+   },
+   "src": "SpoutScenes.java:131"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "SpoutScenes.java:136"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     0,
+     1,
+     2
+    ],
+    "insertionSide": "south",
+    "item": {
+     "id": "minecraft:glass_bottle",
+     "count": 1
+    }
+   },
+   "src": "SpoutScenes.java:138",
+   "out": "e2"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     2,
+     2
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "SpoutScenes.java:138"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "SpoutScenes.java:139"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     0,
+     1,
+     2
+    ],
+    "insertionSide": "south",
+    "item": {
+     "id": "minecraft:glass_bottle",
+     "count": 1
+    }
+   },
+   "src": "SpoutScenes.java:140",
+   "out": "e3"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     0,
+     2,
+     2
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "SpoutScenes.java:140"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "SpoutScenes.java:141"
+  },
+  {
+   "op": "world.stallBeltItem",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "stalled": true
+   },
+   "src": "SpoutScenes.java:142"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 50,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     2,
+     3.5,
+     2.5
+    ],
+    "key": "text_6",
+    "text": "The Spout will hold and process them automatically"
+   },
+   "src": "SpoutScenes.java:145"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "SpoutScenes.java:151"
+  },
+  {
+   "op": "effects.emitParticles",
+   "args": {
+    "location": [
+     2.5,
+     2.0625,
+     2.5
+    ],
+    "emitter": {
+     "kind": "simple",
+     "particle": {
+      "type": "create:fluid_particle",
+      "fluid": {
+       "fluid": "create:honey",
+       "amount": 1000
+      }
+     },
+     "motion": [
+      0.09289737045764923,
+      0.01258993148803711,
+      -0.07910187542438507
+     ]
+    },
+    "amountPerCycle": 1,
+    "cycles": 1
+   },
+   "src": "SpoutScenes.java:153"
+  },
+  {
+   "op": "effects.emitParticles",
+   "args": {
+    "location": [
+     2.5,
+     2.0625,
+     2.5
+    ],
+    "emitter": {
+     "kind": "simple",
+     "particle": {
+      "type": "create:fluid_particle",
+      "fluid": {
+       "fluid": "create:honey",
+       "amount": 1000
+      }
+     },
+     "motion": [
+      -0.04942338541150093,
+      0.025029266253113747,
+      -0.04281904920935631
+     ]
+    },
+    "amountPerCycle": 1,
+    "cycles": 1
+   },
+   "src": "SpoutScenes.java:153"
+  },
+  {
+   "op": "effects.emitParticles",
+   "args": {
+    "location": [
+     2.5,
+     2.0625,
+     2.5
+    ],
+    "emitter": {
+     "kind": "simple",
+     "particle": {
+      "type": "create:fluid_particle",
+      "fluid": {
+       "fluid": "create:honey",
+       "amount": 1000
+      }
+     },
+     "motion": [
+      -0.01784076727926731,
+      -0.09701459854841232,
+      0.05526244640350342
+     ]
+    },
+    "amountPerCycle": 1,
+    "cycles": 1
+   },
+   "src": "SpoutScenes.java:153"
+  },
+  {
+   "op": "effects.emitParticles",
+   "args": {
+    "location": [
+     2.5,
+     2.0625,
+     2.5
+    ],
+    "emitter": {
+     "kind": "simple",
+     "particle": {
+      "type": "create:fluid_particle",
+      "fluid": {
+       "fluid": "create:honey",
+       "amount": 1000
+      }
+     },
+     "motion": [
+      0.09533955901861191,
+      0.09814455360174179,
+      0.03764690086245537
+     ]
+    },
+    "amountPerCycle": 1,
+    "cycles": 1
+   },
+   "src": "SpoutScenes.java:153"
+  },
+  {
+   "op": "effects.emitParticles",
+   "args": {
+    "location": [
+     2.5,
+     2.0625,
+     2.5
+    ],
+    "emitter": {
+     "kind": "simple",
+     "particle": {
+      "type": "create:fluid_particle",
+      "fluid": {
+       "fluid": "create:honey",
+       "amount": 1000
+      }
+     },
+     "motion": [
+      -0.0025534392334520817,
+      0.0735357329249382,
+      0.04924827814102173
+     ]
+    },
+    "amountPerCycle": 1,
+    "cycles": 1
+   },
+   "src": "SpoutScenes.java:153"
+  },
+  {
+   "op": "effects.emitParticles",
+   "args": {
+    "location": [
+     2.5,
+     2.0625,
+     2.5
+    ],
+    "emitter": {
+     "kind": "simple",
+     "particle": {
+      "type": "create:fluid_particle",
+      "fluid": {
+       "fluid": "create:honey",
+       "amount": 1000
+      }
+     },
+     "motion": [
+      0.09618902206420898,
+      0.046630408614873886,
+      0.014006853103637695
+     ]
+    },
+    "amountPerCycle": 1,
+    "cycles": 1
+   },
+   "src": "SpoutScenes.java:153"
+  },
+  {
+   "op": "effects.emitParticles",
+   "args": {
+    "location": [
+     2.5,
+     2.0625,
+     2.5
+    ],
+    "emitter": {
+     "kind": "simple",
+     "particle": {
+      "type": "create:fluid_particle",
+      "fluid": {
+       "fluid": "create:honey",
+       "amount": 1000
+      }
+     },
+     "motion": [
+      0.06345941126346588,
+      -0.09743868559598923,
+      0.06777806580066681
+     ]
+    },
+    "amountPerCycle": 1,
+    "cycles": 1
+   },
+   "src": "SpoutScenes.java:153"
+  },
+  {
+   "op": "effects.emitParticles",
+   "args": {
+    "location": [
+     2.5,
+     2.0625,
+     2.5
+    ],
+    "emitter": {
+     "kind": "simple",
+     "particle": {
+      "type": "create:fluid_particle",
+      "fluid": {
+       "fluid": "create:honey",
+       "amount": 1000
+      }
+     },
+     "motion": [
+      -0.017556453123688698,
+      0.005339884664863348,
+      0.04515496641397476
+     ]
+    },
+    "amountPerCycle": 1,
+    "cycles": 1
+   },
+   "src": "SpoutScenes.java:153"
+  },
+  {
+   "op": "effects.emitParticles",
+   "args": {
+    "location": [
+     2.5,
+     2.0625,
+     2.5
+    ],
+    "emitter": {
+     "kind": "simple",
+     "particle": {
+      "type": "create:fluid_particle",
+      "fluid": {
+       "fluid": "create:honey",
+       "amount": 1000
+      }
+     },
+     "motion": [
+      0.07986699789762497,
+      0.09693481773138046,
+      -0.07321204245090485
+     ]
+    },
+    "amountPerCycle": 1,
+    "cycles": 1
+   },
+   "src": "SpoutScenes.java:153"
+  },
+  {
+   "op": "effects.emitParticles",
+   "args": {
+    "location": [
+     2.5,
+     2.0625,
+     2.5
+    ],
+    "emitter": {
+     "kind": "simple",
+     "particle": {
+      "type": "create:fluid_particle",
+      "fluid": {
+       "fluid": "create:honey",
+       "amount": 1000
+      }
+     },
+     "motion": [
+      0.00922547560185194,
+      -0.08338753134012222,
+      -0.06280207633972168
+     ]
+    },
+    "amountPerCycle": 1,
+    "cycles": 1
+   },
+   "src": "SpoutScenes.java:153"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ]
+   },
+   "src": "SpoutScenes.java:157"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:honey_bottle",
+     "count": 1
+    }
+   },
+   "src": "SpoutScenes.java:158",
+   "out": "e4"
+  },
+  {
+   "op": "world.stallBeltItem",
+   "args": {
+    "link": {
+     "link": "e4"
+    },
+    "stalled": true
+   },
+   "src": "SpoutScenes.java:159"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "SpoutScenes.java:160"
+  },
+  {
+   "op": "world.stallBeltItem",
+   "args": {
+    "link": {
+     "link": "e4"
+    },
+    "stalled": false
+   },
+   "src": "SpoutScenes.java:161"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "SpoutScenes.java:162"
+  },
+  {
+   "op": "world.stallBeltItem",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "stalled": true
+   },
+   "src": "SpoutScenes.java:163"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "SpoutScenes.java:165"
+  },
+  {
+   "op": "effects.emitParticles",
+   "args": {
+    "location": [
+     2.5,
+     2.0625,
+     2.5
+    ],
+    "emitter": {
+     "kind": "simple",
+     "particle": {
+      "type": "create:fluid_particle",
+      "fluid": {
+       "fluid": "create:honey",
+       "amount": 1000
+      }
+     },
+     "motion": [
+      0.09571486711502075,
+      -0.03862577676773071,
+      0.04447142034769058
+     ]
+    },
+    "amountPerCycle": 1,
+    "cycles": 1
+   },
+   "src": "SpoutScenes.java:167"
+  },
+  {
+   "op": "effects.emitParticles",
+   "args": {
+    "location": [
+     2.5,
+     2.0625,
+     2.5
+    ],
+    "emitter": {
+     "kind": "simple",
+     "particle": {
+      "type": "create:fluid_particle",
+      "fluid": {
+       "fluid": "create:honey",
+       "amount": 1000
+      }
+     },
+     "motion": [
+      0.03421524912118912,
+      0.04300619289278984,
+      -0.08714528381824493
+     ]
+    },
+    "amountPerCycle": 1,
+    "cycles": 1
+   },
+   "src": "SpoutScenes.java:167"
+  },
+  {
+   "op": "effects.emitParticles",
+   "args": {
+    "location": [
+     2.5,
+     2.0625,
+     2.5
+    ],
+    "emitter": {
+     "kind": "simple",
+     "particle": {
+      "type": "create:fluid_particle",
+      "fluid": {
+       "fluid": "create:honey",
+       "amount": 1000
+      }
+     },
+     "motion": [
+      -0.07135593146085739,
+      -0.028166938573122025,
+      -0.007408440113067627
+     ]
+    },
+    "amountPerCycle": 1,
+    "cycles": 1
+   },
+   "src": "SpoutScenes.java:167"
+  },
+  {
+   "op": "effects.emitParticles",
+   "args": {
+    "location": [
+     2.5,
+     2.0625,
+     2.5
+    ],
+    "emitter": {
+     "kind": "simple",
+     "particle": {
+      "type": "create:fluid_particle",
+      "fluid": {
+       "fluid": "create:honey",
+       "amount": 1000
+      }
+     },
+     "motion": [
+      -0.04515058919787407,
+      -0.09910289198160172,
+      0.03336986526846886
+     ]
+    },
+    "amountPerCycle": 1,
+    "cycles": 1
+   },
+   "src": "SpoutScenes.java:167"
+  },
+  {
+   "op": "effects.emitParticles",
+   "args": {
+    "location": [
+     2.5,
+     2.0625,
+     2.5
+    ],
+    "emitter": {
+     "kind": "simple",
+     "particle": {
+      "type": "create:fluid_particle",
+      "fluid": {
+       "fluid": "create:honey",
+       "amount": 1000
+      }
+     },
+     "motion": [
+      -0.08570034801959991,
+      0.03790079429745674,
+      -0.030315959826111794
+     ]
+    },
+    "amountPerCycle": 1,
+    "cycles": 1
+   },
+   "src": "SpoutScenes.java:167"
+  },
+  {
+   "op": "effects.emitParticles",
+   "args": {
+    "location": [
+     2.5,
+     2.0625,
+     2.5
+    ],
+    "emitter": {
+     "kind": "simple",
+     "particle": {
+      "type": "create:fluid_particle",
+      "fluid": {
+       "fluid": "create:honey",
+       "amount": 1000
+      }
+     },
+     "motion": [
+      0.06318750232458115,
+      -0.03224607929587364,
+      0.02129160240292549
+     ]
+    },
+    "amountPerCycle": 1,
+    "cycles": 1
+   },
+   "src": "SpoutScenes.java:167"
+  },
+  {
+   "op": "effects.emitParticles",
+   "args": {
+    "location": [
+     2.5,
+     2.0625,
+     2.5
+    ],
+    "emitter": {
+     "kind": "simple",
+     "particle": {
+      "type": "create:fluid_particle",
+      "fluid": {
+       "fluid": "create:honey",
+       "amount": 1000
+      }
+     },
+     "motion": [
+      0.0718713030219078,
+      0.08647360652685165,
+      0.09430938959121704
+     ]
+    },
+    "amountPerCycle": 1,
+    "cycles": 1
+   },
+   "src": "SpoutScenes.java:167"
+  },
+  {
+   "op": "effects.emitParticles",
+   "args": {
+    "location": [
+     2.5,
+     2.0625,
+     2.5
+    ],
+    "emitter": {
+     "kind": "simple",
+     "particle": {
+      "type": "create:fluid_particle",
+      "fluid": {
+       "fluid": "create:honey",
+       "amount": 1000
+      }
+     },
+     "motion": [
+      0.0488918200135231,
+      0.0731491670012474,
+      0.00676883477717638
+     ]
+    },
+    "amountPerCycle": 1,
+    "cycles": 1
+   },
+   "src": "SpoutScenes.java:167"
+  },
+  {
+   "op": "effects.emitParticles",
+   "args": {
+    "location": [
+     2.5,
+     2.0625,
+     2.5
+    ],
+    "emitter": {
+     "kind": "simple",
+     "particle": {
+      "type": "create:fluid_particle",
+      "fluid": {
+       "fluid": "create:honey",
+       "amount": 1000
+      }
+     },
+     "motion": [
+      0.022516215220093727,
+      -0.09101114422082901,
+      -0.06420240551233292
+     ]
+    },
+    "amountPerCycle": 1,
+    "cycles": 1
+   },
+   "src": "SpoutScenes.java:167"
+  },
+  {
+   "op": "effects.emitParticles",
+   "args": {
+    "location": [
+     2.5,
+     2.0625,
+     2.5
+    ],
+    "emitter": {
+     "kind": "simple",
+     "particle": {
+      "type": "create:fluid_particle",
+      "fluid": {
+       "fluid": "create:honey",
+       "amount": 1000
+      }
+     },
+     "motion": [
+      -0.03772430494427681,
+      -0.05648592859506607,
+      -0.059319257736206055
+     ]
+    },
+    "amountPerCycle": 1,
+    "cycles": 1
+   },
+   "src": "SpoutScenes.java:167"
+  },
+  {
+   "op": "world.removeItemsFromBelt",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ]
+   },
+   "src": "SpoutScenes.java:171"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ],
+    "insertionSide": "up",
+    "item": {
+     "id": "minecraft:honey_bottle",
+     "count": 1
+    }
+   },
+   "src": "SpoutScenes.java:172",
+   "out": "e5"
+  },
+  {
+   "op": "world.stallBeltItem",
+   "args": {
+    "link": {
+     "link": "e5"
+    },
+    "stalled": true
+   },
+   "src": "SpoutScenes.java:173"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "SpoutScenes.java:174"
+  },
+  {
+   "op": "world.stallBeltItem",
+   "args": {
+    "link": {
+     "link": "e5"
+    },
+    "stalled": false
+   },
+   "src": "SpoutScenes.java:175"
+  }
+ ]
+}

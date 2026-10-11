@@ -150,3 +150,13 @@ export function javaDoubleToString(v, isFloat = false) {
   if (!m.includes('.')) m += '.0';
   return `${m}E${parseInt(e, 10)}`;
 }
+
+/** shortest decimal that round-trips through float32 (so JSON shows 0.59571427, not 0.595714271068573) */
+export function f32short(v) {
+  if (!Number.isFinite(v) || Number.isInteger(v)) return v;
+  for (let p = 1; p <= 9; p++) {
+    const t = parseFloat(v.toPrecision(p));
+    if (Math.fround(t) === v) return t;
+  }
+  return v;
+}

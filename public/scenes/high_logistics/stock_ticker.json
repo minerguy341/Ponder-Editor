@@ -1,0 +1,1787 @@
+{
+ "id": "create:high_logistics/stock_ticker",
+ "schematic": "high_logistics/stock_ticker",
+ "schematicNamespace": "create",
+ "title": "Ordering items with Stock tickers",
+ "texts": {
+  "text_1": "Right-click a Stock link before placement to connect to its network",
+  "text_2": "Stock-linked packagers make their attached inventory available to the network",
+  "text_3": "Stock tickers can order items from these inventories",
+  "text_4": "Seated mobs or blaze burners in front of it act as the Stock Keeper",
+  "text_5": "Right-click the keeper to start ordering items",
+  "text_6": "When an order is submitted, the items will be placed into packages",
+  "text_7": "From there, they can be transported to the request point",
+  "text_8": "Using attribute or list filters, categories can be added to the item listings",
+  "text_9": "Right-click the Stock ticker to open the category editor",
+  "text_10": "Stock tickers can also order blocks required for the schematicannon",
+  "text_11": "Simply hand the printed clipboard it generated to the Stock keeper"
+ },
+ "tags": [],
+ "items": [
+  "create:stock_ticker"
+ ],
+ "keyframes": [
+  63,
+  267,
+  377,
+  477,
+  577,
+  675,
+  820,
+  972,
+  1182
+ ],
+ "totalTicks": 1336,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 7
+   },
+   "src": "StockTickerScenes.java:30"
+  },
+  {
+   "op": "scaleSceneView",
+   "args": {
+    "factor": 0.925
+   },
+   "src": "StockTickerScenes.java:31"
+  },
+  {
+   "op": "setSceneOffsetY",
+   "args": {
+    "yOffset": -0.5
+   },
+   "src": "StockTickerScenes.java:32"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      6,
+      0,
+      6
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "StockTickerScenes.java:33"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "StockTickerScenes.java:90"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      3,
+      5
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "StockTickerScenes.java:93",
+   "out": "e1"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     -2,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "StockTickerScenes.java:95"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "StockTickerScenes.java:97"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3.5,
+     2,
+     5.5
+    ],
+    "direction": "down",
+    "duration": 50,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:stock_ticker",
+     "count": 1
+    }
+   },
+   "src": "StockTickerScenes.java:101"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "StockTickerScenes.java:105"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "blue",
+    "slot": "pos:3,3,5",
+    "box": {
+     "min": [
+      3.45,
+      1.45,
+      5.45
+     ],
+     "max": [
+      3.55,
+      1.55,
+      5.55
+     ]
+    },
+    "duration": 10
+   },
+   "src": "StockTickerScenes.java:109"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "StockTickerScenes.java:110"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "blue",
+    "slot": "pos:3,3,5",
+    "box": {
+     "min": [
+      3.0625,
+      0.5625,
+      5.0625
+     ],
+     "max": [
+      3.9375,
+      1.9375,
+      5.9375
+     ]
+    },
+    "duration": 50
+   },
+   "src": "StockTickerScenes.java:114"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 26
+   },
+   "src": "StockTickerScenes.java:115"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 100,
+    "color": "blue",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_1",
+    "pointAt": [
+     3.5,
+     1.5,
+     5.5
+    ],
+    "text": "Right-click a Stock link before placement to connect to its network"
+   },
+   "src": "StockTickerScenes.java:118"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "StockTickerScenes.java:126"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      1
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "StockTickerScenes.java:129"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "StockTickerScenes.java:130"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "green",
+    "slot": "pos:3,1,1",
+    "box": {
+     "min": [
+      3,
+      1,
+      1
+     ],
+     "max": [
+      4,
+      2,
+      2
+     ]
+    },
+    "duration": 40
+   },
+   "src": "StockTickerScenes.java:133"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "green",
+    "slot": "pos:3,3,5",
+    "box": {
+     "min": [
+      3.0625,
+      0.5625,
+      5.0625
+     ],
+     "max": [
+      3.9375,
+      1.9375,
+      5.9375
+     ]
+    },
+    "duration": 40
+   },
+   "src": "StockTickerScenes.java:135"
+  },
+  {
+   "op": "overlay.showLine",
+   "args": {
+    "color": "green",
+    "start": [
+     3.5,
+     1.25,
+     1.5
+    ],
+    "end": [
+     3.5,
+     1.25,
+     5.5
+    ],
+    "duration": 40,
+    "big": false
+   },
+   "src": "StockTickerScenes.java:137"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "StockTickerScenes.java:144"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       2,
+       5
+      ],
+      "state": {
+       "name": "create:packager",
+       "props": {
+        "facing": "north",
+        "linked": "false",
+        "powered": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "StockTickerScenes.java:147"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       5,
+       2,
+       5
+      ],
+      "state": {
+       "name": "create:packager",
+       "props": {
+        "facing": "north",
+        "linked": "false",
+        "powered": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "StockTickerScenes.java:149"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     2.25,
+     0
+    ],
+    "duration": 15
+   },
+   "src": "StockTickerScenes.java:152"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "StockTickerScenes.java:154"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      5
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "StockTickerScenes.java:156"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      5,
+      1,
+      5
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "StockTickerScenes.java:158"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 8
+   },
+   "src": "StockTickerScenes.java:159"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      2,
+      5
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "StockTickerScenes.java:161"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "StockTickerScenes.java:162"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      5,
+      2,
+      5
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "StockTickerScenes.java:164"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      5,
+      3,
+      5
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "StockTickerScenes.java:166"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "StockTickerScenes.java:167"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     -0.25,
+     0
+    ],
+    "duration": 10
+   },
+   "src": "StockTickerScenes.java:169"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "StockTickerScenes.java:171"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       2,
+       5
+      ],
+      "state": {
+       "name": "create:packager",
+       "props": {
+        "facing": "north",
+        "linked": "true",
+        "powered": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "StockTickerScenes.java:173"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       5,
+       2,
+       5
+      ],
+      "state": {
+       "name": "create:packager",
+       "props": {
+        "facing": "north",
+        "linked": "true",
+        "powered": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "StockTickerScenes.java:175"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     3,
+     2,
+     5
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "StockTickerScenes.java:177"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     5,
+     2,
+     5
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "StockTickerScenes.java:179"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "StockTickerScenes.java:180"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      1,
+      6
+     ],
+     "to": [
+      3,
+      2,
+      6
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "StockTickerScenes.java:182"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "StockTickerScenes.java:183"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      1,
+      6
+     ],
+     "to": [
+      5,
+      3,
+      6
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "StockTickerScenes.java:185"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "StockTickerScenes.java:186"
+  },
+  {
+   "op": "overlay.showOutline",
+   "args": {
+    "color": "blue",
+    "slot": "pos:3,3,5",
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      2,
+      6
+     ]
+    },
+    "duration": 120
+   },
+   "src": "StockTickerScenes.java:189"
+  },
+  {
+   "op": "overlay.showOutline",
+   "args": {
+    "color": "blue",
+    "slot": "pos:5,3,5",
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      2,
+      6
+     ],
+     "to": [
+      5,
+      3,
+      6
+     ]
+    },
+    "duration": 120
+   },
+   "src": "StockTickerScenes.java:192"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "StockTickerScenes.java:194"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 100,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_2",
+    "pointAt": [
+     3,
+     2.5,
+     5.5
+    ],
+    "text": "Stock-linked packagers make their attached inventory available to the network"
+   },
+   "src": "StockTickerScenes.java:197"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 110
+   },
+   "src": "StockTickerScenes.java:204"
+  },
+  {
+   "op": "overlay.showOutline",
+   "args": {
+    "color": "blue",
+    "slot": "pos:3,1,1",
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      1
+     ]
+    },
+    "duration": 40
+   },
+   "src": "StockTickerScenes.java:207"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_3",
+    "pointAt": [
+     3.5,
+     1.5,
+     1.5
+    ],
+    "text": "Stock tickers can order items from these inventories"
+   },
+   "src": "StockTickerScenes.java:210"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "StockTickerScenes.java:216"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      1,
+      1
+     ]
+    },
+    "direction": "west"
+   },
+   "src": "StockTickerScenes.java:219"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "StockTickerScenes.java:220"
+  },
+  {
+   "op": "special.createBirb",
+   "args": {
+    "location": [
+     4.5,
+     1.5,
+     1.5
+    ],
+    "pose": {
+     "type": "face_poi"
+    }
+   },
+   "src": "StockTickerScenes.java:222",
+   "out": "e2"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_4",
+    "pointAt": [
+     4,
+     2,
+     1.5
+    ],
+    "text": "Seated mobs or blaze burners in front of it act as the Stock Keeper"
+   },
+   "src": "StockTickerScenes.java:229"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "StockTickerScenes.java:234"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     4.5,
+     2,
+     1.5
+    ],
+    "direction": "down",
+    "duration": 50,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb"
+   },
+   "src": "StockTickerScenes.java:237"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "StockTickerScenes.java:240"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_5",
+    "pointAt": [
+     4,
+     2,
+     1.5
+    ],
+    "text": "Right-click the keeper to start ordering items"
+   },
+   "src": "StockTickerScenes.java:243"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "StockTickerScenes.java:248"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     3,
+     1,
+     1
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "StockTickerScenes.java:251"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "StockTickerScenes.java:252"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     3,
+     5
+    ],
+    "beType": "LinkWithBulbBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "pulse",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "PonderHilo.java:56"
+  },
+  {
+   "op": "effects.addParticles",
+   "args": {
+    "particles": [
+     {
+      "particle": {
+       "type": "create:wifi"
+      },
+      "location": [
+       3.5,
+       3.5,
+       5.5
+      ],
+      "motion": [
+       1,
+       1,
+       1
+      ]
+     }
+    ]
+   },
+   "src": "PonderHilo.java:57"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     2,
+     5
+    ],
+    "beType": "PackagerBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "set": "animationTicks",
+        "v": 20
+       }
+      ]
+     },
+     {
+      "path": [
+       {
+        "set": "animationInward",
+        "v": false
+       }
+      ]
+     },
+     {
+      "path": [
+       {
+        "set": "heldBox",
+        "v": {
+         "id": "create:cardboard_package_10x12",
+         "count": 1,
+         "nbt": {
+          "create:package_contents": []
+         }
+        }
+       }
+      ]
+     }
+    ]
+   },
+   "src": "PonderHilo.java:19"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "StockTickerScenes.java:257"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     5,
+     3,
+     5
+    ],
+    "beType": "LinkWithBulbBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "pulse",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "PonderHilo.java:56"
+  },
+  {
+   "op": "effects.addParticles",
+   "args": {
+    "particles": [
+     {
+      "particle": {
+       "type": "create:wifi"
+      },
+      "location": [
+       5.5,
+       3.5,
+       5.5
+      ],
+      "motion": [
+       1,
+       1,
+       1
+      ]
+     }
+    ]
+   },
+   "src": "PonderHilo.java:57"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     5,
+     2,
+     5
+    ],
+    "beType": "PackagerBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "set": "animationTicks",
+        "v": 20
+       }
+      ]
+     },
+     {
+      "path": [
+       {
+        "set": "animationInward",
+        "v": false
+       }
+      ]
+     },
+     {
+      "path": [
+       {
+        "set": "heldBox",
+        "v": {
+         "id": "create:cardboard_package_10x8",
+         "count": 1,
+         "nbt": {
+          "create:package_contents": []
+         }
+        }
+       }
+      ]
+     }
+    ]
+   },
+   "src": "PonderHilo.java:19"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "StockTickerScenes.java:260"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 100,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_6",
+    "pointAt": [
+     3.5,
+     2.5,
+     5.5
+    ],
+    "text": "When an order is submitted, the items will be placed into packages"
+   },
+   "src": "StockTickerScenes.java:263"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "StockTickerScenes.java:270"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      7,
+      0,
+      3
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "StockTickerScenes.java:273"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      0,
+      7
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "StockTickerScenes.java:275"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "StockTickerScenes.java:276"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      6,
+      1,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "StockTickerScenes.java:278"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      6
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "StockTickerScenes.java:280"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "StockTickerScenes.java:281"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      1,
+      4
+     ],
+     "to": [
+      6,
+      1,
+      4
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "StockTickerScenes.java:283"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      1,
+      1
+     ],
+     "to": [
+      1,
+      1,
+      6
+     ]
+    },
+    "direction": "east"
+   },
+   "src": "StockTickerScenes.java:285"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "StockTickerScenes.java:286"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      0
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "StockTickerScenes.java:288"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "StockTickerScenes.java:289"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      2,
+      4
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "StockTickerScenes.java:291"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "StockTickerScenes.java:292"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      5,
+      2,
+      4
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "StockTickerScenes.java:294"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "StockTickerScenes.java:295"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     3,
+     1,
+     4
+    ],
+    "insertionSide": "south",
+    "item": {
+     "id": "create:cardboard_package_10x12",
+     "count": 1,
+     "nbt": {
+      "create:package_contents": []
+     }
+    }
+   },
+   "src": "StockTickerScenes.java:298",
+   "out": "e3"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     2,
+     4
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "StockTickerScenes.java:298"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     3,
+     2,
+     5
+    ],
+    "beType": "PackagerBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "set": "heldBox",
+        "v": {
+         "id": "minecraft:air",
+         "count": 0
+        }
+       }
+      ]
+     }
+    ]
+   },
+   "src": "PonderHilo.java:37"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "StockTickerScenes.java:301"
+  },
+  {
+   "op": "world.createItemOnBelt",
+   "args": {
+    "pos": [
+     5,
+     1,
+     4
+    ],
+    "insertionSide": "south",
+    "item": {
+     "id": "create:cardboard_package_10x8",
+     "count": 1,
+     "nbt": {
+      "create:package_contents": []
+     }
+    }
+   },
+   "src": "StockTickerScenes.java:303",
+   "out": "e4"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     5,
+     2,
+     4
+    ],
+    "beType": "FunnelBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "flap",
+        "a": [
+         false
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "src": "StockTickerScenes.java:303"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     5,
+     2,
+     5
+    ],
+    "beType": "PackagerBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "set": "heldBox",
+        "v": {
+         "id": "minecraft:air",
+         "count": 0
+        }
+       }
+      ]
+     }
+    ]
+   },
+   "src": "PonderHilo.java:37"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "StockTickerScenes.java:306"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_7",
+    "pointAt": [
+     1.5,
+     1.5,
+     3.5
+    ],
+    "text": "From there, they can be transported to the request point"
+   },
+   "src": "StockTickerScenes.java:309"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 110
+   },
+   "src": "StockTickerScenes.java:316"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      0,
+      7
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "StockTickerScenes.java:319"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      7,
+      0,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "StockTickerScenes.java:321"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "StockTickerScenes.java:322"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      1,
+      4
+     ],
+     "to": [
+      6,
+      1,
+      4
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "StockTickerScenes.java:324"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      1,
+      1
+     ],
+     "to": [
+      1,
+      1,
+      6
+     ]
+    },
+    "direction": "west"
+   },
+   "src": "StockTickerScenes.java:326"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      6
+     ]
+    },
+    "direction": "west"
+   },
+   "src": "StockTickerScenes.java:328"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      6,
+      1,
+      3
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "StockTickerScenes.java:330"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      0
+     ]
+    },
+    "direction": "west"
+   },
+   "src": "StockTickerScenes.java:332"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      2,
+      4
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "StockTickerScenes.java:334"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      5,
+      2,
+      4
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "StockTickerScenes.java:336"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "StockTickerScenes.java:337"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3.5,
+     2,
+     1.5
+    ],
+    "direction": "down",
+    "duration": 100,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:attribute_filter",
+     "count": 1
+    }
+   },
+   "src": "StockTickerScenes.java:341"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "StockTickerScenes.java:345"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 100,
+    "color": "blue",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_8",
+    "pointAt": [
+     3.5,
+     1.5,
+     1.5
+    ],
+    "text": "Using attribute or list filters, categories can be added to the item listings"
+   },
+   "src": "StockTickerScenes.java:348"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 110
+   },
+   "src": "StockTickerScenes.java:355"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "blue",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_9",
+    "pointAt": [
+     3.5,
+     1.5,
+     1.5
+    ],
+    "text": "Right-click the Stock ticker to open the category editor"
+   },
+   "src": "StockTickerScenes.java:358"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 100
+   },
+   "src": "StockTickerScenes.java:364"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "StockTickerScenes.java:367"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "blue",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_10",
+    "pointAt": [
+     2.5,
+     1.5,
+     3.5
+    ],
+    "text": "Stock tickers can also order blocks required for the schematicannon"
+   },
+   "src": "StockTickerScenes.java:370"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 100
+   },
+   "src": "StockTickerScenes.java:378"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     4,
+     2,
+     1.5
+    ],
+    "direction": "down",
+    "duration": 100,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:clipboard",
+     "count": 1
+    }
+   },
+   "src": "StockTickerScenes.java:382"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "StockTickerScenes.java:385"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "blue",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_11",
+    "pointAt": [
+     4,
+     2,
+     1.5
+    ],
+    "text": "Simply hand the printed clipboard it generated to the Stock keeper"
+   },
+   "src": "StockTickerScenes.java:388"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "StockTickerScenes.java:393"
+  }
+ ]
+}
