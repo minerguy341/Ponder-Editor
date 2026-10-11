@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "about": "One entry per reference. verdict: pending | match | differences. After running compare.mjs, open the *-side-by-side*.png of each reference (Read tool / image viewer), list EVERY difference you see in `differences` ([{id, aspect, description, status}] with status open | fixed | accepted:<reason>), set `oursSha256` and `lookedAt` from out/compare-report.json, then verdict. `--check-review` prints REVIEW_OK only if every verdict is match, or differences with every item fixed/accepted:<reason>.",
+  "reviews": {
+    "ref1": {
+      "verdict": "pending",
+      "reviewedBy": "",
+      "reviewedAt": "",
+      "oursSha256": "",
+      "lookedAt": [],
+      "differences": [],
+      "notes": ""
+    },
+    "ref2": {
+      "verdict": "pending",
+      "reviewedBy": "",
+      "reviewedAt": "",
+      "oursSha256": "",
+      "lookedAt": [],
+      "differences": [],
+      "notes": ""
+    },
+    "ref3": {
+      "verdict": "pending",
+      "reviewedBy": "",
+      "reviewedAt": "",
+      "oursSha256": "",
+      "lookedAt": [],
+      "differences": [],
+      "notes": ""
+    },
+    "ref4": {
+      "verdict": "pending",
+      "reviewedBy": "",
+      "reviewedAt": "",
+      "oursSha256": "",
+      "lookedAt": [],
+      "differences": [],
+      "notes": ""
+    }
+  }
+}

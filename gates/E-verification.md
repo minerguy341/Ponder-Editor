@@ -34,3 +34,31 @@ Scope: `tools/verify/**` (Node ESM + Playwright via /opt/pw-browsers/chromium-11
 
 - [ ] G7: README section tools/verify/README.md documents every script, flags, outputs; npm scripts added (`verify:*`) - report to driver instead of editing package.json
   EVIDENCE: pending
+
+- [ ] G2b: `coverage.mjs --selftest`: parser (comments/strings/dynamic components), every tolerance rule T1-T6 with negative cases, and the real AllCreatePonderScenes.java parse (structural count == textual count, 179 registrations -> 166 unique scenes, known facts)
+  CHECK: node tools/verify/coverage.mjs --selftest
+  EXPECT: COVERAGE_SELFTEST_OK
+  EVIDENCE: pending
+
+- [ ] G4b: references.json is reproducible: Java sources of Create 6.0.10 give the same totalTicks/keyframes/visible texts, and the keyframe marks measured in the four real screenshots equal the marks predicted from those keyframes (pixel-exact), tick inside the bar-implied band
+  CHECK: PONDER_REFS=/tmp/claude-0/-home-user-Ponder-Editor/47704bde-6ef6-528e-8e40-17c897bfab24/scratchpad/refs node tools/verify/compare.mjs --verify-refs
+  EXPECT: REFS_VERIFIED
+  EVIDENCE: pending
+
+- [ ] G7b: README documents every script, the window.__ponder contract, DOM testids, tolerance rules, review.json schema and the suggested npm scripts
+  CHECK: node tools/verify/readme-check.mjs
+  EXPECT: README_COMPLETE
+  EVIDENCE: pending
+
+- [ ] G8: the harness-vs-real-app contract (window.__ponder methods and semantics, DOM testids, sub-path rules, reference viewport/GUI scale) is written in tools/verify/README.md "App contract" and exercised by the fixture (the interaction suite uses every testid and getCamera/setCamera/seek/loadScene/getState against it, with negative controls)
+  CHECK: node tools/verify/interaction.mjs --selftest
+  EXPECT: INTERACTION_SELFTEST_OK
+  EVIDENCE: pending
+
+- [ ] G9: references.json names scene id, tick (+ anchor, range), visible text keys and derivation for ref1..ref4; review.json is seeded with pending entries and `--check-review` refuses it until a real review exists
+  CHECK: node tools/verify/compare.mjs --check-review; node tools/verify/readme-check.mjs --refs
+  EXPECT: /REVIEW_NOT_OK[\s\S]*ref1 create:cog\/small tick 63 \| ref2 create:high_logistics\/chain_conveyor tick 69 \| ref3 create:mechanical_press\/pressing tick 471 \| ref4 create:mechanical_press\/compacting tick 93/
+  EVIDENCE: pending
+
+- [ ] G10: G2 (`coverage.mjs --scenes` on the real public/scenes/index.json) cannot be met inside leaf E: it needs C1's converter output. Recorded here so the driver runs it after merging C1; until then the harness-side proof is G2b plus a synthetic complete/damaged index.
+  EVIDENCE: pending

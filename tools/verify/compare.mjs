@@ -4,6 +4,7 @@
 //   node tools/verify/compare.mjs [--refs DIR] [--fixture|--url U|--dev] [--only ref1,ref3] [--sweep N] [--settle MS] [--out DIR]
 //   node tools/verify/compare.mjs --verify-refs [--refs DIR] [--scenes-dir public/scenes] [--offline-ok]
 //   node tools/verify/compare.mjs --check-review [--allow-stale]
+//   node tools/verify/compare.mjs --seed-review      (creates review.json with pending entries if missing)
 //   node tools/verify/compare.mjs --selftest        (-> COMPARE_SELFTEST_OK)
 //
 // See tools/verify/README.md ("compare.mjs") for outputs and the review.json schema.
@@ -562,11 +563,14 @@ async function selftest() {
 
 if (process.argv[1] && pathToFileURL(path.resolve(process.argv[1])).href === import.meta.url) {
   const args = parseArgs(process.argv.slice(2), {
-    bool: ['selftest', 'check-review', 'verify-refs', 'allow-stale', 'fixture', 'dev', 'rebuild', 'offline-ok'],
+    bool: ['selftest', 'check-review', 'verify-refs', 'seed-review', 'allow-stale', 'fixture', 'dev', 'rebuild', 'offline-ok'],
     value: ['refs', 'url', 'only', 'sweep', 'settle', 'out', 'scenes-dir'],
   });
   if (args.selftest) await selftest();
-  else if (args.checkReview) {
+  else if (args.seedReview) {
+    seedReview(REVIEW, loadReferences());
+    console.log(`review ledger: ${REVIEW}`);
+  } else if (args.checkReview) {
     const r = checkReview({ allowStale: !!args.allowStale });
     for (const p of r.problems) console.log('  PROBLEM ' + p);
     console.log(r.ok ? 'REVIEW_OK' : `REVIEW_NOT_OK (${r.problems.length} problem(s))`);

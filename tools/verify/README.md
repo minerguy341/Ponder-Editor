@@ -34,6 +34,8 @@ Common target flags (run-all, compare, interaction): `--fixture` (serve `tools/v
 | `compare.mjs [--refs D] [--only ref1,ref3] [--sweep N] [--settle MS]` | renders the 4 reference scenes at the tick each screenshot shows (1920x1009), writes ref \| ours \| heatmap strips and metrics | exit 1 if a render had problems | `out/refN-{ours,diff,side-by-side,side-by-side-small}.png`, `out/compare-report.json`, seeds `review.json` |
 | `compare.mjs --check-review [--allow-stale]` | gate on the review ledger `tools/verify/review.json` | `REVIEW_OK` / `REVIEW_NOT_OK` | |
 | `compare.mjs --verify-refs [--refs D] [--scenes-dir public/scenes] [--offline-ok]` | re-derives `references.json` from the Java sources and the screenshot pixels; optionally cross-checks C1's scene JSON (`keyframes`, `totalTicks`) | `REFS_VERIFIED` | |
+| `compare.mjs --seed-review` | creates `review.json` with `pending` entries if missing (runs also seed it) | | `review.json` |
+| `readme-check.mjs [--refs]` | checks this README covers every script/topic (gate G7b); `--refs` prints the reference summary | `README_COMPLETE` | |
 | `interaction.mjs [--scene ID] [--query q]` | mouse drag, touch drag, wheel, pinch, replay, next/prev, progress-bar seek, scene browser, mobile overflow | `INTERACTION_OK` | `out/interaction-mobile.png` |
 | `subpath.mjs [--base /Ponder-Editor/] [--fixture] [--dist D]` | builds with the sub-path base (and with `./`), serves it like GitHub Pages, loads and plays a scene | `SUBPATH_OK` | `out/subpath-{abs,relative}/` |
 
