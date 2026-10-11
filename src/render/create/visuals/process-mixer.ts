@@ -56,7 +56,9 @@ export function mixerStep(s: MixerState, speed: number): void {
   }
   if (s.runningTicks === 20) {
     if (s.processingTicks < 0) {
-      // currentRecipe is null in the Ponder level: recipeSpeed = 1
+      // recipeSpeed = 1: MechanicalMixerBlockEntity.tick (Create 6.0.10) uses the recipe's processingDuration
+      // only when it is non-zero. The scene recipes do not set it: create:mixing/andesite_alloy (Create 6.0.10
+      // data) has no processingTime, and the dye mix has no matching recipe at all (currentRecipe stays null).
       s.processingTicks = Math.max(Math.floor(Math.log2(Math.trunc(512 / absSpeed))) * Math.ceil(1 * 15) + 1, 1);
     } else {
       s.processingTicks--;
