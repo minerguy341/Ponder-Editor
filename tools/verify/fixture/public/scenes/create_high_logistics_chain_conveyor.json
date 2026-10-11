@@ -1,0 +1,132 @@
+{
+ "id": "create:high_logistics/chain_conveyor",
+ "schematic": "high_logistics/chain_conveyor",
+ "schematicNamespace": "create",
+ "title": "Fixture chain_conveyor",
+ "texts": {
+  "text_1": "fixture text 1",
+  "text_2": "fixture text 2",
+  "text_3": "fixture text 3",
+  "text_4": "fixture text 4",
+  "text_5": "fixture text 5"
+ },
+ "tags": [],
+ "items": [
+  "create:chain_conveyor"
+ ],
+ "keyframes": [
+  74,
+  211,
+  319,
+  404,
+  543
+ ],
+ "totalTicks": 674,
+ "instructions": [
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 68
+   }
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "text": "text_1",
+    "duration": 60,
+    "keyframe": true
+   }
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 137
+   }
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "text": "text_2",
+    "duration": 60,
+    "keyframe": true
+   }
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 108
+   }
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "text": "text_3",
+    "duration": 60,
+    "keyframe": true
+   }
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 85
+   }
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "text": "text_4",
+    "duration": 60,
+    "keyframe": true
+   }
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 139
+   }
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "text": "text_5",
+    "duration": 60,
+    "keyframe": true
+   }
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 137
+   }
+  }
+ ],
+ "fixture": {
+  "texts": [
+   {
+    "key": "text_1",
+    "at": 68,
+    "duration": 80
+   },
+   {
+    "key": "text_2",
+    "at": 205,
+    "duration": 70
+   },
+   {
+    "key": "text_3",
+    "at": 313,
+    "duration": 60
+   },
+   {
+    "key": "text_4",
+    "at": 398,
+    "duration": 80
+   },
+   {
+    "key": "text_5",
+    "at": 537,
+    "duration": 60
+   }
+  ]
+ }
+}

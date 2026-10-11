@@ -1,0 +1,63 @@
+[
+ {
+  "id": "fx:alpha",
+  "title": "Fixture Alpha",
+  "items": [
+   "fx:cube"
+  ],
+  "tags": [
+   "fx:basics"
+  ],
+  "file": "fx_alpha.json"
+ },
+ {
+  "id": "fx:beta-press",
+  "title": "Fixture Beta Press",
+  "items": [
+   "fx:press"
+  ],
+  "tags": [
+   "fx:basics"
+  ],
+  "file": "fx_beta-press.json"
+ },
+ {
+  "id": "create:cog/small",
+  "title": "Fixture cog/small",
+  "items": [
+   "create:cogwheel"
+  ],
+  "tags": [
+   "create:kinetic_relays"
+  ],
+  "file": "create_cog_small.json"
+ },
+ {
+  "id": "create:high_logistics/chain_conveyor",
+  "title": "Fixture chain_conveyor",
+  "items": [
+   "create:chain_conveyor"
+  ],
+  "tags": [],
+  "file": "create_high_logistics_chain_conveyor.json"
+ },
+ {
+  "id": "create:mechanical_press/pressing",
+  "title": "Fixture pressing",
+  "items": [
+   "create:mechanical_press"
+  ],
+  "tags": [],
+  "file": "create_mechanical_press_pressing.json"
+ },
+ {
+  "id": "create:mechanical_press/compacting",
+  "title": "Fixture compacting",
+  "items": [
+   "create:mechanical_press",
+   "create:basin"
+  ],
+  "tags": [],
+  "file": "create_mechanical_press_compacting.json"
+ }
+]

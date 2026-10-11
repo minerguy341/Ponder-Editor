@@ -1,6 +1,8 @@
 node_modules
 dist
 *.log
+.claude/worktrees
 tools/.cache
 tools/verify/out
 public/scenes/.tmp
+tools/a1-out

@@ -1,0 +1,96 @@
+{
+ "id": "create:mechanical_press/pressing",
+ "schematic": "mechanical_press/pressing",
+ "schematicNamespace": "create",
+ "title": "Fixture pressing",
+ "texts": {
+  "text_1": "fixture text 1",
+  "text_2": "fixture text 2",
+  "text_3": "fixture text 3",
+  "text_4": "fixture text 4"
+ },
+ "tags": [],
+ "items": [
+  "create:mechanical_press"
+ ],
+ "keyframes": [
+  47,
+  312,
+  372
+ ],
+ "totalTicks": 471,
+ "instructions": [
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 41
+   }
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "text": "text_1",
+    "duration": 60,
+    "keyframe": true
+   }
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 265
+   }
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "text": "text_2",
+    "duration": 60,
+    "keyframe": true
+   }
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   }
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "text": "text_3",
+    "duration": 60,
+    "keyframe": true
+   }
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 105
+   }
+  }
+ ],
+ "fixture": {
+  "texts": [
+   {
+    "key": "text_1",
+    "at": 41,
+    "duration": 60
+   },
+   {
+    "key": "text_2",
+    "at": 111,
+    "duration": 60
+   },
+   {
+    "key": "text_3",
+    "at": 306,
+    "duration": 40
+   },
+   {
+    "key": "text_4",
+    "at": 366,
+    "duration": 50
+   }
+  ]
+ }
+}
