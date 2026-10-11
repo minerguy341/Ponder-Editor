@@ -10,7 +10,8 @@ import { missingResources, fetchStats } from '../assets/resources';
 import { getBlockRenderer } from '../render/blockRenderer';
 import { PonderViewer } from '../render/viewer';
 import { PoseStack, createItemEntityObject, createItemObjectSync, prepareItem } from '../render/create/items';
-import type { ItemStackJson } from '../contract';
+import type { ItemStackJson, BlockVisual } from '../contract';
+import { createVisual, isEntityRendered } from '../render/create';
 
 const qs = new URLSearchParams(location.search);
 const stage = document.getElementById('stage')!;
@@ -73,9 +74,42 @@ async function itemsMode() {
   viewer.setBasePlate({ x: 0, z: 0, size });
 }
 
+const visuals: { v: BlockVisual; b: BlockInstance }[] = [];
+function setTicks(t: number) {
+  for (const e of visuals) e.v.update(t);
+  renderer.tick(performance.now());
+  viewer.renderFrame();
+}
+
+async function sceneMode() {
+  const path = qs.get('path') ?? 'belt/transport';
+  const st = await loadStructure('create', path);
+  renderer.setEntityBlockPredicate(isEntityRendered);
+  const lookup = makeLookup(st.blocks);
+  await renderer.prepare(st.blocks.map((b) => b.state));
+  const group = renderer.buildSection(st.blocks, { lookup });
+  viewer.world.add(group);
+  const ctx = { renderer, lookup };
+  const only = qs.get('only');
+  for (const b of st.blocks) {
+    if (only && !only.split(',').includes(b.state.name)) continue;
+    const v = await createVisual(b, ctx);
+    if (!v) continue;
+    v.object.position.set(b.pos[0], b.pos[1], b.pos[2]);
+    viewer.world.add(v.object);
+    visuals.push({ v, b });
+  }
+  viewer.setBounds(st.size[0], st.size[1], st.size[2]);
+  const ent = qs.get('plate');
+  void ent;
+  setTicks(Number(qs.get('t') ?? 0));
+  Object.assign(w.__b2 as object, { visuals, setTicks, structure: st, lookup, ctx });
+}
+
 async function main() {
   const mode = qs.get('mode') ?? 'items';
   if (mode === 'items') await itemsMode();
+  if (mode === 'scene') await sceneMode();
   viewer.start();
   info.done = true;
 }
