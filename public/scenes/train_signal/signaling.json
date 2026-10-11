@@ -1205,7 +1205,8 @@
     ],
     "pose": {
      "type": "face_poi"
-    }
+    },
+    "fadeFrom": "down"
    },
    "src": "TrainSignalScenes.java:289",
    "out": "e2"
@@ -1442,7 +1443,8 @@
     ],
     "pose": {
      "type": "face_poi"
-    }
+    },
+    "fadeFrom": "down"
    },
    "src": "TrainSignalScenes.java:314",
    "out": "e4"
@@ -1978,7 +1980,8 @@
     ],
     "pose": {
      "type": "dance"
-    }
+    },
+    "fadeFrom": "down"
    },
    "src": "TrainSignalScenes.java:385",
    "out": "e6"
@@ -2178,7 +2181,8 @@
     ],
     "pose": {
      "type": "face_poi"
-    }
+    },
+    "fadeFrom": "down"
    },
    "src": "TrainSignalScenes.java:402",
    "out": "e8"
@@ -2900,7 +2904,8 @@
     ],
     "pose": {
      "type": "face_poi"
-    }
+    },
+    "fadeFrom": "down"
    },
    "src": "TrainSignalScenes.java:448",
    "out": "e10"

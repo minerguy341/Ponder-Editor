@@ -64,8 +64,8 @@ export class Env {
     }
     return null;
   }
-  declare(name, value, type = null) {
-    this.vars.set(name, { v: value, t: type });
+  declare(name, value, type = null, jt = null) {
+    this.vars.set(name, { v: value, t: type, jt }); // jt: declared Java type name ('array' for arrays, null when unknown)
   }
 }
 
@@ -84,6 +84,18 @@ class Frame {
 const SIG = { BREAK: 1, CONTINUE: 2, RETURN: 3, YIELD: 4 };
 
 const FLOAT_T = new Set(['float', 'Float']);
+const SHIFT_OPS = new Set(['<<', '>>', '>>>']);
+const PRIM_NAMES = new Set(['byte', 'short', 'int', 'long', 'char', 'float', 'double', 'boolean']);
+const BOXED_NAMES = new Set(['Byte', 'Short', 'Integer', 'Long', 'Character', 'Float', 'Double', 'Boolean']);
+
+/** Java shift on a long: the count is masked to 6 bits and the result wraps at 64 bits. */
+function longShift(op, x, y) {
+  const s = BigInt(y & 63);
+  const bx = BigInt(x);
+  if (op === '<<') return Number(BigInt.asIntN(64, bx << s));
+  if (op === '>>') return Number(bx >> s);
+  return Number(BigInt.asIntN(64, BigInt.asUintN(64, bx) >> s));
+}
 const DOUBLE_T = new Set(['double', 'Double']);
 const INT_T = new Set(['int', 'long', 'short', 'byte', 'Integer', 'Long', 'Short', 'Byte']);
 
@@ -564,7 +576,8 @@ export class Interp {
       if (v instanceof JChar) return D(v.c);
     } else if (INT_T.has(n)) {
       if (v instanceof JChar) return v.c;
-      if (typeof v === 'number') return v;
+      // ints and longs share one JS number type, so int overflow wraps at the typed boundary (declaration, assignment, parameter, return, cast)
+      if (typeof v === 'number') return (n === 'int' || n === 'Integer') && (v > 2147483647 || v < -2147483648) && Number.isInteger(v) ? v | 0 : v;
     } else if (n === 'char') {
       if (typeof v === 'number') return new JChar(v);
     }
@@ -625,7 +638,7 @@ export class Interp {
         if (args.length === ps.length && (args[i] instanceof JArray || args[i] === null)) rest = args[i];
         else rest = new JArray(args.slice(i).map((a) => this.coerce(a, { ...p.type, dims: p.type.dims - 1 })), p.type.name);
         env.declare(p.name, rest);
-      } else env.declare(p.name, this.coerce(args[i], p.type), FLOAT_T.has(p.type.name) || DOUBLE_T.has(p.type.name) ? p.type.name : null);
+      } else env.declare(p.name, this.coerce(args[i], p.type), FLOAT_T.has(p.type.name) || DOUBLE_T.has(p.type.name) ? p.type.name : null, p.type.dims ? 'array' : p.type.name);
     }
   }
 
@@ -940,7 +953,7 @@ export class Interp {
       const env = new Env(l.env);
       const fr = new Frame(l.cu, l.cls, l.thisObj, env);
       const ps = l.node.params;
-      for (let i = 0; i < ps.length; i++) env.declare(ps[i].name, ps[i].type ? this.coerce(args[i], ps[i].type) : args[i]);
+      for (let i = 0; i < ps.length; i++) env.declare(ps[i].name, ps[i].type ? this.coerce(args[i], ps[i].type) : args[i], null, ps[i].type ? (ps[i].type.dims ? 'array' : ps[i].type.name) : null);
       if (l.node.exprBody) return this.evalExpr(l.node.body, fr);
       const sig = this.execBlock(l.node.body, fr, true);
       if (sig && sig.t === SIG.RETURN) return sig.v;
@@ -1033,20 +1046,20 @@ export class Interp {
     return fmt.replace(/%(?:(\d+)\$)?([-#+ 0,(]*)(\d+)?(?:\.(\d+))?([a-zA-Z%])/g, (m, idx, flags, width, prec, conv) => {
       if (conv === 'n') return '\n';
       if (conv === '%') return '%';
-      const v = idx ? args[num(idx) - 1] : args[i++];
+      const v = idx ? args[Number(idx) - 1] : args[i++];
       let out;
       switch (conv) {
         case 'd': out = String(Math.trunc(num(v))); break;
-        case 'f': out = num(v).toFixed(prec !== undefined ? num(prec) : 6); break;
-        case 's': case 'S': out = this.toStr(v); if (prec !== undefined) out = out.slice(0, num(prec)); if (conv === 'S') out = out.toUpperCase(); break;
+        case 'f': out = num(v).toFixed(prec !== undefined ? Number(prec) : 6); break;
+        case 's': case 'S': out = this.toStr(v); if (prec !== undefined) out = out.slice(0, Number(prec)); if (conv === 'S') out = out.toUpperCase(); break;
         case 'x': out = (num(v) >>> 0).toString(16); break;
         case 'X': out = (num(v) >>> 0).toString(16).toUpperCase(); break;
         case 'c': out = v instanceof JChar ? v.toString() : String.fromCharCode(num(v)); break;
         case 'b': out = String(v !== null && v !== false); break;
         default: out = this.toStr(v);
       }
-      if (flags.includes('0') && width) out = out.padStart(num(width), '0');
-      else if (width) out = flags.includes('-') ? out.padEnd(num(width)) : out.padStart(num(width));
+      if (flags.includes('0') && width) out = out.padStart(Number(width), '0');
+      else if (width) out = flags.includes('-') ? out.padEnd(Number(width)) : out.padStart(Number(width));
       return out;
     });
   }
@@ -1104,7 +1117,7 @@ export class Interp {
           const type = { name: s.type.name, dims: s.type.dims + d.dims, args: s.type.args };
           let v = d.init ? this.evalInit(d.init, type, fr) : this.defaultValue(type);
           if (s.type.name !== 'var') v = this.coerce(v, type);
-          fr.env.declare(d.name, v, type.dims === 0 && (FLOAT_T.has(type.name) || DOUBLE_T.has(type.name)) ? type.name : null);
+          fr.env.declare(d.name, v, type.dims === 0 && (FLOAT_T.has(type.name) || DOUBLE_T.has(type.name)) ? type.name : null, type.dims ? 'array' : type.name === 'var' ? null : type.name);
         }
         return null;
       }
@@ -1138,7 +1151,7 @@ export class Interp {
         const items = this.iterate(this.evalExpr(s.iter, fr));
         for (const it of items) {
           const f = fr.child();
-          f.env.declare(s.name, s.type.name === 'var' ? it : this.coerce(it, s.type), null);
+          f.env.declare(s.name, s.type.name === 'var' ? it : this.coerce(it, s.type), null, s.type.name === 'var' ? null : s.type.dims ? 'array' : s.type.name);
           const sig = this.exec(s.body, f);
           if (sig) {
             if (sig.t === SIG.BREAK && (!sig.label || sig.label === s.$label)) break;
@@ -1608,6 +1621,7 @@ export class Interp {
     if (tv && tv.$lazyArgs) return tv.$callLazy(this, n.name, n.args, fr);
     const args = n.args.map((a) => this.evalExpr(a, fr));
     this.curLine = n.line || this.curLine;
+    if (n.name === 'remove' && args.length === 1 && tv && typeof tv.removeObject === 'function' && this.isBoxedExpr(n.args[0], fr)) return tv.removeObject(args[0]);
     return this.invoke(tv, n.name, args);
   }
 
@@ -1758,7 +1772,8 @@ export class Interp {
           if (v instanceof JChar) return v.c;
           const x = num(v);
           let r = Number.isNaN(x) ? 0 : Math.trunc(x);
-          if (t.name === 'int') r = r > 2147483647 ? 2147483647 : r < -2147483648 ? -2147483648 : r;
+          // double -> int saturates (JLS 5.1.3); long -> int wraps
+          if (t.name === 'int') r = v instanceof Dbl ? (r > 2147483647 ? 2147483647 : r < -2147483648 ? -2147483648 : r) : r | 0;
           if (t.name === 'byte') r = (r << 24) >> 24;
           if (t.name === 'short') r = (r << 16) >> 16;
           return r;
@@ -1903,7 +1918,42 @@ export class Interp {
       if (n.op === '&&') return this.truthy(a) && this.truthy(this.evalExpr(n.b, fr));
       return this.truthy(a) || this.truthy(this.evalExpr(n.b, fr));
     }
-    return this.binop(n.op, this.evalExpr(n.a, fr), this.evalExpr(n.b, fr));
+    const a = this.evalExpr(n.a, fr);
+    const b = this.evalExpr(n.b, fr);
+    if (SHIFT_OPS.has(n.op) && isNum(a) && isNum(b) && this.isLongExpr(n.a, fr)) return longShift(n.op, num(a), num(b));
+    return this.binop(n.op, a, b);
+  }
+
+  /** Static (declared-type) approximation of "this expression has Java type long": ints and longs share one JS number type. */
+  isLongExpr(n, fr) {
+    switch (n.k) {
+      case 'lit': return n.t === 'long';
+      case 'paren': return this.isLongExpr(n.e, fr);
+      case 'cast': return !n.type.dims && n.type.name === 'long';
+      case 'unary': return n.op !== '!' && this.isLongExpr(n.e, fr);
+      case 'name': {
+        if (n.parts.length !== 1) return false;
+        const lv = fr.env.find(n.parts[0]);
+        return !!lv && lv.jt === 'long';
+      }
+      case 'bin': return SHIFT_OPS.has(n.op) ? this.isLongExpr(n.a, fr) : this.isLongExpr(n.a, fr) || this.isLongExpr(n.b, fr);
+      default: return false;
+    }
+  }
+
+  /** Static approximation of "this expression has a reference (boxed) type": selects List.remove(Object) over remove(int). */
+  isBoxedExpr(n, fr) {
+    switch (n.k) {
+      case 'paren': return this.isBoxedExpr(n.e, fr);
+      case 'cast': return n.type.dims === 0 && !PRIM_NAMES.has(n.type.name);
+      case 'call': return n.name === 'valueOf' && !!n.target && n.target.k === 'name' && BOXED_NAMES.has(n.target.parts[n.target.parts.length - 1]);
+      case 'name': {
+        if (n.parts.length !== 1) return false;
+        const lv = fr.env.find(n.parts[0]);
+        return !!lv && !!lv.jt && lv.jt !== 'array' && !PRIM_NAMES.has(lv.jt);
+      }
+      default: return false;
+    }
   }
 
   binop(op, a, b) {

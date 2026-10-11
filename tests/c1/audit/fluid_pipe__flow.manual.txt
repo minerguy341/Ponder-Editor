@@ -1,0 +1,75 @@
+# fluid_pipe/flow: PipeScenes.java:47-182 (flow, package scenes/fluid). Hand derivation.
+# Block states: FluidPipeBlock.registerDefaultState only sets WATERLOGGED=false; the six direction properties keep the BooleanProperty
+# default (first value, true), so an unset N/E/S/W is "true" and the Java setValue(...,false) calls are the only falses.
+# Speeds: schematic BEs cogwheel(3,1,0) -32, shaft(4,1,0) -32, cogwheel(5,1,0) -32, large cog(5,0,1) 16. The pump BE (3,1,1) is new (0).
+# Floats: 1/6f = 0.16666667163372040 (double), so bb = centre +-0.1666666716337204 with centre (2.5,1.5,2.5).
+# Selections are compared as position sets; "strayPipes" = fromTo(2,1,2,2,2,2) union fromTo(1,2,2,1,3,2).
+0 PipeScenes.java:50 configureBasePlate {"xOffset":0,"zOffset":0,"size":5}
+0 PipeScenes.java:51 world.showSection {"selection":{"t":"box","from":[0,0,0],"to":[4,0,4]},"direction":"up"}
+0 PipeScenes.java:52 idle {"ticks":5}
+5 PipeScenes.java:58 world.setBlocks {"selection":{"t":"pos","pos":[2,1,1]},"state":{"name":"create:fluid_pipe","props":{"down":"false","east":"true","north":"false","south":"false","up":"false","waterlogged":"false","west":"true"}},"particles":false}
+5 PipeScenes.java:60 world.setBlocks {"selection":{"t":"pos","pos":[1,1,2]},"state":{"name":"create:fluid_pipe","props":{"down":"false","east":"false","north":"true","south":"true","up":"false","waterlogged":"false","west":"false"}},"particles":false}
+5 PipeScenes.java:71 world.showSection {"selection":{"t":"box","from":[4,1,2],"to":[4,2,2]},"direction":"down"}
+5 PipeScenes.java:72 idle {"ticks":5}
+10 PipeScenes.java:73 world.showSection {"selection":{"t":"box","from":[0,1,3],"to":[0,2,3]},"direction":"down"}
+10 PipeScenes.java:75 world.modifyBlockEntity {"pos":[4,1,2],"beType":"FluidTankBlockEntity","calls":[{"path":[{"m":"getTankInventory","a":[]},{"m":"fill","a":[{"fluid":"minecraft:lava","amount":10000},{"enum":"FluidAction.EXECUTE"}]}]}]}
+10 PipeScenes.java:77 idle {"ticks":10}
+20 PipeScenes.java:80 world.showSection {"selection":{"t":"pos","pos":[4,1,1]},"direction":"south"}
+20 PipeScenes.java:81 idle {"ticks":3}
+23 PipeScenes.java:80 world.showSection {"selection":{"t":"pos","pos":[3,1,1]},"direction":"east"}
+23 PipeScenes.java:81 idle {"ticks":3}
+26 PipeScenes.java:80 world.showSection {"selection":{"t":"pos","pos":[2,1,1]},"direction":"east"}
+26 PipeScenes.java:81 idle {"ticks":3}
+29 PipeScenes.java:80 world.showSection {"selection":{"t":"pos","pos":[1,1,1]},"direction":"east"}
+29 PipeScenes.java:81 idle {"ticks":3}
+32 PipeScenes.java:84 overlay.showText {"duration":60,"color":"white","placeNearTarget":true,"keyframe":true,"pointAt":[1.5,2,1.5],"key":"text_1","text":"Fluid Pipes can connect two or more fluid sources and targets"}
+32 PipeScenes.java:91 world.showSection {"selection":{"t":"pos","pos":[1,1,2]},"direction":"north"}
+32 PipeScenes.java:92 idle {"ticks":3}
+35 PipeScenes.java:91 world.showSection {"selection":{"t":"pos","pos":[1,1,3]},"direction":"north"}
+35 PipeScenes.java:92 idle {"ticks":3}
+38 PipeScenes.java:95 idle {"ticks":60}
+98 PipeScenes.java:97 overlay.showControls {"location":[2.5,1.5,1.5],"direction":"down","duration":40,"sneak":false,"ctrl":false,"icon":"rmb","item":{"id":"create:wrench","count":1}}
+98 PipeScenes.java:99 idle {"ticks":7}
+105 PipeScenes.java:100 world.restoreBlocks {"selection":{"t":"pos","pos":[2,1,1]}}
+105 PipeScenes.java:101 overlay.showText {"duration":70,"color":"white","placeNearTarget":true,"keyframe":true,"pointAt":[2.5,1.5,1.5],"key":"text_2","text":"Using a wrench, a straight pipe segment can be given a window"}
+105 PipeScenes.java:106 idle {"ticks":40}
+145 PipeScenes.java:108 overlay.showControls {"location":[1.5,1.5,2.5],"direction":"down","duration":10,"sneak":false,"ctrl":false,"icon":"rmb","item":{"id":"create:wrench","count":1}}
+145 PipeScenes.java:110 idle {"ticks":7}
+152 PipeScenes.java:111 world.restoreBlocks {"selection":{"t":"pos","pos":[1,1,2]}}
+152 PipeScenes.java:112 idle {"ticks":40}
+192 PipeScenes.java:119 world.showSection {"selection":{"t":"union","items":[{"t":"box","from":[2,1,2],"to":[2,2,2]},{"t":"box","from":[1,2,2],"to":[1,3,2]}]},"direction":"down"}
+192 PipeScenes.java:120 idle {"ticks":10}
+202 PipeScenes.java:121 overlay.chaseBoundingBoxOutline {"color":"red","slot":"obj:1","box":{"min":[2.3333333283662796,1.3333333283662796,2.3333333283662796],"max":[2.6666666716337204,1.6666666716337204,2.6666666716337204]},"duration":1}
+202 PipeScenes.java:122 overlay.chaseBoundingBoxOutline {"color":"red","slot":"obj:2","box":{"min":[2.3333333283662796,1.3333333283662796,2.3333333283662796],"max":[2.6666666716337204,1.6666666716337204,2.6666666716337204]},"duration":1}
+202 PipeScenes.java:123 idle {"ticks":1}
+203 PipeScenes.java:124 overlay.chaseBoundingBoxOutline {"color":"red","slot":"obj:1","box":{"min":[1.8333333283662796,1.3333333283662796,2.3333333283662796],"max":[2.1666666716337204,1.6666666716337204,2.6666666716337204]},"duration":50}
+203 PipeScenes.java:125 overlay.chaseBoundingBoxOutline {"color":"red","slot":"obj:2","box":{"min":[2.3333333283662796,1.3333333283662796,1.8333333283662796],"max":[2.6666666716337204,1.6666666716337204,2.1666666716337204]},"duration":50}
+203 PipeScenes.java:126 idle {"ticks":10}
+213 PipeScenes.java:127 overlay.showText {"duration":55,"color":"red","placeNearTarget":true,"keyframe":true,"pointAt":[2.5,1.5,2.5],"key":"text_3","text":"Windowed pipes will not connect to any other adjacent pipe segments"}
+213 PipeScenes.java:133 idle {"ticks":60}
+273 PipeScenes.java:134 world.hideSection {"selection":{"t":"union","items":[{"t":"box","from":[2,1,2],"to":[2,2,2]},{"t":"box","from":[1,2,2],"to":[1,3,2]}]},"direction":"up"}
+273 PipeScenes.java:135 idle {"ticks":10}
+283 PipeScenes.java:138 world.setBlocks {"selection":{"t":"pos","pos":[3,1,1]},"state":{"name":"create:mechanical_pump","props":{"facing":"west","waterlogged":"false"}},"particles":true}
+283 PipeScenes.java:140 idle {"ticks":10}
+293 PipeScenes.java:141 world.showSection {"selection":{"t":"pos","pos":[5,0,1]},"direction":"up"}
+293 PipeScenes.java:142 world.showSection {"selection":{"t":"box","from":[3,1,0],"to":[5,1,0]},"direction":"south"}
+293 PipeScenes.java:143 idle {"ticks":10}
+303 PipeScenes.java:144 world.modifyBlockEntityNBT {"beType":"KineticBlockEntity","redraw":false,"targets":[{"pos":[3,1,0],"nbt":{"Speed":-8}},{"pos":[4,1,0],"nbt":{"Speed":-8}},{"pos":[5,1,0],"nbt":{"Speed":-8}},{"pos":[5,0,1],"nbt":{"Speed":4}},{"pos":[3,1,1],"nbt":{"Speed":0}}]}
+303 PipeScenes.java:145 world.modifyBlockEntityNBT {"beType":"KineticBlockEntity","redraw":false,"targets":[{"pos":[3,1,1],"nbt":{"Speed":8}}]}
+303 PipeScenes.java:146 world.modifyBlockEntity {"pos":[3,1,1],"beType":"PumpBlockEntity","calls":[{"path":[{"m":"onSpeedChanged","a":[0]}]}]}
+303 PipeScenes.java:148 overlay.showText {"duration":70,"color":"white","placeNearTarget":true,"keyframe":true,"pointAt":[3.5,2,1.5],"key":"text_4","text":"Powered by Mechanical Pumps, the Pipes can transport Fluids"}
+303 PipeScenes.java:153 idle {"ticks":85}
+388 PipeScenes.java:154 overlay.showOutlineWithText {"duration":40,"color":"red","placeNearTarget":true,"keyframe":false,"selection":{"t":"box","from":[4,1,2],"to":[4,2,2]},"pointAt":[4.5,2,2.5],"key":"text_5","text":"No fluid is being extracted at first"}
+388 PipeScenes.java:158 idle {"ticks":70}
+458 PipeScenes.java:160 overlay.showOutline {"color":"green","slot":"obj:3","selection":{"t":"box","from":[4,1,2],"to":[4,2,2]},"duration":100}
+458 PipeScenes.java:161 idle {"ticks":5}
+463 PipeScenes.java:162 overlay.showOutline {"color":"green","slot":"obj:4","selection":{"t":"box","from":[0,1,3],"to":[0,2,3]},"duration":100}
+463 PipeScenes.java:163 idle {"ticks":5}
+468 PipeScenes.java:164 overlay.showText {"duration":100,"color":"white","placeNearTarget":false,"keyframe":true,"independent":0,"key":"text_6","text":"Once the flow connects them, the endpoints gradually transfer their contents"}
+468 PipeScenes.java:168 overlay.showLine {"color":"green","start":[4,2.5,2.5],"end":[1,2.5,3.5],"duration":80,"big":false}
+468 PipeScenes.java:171 world.modifyBlockEntityNBT {"beType":"KineticBlockEntity","redraw":false,"targets":[{"pos":[3,1,0],"nbt":{"Speed":-16}},{"pos":[4,1,0],"nbt":{"Speed":-16}},{"pos":[5,1,0],"nbt":{"Speed":-16}},{"pos":[5,0,1],"nbt":{"Speed":8}},{"pos":[3,1,1],"nbt":{"Speed":16}}]}
+468 PipeScenes.java:172 world.modifyBlockEntity {"pos":[3,1,1],"beType":"PumpBlockEntity","calls":[{"path":[{"m":"onSpeedChanged","a":[0]}]}]}
+468 PipeScenes.java:173 effects.rotationIndicator {"pos":[3,1,1],"direction":false}
+468 PipeScenes.java:175 idle {"ticks":120}
+588 PipeScenes.java:177 overlay.showText {"duration":60,"color":"white","placeNearTarget":true,"keyframe":false,"pointAt":[1.5,2,1.5],"key":"text_7","text":"Thus, the Pipe blocks themselves never 'physically' contain any fluid"}
+588 PipeScenes.java:181 idle {"ticks":50}

@@ -897,7 +897,8 @@ function poseOf(rec, supplier) {
 export const SPECIAL = {
   createBirb(rec, loc, pose, duration, variant) {
     const l = rec.newLink('Parrot');
-    const args = { location: v3(loc), pose: poseOf(rec, pose) };
+    // Create's SpecialInstructions.createBirb (ExpandedParrotElement) and Ponder's PonderSceneBuilder.createBirb both fade in 10 ticks from DOWN
+    const args = { location: v3(loc), pose: poseOf(rec, pose), fadeFrom: 'down' };
     if (duration !== undefined) args.duration = duration;
     if (variant) args.variant = variant;
     rec.emit('special.createBirb', args, l.id);
@@ -919,7 +920,8 @@ export const SPECIAL = {
   createCart(rec, loc, angle, type) {
     const l = rec.newLink('Minecart');
     let name = type instanceof MethodRef ? (type.cls ? type.cls.name : type.name) : describe(type);
-    rec.emit('special.createCart', { location: v3(loc), angle: f32short(num(angle)), cartType: name }, l.id);
+    // PonderSceneBuilder.createCart: CreateMinecartInstruction(10, Direction.DOWN, cart)
+    rec.emit('special.createCart', { location: v3(loc), angle: f32short(num(angle)), cartType: name, fadeFrom: 'down' }, l.id);
     return l;
   },
   rotateCart(rec, link, yRot, duration) {

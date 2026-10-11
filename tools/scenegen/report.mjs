@@ -73,12 +73,32 @@ if (args.includes('--texts')) {
   // "nothing documented is dead": every documented op must be emitted by at least one scene, unless explicitly listed as reserved in OPS.md
   const reserved = new Set([...md.matchAll(/^RESERVED:\s*`([^`]+)`/gm)].map((m) => m[1]));
   const dead = [...documented].filter((o) => !emitted.has(o) && !reserved.has(o));
-  if (undocumented.length || dead.length) {
+  // every top-level arg key that the converter emits must be named in the op's table row (arg shape documented)
+  const rowText = new Map();
+  for (const line of md.split('\n')) {
+    const m = line.match(/^\|\s*`([A-Za-z]+(?:\.[A-Za-z]+)?)`\s*\|(.*)$/);
+    if (m) rowText.set(m[1], (rowText.get(m[1]) || '') + ' ' + m[2]);
+  }
+  const argKeys = new Map();
+  for (const { scene } of scenes) for (const op of scene.instructions) {
+    if (!argKeys.has(op.op)) argKeys.set(op.op, new Set());
+    for (const k of Object.keys(op.args || {})) argKeys.get(op.op).add(k);
+  }
+  const undocumentedArgs = [];
+  for (const [op, keys] of argKeys) {
+    if (!rowText.has(op)) continue;
+    // a row may say "same as `other.op`" (its args are that op's args plus its own)
+    let text = rowText.get(op);
+    for (const m of text.matchAll(/same as `([A-Za-z.]+)`/g)) text += ' ' + (rowText.get(m[1]) || '');
+    for (const k of keys) if (!new RegExp(`\\b${k}\\b`).test(text)) undocumentedArgs.push(`${op}.${k}`);
+  }
+  if (undocumented.length || dead.length || undocumentedArgs.length) {
     if (undocumented.length) console.log('undocumented ops: ' + undocumented.join(', '));
     if (dead.length) console.log('documented but never emitted: ' + dead.join(', '));
+    if (undocumentedArgs.length) console.log('emitted args not named in OPS.md: ' + undocumentedArgs.join(', '));
     fail('OPS_PROBLEMS');
   }
-  console.log(`OPS_OK (${emitted.size} ops emitted, ${documented.size} documented)`);
+  console.log(`OPS_OK (${emitted.size} ops emitted, ${documented.size} documented, ${[...argKeys.values()].reduce((n, s) => n + s.size, 0)} arg keys checked)`);
 } else if (args.includes('--schema')) {
   const problems = [];
   const isVec = (v) => Array.isArray(v) && v.length === 3 && v.every((x) => typeof x === 'number' && Number.isFinite(x));
@@ -151,5 +171,12 @@ if (args.includes('--texts')) {
   const files = new Set(index.map((e) => e.file));
   const missingFiles = [...files].filter((f) => !fs.existsSync(path.join(dir, f)));
   if (missingFiles.length) fail('missing scene files: ' + missingFiles.join(', '));
-  console.log(`registered=${registered} generated=${generated} warnings=${warnings}`);
+  // independent of the interpreter: count addStoryBoard(...) calls in the Java source with a regex (both overloads), distinct by schematic+method
+  const javaSrc = fs.readFileSync(path.join(ROOT, 'tools/.cache/create/src/main/java/com/simibubi/create/infrastructure/ponder/AllCreatePonderScenes.java'), 'utf8');
+  const calls = [...javaSrc.matchAll(/addStoryBoard\(\s*(?:[A-Za-z_][\w.]*\s*,\s*)?"([^"]+)"\s*,\s*([A-Za-z_][\w.]*)::(\w+)/g)];
+  const sourceDistinct = new Set(calls.map((m) => `${m[1]}|${m[2]}::${m[3]}`)).size;
+  const sourceCalls = (javaSrc.match(/addStoryBoard\(/g) || []).length;
+  if (calls.length !== sourceCalls) fail(`REGISTRATION_PARSE_MISMATCH regex matched ${calls.length} of ${sourceCalls} addStoryBoard calls`);
+  if (sourceDistinct !== registered || registered !== generated) fail(`COVERAGE_MISMATCH source_distinct=${sourceDistinct} interpreter_registered=${registered} generated=${generated}`);
+  console.log(`registered=${registered} generated=${generated} warnings=${warnings} (source: ${sourceCalls} addStoryBoard calls, ${sourceDistinct} distinct schematic+method)`);
 }

@@ -14,6 +14,8 @@
 //      Item constants AllBlocks.X / AllItems.X are mapped to registry names by regex over AllBlocks.java / AllItems.java
 //      (`X = REGISTRATE.block("name"` / item("name") / ingredient("name")); unresolved constants fall back to lower-case X.
 //      Dynamic components (`AllBlocks.TABLE_CLOTHS.toArray()`, the TrackMaterial stream) cannot be expanded statically.
+//   4b. Scene identity: one scene = one (path, scene function) pair. Path with one function -> id "create:<path>";
+//      path with several scene functions -> "create:<path>~<functionName>" (see foldScenes; OPS.md section 0).
 //   5. Sanity: the number of registrations found structurally must equal the number of `addStoryBoard(` tokens found by a
 //      plain text count; otherwise the parse is wrong and the check fails.
 //
@@ -229,17 +231,36 @@ export function scanRegistrations(scenesSource, { blocks = new Map(), items = ne
           const id = tagId(t);
           if (id) sceneTags.push(id);
         }
-        registrations.push({ path: pm[1], id: `create:${pm[1]}`, method, items: own.items, dynamic: own.dynamic, tags: sceneTags });
+        registrations.push({ path: pm[1], id: null, method, items: own.items, dynamic: own.dynamic, tags: sceneTags });
       }
     }
   }
   return { registrations, tokenCount, unresolved: [...unresolved] };
 }
 
+/**
+ * Scene identity (C1 / OPS.md section 0, rule added for the C1 integration; see README "scene ids"): a scene is one story board,
+ * i.e. one (schematic path, scene function) pair. Registrations of the same pair are ONE scene (items and tags are merged).
+ * The id is "create:<path>" when the path has a single scene function, and "create:<path>~<functionName>" when several scene
+ * functions share the path (Ponder allows that: e.g. gauges~speedometer / gauges~stressometer).
+ */
 /** Folds registrations into unique scenes: id -> {registrations, items, dynamic, tags, methods}. */
 export function foldScenes(registrations) {
+  const methodsByPath = new Map();
+  for (const r of registrations) {
+    if (!methodsByPath.has(r.path)) methodsByPath.set(r.path, new Set());
+    methodsByPath.get(r.path).add(r.method);
+  }
+  const idOf = (r) => {
+    const ms = [...methodsByPath.get(r.path)];
+    if (ms.length <= 1) return `create:${r.path}`;
+    const fn = r.method.split('::').pop().trim();
+    if (ms.filter((m) => m.split('::').pop().trim() === fn).length > 1) throw new Error(`scene functions of ${r.path} have duplicate simple names: ${ms.join(', ')}`);
+    return `create:${r.path}~${fn}`;
+  };
   const scenes = new Map();
   for (const r of registrations) {
+    r.id = idOf(r);
     const s = scenes.get(r.id) || { id: r.id, registrations: 0, items: new Set(), dynamic: false, tags: new Set(), methods: new Set() };
     s.registrations++;
     r.items.forEach((i) => s.items.add(i));
@@ -328,6 +349,9 @@ async function selftest() {
   const folded = foldScenes(sc.registrations);
   c.eq([...folded.keys()].sort(), ['create:a/dyed', 'create:a/four', 'create:a/one', 'create:a/stream', 'create:a/two', 'create:semi;colon, inside'], 'parser: unique scene ids (a/two registered twice counts once)');
   c.eq(folded.get('create:a/two').registrations, 2, 'parser: a/two has 2 registrations');
+  const shared = foldScenes(scanRegistrations('class A { static void register(H h) { HELPER.addStoryBoard(AllBlocks.X, "gauges", KineticsScenes::speedometer); HELPER.addStoryBoard(AllBlocks.Y, "gauges", KineticsScenes::stressometer); HELPER.addStoryBoard(AllBlocks.Y, "gauges", KineticsScenes::stressometer); } }').registrations);
+  c.eq([...shared.keys()].sort(), ['create:gauges~speedometer', 'create:gauges~stressometer'], 'parser: a path with several scene functions gets ~function ids; same function twice is one scene');
+  c.eq(folded.get('create:a/one').registrations, 1, 'parser: single-function path keeps the plain id');
   c.eq([...folded.get('create:a/two').items].sort(), ['one_block', 'three', 'two'], 'parser: a/two items are the union over both registrations');
   c.eq([...folded.get('create:semi;colon, inside').tags].sort(), ['tag_a', 'tag_b'], 'parser: tags resolved through the tag table');
   c.eq(folded.get('create:a/four').items.size, 1, 'parser: direct HELPER.addStoryBoard(item, path, ...) form');
