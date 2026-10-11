@@ -11,7 +11,7 @@
 //     claw   : head chain [* rotZ 180 when ceiling and goggles]; grips T(0, -flip*k, -6/16), flip = index*2 - 1
 //   progress += min(256, |speed|) / 1024 per tick (clamped to 1); angles are lerps between the previous and the target point angles.
 import * as THREE from 'three';
-import type { BlockInstance, BlockState, BlockVisual, ItemStackJson, Vec3, VisualContext } from '../../../contract';
+import type { BlockInstance, BlockState, BlockVisual, Direction, ItemStackJson, Vec3, VisualContext } from '../../../contract';
 import type { VisualModule } from '../registry';
 import { PARTIAL, getPartial, lerpAngleDeg, readItemStack, rotationOffset, stateBool } from '../common';
 import { itemInfo } from '../items';
@@ -69,12 +69,38 @@ export function armTargetAngles(armPos: Vec3, point: Vec3, clawFacing: 'down' | 
   return { base: baseAngle, lower: alpha, upper: beta, head: -headAngle };
 }
 
+/** An interaction point: its target position (ArmInteractionPoint.getInteractionPositionVector) and claw direction (getInteractionDirection). */
+export interface ArmPoint { p: Vec3; dir: Direction }
+
+const DIRS: Record<string, [number, number, number]> = { up: [0, 1, 0], down: [0, -1, 0], north: [0, 0, -1], south: [0, 0, 1], east: [1, 0, 0], west: [-1, 0, 0] };
+const OPP: Record<string, Direction> = { up: 'down', down: 'up', north: 'south', south: 'north', east: 'west', west: 'east' };
+
+/**
+ * ArmInteractionPoint geometry by point type (content/kinetics/mechanicalArm/AllArmInteractionPointTypes.java), chosen by the block at
+ * the point (the type that accepts it). Base: centre of the block, direction DOWN. Depot / belt / saw (DepotPoint, L449-L451):
+ * (.5, 14/16, .5). Top face (chute, crushing wheels, jukebox): (.5, 1, .5). Crafter (CrafterPoint L377-L392): centre + normal(dir)*.5,
+ * dir = facing.opposite. Deployer (DeployerPoint L416-L431): centre + normal(dir)*.65, dir = facing.opposite. Funnel (FunnelPoint
+ * L455-L470): centre + normal(facing)*(-.15), dir = facing.opposite.
+ */
+export function armPointGeometry(state: BlockState | undefined, pos: Vec3): ArmPoint {
+  const name = state?.name ?? '';
+  const centre: Vec3 = [pos[0] + 0.5, pos[1] + 0.5, pos[2] + 0.5];
+  const facing = (state?.props.facing ?? 'north') as Direction;
+  const add = (v: Vec3, d: [number, number, number], k: number): Vec3 => [v[0] + d[0] * k, v[1] + d[1] * k, v[2] + d[2] * k];
+  if (name === 'create:depot' || name === 'create:belt' || name === 'create:mechanical_saw') return { p: [pos[0] + 0.5, pos[1] + 14 / 16, pos[2] + 0.5], dir: 'down' };
+  if (name === 'create:chute' || name === 'create:crushing_wheel' || name === 'minecraft:jukebox') return { p: [pos[0] + 0.5, pos[1] + 1, pos[2] + 0.5], dir: 'down' };
+  if (name === 'create:mechanical_crafter') { const dir = OPP[facing] ?? 'up'; return { p: add(centre, DIRS[dir], 0.5), dir }; }
+  if (name === 'create:deployer') { const dir = OPP[facing] ?? 'up'; return { p: add(centre, DIRS[dir], 0.65), dir }; }
+  if (name.startsWith('create:') && name.includes('funnel')) { return { p: add(centre, DIRS[facing] ?? [0, 0, 0], -0.15), dir: OPP[facing] ?? 'up' }; }
+  return { p: centre, dir: 'down' };
+}
+
 export interface ArmState {
   phase: string;
   index: number;
   progress: number;
-  inputs: Vec3[];
-  outputs: Vec3[];
+  inputs: ArmPoint[];
+  outputs: ArmPoint[];
   prevTarget: ArmTarget;
   prevBase: number;
   base: number; lower: number; upper: number; head: number;
@@ -96,13 +122,16 @@ function pointsOf(list: unknown): { inputs: Vec3[]; outputs: Vec3[] } {
   return { inputs, outputs };
 }
 
-export function armInitial(nbt: Record<string, unknown> | undefined, armPos: Vec3): ArmState {
+export function armInitial(nbt: Record<string, unknown> | undefined, armPos: Vec3, getState: (p: Vec3) => BlockState | undefined = () => undefined): ArmState {
   const pts = pointsOf(nbt?.InteractionPoints);
   const phase = typeof nbt?.Phase === 'string' ? nbt.Phase : 'SEARCH_INPUTS';
   const index = typeof nbt?.TargetPointIndex === 'number' ? nbt.TargetPointIndex : -1;
   const progress = typeof nbt?.MovementProgress === 'number' ? nbt.MovementProgress : 0;
   // absolute point positions: the stored Pos is relative to the arm
-  const abs = (v: Vec3[]) => v.map((p) => [armPos[0] + p[0], armPos[1] + p[1], armPos[2] + p[2]] as Vec3);
+  const abs = (v: Vec3[]): ArmPoint[] => v.map((p) => {
+    const bp: Vec3 = [armPos[0] + p[0], armPos[1] + p[1], armPos[2] + p[2]];
+    return armPointGeometry(getState(bp), bp);
+  });
   return {
     phase, index, progress, inputs: abs(pts.inputs), outputs: abs(pts.outputs),
     prevTarget: ARM_NO_TARGET, prevBase: ARM_NO_TARGET.base,
@@ -112,10 +141,10 @@ export function armInitial(nbt: Record<string, unknown> | undefined, armPos: Vec
 }
 
 /** ArmBlockEntity.tickMovementProgress (client side), one scene tick. */
-export function armStep(s: ArmState, speed: number, angles: (p: Vec3) => ArmTarget): void {
+export function armStep(s: ArmState, speed: number, angles: (p: ArmPoint) => ArmTarget): void {
   s.progress = Math.min(1, s.progress + Math.min(256, Math.abs(speed)) / 1024);
   const pointList = s.phase === 'MOVE_TO_INPUT' ? s.inputs : s.phase === 'MOVE_TO_OUTPUT' ? s.outputs : null;
-  const point = pointList && s.index >= 0 && s.index < pointList.length ? pointList[s.index] : null;
+  const point: ArmPoint | null = pointList && s.index >= 0 && s.index < pointList.length ? pointList[s.index] : null;
   const target = point ? angles(point) : ARM_NO_TARGET;
   const hasTarget = point !== null;
   s.base = lerpAngleDeg(s.progress, s.prevBase, hasTarget ? target.base : s.prevBase);
@@ -128,13 +157,13 @@ export function armStep(s: ArmState, speed: number, angles: (p: Vec3) => ArmTarg
 }
 
 /** ArmBlockEntity.read: a change of phase or target point stores the previous point's angles (previousTarget / previousBaseAngle). */
-export function armApply(s: ArmState, ev: BEvent, angles: (p: Vec3) => ArmTarget): void {
+export function armApply(s: ArmState, ev: BEvent, angles: (p: ArmPoint) => ArmTarget): void {
   const p = ev.patch;
   const phase = typeof p.Phase === 'string' ? p.Phase : s.seenPhase;
   const index = typeof p.TargetPointIndex === 'number' ? p.TargetPointIndex : s.seenIndex;
   if (phase !== s.seenPhase || index !== s.seenIndex) {
     const prevList = s.seenPhase === 'MOVE_TO_INPUT' ? s.inputs : s.seenPhase === 'MOVE_TO_OUTPUT' ? s.outputs : null;
-    const prevPoint = prevList && s.seenIndex >= 0 && s.seenIndex < prevList.length ? prevList[s.seenIndex] : null;
+    const prevPoint: ArmPoint | null = prevList && s.seenIndex >= 0 && s.seenIndex < prevList.length ? prevList[s.seenIndex] : null;
     s.prevTarget = prevPoint ? angles(prevPoint) : ARM_NO_TARGET;
     if (prevPoint) s.prevBase = s.prevTarget.base;
     s.seenPhase = phase; s.seenIndex = index;
@@ -169,18 +198,18 @@ class ArmVisual extends ProcessVisual {
     this.ceiling = stateBool(block.state, 'ceiling');
     this.goggles = !!block.nbt?.Goggles;
     this.cogOffset = rotationOffset(block.state, 'y', block.pos);
-    const angles = (p: Vec3) => this.anglesFor(p);
+    const angles = (p: ArmPoint) => this.anglesFor(p);
     this.sim = this.registerSim(new TickSim<ArmState>(
-      () => armInitial(block.nbt, block.pos),
+      () => armInitial(block.nbt, block.pos, (q) => ctx.lookup.getState(q)),
       (s, n) => armStep(s, this.speedAt(n), angles),
       (s, ev) => armApply(s, ev, angles),
     ));
   }
 
-  private anglesFor(p: Vec3): ArmTarget {
-    const k = `${p[0]},${p[1]},${p[2]}`;
+  private anglesFor(pt: ArmPoint): ArmTarget {
+    const k = `${pt.p[0]},${pt.p[1]},${pt.p[2]},${pt.dir}`;
     let a = this.angleCache.get(k);
-    if (!a) { a = armTargetAngles(this.block.pos, p, 'down', this.ceiling); this.angleCache.set(k, a); }
+    if (!a) { a = armTargetAngles(this.block.pos, pt.p, pt.dir, this.ceiling); this.angleCache.set(k, a); }
     return a;
   }
 
