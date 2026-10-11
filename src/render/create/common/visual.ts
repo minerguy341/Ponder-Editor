@@ -67,6 +67,11 @@ export abstract class BaseVisual implements BlockVisual {
   protected dataAt(tick: number): Nbt {
     return this.timeline[this.indexAt(tick)].data;
   }
+  /** Scene tick at which the snapshot valid at `tick` was recorded (0 for the data the block was created with). */
+  protected dataTickAt(tick: number): number {
+    const t = this.timeline[this.indexAt(tick)].tick;
+    return t === -Infinity ? 0 : t;
+  }
   private indexAt(tick: number): number {
     let i = this.timeline.length - 1;
     while (i > 0 && this.timeline[i].tick > tick) i--;
