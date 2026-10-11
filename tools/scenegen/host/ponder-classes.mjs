@@ -317,7 +317,7 @@ export function buildPonderHost(R, ctx) {
   R.map.get('IFluidHandler').nested.FluidAction = R.map.get('FluidAction');
   R.add(hc('IItemHandler', { isInterface: true }));
   R.add(hc('IFluidHandlerItem', { isInterface: true }));
-  R.add(hc('ItemHandlerHelper', { statics: { copyStackWithSize: (s, n) => s.copyWithCount(n) } }));
+  R.add(hc('ItemHandlerHelper', { statics: { copyStackWithSize: (s, n) => s.copyWithCount(n), insertItemStacked: (h, stack, sim) => { if (h && h.$recproxy) return h.$invoke(getRT(), 'insertItemStacked', [stack, sim]); throw new Unsupported('ItemHandlerHelper.insertItemStacked on a concrete handler'); } } }));
   const cap = (n) => ({ $class: 'Capability', toJSON: () => ({ cap: n }) });
   R.map.set('net.neoforged.neoforge.capabilities.Capabilities.ItemHandler', hc('ItemHandler', { statics: { BLOCK: cap('ItemHandler.BLOCK'), ITEM: cap('ItemHandler.ITEM'), ENTITY: cap('ItemHandler.ENTITY') } }));
   R.map.set('net.neoforged.neoforge.capabilities.Capabilities.FluidHandler', hc('FluidHandler', { statics: { BLOCK: cap('FluidHandler.BLOCK'), ITEM: cap('FluidHandler.ITEM'), ENTITY: cap('FluidHandler.ENTITY') } }));
