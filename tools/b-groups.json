@@ -147,7 +147,8 @@
   "create:train_trapdoor",
   "create:white_sail",
   "create:white_seat",
-  "create:windmill_bearing"
+  "create:windmill_bearing",
+  "create:elevator_contact"
  ],
  "B3": [
   "create:blaze_burner",
