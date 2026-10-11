@@ -8,6 +8,7 @@ import { JState, JBlock, JItemStack, HItem, EMPTY_STACK, vanillaBlock, itemIdOf,
 import { JCompound, JListTag, JComponent, jsonOf } from './nbtobj.mjs';
 import { Entry } from './registry.mjs';
 import { ser, HOOKS, enumToString } from '../serialize.mjs';
+import { auditTable, recordDrop } from '../drops.mjs';
 
 const f32 = Math.fround;
 
@@ -609,15 +610,36 @@ function modifyBlocksImpl(rec, sel, fn, particles) {
     }
   }
   if (changes.length) rec.emit('world.modifyBlocks', { changes, particles: !!particles });
+  else {
+    // nothing changed: record what the selection holds, so the drop audit can tell air / unchanged states from lost ones
+    const seen = [...sel.positions()].slice(0, 6).map((p) => {
+      const st = w.inside(p) ? w.getState(p) : undefined;
+      return `${p.join(',')}=${st ? st.toNbt().name.replace('minecraft:', '') + JSON.stringify(st.toNbt().props ?? {}) : (w.inside(p) ? 'air' : 'outside')}`;
+    });
+    recordDrop('noChange', 'WORLD.modifyBlocks', 'selection', seen.join(' '));
+  }
 }
 
 const sPos = (p) => JSel.box([p.x, p.y, p.z], [p.x, p.y, p.z]);
+
+/** Does a block state carry a block entity of the requested class in the registry (the world model would create it)? */
+function blockEntityClassOf(rec, st, beType) {
+  if (!st) return false;
+  const entry = rec.world.beEntryFor(st);
+  const cls = beType instanceof ClassRef ? beType.cls : beType;
+  if (!entry || !entry.cls || !cls || !cls.isSource) return false;
+  return rec.rt.isSubclass(entry.cls, cls);
+}
 
 function beClassOk(rt, be, beType) {
   if (!be) return false;
   const cls = beType instanceof ClassRef ? beType.cls : beType;
   if (!cls) return false;
-  if (cls.unknown || !cls.isSource) return cls.name === 'BlockEntity';
+  if (cls.unknown || !cls.isSource) {
+    // the converter cannot decide instanceof for this class: the modification is dropped unless it is BlockEntity itself
+    if (cls.name !== 'BlockEntity') recordDrop('beUnknownClass', cls.name, 'instanceof', `at ${be.entry?.id ?? '?'}`);
+    return cls.name === 'BlockEntity';
+  }
   const bc = be.entry.cls;
   return !!bc && rt.isSubclass(bc, cls);
 }
@@ -634,7 +656,7 @@ function runRecorded(rec, root, fn) {
   return root.calls();
 }
 
-export const WORLD = {
+const WORLD_RAW = {
   getHolderLookupProvider: () => ({ $class: 'Provider' }),
   incrementBlockBreakingProgress(rec, pos) {
     rec.emit('world.incrementBlockBreakingProgress', { pos: bp(pos) });
@@ -714,7 +736,8 @@ export const WORLD = {
     modifyBlocksImpl(rec, sel, (s) => {
       if (s.hasProperty(POWER)) s = s.setValue(POWER, s.getValue(POWER) === 0 ? 15 : 0);
       if (s.hasProperty(POWERED)) s = s.cycle(POWERED);
-      const lit = (s.block.id === 'minecraft:redstone_torch' || s.block.id === 'minecraft:redstone_wall_torch') && s.block.props.find((p) => p.name === 'lit');
+      // RedstoneTorchBlock.LIT is BlockStateProperties.LIT ("lit"), shared with the redstone lamp: any block that has it is cycled
+      const lit = s.block.props.find((p) => p.name === 'lit');
       if (lit) s = s.cycle(lit);
       return s;
     }, false);
@@ -748,10 +771,12 @@ export const WORLD = {
   },
   modifyBlockEntityNBT(rec, sel, beType, consumer, redraw) {
     const targets = [];
+    let matched = 0;
     for (const p of sel.positions()) {
       if (!rec.world.inside(p)) continue;
       const be = rec.world.getBlockEntity(p);
       if (!beClassOk(rec.rt, be, beType)) continue;
+      matched++;
       const before = be.nbt.copy();
       const work = be.nbt.copy();
       rec.rt.callFn(consumer, [work]);
@@ -760,16 +785,36 @@ export const WORLD = {
       if (patch && Object.keys(patch).length) targets.push({ pos: p, nbt: patch });
     }
     if (targets.length) rec.emit('world.modifyBlockEntityNBT', { beType: beTypeName(beType), redraw: !!redraw, targets });
+    else if (matched) {
+      const cur = [...sel.positions()].filter((p) => rec.world.inside(p)).map((p) => rec.world.getBlockEntity(p)).filter((b) => beClassOk(rec.rt, b, beType));
+      recordDrop('nbtUnchanged', beTypeName(beType), 'modifyBlockEntityNBT', `${matched} instance(s) matched, consumer left the data unchanged; current data ${cur.map((b) => JSON.stringify(b.nbt.toJSON()).slice(0, 90)).join(' | ')}`);
+    }
+    else {
+      const blocks = [...sel.positions()].slice(0, 3).map((p) => {
+        const st = rec.world.getState(p);
+        return st ? st.toNbt().name : 'air';
+      });
+      const lost = [...sel.positions()].filter((p) => rec.world.inside(p) && blockEntityClassOf(rec, rec.world.getState(p), beType));
+      if (lost.length) recordDrop('beLost', beTypeName(beType), 'modifyBlockEntityNBT', `${lost.length} block(s) should hold a ${beTypeName(beType)} but the world has none`);
+      recordDrop('noTarget', beTypeName(beType), 'modifyBlockEntityNBT', `${[...sel.positions()].length} position(s), no ${beTypeName(beType)} instance; blocks ${blocks.join(' ')}`);
+    }
   },
   modifyBlockEntity(rec, pos, beType, consumer) {
     const be = rec.world.getBlockEntity([pos.x, pos.y, pos.z]);
-    if (!beClassOk(rec.rt, be, beType)) return;
+    if (!beClassOk(rec.rt, be, beType)) {
+      // Java: no-op when the block entity is absent or not an instance (instanceof). Record what is there for the audit.
+      const st = rec.world.getState([pos.x, pos.y, pos.z]);
+      if (!be && st && blockEntityClassOf(rec, st, beType)) recordDrop('beLost', beTypeName(beType), `at ${pos.x},${pos.y},${pos.z}`, `block ${st.toNbt().name} should hold a ${beTypeName(beType)} but the world has none`);
+      else recordDrop(be ? 'beNotInstance' : 'beMissing', beTypeName(beType), `at ${pos.x},${pos.y},${pos.z}`, `block ${st ? st.toNbt().name : 'air'}${be ? ' has BE ' + be.entry.id : ''}`);
+      return;
+    }
     const root = RecProxy.root('be');
     root.pos = pos;
     const calls = runRecorded(rec, root, consumer);
     if (calls.length) rec.emit('world.modifyBlockEntity', { pos: bp(pos), beType: beTypeName(beType), calls });
   },
 };
+export const WORLD = auditTable('WORLD', WORLD_RAW, (r) => r instanceof Recorder);
 
 function diffNbt(before, after) {
   const a = before.toJSON();
@@ -780,7 +825,7 @@ function diffNbt(before, after) {
   return patch;
 }
 
-export const OVERLAY = {
+const OVERLAY_RAW = {
   showText(rec, duration) {
     const args = { duration: num(duration), color: 'white', placeNearTarget: false, keyframe: false };
     rec.emit('overlay.showText', args);
@@ -839,6 +884,7 @@ export const OVERLAY = {
     rec.emit('overlay.showOutline', { color: palName(color), slot: rec.slotKey(slot), selection: sel.toJSON(), duration: num(duration) });
   },
 };
+export const OVERLAY = auditTable('OVERLAY', OVERLAY_RAW, (r) => r instanceof Recorder);
 
 export class Emitter {
   constructor(kind, particle, motion) {
@@ -853,7 +899,7 @@ export class Emitter {
 HOOKS.isEmitter = (v) => v instanceof Emitter;
 HOOKS.emitterJSON = (e) => ({ kind: e.kind, particle: ser(e.particle), motion: v3(e.motion) });
 
-export const EFFECTS = {
+const EFFECTS_RAW = {
   emitParticles(rec, loc, emitter, amount, cycles) {
     if (!(emitter instanceof Emitter)) throw new Unsupported('custom ParticleEmitter lambdas are not supported');
     rec.emit('effects.emitParticles', { location: v3(loc), emitter: HOOKS.emitterJSON(emitter), amountPerCycle: num(amount), cycles: num(cycles) });
@@ -870,6 +916,7 @@ export const EFFECTS = {
     rec.emit('effects.createRedstoneParticles', { pos: bp(pos), color: num(color), amount: num(amount) });
   },
 };
+export const EFFECTS = auditTable('EFFECTS', EFFECTS_RAW, (r) => r instanceof Recorder);
 
 const POSE_TYPES = { DancePose: 'dance', FaceCursorPose: 'face_cursor', FacePointOfInterestPose: 'face_poi', FlappyPose: 'flappy', ParrotSpinOnComponentPose: 'spin_on_component' };
 HOOKS.isPose = (v) => v instanceof PoseObj || (v instanceof JObject && v.cls.isSource && /Pose$/.test(v.cls.name));
@@ -894,7 +941,7 @@ function poseOf(rec, supplier) {
   return HOOKS.poseJSON(p);
 }
 
-export const SPECIAL = {
+const SPECIAL_RAW = {
   createBirb(rec, loc, pose, duration, variant) {
     const l = rec.newLink('Parrot');
     // Create's SpecialInstructions.createBirb (ExpandedParrotElement) and Ponder's PonderSceneBuilder.createBirb both fade in 10 ticks from DOWN
@@ -934,8 +981,9 @@ export const SPECIAL = {
     rec.emit('special.hideElement', { link: HOOKS.linkJSON(link), direction: dirName(dir) });
   },
 };
+export const SPECIAL = auditTable('SPECIAL', SPECIAL_RAW, (r) => r instanceof Recorder);
 
-export const DEBUG = {
+const DEBUG_RAW = {
   debugSchematic() {},
   addInstructionInstance(rec, ins) {
     BASE.addInstruction(rec, ins);
@@ -944,6 +992,7 @@ export const DEBUG = {
     BASE.addInstruction(rec, cb);
   },
 };
+export const DEBUG = auditTable('DEBUG', DEBUG_RAW, (r) => r instanceof Recorder);
 HOOKS.isLink = (v) => v instanceof JLink;
 HOOKS.linkJSON = (l) => {
   if (!l.id) throw new Unsupported('element link used before being bound to an element');
@@ -953,7 +1002,7 @@ HOOKS.isSel = (v) => v instanceof JSel;
 HOOKS.selJSON = (s) => s.toJSON();
 HOOKS.isPalette = (v) => v instanceof PonderPaletteEnum;
 
-export const BASE = {
+const BASE_RAW = {
   title(rec, id, text) {
     rec.sceneIdPath = id;
     rec.titleText = text;
@@ -1014,6 +1063,7 @@ export const BASE = {
     if (!rec.stopped) rec.keyframes.push(rec.totalTime + 6);
   },
 };
+export const BASE = auditTable('BASE', BASE_RAW, (r) => r instanceof Recorder);
 
 /** Runtime stand-in for `PonderScene` inside `addInstruction(scene -> ...)` callbacks */
 export class SceneRuntime {
