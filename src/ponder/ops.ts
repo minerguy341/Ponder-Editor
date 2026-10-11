@@ -439,17 +439,6 @@ export const OPS: Record<string, OpDef> = {
       }
     },
   },
-  'world.modifyEntitiesInside': {
-    tick(o) {
-      const sel = selOf(o, o.args.selection);
-      for (const e of [...o.st.entities]) {
-        if (!entityMatches(e, String(o.args.entityType))) continue;
-        if (!sel.keys.has(`${Math.floor(e.pos[0])},${Math.floor(e.pos[1])},${Math.floor(e.pos[2])}`)) continue;
-        for (const c of (o.args.calls ?? []) as Call[]) applyEntityCall(o.st, e, c);
-      }
-    },
-  },
-
   // ---- 4. world (Create)
   'world.animateBlockEntity': {
     ticks: (a) => intv(a.duration),
@@ -516,9 +505,6 @@ export const OPS: Record<string, OpDef> = {
       t.stack = { id: it.id, count: it.count ?? 1, nbt: it.nbt };
       resyncBelt(o.st, el.controller);
     },
-  },
-  'world.flapFunnel': {
-    tick(o) { logCall(o, vec(o.args.pos), { path: [{ m: 'flap', a: [!o.args.outward] }] }); },
   },
   'world.connectCrafterInvs': {
     tick(o) {

@@ -256,7 +256,10 @@ export function runnerSeek(r: SimRunner, time: number): void {
     for (const t of r.snapshots.keys()) if (t <= target && t > best) best = t;
     r.state = structuredClone(r.snapshots.get(best)!);
   }
-  while (r.state.tick < target && !r.state.finished) {
+  // PonderScene.seekToTime stops at `time`; the clock is clamped at totalTime but the instruction pass keeps running, so
+  // instructions scheduled after the last idle still execute (on ticks past the total). seek(total) therefore runs to finished.
+  const atEnd = target >= r.ctx.scene.totalTicks;
+  while (!r.state.finished && (r.state.tick < target || atEnd)) {
     tickScene(r.ctx, r.state);
     if (r.state.tick % SNAPSHOT_EVERY === 0 && !r.snapshots.has(r.state.tick)) r.snapshots.set(r.state.tick, structuredClone(r.state));
   }

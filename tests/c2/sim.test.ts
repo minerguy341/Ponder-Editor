@@ -92,11 +92,15 @@ describe('timing (PonderScene.tick semantics)', () => {
 
   it('finishes at markAsFinished and stops counting', () => {
     const r = runner(demo(), [shaft]);
+    runnerSeek(r, 94);
+    expect(r.state.tick).toBe(94);
+    expect(r.state.finished).toBe(false);
+    // seek(total) is the final state (E contract): the instruction pass runs past the clamped clock until the schedule is empty,
+    // so markAsFinished (scheduled after the last idle) has run and the clock stays at 95
     runnerSeek(r, 95);
     expect(r.state.tick).toBe(95);
-    expect(r.state.finished).toBe(false); // markAsFinished runs on the next tick
-    runnerStep(r);
     expect(r.state.finished).toBe(true);
+    runnerStep(r);
     expect(r.state.tick).toBe(95);
   });
 

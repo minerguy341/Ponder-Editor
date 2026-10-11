@@ -30,6 +30,7 @@ describe.skipIf(!have)('real scenes', () => {
       const r = createRunner(ctx);
       runnerSeek(r, scene.totalTicks);
       if (r.state.tick !== scene.totalTicks) problems.push(`${scene.id}: reached ${r.state.tick} of ${scene.totalTicks}`);
+      if (!r.state.finished) problems.push(`${scene.id}: not finished after seek(total)`);
       if (r.state.errors.length) problems.push(`${scene.id}: errors ${r.state.errors.join(' | ')}`);
       if (r.state.unsupported.length) problems.push(`${scene.id}: unsupported ${r.state.unsupported.join(',')}`);
       // seek backwards into the middle and compare with a fresh run to the same tick
