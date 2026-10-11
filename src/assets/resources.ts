@@ -1,4 +1,4 @@
-import { PONDER_ROOTS, ROOTS } from '../config';
+import { CREATE_INDEX_URL, CREATE_ROOTS, PONDER_ROOTS, ROOTS } from '../config';
 
 export interface ResLoc { ns: string; path: string }
 
@@ -110,14 +110,68 @@ async function fetchFromRoots(roots: string[], prefKey: string, rel: string, as:
 /** Every resource id that was asked for and does not exist (diagnostics, audit). */
 export const missingResources = new Set<string>();
 
+/**
+ * File index of the Create tag (path below assets/create -> index into CREATE_ROOTS). With it every Create resource is
+ * fetched from exactly the right place: no 404 probing (which the browser logs as console errors) and a missing
+ * resource is known without a request. Fetched once, lazily, from jsDelivr's flat package listing.
+ */
+let createIndex: Promise<Map<string, number> | null> | null = null;
+
+export function buildCreateIndex(names: Iterable<string>): Map<string, number> {
+  const m = new Map<string, number>();
+  const prefixes = CREATE_ROOTS.map((r) => r.replace(/^.*\/Create@[^/]+/, '') + '/'); // "/src/generated/resources/assets/create/"
+  for (const n of names) {
+    for (let i = 0; i < prefixes.length; i++) {
+      if (n.startsWith(prefixes[i])) {
+        const rel = n.slice(prefixes[i].length);
+        if (!m.has(rel)) m.set(rel, i);
+        break;
+      }
+    }
+  }
+  return m;
+}
+
+function getCreateIndex(): Promise<Map<string, number> | null> {
+  if (!createIndex) {
+    createIndex = (async () => {
+      for (let attempt = 0; attempt < 3; attempt++) {
+        try {
+          const res = await fetch(CREATE_INDEX_URL);
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          const j = await res.json();
+          return buildCreateIndex((j.files as { name: string }[]).map((f) => f.name));
+        } catch (e) {
+          if (attempt === 2) console.warn('Create file index unavailable, probing roots instead', e);
+          else await new Promise((r) => setTimeout(r, 400 * (attempt + 1)));
+        }
+      }
+      return null;
+    })();
+  }
+  return createIndex;
+}
+
+/** Tests / tools: provide the Create index without any network, or `null` to force probing. */
+export function setCreateIndex(names: Iterable<string> | null) {
+  createIndex = Promise.resolve(names ? buildCreateIndex(names) : null);
+}
+
 export const resources = {
   /** Raw file below assets/<ns>/ (e.g. 'models/block/x.obj'). */
   async file(loc: ResLoc, as: 'text' | 'buffer'): Promise<string | ArrayBuffer | null> {
     return memo(`${as}:${loc.ns}:${loc.path}`, async () => {
       const roots = ROOTS[loc.ns];
       if (!roots) return null;
-      const dir = loc.path.slice(0, loc.path.indexOf('/'));
-      const r = await fetchFromRoots(roots, `${loc.ns}/${dir}`, loc.path, as);
+      let r: string | ArrayBuffer | null;
+      const idx = loc.ns === 'create' ? await getCreateIndex() : null;
+      if (idx) {
+        const which = idx.get(loc.path);
+        r = which === undefined ? null : await fetchOnce(`${CREATE_ROOTS[which]}/${loc.path}`, as);
+      } else {
+        const dir = loc.path.slice(0, loc.path.indexOf('/'));
+        r = await fetchFromRoots(roots, `${loc.ns}/${dir}`, loc.path, as);
+      }
       if (r == null) missingResources.add(`${loc.ns}:${loc.path}`);
       return r;
     });
@@ -139,19 +193,31 @@ export const resources = {
       try { return await decoder(buf); } catch (e) { console.warn('bad png', loc, e); return null; }
     });
   },
-  async textureMeta(loc: ResLoc): Promise<any | null> {
+  /**
+   * .png.mcmeta of a texture, or null. Create: answered from the file index (no request when absent).
+   * Other namespaces have no index, so the request is only made for textures taller than wide (animation strips) -
+   * a probe for a missing file would show up as a console error in the browser.
+   */
+  async textureMeta(loc: ResLoc, texW?: number, texH?: number): Promise<any | null> {
     return memo(`texmeta:${loc.ns}:${loc.path}`, async () => {
       const roots = ROOTS[loc.ns];
       if (!roots) return null;
       const rel = `textures/${loc.path}.png.mcmeta`;
-      // mcmeta files are rare: do not teach the root preference from them and never log them as missing
-      for (const r of (preferred.get(`${loc.ns}/textures`) ?? 0) === 0 ? roots : [...roots].reverse()) {
-        const txt = (await fetchOnce(`${r}/${rel}`, 'text')) as string | null;
-        if (txt != null) { try { return lenientJson(txt); } catch { return null; } }
+      const idx = loc.ns === 'create' ? await getCreateIndex() : null;
+      let txt: string | null = null;
+      if (idx) {
+        const which = idx.get(rel);
+        if (which === undefined) return null;
+        txt = (await fetchOnce(`${CREATE_ROOTS[which]}/${rel}`, 'text')) as string | null;
+      } else {
+        if (texW !== undefined && texH !== undefined && texH <= texW) return null;
+        txt = (await fetchFromRoots(roots, `${loc.ns}/textures-meta`, rel, 'text')) as string | null;
       }
-      return null;
+      if (txt == null) return null;
+      try { return lenientJson(txt); } catch { return null; }
     });
   },
+  /** Schematics: from the index when available */
   /** Ponder schematic bytes: assets/<ns>/ponder/<path>.nbt */
   async schematic(ns: string, path: string): Promise<ArrayBuffer | null> {
     return memo(`nbt:${ns}:${path}`, async () => {

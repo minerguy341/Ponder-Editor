@@ -26,27 +26,25 @@ export interface LayerGeometry {
   positions: Float32Array;
   normals: Float32Array;
   uvs: Float32Array;
-  colors: Float32Array; // rgb tint (x vanilla shade when shadeInColor)
-  shade: Float32Array; // vanilla directional shade per vertex
-  shaded: Float32Array; // 1 when the quad takes part in directional shading
+  colors: Float32Array; // rgb tint only (x vanilla face shade when `shadeInColor` is requested)
   indices: Uint32Array;
   quadCount: number;
 }
 
-export type MeshResult = Partial<Record<RenderLayer, LayerGeometry>>;
+/** One drawable batch: all quads of one render layer that share the shaded / unshaded lighting class (quad `shade` flag). */
+export interface MeshPart { layer: RenderLayer; unshaded: boolean; geometry: LayerGeometry }
+export type MeshResult = MeshPart[];
 
 class LayerBuilder {
   positions: number[] = [];
   normals: number[] = [];
   uvs: number[] = [];
   colors: number[] = [];
-  shade: number[] = [];
-  shaded: number[] = [];
   indices: number[] = [];
   vertexCount = 0;
   quadCount = 0;
 
-  addQuad(pos: ArrayLike<number>, uv: ArrayLike<number>, normal: ArrayLike<number> | null, fallbackNormal: readonly number[], rgb: readonly number[], shade: number, shaded: boolean, offset: Vec3, shadeInColor: boolean) {
+  addQuad(pos: ArrayLike<number>, uv: ArrayLike<number>, normal: ArrayLike<number> | null, fallbackNormal: readonly number[], rgb: readonly number[], shade: number, offset: Vec3, shadeInColor: boolean) {
     const base = this.vertexCount;
     const mul = shadeInColor ? shade : 1;
     for (let i = 0; i < 4; i++) {
@@ -55,8 +53,6 @@ class LayerBuilder {
       else this.normals.push(fallbackNormal[0], fallbackNormal[1], fallbackNormal[2]);
       this.uvs.push(uv[i * 2], uv[i * 2 + 1]);
       this.colors.push(rgb[0] * mul, rgb[1] * mul, rgb[2] * mul);
-      this.shade.push(shade);
-      this.shaded.push(shaded ? 1 : 0);
     }
     this.indices.push(base, base + 1, base + 2, base, base + 2, base + 3);
     this.vertexCount += 4;
@@ -69,8 +65,6 @@ class LayerBuilder {
       normals: new Float32Array(this.normals),
       uvs: new Float32Array(this.uvs),
       colors: new Float32Array(this.colors),
-      shade: new Float32Array(this.shade),
-      shaded: new Float32Array(this.shaded),
       indices: new Uint32Array(this.indices),
       quadCount: this.quadCount,
     };
@@ -79,31 +73,32 @@ class LayerBuilder {
 
 /** Collects quads into the per-layer builders. Shared by sections, partial models and item models. */
 export class GeometryBuilder {
-  private layers = new Map<RenderLayer, LayerBuilder>();
+  private layers = new Map<string, { layer: RenderLayer; unshaded: boolean; b: LayerBuilder }>();
   constructor(readonly shadeInColor = false) {}
 
-  private layer(l: RenderLayer): LayerBuilder {
-    let b = this.layers.get(l);
-    if (!b) { b = new LayerBuilder(); this.layers.set(l, b); }
-    return b;
+  private layer(l: RenderLayer, unshaded: boolean): LayerBuilder {
+    const k = `${l}|${unshaded ? 'u' : 's'}`;
+    let e = this.layers.get(k);
+    if (!e) { e = { layer: l, unshaded, b: new LayerBuilder() }; this.layers.set(k, e); }
+    return e.b;
   }
 
   addBaked(q: BakedQuad, layer: RenderLayer, rgb: readonly number[], offset: Vec3) {
     const shade = vanillaShade(q.dir, q.shade);
     const col = q.color ? [rgb[0] * q.color[0], rgb[1] * q.color[1], rgb[2] * q.color[2]] : rgb;
-    this.layer(layer).addQuad(q.pos, q.uv, q.normal, DIR_NORMAL[q.dir], col, shade, q.shade, offset, this.shadeInColor);
+    this.layer(layer, !q.shade).addQuad(q.pos, q.uv, q.normal, DIR_NORMAL[q.dir], col, shade, offset, this.shadeInColor);
   }
 
   addRaw(layer: RenderLayer, pos: ArrayLike<number>, uv: ArrayLike<number>, normal: readonly number[], rgb: readonly number[], shade: number) {
-    this.layer(layer).addQuad(pos, uv, null, normal, rgb, shade, true, [0, 0, 0], this.shadeInColor);
+    this.layer(layer, false).addQuad(pos, uv, null, normal, rgb, shade, [0, 0, 0], this.shadeInColor);
   }
 
   build(): MeshResult {
-    const out: MeshResult = {};
-    for (const [l, b] of this.layers) if (b.quadCount) out[l] = b.build();
+    const out: MeshResult = [];
+    for (const e of this.layers.values()) if (e.b.quadCount) out.push({ layer: e.layer, unshaded: e.unshaded, geometry: e.b.build() });
     return out;
   }
-  get quadCount(): number { let n = 0; for (const b of this.layers.values()) n += b.quadCount; return n; }
+  get quadCount(): number { let n = 0; for (const e of this.layers.values()) n += e.b.quadCount; return n; }
 }
 
 // ------------------------------------------------------------------------------------------------ occlusion
@@ -354,7 +349,7 @@ function emitModel(
       }
     }
     const tint = q.tint >= 0 ? blockTint(state, q.tint) : null;
-    gb.addBaked(q, layerFor(model, state, q), rgbOf(tint), offset);
+    gb.addBaked(q, layerFor(model, state, q), rgbOf(tint), [pos[0] + offset[0], pos[1] + offset[1], pos[2] + offset[2]]);
   }
 }
 

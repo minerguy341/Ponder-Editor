@@ -94,7 +94,7 @@ export class Atlas {
     this.texture.magFilter = THREE.NearestFilter;
     this.texture.minFilter = THREE.NearestFilter; // like the game's nearest magnification; no mips means no bleeding
     this.texture.generateMipmaps = false;
-    this.texture.colorSpace = THREE.NoColorSpace; // vanilla shades in gamma space; materials output raw values
+    this.texture.colorSpace = THREE.SRGBColorSpace; // required by the viewer; tint/diffuse are applied in encoded space like the game
     this.texture.flipY = false;
     this.texture.premultiplyAlpha = false;
     this.texture.unpackAlignment = 4;
@@ -288,7 +288,7 @@ export class Atlas {
         buf.set(this.data.subarray(so, so + r.w * 4), row * r.w * 4);
       }
       const src = new THREE.DataTexture(buf, r.w, r.h, THREE.RGBAFormat, THREE.UnsignedByteType);
-      src.colorSpace = THREE.NoColorSpace;
+      src.colorSpace = THREE.SRGBColorSpace;
       src.flipY = false;
       src.premultiplyAlpha = false;
       renderer.copyTextureToTexture(src, this.texture, null, new THREE.Vector2(r.x, r.y));
@@ -308,7 +308,8 @@ function normalizeId(id: string): string {
 
 async function defaultLoader(id: string): Promise<{ data: TextureData; meta: any | null } | null> {
   const loc = parseLoc(id);
-  const [data, meta] = await Promise.all([resources.texture(loc), resources.textureMeta(loc)]);
+  const data = await resources.texture(loc);
   if (!data) return null;
+  const meta = await resources.textureMeta(loc, data.width, data.height);
   return { data, meta };
 }

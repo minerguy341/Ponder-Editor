@@ -2,11 +2,11 @@ import * as THREE from 'three';
 import type { BlockInstance, BlockRenderer, BlockState, EntityBlockPredicate, SectionBuildOptions, Vec3 } from '../contract';
 import { parseLoc, resources } from '../assets/resources';
 import { Atlas, MISSING_ID } from './atlas';
-import { BlockMaterials, ShadeMode } from './blockMaterials';
+import { BlockMaterials } from './blockMaterials';
 import { BlockstateDef, chooseVariants, blockOffset, blockSeed, parseBlockstate, selectModels, stateKey, Selection, VariantDef } from './blockstate';
 import { fluidOfState, fluidSpriteIds, isLiquidBlock } from './fluids';
 import { BakedModel, bakeModel, defaultModelProvider, MISSING_MODEL_RAW, ModelProvider, ModelStore, modelTextureIds, NO_ROT, rotKey, UnbakedModel } from './models';
-import { GeometryBuilder, layerFor, MeshResult, meshBlocks, PlacedModel } from './mesher';
+import { GeometryBuilder, layerFor, LayerGeometry, MeshResult, meshBlocks, PlacedModel } from './mesher';
 import type { RenderLayer } from './models';
 
 const AIR = new Set(['minecraft:air', 'minecraft:cave_air', 'minecraft:void_air']);
@@ -67,8 +67,6 @@ export class BlockRendererImpl implements BlockRenderer {
 
   /** B injects its `isEntityRendered` here: matching blocks are drawn by visuals instead of the static mesh. */
   setEntityBlockPredicate(p: EntityBlockPredicate) { this.entityPredicate = p; }
-
-  setShadeMode(mode: ShadeMode) { this.materials.setShadeMode(mode); }
 
   // ------------------------------------------------------------------------------------------------ prepare
 
@@ -181,24 +179,22 @@ export class BlockRendererImpl implements BlockRenderer {
     return group;
   }
 
-  private toGroup(res: MeshResult, name: string, material?: (l: RenderLayer) => THREE.Material): THREE.Group {
+  private toGroup(res: MeshResult, name: string): THREE.Group {
     const group = new THREE.Group();
     group.name = name;
     let quads = 0;
-    for (const layer of LAYER_ORDER) {
-      const g = res[layer];
-      if (!g) continue;
-      const geo = geometryOf(g);
-      const mesh = new THREE.Mesh(geo, material ? material(layer) : this.materials.forLayer(layer));
-      mesh.name = `${name}:${layer}`;
-      mesh.renderOrder = RENDER_ORDER[layer];
+    const order = (p: { layer: RenderLayer; unshaded: boolean }) => LAYER_ORDER.indexOf(p.layer) * 2 + (p.unshaded ? 1 : 0);
+    for (const part of [...res].sort((a, b) => order(a) - order(b))) {
+      const mesh = new THREE.Mesh(geometryOf(part.geometry), this.materials.forLayer(part.layer, part.unshaded));
+      mesh.name = `${name}:${part.layer}${part.unshaded ? ':unshaded' : ''}`;
+      mesh.renderOrder = RENDER_ORDER[part.layer];
       mesh.frustumCulled = false;
       mesh.onBeforeRender = (renderer) => this.atlas.flush(renderer);
       group.add(mesh);
-      quads += g.quadCount;
+      quads += part.geometry.quadCount;
     }
     group.userData.quadCount = quads;
-    group.userData.layers = LAYER_ORDER.filter((l) => res[l]);
+    group.userData.layers = [...new Set(res.map((p) => p.layer))];
     return group;
   }
 
@@ -237,11 +233,9 @@ export class BlockRendererImpl implements BlockRenderer {
     const res = gb.build();
     const meshes: PartialData['meshes'] = [];
     let quadCount = 0;
-    for (const layer of LAYER_ORDER) {
-      const g = res[layer];
-      if (!g) continue;
-      meshes.push({ geometry: geometryOf(g), material: this.materials.forLayer(layer), renderOrder: RENDER_ORDER[layer] });
-      quadCount += g.quadCount;
+    for (const part of res) {
+      meshes.push({ geometry: geometryOf(part.geometry), material: this.materials.forLayer(part.layer, part.unshaded), renderOrder: RENDER_ORDER[part.layer] });
+      quadCount += part.geometry.quadCount;
     }
     return { meshes, quadCount, broken: m.broken, baked };
   }
@@ -280,14 +274,12 @@ interface PartialData {
   baked: BakedModel;
 }
 
-export function geometryOf(g: import('./mesher').LayerGeometry): THREE.BufferGeometry {
+export function geometryOf(g: LayerGeometry): THREE.BufferGeometry {
   const geo = new THREE.BufferGeometry();
   geo.setAttribute('position', new THREE.BufferAttribute(g.positions, 3));
   geo.setAttribute('normal', new THREE.BufferAttribute(g.normals, 3));
   geo.setAttribute('uv', new THREE.BufferAttribute(g.uvs, 2));
   geo.setAttribute('color', new THREE.BufferAttribute(g.colors, 3));
-  geo.setAttribute('shade', new THREE.BufferAttribute(g.shade, 1));
-  geo.setAttribute('shaded', new THREE.BufferAttribute(g.shaded, 1));
   geo.setIndex(new THREE.BufferAttribute(g.indices, 1));
   geo.computeBoundingSphere();
   geo.computeBoundingBox();
