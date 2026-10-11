@@ -336,6 +336,47 @@ class SelectionUtil {
 
 // ------------------------------------------------------------------------------------------ recording proxies (lambda bodies over BEs/entities)
 
+export class Sym {
+  constructor(expr) {
+    this.expr = expr;
+    this.$sym = true;
+  }
+  get $class() {
+    return 'Sym';
+  }
+}
+const symOf = (v) => {
+  if (v instanceof Sym) return v.expr;
+  if (v instanceof RecProxy) {
+    v.used = true; // consumed as a value
+    return { call: v.path };
+  }
+  return ser(v);
+};
+export const SYM_HOOKS = {
+  symBin: (op, a, b) => new Sym({ op, a: symOf(a), b: symOf(b) }),
+  symUn: (op, a) => new Sym({ op, a: symOf(a) }),
+  symIf(cond, thenFn, elseFn) {
+    const root = (cond instanceof RecProxy ? cond : cond.root)?.root || ACTIVE_ROOT.cur;
+    const r = ACTIVE_ROOT.cur;
+    if (!r) throw new Unsupported('symbolic condition outside of a recorded lambda');
+    const e = symOf(cond);
+    const seq = ++r.root.seqCounter;
+    r.pushCtx();
+    thenFn();
+    const thenCalls = r.popCtx();
+    let elseCalls = [];
+    if (elseFn) {
+      r.pushCtx();
+      elseFn();
+      elseCalls = r.popCtx();
+    }
+    r.cur.branches.push({ seq, if: e, then: thenCalls, else: elseCalls });
+    void root;
+  },
+};
+const ACTIVE_ROOT = { cur: null };
+
 export class RecProxy {
   constructor(root, path, parent) {
     this.root = root;
@@ -351,16 +392,37 @@ export class RecProxy {
     const r = new RecProxy(null, [], null);
     r.root = r;
     r.kind = kind;
-    r.created = [];
+    r.ctxs = [{ created: [], branches: [] }];
+    r.seqCounter = 0;
     return r;
+  }
+  get cur() {
+    return this.root.ctxs[this.root.ctxs.length - 1];
+  }
+  pushCtx() {
+    this.root.ctxs.push({ created: [], branches: [] });
+  }
+  popCtx() {
+    const c = this.root.ctxs.pop();
+    return RecProxy.collect(c);
+  }
+  static collect(ctx) {
+    // statements in program order: leaf chains and branches, interleaved by creation order
+    const items = [];
+    for (const p of ctx.created) if (!p.used) items.push({ at: p.seq, v: { path: p.path } });
+    for (const b of ctx.branches) items.push({ at: b.seq, v: { if: b.if, then: b.then, else: b.else } });
+    items.sort((x, y) => x.at - y.at);
+    return items.map((i) => i.v);
   }
   child(step) {
     this.used = true;
     const c = new RecProxy(this.root, [...this.path, step], this);
-    this.root.created.push(c);
+    c.seq = ++this.root.seqCounter;
+    this.root.cur.created.push(c);
     return c;
   }
   $invoke(rt, name, args) {
+    if (name === 'getBlockPos' && this.path.length === 0 && this.root.pos) return this.root.pos;
     if (name === 'toString') return `RecProxy(${this.path.map((s) => s.m || s.f).join('.')})`;
     if (name === 'equals') return this === args[0];
     if (name === 'hashCode') return 1;
@@ -373,11 +435,12 @@ export class RecProxy {
   $setField(rt, name, v) {
     this.used = true;
     const c = new RecProxy(this.root, [...this.path, { set: name, v: serArg(v) }], this);
+    c.seq = ++this.root.seqCounter;
     c.used = false;
-    this.root.created.push(c);
+    this.root.cur.created.push(c);
   }
   calls() {
-    return this.root.created.filter((c) => !c.used).map((c) => ({ path: c.path }));
+    return RecProxy.collect(this.root.ctxs[0]);
   }
 }
 const serArg = (v) => {
@@ -409,7 +472,28 @@ export class JEntity {
     this.calls.push({ path: [{ set: name, v: serArg(v) }] });
   }
   $getField(rt, name) {
+    if (name === 'walkAnimation') return new WalkAnim(this);
     return D(0);
+  }
+}
+/** WalkAnimationState of a freshly created entity (position/speed 0); mutators are recorded */
+class WalkAnim {
+  constructor(entity) {
+    this.entity = entity;
+  }
+  get $class() {
+    return 'WalkAnimationState';
+  }
+  position() {
+    return F(0);
+  }
+  speed() {
+    return F(0);
+  }
+  $invoke(rt, name, args) {
+    if (name === 'position' || name === 'speed') return F(0);
+    this.entity.calls.push({ path: [{ f: 'walkAnimation' }, { m: name, a: args.map(serArg) }] });
+    return undefined;
   }
 }
 HOOKS.isEntity = (v) => v instanceof JEntity;
@@ -539,6 +623,17 @@ function beClassOk(rt, be, beType) {
 }
 const beTypeName = (beType) => (beType instanceof ClassRef ? beType.name : String(beType));
 
+function runRecorded(rec, root, fn) {
+  const prev = ACTIVE_ROOT.cur;
+  ACTIVE_ROOT.cur = root;
+  try {
+    rec.rt.callFn(fn, [root]);
+  } finally {
+    ACTIVE_ROOT.cur = prev;
+  }
+  return root.calls();
+}
+
 export const WORLD = {
   getHolderLookupProvider: () => ({ $class: 'Provider' }),
   incrementBlockBreakingProgress(rec, pos) {
@@ -626,20 +721,17 @@ export const WORLD = {
   },
   modifyEntities(rec, cls, fn) {
     const root = RecProxy.root('entity');
-    rec.rt.callFn(fn, [root]);
-    const calls = root.calls();
+    const calls = runRecorded(rec, root, fn);
     if (calls.length) rec.emit('world.modifyEntities', { entityType: beTypeName(cls), calls });
   },
   modifyEntitiesInside(rec, cls, area, fn) {
     const root = RecProxy.root('entity');
-    rec.rt.callFn(fn, [root]);
-    const calls = root.calls();
+    const calls = runRecorded(rec, root, fn);
     if (calls.length) rec.emit('world.modifyEntitiesInside', { entityType: beTypeName(cls), selection: area.toJSON(), calls });
   },
   modifyEntity(rec, link, fn) {
     const root = RecProxy.root('entity');
-    rec.rt.callFn(fn, [root]);
-    const calls = root.calls();
+    const calls = runRecorded(rec, root, fn);
     if (calls.length) rec.emit('world.modifyEntity', { link: HOOKS.linkJSON(link), calls });
   },
   createEntity(rec, factory) {
@@ -673,8 +765,8 @@ export const WORLD = {
     const be = rec.world.getBlockEntity([pos.x, pos.y, pos.z]);
     if (!beClassOk(rec.rt, be, beType)) return;
     const root = RecProxy.root('be');
-    rec.rt.callFn(consumer, [root]);
-    const calls = root.calls();
+    root.pos = pos;
+    const calls = runRecorded(rec, root, consumer);
     if (calls.length) rec.emit('world.modifyBlockEntity', { pos: bp(pos), beType: beTypeName(beType), calls });
   },
 };

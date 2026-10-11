@@ -18,6 +18,7 @@ const BASES = [
   ['LadderBlock', { ref: 'ladder', statics: { FACING: 'HORIZONTAL_FACING', WATERLOGGED: 'WATERLOGGED' } }],
   ['ScaffoldingBlock', { ref: 'scaffolding', statics: { WATERLOGGED: 'WATERLOGGED', DISTANCE: 'STABILITY_DISTANCE', BOTTOM: 'BOTTOM' } }],
   ['BaseRailBlock', { props: [], statics: { WATERLOGGED: 'WATERLOGGED' } }],
+  ['TransparentBlock', { props: [], statics: {} }],
   ['BellBlock', { ref: 'bell', statics: { FACING: 'HORIZONTAL_FACING', ATTACHMENT: 'BELL_ATTACHMENT', POWERED: 'POWERED' } }],
   ['PipeBlock', { props: [], statics: { NORTH: 'NORTH', EAST: 'EAST', SOUTH: 'SOUTH', WEST: 'WEST', UP: 'UP', DOWN: 'DOWN' }, extra: 'PROPERTY_BY_DIRECTION' }],
   ['LecternBlock', { ref: 'lectern', statics: { FACING: 'HORIZONTAL_FACING', POWERED: 'POWERED', HAS_BOOK: 'HAS_BOOK' } }],

@@ -19,7 +19,10 @@ export async function ensureCache({ log = () => {} } = {}) {
     log(`fetching ${need.length} Create files...`);
     await pool(need, 24, (n) => getText('create', n, { binary: n.endsWith('.nbt') }));
   }
+  const tagFiles = idx.filter((n) => /^\/src\/(generated|main)\/resources\/data\/[^/]+\/tags\/(item|block|fluid)\/.+\.json$/.test(n)).filter((n) => !fs.existsSync(cachePath('create', n)));
+  if (tagFiles.length) await pool(tagFiles, 24, (n) => getText('create', n));
   for (const f of ['blocks.json', 'items.json']) await getText('mcdata', f);
+  await getText('mcassets', 'assets/minecraft/lang/en_us.json');
   const pidx = await getRepoIndex('ponder');
   const pj = pidx.filter((n) => n.startsWith('/common/') && n.endsWith('.java') && !n.includes('/mixin/'));
   const pneed = pj.filter((n) => !fs.existsSync(cachePath('ponder', n)));

@@ -68,6 +68,10 @@ export class JFluid {
   isSource() {
     return true;
   }
+  getFluidType() {
+    const id = this.id;
+    return { $class: 'FluidType', getBucket: () => new JItemStack(id.replace(/^(.*:)(.*)$/, '$1$2_bucket'), 1) };
+  }
   toJSON() {
     return { fluid: this.id };
   }
@@ -145,7 +149,7 @@ export class Entry {
     return new JFluid(this.id);
   }
   getType() {
-    return { $class: 'FluidType' };
+    return this.get().getFluidType();
   }
   asItem() {
     return itemLike(this.id);
@@ -247,6 +251,7 @@ export class Registrate {
         return new Builder(this.registry, kind, args[0], args[1] ?? null);
       }
       case 'fluid':
+      case 'virtualFluid':
       case 'standardFluid': {
         const args = argNodes.map((n) => rt.evalExpr(n, fr));
         return new Builder(this.registry, 'fluid', args[0], null);
@@ -308,22 +313,23 @@ export function buildRegistry(R, registry) {
   }));
   for (const n of ['ItemEntry', 'BlockEntityEntry', 'ItemProviderEntry', 'RegistryEntry', 'FluidEntry']) R.add(hc(n, { is: (v) => v instanceof Entry }));
   for (const n of ['CreateRegistrate', 'AbstractRegistrate']) R.add(hc(n, { is: (v) => v instanceof Registrate }));
-  for (const n of ['MapColor', 'Tags', 'ItemTags', 'BlockTags', 'EntityTypeTags', 'Ingredient', 'DataIngredient', 'SoundType', 'NoteBlockInstrument', 'PushReaction', 'RecipeCategory', 'TagKey', 'BlockBehaviour', 'CreativeModeTab', 'SoundEvents', 'DeferredSoundType', 'FluidType', 'BlockSetType', 'WoodType', 'StatType', 'Rarity', ]) R.add(hc(n, { stubAll: true }));
+  for (const n of ['MapColor', 'Tags', 'ItemTags', 'BlockTags', 'EntityTypeTags', 'Ingredient', 'DataIngredient', 'SoundType', 'NoteBlockInstrument', 'PushReaction', 'RecipeCategory', 'BlockBehaviour', 'NeoForgeMod', 'DeferredRegister', 'ParticleType', 'RecordCodecBuilder', 'Codec', 'ByteBufCodecs', 'StreamCodec', 'CatnipCodecs', 'CatnipStreamCodecs', 'CatnipCodecUtils', 'DataComponentType', 'DataComponents', 'DefaultDispenseItemBehavior', 'DispenseItemBehavior', 'CreativeModeTab', 'SoundEvents', 'DeferredSoundType', 'FluidType', 'BlockSetType', 'WoodType', 'StatType', 'Rarity', ]) R.add(hc(n, { stubAll: true }));
   R.map.set('net.createmod.catnip.platform.CatnipServices', hc('CatnipServices', { preferHost: true, statics: { PLATFORM: { $class: 'Platform', getEnv: () => ({ $class: 'Env', isClient: () => false, isDedicatedServer: () => false }), isDevelopmentEnvironment: () => false, executeOnClientOnly: () => undefined, executeOnDedicatedServerOnly: () => undefined, isModLoaded: () => false }, HOOKS: { $class: 'Hooks' } } }));
   // datagen-only Create classes: ids/tags are irrelevant for scene conversion, any access yields an inert stub
-  for (const fq of ['com.simibubi.create.AllTags', 'com.simibubi.create.AllTags.AllItemTags', 'com.simibubi.create.AllTags.AllBlockTags', 'com.simibubi.create.AllTags.AllFluidTags', 'com.simibubi.create.AllTags.AllEntityTags', 'com.simibubi.create.foundation.data.recipe.CommonMetal']) {
+  for (const fq of ['com.simibubi.create.foundation.data.recipe.CommonMetal']) {
     R.map.set(fq, hc(fq.slice(fq.lastIndexOf('.') + 1), { stubAll: true, preferHost: true }));
   }
   R.map.set('net.neoforged.neoforge.common.Tags.Items', hc('Items', { stubAll: true }));
   R.map.set('net.neoforged.neoforge.common.Tags.Blocks', hc('Blocks', { stubAll: true }));
   R.map.set('net.neoforged.neoforge.common.Tags.Fluids', hc('Fluids', { stubAll: true }));
-  R.add(hc('Registries', { statics: { BLOCK: { $class: 'ResourceKey', kind: 'block' }, ITEM: { $class: 'ResourceKey', kind: 'item' }, BLOCK_ENTITY_TYPE: { $class: 'ResourceKey' }, FLUID: { $class: 'ResourceKey' } } }));
+  R.add(hc('Registries', { statics: {}, staticGet: (rt, n) => ({ $class: 'ResourceKey', kind: n.toLowerCase() }) }));
   const regObj = (kind) => ({
     $class: 'Registry',
+    key: () => ({ $class: 'ResourceKey', kind }),
     getKey: (v) => rlParse(kind === 'block' ? (v instanceof JBlock ? v.id : itemIdOf(v)) : itemIdOf(v)),
     get: (rl) => (kind === 'block' ? (rl.ns === 'create' ? registry.blocks.get(rl.toString())?.block() : null) : itemLike(rl.toString())),
   });
-  R.add(hc('BuiltInRegistries', { statics: { BLOCK: regObj('block'), ITEM: regObj('item') } }));
+  R.add(hc('BuiltInRegistries', { statics: { BLOCK: regObj('block'), ITEM: regObj('item'), FLUID: regObj('fluid') } }));
   R.add(hc('DeferredHolder', { statics: { create: (key, rl) => ({ $class: 'DeferredHolder', rl }) } }));
   // new BlockEntry<>(registrate, holder): an entry that only knows its id (used for the train track items)
   R.add(hc('BlockEntry', {

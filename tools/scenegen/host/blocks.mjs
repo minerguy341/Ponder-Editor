@@ -6,6 +6,7 @@ import { HEnum, hostEnum, DIRECTION, AXIS, enumNameOf } from './mc.mjs';
 import { JList, JSet, JOptional, mkList } from './lang.mjs';
 import { readCached } from '../fetch.mjs';
 import { STUB } from '../interp.mjs';
+import { JTagKey, tagContains } from './tags.mjs';
 
 // ------------------------------------------------------------------------------------------ properties
 
@@ -309,6 +310,7 @@ export class JState {
     return this.getShape(...args);
   }
   is(x) {
+    if (x instanceof JTagKey) return tagContains('block', x.id, this.block.id);
     if (x instanceof JBlock) return this.block === x;
     if (x && x.$isBlockLike) return x.blockOf() === this.block;
     return false;
@@ -395,6 +397,9 @@ export class JBlock {
   asItem() {
     return itemLike(this.id);
   }
+  builtInRegistryHolder() {
+    return { $class: 'Holder', is: (t) => t instanceof JTagKey && tagContains('block', t.id, this.id), value: () => this };
+  }
   getDescriptionId() {
     return 'block.' + this.id.replace(':', '.');
   }
@@ -424,6 +429,9 @@ export class HItem {
   }
   asItem() {
     return this;
+  }
+  builtInRegistryHolder() {
+    return { $class: 'Holder', is: (t) => t instanceof JTagKey && tagContains('item', t.id, this.id), value: () => this };
   }
   $key() {
     return 'item:' + this.id;
@@ -488,6 +496,7 @@ export class JItemStack {
     return itemLike(this.id);
   }
   is(x) {
+    if (x instanceof JTagKey) return tagContains('item', x.id, this.id);
     return x && (x.$isItemLike || x.$itemId || x instanceof JBlock) ? itemIdOf(x) === this.id : false;
   }
   getMaxStackSize() {
@@ -497,7 +506,7 @@ export class JItemStack {
     return null;
   }
   getHoverName() {
-    return this.id;
+    return this.id; // replaced by host/names.mjs
   }
   saveOptional(provider) {
     return JItemStack.mkNbt(this.toNbt());
@@ -518,8 +527,14 @@ export class JItemStack {
   }
   set(k, v) {
     if (!this.comps) this.comps = {};
-    this.comps[typeof k === 'string' ? k : k.id] = v;
+    this.comps[typeof k === 'string' ? k : k.id] = JItemStack.serValue ? JItemStack.serValue(v) : v;
     return null;
+  }
+  get(k) {
+    return this.comps && this.comps[typeof k === 'string' ? k : k.id] !== undefined ? this.comps[typeof k === 'string' ? k : k.id] : null;
+  }
+  has(k) {
+    return !!this.comps && (typeof k === 'string' ? k : k.id) in this.comps;
   }
   getComponents() {
     return null;

@@ -62,6 +62,11 @@ export function ser(v) {
   if (Array.isArray(v)) return v.map(ser);
   if (v instanceof Lambda || v instanceof MethodRef) throw new Unsupported('cannot serialise a function value');
   if (v && typeof v.toJSON === 'function') return v.toJSON();
+  if (v && typeof v === 'object' && Object.getPrototypeOf(v) === Object.prototype && !v.$class) {
+    const o = {};
+    for (const [k, x] of Object.entries(v)) o[k] = ser(x);
+    return o;
+  }
   throw new Unsupported('cannot serialise ' + describe(v));
 }
 

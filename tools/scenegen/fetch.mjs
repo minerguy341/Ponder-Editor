@@ -12,6 +12,8 @@ export const REPOS = {
   // Ponder library (also contains catnip) - 1.21.1 branch
   ponder: 'https://cdn.jsdelivr.net/gh/Creators-of-Create/Ponder@mc1.21.1%2Fdev',
   // vanilla block/state/item definitions (property names, value order, default state) - pinned tag
+  // vanilla lang (display names)
+  mcassets: 'https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@1.21.1',
   mcdata: 'https://cdn.jsdelivr.net/gh/PrismarineJS/minecraft-data@3.117.0/data/pc/1.21.1',
 };
 

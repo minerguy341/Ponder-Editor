@@ -101,6 +101,7 @@ export function compileScene(env, group, lang) {
   world.loadSchematic(group.schematic);
   const notes = [...new Set(world.notes)];
   ctx.world = world;
+  ctx.pkgRandom = null;
   const rec = new Recorder(ctx);
   const host = new SceneHost(rec);
   const util = rec.util();
@@ -109,6 +110,7 @@ export function compileScene(env, group, lang) {
   try {
     rt.callFn(group.fn, [host, util]);
   } catch (e) {
+    if (process.env.SCENEGEN_TRACE) console.error(e.stack);
     if (e instanceof Unsupported || e instanceof JavaThrow) warnings.push(`scene aborted: ${e.message}`);
     else throw e;
   }

@@ -5,6 +5,8 @@ import { HOOKS } from './serialize.mjs';
 import { SPECIAL } from './host/ponder.mjs';
 import { mkList } from './host/lang.mjs';
 import { STUB } from './interp.mjs';
+import { JItemStack } from './host/blocks.mjs';
+import { JParticle } from './host/ponder-classes.mjs';
 
 const CSB = 'com.simibubi.create.foundation.ponder.CreateSceneBuilder';
 const bp = (p) => [p.x, p.y, p.z];
@@ -37,6 +39,51 @@ export function installOverrides(rt, ctxOf) {
     },
     $getField: () => STUB(),
   }));
+
+  // ---- data components: registered under the create namespace, serialised by id
+  rt.nativeOverrides.set('com.simibubi.create.AllDataComponents#register', (rt2, self, args) => (typeof args[0] === 'string' ? { $class: 'DataComponentType', id: 'create:' + args[0], toJSON: () => ({ component: 'create:' + args[0] }), $key: () => 'comp:create:' + args[0] } : STUB()));
+
+  // ---- packages: items are instantiated by the game at registration (PackageStyles lists), the random style pick is made deterministic
+  const pkgStyles = () => rt.getStatic(rt.sourceClass('com.simibubi.create.content.logistics.box.PackageStyles'), 'STYLES');
+  const pickBox = (rare) => {
+    const styles = rt.iterate(pkgStyles()).filter((s) => rt.invoke(s, 'rare', []) === rare);
+    const idx = (ctxOf.pkgRandom ||= ctxOf.makeRandom()).nextInt(styles.length);
+    return new JItemStack(rt.invoke(rt.invoke(styles[idx], 'getItemId', []), 'toString', []), 1);
+  };
+  rt.nativeOverrides.set('com.simibubi.create.content.logistics.box.PackageStyles#getRandomBox', () => pickBox(false));
+  rt.nativeOverrides.set('com.simibubi.create.content.logistics.box.PackageStyles#getDefaultBox', () => {
+    const styles = rt.iterate(pkgStyles());
+    return new JItemStack(rt.invoke(rt.invoke(styles[0], 'getItemId', []), 'toString', []), 1);
+  });
+  rt.nativeOverrides.set('com.simibubi.create.content.logistics.box.PackageItem#containing', (rt2, self, [stacks]) => {
+    if (!(stacks && stacks.$iter)) throw new Unsupported('PackageItem.containing(ItemStackHandler) is not supported');
+    // ItemStackHandler(9) + ItemHandlerHelper.insertItemStacked: merge into matching stacks up to 64, else the first free slot
+    const slots = [];
+    for (const s of stacks.$iter()) {
+      let left = s.count;
+      for (const sl of slots) if (left > 0 && sl.id === s.id && JSON.stringify(sl.comps) === JSON.stringify(s.comps) && sl.count < 64) {
+        const t = Math.min(64 - sl.count, left);
+        sl.count += t;
+        left -= t;
+      }
+      while (left > 0 && slots.length < 9) {
+        const t = Math.min(64, left);
+        slots.push(new JItemStack(s.id, t, s.comps ? structuredClone(s.comps) : null));
+        left -= t;
+      }
+    }
+    const box = pickBox(false);
+    box.set('create:package_contents', slots.map((s, i) => ({ slot: i, item: s.toNbt() })));
+    return box;
+  });
+
+  // ---- scene helper that iterates a block entity's runtime package list: recorded as one named call
+  rt.nativeOverrides.set('com.simibubi.create.infrastructure.ponder.scenes.highLogistics.FrogAndConveyorScenes#boxTransfer', (rt2, self, [to, from, be]) => {
+    // for (pkg : be.getLoopingPackages()) { pkg.chainPosition = 0; be.addTravellingPackage(pkg, to.subtract(from)); remove from looping }
+    be.$invoke(rt2, 'transferLoopingPackages', [to.subtract(from)]);
+  });
+  // fluid particle options depend on client fluid rendering extensions: recorded as data
+  rt.nativeOverrides.set('com.simibubi.create.content.fluids.FluidFX#getFluidParticle', (rt2, self, [stack]) => new JParticle('create:fluid_particle', { fluid: stack.toJSON() }));
 
   // ---- WorldInstructions
   const animate = (kind, extraTicks = 0) => (rt2, self, [pos, dist, dur]) => {
