@@ -35,6 +35,8 @@ export interface PonderUiOptions {
   getLang: () => Record<string, string> | null;
   onExit: () => void;
   onSceneChanged?: (e: SceneIndexEntry) => void;
+  /** the scene was paused / sought: gives the caller a tick to put into a deep link */
+  onLink?: (e: SceneIndexEntry, tick: number) => void;
   onOpenTag?: (tagId: string) => void;
   initialTick?: number;
 }
@@ -134,11 +136,19 @@ export class PonderUI implements ProgressSource {
     this.identifyMode = false;
     this.afterIdentifyChange();
     this.finishingFlashWarmup = 0;
+    this.o.onLink?.(this.activeEntry, t);
   }
 
   // ------------------------------------------------------------------------------------------------ scene control
 
-  private async loadScene(i: number, initialTick?: number): Promise<void> {
+  private loadPromise: Promise<void> = Promise.resolve();
+  whenLoaded(): Promise<void> { return this.loadPromise; }
+
+  private loadScene(i: number, initialTick?: number): void {
+    this.loadPromise = this.loadSceneAsync(i, initialTick);
+  }
+
+  private async loadSceneAsync(i: number, initialTick?: number): Promise<void> {
     const seq = ++this.loadSeq;
     const entry = this.o.entries[i];
     this.loading = true; this.loadError = null;
@@ -180,14 +190,17 @@ export class PonderUI implements ProgressSource {
     return true;
   }
 
-  /** route change from outside (browser back button) */
-  goToEntry(id: string): void {
+  hasEntry(id: string): boolean { return this.o.entries.some((e) => e.id === id); }
+
+  /** route change from outside (browser back button, deep link) */
+  goToEntry(id: string, tick?: number): void {
     const i = this.o.entries.findIndex((e) => e.id === id);
-    if (i >= 0 && i !== this.index) {
+    if (i < 0) return;
+    if (i !== this.index) {
       this.index = i;
       this.lazyIndex.chase(i, 1 / 4, Chaser.EXP);
-      this.loadScene(i);
-    }
+      this.loadScene(i, tick);
+    } else if (tick !== undefined) this.seekToTime(tick);
   }
 
   get activeEntry(): SceneIndexEntry { return this.o.entries[this.index]; }
@@ -208,6 +221,7 @@ export class PonderUI implements ProgressSource {
   toggleIdentify(): void {
     this.identifyMode = !this.identifyMode;
     this.afterIdentifyChange();
+    if (this.identifyMode) this.o.onLink?.(this.activeEntry, this.current());
   }
 
   toggleComfy(): void {

@@ -31,6 +31,12 @@ export class MockViewer implements ViewerLike {
     return () => { this.frameCbs = this.frameCbs.filter((c) => c !== cb); };
   }
 
+  cameraSet: Record<string, unknown> | null = null;
+  setCamera(c: Record<string, unknown>): void { this.cameraSet = c; if (typeof c.yaw === 'number') this.yawOffset = c.yaw as number; }
+  screenshot(): Promise<Blob> {
+    return new Promise((res, rej) => this.canvas.toBlob((b) => (b ? res(b) : rej(new Error('toBlob failed'))), 'image/png'));
+  }
+
   resetCamera(): void { this.resetCount++; this.yawOffset = 0; }
 
   getCamera(): { guiScale: number } { return { guiScale: this.scale() }; }

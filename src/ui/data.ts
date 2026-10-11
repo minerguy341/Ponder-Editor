@@ -39,7 +39,7 @@ export function loadScene(entry: SceneIndexEntry): Promise<SceneJson> {
 }
 
 /** "create:cog/small" etc. -> URL-safe route fragment and back */
-export const sceneIdToHash = (id: string): string => id.split('/').map(encodeURIComponent).join('/');
+export const sceneIdToHash = (id: string): string => id.split('/').map((s) => encodeURIComponent(s).replace(/%3A/gi, ':')).join('/');
 
 // ------------------------------------------------------------------------------------------------ names
 
