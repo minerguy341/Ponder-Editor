@@ -41,6 +41,9 @@ export interface SimItem {
   lockedExternally: boolean;
   /** scene element link of the item (createItemOnBelt `out`) */
   link?: string;
+  /** processing state: the segment already offered to a processor, and whether a processor holds the item */
+  processed?: number;
+  processHeld?: boolean;
 }
 
 /** A belt chain: BeltBlock.initBelt / getBeltChain. `segments[i]` is the block of offset i; the first one is the controller. */
@@ -64,6 +67,26 @@ export interface ItemPose {
   locked: boolean;
 }
 
+/**
+ * Belt processing (BeltProcessingBehaviour.handleReceivedItem / handleHeldItem, kinetics/belt/behaviour): a processing block
+ * whose BeltProcessingBehaviour sits at pos.above(2) of a belt segment sees the items that enter that segment.
+ *   receive(item, ctx): called once when an item's centre reaches the segment (ctx.segment = segment index, ctx.pos = belt pos).
+ *     returns 'remove' (the item is taken), 'hold' (the item stays on the segment, locked, until the processor releases it:
+ *     item.locked = false in a later call to held()), or 'pass' (the item moves on).
+ *   held(item, ctx): called every tick while the item is held; returns the same three results.
+ * Registered per processing block id with registerBeltProcessor (idempotent per id). Scenes that use no processor behave as
+ * before: the scene ops (removeItemsFromBelt, createItemOnBelt, stallBeltItem, changeBeltItemTo) drive the effect.
+ */
+export interface BeltProcessContext { segment: number; pos: Vec3; world: LogisticsWorld }
+export type BeltProcessResult = 'remove' | 'hold' | 'pass';
+export interface BeltProcessor {
+  receive(item: SimItem, ctx: BeltProcessContext): BeltProcessResult;
+  held(item: SimItem, ctx: BeltProcessContext): BeltProcessResult;
+}
+const beltProcessors = new Map<string, BeltProcessor>();
+/** Registers the processor of a processing block id (e.g. 'create:mechanical_press'); the belt under the block is the one at pos.below(2). */
+export function registerBeltProcessor(blockId: string, p: BeltProcessor): void { beltProcessors.set(blockId, p); }
+
 /** A block a belt hands items to (DirectBeltInputBehaviour). */
 export interface BeltReceiver {
   canInsertFromSide(side: Direction): boolean;
@@ -72,7 +95,7 @@ export interface BeltReceiver {
 }
 
 /** Blocks with a DirectBeltInputBehaviour (Ending.INSERT margin). */
-const RECEIVER_BLOCKS = new Set(['create:depot', 'create:basin']);
+const RECEIVER_BLOCKS = new Set(['create:depot', 'create:basin', 'create:item_drain', 'create:weighted_ejector']);
 /** Blocks that do not make a belt end BLOCKED (approximation of BlockHelper.hasBlockSolidSide). */
 const NOT_SOLID = /^(minecraft:air|minecraft:(water|lava)|create:belt|create:.*funnel|create:.*tunnel|create:.*chute|create:.*pipe|create:.*valve|create:.*pump|create:depot|create:item_drain|create:spout|create:hose_pulley|create:.*fluid_tank|create:.*interface)$/;
 
@@ -446,7 +469,7 @@ export class LogisticsWorld {
   /** removeItemsFromBelt: TransportedItemStackHandlerBehaviour.handleCenteredProcessingOnAllItems(.52, removeItem) */
   private removeAt(pos: Vec3): void {
     const name = this.lookup.getState(pos)?.name;
-    if (name === 'create:depot') {
+    if (name === 'create:depot' || name === 'create:item_drain' || name === 'create:weighted_ejector') {
       const d = this.depotAt(pos);
       if (d.held && 0.5 - d.held.beltPosition <= 0.52) d.held = null; // DepotBehaviour.applyToAllItems: held item only
       return;
@@ -480,6 +503,7 @@ export class LogisticsWorld {
       const name = this.lookup.getState(pos)?.name;
       if (name === 'create:depot') this.depotInsert(this.depotAt(pos), stack, side);
       else if (name === 'create:basin') this.basinInsert(this.basinAt(pos), stack);
+      else if (name === 'create:item_drain' || name === 'create:weighted_ejector') this.depotInsert(this.depotAt(pos), stack, side);
       else if (name === 'create:chute' || name === 'create:smart_chute') this.chuteInsert(this.chuteAt(pos), stack);
       return;
     }
@@ -582,6 +606,7 @@ export class LogisticsWorld {
       item.prevBeltPosition = item.beltPosition;
       item.prevSideOffset = item.sideOffset;
       let movement = beltSpeed;
+      if (this.processBelt(chain, item, positive, beltSpeed)) { removed.push(item); continue; }
       // held by processing or by a scene instruction until released
       if (item.locked) continue;
       if (item.lockedExternally) { item.lockedExternally = false; continue; }
@@ -624,6 +649,36 @@ export class LogisticsWorld {
     if (removed.length) st.items = st.items.filter((it) => !removed.includes(it));
   }
 
+  /**
+   * BeltInventory.handleBeltProcessingAndCheckIfRemoved (server path): true when the processor removes the item.
+   * A processing block at pos.above(2) of the segment handles items that reach the segment centre (receive); held items are
+   * offered to held() every tick until released.
+   */
+  private processBelt(chain: BeltChain, item: SimItem, positive: boolean, beltSpeed: number): boolean {
+    const seg = Math.floor(item.beltPosition);
+    const segPos = chain.segments[seg];
+    if (!segPos) return false;
+    const procPos: Vec3 = [segPos[0], segPos[1] + 2, segPos[2]];
+    const block = this.lookup.getState(procPos);
+    const proc = block ? beltProcessors.get(block.name) : undefined;
+    if (!proc) return false;
+    const ctx = { segment: seg, pos: segPos, world: this };
+    if (item.locked && item.processHeld) {
+      const r = proc.held(item, ctx);
+      if (r === 'remove') return true;
+      if (r === 'pass') { item.locked = false; item.processHeld = false; }
+      return false;
+    }
+    const centre = seg + 0.5;
+    const crossed = positive ? item.prevBeltPosition < centre && item.beltPosition + beltSpeed >= centre : item.prevBeltPosition > centre && item.beltPosition + beltSpeed <= centre;
+    if (!crossed || item.processed === seg) return false;
+    item.processed = seg;
+    const r = proc.receive(item, ctx);
+    if (r === 'remove') return true;
+    if (r === 'hold') { item.locked = true; item.processHeld = true; }
+    return false;
+  }
+
   /** BeltInventory.resolveEnding, for the block one step past the chain end. */
   private resolveEnding(chain: BeltChain, positive: boolean): Ending {
     const next = positionForOffset(chain.controller, chain.shape, chain.segments.length, positive ? chain.segments.length : -1);
@@ -635,7 +690,7 @@ export class LogisticsWorld {
 
   private receiverAt(pos: Vec3): BeltReceiver | undefined {
     const name = this.lookup.getState(pos)?.name;
-    if (name === 'create:depot') {
+    if (name === 'create:depot' || name === 'create:item_drain' || name === 'create:weighted_ejector') {
       const d = this.depotAt(pos);
       return { canInsertFromSide: () => true, insert: (stack, side) => this.depotInsert(d, stack, side) };
     }
@@ -843,3 +898,38 @@ export function logisticsEventsOf(instructions: { op: string; args?: Record<stri
   }
   return out;
 }
+
+/**
+ * Lookup over the blocks of a loaded structure, as they are at scene tick 0 (the simulation must never see later block
+ * entity data: the scene graph's live lookup changes with the scene timeline).
+ */
+export function lookupOfBlocks(blocks: { pos: Vec3; state: BlockState; nbt?: Record<string, unknown> }[]): WorldLookup {
+  const map = new Map<string, { pos: Vec3; state: BlockState; nbt?: Record<string, unknown> }>();
+  for (const b of blocks) map.set(posKey(b.pos), b);
+  return {
+    getState: (p) => map.get(posKey(p))?.state,
+    getBlockEntity: (p) => {
+      const b = map.get(posKey(p));
+      return b && b.nbt ? (b as never) : undefined;
+    },
+  };
+}
+
+/**
+ * Binds the logistics simulation of one scene: `dynamic` is the lookup the visuals receive (their VisualContext), `initial`
+ * the scene-start lookup (lookupOfBlocks), `events` the scene's logistics ops (logisticsEventsOf). Later getLogisticsWorld(dynamic)
+ * returns this simulation.
+ */
+export function bindLogisticsScene(dynamic: WorldLookup, initial: WorldLookup, events: LogisticsEvent[]): LogisticsWorld {
+  const w = new LogisticsWorld(initial);
+  for (const ev of events) w.apply(ev);
+  worlds.set(dynamic, w);
+  return w;
+}
+
+/** Textures that the logistics visuals and block-model processors need before a section is built. */
+export const LOGISTICS_TEXTURES = [
+  'create:block/belt/brass_belt_casing', 'create:block/belt/andesite_belt_casing',
+  'create:block/belt', 'create:block/belt_offset', 'create:block/belt_diagonal',
+  'create:block/belt_scroll', 'create:block/belt_diagonal_scroll',
+];
