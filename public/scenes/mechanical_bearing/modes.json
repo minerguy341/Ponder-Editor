@@ -1,0 +1,869 @@
+{
+ "id": "create:mechanical_bearing/modes",
+ "schematic": "mechanical_bearing/modes",
+ "schematicNamespace": "create",
+ "title": "Movement Modes of the Mechanical Bearing",
+ "texts": {
+  "text_1": "When Stopped, the Bearing will place the structure at the nearest grid-aligned Angle",
+  "text_2": "It can be configured never to revert to solid blocks, or only near the angle it started at"
+ },
+ "tags": [],
+ "items": [
+  "create:mechanical_bearing"
+ ],
+ "keyframes": [
+  130,
+  250
+ ],
+ "totalTicks": 468,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 1,
+    "zOffset": 1,
+    "size": 6
+   },
+   "src": "BearingScenes.java:334"
+  },
+  {
+   "op": "setSceneOffsetY",
+   "args": {
+    "yOffset": -1
+   },
+   "src": "BearingScenes.java:335"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       7,
+       0,
+       3
+      ],
+      "nbt": {
+       "Speed": 4
+      }
+     }
+    ]
+   },
+   "src": "BearingScenes.java:342"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       6,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": -4
+      }
+     },
+     {
+      "pos": [
+       6,
+       2,
+       3
+      ],
+      "nbt": {
+       "Speed": -4
+      }
+     },
+     {
+      "pos": [
+       6,
+       3,
+       3
+      ],
+      "nbt": {
+       "Speed": -4
+      }
+     },
+     {
+      "pos": [
+       6,
+       4,
+       3
+      ],
+      "nbt": {
+       "Speed": -4
+      }
+     }
+    ]
+   },
+   "src": "BearingScenes.java:343"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       5,
+       3,
+       2
+      ],
+      "nbt": {
+       "Speed": 8
+      }
+     },
+     {
+      "pos": [
+       5,
+       4,
+       2
+      ],
+      "nbt": {
+       "Speed": 8
+      }
+     }
+    ]
+   },
+   "src": "BearingScenes.java:344"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       5,
+       3,
+       1
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "wall",
+        "facing": "north",
+        "powered": "true"
+       }
+      }
+     },
+     {
+      "pos": [
+       5,
+       3,
+       2
+      ],
+      "state": {
+       "name": "create:clutch",
+       "props": {
+        "axis": "y",
+        "powered": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "BearingScenes.java:345"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      7,
+      0,
+      6
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "BearingScenes.java:347"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "BearingScenes.java:348"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      6,
+      1,
+      3
+     ],
+     "to": [
+      6,
+      4,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "BearingScenes.java:349"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "BearingScenes.java:350"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      5,
+      3,
+      1
+     ],
+     "to": [
+      5,
+      4,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "BearingScenes.java:351"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "BearingScenes.java:352"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      5,
+      2,
+      2
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "BearingScenes.java:355"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "BearingScenes.java:356"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      1,
+      2
+     ],
+     "to": [
+      5,
+      1,
+      2
+     ]
+    },
+    "direction": "east"
+   },
+   "src": "BearingScenes.java:359",
+   "out": "e1"
+  },
+  {
+   "op": "world.configureCenterOfRotation",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "anchor": [
+     5.5,
+     2.5,
+     2.5
+    ]
+   },
+   "src": "BearingScenes.java:360"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "BearingScenes.java:361"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       5,
+       3,
+       1
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "wall",
+        "facing": "north",
+        "powered": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       5,
+       3,
+       2
+      ],
+      "state": {
+       "name": "create:clutch",
+       "props": {
+        "axis": "y",
+        "powered": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "BearingScenes.java:363"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     5,
+     3,
+     1
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "BearingScenes.java:364"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "rotation": [
+     0,
+     55,
+     0
+    ],
+    "duration": 23
+   },
+   "src": "BearingScenes.java:365"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bearing",
+    "pos": [
+     5,
+     2,
+     2
+    ],
+    "distance": 55,
+    "duration": 23
+   },
+   "src": "BearingScenes.java:366"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 24
+   },
+   "src": "BearingScenes.java:367"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       5,
+       3,
+       1
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "wall",
+        "facing": "north",
+        "powered": "true"
+       }
+      }
+     },
+     {
+      "pos": [
+       5,
+       3,
+       2
+      ],
+      "state": {
+       "name": "create:clutch",
+       "props": {
+        "axis": "y",
+        "powered": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "BearingScenes.java:369"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     5,
+     3,
+     1
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "BearingScenes.java:370"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "rotation": [
+     0,
+     35,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "BearingScenes.java:371"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bearing",
+    "pos": [
+     5,
+     2,
+     2
+    ],
+    "distance": 35,
+    "duration": 0
+   },
+   "src": "BearingScenes.java:372"
+  },
+  {
+   "op": "overlay.showLine",
+   "args": {
+    "color": "red",
+    "start": [
+     3,
+     2,
+     6
+    ],
+    "end": [
+     5.5,
+     2,
+     2.5
+    ],
+    "duration": 50,
+    "big": false
+   },
+   "src": "BearingScenes.java:375"
+  },
+  {
+   "op": "overlay.showLine",
+   "args": {
+    "color": "green",
+    "start": [
+     5.5,
+     2,
+     7
+    ],
+    "end": [
+     5.5,
+     2,
+     2.5
+    ],
+    "duration": 50,
+    "big": false
+   },
+   "src": "BearingScenes.java:376"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "BearingScenes.java:378"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 100,
+    "color": "red",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     5.5,
+     1,
+     4.5
+    ],
+    "key": "text_1",
+    "text": "When Stopped, the Bearing will place the structure at the nearest grid-aligned Angle"
+   },
+   "src": "BearingScenes.java:380"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 110
+   },
+   "src": "BearingScenes.java:386"
+  },
+  {
+   "op": "overlay.highlightValueBox",
+   "args": {
+    "location": [
+     5.5,
+     2.625,
+     2.0234375
+    ],
+    "expands": [
+     0.0859375,
+     0.0859375,
+     0
+    ],
+    "duration": 60
+   },
+   "src": "BearingScenes.java:390"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     5.5,
+     2.625,
+     2
+    ],
+    "direction": "down",
+    "duration": 60,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb"
+   },
+   "src": "BearingScenes.java:391"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "BearingScenes.java:392"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     5.5,
+     2.625,
+     2
+    ],
+    "sharedKey": "create:behaviour_modify_value_panel",
+    "text": "This behaviour can be modified using the value panel"
+   },
+   "src": "BearingScenes.java:393"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "BearingScenes.java:398"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       5,
+       3,
+       2
+      ],
+      "nbt": {
+       "Speed": -8
+      }
+     },
+     {
+      "pos": [
+       5,
+       4,
+       2
+      ],
+      "nbt": {
+       "Speed": -8
+      }
+     },
+     {
+      "pos": [
+       7,
+       0,
+       3
+      ],
+      "nbt": {
+       "Speed": -4
+      }
+     },
+     {
+      "pos": [
+       6,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": 4
+      }
+     },
+     {
+      "pos": [
+       6,
+       2,
+       3
+      ],
+      "nbt": {
+       "Speed": 4
+      }
+     },
+     {
+      "pos": [
+       6,
+       3,
+       3
+      ],
+      "nbt": {
+       "Speed": 4
+      }
+     },
+     {
+      "pos": [
+       6,
+       4,
+       3
+      ],
+      "nbt": {
+       "Speed": 4
+      }
+     }
+    ]
+   },
+   "src": "BearingScenes.java:400"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       5,
+       3,
+       1
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "wall",
+        "facing": "north",
+        "powered": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       5,
+       3,
+       2
+      ],
+      "state": {
+       "name": "create:clutch",
+       "props": {
+        "axis": "y",
+        "powered": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "BearingScenes.java:401"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     5,
+     3,
+     1
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "BearingScenes.java:402"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "rotation": [
+     0,
+     -55,
+     0
+    ],
+    "duration": 23
+   },
+   "src": "BearingScenes.java:403"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bearing",
+    "pos": [
+     5,
+     2,
+     2
+    ],
+    "distance": -55,
+    "duration": 23
+   },
+   "src": "BearingScenes.java:404"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 24
+   },
+   "src": "BearingScenes.java:405"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       5,
+       3,
+       1
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "wall",
+        "facing": "north",
+        "powered": "true"
+       }
+      }
+     },
+     {
+      "pos": [
+       5,
+       3,
+       2
+      ],
+      "state": {
+       "name": "create:clutch",
+       "props": {
+        "axis": "y",
+        "powered": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "BearingScenes.java:407"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     5,
+     3,
+     1
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "BearingScenes.java:408"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "BearingScenes.java:409"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 120,
+    "color": "green",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     3.5,
+     2,
+     3.5
+    ],
+    "key": "text_2",
+    "text": "It can be configured never to revert to solid blocks, or only near the angle it started at"
+   },
+   "src": "BearingScenes.java:411"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "BearingScenes.java:416"
+  }
+ ]
+}

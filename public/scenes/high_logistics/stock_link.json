@@ -1,0 +1,1622 @@
+{
+ "id": "create:high_logistics/stock_link",
+ "schematic": "high_logistics/stock_link",
+ "schematicNamespace": "create",
+ "title": "Logistics Networks and the Stock Link",
+ "texts": {
+  "text_1": "When placed, Stock Links create a new stock network",
+  "text_2": "Right-click an existing link before placing it to bind them",
+  "text_3": "Stock-linked packagers make their inventory available to the network",
+  "text_4": "Other components on the network can now find and request their items",
+  "text_5": "On request, items from the inventories will be placed into packages",
+  "text_6": "Stock Link signals have unlimited range, but packages require transportation",
+  "text_7": "Full redstone power will stop a link from broadcasting",
+  "text_8": "Analog power lowers the priority of a link, causing others to act first"
+ },
+ "tags": [],
+ "items": [
+  "create:stock_link"
+ ],
+ "keyframes": [
+  41,
+  153,
+  340,
+  458,
+  606,
+  726,
+  896,
+  1046
+ ],
+ "totalTicks": 1120,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 7
+   },
+   "src": "StockLinkScenes.java:30"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      6,
+      0,
+      6
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "StockLinkScenes.java:32"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "StockLinkScenes.java:68"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      2,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "StockLinkScenes.java:70",
+   "out": "e1"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     -1,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "StockLinkScenes.java:72"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 25
+   },
+   "src": "StockLinkScenes.java:74"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_1",
+    "pointAt": [
+     2.5,
+     1.5,
+     3.5
+    ],
+    "text": "When placed, Stock Links create a new stock network"
+   },
+   "src": "StockLinkScenes.java:77"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "StockLinkScenes.java:83"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     2,
+     3.5
+    ],
+    "direction": "down",
+    "duration": 50,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:stock_link",
+     "count": 1
+    }
+   },
+   "src": "StockLinkScenes.java:87"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "StockLinkScenes.java:91"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "blue",
+    "slot": "pos:2,2,3",
+    "box": {
+     "min": [
+      2.45,
+      1.45,
+      3.45
+     ],
+     "max": [
+      2.55,
+      1.55,
+      3.55
+     ]
+    },
+    "duration": 10
+   },
+   "src": "StockLinkScenes.java:95"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "StockLinkScenes.java:96"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "blue",
+    "slot": "pos:2,2,3",
+    "box": {
+     "min": [
+      2.0625,
+      0.5625,
+      3.0625
+     ],
+     "max": [
+      2.9375,
+      1.9375,
+      3.9375
+     ]
+    },
+    "duration": 50
+   },
+   "src": "StockLinkScenes.java:100"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 26
+   },
+   "src": "StockLinkScenes.java:101"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "blue",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_2",
+    "pointAt": [
+     2.5,
+     1.5,
+     3.5
+    ],
+    "text": "Right-click an existing link before placing it to bind them"
+   },
+   "src": "StockLinkScenes.java:104"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "StockLinkScenes.java:112"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      2,
+      3
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "StockLinkScenes.java:115"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "StockLinkScenes.java:116"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "green",
+    "slot": "pos:4,2,3",
+    "box": {
+     "min": [
+      4.0625,
+      0.5625,
+      3.0625
+     ],
+     "max": [
+      4.9375,
+      1.9375,
+      3.9375
+     ]
+    },
+    "duration": 40
+   },
+   "src": "StockLinkScenes.java:119"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "green",
+    "slot": "pos:2,2,3",
+    "box": {
+     "min": [
+      2.0625,
+      0.5625,
+      3.0625
+     ],
+     "max": [
+      2.9375,
+      1.9375,
+      3.9375
+     ]
+    },
+    "duration": 40
+   },
+   "src": "StockLinkScenes.java:122"
+  },
+  {
+   "op": "overlay.showLine",
+   "args": {
+    "color": "green",
+    "start": [
+     4.5,
+     1.25,
+     3.5
+    ],
+    "end": [
+     2.5,
+     1.25,
+     3.5
+    ],
+    "duration": 40,
+    "big": false
+   },
+   "src": "StockLinkScenes.java:124"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "StockLinkScenes.java:131"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       4,
+       1,
+       3
+      ],
+      "state": {
+       "name": "create:packager",
+       "props": {
+        "facing": "north",
+        "linked": "false",
+        "powered": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "StockLinkScenes.java:134"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       1,
+       3
+      ],
+      "state": {
+       "name": "create:packager",
+       "props": {
+        "facing": "north",
+        "linked": "false",
+        "powered": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "StockLinkScenes.java:136"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     1.25,
+     0
+    ],
+    "duration": 15
+   },
+   "src": "StockLinkScenes.java:139"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "StockLinkScenes.java:141"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      1,
+      3
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "StockLinkScenes.java:143"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "StockLinkScenes.java:144"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      3
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "StockLinkScenes.java:146"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "StockLinkScenes.java:147"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     -0.25,
+     0
+    ],
+    "duration": 10
+   },
+   "src": "StockLinkScenes.java:149"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "StockLinkScenes.java:151"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       4,
+       1,
+       3
+      ],
+      "state": {
+       "name": "create:packager",
+       "props": {
+        "facing": "north",
+        "linked": "true",
+        "powered": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "StockLinkScenes.java:153"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       1,
+       3
+      ],
+      "state": {
+       "name": "create:packager",
+       "props": {
+        "facing": "north",
+        "linked": "true",
+        "powered": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "StockLinkScenes.java:155"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     4,
+     1,
+     3
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "StockLinkScenes.java:157"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     2,
+     1,
+     3
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "StockLinkScenes.java:159"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "StockLinkScenes.java:160"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 100,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_3",
+    "pointAt": [
+     2,
+     1.5,
+     3
+    ],
+    "text": "Stock-linked packagers make their inventory available to the network"
+   },
+   "src": "StockLinkScenes.java:163"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "StockLinkScenes.java:169"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      1,
+      4
+     ],
+     "to": [
+      2,
+      1,
+      5
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "StockLinkScenes.java:172"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "StockLinkScenes.java:173"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      1,
+      4
+     ],
+     "to": [
+      5,
+      2,
+      5
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "StockLinkScenes.java:175"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "StockLinkScenes.java:176"
+  },
+  {
+   "op": "overlay.showOutline",
+   "args": {
+    "color": "blue",
+    "slot": "pos:4,2,3",
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      1,
+      4
+     ],
+     "to": [
+      2,
+      1,
+      5
+     ]
+    },
+    "duration": 120
+   },
+   "src": "StockLinkScenes.java:179"
+  },
+  {
+   "op": "overlay.showOutline",
+   "args": {
+    "color": "blue",
+    "slot": "pos:2,2,3",
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      1,
+      4
+     ],
+     "to": [
+      5,
+      2,
+      5
+     ]
+    },
+    "duration": 120
+   },
+   "src": "StockLinkScenes.java:181"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "StockLinkScenes.java:182"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      1,
+      1
+     ],
+     "to": [
+      5,
+      1,
+      1
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "StockLinkScenes.java:185"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "StockLinkScenes.java:186"
+  },
+  {
+   "op": "special.createBirb",
+   "args": {
+    "location": [
+     5.5,
+     1.5,
+     1.5
+    ],
+    "pose": {
+     "type": "face_poi"
+    }
+   },
+   "src": "StockLinkScenes.java:188",
+   "out": "e2"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "StockLinkScenes.java:190"
+  },
+  {
+   "op": "overlay.showOutline",
+   "args": {
+    "color": "blue",
+    "slot": "pos:5,1,1",
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      1,
+      1
+     ]
+    },
+    "duration": 100
+   },
+   "src": "StockLinkScenes.java:193"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 100,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_4",
+    "pointAt": [
+     4.5,
+     1.5,
+     1.5
+    ],
+    "text": "Other components on the network can now find and request their items"
+   },
+   "src": "StockLinkScenes.java:197"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 110
+   },
+   "src": "StockLinkScenes.java:204"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     4,
+     1,
+     1
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "StockLinkScenes.java:207"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "StockLinkScenes.java:208"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     4,
+     2,
+     3
+    ],
+    "beType": "LinkWithBulbBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "pulse",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "PonderHilo.java:56"
+  },
+  {
+   "op": "effects.addParticles",
+   "args": {
+    "particles": [
+     {
+      "particle": {
+       "type": "create:wifi"
+      },
+      "location": [
+       4.5,
+       2.5,
+       3.5
+      ],
+      "motion": [
+       1,
+       1,
+       1
+      ]
+     }
+    ]
+   },
+   "src": "PonderHilo.java:57"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     4,
+     1,
+     3
+    ],
+    "beType": "PackagerBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "set": "animationTicks",
+        "v": 20
+       }
+      ]
+     },
+     {
+      "path": [
+       {
+        "set": "animationInward",
+        "v": false
+       }
+      ]
+     },
+     {
+      "path": [
+       {
+        "set": "heldBox",
+        "v": {
+         "id": "create:cardboard_package_10x12",
+         "count": 1,
+         "nbt": {
+          "create:package_contents": []
+         }
+        }
+       }
+      ]
+     }
+    ]
+   },
+   "src": "PonderHilo.java:19"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "StockLinkScenes.java:211"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     2,
+     2,
+     3
+    ],
+    "beType": "LinkWithBulbBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "pulse",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "PonderHilo.java:56"
+  },
+  {
+   "op": "effects.addParticles",
+   "args": {
+    "particles": [
+     {
+      "particle": {
+       "type": "create:wifi"
+      },
+      "location": [
+       2.5,
+       2.5,
+       3.5
+      ],
+      "motion": [
+       1,
+       1,
+       1
+      ]
+     }
+    ]
+   },
+   "src": "PonderHilo.java:57"
+  },
+  {
+   "op": "world.modifyBlockEntity",
+   "args": {
+    "pos": [
+     2,
+     1,
+     3
+    ],
+    "beType": "PackagerBlockEntity",
+    "calls": [
+     {
+      "path": [
+       {
+        "set": "animationTicks",
+        "v": 20
+       }
+      ]
+     },
+     {
+      "path": [
+       {
+        "set": "animationInward",
+        "v": false
+       }
+      ]
+     },
+     {
+      "path": [
+       {
+        "set": "heldBox",
+        "v": {
+         "id": "create:cardboard_package_10x8",
+         "count": 1,
+         "nbt": {
+          "create:package_contents": []
+         }
+        }
+       }
+      ]
+     }
+    ]
+   },
+   "src": "PonderHilo.java:19"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "StockLinkScenes.java:214"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 100,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_5",
+    "pointAt": [
+     2,
+     1.5,
+     3
+    ],
+    "text": "On request, items from the inventories will be placed into packages"
+   },
+   "src": "StockLinkScenes.java:217"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 120
+   },
+   "src": "StockLinkScenes.java:223"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 100,
+    "color": "blue",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_6",
+    "pointAt": [
+     2.5,
+     2.5,
+     3.5
+    ],
+    "text": "Stock Link signals have unlimited range, but packages require transportation"
+   },
+   "src": "StockLinkScenes.java:226"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 110
+   },
+   "src": "StockLinkScenes.java:234"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      3
+     ]
+    },
+    "direction": "east"
+   },
+   "src": "StockLinkScenes.java:237"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "StockLinkScenes.java:238"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      2,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "StockLinkScenes.java:240",
+   "out": "e3"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "offset": [
+     0,
+     0,
+     1
+    ],
+    "duration": 0
+   },
+   "src": "StockLinkScenes.java:243"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "StockLinkScenes.java:245"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       2,
+       2
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "floor",
+        "facing": "east",
+        "powered": "true"
+       }
+      }
+     },
+     {
+      "pos": [
+       2,
+       2,
+       3
+      ],
+      "state": {
+       "name": "create:stock_link",
+       "props": {
+        "face": "floor",
+        "facing": "north",
+        "powered": "true",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "StockLinkScenes.java:248"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     1,
+     2,
+     3
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "StockLinkScenes.java:251"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "StockLinkScenes.java:252"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     2.5,
+     3.5
+    ],
+    "direction": "down",
+    "duration": 40,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "minecraft:barrier",
+     "count": 1
+    }
+   },
+   "src": "StockLinkScenes.java:254"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "StockLinkScenes.java:258"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "red",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_7",
+    "pointAt": [
+     2.25,
+     2.5,
+     3.5
+    ],
+    "text": "Full redstone power will stop a link from broadcasting"
+   },
+   "src": "StockLinkScenes.java:260"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "StockLinkScenes.java:269"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       2,
+       2
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "floor",
+        "facing": "east",
+        "powered": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       2,
+       2,
+       3
+      ],
+      "state": {
+       "name": "create:stock_link",
+       "props": {
+        "face": "floor",
+        "facing": "north",
+        "powered": "false",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "StockLinkScenes.java:272"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "StockLinkScenes.java:274"
+  },
+  {
+   "op": "world.hideIndependentSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "direction": "south"
+   },
+   "src": "StockLinkScenes.java:276"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "StockLinkScenes.java:278"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      2,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "StockLinkScenes.java:282"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "StockLinkScenes.java:284"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     1,
+     2,
+     3
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "StockLinkScenes.java:286"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       2,
+       2,
+       3
+      ],
+      "state": {
+       "name": "create:stock_link",
+       "props": {
+        "face": "floor",
+        "facing": "north",
+        "powered": "true",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "StockLinkScenes.java:288"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "AnalogLeverBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       2,
+       3
+      ],
+      "nbt": {
+       "State": 1
+      }
+     }
+    ]
+   },
+   "src": "StockLinkScenes.java:293"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "StockLinkScenes.java:294"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "AnalogLeverBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       2,
+       3
+      ],
+      "nbt": {
+       "State": 2
+      }
+     }
+    ]
+   },
+   "src": "StockLinkScenes.java:293"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "StockLinkScenes.java:294"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "AnalogLeverBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       2,
+       3
+      ],
+      "nbt": {
+       "State": 3
+      }
+     }
+    ]
+   },
+   "src": "StockLinkScenes.java:293"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "StockLinkScenes.java:294"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "AnalogLeverBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       2,
+       3
+      ],
+      "nbt": {
+       "State": 4
+      }
+     }
+    ]
+   },
+   "src": "StockLinkScenes.java:293"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "StockLinkScenes.java:294"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "AnalogLeverBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       2,
+       3
+      ],
+      "nbt": {
+       "State": 5
+      }
+     }
+    ]
+   },
+   "src": "StockLinkScenes.java:293"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "StockLinkScenes.java:294"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "AnalogLeverBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       2,
+       3
+      ],
+      "nbt": {
+       "State": 6
+      }
+     }
+    ]
+   },
+   "src": "StockLinkScenes.java:293"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "StockLinkScenes.java:294"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "AnalogLeverBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       2,
+       3
+      ],
+      "nbt": {
+       "State": 7
+      }
+     }
+    ]
+   },
+   "src": "StockLinkScenes.java:293"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "StockLinkScenes.java:294"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "AnalogLeverBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       2,
+       3
+      ],
+      "nbt": {
+       "State": 8
+      }
+     }
+    ]
+   },
+   "src": "StockLinkScenes.java:293"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "StockLinkScenes.java:294"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "AnalogLeverBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       2,
+       3
+      ],
+      "nbt": {
+       "State": 9
+      }
+     }
+    ]
+   },
+   "src": "StockLinkScenes.java:293"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "StockLinkScenes.java:294"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "AnalogLeverBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       2,
+       3
+      ],
+      "nbt": {
+       "State": 10
+      }
+     }
+    ]
+   },
+   "src": "StockLinkScenes.java:293"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "StockLinkScenes.java:294"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "StockLinkScenes.java:296"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 100,
+    "color": "red",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_8",
+    "pointAt": [
+     2.25,
+     2.5,
+     3.5
+    ],
+    "text": "Analog power lowers the priority of a link, causing others to act first"
+   },
+   "src": "StockLinkScenes.java:299"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "StockLinkScenes.java:308"
+  }
+ ]
+}

@@ -1,0 +1,791 @@
+{
+ "id": "create:mechanical_drill/breaker",
+ "schematic": "mechanical_drill/breaker",
+ "schematicNamespace": "create",
+ "title": "Breaking Blocks with the Mechanical Drill",
+ "texts": {
+  "text_1": "When given Rotational Force, a Mechanical Drill will break blocks directly in front of it",
+  "text_2": "Its mining speed depends on the Rotational Input"
+ },
+ "tags": [
+  "create:kinetic_appliances"
+ ],
+ "items": [
+  "create:mechanical_drill"
+ ],
+ "keyframes": [
+  66,
+  200
+ ],
+ "totalTicks": 265,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "MechanicalDrillScenes.java:26"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       5,
+       0,
+       3
+      ],
+      "nbt": {
+       "Speed": -8
+      }
+     }
+    ]
+   },
+   "src": "MechanicalDrillScenes.java:28"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 16
+      }
+     }
+    ]
+   },
+   "src": "MechanicalDrillScenes.java:29"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      5,
+      0,
+      4
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "MechanicalDrillScenes.java:31"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "MechanicalDrillScenes.java:32"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      1,
+      2
+     ],
+     "to": [
+      5,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "MechanicalDrillScenes.java:33"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "MechanicalDrillScenes.java:34"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      2
+     ]
+    },
+    "direction": "east"
+   },
+   "src": "MechanicalDrillScenes.java:35"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "MechanicalDrillScenes.java:36"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "MechanicalDrillScenes.java:40"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "MechanicalDrillScenes.java:41"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "MechanicalDrillScenes.java:43"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ]
+   },
+   "src": "MechanicalDrillScenes.java:44"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "MechanicalDrillScenes.java:43"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ]
+   },
+   "src": "MechanicalDrillScenes.java:44"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     2.5,
+     2,
+     2.5
+    ],
+    "key": "text_1",
+    "text": "When given Rotational Force, a Mechanical Drill will break blocks directly in front of it"
+   },
+   "src": "MechanicalDrillScenes.java:46"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "MechanicalDrillScenes.java:43"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ]
+   },
+   "src": "MechanicalDrillScenes.java:44"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "MechanicalDrillScenes.java:43"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ]
+   },
+   "src": "MechanicalDrillScenes.java:44"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "MechanicalDrillScenes.java:43"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ]
+   },
+   "src": "MechanicalDrillScenes.java:44"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "MechanicalDrillScenes.java:43"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ]
+   },
+   "src": "MechanicalDrillScenes.java:44"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "MechanicalDrillScenes.java:43"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ]
+   },
+   "src": "MechanicalDrillScenes.java:44"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "MechanicalDrillScenes.java:43"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ]
+   },
+   "src": "MechanicalDrillScenes.java:44"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "MechanicalDrillScenes.java:43"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ]
+   },
+   "src": "MechanicalDrillScenes.java:44"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "MechanicalDrillScenes.java:43"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ]
+   },
+   "src": "MechanicalDrillScenes.java:44"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      2
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "MechanicalDrillScenes.java:54"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     1.5,
+     2.5
+    ],
+    "motion": [
+     0,
+     0.10000000149011612,
+     0
+    ],
+    "item": {
+     "id": "minecraft:oak_planks",
+     "count": 1
+    }
+   },
+   "src": "MechanicalDrillScenes.java:55",
+   "out": "e1"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "MechanicalDrillScenes.java:57"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "MechanicalDrillScenes.java:58"
+  },
+  {
+   "op": "world.modifyEntity",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "calls": [
+     {
+      "path": [
+       {
+        "m": "discard",
+        "a": []
+       }
+      ]
+     }
+    ]
+   },
+   "src": "MechanicalDrillScenes.java:60"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 64
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 64
+      }
+     },
+     {
+      "pos": [
+       5,
+       1,
+       2
+      ],
+      "nbt": {
+       "Speed": 64
+      }
+     },
+     {
+      "pos": [
+       5,
+       0,
+       3
+      ],
+      "nbt": {
+       "Speed": -32
+      }
+     }
+    ]
+   },
+   "src": "MechanicalDrillScenes.java:61"
+  },
+  {
+   "op": "effects.rotationIndicator",
+   "args": {
+    "pos": [
+     5,
+     1,
+     2
+    ],
+    "direction": false
+   },
+   "src": "MechanicalDrillScenes.java:62"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "MechanicalDrillScenes.java:63"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:oak_planks",
+     "props": {}
+    },
+    "particles": false
+   },
+   "src": "MechanicalDrillScenes.java:64"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "MechanicalDrillScenes.java:65"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "MechanicalDrillScenes.java:67"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "MechanicalDrillScenes.java:69"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ]
+   },
+   "src": "MechanicalDrillScenes.java:70"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "MechanicalDrillScenes.java:69"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ]
+   },
+   "src": "MechanicalDrillScenes.java:70"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "MechanicalDrillScenes.java:69"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ]
+   },
+   "src": "MechanicalDrillScenes.java:70"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     3.5,
+     2,
+     2.5
+    ],
+    "key": "text_2",
+    "text": "Its mining speed depends on the Rotational Input"
+   },
+   "src": "MechanicalDrillScenes.java:72"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "MechanicalDrillScenes.java:69"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ]
+   },
+   "src": "MechanicalDrillScenes.java:70"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "MechanicalDrillScenes.java:69"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ]
+   },
+   "src": "MechanicalDrillScenes.java:70"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "MechanicalDrillScenes.java:69"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ]
+   },
+   "src": "MechanicalDrillScenes.java:70"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "MechanicalDrillScenes.java:69"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ]
+   },
+   "src": "MechanicalDrillScenes.java:70"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "MechanicalDrillScenes.java:69"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ]
+   },
+   "src": "MechanicalDrillScenes.java:70"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "MechanicalDrillScenes.java:69"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ]
+   },
+   "src": "MechanicalDrillScenes.java:70"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 3
+   },
+   "src": "MechanicalDrillScenes.java:69"
+  },
+  {
+   "op": "world.incrementBlockBreakingProgress",
+   "args": {
+    "pos": [
+     2,
+     1,
+     2
+    ]
+   },
+   "src": "MechanicalDrillScenes.java:70"
+  },
+  {
+   "op": "world.createItemEntity",
+   "args": {
+    "location": [
+     2.5,
+     1.5,
+     2.5
+    ],
+    "motion": [
+     0,
+     0.10000000149011612,
+     0
+    ],
+    "item": {
+     "id": "minecraft:oak_planks",
+     "count": 1
+    }
+   },
+   "src": "MechanicalDrillScenes.java:80",
+   "out": "e2"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "MechanicalDrillScenes.java:82"
+  }
+ ]
+}

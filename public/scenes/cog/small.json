@@ -1,0 +1,409 @@
+{
+ "id": "create:cog/small",
+ "schematic": "cog/small",
+ "schematicNamespace": "create",
+ "title": "Relaying rotational force using Cogwheels",
+ "texts": {
+  "text_1": "Cogwheels will relay rotation to other adjacent cogwheels",
+  "text_2": "Neighbouring shafts connected like this will rotate in opposite directions"
+ },
+ "tags": [
+  "create:kinetic_relays"
+ ],
+ "items": [
+  "create:cogwheel"
+ ],
+ "keyframes": [
+  141
+ ],
+ "totalTicks": 205,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "KineticsScenes.java:120"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      4,
+      0,
+      5
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "KineticsScenes.java:123"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      1,
+      1
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "KineticsScenes.java:124"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "SpeedGaugeBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       1
+      ],
+      "nbt": {
+       "Value": 0
+      }
+     }
+    ]
+   },
+   "src": "KineticsScenes.java:125"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       1
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     }
+    ]
+   },
+   "src": "KineticsScenes.java:125"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "KineticsScenes.java:126"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      1,
+      3
+     ],
+     "to": [
+      1,
+      1,
+      5
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "KineticsScenes.java:127"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "KineticsScenes.java:128"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "KineticsScenes.java:131"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "KineticsScenes.java:134"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "KineticsScenes.java:131"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "KineticsScenes.java:133"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "KineticsScenes.java:134"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "KineticsScenes.java:131"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "KineticsScenes.java:134"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "KineticsScenes.java:131"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "KineticsScenes.java:134"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "SpeedGaugeBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       1
+      ],
+      "nbt": {
+       "Value": 0.5957143
+      }
+     }
+    ]
+   },
+   "src": "KineticsScenes.java:137"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       1
+      ],
+      "nbt": {
+       "Speed": 64
+      }
+     }
+    ]
+   },
+   "src": "KineticsScenes.java:137"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     4,
+     1,
+     1
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "KineticsScenes.java:138"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "KineticsScenes.java:139"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": false,
+    "keyframe": false,
+    "key": "text_1",
+    "pointAt": [
+     1,
+     1.5,
+     2.5
+    ],
+    "text": "Cogwheels will relay rotation to other adjacent cogwheels"
+   },
+   "src": "KineticsScenes.java:140"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "KineticsScenes.java:144"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      1,
+      1
+     ],
+     "to": [
+      2,
+      1,
+      1
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "KineticsScenes.java:145"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "KineticsScenes.java:146"
+  },
+  {
+   "op": "effects.rotationIndicator",
+   "args": {
+    "pos": [
+     1,
+     1,
+     1
+    ],
+    "direction": true
+   },
+   "src": "KineticsScenes.java:147"
+  },
+  {
+   "op": "effects.rotationIndicator",
+   "args": {
+    "pos": [
+     2,
+     1,
+     1
+    ],
+    "direction": true
+   },
+   "src": "KineticsScenes.java:148"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "KineticsScenes.java:149"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 100,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_2",
+    "pointAt": [
+     1.5,
+     1.5,
+     2
+    ],
+    "text": "Neighbouring shafts connected like this will rotate in opposite directions"
+   },
+   "src": "KineticsScenes.java:150"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "KineticsScenes.java:155"
+  }
+ ]
+}

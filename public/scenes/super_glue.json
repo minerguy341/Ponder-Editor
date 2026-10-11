@@ -1,0 +1,1408 @@
+{
+ "id": "create:super_glue",
+ "schematic": "super_glue",
+ "schematicNamespace": "create",
+ "title": "Attaching blocks using Super Glue",
+ "texts": {
+  "text_1": "Super Glue groups blocks together into moving contraptions",
+  "text_2": "Clicking two endpoints creates a new 'glued' area",
+  "text_3": "To remove a box, punch it with the glue item in hand",
+  "text_4": "Adjacent blocks sharing an area will pull each other along",
+  "text_5": "Overlapping glue volumes will move together",
+  "text_6": "Blocks hanging on others usually do not require glue"
+ },
+ "tags": [
+  "create:contraption_assembly"
+ ],
+ "items": [
+  "create:super_glue"
+ ],
+ "keyframes": [
+  46,
+  198,
+  298,
+  388,
+  558,
+  663
+ ],
+ "totalTicks": 767,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "ChassisScenes.java:486"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      4,
+      0,
+      4
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "ChassisScenes.java:487"
+  },
+  {
+   "op": "setSceneOffsetY",
+   "args": {
+    "yOffset": -1
+   },
+   "src": "ChassisScenes.java:488"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "ChassisScenes.java:489"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      2,
+      2
+     ],
+     "to": [
+      2,
+      3,
+      2
+     ]
+    },
+    "state": {
+     "name": "minecraft:air",
+     "props": {}
+    },
+    "particles": false
+   },
+   "src": "ChassisScenes.java:500"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      1,
+      2
+     ],
+     "to": [
+      2,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ChassisScenes.java:502"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      1,
+      3
+     ],
+     "to": [
+      2,
+      2,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ChassisScenes.java:503"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ChassisScenes.java:504"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      1,
+      2
+     ],
+     "to": [
+      4,
+      1,
+      2
+     ]
+    },
+    "direction": "west"
+   },
+   "src": "ChassisScenes.java:505"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "ChassisScenes.java:506"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_1",
+    "pointAt": [
+     2.5,
+     2,
+     2.5
+    ],
+    "text": "Super Glue groups blocks together into moving contraptions"
+   },
+   "src": "ChassisScenes.java:508"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "ChassisScenes.java:513"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     3,
+     3.5
+    ],
+    "direction": "down",
+    "duration": 40,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "create:super_glue",
+     "count": 1
+    },
+    "icon": "rmb"
+   },
+   "src": "ChassisScenes.java:515"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 6
+   },
+   "src": "ChassisScenes.java:517"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     2,
+     2,
+     3
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "ChassisScenes.java:518"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 45
+   },
+   "src": "ChassisScenes.java:520"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     1.5,
+     1,
+     2.5
+    ],
+    "direction": "up",
+    "duration": 40,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "create:super_glue",
+     "count": 1
+    },
+    "icon": "rmb"
+   },
+   "src": "ChassisScenes.java:521"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 6
+   },
+   "src": "ChassisScenes.java:524"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "green",
+    "slot": "obj:1",
+    "box": {
+     "min": [
+      2,
+      2,
+      3
+     ],
+     "max": [
+      3,
+      3,
+      4
+     ]
+    },
+    "duration": 1
+   },
+   "src": "ChassisScenes.java:527"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "green",
+    "slot": "obj:1",
+    "box": {
+     "min": [
+      1,
+      1,
+      2
+     ],
+     "max": [
+      3,
+      3,
+      4
+     ]
+    },
+    "duration": 285
+   },
+   "src": "ChassisScenes.java:528"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 25
+   },
+   "src": "ChassisScenes.java:529"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "green",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_2",
+    "pointAt": [
+     1,
+     1.5,
+     2.5
+    ],
+    "text": "Clicking two endpoints creates a new 'glued' area"
+   },
+   "src": "ChassisScenes.java:531"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "ChassisScenes.java:537"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "green",
+    "slot": "pos:1,4,2",
+    "box": {
+     "min": [
+      3,
+      1,
+      3
+     ],
+     "max": [
+      4,
+      2,
+      4
+     ]
+    },
+    "duration": 1
+   },
+   "src": "ChassisScenes.java:540"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "green",
+    "slot": "pos:1,4,2",
+    "box": {
+     "min": [
+      3,
+      1,
+      1
+     ],
+     "max": [
+      4,
+      2,
+      4
+     ]
+    },
+    "duration": 66
+   },
+   "src": "ChassisScenes.java:541"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "ChassisScenes.java:542"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_3",
+    "pointAt": [
+     3,
+     1.5,
+     1.5
+    ],
+    "text": "To remove a box, punch it with the glue item in hand"
+   },
+   "src": "ChassisScenes.java:544"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "ChassisScenes.java:549"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3.5,
+     2,
+     1.5
+    ],
+    "direction": "down",
+    "duration": 40,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "create:super_glue",
+     "count": 1
+    },
+    "icon": "lmb"
+   },
+   "src": "ChassisScenes.java:551"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "ChassisScenes.java:554"
+  },
+  {
+   "op": "overlay.showOutlineWithText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        1,
+        1,
+        2
+       ],
+       "to": [
+        2,
+        1,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        2,
+        1,
+        3
+       ],
+       "to": [
+        2,
+        2,
+        3
+       ]
+      }
+     ]
+    },
+    "pointAt": [
+     1,
+     1.5,
+     2.5
+    ],
+    "key": "text_4",
+    "text": "Adjacent blocks sharing an area will pull each other along"
+   },
+   "src": "ChassisScenes.java:558"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "ChassisScenes.java:563"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      2,
+      2
+     ],
+     "to": [
+      2,
+      4,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ChassisScenes.java:565"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChassisScenes.java:566"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      4,
+      2
+     ]
+    },
+    "direction": "east"
+   },
+   "src": "ChassisScenes.java:567"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "ChassisScenes.java:568"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "pulley",
+    "pos": [
+     2,
+     4,
+     2
+    ],
+    "distance": -1,
+    "duration": 20
+   },
+   "src": "ChassisScenes.java:570"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       4,
+       2
+      ],
+      "nbt": {
+       "Speed": -24
+      }
+     },
+     {
+      "pos": [
+       2,
+       4,
+       2
+      ],
+      "nbt": {
+       "Speed": -24
+      }
+     }
+    ]
+   },
+   "src": "ChassisScenes.java:571"
+  },
+  {
+   "op": "world.makeSectionIndependent",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        1,
+        1,
+        2
+       ],
+       "to": [
+        2,
+        1,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        2,
+        1,
+        3
+       ],
+       "to": [
+        2,
+        2,
+        3
+       ]
+      }
+     ]
+    }
+   },
+   "src": "ChassisScenes.java:572",
+   "out": "e1"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     1,
+     0
+    ],
+    "duration": 20
+   },
+   "src": "ChassisScenes.java:573"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "ChassisScenes.java:574"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       4,
+       2
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       2,
+       4,
+       2
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     }
+    ]
+   },
+   "src": "ChassisScenes.java:575"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChassisScenes.java:576"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "pulley",
+    "pos": [
+     2,
+     4,
+     2
+    ],
+    "distance": 1,
+    "duration": 20
+   },
+   "src": "ChassisScenes.java:578"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       4,
+       2
+      ],
+      "nbt": {
+       "Speed": 24
+      }
+     },
+     {
+      "pos": [
+       2,
+       4,
+       2
+      ],
+      "nbt": {
+       "Speed": 24
+      }
+     }
+    ]
+   },
+   "src": "ChassisScenes.java:579"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     -1,
+     0
+    ],
+    "duration": 20
+   },
+   "src": "ChassisScenes.java:580"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "ChassisScenes.java:581"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       4,
+       2
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       2,
+       4,
+       2
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     }
+    ]
+   },
+   "src": "ChassisScenes.java:582"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChassisScenes.java:583"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "green",
+    "slot": "0",
+    "box": {
+     "min": [
+      1,
+      1,
+      2
+     ],
+     "max": [
+      3,
+      3,
+      4
+     ]
+    },
+    "duration": 70
+   },
+   "src": "ChassisScenes.java:586"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "ChassisScenes.java:587"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      2,
+      2
+     ],
+     "to": [
+      1,
+      2,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "ChassisScenes.java:588"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "green",
+    "slot": "1",
+    "box": {
+     "min": [
+      2,
+      1,
+      2
+     ],
+     "max": [
+      3,
+      2,
+      3
+     ]
+    },
+    "duration": 1
+   },
+   "src": "ChassisScenes.java:590"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "green",
+    "slot": "1",
+    "box": {
+     "min": [
+      2,
+      1,
+      2
+     ],
+     "max": [
+      5,
+      2,
+      3
+     ]
+    },
+    "duration": 55
+   },
+   "src": "ChassisScenes.java:591"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "ChassisScenes.java:592"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "green",
+    "slot": "2",
+    "box": {
+     "min": [
+      1,
+      2,
+      2
+     ],
+     "max": [
+      2,
+      3,
+      3
+     ]
+    },
+    "duration": 1
+   },
+   "src": "ChassisScenes.java:594"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "green",
+    "slot": "2",
+    "box": {
+     "min": [
+      0,
+      2,
+      2
+     ],
+     "max": [
+      2,
+      3,
+      3
+     ]
+    },
+    "duration": 40
+   },
+   "src": "ChassisScenes.java:595"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "green",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_5",
+    "pointAt": [
+     0,
+     2.5,
+     2.5
+    ],
+    "text": "Overlapping glue volumes will move together"
+   },
+   "src": "ChassisScenes.java:597"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "ChassisScenes.java:603"
+  },
+  {
+   "op": "world.makeSectionIndependent",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        3,
+        1,
+        2
+       ],
+       "to": [
+        4,
+        1,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        2,
+        2
+       ],
+       "to": [
+        1,
+        2,
+        2
+       ]
+      }
+     ]
+    }
+   },
+   "src": "ChassisScenes.java:605",
+   "out": "e2"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "pulley",
+    "pos": [
+     2,
+     4,
+     2
+    ],
+    "distance": -1,
+    "duration": 20
+   },
+   "src": "ChassisScenes.java:609"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       4,
+       2
+      ],
+      "nbt": {
+       "Speed": -24
+      }
+     },
+     {
+      "pos": [
+       2,
+       4,
+       2
+      ],
+      "nbt": {
+       "Speed": -24
+      }
+     }
+    ]
+   },
+   "src": "ChassisScenes.java:610"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     1,
+     0
+    ],
+    "duration": 20
+   },
+   "src": "ChassisScenes.java:611"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     0,
+     1,
+     0
+    ],
+    "duration": 20
+   },
+   "src": "ChassisScenes.java:612"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "ChassisScenes.java:613"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       4,
+       2
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       2,
+       4,
+       2
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     }
+    ]
+   },
+   "src": "ChassisScenes.java:614"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChassisScenes.java:615"
+  },
+  {
+   "op": "overlay.showOutline",
+   "args": {
+    "color": "green",
+    "slot": "obj:2",
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        1,
+        2,
+        2
+       ],
+       "to": [
+        4,
+        2,
+        2
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        2,
+        2,
+        3
+       ],
+       "to": [
+        2,
+        3,
+        3
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        0,
+        3,
+        2
+       ],
+       "to": [
+        1,
+        3,
+        2
+       ]
+      }
+     ]
+    },
+    "duration": 70
+   },
+   "src": "ChassisScenes.java:617"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      1
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "ChassisScenes.java:620",
+   "out": "e3"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "offset": [
+     0,
+     1,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "ChassisScenes.java:621"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ChassisScenes.java:622"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      2,
+      3
+     ]
+    },
+    "direction": "west",
+    "link": {
+     "link": "e3"
+    }
+   },
+   "src": "ChassisScenes.java:623"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "ChassisScenes.java:624"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      2,
+      3
+     ]
+    },
+    "direction": "east",
+    "link": {
+     "link": "e3"
+    }
+   },
+   "src": "ChassisScenes.java:625"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 25
+   },
+   "src": "ChassisScenes.java:626"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "blue",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_6",
+    "pointAt": [
+     1.5,
+     2.5,
+     2
+    ],
+    "text": "Blocks hanging on others usually do not require glue"
+   },
+   "src": "ChassisScenes.java:628"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "ChassisScenes.java:634"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "pulley",
+    "pos": [
+     2,
+     4,
+     2
+    ],
+    "distance": 1,
+    "duration": 20
+   },
+   "src": "ChassisScenes.java:636"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       4,
+       2
+      ],
+      "nbt": {
+       "Speed": 24
+      }
+     },
+     {
+      "pos": [
+       2,
+       4,
+       2
+      ],
+      "nbt": {
+       "Speed": 24
+      }
+     }
+    ]
+   },
+   "src": "ChassisScenes.java:637"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e2"
+    },
+    "offset": [
+     0,
+     -1,
+     0
+    ],
+    "duration": 20
+   },
+   "src": "ChassisScenes.java:638"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e3"
+    },
+    "offset": [
+     0,
+     -1,
+     0
+    ],
+    "duration": 20
+   },
+   "src": "ChassisScenes.java:639"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     -1,
+     0
+    ],
+    "duration": 20
+   },
+   "src": "ChassisScenes.java:640"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "ChassisScenes.java:641"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       4,
+       2
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     },
+     {
+      "pos": [
+       2,
+       4,
+       2
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     }
+    ]
+   },
+   "src": "ChassisScenes.java:642"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "ChassisScenes.java:643"
+  }
+ ]
+}

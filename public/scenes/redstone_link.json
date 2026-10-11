@@ -1,0 +1,1559 @@
+{
+ "id": "create:redstone_link",
+ "schematic": "redstone_link",
+ "schematicNamespace": "create",
+ "title": "Using Redstone Links",
+ "texts": {
+  "text_1": "Redstone Links can transmit redstone signals wirelessly",
+  "text_2": "Right-click while Sneaking to toggle receive mode",
+  "text_3": "A simple Right-click with a Wrench can do the same",
+  "text_4": "Receivers emit the redstone power of transmitters within 256 blocks",
+  "text_5": "Placing items in the two slots can specify a Frequency",
+  "text_6": "Only the links with matching Frequencies will communicate"
+ },
+ "tags": [],
+ "items": [
+  "create:redstone_link"
+ ],
+ "keyframes": [
+  41,
+  259,
+  389,
+  579
+ ],
+ "totalTicks": 691,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "RedstoneScenes.java:683"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        0,
+        0,
+        0
+       ],
+       "to": [
+        4,
+        0,
+        4
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        2,
+        1,
+        1
+       ],
+       "to": [
+        3,
+        1,
+        1
+       ]
+      }
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "RedstoneScenes.java:684"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "RedstoneScenes.java:686"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      1,
+      3
+     ],
+     "to": [
+      4,
+      2,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "RedstoneScenes.java:687"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "RedstoneScenes.java:688"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      1
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "RedstoneScenes.java:705"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "RedstoneScenes.java:706"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      2,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "RedstoneScenes.java:707"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "RedstoneScenes.java:708"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      2,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "RedstoneScenes.java:709"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "RedstoneScenes.java:710"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 50,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_1",
+    "pointAt": [
+     1.5,
+     1.1875,
+     1.5
+    ],
+    "text": "Redstone Links can transmit redstone signals wirelessly"
+   },
+   "src": "RedstoneScenes.java:712"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "RedstoneScenes.java:717"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     1.5,
+     2.5,
+     2.8125
+    ],
+    "direction": "up",
+    "duration": 40,
+    "sneak": true,
+    "ctrl": false,
+    "icon": "rmb"
+   },
+   "src": "RedstoneScenes.java:719"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "RedstoneScenes.java:721"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       2,
+       2
+      ],
+      "state": {
+       "name": "create:redstone_link",
+       "props": {
+        "facing": "north",
+        "powered": "false",
+        "receiver": "true"
+       }
+      }
+     }
+    ],
+    "particles": true
+   },
+   "src": "RedstoneScenes.java:722"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "RedstoneScenes.java:723"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 50,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_2",
+    "pointAt": [
+     1.5,
+     2.5,
+     2.8125
+    ],
+    "text": "Right-click while Sneaking to toggle receive mode"
+   },
+   "src": "RedstoneScenes.java:724"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "RedstoneScenes.java:728"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3.5,
+     2.5,
+     2.8125
+    ],
+    "direction": "up",
+    "duration": 40,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:wrench",
+     "count": 1
+    }
+   },
+   "src": "RedstoneScenes.java:730"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "RedstoneScenes.java:732"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       2,
+       2
+      ],
+      "state": {
+       "name": "create:redstone_link",
+       "props": {
+        "facing": "north",
+        "powered": "false",
+        "receiver": "true"
+       }
+      }
+     }
+    ],
+    "particles": true
+   },
+   "src": "RedstoneScenes.java:733"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "RedstoneScenes.java:734"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 50,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_3",
+    "pointAt": [
+     3.5,
+     2.5,
+     2.8125
+    ],
+    "text": "A simple Right-click with a Wrench can do the same"
+   },
+   "src": "RedstoneScenes.java:735"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "RedstoneScenes.java:739"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "RedstoneScenes.java:742"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       1
+      ],
+      "state": {
+       "name": "create:redstone_link",
+       "props": {
+        "facing": "up",
+        "powered": "true",
+        "receiver": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "side",
+        "north": "none",
+        "power": "15",
+        "south": "none",
+        "west": "side"
+       }
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "floor",
+        "facing": "east",
+        "powered": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:743"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     3,
+     1,
+     1
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "RedstoneScenes.java:744"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "RedstoneScenes.java:745"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       2,
+       2
+      ],
+      "state": {
+       "name": "create:redstone_link",
+       "props": {
+        "facing": "north",
+        "powered": "true",
+        "receiver": "true"
+       }
+      }
+     },
+     {
+      "pos": [
+       3,
+       2,
+       2
+      ],
+      "state": {
+       "name": "create:redstone_link",
+       "props": {
+        "facing": "north",
+        "powered": "true",
+        "receiver": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:746"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     1,
+     2,
+     2
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "RedstoneScenes.java:747"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     3,
+     2,
+     2
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "RedstoneScenes.java:748"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "RedstoneScenes.java:750"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "green",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_4",
+    "pointAt": [
+     1.5,
+     2.5,
+     2.8125
+    ],
+    "text": "Receivers emit the redstone power of transmitters within 256 blocks"
+   },
+   "src": "RedstoneScenes.java:751"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "RedstoneScenes.java:756"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       1
+      ],
+      "state": {
+       "name": "create:redstone_link",
+       "props": {
+        "facing": "up",
+        "powered": "false",
+        "receiver": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "side",
+        "north": "none",
+        "power": "0",
+        "south": "none",
+        "west": "side"
+       }
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "floor",
+        "facing": "east",
+        "powered": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:757"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "RedstoneScenes.java:758"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       2,
+       2
+      ],
+      "state": {
+       "name": "create:redstone_link",
+       "props": {
+        "facing": "north",
+        "powered": "false",
+        "receiver": "true"
+       }
+      }
+     },
+     {
+      "pos": [
+       3,
+       2,
+       2
+      ],
+      "state": {
+       "name": "create:redstone_link",
+       "props": {
+        "facing": "north",
+        "powered": "false",
+        "receiver": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:759"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "RedstoneScenes.java:760"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "RedstoneScenes.java:770"
+  },
+  {
+   "op": "overlay.highlightValueBox",
+   "args": {
+    "location": [
+     1.5,
+     1.1890625,
+     1.35
+    ],
+    "expands": [
+     0.0859375,
+     0,
+     0.0859375
+    ],
+    "duration": 100
+   },
+   "src": "RedstoneScenes.java:771"
+  },
+  {
+   "op": "overlay.highlightValueBox",
+   "args": {
+    "location": [
+     1.5,
+     1.1890625,
+     1.65
+    ],
+    "expands": [
+     0.0859375,
+     0,
+     0.0859375
+    ],
+    "duration": 100
+   },
+   "src": "RedstoneScenes.java:772"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "RedstoneScenes.java:773"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 50,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_5",
+    "pointAt": [
+     1.5,
+     1.2125,
+     1.65
+    ],
+    "text": "Placing items in the two slots can specify a Frequency"
+   },
+   "src": "RedstoneScenes.java:775"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "RedstoneScenes.java:779"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     1.5,
+     1.2125,
+     1.35
+    ],
+    "direction": "up",
+    "duration": 30,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "minecraft:iron_ingot",
+     "count": 1
+    }
+   },
+   "src": "RedstoneScenes.java:785"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "RedstoneScenes.java:786"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     1.5,
+     1.2125,
+     1.65
+    ],
+    "direction": "down",
+    "duration": 30,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "minecraft:oak_sapling",
+     "count": 1
+    }
+   },
+   "src": "RedstoneScenes.java:787"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "RedstoneLinkBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       1,
+       1
+      ],
+      "nbt": {
+       "FrequencyLast": {
+        "id": "minecraft:iron_ingot",
+        "count": 1
+       }
+      }
+     }
+    ]
+   },
+   "src": "RedstoneScenes.java:788"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "RedstoneScenes.java:790"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "RedstoneLinkBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       1,
+       1
+      ],
+      "nbt": {
+       "FrequencyFirst": {
+        "id": "minecraft:oak_sapling",
+        "count": 1
+       }
+      }
+     }
+    ]
+   },
+   "src": "RedstoneScenes.java:791"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "RedstoneScenes.java:793"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     1.5,
+     2.3,
+     2.8125
+    ],
+    "direction": "up",
+    "duration": 30,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "minecraft:iron_ingot",
+     "count": 1
+    }
+   },
+   "src": "RedstoneScenes.java:795"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "RedstoneScenes.java:796"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     1.5,
+     2.65,
+     2.8125
+    ],
+    "direction": "down",
+    "duration": 30,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "minecraft:oak_sapling",
+     "count": 1
+    }
+   },
+   "src": "RedstoneScenes.java:797"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "RedstoneLinkBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       2,
+       2
+      ],
+      "nbt": {
+       "FrequencyLast": {
+        "id": "minecraft:iron_ingot",
+        "count": 1
+       }
+      }
+     }
+    ]
+   },
+   "src": "RedstoneScenes.java:798"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "RedstoneScenes.java:800"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "RedstoneLinkBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       2,
+       2
+      ],
+      "nbt": {
+       "FrequencyFirst": {
+        "id": "minecraft:oak_sapling",
+        "count": 1
+       }
+      }
+     }
+    ]
+   },
+   "src": "RedstoneScenes.java:801"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "RedstoneScenes.java:803"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3.5,
+     2.3,
+     2.8125
+    ],
+    "direction": "up",
+    "duration": 30,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "minecraft:gold_ingot",
+     "count": 1
+    }
+   },
+   "src": "RedstoneScenes.java:805"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "RedstoneScenes.java:806"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3.5,
+     2.65,
+     2.8125
+    ],
+    "direction": "down",
+    "duration": 30,
+    "sneak": false,
+    "ctrl": false,
+    "item": {
+     "id": "minecraft:oak_sapling",
+     "count": 1
+    }
+   },
+   "src": "RedstoneScenes.java:807"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "RedstoneLinkBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       2,
+       2
+      ],
+      "nbt": {
+       "FrequencyLast": {
+        "id": "minecraft:gold_ingot",
+        "count": 1
+       }
+      }
+     }
+    ]
+   },
+   "src": "RedstoneScenes.java:808"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "RedstoneScenes.java:810"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "RedstoneLinkBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       2,
+       2
+      ],
+      "nbt": {
+       "FrequencyFirst": {
+        "id": "minecraft:oak_sapling",
+        "count": 1
+       }
+      }
+     }
+    ]
+   },
+   "src": "RedstoneScenes.java:811"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "RedstoneScenes.java:813"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       1
+      ],
+      "state": {
+       "name": "create:redstone_link",
+       "props": {
+        "facing": "up",
+        "powered": "true",
+        "receiver": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "side",
+        "north": "none",
+        "power": "15",
+        "south": "none",
+        "west": "side"
+       }
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "floor",
+        "facing": "east",
+        "powered": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:815"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     3,
+     1,
+     1
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "RedstoneScenes.java:816"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RedstoneScenes.java:817"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       2,
+       2
+      ],
+      "state": {
+       "name": "create:redstone_link",
+       "props": {
+        "facing": "north",
+        "powered": "true",
+        "receiver": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:818"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 90,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_6",
+    "pointAt": [
+     1.5,
+     2.5,
+     2.8125
+    ],
+    "text": "Only the links with matching Frequencies will communicate"
+   },
+   "src": "RedstoneScenes.java:819"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "RedstoneScenes.java:825"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       1
+      ],
+      "state": {
+       "name": "create:redstone_link",
+       "props": {
+        "facing": "up",
+        "powered": "false",
+        "receiver": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "side",
+        "north": "none",
+        "power": "0",
+        "south": "none",
+        "west": "side"
+       }
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "floor",
+        "facing": "east",
+        "powered": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:829"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RedstoneScenes.java:830"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       2,
+       2
+      ],
+      "state": {
+       "name": "create:redstone_link",
+       "props": {
+        "facing": "north",
+        "powered": "false",
+        "receiver": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:831"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "RedstoneScenes.java:832"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     3,
+     1,
+     1
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "RedstoneScenes.java:828"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       1
+      ],
+      "state": {
+       "name": "create:redstone_link",
+       "props": {
+        "facing": "up",
+        "powered": "true",
+        "receiver": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "side",
+        "north": "none",
+        "power": "15",
+        "south": "none",
+        "west": "side"
+       }
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "floor",
+        "facing": "east",
+        "powered": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:829"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RedstoneScenes.java:830"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       2,
+       2
+      ],
+      "state": {
+       "name": "create:redstone_link",
+       "props": {
+        "facing": "north",
+        "powered": "true",
+        "receiver": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:831"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "RedstoneScenes.java:832"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       1
+      ],
+      "state": {
+       "name": "create:redstone_link",
+       "props": {
+        "facing": "up",
+        "powered": "false",
+        "receiver": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "side",
+        "north": "none",
+        "power": "0",
+        "south": "none",
+        "west": "side"
+       }
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "floor",
+        "facing": "east",
+        "powered": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:829"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RedstoneScenes.java:830"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       2,
+       2
+      ],
+      "state": {
+       "name": "create:redstone_link",
+       "props": {
+        "facing": "north",
+        "powered": "false",
+        "receiver": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:831"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "RedstoneScenes.java:832"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     3,
+     1,
+     1
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "RedstoneScenes.java:828"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       1
+      ],
+      "state": {
+       "name": "create:redstone_link",
+       "props": {
+        "facing": "up",
+        "powered": "true",
+        "receiver": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "side",
+        "north": "none",
+        "power": "15",
+        "south": "none",
+        "west": "side"
+       }
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "floor",
+        "facing": "east",
+        "powered": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:829"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "RedstoneScenes.java:830"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       2,
+       2
+      ],
+      "state": {
+       "name": "create:redstone_link",
+       "props": {
+        "facing": "north",
+        "powered": "true",
+        "receiver": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "RedstoneScenes.java:831"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "RedstoneScenes.java:832"
+  }
+ ]
+}

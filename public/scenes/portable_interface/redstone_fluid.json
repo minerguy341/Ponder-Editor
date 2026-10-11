@@ -1,0 +1,325 @@
+{
+ "id": "create:portable_interface/redstone_fluid",
+ "schematic": "portable_interface/redstone_fluid",
+ "schematicNamespace": "create",
+ "title": "Redstone Control",
+ "texts": {
+  "text_1": "Redstone power will prevent the stationary interface from engaging"
+ },
+ "tags": [],
+ "items": [
+  "create:portable_fluid_interface"
+ ],
+ "keyframes": [],
+ "totalTicks": 80,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "MovementActorScenes.java:170"
+  },
+  {
+   "op": "setSceneOffsetY",
+   "args": {
+    "yOffset": -1
+   },
+   "src": "MovementActorScenes.java:171"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "PortableStorageInterfaceBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       1,
+       3
+      ],
+      "nbt": {
+       "Timer": 12,
+       "Distance": 1
+      }
+     },
+     {
+      "pos": [
+       1,
+       3,
+       3
+      ],
+      "nbt": {
+       "Timer": 12,
+       "Distance": 1
+      }
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:175"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      4,
+      0,
+      4
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "MovementActorScenes.java:180"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "MovementActorScenes.java:181"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      1,
+      0
+     ],
+     "to": [
+      4,
+      1,
+      4
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "MovementActorScenes.java:182"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "MovementActorScenes.java:183"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      2,
+      0
+     ],
+     "to": [
+      4,
+      4,
+      4
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "MovementActorScenes.java:186",
+   "out": "e1"
+  },
+  {
+   "op": "world.configureCenterOfRotation",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "anchor": [
+     3.5,
+     2,
+     3.5
+    ]
+   },
+   "src": "MovementActorScenes.java:188"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "MovementActorScenes.java:189"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "PortableStorageInterfaceBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       1,
+       3
+      ],
+      "nbt": {
+       "Timer": 2
+      }
+     },
+     {
+      "pos": [
+       1,
+       3,
+       3
+      ],
+      "nbt": {
+       "Timer": 2
+      }
+     }
+    ]
+   },
+   "src": "MovementActorScenes.java:190"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bearing",
+    "pos": [
+     3,
+     1,
+     3
+    ],
+    "distance": 1350,
+    "duration": 300
+   },
+   "src": "MovementActorScenes.java:191"
+  },
+  {
+   "op": "world.rotateSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "rotation": [
+     0,
+     1350,
+     0
+    ],
+    "duration": 300
+   },
+   "src": "MovementActorScenes.java:192"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "MovementActorScenes.java:193"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "floor",
+        "facing": "east",
+        "powered": "true"
+       }
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       2
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "none",
+        "north": "side",
+        "power": "15",
+        "south": "side",
+        "west": "none"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "MovementActorScenes.java:195"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     1,
+     1,
+     1
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "MovementActorScenes.java:196"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "MovementActorScenes.java:198"
+  },
+  {
+   "op": "overlay.showOutlineWithText",
+   "args": {
+    "duration": 120,
+    "color": "red",
+    "placeNearTarget": false,
+    "keyframe": false,
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      3
+     ]
+    },
+    "pointAt": [
+     1.5,
+     1.5,
+     3.5
+    ],
+    "key": "text_1",
+    "text": "Redstone power will prevent the stationary interface from engaging"
+   },
+   "src": "MovementActorScenes.java:200"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "MovementActorScenes.java:204"
+  },
+  {
+   "op": "markAsFinished",
+   "args": {},
+   "src": "MovementActorScenes.java:205"
+  }
+ ]
+}

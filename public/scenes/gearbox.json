@@ -1,0 +1,661 @@
+{
+ "id": "create:gearbox",
+ "schematic": "gearbox",
+ "schematicNamespace": "create",
+ "title": "Relaying rotational force using Gearboxes",
+ "texts": {
+  "text_1": "Jumping between axes of rotation can get bulky quickly",
+  "text_2": "A gearbox is the more compact equivalent of this setup",
+  "text_3": "Shafts around corners rotate in mirrored directions",
+  "text_4": "Straight connections will be reversed"
+ },
+ "tags": [
+  "create:kinetic_relays"
+ ],
+ "items": [
+  "create:gearbox",
+  "create:vertical_gearbox"
+ ],
+ "keyframes": [
+  156
+ ],
+ "totalTicks": 360,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 1,
+    "zOffset": 1,
+    "size": 5
+   },
+   "src": "KineticsScenes.java:408"
+  },
+  {
+   "op": "setSceneOffsetY",
+   "args": {
+    "yOffset": -1
+   },
+   "src": "KineticsScenes.java:409"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      5,
+      0,
+      6
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "KineticsScenes.java:411"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      1,
+      5
+     ],
+     "to": [
+      4,
+      2,
+      6
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "KineticsScenes.java:412"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "KineticsScenes.java:413"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      2,
+      4
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "KineticsScenes.java:420"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "KineticsScenes.java:421"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      2,
+      3
+     ]
+    },
+    "direction": "west"
+   },
+   "src": "KineticsScenes.java:422"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      5,
+      2,
+      3
+     ]
+    },
+    "direction": "west"
+   },
+   "src": "KineticsScenes.java:423"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      2,
+      3
+     ]
+    },
+    "direction": "east"
+   },
+   "src": "KineticsScenes.java:424"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      2,
+      3
+     ]
+    },
+    "direction": "east"
+   },
+   "src": "KineticsScenes.java:425"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "KineticsScenes.java:426"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      2,
+      2
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "KineticsScenes.java:427"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      2,
+      1
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "KineticsScenes.java:428"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "KineticsScenes.java:430"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "red",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     1,
+     2.5,
+     3.5
+    ],
+    "key": "text_1",
+    "text": "Jumping between axes of rotation can get bulky quickly"
+   },
+   "src": "KineticsScenes.java:432"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 80
+   },
+   "src": "KineticsScenes.java:437"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        2,
+        2,
+        2
+       ],
+       "to": [
+        4,
+        2,
+        2
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        2,
+        2,
+        3
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        4,
+        2,
+        3
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        2,
+        2,
+        4
+       ],
+       "to": [
+        4,
+        2,
+        4
+       ]
+      }
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "KineticsScenes.java:439"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "KineticsScenes.java:441"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      2,
+      4
+     ]
+    },
+    "state": {
+     "name": "create:shaft",
+     "props": {
+      "axis": "z",
+      "waterlogged": "false"
+     }
+    },
+    "particles": false
+   },
+   "src": "KineticsScenes.java:445"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      2,
+      2
+     ]
+    },
+    "state": {
+     "name": "create:shaft",
+     "props": {
+      "axis": "z",
+      "waterlogged": "false"
+     }
+    },
+    "particles": false
+   },
+   "src": "KineticsScenes.java:446"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      2,
+      3
+     ]
+    },
+    "state": {
+     "name": "create:shaft",
+     "props": {
+      "axis": "x",
+      "waterlogged": "false"
+     }
+    },
+    "particles": false
+   },
+   "src": "KineticsScenes.java:447"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      2,
+      3
+     ]
+    },
+    "state": {
+     "name": "create:shaft",
+     "props": {
+      "axis": "x",
+      "waterlogged": "false"
+     }
+    },
+    "particles": false
+   },
+   "src": "KineticsScenes.java:448"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      2,
+      2,
+      2
+     ],
+     "to": [
+      4,
+      2,
+      4
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "KineticsScenes.java:449"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "KineticsScenes.java:451"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "green",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     3.5,
+     3,
+     3.5
+    ],
+    "key": "text_2",
+    "text": "A gearbox is the more compact equivalent of this setup"
+   },
+   "src": "KineticsScenes.java:452"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "KineticsScenes.java:459"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      2,
+      1
+     ]
+    },
+    "state": {
+     "name": "create:cogwheel",
+     "props": {
+      "axis": "z",
+      "waterlogged": "false"
+     }
+    },
+    "particles": true
+   },
+   "src": "KineticsScenes.java:460"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      2,
+      3
+     ]
+    },
+    "state": {
+     "name": "create:cogwheel",
+     "props": {
+      "axis": "x",
+      "waterlogged": "false"
+     }
+    },
+    "particles": true
+   },
+   "src": "KineticsScenes.java:461"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "KineticsScenes.java:462"
+  },
+  {
+   "op": "effects.rotationIndicator",
+   "args": {
+    "pos": [
+     3,
+     2,
+     1
+    ],
+    "direction": true
+   },
+   "src": "KineticsScenes.java:463"
+  },
+  {
+   "op": "effects.rotationIndicator",
+   "args": {
+    "pos": [
+     1,
+     2,
+     3
+    ],
+    "direction": true
+   },
+   "src": "KineticsScenes.java:464"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "KineticsScenes.java:465"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     3,
+     2.5,
+     3
+    ],
+    "key": "text_3",
+    "text": "Shafts around corners rotate in mirrored directions"
+   },
+   "src": "KineticsScenes.java:466"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "KineticsScenes.java:471"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      2,
+      3
+     ],
+     "to": [
+      2,
+      2,
+      3
+     ]
+    },
+    "direction": "west"
+   },
+   "src": "KineticsScenes.java:473"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      2,
+      3
+     ],
+     "to": [
+      5,
+      2,
+      3
+     ]
+    },
+    "direction": "east"
+   },
+   "src": "KineticsScenes.java:474"
+  },
+  {
+   "op": "world.setBlocks",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      2,
+      5
+     ]
+    },
+    "state": {
+     "name": "create:cogwheel",
+     "props": {
+      "axis": "z",
+      "waterlogged": "false"
+     }
+    },
+    "particles": true
+   },
+   "src": "KineticsScenes.java:475"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "KineticsScenes.java:476"
+  },
+  {
+   "op": "effects.rotationIndicator",
+   "args": {
+    "pos": [
+     3,
+     2,
+     1
+    ],
+    "direction": true
+   },
+   "src": "KineticsScenes.java:478"
+  },
+  {
+   "op": "effects.rotationIndicator",
+   "args": {
+    "pos": [
+     3,
+     2,
+     5
+    ],
+    "direction": true
+   },
+   "src": "KineticsScenes.java:479"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "KineticsScenes.java:480"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     3.5,
+     2.5,
+     5.5
+    ],
+    "key": "text_4",
+    "text": "Straight connections will be reversed"
+   },
+   "src": "KineticsScenes.java:481"
+  }
+ ]
+}

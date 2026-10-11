@@ -1,0 +1,700 @@
+{
+ "id": "create:train_signal/redstone",
+ "schematic": "train_signal/redstone",
+ "schematicNamespace": "create",
+ "title": "Signals & Redstone",
+ "texts": {
+  "text_1": "Signals can be forced red by a redstone signal",
+  "text_2": "Conversely, red signals emit a comparator output"
+ },
+ "tags": [],
+ "items": [
+  "create:track_signal"
+ ],
+ "keyframes": [
+  55,
+  205
+ ],
+ "totalTicks": 249,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 9
+   },
+   "src": "TrainSignalScenes.java:489"
+  },
+  {
+   "op": "scaleSceneView",
+   "args": {
+    "factor": 0.75
+   },
+   "src": "TrainSignalScenes.java:490"
+  },
+  {
+   "op": "setSceneOffsetY",
+   "args": {
+    "yOffset": -1
+   },
+   "src": "TrainSignalScenes.java:491"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      8,
+      0,
+      8
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "TrainSignalScenes.java:492"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      6,
+      1,
+      1
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainSignalScenes.java:495"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "TrainSignalScenes.java:496"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      6,
+      1,
+      2
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainSignalScenes.java:495"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "TrainSignalScenes.java:496"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      6,
+      1,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainSignalScenes.java:495"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "TrainSignalScenes.java:496"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      6,
+      1,
+      4
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainSignalScenes.java:495"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "TrainSignalScenes.java:496"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      6,
+      1,
+      5
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainSignalScenes.java:495"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "TrainSignalScenes.java:496"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      6,
+      1,
+      6
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainSignalScenes.java:495"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "TrainSignalScenes.java:496"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      6,
+      1,
+      7
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainSignalScenes.java:495"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 2
+   },
+   "src": "TrainSignalScenes.java:496"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "TrainSignalScenes.java:499"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      3,
+      1,
+      3
+     ],
+     "to": [
+      3,
+      2,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainSignalScenes.java:507"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "TrainSignalScenes.java:508"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      1,
+      3
+     ],
+     "to": [
+      2,
+      1,
+      3
+     ]
+    },
+    "direction": "east"
+   },
+   "src": "TrainSignalScenes.java:509"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "TrainSignalScenes.java:510"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     3,
+     2.5,
+     3.5
+    ],
+    "key": "text_1",
+    "text": "Signals can be forced red by a redstone signal"
+   },
+   "src": "TrainSignalScenes.java:512"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "TrainSignalScenes.java:517"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       3
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "floor",
+        "facing": "south",
+        "powered": "true"
+       }
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       3
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "side",
+        "north": "none",
+        "power": "15",
+        "south": "none",
+        "west": "side"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "TrainSignalScenes.java:519"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     1,
+     1,
+     3
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "TrainSignalScenes.java:520"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "SignalBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       3
+      ],
+      "nbt": {
+       "State": "RED"
+      }
+     }
+    ]
+   },
+   "src": "TrainSignalScenes.java:521"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "TrainSignalScenes.java:522"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       3
+      ],
+      "state": {
+       "name": "minecraft:lever",
+       "props": {
+        "face": "floor",
+        "facing": "south",
+        "powered": "false"
+       }
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       3
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "side",
+        "north": "none",
+        "power": "0",
+        "south": "none",
+        "west": "side"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "TrainSignalScenes.java:524"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     1,
+     1,
+     3
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "TrainSignalScenes.java:525"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "SignalBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       3
+      ],
+      "nbt": {
+       "State": "GREEN"
+      }
+     }
+    ]
+   },
+   "src": "TrainSignalScenes.java:526"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "TrainSignalScenes.java:527"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      1,
+      3
+     ],
+     "to": [
+      2,
+      1,
+      3
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "TrainSignalScenes.java:529"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "TrainSignalScenes.java:530"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      1,
+      1
+     ],
+     "to": [
+      2,
+      1,
+      1
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "TrainSignalScenes.java:532",
+   "out": "e1"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     0,
+     2
+    ],
+    "duration": 0
+   },
+   "src": "TrainSignalScenes.java:533"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "TrainSignalScenes.java:534"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     3,
+     2.5,
+     3.5
+    ],
+    "key": "text_2",
+    "text": "Conversely, red signals emit a comparator output"
+   },
+   "src": "TrainSignalScenes.java:536"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "TrainSignalScenes.java:541"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       6,
+       3,
+       5
+      ],
+      "state": {
+       "name": "create:controls",
+       "props": {
+        "facing": "north",
+        "open": "false",
+        "virtual": "true",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "TrainSignalScenes.java:543"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      5,
+      2,
+      3
+     ],
+     "to": [
+      7,
+      3,
+      7
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainSignalScenes.java:544"
+  },
+  {
+   "op": "special.createBirb",
+   "args": {
+    "location": [
+     6.5,
+     3.5,
+     4.5
+    ],
+    "pose": {
+     "type": "dance"
+    }
+   },
+   "src": "TrainSignalScenes.java:545",
+   "out": "e2"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "TrainSignalScenes.java:546"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:redstone_wire",
+       "props": {
+        "east": "side",
+        "north": "none",
+        "power": "15",
+        "south": "none",
+        "west": "side"
+       }
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       1
+      ],
+      "state": {
+       "name": "minecraft:comparator",
+       "props": {
+        "facing": "east",
+        "mode": "compare",
+        "powered": "true"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "TrainSignalScenes.java:547"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     3,
+     1,
+     3
+    ],
+    "color": 16711680,
+    "amount": 10
+   },
+   "src": "TrainSignalScenes.java:548"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "SignalBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       3,
+       1,
+       3
+      ],
+      "nbt": {
+       "State": "RED"
+      }
+     }
+    ]
+   },
+   "src": "TrainSignalScenes.java:549"
+  }
+ ]
+}

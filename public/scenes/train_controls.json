@@ -1,0 +1,1251 @@
+{
+ "id": "create:train_controls",
+ "schematic": "train_controls",
+ "schematicNamespace": "create",
+ "title": "Controlling Trains",
+ "texts": {
+  "text_1": "Train Controls are required on every train contraption",
+  "text_2": "Once assembled, right-click the block to start driving",
+  "text_3": "Accelerate and steer the Train using movement keybinds",
+  "text_4": "If desired, the top speed can be fine-tuned using the mouse wheel",
+  "text_5": "Hold space to approach a nearby Station",
+  "text_6": "Trains can only be disassembled back into blocks at Stations",
+  "text_7": "Assembled Whistles can be activated with the sprint key",
+  "text_8": "Sneak or click again to stop controlling the Train"
+ },
+ "tags": [],
+ "items": [
+  "create:controls"
+ ],
+ "keyframes": [
+  67,
+  167,
+  577,
+  747,
+  827
+ ],
+ "totalTicks": 881,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 1,
+    "zOffset": 0,
+    "size": 9
+   },
+   "src": "TrainScenes.java:29"
+  },
+  {
+   "op": "scaleSceneView",
+   "args": {
+    "factor": 0.75
+   },
+   "src": "TrainScenes.java:30"
+  },
+  {
+   "op": "setSceneOffsetY",
+   "args": {
+    "yOffset": -1
+   },
+   "src": "TrainScenes.java:31"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      1,
+      0,
+      0
+     ],
+     "to": [
+      9,
+      0,
+      8
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "TrainScenes.java:32"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      10,
+      1,
+      4
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainScenes.java:35"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "TrainScenes.java:36"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      9,
+      1,
+      4
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainScenes.java:35"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "TrainScenes.java:36"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      8,
+      1,
+      4
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainScenes.java:35"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "TrainScenes.java:36"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      7,
+      1,
+      4
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainScenes.java:35"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "TrainScenes.java:36"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      6,
+      1,
+      4
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainScenes.java:35"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "TrainScenes.java:36"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      5,
+      1,
+      4
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainScenes.java:35"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "TrainScenes.java:36"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      1,
+      4
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainScenes.java:35"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "TrainScenes.java:36"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      1,
+      4
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainScenes.java:35"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "TrainScenes.java:36"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      2,
+      1,
+      4
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainScenes.java:35"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "TrainScenes.java:36"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      1,
+      1,
+      4
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainScenes.java:35"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "TrainScenes.java:36"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      0,
+      1,
+      4
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainScenes.java:35"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 1
+   },
+   "src": "TrainScenes.java:36"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      4,
+      1,
+      1
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainScenes.java:45"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "TrainScenes.java:46"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "union",
+     "items": [
+      {
+       "t": "box",
+       "from": [
+        1,
+        2,
+        3
+       ],
+       "to": [
+        5,
+        2,
+        5
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        1,
+        3,
+        3
+       ],
+       "to": [
+        5,
+        3,
+        3
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        1,
+        3,
+        4
+       ],
+       "to": [
+        3,
+        3,
+        4
+       ]
+      },
+      {
+       "t": "pos",
+       "pos": [
+        5,
+        3,
+        4
+       ]
+      },
+      {
+       "t": "box",
+       "from": [
+        1,
+        3,
+        5
+       ],
+       "to": [
+        5,
+        3,
+        5
+       ]
+      }
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "TrainScenes.java:48",
+   "out": "e1"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       4,
+       1,
+       1
+      ],
+      "state": {
+       "name": "create:track_station",
+       "props": {
+        "assembling": "true",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "TrainScenes.java:49"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "TrainScenes.java:50"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "white",
+    "slot": "obj:1",
+    "box": {
+     "min": [
+      3,
+      2.875,
+      4
+     ],
+     "max": [
+      4.375,
+      4,
+      5
+     ]
+    },
+    "duration": 85
+   },
+   "src": "TrainScenes.java:53"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 15
+   },
+   "src": "TrainScenes.java:55"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     3.3499999046325684,
+     3.75,
+     5
+    ],
+    "key": "text_1",
+    "text": "Train Controls are required on every train contraption"
+   },
+   "src": "TrainScenes.java:57"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "TrainScenes.java:62"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       4,
+       1,
+       1
+      ],
+      "state": {
+       "name": "create:track_station",
+       "props": {
+        "assembling": "false",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "TrainScenes.java:64"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     4,
+     1,
+     1
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "TrainScenes.java:65"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "StationBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       1
+      ],
+      "nbt": {
+       "ForceFlag": true
+      }
+     }
+    ]
+   },
+   "src": "TrainScenes.java:66"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       3,
+       4
+      ],
+      "state": {
+       "name": "create:controls",
+       "props": {
+        "facing": "west",
+        "open": "false",
+        "virtual": "true",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "TrainScenes.java:67"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "TrainScenes.java:68"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3.5,
+     4,
+     4.5
+    ],
+    "direction": "down",
+    "duration": 70,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb"
+   },
+   "src": "TrainScenes.java:70"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "TrainScenes.java:71"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     3.3499999046325684,
+     3.75,
+     5
+    ],
+    "key": "text_2",
+    "text": "Once assembled, right-click the block to start driving"
+   },
+   "src": "TrainScenes.java:73"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "TrainScenes.java:78"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     4,
+     0,
+     0
+    ],
+    "duration": 20
+   },
+   "src": "TrainScenes.java:80"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bogey",
+    "pos": [
+     3,
+     2,
+     4
+    ],
+    "distance": -4,
+    "duration": 21
+   },
+   "src": "TrainScenes.java:81"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "StationBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       1
+      ],
+      "nbt": {
+       "ForceFlag": false
+      }
+     }
+    ]
+   },
+   "src": "TrainScenes.java:82"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 30
+   },
+   "src": "TrainScenes.java:83"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 60,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     7.349999904632568,
+     3.75,
+     5
+    ],
+    "key": "text_3",
+    "text": "Accelerate and steer the Train using movement keybinds"
+   },
+   "src": "TrainScenes.java:85"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "TrainScenes.java:89"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     -4,
+     0,
+     0
+    ],
+    "duration": 30
+   },
+   "src": "TrainScenes.java:91"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bogey",
+    "pos": [
+     3,
+     2,
+     4
+    ],
+    "distance": 4,
+    "duration": 31
+   },
+   "src": "TrainScenes.java:92"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "TrainScenes.java:93"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     3.5,
+     4,
+     4.5
+    ],
+    "direction": "down",
+    "duration": 70,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "scroll"
+   },
+   "src": "TrainScenes.java:95"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "TrainScenes.java:96"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 90,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     3.3499999046325684,
+     3.75,
+     5
+    ],
+    "key": "text_4",
+    "text": "If desired, the top speed can be fine-tuned using the mouse wheel"
+   },
+   "src": "TrainScenes.java:98"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "TrainScenes.java:102"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     2,
+     0,
+     0
+    ],
+    "duration": 30
+   },
+   "src": "TrainScenes.java:104"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bogey",
+    "pos": [
+     3,
+     2,
+     4
+    ],
+    "distance": -2,
+    "duration": 31
+   },
+   "src": "TrainScenes.java:105"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "TrainScenes.java:106"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     -3,
+     0,
+     0
+    ],
+    "duration": 60
+   },
+   "src": "TrainScenes.java:108"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bogey",
+    "pos": [
+     3,
+     2,
+     4
+    ],
+    "distance": 3,
+    "duration": 61
+   },
+   "src": "TrainScenes.java:109"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "TrainScenes.java:110"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 50,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     2.3499999046325684,
+     3.75,
+     5
+    ],
+    "key": "text_5",
+    "text": "Hold space to approach a nearby Station"
+   },
+   "src": "TrainScenes.java:112"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "TrainScenes.java:117"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     1,
+     0,
+     0
+    ],
+    "duration": 20
+   },
+   "src": "TrainScenes.java:119"
+  },
+  {
+   "op": "world.animateBlockEntity",
+   "args": {
+    "kind": "bogey",
+    "pos": [
+     3,
+     2,
+     4
+    ],
+    "distance": -1,
+    "duration": 21
+   },
+   "src": "TrainScenes.java:120"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "TrainScenes.java:121"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     4,
+     1,
+     1
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "TrainScenes.java:122"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "StationBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       4,
+       1,
+       1
+      ],
+      "nbt": {
+       "ForceFlag": true
+      }
+     }
+    ]
+   },
+   "src": "TrainScenes.java:123"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "TrainScenes.java:124"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "pointAt": [
+     4.5,
+     2,
+     1.5
+    ],
+    "key": "text_6",
+    "text": "Trains can only be disassembled back into blocks at Stations"
+   },
+   "src": "TrainScenes.java:126"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "TrainScenes.java:130"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       4,
+       1,
+       1
+      ],
+      "state": {
+       "name": "create:track_station",
+       "props": {
+        "assembling": "true",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "TrainScenes.java:131"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       3,
+       4
+      ],
+      "state": {
+       "name": "create:controls",
+       "props": {
+        "facing": "west",
+        "open": "false",
+        "virtual": "false",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "TrainScenes.java:132"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "TrainScenes.java:133"
+  },
+  {
+   "op": "world.showSectionAndMerge",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      3,
+      4
+     ],
+     "to": [
+      4,
+      4,
+      4
+     ]
+    },
+    "direction": "down",
+    "link": {
+     "link": "e1"
+    }
+   },
+   "src": "TrainScenes.java:134"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "TrainScenes.java:135"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       4,
+       1,
+       1
+      ],
+      "state": {
+       "name": "create:track_station",
+       "props": {
+        "assembling": "false",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "TrainScenes.java:136"
+  },
+  {
+   "op": "effects.createRedstoneParticles",
+   "args": {
+    "pos": [
+     4,
+     1,
+     1
+    ],
+    "color": 8454058,
+    "amount": 10
+   },
+   "src": "TrainScenes.java:137"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       3,
+       3,
+       4
+      ],
+      "state": {
+       "name": "create:controls",
+       "props": {
+        "facing": "west",
+        "open": "false",
+        "virtual": "true",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "TrainScenes.java:138"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "TrainScenes.java:139"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     4.949999809265137,
+     3.75,
+     5
+    ],
+    "key": "text_7",
+    "text": "Assembled Whistles can be activated with the sprint key"
+   },
+   "src": "TrainScenes.java:141"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 40
+   },
+   "src": "TrainScenes.java:147"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       4,
+       3,
+       4
+      ],
+      "state": {
+       "name": "create:steam_whistle",
+       "props": {
+        "facing": "south",
+        "powered": "true",
+        "size": "medium",
+        "wall": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "TrainScenes.java:148"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "TrainScenes.java:149"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       4,
+       3,
+       4
+      ],
+      "state": {
+       "name": "create:steam_whistle",
+       "props": {
+        "facing": "south",
+        "powered": "false",
+        "size": "medium",
+        "wall": "false"
+       }
+      }
+     }
+    ],
+    "particles": false
+   },
+   "src": "TrainScenes.java:150"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "TrainScenes.java:151"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 70,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "pointAt": [
+     3.3499999046325684,
+     3.75,
+     5
+    ],
+    "key": "text_8",
+    "text": "Sneak or click again to stop controlling the Train"
+   },
+   "src": "TrainScenes.java:153"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "TrainScenes.java:158"
+  }
+ ]
+}

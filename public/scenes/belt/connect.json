@@ -1,0 +1,895 @@
+{
+ "id": "create:belt/connect",
+ "schematic": "belt/connect",
+ "schematicNamespace": "create",
+ "title": "Using Mechanical Belts",
+ "texts": {
+  "text_1": "Right-Clicking two shafts with a belt item will connect them together",
+  "text_2": "Accidental selections can be canceled with Right-Click while Sneaking",
+  "text_3": "Additional Shafts can be added throughout the Belt",
+  "text_4": "Shafts connected via Belts will rotate with Identical Speed and Direction",
+  "text_5": "Added shafts can be removed using the wrench",
+  "text_6": "Mechanical Belts can be dyed for aesthetic purposes"
+ },
+ "tags": [
+  "create:kinetic_relays"
+ ],
+ "items": [
+  "create:belt_connector"
+ ],
+ "keyframes": [
+  105,
+  202,
+  322,
+  499
+ ],
+ "totalTicks": 640,
+ "instructions": [
+  {
+   "op": "configureBasePlate",
+   "args": {
+    "xOffset": 0,
+    "zOffset": 0,
+    "size": 5
+   },
+   "src": "BeltScenes.java:47"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      4,
+      0,
+      4
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "BeltScenes.java:48"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "pos",
+     "pos": [
+      3,
+      0,
+      5
+     ]
+    },
+    "direction": "up"
+   },
+   "src": "BeltScenes.java:49"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 5
+   },
+   "src": "BeltScenes.java:50"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      4,
+      1,
+      3
+     ],
+     "to": [
+      4,
+      1,
+      5
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "BeltScenes.java:52"
+  },
+  {
+   "op": "world.showIndependentSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      1,
+      3
+     ],
+     "to": [
+      4,
+      1,
+      3
+     ]
+    },
+    "direction": "down"
+   },
+   "src": "BeltScenes.java:54",
+   "out": "e1"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     0,
+     -1
+    ],
+    "duration": 0
+   },
+   "src": "BeltScenes.java:55"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       0,
+       1,
+       3
+      ],
+      "nbt": {
+       "Speed": 0
+      }
+     }
+    ]
+   },
+   "src": "BeltScenes.java:56"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "BeltScenes.java:57"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     4.5,
+     2,
+     2.5
+    ],
+    "direction": "down",
+    "duration": 57,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:belt_connector",
+     "count": 1
+    }
+   },
+   "src": "BeltScenes.java:69"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "BeltScenes.java:71"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "green",
+    "slot": "pos:4,1,2",
+    "box": {
+     "min": [
+      4.3125,
+      1.3124999781443059,
+      2.0000000081958853
+     ],
+     "max": [
+      4.6875,
+      1.6875000218556941,
+      2.9999999918041147
+     ]
+    },
+    "duration": 42
+   },
+   "src": "BeltScenes.java:73"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "black",
+    "slot": "vec:4.5,1.5,2.5",
+    "box": {
+     "min": [
+      4.5,
+      1.5,
+      2.5
+     ],
+     "max": [
+      4.5,
+      1.5,
+      2.5
+     ]
+    },
+    "duration": 50
+   },
+   "src": "BeltScenes.java:74"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "BeltScenes.java:75"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     0.5,
+     2,
+     2.5
+    ],
+    "direction": "down",
+    "duration": 37,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:belt_connector",
+     "count": 1
+    }
+   },
+   "src": "BeltScenes.java:77"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "BeltScenes.java:79"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "green",
+    "slot": "pos:0,1,2",
+    "box": {
+     "min": [
+      0.3125,
+      1.3124999781443059,
+      2.0000000081958853
+     ],
+     "max": [
+      0.6875,
+      1.6875000218556941,
+      2.9999999918041147
+     ]
+    },
+    "duration": 17
+   },
+   "src": "BeltScenes.java:81"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "black",
+    "slot": "vec:4.5,1.5,2.5",
+    "box": {
+     "min": [
+      0.5,
+      1.5,
+      2.5
+     ],
+     "max": [
+      4.5,
+      1.5,
+      2.5
+     ]
+    },
+    "duration": 20
+   },
+   "src": "BeltScenes.java:82"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "BeltScenes.java:84"
+  },
+  {
+   "op": "world.moveSection",
+   "args": {
+    "link": {
+     "link": "e1"
+    },
+    "offset": [
+     0,
+     -2,
+     0
+    ],
+    "duration": 0
+   },
+   "src": "BeltScenes.java:86"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      1,
+      2
+     ],
+     "to": [
+      4,
+      1,
+      2
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "BeltScenes.java:87"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "BeltScenes.java:88"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_1",
+    "pointAt": [
+     2.5,
+     2,
+     2.5
+    ],
+    "text": "Right-Clicking two shafts with a belt item will connect them together"
+   },
+   "src": "BeltScenes.java:90"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 90
+   },
+   "src": "BeltScenes.java:95"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     4.5,
+     2,
+     3.5
+    ],
+    "direction": "down",
+    "duration": 37,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:belt_connector",
+     "count": 1
+    }
+   },
+   "src": "BeltScenes.java:98"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "BeltScenes.java:100"
+  },
+  {
+   "op": "overlay.chaseBoundingBoxOutline",
+   "args": {
+    "color": "red",
+    "slot": "pos:4,1,2",
+    "box": {
+     "min": [
+      4.3125,
+      1.3124999781443059,
+      3.0000000081958853
+     ],
+     "max": [
+      4.6875,
+      1.6875000218556941,
+      3.9999999918041147
+     ]
+    },
+    "duration": 50
+   },
+   "src": "BeltScenes.java:101"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "red",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_2",
+    "pointAt": [
+     4.5,
+     1.5,
+     3.5
+    ],
+    "text": "Accidental selections can be canceled with Right-Click while Sneaking"
+   },
+   "src": "BeltScenes.java:103"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 43
+   },
+   "src": "BeltScenes.java:109"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     4.5,
+     2,
+     3.5
+    ],
+    "direction": "down",
+    "duration": 20,
+    "sneak": true,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:belt_connector",
+     "count": 1
+    }
+   },
+   "src": "BeltScenes.java:111"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "BeltScenes.java:114"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     1.5,
+     2,
+     2.5
+    ],
+    "direction": "down",
+    "duration": 50,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:shaft",
+     "count": 1
+    }
+   },
+   "src": "BeltScenes.java:117"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "BeltScenes.java:119"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       2
+      ],
+      "state": {
+       "name": "create:belt",
+       "props": {
+        "casing": "false",
+        "facing": "west",
+        "part": "pulley",
+        "slope": "horizontal",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": true
+   },
+   "src": "BeltScenes.java:120"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "BeltScenes.java:121"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 43,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_3",
+    "pointAt": [
+     1.5,
+     1.5,
+     2
+    ],
+    "text": "Additional Shafts can be added throughout the Belt"
+   },
+   "src": "BeltScenes.java:123"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "BeltScenes.java:128"
+  },
+  {
+   "op": "world.showSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      1,
+      1
+     ],
+     "to": [
+      1,
+      1,
+      1
+     ]
+    },
+    "direction": "south"
+   },
+   "src": "BeltScenes.java:131"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "KineticBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       1,
+       1,
+       1
+      ],
+      "nbt": {
+       "Speed": 32
+      }
+     }
+    ]
+   },
+   "src": "BeltScenes.java:132"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "BeltScenes.java:133"
+  },
+  {
+   "op": "effects.rotationIndicator",
+   "args": {
+    "pos": [
+     0,
+     1,
+     1
+    ],
+    "direction": true
+   },
+   "src": "BeltScenes.java:134"
+  },
+  {
+   "op": "effects.rotationIndicator",
+   "args": {
+    "pos": [
+     1,
+     1,
+     1
+    ],
+    "direction": true
+   },
+   "src": "BeltScenes.java:135"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "BeltScenes.java:136"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 50,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_4",
+    "pointAt": [
+     0.5,
+     1.5,
+     1
+    ],
+    "text": "Shafts connected via Belts will rotate with Identical Speed and Direction"
+   },
+   "src": "BeltScenes.java:138"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 60
+   },
+   "src": "BeltScenes.java:142"
+  },
+  {
+   "op": "world.hideSection",
+   "args": {
+    "selection": {
+     "t": "box",
+     "from": [
+      0,
+      1,
+      1
+     ],
+     "to": [
+      1,
+      1,
+      1
+     ]
+    },
+    "direction": "north"
+   },
+   "src": "BeltScenes.java:144"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "BeltScenes.java:145"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     1.5,
+     2,
+     2.5
+    ],
+    "direction": "down",
+    "duration": 50,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "create:wrench",
+     "count": 1
+    }
+   },
+   "src": "BeltScenes.java:147"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "BeltScenes.java:149"
+  },
+  {
+   "op": "world.modifyBlocks",
+   "args": {
+    "changes": [
+     {
+      "pos": [
+       1,
+       1,
+       2
+      ],
+      "state": {
+       "name": "create:belt",
+       "props": {
+        "casing": "false",
+        "facing": "west",
+        "part": "middle",
+        "slope": "horizontal",
+        "waterlogged": "false"
+       }
+      }
+     }
+    ],
+    "particles": true
+   },
+   "src": "BeltScenes.java:150"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 10
+   },
+   "src": "BeltScenes.java:151"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 50,
+    "color": "white",
+    "placeNearTarget": true,
+    "keyframe": true,
+    "key": "text_5",
+    "pointAt": [
+     1.5,
+     1.5,
+     2
+    ],
+    "text": "Added shafts can be removed using the wrench"
+   },
+   "src": "BeltScenes.java:152"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 70
+   },
+   "src": "BeltScenes.java:157"
+  },
+  {
+   "op": "overlay.showControls",
+   "args": {
+    "location": [
+     2.5,
+     2,
+     2.5
+    ],
+    "direction": "down",
+    "duration": 50,
+    "sneak": false,
+    "ctrl": false,
+    "icon": "rmb",
+    "item": {
+     "id": "minecraft:blue_dye",
+     "count": 1
+    }
+   },
+   "src": "BeltScenes.java:159"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 7
+   },
+   "src": "BeltScenes.java:161"
+  },
+  {
+   "op": "world.modifyBlockEntityNBT",
+   "args": {
+    "beType": "BeltBlockEntity",
+    "redraw": false,
+    "targets": [
+     {
+      "pos": [
+       0,
+       1,
+       2
+      ],
+      "nbt": {
+       "Dye": "BLUE"
+      }
+     },
+     {
+      "pos": [
+       1,
+       1,
+       2
+      ],
+      "nbt": {
+       "Dye": "BLUE"
+      }
+     },
+     {
+      "pos": [
+       2,
+       1,
+       2
+      ],
+      "nbt": {
+       "Dye": "BLUE"
+      }
+     },
+     {
+      "pos": [
+       3,
+       1,
+       2
+      ],
+      "nbt": {
+       "Dye": "BLUE"
+      }
+     },
+     {
+      "pos": [
+       4,
+       1,
+       2
+      ],
+      "nbt": {
+       "Dye": "BLUE"
+      }
+     }
+    ]
+   },
+   "src": "BeltScenes.java:162"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 20
+   },
+   "src": "BeltScenes.java:164"
+  },
+  {
+   "op": "overlay.showText",
+   "args": {
+    "duration": 80,
+    "color": "blue",
+    "placeNearTarget": true,
+    "keyframe": false,
+    "key": "text_6",
+    "pointAt": [
+     2.5,
+     2,
+     2.5
+    ],
+    "text": "Mechanical Belts can be dyed for aesthetic purposes"
+   },
+   "src": "BeltScenes.java:165"
+  },
+  {
+   "op": "idle",
+   "args": {
+    "ticks": 50
+   },
+   "src": "BeltScenes.java:170"
+  }
+ ]
+}
