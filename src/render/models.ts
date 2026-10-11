@@ -532,8 +532,15 @@ function bakeFace(
     uvOut[i * 2] = sprite.getU(uvU(suv, i)); // getU takes 0..16 model-uv units (= TextureAtlasSprite.getU(u / 16))
     uvOut[i * 2 + 1] = sprite.getV(uvV(suv, i));
   }
+  // The facing of the quad is the direction its element face points along after the element and blockstate rotations, not
+  // whatever the vertex order happens to give: a box whose from/to are reversed on an axis (exported by Blockbench, e.g.
+  // Create's andesite funnel) has its corners in the wrong order, and a facing taken from them comes out inverted.
+  const want = faceNormalAfterRotations(dir, erM, rot, identityRot);
+  const fdir = nearestDir(want[0], want[1], want[2]);
+  if (!er) recalculateWinding(pos, uvOut, fdir);
+  // Counter-clockwise (front) winding seen from outside: the vertex order must face the same way as `want`.
+  if (frontNormalDot(pos, want) < 0) reverseQuadOrder(pos, uvOut);
   const qdir = calculateFacing(pos);
-  if (!er) recalculateWinding(pos, uvOut, qdir);
 
   let normal: Float32Array | null = null;
   const nd = face.neoforge_data ?? el.neoforge_data;
@@ -585,6 +592,32 @@ export function calculateFacing(pos: ArrayLike<number>): Dir {
     if (dot >= 0 && dot > bestDot) { bestDot = dot; best = d; }
   }
   return best ?? 'up';
+}
+
+/** Normal of an element face after its element rotation and the blockstate rotation (the direction the face faces). */
+function faceNormalAfterRotations(dir: Dir, erM: M3 | null, rot: M3, identityRot: boolean): [number, number, number] {
+  const d = DIR_NORMAL[dir];
+  let n: [number, number, number] = [d[0], d[1], d[2]];
+  if (erM) n = m3apply(erM, n[0], n[1], n[2]);
+  if (!identityRot) n = m3apply(rot, n[0], n[1], n[2]);
+  return n;
+}
+
+/** Dot product of the counter-clockwise (front) normal of a quad, (v1-v0) x (v2-v1), with `want`. */
+function frontNormalDot(pos: ArrayLike<number>, want: readonly number[]): number {
+  const ax = pos[3] - pos[0], ay = pos[4] - pos[1], az = pos[5] - pos[2];
+  const bx = pos[6] - pos[3], by = pos[7] - pos[4], bz = pos[8] - pos[5];
+  return (ay * bz - az * by) * want[0] + (az * bx - ax * bz) * want[1] + (ax * by - ay * bx) * want[2];
+}
+
+/** Reverse the vertex order of a quad (flips its winding); positions and uvs move together so each corner keeps its uv. */
+function reverseQuadOrder(pos: Float32Array, uv: Float32Array) {
+  const p = pos.slice(), u = uv.slice();
+  for (let i = 0; i < 4; i++) {
+    const s = i === 0 ? 0 : 4 - i; // 0, 3, 2, 1
+    pos[i * 3] = p[s * 3]; pos[i * 3 + 1] = p[s * 3 + 1]; pos[i * 3 + 2] = p[s * 3 + 2];
+    uv[i * 2] = u[s * 2]; uv[i * 2 + 1] = u[s * 2 + 1];
+  }
 }
 
 /** FaceBakery.recalculateWinding: re-order vertices to FaceInfo order of the (rotated) facing, carrying UVs along by position. */
