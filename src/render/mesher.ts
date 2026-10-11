@@ -213,7 +213,8 @@ export interface PlacedModel {
 
 export interface MeshEnv {
   /** Baked models for a block (chosen variants for its position) or null for blocks that draw nothing statically (air, entity-rendered). */
-  placed(state: BlockState, pos: Vec3): PlacedModel | null;
+  /** `ctx.nbt` is the block entity data of that position (from the section's blocks or `lookup.getBlockEntity`). */
+  placed(state: BlockState, pos: Vec3, ctx: { lookup: WorldLookup; nbt?: Record<string, unknown> }): PlacedModel | null;
   sprites: SpriteSource;
   shadeInColor: boolean;
   onMissing?(state: BlockState): void;
@@ -248,7 +249,8 @@ export function meshBlocks(blocks: BlockInstance[], lookup: WorldLookup, env: Me
     const k = key(x, y, z);
     if (placedCache.has(k)) return placedCache.get(k)!;
     const s = stateAt(x, y, z);
-    const p = s ? env.placed(s, [x, y, z]) : null;
+    const nbt = local.get(k)?.nbt ?? lookup.getBlockEntity([x, y, z])?.nbt;
+    const p = s ? env.placed(s, [x, y, z], { lookup, nbt }) : null;
     placedCache.set(k, p);
     return p;
   };

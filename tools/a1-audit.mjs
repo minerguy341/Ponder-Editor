@@ -178,7 +178,7 @@ async function worker() {
     if (++done % 100 === 0) process.stderr.write(`  create blockstates ${done}/${blockstateNames.length}\n`);
   }
 }
-await Promise.all(Array.from({ length: 16 }, worker));
+await Promise.all(Array.from({ length: 48 }, worker));
 
 // ---------------------------------------------------------------- 2) schematics: every palette state must select models; vanilla blocks fully resolved
 const schematics = [...createFiles].filter((f) => /^ponder\/.*\.nbt$/.test(f));
@@ -227,7 +227,7 @@ async function iworker() {
     itemsDone++;
   }
 }
-await Promise.all(Array.from({ length: 16 }, iworker));
+await Promise.all(Array.from({ length: 48 }, iworker));
 
 await vite.close();
 
