@@ -4,6 +4,34 @@
 export type NbtValue = number | bigint | string | NbtValue[] | { [k: string]: NbtValue } | Int8Array | Int32Array;
 export type NbtCompound = { [k: string]: NbtValue };
 
+/** NBT strings are Java "modified UTF-8": NUL as C0 80 and supplementary chars as surrogate pairs (CESU-8). */
+function decodeModifiedUtf8(b: Uint8Array): string {
+  let ascii = true;
+  for (let i = 0; i < b.length; i++) if (b[i] >= 0x80) { ascii = false; break; }
+  if (ascii) return String.fromCharCode(...b);
+  let out = '';
+  for (let i = 0; i < b.length;) {
+    const c = b[i++];
+    if (c < 0x80) out += String.fromCharCode(c);
+    else if ((c & 0xe0) === 0xc0) out += String.fromCharCode(((c & 0x1f) << 6) | (b[i++] & 0x3f));
+    else out += String.fromCharCode(((c & 0x0f) << 12) | ((b[i++] & 0x3f) << 6) | (b[i++] & 0x3f));
+  }
+  return out;
+}
+
+/** Convert parsed NBT into plain JS: longs become numbers (bigint when beyond 2^53), typed arrays become number[]. */
+export function nbtToPlain(v: NbtValue): unknown {
+  if (typeof v === 'bigint') return v >= BigInt(Number.MIN_SAFE_INTEGER) && v <= BigInt(Number.MAX_SAFE_INTEGER) ? Number(v) : v;
+  if (v instanceof Int8Array || v instanceof Int32Array) return Array.from(v);
+  if (Array.isArray(v)) return v.map(nbtToPlain);
+  if (v && typeof v === 'object') {
+    const o: Record<string, unknown> = {};
+    for (const k of Object.keys(v)) o[k] = nbtToPlain((v as NbtCompound)[k]);
+    return o;
+  }
+  return v;
+}
+
 async function gunzip(buf: ArrayBuffer): Promise<ArrayBuffer> {
   const ds = new DecompressionStream('gzip');
   const stream = new Blob([buf]).stream().pipeThrough(ds);
@@ -36,7 +64,7 @@ class Reader {
   f64() { const x = this.v.getFloat64(this.o); this.o += 8; return x; }
   string() {
     const len = this.u16();
-    const s = new TextDecoder().decode(new Uint8Array(this.buf, this.o, len));
+    const s = decodeModifiedUtf8(new Uint8Array(this.buf, this.o, len));
     this.o += len;
     return s;
   }
