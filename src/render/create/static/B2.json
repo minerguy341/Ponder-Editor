@@ -1,0 +1,8 @@
+{
+  "create:fluid_pipe": "AllBlockEntityTypes.FLUID_PIPE has neither renderer nor visual (AllBlockEntityTypes.java:394-397): the static block model is the whole look",
+  "create:smart_fluid_pipe": "SMART_FLUID_PIPE only registers the generic SmartBlockEntityRenderer with no drawn parts (AllBlockEntityTypes.java:388-392): static model",
+  "create:glass_fluid_pipe": "GLASS_FLUID_PIPE's TransparentStraightPipeRenderer only draws the fluid inside the pipe; the fluid network is not simulated, so the pipe is empty (residual), the glass body is static",
+  "create:item_vault": "ITEM_VAULT registers neither renderer nor visual (AllBlockEntityTypes.java:489-492): static model only",
+  "create:honey": "a FluidBlock, not a block entity: drawn by the chunk mesher as a liquid (src/render/fluids.ts LIQUID_BLOCKS)",
+  "create:chocolate": "a FluidBlock, not a block entity: drawn by the chunk mesher as a liquid (src/render/fluids.ts LIQUID_BLOCKS)"
+}

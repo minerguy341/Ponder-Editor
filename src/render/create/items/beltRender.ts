@@ -15,7 +15,9 @@ import type { ItemPose } from './logisticsSim';
 /** Sprite of the belt texture (AllSpriteShifts.BELT & friends). `target` is the scrolling copy in the atlas. */
 export interface BeltSprites { orig: string; target: string }
 
-export function beltSprites(dye: string | undefined, diagonal: boolean, bottom: boolean): BeltSprites {
+export function beltSprites(dyeName: string | undefined, diagonal: boolean, bottom: boolean): BeltSprites {
+  // the DyeColor serialized name (Java enum BLUE -> blue) names the texture: belt/blue_scroll
+  const dye = dyeName?.toLowerCase();
   if (dye) {
     return diagonal
       ? { orig: 'create:block/belt_diagonal', target: `create:block/belt/${dye}_diagonal_scroll` }
@@ -92,40 +94,49 @@ export function facingStep(facing: Direction): 1 | -1 {
 }
 
 /**
- * Scroll state of one belt partial: owns a copy of its geometry (so the UVs can move) and remembers the rest UVs.
- * `apply(orig, target, scrollV)` writes shiftUVScrolling(entry, 0, scrollV): u' = u - o.u0 + t.u0, v' = v - o.v0 + t.v0 + scroll.
+ * Scroll state of one belt partial: owns a copy of its geometry (so the UVs can move) and remembers the atlas UVs. The rest
+ * state draws the atlas material; `apply` switches to the scroll material (beltScroll.ts) and writes
+ * v = (v - o.v0)/(o.v1 - o.v0) + scroll, u = (u - o.u0)/(o.u1 - o.u0): the sprite-relative shift of Create, which the
+ * sampler wraps (RepeatWrapping on the scroll texture).
  */
 export class ScrollMesh {
   readonly mesh: THREE.Mesh;
   private base: Float32Array;
   private uv: THREE.BufferAttribute;
+  private rest: THREE.Material;
+  private scrolled: THREE.Material;
+  /** the scroll texture of the current dye (BeltRenderer: the sprite target follows the Dye patch of the block entity) */
+  setScrolled(material: THREE.Material): void { this.scrolled = material; }
 
-  constructor(src: THREE.Mesh) {
+  constructor(src: THREE.Mesh, scrolled: THREE.Material) {
     const geom = src.geometry.clone();
     markOwned(geom);
-    this.uv = geom.getAttribute('uv') as THREE.BufferAttribute;
+    this.uv = geom.getAttribute("uv") as THREE.BufferAttribute;
     this.base = Float32Array.from(this.uv.array as ArrayLike<number>);
-    this.mesh = new THREE.Mesh(geom, src.material);
-    this.mesh.onBeforeRender = src.onBeforeRender;
+    this.rest = src.material as THREE.Material;
+    this.scrolled = scrolled;
+    this.mesh = new THREE.Mesh(geom, this.rest);
     this.mesh.renderOrder = src.renderOrder;
     this.mesh.frustumCulled = false;
     this.mesh.name = src.name;
   }
 
-  /** no UV shift (Create skips shiftUV when the belt does not move and is not dyed) */
+  /** no shift: the atlas sprite as modelled */
   reset(): void {
+    this.mesh.material = this.rest;
     (this.uv.array as Float32Array).set(this.base);
     this.uv.needsUpdate = true;
   }
 
-  apply(o: { u0: number; v0: number }, t: { u0: number; v0: number }, scrollV: number): void {
+  /** shiftUVScrolling(entry, 0, scroll): scroll is a fraction of the sprite (the sampler wraps the rest) */
+  apply(o: { u0: number; v0: number; u1: number; v1: number }, scroll: number): void {
+    this.mesh.material = this.scrolled;
     const a = this.uv.array as Float32Array;
     const b = this.base;
-    const du = t.u0 - o.u0;
-    const dv = t.v0 - o.v0 + scrollV;
+    const du = 1 / (o.u1 - o.u0), dv = 1 / (o.v1 - o.v0);
     for (let i = 0; i < a.length; i += 2) {
-      a[i] = b[i] + du;
-      a[i + 1] = b[i + 1] + dv;
+      a[i] = (b[i] - o.u0) * du;
+      a[i + 1] = (b[i + 1] - o.v0) * dv + scroll;
     }
     this.uv.needsUpdate = true;
   }
@@ -134,7 +145,6 @@ export class ScrollMesh {
 /** BeltRenderer.renderSafe scroll: `scroll = speed * time / (31.5 * 16) + (bottom ? .5 : 0)`, wrapped, times spriteSize * scrollMult. */
 export function beltScroll(opts: {
   speed: number; ticks: number; facing: Direction; diagonal: boolean; sideways: boolean; downward: boolean; bottom: boolean;
-  spriteSize: number;
 }): number {
   const alongX = axisOf(opts.facing) === 'x';
   const step = facingStep(opts.facing);
@@ -144,7 +154,7 @@ export function beltScroll(opts: {
   const scrollMult = opts.diagonal ? 3 / 8 : 0.5;
   let scroll = speed * time / (31.5 * 16) + (opts.bottom ? 0.5 : 0);
   scroll = scroll - Math.floor(scroll);
-  return scroll * opts.spriteSize * scrollMult;
+  return scroll * scrollMult;
 }
 
 /** The BeltRenderer.renderItems origin: beltStartOffset relative to the controller block. */
@@ -170,7 +180,7 @@ export interface ItemPlacement {
  */
 export function placeBeltItem(
   pose: ItemPose, beltFacing: Direction, slope: BeltShape['slope'], beltLength: number, verticalityOf: number,
-  blockItem: boolean, upright: boolean, out: ItemPlacement[], ms: PoseStack, shadowMatrix: THREE.Matrix4,
+  blockItem: boolean, upright: boolean, out: ItemPlacement[], ms: PoseStack, shadowMatrix: THREE.Matrix4, yaw = Math.PI,
 ): ItemPlacement[] {
   const offset = pose.offset;
   let sideOffset = pose.sideOffset;
@@ -208,8 +218,8 @@ export function placeBeltItem(
     ms.translate(0, slopeOffset, 0);
   }
   if (renderUpright) {
-    // Create yaws upright items towards the camera; the web viewer has no camera here, so they face +z (see residuals).
-    ms.rotateYDegrees(180);
+    // BeltRenderer.renderItem: mulPose(YP.rotation(yRot)) towards the camera (cameraFacing.ts)
+    ms.rotateY(yaw);
     ms.translate(0, 3 / 32, 1 / 16);
   }
 
@@ -240,3 +250,4 @@ export function placeBeltItem(
 }
 
 function clamp(v: number, lo: number, hi: number): number { return v < lo ? lo : v > hi ? hi : v; }
+

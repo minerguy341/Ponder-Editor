@@ -121,27 +121,6 @@ export interface InstrRT {
   d?: Record<string, unknown>;
 }
 
-export interface TransportedItem {
-  id: number;
-  stack: { id: string; count: number; nbt?: unknown };
-  pos: number;
-  prevPos: number;
-  offset: number;
-  prevOffset: number;
-  angle: number;
-  insertedAt: number;
-  insertedFrom: number; // Direction 3d data value
-  locked: boolean;
-  lockedExternally: boolean;
-}
-
-export interface BeltCtrl {
-  items: TransportedItem[];
-  toInsert: TransportedItem[];
-  toRemove: number[];
-  positiveOrder: boolean;
-}
-
 export interface SimState {
   tick: number;
   finished: boolean;
@@ -157,7 +136,6 @@ export interface SimState {
   poi: { cur: Vec3; chase: Vec3 | null };
   entities: WorldEntity[];
   nextEntityId: number;
-  belts: Record<string, BeltCtrl>;
   nextItemId: number;
   /** bumped whenever block entity data changed (visuals re-read it) */
   beRev: number;
