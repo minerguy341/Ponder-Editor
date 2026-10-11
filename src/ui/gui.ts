@@ -2,7 +2,6 @@
 // CSS px). All Ponder layout constants (31, 51, 55/19, 20x20 buttons ...) can therefore be used verbatim.
 
 import { resources } from '../assets/resources';
-import { CREATE_ROOTS } from '../config';
 import { McFont } from './mcfont';
 
 /** Ponder widgets texture (ponder:textures/gui/widgets.png): icons, speech-box divot. Fetched at runtime from the Ponder repo. */
@@ -112,5 +111,3 @@ export class Gui {
   }
 }
 
-/** Where Create's own en_us.json lives (used for item names); re-exported for lang.ts. */
-export const CREATE_LANG_URLS = CREATE_ROOTS.map((r) => `${r}/lang/en_us.json`);
