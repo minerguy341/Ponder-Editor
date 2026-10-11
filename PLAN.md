@@ -50,3 +50,4 @@ Every registered Create ponder scene converts, loads, plays to its end without e
 ## Status log (append only)
 - driver: contract + plan written; scaffold committed.
 - driver: wave 1 dispatched (A1 a976a1841a4caaceb, A2 a7025a6552ed1d739, C1 af4bef28e246b4919, E a17f0360292bbea7a, D ae4005745cba60d7b) in worktrees. Next: B after A1 lands, C2 after C1 OPS.md draft.
+- driver: A2 merged (9/9, re-verified: gate-check, tsc, interaction test). A1 told: no baked shade, emit normals.
