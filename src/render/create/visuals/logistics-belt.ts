@@ -138,7 +138,9 @@ class BeltBlockVisual extends BaseVisual {
       partial.traverse((o) => {
         const m = o as THREE.Mesh;
         if (!m.isMesh) return;
-        const sm = new ScrollMesh(m);
+        // the scrolled sprite is one 16-texel tile of the atlas: quads are split to one texel along V
+        const orig = this.renderer.atlas.get(sprites.orig);
+        const sm = new ScrollMesh(m, orig ? (orig.v1 - orig.v0) / 16 : 0);
         group.add(sm.mesh);
         this.parts.push({ sm, sprites, bottom, group });
       });

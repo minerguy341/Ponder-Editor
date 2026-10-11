@@ -100,8 +100,8 @@ export class ScrollMesh {
   private base: Float32Array;
   private uv: THREE.BufferAttribute;
 
-  constructor(src: THREE.Mesh) {
-    const geom = src.geometry.clone();
+  constructor(src: THREE.Mesh, texelV = 0) {
+    const geom = texelV > 0 ? subdivideAlongV(src.geometry, texelV) : src.geometry.clone();
     markOwned(geom);
     this.uv = geom.getAttribute('uv') as THREE.BufferAttribute;
     this.base = Float32Array.from(this.uv.array as ArrayLike<number>);
@@ -242,3 +242,60 @@ export function placeBeltItem(
 }
 
 function clamp(v: number, lo: number, hi: number): number { return v < lo ? lo : v > hi ? hi : v; }
+
+/**
+ * Splits every quad of a block geometry (4 consecutive vertices per quad, GeometryBuilder layout) into strips no taller than
+ * one texel of the scrolled sprite along the axis that carries V. The scroll wraps per vertex (Flywheel wraps per fragment);
+ * a quad spanning the whole sprite would otherwise have both ends wrap to the same value and collapse. Attributes are
+ * interpolated bilinearly in the quad's parameter space, so the un-scrolled mapping is unchanged.
+ */
+export function subdivideAlongV(src: THREE.BufferGeometry, texelV: number): THREE.BufferGeometry {
+  const P = src.getAttribute('position').array as Float32Array;
+  const N = src.getAttribute('normal').array as Float32Array;
+  const UV = src.getAttribute('uv').array as Float32Array;
+  const C = src.getAttribute('color').array as Float32Array;
+  const quads = P.length / 12;
+  const outP: number[] = [], outN: number[] = [], outUV: number[] = [], outC: number[] = [], outI: number[] = [];
+  const corners = [[0, 0], [1, 0], [1, 1], [0, 1]];
+  const lerp4 = (arr: Float32Array, base: number, stride: number, s: number, t: number, out: number[]) => {
+    // corners 0..3 at base + k*stride; bilinear at (s,t)
+    for (let c = 0; c < stride; c++) {
+      const a = arr[base + c], b = arr[base + stride + c], cc = arr[base + 2 * stride + c], d = arr[base + 3 * stride + c];
+      out.push((1 - s) * (1 - t) * a + s * (1 - t) * b + s * t * cc + (1 - s) * t * d);
+    }
+  };
+  for (let q = 0; q < quads; q++) {
+    const v0 = q * 4;
+    const uvBase = v0 * 2;
+    const vs = [UV[uvBase + 1], UV[uvBase + 3], UV[uvBase + 5], UV[uvBase + 7]];
+    const span = Math.max(...vs) - Math.min(...vs);
+    const cv = vs;
+    // the axis that carries V: corner 1 - corner 0 (s) or corner 3 - corner 0 (t)
+    const sCarriesV = Math.abs(cv[1] - cv[0]) >= Math.abs(cv[3] - cv[0]);
+    const n = span <= texelV * 1.0001 ? 1 : Math.ceil(span / texelV - 1e-6);
+    for (let k = 0; k < n; k++) {
+      const a = k / n, b = (k + 1) / n;
+      const strip = corners.map(([cs, ct]) => {
+        // corner parameter inside the strip: along the V axis the strip bounds, across it the corner itself
+        const s = sCarriesV ? (cs === 0 ? a : b) : cs;
+        const t = sCarriesV ? ct : (ct === 0 ? a : b);
+        return [s, t] as [number, number];
+      });
+      for (const [s, t] of strip) {
+        lerp4(P, v0 * 3, 3, s, t, outP);
+        lerp4(N, v0 * 3, 3, s, t, outN);
+        lerp4(UV, v0 * 2, 2, s, t, outUV);
+        lerp4(C, v0 * 3, 3, s, t, outC);
+      }
+      const base = outP.length / 3 - 4;
+      outI.push(base, base + 1, base + 2, base, base + 2, base + 3);
+    }
+  }
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.Float32BufferAttribute(outP, 3));
+  geo.setAttribute('normal', new THREE.Float32BufferAttribute(outN, 3));
+  geo.setAttribute('uv', new THREE.Float32BufferAttribute(outUV, 2));
+  geo.setAttribute('color', new THREE.Float32BufferAttribute(outC, 3));
+  geo.setIndex(outI);
+  return geo;
+}
