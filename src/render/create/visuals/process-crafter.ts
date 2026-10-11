@@ -163,6 +163,7 @@ class CrafterVisual extends KineticVisual {
   private cogOffset: number;
   private lastData: Nbt | undefined;
   private lastTick = Number.NaN;
+  private shownItem: ItemStackJson | undefined;
   private targetBelt: boolean;
 
   constructor(block: BlockInstance, ctx: VisualContext) {
@@ -244,8 +245,9 @@ class CrafterVisual extends KineticVisual {
       this.lastTick = tick;
       this.lidNode.visible = d.Cover === true; // Cover is the block entity's boolean `covered`
       const members = this.connectedMembers(d, tick);
-      this.itemNode.set(crafterGroupSlot0(members, tick), 'fixed');
+      this.shownItem = crafterGroupSlot0(members, tick);
     }
+    this.itemNode.set(this.shownItem, 'fixed'); // every update: a model that finished loading (ItemSlot.onReady) must be shown
     const axis = this.axis;
     const angle = (ticks * this.kin.effectiveSpeed * 3 / 10 + this.cogOffset) % 360;
     // standardKineticRotationTransform: rotateCentered(axis, angle), then the Y-axis cog placement (no allocation)
