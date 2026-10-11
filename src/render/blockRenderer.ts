@@ -6,7 +6,7 @@ import { BlockMaterials } from './blockMaterials';
 import { BlockstateDef, chooseVariants, blockOffset, blockSeed, parseBlockstate, selectModels, stateKey, Selection, VariantDef } from './blockstate';
 import { fluidOfState, fluidSpriteIds, isLiquidBlock } from './fluids';
 import { BakedModel, bakeModel, defaultModelProvider, MISSING_MODEL_RAW, ModelProvider, ModelStore, modelTextureIds, NO_ROT, rotKey, UnbakedModel } from './models';
-import { GeometryBuilder, layerFor, LayerGeometry, MeshResult, meshBlocks, PlacedModel } from './mesher';
+import { GeometryBuilder, layerFor, LayerGeometry, MeshResult, meshBlocks, PlacedModel, sortQuadsBackToFront } from './mesher';
 import type { RenderLayer } from './models';
 
 const AIR = new Set(['minecraft:air', 'minecraft:cave_air', 'minecraft:void_air']);
@@ -183,13 +183,14 @@ export class BlockRendererImpl implements BlockRenderer {
     const group = new THREE.Group();
     group.name = name;
     let quads = 0;
+    const sorter = makeSorter();
     const order = (p: { layer: RenderLayer; unshaded: boolean }) => LAYER_ORDER.indexOf(p.layer) * 2 + (p.unshaded ? 1 : 0);
     for (const part of [...res].sort((a, b) => order(a) - order(b))) {
       const mesh = new THREE.Mesh(geometryOf(part.geometry), this.materials.forLayer(part.layer, part.unshaded));
       mesh.name = `${name}:${part.layer}${part.unshaded ? ':unshaded' : ''}`;
       mesh.renderOrder = RENDER_ORDER[part.layer];
       mesh.frustumCulled = false;
-      mesh.onBeforeRender = (renderer) => this.atlas.flush(renderer);
+      mesh.onBeforeRender = (renderer, _scene, camera) => { this.atlas.flush(renderer); if (part.layer === 'translucent') sorter(mesh, camera); };
       group.add(mesh);
       quads += part.geometry.quadCount;
     }
@@ -210,11 +211,15 @@ export class BlockRendererImpl implements BlockRenderer {
     // a fresh Group per call (callers transform it), sharing geometry + materials
     const g = new THREE.Group();
     g.name = `partial:${norm}`;
+    const sorter = makeSorter();
     for (const m of data.meshes) {
-      const mesh = new THREE.Mesh(m.geometry, m.material);
+      // translucent geometry is re-sorted per instance, so each Group gets its own index buffer
+      const translucent = m.renderOrder === RENDER_ORDER.translucent;
+      const geometry = translucent ? cloneWithOwnIndex(m.geometry) : m.geometry;
+      const mesh = new THREE.Mesh(geometry, m.material);
       mesh.renderOrder = m.renderOrder;
       mesh.frustumCulled = false;
-      mesh.onBeforeRender = (r) => this.atlas.flush(r);
+      mesh.onBeforeRender = (r, _s, camera) => { this.atlas.flush(r); if (translucent) sorter(mesh, camera); };
       g.add(mesh);
     }
     g.userData.quadCount = data.quadCount;
@@ -272,6 +277,38 @@ interface PartialData {
   quadCount: number;
   broken: boolean;
   baked: BakedModel;
+}
+
+function cloneWithOwnIndex(g: THREE.BufferGeometry): THREE.BufferGeometry {
+  const c = g.clone();
+  const idx = (g.getIndex()!.array as Uint32Array).slice();
+  c.setIndex(new THREE.BufferAttribute(idx, 1).setUsage(THREE.DynamicDrawUsage));
+  return c;
+}
+
+/** Back-to-front sorting of a translucent mesh for the current camera (re-sorts only when the view changed). */
+function makeSorter() {
+  const mv = new THREE.Matrix4();
+  const last = new Map<THREE.Mesh, string>();
+  const scratch = { order: new Uint32Array(0), depth: new Float32Array(0) };
+  return (mesh: THREE.Mesh, camera: THREE.Camera) => {
+    const geo = mesh.geometry;
+    const index = geo.getIndex();
+    if (!index) return;
+    mv.multiplyMatrices(camera.matrixWorldInverse, mesh.matrixWorld);
+    const key = mv.elements.map((v) => v.toFixed(4)).join(',');
+    if (last.get(mesh) === key) return;
+    last.set(mesh, key);
+    const n = index.count / 6;
+    if (scratch.order.length < n) { scratch.order = new Uint32Array(n); scratch.depth = new Float32Array(n); }
+    // sections share one index buffer per mesh: ensure it is a dynamic, mesh-owned copy before the first write
+    if (index.usage !== THREE.DynamicDrawUsage) {
+      const own = new THREE.BufferAttribute((index.array as Uint32Array).slice(), 1).setUsage(THREE.DynamicDrawUsage);
+      geo.setIndex(own);
+    }
+    const idx = geo.getIndex()!;
+    if (sortQuadsBackToFront(geo.getAttribute('position').array, idx.array as Uint32Array, mv.elements, scratch)) idx.needsUpdate = true;
+  };
 }
 
 export function geometryOf(g: LayerGeometry): THREE.BufferGeometry {
