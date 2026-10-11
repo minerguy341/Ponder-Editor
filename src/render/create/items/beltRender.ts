@@ -121,11 +121,13 @@ export class ScrollMesh {
   apply(o: { u0: number; v0: number }, t: { u0: number; v0: number }, scrollV: number): void {
     const a = this.uv.array as Float32Array;
     const b = this.base;
+    // the scrolled coordinate wraps inside the target sprite (Flywheel scrolls within the sprite, never into the atlas padding)
     const du = t.u0 - o.u0;
-    const dv = t.v0 - o.v0 + scrollV;
+    const h = t.v1 - t.v0;
     for (let i = 0; i < a.length; i += 2) {
       a[i] = b[i] + du;
-      a[i + 1] = b[i + 1] + dv;
+      const local = b[i + 1] - o.v0 + scrollV;
+      a[i + 1] = t.v0 + (((local % h) + h) % h);
     }
     this.uv.needsUpdate = true;
   }
