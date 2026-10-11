@@ -1151,6 +1151,7 @@
      "type": "face_poi"
     },
     "duration": 0,
+    "fadeFrom": "down",
     "variant": "ChainConveyorParrotElement"
    },
    "src": "FrogAndConveyorScenes.java:241",

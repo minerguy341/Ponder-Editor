@@ -1764,14 +1764,7 @@
   ],
   "tags": [],
   "file": "train_track/portal.json",
-  "titleId": "track_portal",
-  "notes": [
-   "palette: unknown block create:polished_cut_scorchia_stairs is loaded as air (as in the game)",
-   "palette: create:polished_cut_scorchia_stairs has no property half (ignored, as in the game)",
-   "palette: create:polished_cut_scorchia_stairs has no property waterlogged (ignored, as in the game)",
-   "palette: create:polished_cut_scorchia_stairs has no property shape (ignored, as in the game)",
-   "palette: create:polished_cut_scorchia_stairs has no property facing (ignored, as in the game)"
-  ]
+  "titleId": "track_portal"
  },
  {
   "id": "create:train_track/chunks",
@@ -1781,20 +1774,7 @@
   ],
   "tags": [],
   "file": "train_track/chunks.json",
-  "titleId": "track_chunks",
-  "notes": [
-   "palette: unknown block create:veridium_pillar is loaded as air (as in the game)",
-   "palette: create:veridium_pillar has no property east (ignored, as in the game)",
-   "palette: create:veridium_pillar has no property south (ignored, as in the game)",
-   "palette: create:veridium_pillar has no property north (ignored, as in the game)",
-   "palette: create:veridium_pillar has no property west (ignored, as in the game)",
-   "palette: create:veridium_pillar has no property axis (ignored, as in the game)",
-   "palette: unknown block create:polished_cut_scorchia_stairs is loaded as air (as in the game)",
-   "palette: create:polished_cut_scorchia_stairs has no property half (ignored, as in the game)",
-   "palette: create:polished_cut_scorchia_stairs has no property waterlogged (ignored, as in the game)",
-   "palette: create:polished_cut_scorchia_stairs has no property shape (ignored, as in the game)",
-   "palette: create:polished_cut_scorchia_stairs has no property facing (ignored, as in the game)"
-  ]
+  "titleId": "track_chunks"
  },
  {
   "id": "create:train_station/assembly",
@@ -1804,20 +1784,7 @@
   ],
   "tags": [],
   "file": "train_station/assembly.json",
-  "titleId": "train_assembly",
-  "notes": [
-   "palette: unknown block create:scorchia_pillar is loaded as air (as in the game)",
-   "palette: create:scorchia_pillar has no property east (ignored, as in the game)",
-   "palette: create:scorchia_pillar has no property south (ignored, as in the game)",
-   "palette: create:scorchia_pillar has no property north (ignored, as in the game)",
-   "palette: create:scorchia_pillar has no property west (ignored, as in the game)",
-   "palette: create:scorchia_pillar has no property axis (ignored, as in the game)",
-   "palette: unknown block create:polished_cut_scorchia_stairs is loaded as air (as in the game)",
-   "palette: create:polished_cut_scorchia_stairs has no property half (ignored, as in the game)",
-   "palette: create:polished_cut_scorchia_stairs has no property waterlogged (ignored, as in the game)",
-   "palette: create:polished_cut_scorchia_stairs has no property shape (ignored, as in the game)",
-   "palette: create:polished_cut_scorchia_stairs has no property facing (ignored, as in the game)"
-  ]
+  "titleId": "train_assembly"
  },
  {
   "id": "create:train_station/schedule",
@@ -1827,14 +1794,7 @@
   ],
   "tags": [],
   "file": "train_station/schedule.json",
-  "titleId": "auto_schedule",
-  "notes": [
-   "palette: unknown block create:polished_cut_scorchia_stairs is loaded as air (as in the game)",
-   "palette: create:polished_cut_scorchia_stairs has no property half (ignored, as in the game)",
-   "palette: create:polished_cut_scorchia_stairs has no property waterlogged (ignored, as in the game)",
-   "palette: create:polished_cut_scorchia_stairs has no property shape (ignored, as in the game)",
-   "palette: create:polished_cut_scorchia_stairs has no property facing (ignored, as in the game)"
-  ]
+  "titleId": "auto_schedule"
  },
  {
   "id": "create:train_signal/placement",
@@ -1844,14 +1804,7 @@
   ],
   "tags": [],
   "file": "train_signal/placement.json",
-  "titleId": "train_signal_placement",
-  "notes": [
-   "palette: unknown block create:polished_cut_scorchia_stairs is loaded as air (as in the game)",
-   "palette: create:polished_cut_scorchia_stairs has no property half (ignored, as in the game)",
-   "palette: create:polished_cut_scorchia_stairs has no property waterlogged (ignored, as in the game)",
-   "palette: create:polished_cut_scorchia_stairs has no property shape (ignored, as in the game)",
-   "palette: create:polished_cut_scorchia_stairs has no property facing (ignored, as in the game)"
-  ]
+  "titleId": "train_signal_placement"
  },
  {
   "id": "create:train_signal/signaling",
@@ -1861,14 +1814,7 @@
   ],
   "tags": [],
   "file": "train_signal/signaling.json",
-  "titleId": "train_signal_signaling",
-  "notes": [
-   "palette: unknown block create:polished_cut_scorchia_stairs is loaded as air (as in the game)",
-   "palette: create:polished_cut_scorchia_stairs has no property half (ignored, as in the game)",
-   "palette: create:polished_cut_scorchia_stairs has no property waterlogged (ignored, as in the game)",
-   "palette: create:polished_cut_scorchia_stairs has no property shape (ignored, as in the game)",
-   "palette: create:polished_cut_scorchia_stairs has no property facing (ignored, as in the game)"
-  ]
+  "titleId": "train_signal_signaling"
  },
  {
   "id": "create:train_signal/redstone",
@@ -1878,14 +1824,7 @@
   ],
   "tags": [],
   "file": "train_signal/redstone.json",
-  "titleId": "train_signal_redstone",
-  "notes": [
-   "palette: unknown block create:polished_cut_scorchia_stairs is loaded as air (as in the game)",
-   "palette: create:polished_cut_scorchia_stairs has no property half (ignored, as in the game)",
-   "palette: create:polished_cut_scorchia_stairs has no property waterlogged (ignored, as in the game)",
-   "palette: create:polished_cut_scorchia_stairs has no property shape (ignored, as in the game)",
-   "palette: create:polished_cut_scorchia_stairs has no property facing (ignored, as in the game)"
-  ]
+  "titleId": "train_signal_redstone"
  },
  {
   "id": "create:train_schedule",
@@ -1895,14 +1834,7 @@
   ],
   "tags": [],
   "file": "train_schedule.json",
-  "titleId": "train_schedule",
-  "notes": [
-   "palette: unknown block create:polished_cut_scorchia_stairs is loaded as air (as in the game)",
-   "palette: create:polished_cut_scorchia_stairs has no property half (ignored, as in the game)",
-   "palette: create:polished_cut_scorchia_stairs has no property waterlogged (ignored, as in the game)",
-   "palette: create:polished_cut_scorchia_stairs has no property shape (ignored, as in the game)",
-   "palette: create:polished_cut_scorchia_stairs has no property facing (ignored, as in the game)"
-  ]
+  "titleId": "train_schedule"
  },
  {
   "id": "create:train_controls",
@@ -1912,14 +1844,7 @@
   ],
   "tags": [],
   "file": "train_controls.json",
-  "titleId": "train_controls",
-  "notes": [
-   "palette: unknown block create:polished_cut_scorchia_stairs is loaded as air (as in the game)",
-   "palette: create:polished_cut_scorchia_stairs has no property half (ignored, as in the game)",
-   "palette: create:polished_cut_scorchia_stairs has no property waterlogged (ignored, as in the game)",
-   "palette: create:polished_cut_scorchia_stairs has no property shape (ignored, as in the game)",
-   "palette: create:polished_cut_scorchia_stairs has no property facing (ignored, as in the game)"
-  ]
+  "titleId": "train_controls"
  },
  {
   "id": "create:train_observer",
@@ -1929,14 +1854,7 @@
   ],
   "tags": [],
   "file": "train_observer.json",
-  "titleId": "track_observer",
-  "notes": [
-   "palette: unknown block create:polished_cut_scorchia_stairs is loaded as air (as in the game)",
-   "palette: create:polished_cut_scorchia_stairs has no property half (ignored, as in the game)",
-   "palette: create:polished_cut_scorchia_stairs has no property waterlogged (ignored, as in the game)",
-   "palette: create:polished_cut_scorchia_stairs has no property shape (ignored, as in the game)",
-   "palette: create:polished_cut_scorchia_stairs has no property facing (ignored, as in the game)"
-  ]
+  "titleId": "track_observer"
  },
  {
   "id": "create:display_link",

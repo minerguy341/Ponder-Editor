@@ -2057,7 +2057,8 @@
     ],
     "pose": {
      "type": "flappy"
-    }
+    },
+    "fadeFrom": "down"
    },
    "src": "MovementActorScenes.java:495",
    "out": "e9"

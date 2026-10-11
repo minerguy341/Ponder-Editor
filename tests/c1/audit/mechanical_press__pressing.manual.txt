@@ -1,0 +1,69 @@
+# mechanical_press/pressing: ProcessingScenes.java:272-379 (pressing). Hand derivation. Scene size [5,4,6] (layer(0) = box x0..4, z0..5).
+# Funnel flaps: createItemOnBelt(belt) flaps belt.above(); a FunnelBlockEntity exists only at (0,2,2) (andesite belt funnel), so only the
+# belt insertions at (0,1,2) emit a flap. createItemOnBeltLike(depot) flaps depot.above() = (2,2,1): no funnel there, nothing emitted.
+0 ProcessingScenes.java:275 configureBasePlate {"xOffset":0,"zOffset":0,"size":5}
+0 ProcessingScenes.java:276 world.showSection {"selection":{"t":"box","from":[0,0,0],"to":[4,0,5]},"direction":"up"}
+0 ProcessingScenes.java:277 idle {"ticks":5}
+5 ProcessingScenes.java:280 world.showIndependentSection {"$out":"e1","selection":{"t":"pos","pos":[2,1,1]},"direction":"down"}
+5 ProcessingScenes.java:281 world.moveSection {"link":{"link":"e1"},"offset":[0,0,1],"duration":0}
+5 ProcessingScenes.java:282 idle {"ticks":10}
+15 ProcessingScenes.java:287 world.modifyBlockEntityNBT {"beType":"KineticBlockEntity","redraw":false,"targets":[{"pos":[2,3,2],"nbt":{"Speed":0}}]}
+15 ProcessingScenes.java:288 world.showSection {"selection":{"t":"pos","pos":[2,3,2]},"direction":"down"}
+15 ProcessingScenes.java:289 idle {"ticks":10}
+25 ProcessingScenes.java:291 world.showSection {"selection":{"t":"box","from":[2,1,3],"to":[2,1,5]},"direction":"north"}
+25 ProcessingScenes.java:292 idle {"ticks":3}
+28 ProcessingScenes.java:293 world.showSection {"selection":{"t":"pos","pos":[2,2,3]},"direction":"south"}
+28 ProcessingScenes.java:294 idle {"ticks":3}
+31 ProcessingScenes.java:295 world.showSection {"selection":{"t":"pos","pos":[2,3,3]},"direction":"north"}
+31 ProcessingScenes.java:296 world.modifyBlockEntityNBT {"beType":"KineticBlockEntity","redraw":false,"targets":[{"pos":[2,3,2],"nbt":{"Speed":-32}}]}
+31 ProcessingScenes.java:297 effects.createRedstoneParticles {"pos":[2,3,2],"color":8454058,"amount":10}
+31 ProcessingScenes.java:298 idle {"ticks":10}
+41 ProcessingScenes.java:301 overlay.showText {"duration":60,"color":"white","placeNearTarget":true,"keyframe":true,"pointAt":[2,3.5,2.5],"key":"text_1","text":"The Mechanical Press can process items provided beneath it"}
+41 ProcessingScenes.java:306 idle {"ticks":70}
+111 ProcessingScenes.java:307 overlay.showText {"duration":60,"color":"white","placeNearTarget":true,"keyframe":false,"pointAt":[2,1.5,2.5],"key":"text_2","text":"The Input items can be dropped or placed on a Depot under the Press"}
+111 ProcessingScenes.java:311 idle {"ticks":50}
+161 ProcessingScenes.java:313 world.createItemOnBeltLike {"pos":[2,1,1],"insertionSide":"north","item":{"id":"minecraft:copper_ingot","count":1}}
+161 ProcessingScenes.java:315 overlay.showControls {"location":[2.5,1.5,2.5],"direction":"up","duration":30,"sneak":false,"ctrl":false,"item":{"id":"minecraft:copper_ingot","count":1}}
+161 ProcessingScenes.java:316 idle {"ticks":10}
+171 ProcessingScenes.java:319 world.modifyBlockEntity {"pos":[2,3,2],"beType":"MechanicalPressBlockEntity","calls":[{"path":[{"m":"getPressingBehaviour","a":[]},{"m":"start","a":[{"enum":"Mode.BELT"}]}]}]}
+171 ProcessingScenes.java:321 idle {"ticks":30}
+201 ProcessingScenes.java:322 world.modifyBlockEntity {"pos":[2,3,2],"beType":"MechanicalPressBlockEntity","calls":[{"path":[{"m":"getPressingBehaviour","a":[]},{"m":"makePressingParticleEffect","a":[[2.5,2,2.5],{"id":"minecraft:copper_ingot","count":1}]}]}]}
+201 ProcessingScenes.java:324 world.removeItemsFromBelt {"pos":[2,1,1]}
+201 ProcessingScenes.java:326 world.createItemOnBeltLike {"pos":[2,1,1],"insertionSide":"up","item":{"id":"create:copper_sheet","count":1}}
+201 ProcessingScenes.java:327 idle {"ticks":10}
+211 ProcessingScenes.java:328 overlay.showControls {"location":[2.5,1.5,2.5],"direction":"up","duration":50,"sneak":false,"ctrl":false,"item":{"id":"create:copper_sheet","count":1}}
+211 ProcessingScenes.java:329 idle {"ticks":60}
+271 ProcessingScenes.java:331 world.hideIndependentSection {"link":{"link":"e1"},"direction":"north"}
+271 ProcessingScenes.java:332 idle {"ticks":5}
+276 ProcessingScenes.java:333 world.showSection {"selection":{"t":"box","from":[0,1,3],"to":[0,2,3]},"direction":"down"}
+276 ProcessingScenes.java:334 idle {"ticks":10}
+286 ProcessingScenes.java:335 world.showSection {"selection":{"t":"box","from":[0,1,2],"to":[4,2,2]},"direction":"south"}
+286 ProcessingScenes.java:336 idle {"ticks":20}
+306 ProcessingScenes.java:338 overlay.showText {"duration":40,"color":"white","placeNearTarget":true,"keyframe":true,"pointAt":[0,1.5,2.5],"key":"text_3","text":"When items are provided on a belt..."}
+306 ProcessingScenes.java:343 idle {"ticks":30}
+336 ProcessingScenes.java:345 world.createItemOnBelt {"$out":"e2","pos":[0,1,2],"insertionSide":"south","item":{"id":"minecraft:copper_ingot","count":1}}
+336 ProcessingScenes.java:345 world.modifyBlockEntity {"pos":[0,2,2],"beType":"FunnelBlockEntity","calls":[{"path":[{"m":"flap","a":[false]}]}]}
+336 ProcessingScenes.java:346 idle {"ticks":15}
+351 ProcessingScenes.java:347 world.createItemOnBelt {"$out":"e3","pos":[0,1,2],"insertionSide":"south","item":{"id":"minecraft:copper_ingot","count":1}}
+351 ProcessingScenes.java:347 world.modifyBlockEntity {"pos":[0,2,2],"beType":"FunnelBlockEntity","calls":[{"path":[{"m":"flap","a":[false]}]}]}
+351 ProcessingScenes.java:348 idle {"ticks":15}
+366 ProcessingScenes.java:349 world.stallBeltItem {"link":{"link":"e2"},"stalled":true}
+366 ProcessingScenes.java:350 world.modifyBlockEntity {"pos":[2,3,2],"beType":"MechanicalPressBlockEntity","calls":[{"path":[{"m":"getPressingBehaviour","a":[]},{"m":"start","a":[{"enum":"Mode.BELT"}]}]}]}
+366 ProcessingScenes.java:353 overlay.showText {"duration":50,"color":"white","placeNearTarget":true,"keyframe":true,"pointAt":[2,3.5,2.5],"key":"text_4","text":"The Press will hold and process them automatically"}
+366 ProcessingScenes.java:359 idle {"ticks":30}
+396 ProcessingScenes.java:360 world.modifyBlockEntity {"pos":[2,3,2],"beType":"MechanicalPressBlockEntity","calls":[{"path":[{"m":"getPressingBehaviour","a":[]},{"m":"makePressingParticleEffect","a":[[2.5,2,2.5],{"id":"minecraft:copper_ingot","count":1}]}]}]}
+396 ProcessingScenes.java:362 world.removeItemsFromBelt {"pos":[2,1,2]}
+396 ProcessingScenes.java:363 world.createItemOnBelt {"$out":"e4","pos":[2,1,2],"insertionSide":"up","item":{"id":"create:copper_sheet","count":1}}
+396 ProcessingScenes.java:364 world.stallBeltItem {"link":{"link":"e4"},"stalled":true}
+396 ProcessingScenes.java:365 idle {"ticks":15}
+411 ProcessingScenes.java:366 world.stallBeltItem {"link":{"link":"e4"},"stalled":false}
+411 ProcessingScenes.java:367 idle {"ticks":15}
+426 ProcessingScenes.java:368 world.stallBeltItem {"link":{"link":"e3"},"stalled":true}
+426 ProcessingScenes.java:369 world.modifyBlockEntity {"pos":[2,3,2],"beType":"MechanicalPressBlockEntity","calls":[{"path":[{"m":"getPressingBehaviour","a":[]},{"m":"start","a":[{"enum":"Mode.BELT"}]}]}]}
+426 ProcessingScenes.java:371 idle {"ticks":30}
+456 ProcessingScenes.java:372 world.modifyBlockEntity {"pos":[2,3,2],"beType":"MechanicalPressBlockEntity","calls":[{"path":[{"m":"getPressingBehaviour","a":[]},{"m":"makePressingParticleEffect","a":[[2.5,2,2.5],{"id":"minecraft:copper_ingot","count":1}]}]}]}
+456 ProcessingScenes.java:374 world.removeItemsFromBelt {"pos":[2,1,2]}
+456 ProcessingScenes.java:375 world.createItemOnBelt {"$out":"e5","pos":[2,1,2],"insertionSide":"up","item":{"id":"create:copper_sheet","count":1}}
+456 ProcessingScenes.java:376 world.stallBeltItem {"link":{"link":"e5"},"stalled":true}
+456 ProcessingScenes.java:377 idle {"ticks":15}
+471 ProcessingScenes.java:378 world.stallBeltItem {"link":{"link":"e5"},"stalled":false}

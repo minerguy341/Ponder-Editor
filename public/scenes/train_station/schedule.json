@@ -475,7 +475,8 @@
     ],
     "pose": {
      "type": "face_poi"
-    }
+    },
+    "fadeFrom": "down"
    },
    "src": "TrainStationScenes.java:362",
    "out": "e2"
@@ -1483,7 +1484,8 @@
     ],
     "pose": {
      "type": "face_poi"
-    }
+    },
+    "fadeFrom": "down"
    },
    "src": "TrainStationScenes.java:473",
    "out": "e4"

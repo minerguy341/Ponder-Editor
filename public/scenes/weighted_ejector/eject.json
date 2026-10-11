@@ -1198,7 +1198,8 @@
     ],
     "pose": {
      "type": "flappy"
-    }
+    },
+    "fadeFrom": "down"
    },
    "src": "EjectorScenes.java:195",
    "out": "e1"

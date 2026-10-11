@@ -256,6 +256,11 @@ export class Registrate {
         const args = argNodes.map((n) => rt.evalExpr(n, fr));
         return new Builder(this.registry, 'fluid', args[0], null);
       }
+      case 'paletteStoneBlock': {
+        // CreateRegistrate.paletteStoneBlock(name, [factory,] propertiesFrom, worldGenStone, hasNaturalVariants): Block::new, no state properties
+        const args = argNodes.map((n) => rt.evalExpr(n, fr));
+        return new Builder(this.registry, 'block', args[0], null);
+      }
       case 'entity': case 'tag': case 'setCreativeTab': case 'defaultCreativeTab': case 'creativeModeTab': case 'addRawLang': case 'addDataGenerator': case 'setTooltipModifierFactory': case 'object':
         return new Builder(this.registry, 'other', 'ignored', null);
       case 'asResource':

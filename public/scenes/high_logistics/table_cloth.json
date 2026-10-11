@@ -680,7 +680,8 @@
     ],
     "pose": {
      "type": "face_poi"
-    }
+    },
+    "fadeFrom": "down"
    },
    "src": "TableClothScenes.java:189",
    "out": "e1"

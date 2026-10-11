@@ -159,7 +159,8 @@
     ],
     "pose": {
      "type": "flappy"
-    }
+    },
+    "fadeFrom": "down"
    },
    "src": "FanScenes.java:48",
    "out": "e1"
