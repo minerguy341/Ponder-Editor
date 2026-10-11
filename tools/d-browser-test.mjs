@@ -1,6 +1,9 @@
-// G4: scene browser test on the mock engine/data (debug/d-app.html): search by title / item id / item name / tag, tag filter,
-// all tags + scenes listed, selecting loads the scene, hash routing survives reload and the back button. Prints BROWSER_OK.
-import { launch, startServer, sleep } from './d-lib.mjs';
+// G4: scene browser test on the mock engine/data (debug/d-app.html): search by title / item id / item name / tag, the tag categories
+// (each opens its tag screen), all scenes listed, selecting loads the scene, hash routing survives reload and the back button.
+// Prints BROWSER_OK. The category check reads public/scenes/tags.json (the converter's output, also used by the debug app).
+import fs from 'node:fs';
+import path from 'node:path';
+import { launch, ROOT, startServer, sleep } from './d-lib.mjs';
 
 const srv = await startServer();
 const { browser, page, problems } = await launch({ width: 1280, height: 900 });
@@ -18,9 +21,13 @@ try {
   const all = await visible();
   check('all scenes listed', all.length === index.length && index.length >= 10, `${all.length}/${index.length}`);
   const tagSet = new Set(index.flatMap((e) => e.tags));
+  // the index shows Ponder's categories: the tags registered with addToIndex (tags.json from the converter), each opening its tag screen
+  const tagsJson = JSON.parse(fs.readFileSync(path.join(ROOT, 'public', 'scenes', 'tags.json'), 'utf8'));
   const chips = await page.$$eval('.pb-chip', (els) => els.map((e) => e.querySelector('.pb-chip-label').textContent));
-  check('all tags listed as chips (+ All)', chips.length === tagSet.size + 1, `chips=${chips.length} tags=${tagSet.size} [${chips.join(' | ')}]`);
+  const indexTitles = tagsJson.filter((t) => t.index).map((t) => t.title);
+  check('categories = addToIndex tags of tags.json', JSON.stringify(chips) === JSON.stringify(indexTitles), `chips=${chips.length} index tags=${indexTitles.length}`);
   check('tag titles come from Create (not raw ids)', chips.includes('Kinetic Blocks') && chips.includes('Item Transportation'), chips.join('|'));
+  void tagSet;
 
   const expectSearch = async (q, pred, name) => {
     await type(q);
@@ -39,14 +46,14 @@ try {
   await type('');
   check('clearing the search lists everything again', (await visible()).length === index.length);
 
-  // tag filter
+  // a category opens the tag screen (PonderTagScreen), which lists the tag's items; the index comes back with the hash
   await page.click('.pb-chip:has-text("Item Transportation")');
+  await page.waitForSelector('.pt-screen:not([hidden]) .pt-title', { timeout: 10000 });
+  const tagTitle = await page.$eval('.pt-title', (e) => e.textContent);
+  check('category chip opens its tag screen', (await page.evaluate(() => location.hash)) === '#/tag/create:logistics' && tagTitle === 'Item Transportation', tagTitle);
+  await page.evaluate(() => { location.hash = '#/'; });
+  await page.waitForSelector('.pb-card', { state: 'attached' });
   await sleep(150);
-  const logi = await visible();
-  check('tag chip filters', logi.length === index.filter((e) => e.tags.includes('create:logistics')).length && logi.length > 0, `got ${logi.length}`);
-  check('filter mirrored into the URL', (await page.evaluate(() => location.hash)).includes('tag=create:logistics'), await page.evaluate(() => location.hash));
-  await page.click('.pb-chip:has-text("All")');
-  await sleep(100);
 
   // select -> loads
   await type('funnel');
@@ -80,8 +87,8 @@ try {
   // deep link with tick
   await page.goto(base + '#/scene/create:press/compacting?t=150');
   await page.reload();
-  await page.waitForFunction(() => window.__appReady && window.__ponder.ui() && !window.__ponder.ui().loading, null, { timeout: 60000 });
-  await sleep(300);
+  await page.waitForFunction(() => window.__appReady && window.__ponder.ui() && !window.__ponder.ui().loading && window.__ponder.ui().sceneId === 'create:press/compacting', null, { timeout: 60000 });
+  await page.waitForFunction(() => window.__ponder.getState().tick >= 150, null, { timeout: 10000 }).catch(() => {});
   const tick = await page.evaluate(() => window.__ponder.getState().tick);
   check('deep link ?t= seeks', tick >= 150 && tick < 200, `tick=${tick}`);
   // 'a' goes to the previous scene of the subject (mechanical press has two scenes: pressing, compacting)

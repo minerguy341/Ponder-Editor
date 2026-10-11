@@ -768,6 +768,8 @@ export class PonderUI implements ProgressSource {
     return {
       index: this.index, sceneId: this.o.entries[this.index]?.id, identify: this.identifyMode, comfy: this.comfy, loading: this.loading,
       error: this.loadError, texts: this.texts.size, controls: this.controls.size, scale: this.gui.scale, width: this.gui.width, height: this.gui.height,
+      /** titles of the left tag buttons (drawn on canvases; the test reads them here) */
+      tagButtons: this.tagButtons.map((t) => t.tag.title), finished: this.isFinished(), nextUpShown: this.nextUpBox.el.style.display !== 'none',
     };
   }
 }
