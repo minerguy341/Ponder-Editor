@@ -81,7 +81,8 @@ export const fetchStats = { requests: 0, notFound: 0, failures: 0 };
 /** Which root of a namespace answered last for a resource directory; tried first next time (saves 404 round trips). */
 const preferred = new Map<string, number>();
 
-async function fetchOnce(url: string, as: 'text' | 'buffer'): Promise<string | ArrayBuffer | null> {
+/** null = does not exist (404); undefined = transient network failure (never cached as "missing"). */
+async function fetchOnce(url: string, as: 'text' | 'buffer'): Promise<string | ArrayBuffer | null | undefined> {
   for (let attempt = 0; attempt < 4; attempt++) {
     try {
       fetchStats.requests++;
@@ -90,19 +91,20 @@ async function fetchOnce(url: string, as: 'text' | 'buffer'): Promise<string | A
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       return as === 'text' ? await res.text() : await res.arrayBuffer();
     } catch (e) {
-      if (attempt === 3) { fetchStats.failures++; console.warn('fetch failed', url, e); return null; }
+      if (attempt === 3) { fetchStats.failures++; console.warn('fetch failed', url, e); return undefined; }
       await new Promise((r) => setTimeout(r, 250 * (attempt + 1) * (attempt + 1)));
     }
   }
-  return null;
+  return undefined;
 }
 
-async function fetchFromRoots(roots: string[], prefKey: string, rel: string, as: 'text' | 'buffer'): Promise<string | ArrayBuffer | null> {
+async function fetchFromRoots(roots: string[], prefKey: string, rel: string, as: 'text' | 'buffer'): Promise<string | ArrayBuffer | null | undefined> {
   const first = preferred.get(prefKey) ?? 0;
   for (let k = 0; k < roots.length; k++) {
     const idx = (first + k) % roots.length;
     const r = await fetchOnce(`${roots[idx]}/${rel}`, as);
-    if (r != null) { preferred.set(prefKey, idx); return r; }
+    if (r === undefined) return undefined;
+    if (r !== null) { preferred.set(prefKey, idx); return r; }
   }
   return null;
 }
@@ -163,7 +165,7 @@ export const resources = {
     return memo(`${as}:${loc.ns}:${loc.path}`, async () => {
       const roots = ROOTS[loc.ns];
       if (!roots) return null;
-      let r: string | ArrayBuffer | null;
+      let r: string | ArrayBuffer | null | undefined;
       const idx = loc.ns === 'create' ? await getCreateIndex() : null;
       if (idx) {
         const which = idx.get(loc.path);
@@ -172,14 +174,16 @@ export const resources = {
         const dir = loc.path.slice(0, loc.path.indexOf('/'));
         r = await fetchFromRoots(roots, `${loc.ns}/${dir}`, loc.path, as);
       }
-      if (r == null) missingResources.add(`${loc.ns}:${loc.path}`);
+      if (r === undefined) { cache.delete(`${as}:${loc.ns}:${loc.path}`); return null; } // network failure: retry on next request
+      if (r === null) missingResources.add(`${loc.ns}:${loc.path}`);
       return r;
     });
   },
   async json(loc: ResLoc, kind: 'blockstates' | 'models', ext = '.json'): Promise<any | null> {
     return memo(`json:${kind}:${loc.ns}:${loc.path}`, async () => {
-      const txt = (await this.file({ ns: loc.ns, path: `${kind}/${loc.path}${ext}` }, 'text')) as string | null;
-      if (txt == null) return null;
+      const fl = { ns: loc.ns, path: `${kind}/${loc.path}${ext}` };
+      const txt = (await this.file(fl, 'text')) as string | null;
+      if (txt == null) { if (!missingResources.has(locToString(fl))) cache.delete(`json:${kind}:${loc.ns}:${loc.path}`); return null; }
       try { return lenientJson(txt); } catch (e) { console.warn('bad json', loc, e); return null; }
     });
   },
@@ -188,8 +192,9 @@ export const resources = {
   /** Decoded texture pixels (straight alpha) or null when the texture does not exist. */
   async texture(loc: ResLoc): Promise<TextureData | null> {
     return memo(`tex:${loc.ns}:${loc.path}`, async () => {
-      const buf = (await this.file({ ns: loc.ns, path: `textures/${loc.path}.png` }, 'buffer')) as ArrayBuffer | null;
-      if (!buf) return null;
+      const fl = { ns: loc.ns, path: `textures/${loc.path}.png` };
+      const buf = (await this.file(fl, 'buffer')) as ArrayBuffer | null;
+      if (!buf) { if (!missingResources.has(locToString(fl))) cache.delete(`tex:${loc.ns}:${loc.path}`); return null; }
       try { return await decoder(buf); } catch (e) { console.warn('bad png', loc, e); return null; }
     });
   },
@@ -208,10 +213,10 @@ export const resources = {
       if (idx) {
         const which = idx.get(rel);
         if (which === undefined) return null;
-        txt = (await fetchOnce(`${CREATE_ROOTS[which]}/${rel}`, 'text')) as string | null;
+        txt = ((await fetchOnce(`${CREATE_ROOTS[which]}/${rel}`, 'text')) ?? null) as string | null;
       } else {
         if (texW !== undefined && texH !== undefined && texH <= texW) return null;
-        txt = (await fetchFromRoots(roots, `${loc.ns}/textures-meta`, rel, 'text')) as string | null;
+        txt = ((await fetchFromRoots(roots, `${loc.ns}/textures-meta`, rel, 'text')) ?? null) as string | null;
       }
       if (txt == null) return null;
       try { return lenientJson(txt); } catch { return null; }
@@ -223,14 +228,16 @@ export const resources = {
     return memo(`nbt:${ns}:${path}`, async () => {
       const roots = PONDER_ROOTS[ns];
       if (!roots) return null;
-      return (await fetchFromRoots(roots, `${ns}/ponder`, `ponder/${path}.nbt`, 'buffer')) as ArrayBuffer | null;
+      const r = await fetchFromRoots(roots, `${ns}/ponder`, `ponder/${path}.nbt`, 'buffer');
+      if (r === undefined) { cache.delete(`nbt:${ns}:${path}`); return null; }
+      return r as ArrayBuffer | null;
     });
   },
   async binary(url: string): Promise<ArrayBuffer | null> {
-    return memo(`bin:${url}`, () => fetchOnce(url, 'buffer') as Promise<ArrayBuffer | null>);
+    return memo(`bin:${url}`, async () => ((await fetchOnce(url, 'buffer')) ?? null) as ArrayBuffer | null);
   },
   async text(url: string): Promise<string | null> {
-    return memo(`txt:${url}`, () => fetchOnce(url, 'text') as Promise<string | null>);
+    return memo(`txt:${url}`, async () => ((await fetchOnce(url, 'text')) ?? null) as string | null);
   },
   /** For tests: drop everything cached. */
   clearCache() { cache.clear(); missingResources.clear(); },

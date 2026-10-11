@@ -80,6 +80,28 @@ describe('partial: buildPartial on fixture models', () => {
   });
 });
 
+describe('partial: vanilla face shade is optional (shadeInColor)', () => {
+  const models = { ...CUBE_ALL, 'a:block/b': { parent: 'minecraft:block/cube_all', textures: { all: 'a:block/b' } } };
+  it('off by default; on bakes down .5 / up 1 / north,south .8 / west,east .6 into the color attribute', async () => {
+    const blocks = [blk(0, 0, 0, 'a:b')];
+    const states = { 'a:b': { variants: { '': { model: 'a:block/b' } } } };
+    for (const on of [false, true]) {
+      const r = offlineRenderer(models, states, { shadeInColor: on });
+      await r.prepare(blocks.map((b) => b.state));
+      const g = r.buildSection(blocks, { lookup: lookupOf(blocks) });
+      const geo = (g.children[0] as THREE.Mesh).geometry;
+      const col = geo.getAttribute('color'), nor = geo.getAttribute('normal');
+      const byNormal: Record<string, number> = {};
+      for (let i = 0; i < col.count; i++) byNormal[`${nor.getX(i)},${nor.getY(i)},${nor.getZ(i)}`] = col.getX(i);
+      if (!on) expect(Object.values(byNormal).every((v) => v === 1)).toBe(true);
+      else {
+        const exp: Record<string, number> = { '0,-1,0': 0.5, '0,1,0': 1, '0,0,-1': 0.8, '0,0,1': 0.8, '-1,0,0': 0.6, '1,0,0': 0.6 };
+        for (const k of Object.keys(exp)) expect(byNormal[k], k).toBeCloseTo(exp[k], 6);
+      }
+    }
+  });
+});
+
 describe('partial: real Create partial models (network)', () => {
   // ids as used by AllPartialModels (block models under create:block/...)
   const ids = ['create:block/shaft_half', 'create:block/cogwheel_shaftless', 'create:block/cogwheel', 'create:block/large_cogwheel', 'create:block/shaft', 'create:block/cogwheel_shaft', 'create:block/large_cogwheel_shaftless'];
