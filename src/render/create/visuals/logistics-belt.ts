@@ -17,6 +17,7 @@ import { buildStateObject } from '../common';
 import { registerBlockModelProcessor } from '../../blockRenderer';
 import { retextureQuad } from '../../models';
 import { beltPartialId, beltSegmentMatrix, beltSprites, beltPulleyBase, beltPulleyDirection, beltRotationAxis, beltScroll, ScrollMesh, placeBeltItem, type ItemPlacement, type BeltSprites } from '../items/beltRender';
+import { loadBeltScrollTexture, beltScrollMaterial } from '../items/beltScroll';
 import { createItemObjectSync, itemInfo, prepareItem } from '../items/itemObject';
 import { PoseStack } from '../items/pose';
 import { loadShadowMaterial, shadowGeometry, shadowMaterialReady } from '../items/shadow';
@@ -132,15 +133,14 @@ class BeltBlockVisual extends BaseVisual {
     for (const bottom of diagonal ? [true] : [true, false]) {
       const sprites = beltSprites(dye, diagonal, bottom);
       const partial = await getPartial(this.ctx, beltPartialId(diagonal, start, end, bottom));
+      const scrollMat = beltScrollMaterial(await loadBeltScrollTexture(sprites.target));
       const group = new THREE.Group();
       group.matrixAutoUpdate = false;
       group.matrix.copy(this.segment);
       partial.traverse((o) => {
         const m = o as THREE.Mesh;
         if (!m.isMesh) return;
-        // the scrolled sprite is one 16-texel tile of the atlas: quads are split to one texel along V
-        const orig = this.renderer.atlas.get(sprites.orig);
-        const sm = new ScrollMesh(m, orig ? (orig.v1 - orig.v0) / 16 : 0);
+        const sm = new ScrollMesh(m, scrollMat);
         group.add(sm.mesh);
         this.parts.push({ sm, sprites, bottom, group });
       });
@@ -192,13 +192,11 @@ class BeltBlockVisual extends BaseVisual {
     for (const part of this.parts) {
       if (speed === 0 && !this.dyed) { part.sm.reset(); continue; }
       const o = atlas.get(part.sprites.orig);
-      const t = atlas.get(part.sprites.target);
-      if (!o || !t) { part.sm.reset(); continue; }
-      const spriteSize = t.v1 - t.v0;
-      const scrollV = beltScroll({
-        speed, ticks, facing: shape.facing, diagonal, sideways, downward, bottom: part.bottom, spriteSize,
+      if (!o) { part.sm.reset(); continue; }
+      const scroll = beltScroll({
+        speed, ticks, facing: shape.facing, diagonal, sideways, downward, bottom: part.bottom,
       });
-      part.sm.apply(o, t, scrollV);
+      part.sm.apply(o, scroll);
     }
 
     if (this.casingObj || this.coverObj) {
