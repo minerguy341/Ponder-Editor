@@ -1,6 +1,7 @@
 // Screenshot driver for debug/b5.html (B5 visuals): node tools/b5-shot.mjs <out.png> "<query>" [width] [height] [actionJs]
 // Waits for window.__b5.info.done, optionally runs actionJs (a function body evaluated with `b5` = window.__b5, async allowed)
 // to drive animations / data (e.g. b5.send(pos, {...}); b5.render(t)), then stops the render loop and renders one frame.
+import fs from 'node:fs';
 import { startServer, launch } from './a2-lib.mjs';
 
 const [out, query = '?sheet=bogey', w = '1280', h = '720', action = ''] = process.argv.slice(2);
@@ -22,6 +23,8 @@ try {
   await page.screenshot({ path: out });
   const info = await page.evaluate(() => window.__b5.info);
   const all = [...errors, ...info.errors];
+  const sidecar = out.replace(/\.png$/, '.json');
+  fs.writeFileSync(sidecar, JSON.stringify({ query, labels: info.labels ?? null, blockCount: info.blockCount ?? null, errors: all, diagnostics: info.diagnostics ?? null }, null, 1));
   console.log('shot', out, all.length ? 'ERRORS ' + all.join(' | ') : 'no console errors', JSON.stringify(info.diagnostics ?? {}).slice(0, 400));
 } finally {
   await browser.close();

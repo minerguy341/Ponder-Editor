@@ -10,7 +10,7 @@ import { missingResources } from '../assets/resources';
 import { createBlockRenderer } from '../render/blockRenderer';
 import { PonderViewer } from '../render/viewer';
 import { createVisual, isEntityRendered, moduleFor, preloadVisuals } from '../render/create';
-import { SHEETS } from './b5-sheets';
+import { SHEETS, grid } from './b5-sheets';
 import { missingResources as missing } from '../assets/resources';
 
 const q = new URLSearchParams(location.search);
@@ -93,7 +93,20 @@ async function main() {
   viewer.setCameraClock('manual');
   if (q.get('audit')) { await audit(); info.done = true; return; }
   const sheet = q.get('sheet');
-  if (sheet) {
+  if (q.get('survey') !== null) {
+    // G5 contact sheets: every distinct (block, properties, block-entity nbt) state seen in the ponder schematics (tools/b5-survey)
+    const all = (await (await fetch('/tools/.cache/b5-states.json')).json()) as { id: string; props: Record<string, string>; nbt: Record<string, unknown> }[];
+    const per = Number(q.get('per') ?? 12), part = Number(q.get('part') ?? 0);
+    const items = all.slice(part * per, part * per + per);
+    const rows: { state: BlockState; nbt?: Record<string, unknown> }[][] = [];
+    for (let i = 0; i < items.length; i += 4) {
+      rows.push(items.slice(i, i + 4).map((it) => ({ state: { name: it.id, props: it.props }, nbt: Object.keys(it.nbt).length ? it.nbt : undefined })));
+    }
+    const { blocks, size } = grid(rows, 3);
+    info.labels = items.map((it) => `${it.id} ${JSON.stringify(it.props)}`);
+    info.blockCount = blocks.length;
+    await show(blocks, size);
+  } else if (sheet) {
     const s = SHEETS[sheet];
     if (!s) throw new Error('unknown sheet ' + sheet);
     const { blocks, size } = s();
