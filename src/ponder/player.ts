@@ -10,6 +10,7 @@ import type { BlockState, SceneJson, Vec3, BlockRenderer, CreateVisualFactory } 
 import { loadStructure } from '../assets/structure';
 import { missingResources } from '../assets/resources';
 import { PonderLighting } from '../render/environment';
+import { preloadVisuals } from '../render/create/index';
 import { controlEvents, lineEvents, outlineEvents, textEvents } from './events';
 import { createRunner, createSimCtx, runnerReplay, runnerSeek, runnerStep, type SimRunner } from './sim';
 import type { SimCtx } from './simTypes';
@@ -98,6 +99,8 @@ export class PonderPlayer implements PlayerLike {
       const ctx = createSimCtx(scene, structure);
       const states = collectStates(scene, structure.blocks);
       await this.renderer.prepare(states);
+      // Create visuals preload before the first section build (connected-texture sheets, bracket partials; registry preloadVisuals)
+      await preloadVisuals({ renderer: this.renderer, lookup: { getState: () => undefined, getBlockEntity: () => undefined } });
       if (token !== this.loadToken) return;
       // Create logistics (belts, depots, basins, funnels, chutes, fluids): the simulation of this scene and its textures
       await (this.renderer as unknown as { ensureTextures?: (ids: string[]) => Promise<void> }).ensureTextures?.(LOGISTICS_TEXTURES);

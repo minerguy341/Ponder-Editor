@@ -2,7 +2,7 @@
 // Everything originating from Mojang / Create (lang files, tag registrations) is fetched at runtime from jsDelivr.
 
 import type { SceneIndexEntry, SceneJson } from '../contract';
-import { CREATE_ROOTS, CREATE_TAG, MINECRAFT_ROOTS } from '../config';
+import { CREATE_TAG } from '../config';
 import { resources } from '../assets/resources';
 
 // ------------------------------------------------------------------------------------------------ scene files
@@ -50,10 +50,11 @@ let langPromise: Promise<LangMap> | null = null;
 export function loadLang(): Promise<LangMap> {
   if (!langPromise) {
     langPromise = (async () => {
-      const urls = [`${MINECRAFT_ROOTS[0]}/lang/en_us.json`, ...CREATE_ROOTS.map((r) => `${r}/lang/en_us.json`)];
-      const parts = await Promise.all(urls.map(async (u) => {
-        const txt = await resources.text(u);
-        if (!txt) return {} as LangMap;
+      // through the resource layer: each namespace resolves to its own root (Create's file index), no probing 404s
+      const sources: { ns: string; path: string }[] = [{ ns: 'minecraft', path: 'lang/en_us.json' }, { ns: 'create', path: 'lang/en_us.json' }];
+      const parts = await Promise.all(sources.map(async (loc) => {
+        const txt = await resources.file(loc, 'text');
+        if (typeof txt !== 'string') return {} as LangMap;
         try { return JSON.parse(txt) as LangMap; } catch { return {} as LangMap; }
       }));
       return Object.assign({}, ...parts) as LangMap;

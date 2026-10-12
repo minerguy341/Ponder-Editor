@@ -3,7 +3,6 @@
 // Pure simulation: no three.js, no DOM.
 
 import type { Direction, Selection, Vec3 } from '../contract';
-import { findBeltItem, insertOnBelt, insertOnDepot, itemId, removeItemsNear, resyncBelt, tickBelt, controllerKeyOf, beltInfo } from './belts';
 import { addEntity, applyEntityCall, entityMatches, ITEM_TYPE, type Call } from './entities';
 import { addSel, copySel, subtractSel } from './selection';
 import type { ActorEl, BeltItemEl, EntityEl, OutlinerEl, OverlayEl, Section } from './simTypes';
@@ -199,11 +198,35 @@ function animateActor(what: 'pos' | 'rot', kind: 'parrot' | 'cart', argName: str
 
 // ------------------------------------------------------------------------------------------------ block entity helpers
 
-function logCall(o: OpCtx, pos: Vec3, call: Call): void {
+/**
+ * Block entity calls with a visible effect are applied to the block entity NBT (so the visual sees them through setData):
+ *  - ChainConveyorBlockEntity.connections.add/remove(pos): HashSet of connection offsets, stored as the "Connections" list
+ *  - ContraptionControlsBlockEntity.disabled = v: stored as the "Disabled" flag (BE.write: putBoolean)
+ * Every call is still recorded in PonderCalls (other owners read those for their effects).
+ */
+export function applyBlockEntityCall(nbt: Record<string, unknown>, beType: string | undefined, call: Call): void {
+  const path = call.path ?? [];
+  if (beType === 'ChainConveyorBlockEntity' && path.length === 2 && path[0].f === 'connections' && (path[1].m === 'add' || path[1].m === 'remove')) {
+    const target = (path[1].a?.[0] ?? []) as number[];
+    const list = ((Array.isArray(nbt.Connections) ? nbt.Connections : []) as number[][]).map((c) => [...c]);
+    const same = (c: number[]) => c.length >= 3 && c[0] === target[0] && c[1] === target[1] && c[2] === target[2];
+    const at = list.findIndex(same);
+    if (path[1].m === 'add' && at < 0 && target.length >= 3) list.push([target[0], target[1], target[2]]);
+    if (path[1].m === 'remove' && at >= 0) list.splice(at, 1);
+    nbt.Connections = list;
+    return;
+  }
+  if (beType === 'ContraptionControlsBlockEntity' && path.length === 1 && path[0].set === 'disabled') {
+    nbt.Disabled = path[0].v ? 1 : 0;
+  }
+}
+
+function logCall(o: OpCtx, pos: Vec3, call: Call, beType?: string): void {
   const b = o.st.world.blocks.get(keyOf(pos));
   if (!b) return;
   const nbt = (b.nbt ??= {});
   ((nbt.PonderCalls ??= []) as unknown[]).push({ t: o.st.tick, path: cloneJson(call.path) });
+  applyBlockEntityCall(nbt, beType, call);
   o.st.beRev++;
 }
 
@@ -403,7 +426,8 @@ export const OPS: Record<string, OpDef> = {
   'world.modifyBlockEntity': {
     tick(o) {
       const pos = vec(o.args.pos);
-      for (const c of (o.args.calls ?? []) as Call[]) logCall(o, pos, c);
+      const beType = o.args.beType as string | undefined;
+      for (const c of (o.args.calls ?? []) as Call[]) logCall(o, pos, c, beType);
     },
   },
   'world.createItemEntity': {
@@ -455,57 +479,25 @@ export const OPS: Record<string, OpDef> = {
       h.set(next);
     },
   },
+  // Belt and depot items live in the logistics simulation (src/render/create/items/logisticsSim.ts, LogisticsWorld): the C2
+  // player keeps only the element for a link so later ops can address it. The item itself is not tracked here.
   'world.createItemOnBelt': {
     tick(o) {
       const pos = vec(o.args.pos);
-      const it = o.args.item as { id: string; count?: number; nbt?: unknown };
-      const side = DIR_OPPOSITE[o.args.insertionSide as Direction];
-      const id = insertOnBelt(o.st, pos, side, { id: it.id, count: it.count ?? 1, nbt: it.nbt });
-      if (id === null) return;
-      const info = beltInfo(o.st, pos);
-      if (!info) return;
-      tickBelt(o.st, info.controller); // controllerBE.tick()
-      const ck = controllerKeyOf(o.st, pos)!;
-      // handleProcessingOnAllItems: every item within one block of the segment centre is tracked, the last one wins the link
-      const ctrl = o.st.belts[ck];
-      const near = ctrl.items.filter((t) => Math.abs(info.index + 0.5 - t.pos) < 1);
-      const last = near[near.length - 1];
-      if (last && o.out) addElement(o.st, { kind: 'beltItem', id: o.out, visible: true, fade: lerped(1), controller: ck, item: last.id } satisfies BeltItemEl);
+      if (o.out) addElement(o.st, { kind: 'beltItem', id: o.out, visible: true, fade: lerped(1), controller: keyOf(pos), item: 0 } satisfies BeltItemEl);
     },
   },
   'world.createItemOnBeltLike': {
     tick(o) {
       const pos = vec(o.args.pos);
-      const it = o.args.item as { id: string; count?: number; nbt?: unknown };
-      const stack = { id: it.id, count: it.count ?? 1, nbt: it.nbt };
-      const side = DIR_OPPOSITE[o.args.insertionSide as Direction];
       const b = o.st.world.blocks.get(keyOf(pos));
-      if (!b) return;
-      if (b.state.name === 'create:belt') insertOnBelt(o.st, pos, side, stack);
-      else if (b.state.name === 'create:depot') insertOnDepot(o.st, pos, stack);
-      else logCall(o, pos, { path: [{ m: 'handleInsertion', a: [stack, side] }] });
+      if (b?.state.name === 'create:belt' || b?.state.name === 'create:depot') return;
+      logCall(o, pos, { path: [{ m: 'handleInsertion', a: [o.args.item, DIR_OPPOSITE[o.args.insertionSide as Direction]] }] });
     },
   },
-  'world.removeItemsFromBelt': { tick(o) { removeItemsNear(o.st, vec(o.args.pos)); } },
-  'world.stallBeltItem': {
-    tick(o) {
-      const el = resolveLink<BeltItemEl>(o.st, o.args.link, 'beltItem');
-      const t = el && (findBeltItem(o.st, el.controller, el.item) ?? itemId(o.st, el.item));
-      if (!el || !t) return;
-      t.locked = Boolean(o.args.stalled);
-      resyncBelt(o.st, el.controller);
-    },
-  },
-  'world.changeBeltItemTo': {
-    tick(o) {
-      const el = resolveLink<BeltItemEl>(o.st, o.args.link, 'beltItem');
-      const t = el && (findBeltItem(o.st, el.controller, el.item) ?? itemId(o.st, el.item));
-      if (!el || !t) return;
-      const it = o.args.item as { id: string; count?: number; nbt?: unknown };
-      t.stack = { id: it.id, count: it.count ?? 1, nbt: it.nbt };
-      resyncBelt(o.st, el.controller);
-    },
-  },
+  'world.removeItemsFromBelt': { tick() { /* logistics simulation */ } },
+  'world.stallBeltItem': { tick() { /* logistics simulation */ } },
+  'world.changeBeltItemTo': { tick() { /* logistics simulation */ } },
   'world.connectCrafterInvs': {
     tick(o) {
       logCall(o, vec(o.args.pos1), { path: [{ m: 'toggleConnection', a: [vec(o.args.pos2)] }] });

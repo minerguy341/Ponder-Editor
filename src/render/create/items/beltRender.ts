@@ -15,7 +15,9 @@ import type { ItemPose } from './logisticsSim';
 /** Sprite of the belt texture (AllSpriteShifts.BELT & friends). `target` is the scrolling copy in the atlas. */
 export interface BeltSprites { orig: string; target: string }
 
-export function beltSprites(dye: string | undefined, diagonal: boolean, bottom: boolean): BeltSprites {
+export function beltSprites(dyeName: string | undefined, diagonal: boolean, bottom: boolean): BeltSprites {
+  // the DyeColor serialized name (Java enum BLUE -> blue) names the texture: belt/blue_scroll
+  const dye = dyeName?.toLowerCase();
   if (dye) {
     return diagonal
       ? { orig: 'create:block/belt_diagonal', target: `create:block/belt/${dye}_diagonal_scroll` }
@@ -92,42 +94,49 @@ export function facingStep(facing: Direction): 1 | -1 {
 }
 
 /**
- * Scroll state of one belt partial: owns a copy of its geometry (so the UVs can move) and remembers the rest UVs.
- * `apply(orig, target, scrollV)` writes shiftUVScrolling(entry, 0, scrollV): u' = u - o.u0 + t.u0, v' = v - o.v0 + t.v0 + scroll.
+ * Scroll state of one belt partial: owns a copy of its geometry (so the UVs can move) and remembers the atlas UVs. The rest
+ * state draws the atlas material; `apply` switches to the scroll material (beltScroll.ts) and writes
+ * v = (v - o.v0)/(o.v1 - o.v0) + scroll, u = (u - o.u0)/(o.u1 - o.u0): the sprite-relative shift of Create, which the
+ * sampler wraps (RepeatWrapping on the scroll texture).
  */
 export class ScrollMesh {
   readonly mesh: THREE.Mesh;
   private base: Float32Array;
   private uv: THREE.BufferAttribute;
+  private rest: THREE.Material;
+  private scrolled: THREE.Material;
+  /** the scroll texture of the current dye (BeltRenderer: the sprite target follows the Dye patch of the block entity) */
+  setScrolled(material: THREE.Material): void { this.scrolled = material; }
 
-  constructor(src: THREE.Mesh, texelV = 0) {
-    const geom = texelV > 0 ? subdivideAlongV(src.geometry, texelV) : src.geometry.clone();
+  constructor(src: THREE.Mesh, scrolled: THREE.Material) {
+    const geom = src.geometry.clone();
     markOwned(geom);
-    this.uv = geom.getAttribute('uv') as THREE.BufferAttribute;
+    this.uv = geom.getAttribute("uv") as THREE.BufferAttribute;
     this.base = Float32Array.from(this.uv.array as ArrayLike<number>);
-    this.mesh = new THREE.Mesh(geom, src.material);
-    this.mesh.onBeforeRender = src.onBeforeRender;
+    this.rest = src.material as THREE.Material;
+    this.scrolled = scrolled;
+    this.mesh = new THREE.Mesh(geom, this.rest);
     this.mesh.renderOrder = src.renderOrder;
     this.mesh.frustumCulled = false;
     this.mesh.name = src.name;
   }
 
-  /** no UV shift (Create skips shiftUV when the belt does not move and is not dyed) */
+  /** no shift: the atlas sprite as modelled */
   reset(): void {
+    this.mesh.material = this.rest;
     (this.uv.array as Float32Array).set(this.base);
     this.uv.needsUpdate = true;
   }
 
-  apply(o: { u0: number; v0: number }, t: { u0: number; v0: number; v1: number }, scrollV: number): void {
+  /** shiftUVScrolling(entry, 0, scroll): scroll is a fraction of the sprite (the sampler wraps the rest) */
+  apply(o: { u0: number; v0: number; u1: number; v1: number }, scroll: number): void {
+    this.mesh.material = this.scrolled;
     const a = this.uv.array as Float32Array;
     const b = this.base;
-    // the scrolled coordinate wraps inside the target sprite (Flywheel scrolls within the sprite, never into the atlas padding)
-    const du = t.u0 - o.u0;
-    const h = t.v1 - t.v0;
+    const du = 1 / (o.u1 - o.u0), dv = 1 / (o.v1 - o.v0);
     for (let i = 0; i < a.length; i += 2) {
-      a[i] = b[i] + du;
-      const local = b[i + 1] - o.v0 + scrollV;
-      a[i + 1] = t.v0 + (((local % h) + h) % h);
+      a[i] = (b[i] - o.u0) * du;
+      a[i + 1] = (b[i + 1] - o.v0) * dv + scroll;
     }
     this.uv.needsUpdate = true;
   }
@@ -136,7 +145,6 @@ export class ScrollMesh {
 /** BeltRenderer.renderSafe scroll: `scroll = speed * time / (31.5 * 16) + (bottom ? .5 : 0)`, wrapped, times spriteSize * scrollMult. */
 export function beltScroll(opts: {
   speed: number; ticks: number; facing: Direction; diagonal: boolean; sideways: boolean; downward: boolean; bottom: boolean;
-  spriteSize: number;
 }): number {
   const alongX = axisOf(opts.facing) === 'x';
   const step = facingStep(opts.facing);
@@ -146,7 +154,7 @@ export function beltScroll(opts: {
   const scrollMult = opts.diagonal ? 3 / 8 : 0.5;
   let scroll = speed * time / (31.5 * 16) + (opts.bottom ? 0.5 : 0);
   scroll = scroll - Math.floor(scroll);
-  return scroll * opts.spriteSize * scrollMult;
+  return scroll * scrollMult;
 }
 
 /** The BeltRenderer.renderItems origin: beltStartOffset relative to the controller block. */
@@ -243,59 +251,3 @@ export function placeBeltItem(
 
 function clamp(v: number, lo: number, hi: number): number { return v < lo ? lo : v > hi ? hi : v; }
 
-/**
- * Splits every quad of a block geometry (4 consecutive vertices per quad, GeometryBuilder layout) into strips no taller than
- * one texel of the scrolled sprite along the axis that carries V. The scroll wraps per vertex (Flywheel wraps per fragment);
- * a quad spanning the whole sprite would otherwise have both ends wrap to the same value and collapse. Attributes are
- * interpolated bilinearly in the quad's parameter space, so the un-scrolled mapping is unchanged.
- */
-export function subdivideAlongV(src: THREE.BufferGeometry, texelV: number): THREE.BufferGeometry {
-  const P = src.getAttribute('position').array as Float32Array;
-  const N = src.getAttribute('normal').array as Float32Array;
-  const UV = src.getAttribute('uv').array as Float32Array;
-  const C = src.getAttribute('color').array as Float32Array;
-  const quads = P.length / 12;
-  const outP: number[] = [], outN: number[] = [], outUV: number[] = [], outC: number[] = [], outI: number[] = [];
-  const corners = [[0, 0], [1, 0], [1, 1], [0, 1]];
-  const lerp4 = (arr: Float32Array, base: number, stride: number, s: number, t: number, out: number[]) => {
-    // corners 0..3 at base + k*stride; bilinear at (s,t)
-    for (let c = 0; c < stride; c++) {
-      const a = arr[base + c], b = arr[base + stride + c], cc = arr[base + 2 * stride + c], d = arr[base + 3 * stride + c];
-      out.push((1 - s) * (1 - t) * a + s * (1 - t) * b + s * t * cc + (1 - s) * t * d);
-    }
-  };
-  for (let q = 0; q < quads; q++) {
-    const v0 = q * 4;
-    const uvBase = v0 * 2;
-    const vs = [UV[uvBase + 1], UV[uvBase + 3], UV[uvBase + 5], UV[uvBase + 7]];
-    const span = Math.max(...vs) - Math.min(...vs);
-    const cv = vs;
-    // the axis that carries V: corner 1 - corner 0 (s) or corner 3 - corner 0 (t)
-    const sCarriesV = Math.abs(cv[1] - cv[0]) >= Math.abs(cv[3] - cv[0]);
-    const n = span <= texelV * 1.0001 ? 1 : Math.ceil(span / texelV - 1e-6);
-    for (let k = 0; k < n; k++) {
-      const a = k / n, b = (k + 1) / n;
-      const strip = corners.map(([cs, ct]) => {
-        // corner parameter inside the strip: along the V axis the strip bounds, across it the corner itself
-        const s = sCarriesV ? (cs === 0 ? a : b) : cs;
-        const t = sCarriesV ? ct : (ct === 0 ? a : b);
-        return [s, t] as [number, number];
-      });
-      for (const [s, t] of strip) {
-        lerp4(P, v0 * 3, 3, s, t, outP);
-        lerp4(N, v0 * 3, 3, s, t, outN);
-        lerp4(UV, v0 * 2, 2, s, t, outUV);
-        lerp4(C, v0 * 3, 3, s, t, outC);
-      }
-      const base = outP.length / 3 - 4;
-      outI.push(base, base + 1, base + 2, base, base + 2, base + 3);
-    }
-  }
-  const geo = new THREE.BufferGeometry();
-  geo.setAttribute('position', new THREE.Float32BufferAttribute(outP, 3));
-  geo.setAttribute('normal', new THREE.Float32BufferAttribute(outN, 3));
-  geo.setAttribute('uv', new THREE.Float32BufferAttribute(outUV, 2));
-  geo.setAttribute('color', new THREE.Float32BufferAttribute(outC, 3));
-  geo.setIndex(outI);
-  return geo;
-}
