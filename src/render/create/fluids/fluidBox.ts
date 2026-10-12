@@ -61,7 +61,9 @@ export function fluidBoxGroup(
   opts: FluidBoxOptions = {},
 ): THREE.Group {
   const still = renderer.atlas.sprite(fluidSprites(fluid).still);
-  const rgb = [((opts.tint ?? defaultFluidTint(fluid)) >> 16 & 255) / 255, ((opts.tint ?? defaultFluidTint(fluid)) >> 8 & 255) / 255, (opts.tint ?? defaultFluidTint(fluid)) & 255];
+  // 0xRRGGBB -> [0..1] per channel (the blue channel was left in 0..255 before: every fluid rendered blue-magenta)
+  const tintRgb = opts.tint ?? defaultFluidTint(fluid);
+  const rgb = [((tintRgb >> 16) & 255) / 255, ((tintRgb >> 8) & 255) / 255, (tintRgb & 255) / 255];
   const gb = new GeometryBuilder(false);
   const [x0, y0, z0] = min, [x1, y1, z1] = max;
   for (const f of facesOf(x0, y0, z0, x1, y1, z1)) {
@@ -82,7 +84,7 @@ export function fluidBoxGroup(
     const q: BakedQuad = {
       pos, uv, normal: null, dir: f.dir, cull: null, tint: -1, shade: false, sprite: still, color: null, renderType: null,
     };
-    gb.addBaked(q, 'translucent', rgb, [0, 0, 0]);
+    gb.addBaked(q, still.kind === 'translucent' ? 'translucent' : 'solid', rgb, [0, 0, 0]);
   }
   return renderer.groupFromBuilder(gb, `fluid:${fluid}`);
 }

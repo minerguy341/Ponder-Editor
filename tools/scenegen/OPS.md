@@ -224,7 +224,16 @@ constructor args, `spin_on_component` carries `{pos}`; emitted today: `dance`, `
 `index.json`: `SceneIndexEntry[]` in AllCreatePonderScenes registration order with the extra optional `titleId` (see 0). `warnings` is omitted when empty.
 `tags.json` (extra file): `[{id:"create:kinetic_relays", title, description, icon:itemId, mainItem:itemId|null, index:boolean, items:[itemId...]}]`
 = Create's `AllCreatePonderTags` registrations (`PonderTagRegistry`: title/description from `create.ponder.tag.<name>[.description]`, items added with
-`.add()`/`addToTag`). Not emitted anywhere in scene files: `debug.*`, `title`, keyframe instructions, `addInstruction(callback)` bodies the
+`.add()`/`addToTag`).
+
+Item membership (what the UI shows): an item's tags are the tags whose `items` contain it, in tag registration order (`registerTag` calls
+precede every `addToTag` in the source). Ponder returns the tags of an item as a hash-based set (`PonderTag` has no `hashCode`), so that order
+is not reproducible; the registration order is the documented choice. A tag's `items` keep add order with duplicates dropped
+(`LinkedHashMultimap`, `PonderTagRegistry.getItems`). `icon` = `item(x, true, _)`, `mainItem` = `item(x, _, true)` (`item(x)` sets both), `index` =
+`addToIndex()`. Title and description: lang key `create.ponder.tag.<path>` (`.description`) first, the Java literal otherwise (`PonderLocalization`).
+The `Mods.COMPUTERCRAFT` block is not executed (CC is not installed). Verified by `node tools/scenegen/report.mjs --tags` (TAGS_OK): a text reading
+of `AllCreatePonderTags.java` against this file, plus scene items (every scene item has a tag list or none, 0 unresolved) and highlight tags
+(must be registered). Not emitted anywhere in scene files: `debug.*`, `title`, keyframe instructions, `addInstruction(callback)` bodies the
 interpreter cannot translate (those are reported as per-scene `warnings`; currently none).
 
 ## 8. Tables generated from the run

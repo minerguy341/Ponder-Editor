@@ -221,6 +221,26 @@ export function applyBlockEntityCall(nbt: Record<string, unknown>, beType: strin
   }
 }
 
+const CRAFTER_BLOCK = 'create:mechanical_crafter';
+const NEIGHBOURHOOD: Vec3[] = [[0, 0, 0], [1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]];
+
+/**
+ * Level.hasNeighborSignal of the block at `pos` from the scene world: a neighbour that is a redstone block, a powered redstone
+ * wire, a powered block (button, lever, pressure plate ...) or a lit redstone torch.
+ */
+export function neighbourSignal(world: { blocks: Map<string, { state: { name: string; props: Record<string, string> } }> }, pos: Vec3): boolean {
+  for (const d of NEIGHBOURHOOD.slice(1)) {
+    const b = world.blocks.get(keyOf([pos[0] + d[0], pos[1] + d[1], pos[2] + d[2]]));
+    if (!b) continue;
+    const { name, props } = b.state;
+    if (name === 'minecraft:redstone_block') return true;
+    if (name === 'minecraft:redstone_wire' && Number(props.power ?? 0) > 0) return true;
+    if (props.powered === 'true') return true;
+    if (/redstone_(wall_)?torch/.test(name) && props.lit === 'true') return true;
+  }
+  return false;
+}
+
 function logCall(o: OpCtx, pos: Vec3, call: Call, beType?: string): void {
   const b = o.st.world.blocks.get(keyOf(pos));
   if (!b) return;
@@ -387,9 +407,30 @@ export const OPS: Record<string, OpDef> = {
   },
   'world.modifyBlocks': {
     tick(o) {
-      for (const ch of (o.args.changes ?? []) as Array<{ pos: Vec3; state: { name: string; props: Record<string, string> }; be?: 'keep' | 'new' }>) {
+      const changes = (o.args.changes ?? []) as Array<{ pos: Vec3; state: { name: string; props: Record<string, string> }; be?: 'keep' | 'new' }>;
+      // mechanical crafters next to a change: their neighbour signal (Level.hasNeighborSignal) before and after
+      const near = new Map<string, Vec3>();
+      for (const ch of changes) {
+        if (!insideBounds(o.st.world, ch.pos)) continue;
+        for (const d of NEIGHBOURHOOD) {
+          const q: Vec3 = [ch.pos[0] + d[0], ch.pos[1] + d[1], ch.pos[2] + d[2]];
+          const b = o.st.world.blocks.get(keyOf(q));
+          if (b && b.state.name === CRAFTER_BLOCK) near.set(keyOf(q), q);
+        }
+      }
+      const before = new Map([...near].map(([k, q]) => [k, neighbourSignal(o.st.world, q)] as const));
+      for (const ch of changes) {
         if (!insideBounds(o.st.world, ch.pos)) continue;
         setBlock(o.st.world, ch.pos, { name: ch.state.name, props: { ...ch.state.props } }, { be: ch.be });
+      }
+      // a crafter whose neighbour signal changed gets the change as a block entity call at this tick (replayed on seeks)
+      for (const [k, q] of near) {
+        const after = neighbourSignal(o.st.world, q);
+        if (after === before.get(k)) continue;
+        const b = o.st.world.blocks.get(k)!;
+        const nbt = (b.nbt ??= {});
+        ((nbt.PonderCalls ??= []) as unknown[]).push({ t: o.st.tick, path: [{ m: '__neighbourSignal', a: [after] }] });
+        o.st.beRev++;
       }
       queueRedraw(o.st);
     },
