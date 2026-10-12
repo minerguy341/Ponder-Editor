@@ -38,6 +38,12 @@ export interface PonderApi {
   ui(): ReturnType<PonderUI['debugState']> | null;
   /** resolves when every item icon requested so far has been rendered (tests wait for it before taking screenshots) */
   iconsIdle(): Promise<void>;
+  /** audit: block positions drawn at the current tick (see ScenePlayer.visiblePositions), null without an engine */
+  visiblePositions(): string[] | null;
+  /** audit: block keys drawn at the current tick before offsets and rotations (ScenePlayer.visibleKeys) */
+  visibleKeys(): string[] | null;
+  /** audit: section elements of the current tick (ScenePlayer.sectionElements) */
+  sectionElements(): { id: string; visible: boolean; fade: number; off: number[]; keys: number; present: number }[] | null;
 }
 
 declare global { interface Window { __ponder?: PonderApi; __PONDER_MANUAL_START__?: boolean } }
@@ -133,6 +139,9 @@ export async function startApp(opts: StartOptions = {}): Promise<PonderApi> {
     sceneIndex: () => index,
     ui: () => ui?.debugState() ?? null,
     iconsIdle: () => icons.idle(),
+    visibleKeys: () => (engine?.player as { visibleKeys?: () => string[] | null } | undefined)?.visibleKeys?.() ?? null,
+    sectionElements: () => (engine?.player as { sectionElements?: () => unknown } | undefined)?.sectionElements?.() as ReturnType<PonderApi['sectionElements']> ?? null,
+    visiblePositions: () => (engine?.player as { visiblePositions?: () => string[] | null } | undefined)?.visiblePositions?.() ?? null,
   };
   window.__ponder = api;
 

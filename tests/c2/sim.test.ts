@@ -129,3 +129,19 @@ describe('determinism: seek(tick) equals playing there', () => {
     }
   });
 });
+
+describe('out-of-bounds writes', () => {
+  it('keeps a block set outside the schematic bounds so a later section shows it', () => {
+    const s = scene([
+      { op: 'world.setBlocks', args: { selection: pos([1, -1, 1]), state: st('create:cogwheel', { axis: 'y' }) } },
+      idle(5),
+      { op: 'world.showIndependentSection', args: { selection: pos([1, -1, 1]), direction: 'down' }, out: 'e1' },
+      idle(20),
+    ]);
+    const r = runner(s);
+    runnerSeek(r, 5);
+    expect(r.state.world.blocks.get('1,-1,1')?.state.name).toBe('create:cogwheel');
+    runnerSeek(r, 6);
+    expect(r.state.elements.e1).toBeDefined();
+  });
+});

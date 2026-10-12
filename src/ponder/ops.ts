@@ -397,9 +397,10 @@ export const OPS: Record<string, OpDef> = {
     tick(o) {
       const sel = selOf(o, o.args.selection);
       const state = o.args.state as { name: string; props: Record<string, string> };
+      // no bounds check: scenes place blocks outside the schematic (below the base plate, e.g. funnels/intro and
+      // windmill_bearing/source) and later show them with a section, so the world keeps them
       for (const k of sel.keys) {
         const p = k.split(',').map(Number) as Vec3;
-        if (!insideBounds(o.st.world, p)) continue;
         setBlock(o.st.world, p, { name: state.name, props: { ...state.props } });
       }
       queueRedraw(o.st);
@@ -411,7 +412,6 @@ export const OPS: Record<string, OpDef> = {
       // mechanical crafters next to a change: their neighbour signal (Level.hasNeighborSignal) before and after
       const near = new Map<string, Vec3>();
       for (const ch of changes) {
-        if (!insideBounds(o.st.world, ch.pos)) continue;
         for (const d of NEIGHBOURHOOD) {
           const q: Vec3 = [ch.pos[0] + d[0], ch.pos[1] + d[1], ch.pos[2] + d[2]];
           const b = o.st.world.blocks.get(keyOf(q));
@@ -420,7 +420,6 @@ export const OPS: Record<string, OpDef> = {
       }
       const before = new Map([...near].map(([k, q]) => [k, neighbourSignal(o.st.world, q)] as const));
       for (const ch of changes) {
-        if (!insideBounds(o.st.world, ch.pos)) continue;
         setBlock(o.st.world, ch.pos, { name: ch.state.name, props: { ...ch.state.props } }, { be: ch.be });
       }
       // a crafter whose neighbour signal changed gets the change as a block entity call at this tick (replayed on seeks)
