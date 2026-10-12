@@ -376,6 +376,24 @@ describe('MechanicalCrafterBlockEntity phase replay (tick, insertItem, begin, AS
     expect(sim.sample(3).cur.m[0].slot0).toEqual({ id: 'minecraft:iron_ingot', count: 5 });
   });
 
+  it('a rising neighbour signal starts a powered chain (checkCompletedRecipe(true)): a member with an item begins and crafts', () => {
+    // wasPoweredBefore starts true; a falling record (false) at tick 1 then a rising one (true) at tick 3 is the edge
+    // no speed before tick 2 (the lazy tick at 0 must not start the item by itself), speed 32 afterwards
+    const sig = (t: number, v: boolean): CallEntry => ({ t, path: [{ m: '__neighbourSignal', a: [v] }] });
+    const topo: ChainTopology = { positions: [[0, 0, 0]], target: [-1], preceding: [[]], cyclic: false };
+    const input: MemberInput = {
+      pos: [0, 0, 0], pointing: 'down', coveredAt: () => false, speedAt: (k: number) => (k < 2 ? 0 : 32),
+      slot0: { id: 'minecraft:oak_planks', count: 1 }, destination: true, calls: () => [sig(1, false), sig(3, true)],
+    };
+    const sim = chainSim(topo, [input]);
+    expect(sim.sample(3).cur.m[0].phase).toBe('IDLE');
+    expect(sim.sample(4).cur.m[0].phase).toBe('CRAFTING');
+  });
+  it('a rising neighbour signal does nothing when the chain holds no item', () => {
+    const sig = (t: number, v: boolean): CallEntry => ({ t, path: [{ m: '__neighbourSignal', a: [v] }] });
+    const sim = replay([{ speed: 32, calls: [sig(1, false), sig(3, true)] }], [-1]);
+    expect(sim.sample(10).cur.m[0].phase).toBe('IDLE');
+  });
   it('a chain A -> B: A exports its grid into B (offset from its pointing), B assembles and crafts after A is WAITING', () => {
     const sim = replay([
       { pointing: 'down', calls: [ins(0, 'minecraft:oak_planks')] },

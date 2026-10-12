@@ -30,7 +30,8 @@ const ctx: VisualContext = { renderer: fakeRenderer(), lookup: { getState: () =>
 function snapshot(root: THREE.Object3D): number[] {
   const out: number[] = [];
   root.updateMatrixWorld(true);
-  root.traverse((o) => { out.push(...o.matrixWorld.elements); });
+  // hidden pool members (particle quads not used at this tick) are not part of the picture
+  root.traverse((o) => { if (o.visible) out.push(...o.matrixWorld.elements); });
   return out;
 }
 
