@@ -78,7 +78,27 @@ const postbox: BlockInstance = {
   nbt: { Inventory: { Items: [{ Slot: 0, id: 'create:cardboard_package_10x12', Count: 1 }] } },
 };
 
+const frogport: BlockInstance = {
+  pos: [2, 1, 3],
+  state: { name: 'create:package_frogport', props: { facing: 'north' } } as BlockState,
+  nbt: { PlacedYaw: 90, PonderCalls: [{ t: 12, path: [{ m: 'startAnimation', a: [undefined, false] }] }, { t: 50, path: [{ m: 'startAnimation', a: [undefined, true] }] }] },
+};
+
+const gauge: BlockInstance = {
+  pos: [2, 1, 3],
+  state: { name: 'create:factory_gauge', props: { face: 'floor', facing: 'north' } } as BlockState,
+  nbt: {},
+};
+
 describe('B5 visuals are pure functions of the tick (seek-safe)', () => {
+  it('frogport: the startAnimation chase gives identical frames in any tick order', async () => {
+    await checkSeekSafe(frogport, 80);
+  });
+
+  it('factory gauge: the panel chase gives identical frames in any tick order', async () => {
+    await checkSeekSafe(gauge, 80);
+  });
+
   it('packager: set-call timeline gives identical frames in any tick order', async () => {
     await checkSeekSafe(packager, 90);
   });
