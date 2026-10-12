@@ -301,6 +301,35 @@ export class ParrotVisual {
     return new ParrotVisual(root, model, [mat], wrench);
   }
 
+  /**
+   * The train conductor hat (CreateHatArmorLayer with TrainHatInfo of the parrot: offset (0, 0, -1.5), the head as the part):
+   * drawn in the head's frame, so it follows the head pose.  `hat` is the baked create:entity/train_hat (block units).
+   */
+  attachHat(hat: THREE.Object3D): void {
+    const head = this.model.head;
+    const headCube = { minY: -1.5, maxY: 1.5, minX: -1, maxX: 1, minZ: -1, maxZ: 1 }; // the head box (2 x 3 x 2 px)
+    const scale = Math.max(headCube.maxX - headCube.minX, headCube.maxZ - headCube.minZ) / 8; // / 8 and * info.scale (1)
+    const m = new THREE.Matrix4()
+      .makeTranslation(0, (headCube.minY - headCube.maxY) / 16, -1.5 / 16)
+      .multiply(new THREE.Matrix4().makeScale(scale, -scale, -scale))
+      .multiply(new THREE.Matrix4().makeTranslation(0, -2.25 / 16, 0))
+      .multiply(new THREE.Matrix4().makeRotationX(-8.5 * DEG));
+    const g = new THREE.Group();
+    g.name = 'train_hat';
+    g.matrixAutoUpdate = false;
+    g.matrix.copy(m);
+    g.add(hat);
+    head.object.add(g);
+    this.hat = g;
+  }
+
+  /** the conductor flag (ExpandedParrotElement.setConductor): the hat is shown while it is set */
+  setHatVisible(v: boolean): void {
+    if (this.hat) this.hat.visible = v;
+  }
+
+  private hat: THREE.Group | null = null;
+
   update(f: ParrotFrame, lighting: PonderLighting): void {
     parrotTop(f, this.object.matrix);
     animateParrot(this.model, f);

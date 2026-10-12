@@ -45,7 +45,22 @@ export function createBlazeLayer(): LayerDefinition {
   const root = mesh.getRoot();
   root.addOrReplaceChild('head', CubeListBuilder.create().texOffs(0, 0).addBox(-4, -4, -4, 8, 8, 8), POSE_ZERO);
   const rod = CubeListBuilder.create().texOffs(0, 16).addBox(0, 0, 0, 2, 8, 2);
-  for (let i = 0; i < 12; i++) root.addOrReplaceChild(`part${i}`, rod, poseOffset(0, 0, 0));
+  // the initial offsets of the three rings (overwritten by setupAnim every frame, kept for the layer's data)
+  let f = 0;
+  for (let i = 0; i < 4; i++) {
+    root.addOrReplaceChild(`part${i}`, rod, poseOffset(Math.cos(f) * 9, -2 + Math.cos(i * 2 * 0.25), Math.sin(f) * 9));
+    f++;
+  }
+  f = Math.PI / 4;
+  for (let j = 4; j < 8; j++) {
+    root.addOrReplaceChild(`part${j}`, rod, poseOffset(Math.cos(f) * 7, 2 + Math.cos(j * 2 * 0.25), Math.sin(f) * 7));
+    f++;
+  }
+  f = 0.47123894;
+  for (let k = 8; k < 12; k++) {
+    root.addOrReplaceChild(`part${k}`, rod, poseOffset(Math.cos(f) * 5, 11 + Math.cos(k * 1.5 * 0.5), Math.sin(f) * 5));
+    f++;
+  }
   return layerDefinition(mesh, 64, 32);
 }
 

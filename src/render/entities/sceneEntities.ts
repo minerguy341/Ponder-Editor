@@ -53,6 +53,8 @@ interface ActorNode {
   kind: 'parrot' | 'cart';
   group: THREE.Group;
   parrot: ParrotVisual | null;
+  /** the conductor hat was requested (it is loaded once) */
+  hatRequested?: boolean;
   cart: MinecartVisual | null;
   /** the creation promise has not settled yet */
   pending: boolean;
@@ -227,6 +229,21 @@ export class SceneEntities {
       node.group.visible = el.visible;
       if (node.kind === 'parrot' && node.parrot) {
         node.parrot.update(parrotFrame(el, st, pt), this.opts.lighting);
+        // the train conductor hat (create:entity/train_hat, disableDiffuse like CreateHatArmorLayer)
+        if (el.conductor && !node.hatRequested) {
+          node.hatRequested = true;
+          const parrot = node.parrot;
+          this.opts.track(this.opts.renderer.buildPartial('create:entity/train_hat')).then((hat) => {
+            if (!hat || node.dead || this.disposed) return;
+            hat.traverse((c) => {
+              const m = (c as THREE.Mesh).material as THREE.Material | THREE.Material[] | undefined;
+              for (const mat of Array.isArray(m) ? m : m ? [m] : []) this.opts.lighting.patch(mat, { diffuse: false });
+            });
+            parrot.attachHat(hat);
+            parrot.setHatVisible(Boolean(el.conductor));
+          }, (err: unknown) => this.opts.onError(`train hat: ${(err as Error).message ?? String(err)}`));
+        }
+        node.parrot.setHatVisible(Boolean(el.conductor));
       } else if (node.kind === 'cart' && node.cart) {
         const lookup = (x: number, y: number, z: number) => st.world.blocks.get(`${x},${y},${z}`)?.state;
         node.cart.update(cartFrame(el, pt), lookup, this.opts.lighting);

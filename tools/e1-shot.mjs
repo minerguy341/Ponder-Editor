@@ -18,6 +18,8 @@ try {
     missing: [...window.__e1.missingResources],
     tick: window.__e1.info.tick,
     entities: window.__e1.viewer.world.getObjectByName('scene-entities') ? 'present' : 'absent',
+    playerErrors: (window.__e1.player.playerErrors ?? []).slice(0, 5),
+    hat: (() => { const h = window.__e1.viewer.world.getObjectByName('train_hat'); if (!h) return null; let n = 0; h.traverse((c) => { if (c.isMesh) n++; }); return { meshes: n, visible: h.visible, parentVisible: h.parent?.visible ?? null }; })(),
     wrench: (() => { const w = window.__e1.viewer.world.getObjectByName('wrench'); return w ? { children: w.children.length, meshes: (() => { let n = 0; w.traverse((c) => { if (c.isMesh) n++; }); return n; })(), pos: w.matrixWorld.elements.slice(12, 15) } : null; })(),
     world: (() => {
       const st = window.__e1.simState();
@@ -27,15 +29,16 @@ try {
       const st = window.__e1.simState();
       if (!st) return [];
       return Object.values(st.elements).filter((e) => e.kind === 'parrot' || e.kind === 'cart' || e.kind === 'entity').map((e) => ({
-        kind: e.kind, id: e.id, visible: e.visible, fade: e.fade, pos: e.pos, rot: e.rot, fadeVec: e.fadeVec, location: e.location, pose: e.pose,
+        kind: e.kind, id: e.id, visible: e.visible, fade: e.fade, pos: e.pos, rot: e.rot, fadeVec: e.fadeVec, location: e.location, pose: e.pose, conductor: e.conductor,
       }));
     })(),
   }));
   if (process.env.E1_DUMP) console.log(JSON.stringify({ actors: info.actors, world: info.world }));
+  if (process.env.E1_WAIT_HAT) await page.waitForFunction(() => window.__e1.viewer.world.getObjectByName("train_hat"), null, { timeout: 120000, polling: 500 }).catch(() => console.log("hat wait timed out"));
   await page.waitForTimeout(200);
   await page.evaluate(() => window.__e1.viewer.renderFrame());
   await page.screenshot({ path: out });
-  console.log(`shot ${out} scene=${scene} t=${info.tick} entities=${info.entities} wrench=${JSON.stringify(info.wrench)}`);
+  console.log(`shot ${out} scene=${scene} t=${info.tick} entities=${info.entities} wrench=${JSON.stringify(info.wrench)} hat=${JSON.stringify(info.hat)} playerErrors=${JSON.stringify(info.playerErrors)}`);
   if (info.missing.length) console.log('MISSING ' + info.missing.join(' '));
   const all = [...errors, ...info.errors];
   if (all.length) console.log('ERRORS ' + all.join(' | '));
