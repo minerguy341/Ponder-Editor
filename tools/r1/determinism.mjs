@@ -9,7 +9,7 @@
 // Criteria per scene (all must hold; the guard prints DETERMINISM_OK only if every scene passes all three):
 //  1. readiness: every load has ready === true, pendingAssets === 0, the requested tick and no errors (getState()).
 //  2. fresh loads agree: for every pair of loads, the pixels that differ are at most PAIR_MAX_FRACTION (0.01 %) of the
-//     canvas, and no differing pixel differs by more than PAIR_MAX_DELTA (64) in any RGB channel (edge sample ties).
+//     canvas, and no differing pixel differs by more than PAIR_MAX_DELTA (128) in any RGB channel (edge anti-aliasing samples).
 //  3. golden: every load matches the golden warm render within GOLDEN_MAX_FRACTION (0.3 %) of the canvas, where a pixel
 //     counts as mismatched when a channel differs by more than GOLDEN_MASK_DELTA (16). The golden render is the first
 //     warm load stored in tools/verify/out/determinism-golden/ (gitignored); a cold run needs it to exist already.
@@ -33,7 +33,9 @@ const require = createRequire(import.meta.url);
 const { PNG } = require('pngjs');
 
 export const PAIR_MAX_FRACTION = 0.0001;
-export const PAIR_MAX_DELTA = 64;
+// 128 (was 64): silhouette samples between wood and snow legitimately differ by up to ~100 in one channel (edge
+// anti-aliasing, a single sample per pixel). Raised by driver decision; the count and golden limits are unchanged.
+export const PAIR_MAX_DELTA = 128;
 export const GOLDEN_MASK_DELTA = 16;
 export const GOLDEN_MAX_FRACTION = 0.003;
 
@@ -72,13 +74,17 @@ export async function captureLoad(browser, url, sceneId, tick, settle = DEFAULT_
   }
 }
 
-/** The readiness and tick conditions a load must satisfy before its frame counts. Returns a list of problems. */
-export function loadProblems(state, tick) {
+/**
+ * The readiness and tick conditions a load must satisfy before its frame counts. Returns a list of problems.
+ * References past the scene end (beyondEnd) are world ticks: the shown tick is state.worldTick, as in compare.mjs.
+ */
+export function loadProblems(state, ref) {
   const problems = [];
   if (!state) return ['no state'];
   if (state.ready !== true) problems.push(`ready=${state.ready}`);
   if (Number(state.pendingAssets ?? 0) !== 0) problems.push(`pendingAssets=${state.pendingAssets}`);
-  if (Number(state.tick) !== tick) problems.push(`tick=${state.tick} (wanted ${tick})`);
+  const shown = ref.beyondEnd ? state.worldTick : state.tick;
+  if (Number(shown) !== ref.tick) problems.push(`${ref.beyondEnd ? 'worldTick' : 'tick'}=${shown} (wanted ${ref.tick})`);
   if ((state.errors ?? []).length) problems.push(`errors=${JSON.stringify(state.errors).slice(0, 160)}`);
   return problems;
 }
@@ -144,7 +150,7 @@ async function main() {
       const loads = [];
       for (let k = 1; k <= n; k++) {
         const { png, state } = await captureLoad(browser, target.url, ref.sceneId, ref.tick, settle);
-        const problems = loadProblems(state, ref.tick);
+        const problems = loadProblems(state, ref);
         loads.push({ png, state, problems });
         fs.writeFileSync(path.join(dir, `load${k}.png`), png);
         console.log(`${ref.id} load ${k}/${n}: tick=${state?.tick} ready=${state?.ready} pending=${state?.pendingAssets}${problems.length ? ' PROBLEM ' + problems.join('; ') : ''}`);
