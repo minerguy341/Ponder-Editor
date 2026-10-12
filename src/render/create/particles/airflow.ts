@@ -11,6 +11,8 @@ export const AIR_FLOW_LIFETIME = 40;
 const QUAD_SIZE = 0.1 * 0.75;
 export const AIR_FLOW_QUAD = QUAD_SIZE;
 export const AIR_FLOW_ALPHA = 0.25;
+/** the visual's fixed quad pool (alive particles beyond this are dropped in emission order; expected ~21 at density .5) */
+export const AIR_FLOW_POOL = 48;
 /** AllConfigs client fanParticleDensity default */
 export const AIR_FLOW_DENSITY = 0.5;
 

@@ -9,7 +9,7 @@ import * as THREE from 'three';
 import type { BlockInstance, BlockState, BlockVisual, Direction, VisualContext } from '../../../contract';
 import type { VisualModule } from '../registry';
 import { KineticVisual, PARTIAL, type RotatingPart, clamp, getPartial, opposite, readKinetic, stateDirection } from '../common';
-import { type AirFlowDot, AIR_FLOW_QUAD, airFlowParticlesAt } from '../particles/airflow';
+import { type AirFlowDot, AIR_FLOW_POOL, AIR_FLOW_QUAD, airFlowParticlesAt } from '../particles/airflow';
 import { entityTexture } from '../vanilla/entityModel';
 
 const PARTICLE_TEX = (i: number) => `minecraft:particle/generic_${i}`;
@@ -46,6 +46,14 @@ class EncasedFanVisual extends KineticVisual {
     this.fan = this.rotating(fanModel, { fromTo });
     const texes = await Promise.all([0, 1, 2, 3, 4, 5, 6, 7].map((i) => entityTexture(PARTICLE_TEX(i))));
     this.frameMats = texes.map((t) => new THREE.MeshBasicMaterial({ map: t ?? undefined, color: 0xeeeeee, transparent: true, depthWrite: false, opacity: 0.25, side: THREE.DoubleSide }));
+    // a fixed pool: the object tree never depends on the update history; every update rewrites every quad (hidden ones included)
+    this.quads = Array.from({ length: AIR_FLOW_POOL }, () => {
+      const q = new THREE.Mesh(this.quadGeo, this.frameMats[0]);
+      q.visible = false;
+      q.onBeforeRender = (_r, _s, cam) => billboard(q, cam);
+      this.object.add(q);
+      return q;
+    });
   }
 
   protected override partSpeed(part: RotatingPart): number {
@@ -65,19 +73,14 @@ class EncasedFanVisual extends KineticVisual {
         return !!st && !PASSABLE.test(st.name);
       },
     };
-    const dots: AirFlowDot[] = ticks >= 0 ? airFlowParticlesAt(input, ticks) : [];
+    const dots: AirFlowDot[] = ticks >= 0 ? airFlowParticlesAt(input, ticks).slice(0, AIR_FLOW_POOL) : [];
     const pt = ticks - Math.floor(ticks);
-    let i = 0;
-    for (const d of dots) {
-      if (i === this.quads.length) {
-        // Sprite objects are not drawn by the viewer; a plane turned to the camera (SingleQuadParticle) is
-        const q = new THREE.Mesh(this.quadGeo, this.frameMats[0]);
-        q.matrixAutoUpdate = false;
-        q.onBeforeRender = (_r, _s, cam) => billboard(q, cam);
-        this.object.add(q);
-        this.quads.push(q);
-      }
-      const q = this.quads[i++];
+    // Sprite objects are not drawn by the viewer; a plane turned to the camera (SingleQuadParticle) in billboard() at render time
+    for (let k = 0; k < this.quads.length; k++) {
+      const q = this.quads[k];
+      q.quaternion.identity();
+      if (k >= dots.length) { q.visible = false; q.position.set(0, 0, 0); continue; }
+      const d = dots[k];
       q.visible = true;
       q.material = this.frameMats[d.frame];
       // AirFlowParticle.render: lerp between the previous and the current position by the partial tick
@@ -87,7 +90,6 @@ class EncasedFanVisual extends KineticVisual {
         d.pz + (d.z - d.pz) * pt - this.block.pos[2],
       );
     }
-    for (; i < this.quads.length; i++) this.quads[i].visible = false;
   }
 }
 
