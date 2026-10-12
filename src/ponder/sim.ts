@@ -59,7 +59,7 @@ export function initState(ctx: SimCtx): SimState {
     off: { p: [0, 0, 0], c: [0, 0, 0] }, rot: { p: [0, 0, 0], c: [0, 0, 0] }, center: [0, 0, 0], stab: null,
   };
   return {
-    tick: 0, finished: false, nextUpEnabled: true, rt, active: [], next: 0, world,
+    tick: 0, worldTick: 0, finished: false, nextUpEnabled: true, rt, active: [], next: 0, world,
     elements: { base }, outlines: {},
     cam: { yaw: chaser(55 + 90), pitch: chaser(-35) },
     poi: { cur: [0, 4, 0], chase: [0, 4, 0] },
@@ -116,6 +116,7 @@ function tickActor(ctx: SimCtx, st: SimState, el: ActorEl): void {
 
 /** PonderScene.tick() */
 export function tickScene(ctx: SimCtx, st: SimState): void {
+  st.worldTick++;
   const poi = st.poi;
   if (poi.chase) poi.cur = lerpV(0.25, poi.cur, poi.chase);
 
@@ -236,27 +237,36 @@ export function createRunner(ctx: SimCtx): SimRunner {
   return { ctx, state, snapshots: new Map([[0, structuredClone(state)]]) };
 }
 
-/** seek to `time` deterministically: restart from the nearest snapshot at or before it (or play on when already before it). */
+/** how many world ticks the world keeps running past the scene end (the reference screenshots are taken there) */
+export const WORLD_TAIL = 600;
+
+/** the last world tick a scene reaches (playback and seeks stop here) */
+export function maxWorldTick(ctx: SimCtx): number { return ctx.scene.totalTicks + WORLD_TAIL; }
+
+/**
+ * seek to world time `time` deterministically: restart from the nearest snapshot at or before it (or play on when already
+ * before it). The scene clock (state.tick) stops at totalTicks; the world (worldTick) keeps going up to maxWorldTick. Seeks
+ * past the total also run the instruction pass to its end (PonderScene.seekToTime keeps running it past totalTime).
+ */
 export function runnerSeek(r: SimRunner, time: number): void {
-  const target = Math.max(0, Math.min(r.ctx.scene.totalTicks, Math.trunc(time)));
-  if (target < r.state.tick) {
+  const max = maxWorldTick(r.ctx);
+  const target = Math.max(0, Math.min(max, Math.trunc(time)));
+  if (target < r.state.worldTick) {
     let best = 0;
     for (const t of r.snapshots.keys()) if (t <= target && t > best) best = t;
     r.state = structuredClone(r.snapshots.get(best)!);
   }
-  // PonderScene.seekToTime stops at `time`; the clock is clamped at totalTime but the instruction pass keeps running, so
-  // instructions scheduled after the last idle still execute (on ticks past the total). seek(total) therefore runs to finished.
   const atEnd = target >= r.ctx.scene.totalTicks;
-  while (!r.state.finished && (r.state.tick < target || atEnd)) {
+  while (r.state.worldTick < max && (r.state.worldTick < target || (atEnd && !r.state.finished))) {
     tickScene(r.ctx, r.state);
-    if (r.state.tick % SNAPSHOT_EVERY === 0 && !r.snapshots.has(r.state.tick)) r.snapshots.set(r.state.tick, structuredClone(r.state));
+    if (r.state.worldTick % SNAPSHOT_EVERY === 0 && !r.snapshots.has(r.state.worldTick)) r.snapshots.set(r.state.worldTick, structuredClone(r.state));
   }
 }
 
-/** one real-time tick (playback), keeping the snapshot cache filled */
+/** one real-time world tick (playback), keeping the snapshot cache filled */
 export function runnerStep(r: SimRunner): void {
   tickScene(r.ctx, r.state);
-  if (r.state.tick % SNAPSHOT_EVERY === 0 && !r.snapshots.has(r.state.tick)) r.snapshots.set(r.state.tick, structuredClone(r.state));
+  if (r.state.worldTick % SNAPSHOT_EVERY === 0 && !r.snapshots.has(r.state.worldTick)) r.snapshots.set(r.state.worldTick, structuredClone(r.state));
 }
 
 export function runnerReplay(r: SimRunner): void {

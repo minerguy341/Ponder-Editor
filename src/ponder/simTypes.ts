@@ -122,7 +122,11 @@ export interface InstrRT {
 }
 
 export interface SimState {
+  /** scene clock: PonderScene.currentTime, clamped at totalTime */
   tick: number;
+  /** world clock: every tickScene call, not clamped. Ponder keeps ticking the world (belts, block entities, kinetics) after
+   * the instruction timeline has finished (PonderUI.tick -> PonderScene.tick, no finished guard). Visuals are driven by this. */
+  worldTick: number;
   finished: boolean;
   nextUpEnabled: boolean;
   rt: InstrRT[];

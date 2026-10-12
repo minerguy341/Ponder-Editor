@@ -116,7 +116,9 @@ export async function runCompare({ url, refsDir, only, sweep = 0, settle = 800, 
       }
       entry.stateTick = state.tick;
       entry.stateTotal = state.total;
-      if (state.tick !== ref.tick) entry.problems.push(`__ponder.getState().tick is ${state.tick}, expected ${ref.tick}`);
+      // beyondEnd references are world ticks past the scene end (the scene clock stays at total; see sim.ts WORLD_TAIL)
+      const shownTick = ref.beyondEnd ? state.worldTick : state.tick;
+      if (shownTick !== ref.tick) entry.problems.push(`__ponder.getState().${ref.beyondEnd ? 'worldTick' : 'tick'} is ${shownTick}, expected ${ref.tick}`);
       if (state.total !== ref.timeline.totalTicks) entry.problems.push(`scene total ${state.total} != derived ${ref.timeline.totalTicks} (timeline differs from real Ponder)`);
       if (state.keyframes && JSON.stringify(state.keyframes) !== JSON.stringify(ref.timeline.keyframes)) entry.problems.push(`scene keyframes ${JSON.stringify(state.keyframes)} != derived ${JSON.stringify(ref.timeline.keyframes)}`);
       if (state.visibleTextKeys && JSON.stringify([...state.visibleTextKeys].sort()) !== JSON.stringify([...ref.visibleTextKeys].sort())) entry.problems.push(`visible text keys ${JSON.stringify(state.visibleTextKeys)} != expected ${JSON.stringify(ref.visibleTextKeys)}`);
@@ -161,7 +163,7 @@ export async function runCompare({ url, refsDir, only, sweep = 0, settle = 800, 
       if (sweep > 0) {
         // Which tick does our renderer match best? (one page, ascending seeks)
         const lo = Math.max(0, ref.tick - sweep);
-        const hi = Math.min(ref.timeline.totalTicks, ref.tick + sweep);
+        const hi = ref.beyondEnd ? ref.tick + sweep : Math.min(ref.timeline.totalTicks, ref.tick + sweep);
         const sp = await newPage(browser, { url, viewport: REF_VIEWPORT });
         await sp.page.goto(url);
         await waitPonder(sp.page);
@@ -318,7 +320,8 @@ export async function verifyRefs({ refsDir, scenesDir, offlineOk = false, refere
       if (m.fillEndPx !== ref.bar.fillEndPx) problems.push(`${ref.id}: measured fill end ${m.fillEndPx} != references.json ${ref.bar.fillEndPx}`);
       const est = estimateTick(m.fillEndPx, t.totalTicks, img.width);
       const inBand = ref.tick >= Math.min(est.lo, t.totalTicks) && ref.tick <= Math.min(est.hi, t.totalTicks) + (m.progress >= 0.999 ? 0 : 0);
-      if (!inBand && !(m.progress >= 0.999 && ref.tick === t.totalTicks)) problems.push(`${ref.id}: tick ${ref.tick} outside the bar-implied band ${est.lo.toFixed(1)}..${est.hi.toFixed(1)}`);
+      if (ref.beyondEnd) { if (m.progress < 0.999) problems.push(`${ref.id}: beyondEnd needs the bar full (progress ${m.progress})`); }
+      else if (!inBand && !(m.progress >= 0.999 && ref.tick === t.totalTicks)) problems.push(`${ref.id}: tick ${ref.tick} outside the bar-implied band ${est.lo.toFixed(1)}..${est.hi.toFixed(1)}`);
       notes.push(`${ref.id}: bar fill ${m.fillEndPx}px (progress ${m.progress.toFixed(4)}) marks ${JSON.stringify(m.marksPx)} == predicted; implied tick ${est.est.toFixed(1)} in [${est.lo.toFixed(1)}, ${est.hi.toFixed(1)}], chosen ${ref.tick}`);
     } else notes.push(`${ref.id}: reference PNG not available, pixel measurement skipped`);
     // 3. cross-check C1's converter output
@@ -358,7 +361,7 @@ async function selftest() {
   const sigs = refsJson.refs.map((r) => JSON.stringify(predictMarks(r.timeline.keyframes, r.timeline.totalTicks)));
   c.ok(new Set(sigs).size === 4, 'the four references have distinct keyframe-mark fingerprints');
   c.ok(refsJson.refs.every((r) => JSON.stringify(predictMarks(r.timeline.keyframes, r.timeline.totalTicks)) === JSON.stringify(r.bar.marksPx)), 'references.json bar.marksPx equal Ponder geometry predictions for the derived keyframes');
-  c.ok(refsJson.refs.every((r) => r.tick >= r.tickRange[0] && r.tick <= r.tickRange[1] && r.tick <= r.timeline.totalTicks), 'ticks lie inside their tickRange and the scene');
+  c.ok(refsJson.refs.every((r) => r.tick >= r.tickRange[0] && r.tick <= r.tickRange[1] && (r.tick <= r.timeline.totalTicks || (r.beyondEnd && r.tick - r.timeline.totalTicks <= r.beyondEnd.maxTicks))), 'ticks lie inside their tickRange and the scene (or the world tail for beyondEnd)');
 
   // ---- 2. Java timeline derivation: synthetic source with every supported construct, hand-computed expectation
   const sample = `

@@ -12,7 +12,7 @@ import { missingResources } from '../assets/resources';
 import { PonderLighting } from '../render/environment';
 import { preloadVisuals } from '../render/create/index';
 import { controlEvents, lineEvents, outlineEvents, textEvents } from './events';
-import { createRunner, createSimCtx, runnerReplay, runnerSeek, runnerStep, type SimRunner } from './sim';
+import { createRunner, createSimCtx, maxWorldTick, runnerReplay, runnerSeek, runnerStep, type SimRunner } from './sim';
 import type { SimCtx } from './simTypes';
 import { SceneGraph } from './scenegraph';
 import { keyOf } from './util';
@@ -73,6 +73,8 @@ export class PonderPlayer implements PlayerLike {
   private runner: SimRunner | null = null;
   private graph: SceneGraph | null = null;
   private playing = false;
+  /** the timeline end was reported to listeners for the loaded scene */
+  private endReported = false;
   private speed = 1;
   /** fraction of the current tick already elapsed in real time (0..1) while playing */
   private acc = 0;
@@ -121,6 +123,7 @@ export class PonderPlayer implements PlayerLike {
 
       this.ctx = ctx;
       this.runner = createRunner(ctx);
+      this.endReported = false;
       this.viewer.setCameraClock('manual');
       this.viewer.setBounds(structure.size[0], structure.size[1], structure.size[2]);
       this.viewer.setBasePlate(ctx.config.basePlate);
@@ -215,6 +218,7 @@ export class PonderPlayer implements PlayerLike {
     const st = this.runner?.state;
     return {
       tick: st?.tick ?? 0,
+      worldTick: st?.worldTick ?? 0,
       total: this.scene?.totalTicks ?? 0,
       sceneId: this.scene?.id,
       playing: this.playing,
@@ -309,17 +313,23 @@ export class PonderPlayer implements PlayerLike {
         this.lastFrame = now;
         this.acc += (dt * this.speed * TICKS_PER_SECOND) / 1000;
         let stepped = false;
+        // the scene timeline ends at totalTicks, but the world keeps ticking (PonderUI.tick -> PonderScene.tick): playback runs
+        // on to the world tail limit; 'finished' is reported once, when the timeline ends
+        const end = this.ctx ? maxWorldTick(this.ctx) : 0;
         while (this.acc >= 1) {
-          if (runner.state.finished) { this.acc = 0; break; }
+          if (runner.state.worldTick >= end) { this.acc = 0; break; }
           runnerStep(runner);
           this.acc -= 1;
           stepped = true;
         }
-        if (runner.state.finished) {
+        if (runner.state.finished && !this.endReported) {
+          this.endReported = true;
+          this.emit('finished', { tick: runner.state.tick });
+        }
+        if (runner.state.worldTick >= end) {
           this.playing = false;
           this.acc = 0;
           this.emitTick();
-          this.emit('finished', { tick: runner.state.tick });
         }
         if (stepped) this.syncAndEmit(false);
         else this.emitOverlays(this.currentPt(), false);

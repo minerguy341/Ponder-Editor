@@ -30,7 +30,7 @@ export interface PonderApi {
   seek(tick: number): void;
   play(): void;
   pause(): void;
-  getState(): { tick: number; total: number; sceneId: string | null; errors: string[]; unsupportedOps: string[]; missingAssets: string[]; ready: boolean; pendingAssets: number };
+  getState(): { tick: number; worldTick: number; total: number; sceneId: string | null; errors: string[]; unsupportedOps: string[]; missingAssets: string[]; ready: boolean; pendingAssets: number };
   setCamera(c: Record<string, unknown>): void;
   screenshot(): Promise<Blob>;
   route(): Route;
@@ -118,7 +118,7 @@ export async function startApp(opts: StartOptions = {}): Promise<PonderApi> {
       const st = (engine?.player.getState() ?? {}) as Record<string, any>;
       const uiErr = ui?.debugState().error;
       return {
-        tick: Number(st.tick ?? 0), total: Number(st.total ?? 0), sceneId: (st.sceneId as string) ?? ui?.activeEntry?.id ?? null,
+        tick: Number(st.tick ?? 0), worldTick: Number(st.worldTick ?? st.tick ?? 0), total: Number(st.total ?? 0), sceneId: (st.sceneId as string) ?? ui?.activeEntry?.id ?? null,
         errors: [...((st.errors as string[]) ?? []), ...errors, ...(uiErr ? [String(uiErr)] : [])],
         unsupportedOps: (st.unsupportedOps as string[]) ?? [], missingAssets: (st.missingAssets as string[]) ?? [],
         ready: st.ready === true, pendingAssets: Number(st.pendingAssets ?? 0),
