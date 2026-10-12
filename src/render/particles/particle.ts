@@ -18,8 +18,6 @@ export type Axis = 'x' | 'y' | 'z';
 /** the atlas view a particle samples (SpriteLike is the subset of the block atlas sprite we use) */
 export interface SpriteLike {
   readonly u0: number; readonly v0: number; readonly u1: number; readonly v1: number;
-  getU(f: number): number;
-  getV(f: number): number;
 }
 /** SpriteSet: a list of frames; get(age, lifetime) = frames[age * (n - 1) / lifetime] (integer division) */
 export interface SpriteSet { readonly frames: readonly SpriteLike[] }
@@ -222,9 +220,12 @@ export class Particle {
   uvBounds(out: Float32Array): void {
     const s = this.sprite!;
     if (this.isTextureSheetFrame) {
-      // BreakingItemParticle.getU0 = sprite.getU((uo + 1) / 4), getU1 = sprite.getU(uo / 4); V likewise
-      out[0] = s.getU((this.uo + 1) / 4); out[1] = s.getU(this.uo / 4);
-      out[2] = s.getV(this.vo / 4); out[3] = s.getV((this.vo + 1) / 4);
+      // BreakingItemParticle.getU0 = sprite.getU((uo + 1) / 4), getU1 = sprite.getU(uo / 4); V likewise.
+      // TextureAtlasSprite.getU takes a fraction of the sprite (u0 + (u1 - u0) * f); the atlas getU of this project takes sixteenths,
+      // so the fraction is applied here explicitly.
+      const du = s.u1 - s.u0, dv = s.v1 - s.v0;
+      out[0] = s.u0 + du * ((this.uo + 1) / 4); out[1] = s.u0 + du * (this.uo / 4);
+      out[2] = s.v0 + dv * (this.vo / 4); out[3] = s.v0 + dv * ((this.vo + 1) / 4);
     } else {
       out[0] = s.u0; out[1] = s.u1; out[2] = s.v0; out[3] = s.v1;
     }

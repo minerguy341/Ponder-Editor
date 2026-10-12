@@ -7,6 +7,8 @@ import type { BlockRendererImpl } from '../blockRenderer';
 import { resolveItemModel } from '../itemModel';
 import { fluidSprites } from '../fluids';
 import { fluidTint } from '../tints';
+import { chooseVariants, parseBlockstate, selectModels } from '../blockstate';
+import { parseLoc, resources } from '../../assets/resources';
 import type { Atlas } from '../atlas';
 import type { SpriteLike, SpriteSet, V3 } from './particle';
 import type { SpriteBank } from './emitter';
@@ -56,24 +58,72 @@ export function isSolidState(s: BlockState | undefined): boolean {
 }
 
 /**
+ * The particle texture of an item (BreakingItemParticle: the item model's particle icon). A generated item model has no
+ * `particle` texture of its own: the game uses its layer0 texture, so that is the fallback.
+ */
+export async function itemParticleTexture(renderer: BlockRendererImpl, id: string): Promise<string> {
+  let baked = 'minecraft:missingno';
+  try {
+    baked = (await resolveItemModel(id, renderer)).baked?.particle ?? baked;
+  } catch {
+    // keep the missing texture
+  }
+  if (baked !== 'minecraft:missingno') return baked;
+  try {
+    const { ns, path: p } = parseLoc(id);
+    const model = await resources.model({ ns, path: p.startsWith('item/') ? p : `item/${p}` });
+    const layer0 = model?.textures?.layer0;
+    if (typeof layer0 === 'string' && !layer0.startsWith('#')) return layer0.includes(':') ? layer0 : `minecraft:${layer0}`;
+  } catch {
+    // no item model
+  }
+  return baked;
+}
+
+/**
+ * The particle texture of an entity-rendered block: the particle model of its blockstate (Create's belt: models
+ * create:block/belt/particle), baked without the entity predicate. Falls back to the item model's particle texture.
+ */
+async function entityParticleTexture(renderer: BlockRendererImpl, st: BlockState): Promise<string> {
+  try {
+    const json = await resources.blockstate(parseLoc(st.name));
+    if (json) {
+      const def = parseBlockstate(json);
+      const sel = selectModels(def, { name: st.name, props: st.props ?? {} });
+      const v = sel ? chooseVariants(sel, false, 0n)[0] : undefined;
+      if (v?.model) return (await renderer.bakeStandalone(v.model)).baked.particle;
+    }
+  } catch {
+    // fall through to the item model
+  }
+  return itemParticleTexture(renderer, st.name);
+}
+
+/**
  * Resolve everything the particle records of the scene need (async: textures and item models), then return the synchronous bank.
  * The renderer must have prepared the scene's block states (BlockRenderer.prepare) first.
  */
-export async function prepareSpriteBank(renderer: BlockRendererImpl, scene: SceneJson): Promise<SpriteBank> {
+export async function prepareSpriteBank(renderer: BlockRendererImpl, scene: SceneJson, blockStates: readonly BlockState[] = []): Promise<SpriteBank> {
   const atlas: Atlas = renderer.atlas;
   const assets = effectAssets(scene);
+  // block entity blocks (belts, funnels, ...) are drawn by visuals, so their models are not in the chunk mesh: their particle
+  // texture comes from the item model of the block (the same texture the game's item renderer uses), their shape is a full cube
+  const entityIcon = new Map<string, string>();
+  const seenNames = new Set<string>();
+  for (const st of blockStates) {
+    if (seenNames.has(st.name)) continue;
+    seenNames.add(st.name);
+    const m = renderer.modelsFor({ name: st.name, props: st.props ?? {} }, [0, 0, 0]);
+    if (m && m[0] && m[0].particle !== 'minecraft:missingno') continue;
+    entityIcon.set(st.name, await entityParticleTexture(renderer, st));
+  }
   const itemIcon = new Map<string, string>();
   for (const id of assets.items) {
-    try {
-      const r = await resolveItemModel(id, renderer);
-      itemIcon.set(id, r.baked?.particle ?? 'minecraft:missingno');
-    } catch {
-      itemIcon.set(id, 'minecraft:missingno');
-    }
+    itemIcon.set(id, await itemParticleTexture(renderer, id));
   }
   const fluidStill = new Map<string, string>();
   for (const f of assets.fluids) fluidStill.set(f, fluidSprites(f).still);
-  await atlas.ensure([...GENERIC, ...GLITTER, ...WIFI, ...itemIcon.values(), ...fluidStill.values()]);
+  await atlas.ensure([...GENERIC, ...GLITTER, ...WIFI, ...itemIcon.values(), ...fluidStill.values(), ...entityIcon.values()]);
 
   const frames = (ids: string[]): SpriteLike[] => ids.map((id) => atlas.sprite(id));
   const generic: SpriteSet = { frames: frames(GENERIC).reverse() }; // dust.json, large_smoke.json, spit.json list generic_7 .. generic_0
@@ -86,8 +136,10 @@ export async function prepareSpriteBank(renderer: BlockRendererImpl, scene: Scen
     let b = blockCache.get(key);
     if (!b) {
       const models = renderer.modelsFor({ name: id, props }, [0, 0, 0]);
-      const pid = models?.[0]?.particle ?? 'minecraft:missingno';
+      const own = models?.[0]?.particle;
+      const pid = own && own !== 'minecraft:missingno' ? own : entityIcon.get(id) ?? 'minecraft:missingno';
       let shape: [number, number, number, number, number, number] | null = null;
+      if (!models) shape = [0, 0, 0, 1, 1, 1];
       if (models) {
         let x0 = Infinity, y0 = Infinity, z0 = Infinity, x1 = -Infinity, y1 = -Infinity, z1 = -Infinity;
         for (const m of models) for (const q of m.quads) for (let v = 0; v < 4; v++) {

@@ -109,7 +109,7 @@ export class PonderPlayer implements PlayerLike {
       if (token !== this.loadToken) return;
       // effect particles (dust, rotation indicators, emitters, glue, block destroy): the sprites of this scene's particle records
       const atlasRenderer = this.renderer as unknown as Partial<BlockRendererImpl>;
-      const bank = atlasRenderer.atlas ? await prepareSpriteBank(this.renderer as BlockRendererImpl, scene) : null;
+      const bank = atlasRenderer.atlas ? await prepareSpriteBank(this.renderer as BlockRendererImpl, scene, structure.blocks.map((b) => b.state)) : null;
       if (token !== this.loadToken) return;
 
       this.ctx = ctx;
