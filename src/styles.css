@@ -252,3 +252,33 @@ html, body {
   .pb-sub { font-size: 12px; }
   .pb-name { font-size: 13px; }
 }
+
+/* index categories (PonderTagIndexScreen) and the tag / item screens (PonderTagScreen, PonderIndexScreen) */
+.pb-cats { max-width: 1180px; margin: 0 auto 14px; }
+.pb-cats-title { margin: 0 0 6px; font-size: 13px; font-weight: normal; color: #8ab6d6; }
+.pb-back { display: inline-block; font-size: 12px; color: var(--pd-accent); text-decoration: none; margin-top: 6px; }
+.pb-back:hover, .pb-back:focus-visible { color: #fff; outline: none; }
+.pb-items-link { margin: 4px 0 0; }
+.pt-screen { overflow-y: auto; }
+.pt-head { display: flex; gap: 14px; align-items: flex-start; max-width: 1180px; margin: 0 auto 16px; flex-wrap: wrap; }
+.pt-tagbox { flex: none; position: relative; width: 56px; height: 56px; display: flex; align-items: center; justify-content: center;
+  background: rgba(0, 0, 0, 0.9); border: 2px solid #9a9ab0; }
+.pt-tagbox > * { position: relative; }
+.pt-titles { min-width: 0; flex: 1 1 260px; }
+.pt-pondering { margin: 0; font-size: 12px; color: #a3a3a3; }
+.pt-title { font-size: 24px; }
+.pt-body { max-width: 1180px; margin: 0 auto; display: flex; flex-direction: column; gap: 18px; align-items: stretch; }
+.pt-main { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.pt-label { margin: 0; font-size: 13px; color: #8ab6d6; }
+.pt-assoc-title { margin: 0 0 10px; font-size: 14px; font-weight: normal; color: #eee; text-align: center; }
+.pt-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.pt-grid-wide { max-width: 1180px; margin: 0 auto; }
+.pt-item { display: inline-flex; align-items: center; justify-content: center; padding: 3px; min-width: 56px; min-height: 56px;
+  background: rgba(0, 0, 0, 0.85); border: 2px solid rgba(255, 255, 255, 0.35); text-decoration: none; }
+a.pt-item:hover, a.pt-item:focus-visible { border-color: rgba(192, 192, 255, 0.95); outline: none; }
+.pt-missing-vanilla { border-color: rgba(40, 0, 127, 0.31); }
+.pt-missing-modded { border-color: rgba(152, 69, 0, 0.44); }
+.pt-slot { position: relative; display: inline-block; width: 48px; height: 48px; }
+.pt-slot > * { position: absolute; left: 0; top: 0; }
+.pt-desc { max-width: 60ch; margin: 0 auto; padding: 10px 12px; font-size: 13px; line-height: 1.45; color: #eee;
+  background: rgba(8, 8, 18, 0.88); border: 2px solid rgba(255, 238, 221, 0.25); }

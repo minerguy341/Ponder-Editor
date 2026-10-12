@@ -12,6 +12,8 @@ import { ItemPool } from '../items/itemPool';
 import { prepareItem } from '../items/itemObject';
 import { PoseStack } from '../items/pose';
 import { fluidBoxGroup } from '../fluids/fluidBox';
+import { getFluidWorld } from '../fluidnet/events';
+import { isEmptyFluid } from '../fluidnet/model';
 import { fluidSpriteIds } from '../../fluids';
 import { markOwned } from '../common';
 import * as THREE from 'three';
@@ -77,7 +79,11 @@ class BasinBlockVisual extends BaseVisual {
 
   /** Rebuilds the fluid boxes when the tank contents at this tick differ from the built ones. */
   private updateFluid(ticks: number, world: ReturnType<typeof getLogisticsWorld>): number {
-    const inputs = world.nbtValueAt(this.block.pos, 'InputTanks', ticks);
+    // F1: the input tank is the scene's fluid store of this basin (capability fills and drains land there, fluidnet/world.ts)
+    const fluidStore = getFluidWorld(this.ctx.lookup).storeOf(this.block.pos);
+    const inputs = fluidStore && !isEmptyFluid(fluidStore.fluid)
+      ? [{ TankContent: { FluidName: fluidStore.fluid.fluid, Amount: fluidStore.getFluidAmount() } }]
+      : world.nbtValueAt(this.block.pos, 'InputTanks', ticks);
     const outputs = world.nbtValueAt(this.block.pos, 'OutputTanks', ticks);
     const sig = JSON.stringify([inputs, outputs]);
     const res = basinFluidBoxes(inputs, outputs);
