@@ -6,7 +6,7 @@
 // in the pose stack only.  The renderer's rail lookup therefore uses the entity's level position (= the offset), exactly as the
 // game does, so the rail snapping only happens where a rail block sits at the offset position.
 import * as THREE from 'three';
-import type { BlockInstance, BlockRenderer, BlockState, WorldLookup } from '../../contract';
+import type { BlockInstance, BlockState, WorldLookup } from '../../contract';
 import type { PonderLighting } from '../environment';
 import { bakeLayer, CubeListBuilder, layerDefinition, LayerDefinition, MeshDefinition, ModelPart, poseOffset, poseOffsetAndRotation } from './modelPart';
 import { DEG, angleLerp } from './mth';
@@ -225,7 +225,7 @@ export class MinecartVisual {
    * `kind` is the Ponder cart class name ("Minecart", "MinecartChest", "MinecartFurnace"). The display block is built with
    * the renderer (block models) and, for chests, the vanilla chest visual.
    */
-  static async create(kind: string, renderer: BlockRenderer, lighting: PonderLighting, displayVisual: (state: BlockState) => Promise<THREE.Object3D | null>): Promise<MinecartVisual | null> {
+  static async create(kind: string, lighting: PonderLighting, displayVisual: (state: BlockState) => Promise<THREE.Object3D | null>): Promise<MinecartVisual | null> {
     const base = await entityBaseMaterial(MINECART_TEXTURE, lighting);
     if (!base) return null;
     const mat = elementMaterial(base, lighting);
@@ -245,7 +245,6 @@ export class MinecartVisual {
           .multiply(new THREE.Matrix4().makeRotationY(90 * DEG));
       }
     }
-    void renderer;
     return new MinecartVisual(model, mats, displayObj, displayMatrix);
   }
 

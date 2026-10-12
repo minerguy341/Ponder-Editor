@@ -18,15 +18,19 @@ try {
     missing: [...window.__e1.missingResources],
     tick: window.__e1.info.tick,
     entities: window.__e1.viewer.world.getObjectByName('scene-entities') ? 'present' : 'absent',
+    world: (() => {
+      const st = window.__e1.simState();
+      return st ? st.entities.map((e) => ({ id: e.id, type: e.type, age: e.age, pos: e.pos, prev: e.prev, vel: e.vel, lerp: e.lerp ?? null, box: e.props?.box?.id ?? null })) : [];
+    })(),
     actors: (() => {
       const st = window.__e1.simState();
       if (!st) return [];
       return Object.values(st.elements).filter((e) => e.kind === 'parrot' || e.kind === 'cart' || e.kind === 'entity').map((e) => ({
-        kind: e.kind, id: e.id, visible: e.visible, fade: e.fade, pos: e.pos, rot: e.rot, fadeVec: e.fadeVec,
+        kind: e.kind, id: e.id, visible: e.visible, fade: e.fade, pos: e.pos, rot: e.rot, fadeVec: e.fadeVec, location: e.location, pose: e.pose,
       }));
     })(),
   }));
-  if (process.env.E1_DUMP) console.log(JSON.stringify(info.actors));
+  if (process.env.E1_DUMP) console.log(JSON.stringify({ actors: info.actors, world: info.world }));
   await page.waitForTimeout(200);
   await page.evaluate(() => window.__e1.viewer.renderFrame());
   await page.screenshot({ path: out });

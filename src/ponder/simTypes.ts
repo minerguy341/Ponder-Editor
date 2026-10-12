@@ -60,6 +60,8 @@ export interface WorldEntity {
   yaw?: number;
   props?: Record<string, unknown>;
   discarded?: boolean;
+  /** LivingEntity.lerpTo state (lerpX/Y/Z, lerpSteps): steps left and target position */
+  lerp?: { x: number; y: number; z: number; steps: number };
 }
 
 export interface EntityEl {

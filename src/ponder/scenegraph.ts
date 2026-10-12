@@ -181,7 +181,7 @@ export class SceneGraph {
     private readonly onError: PlayerErrorSink,
   ) {
     parent.add(this.root);
-    this.sceneEntities = new SceneEntities(this.root, { lighting, track: (p) => this.track(p), onError: (m) => onError(m) });
+    this.sceneEntities = new SceneEntities(this.root, { lighting, renderer, track: (p) => this.track(p), onError: (m) => onError(m) });
   }
 
   /** counts an asynchronous load for idle() */

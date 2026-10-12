@@ -91,9 +91,100 @@ export function tickEntities(st: SimState): void {
     e.age++;
     e.prev = [...e.pos] as Vec3;
     if (e.type === ITEM_TYPE) tickItem(st, e);
+    else if (e.type === PACKAGE_TYPE) tickPackage(st, e);
     if (e.pos[1] <= -0.5) e.discarded = true;
   }
   if (st.entities.some((e) => e.discarded)) st.entities = st.entities.filter((e) => !e.discarded);
+}
+
+export const PACKAGE_TYPE = 'create:package';
+
+/** PackageItem.getWidth / getHeight: the box size from the style id (create:<type>_package_WxH), 1 block otherwise */
+export function packageSize(box: { id: string } | undefined): { w: number; h: number } {
+  const m = /_(\d+)x(\d+)$/.exec(box?.id ?? '');
+  if (!m) return { w: 12 / 16, h: 12 / 16 };
+  return { w: Number(m[1]) / 16, h: Number(m[2]) / 16 };
+}
+
+/**
+ * PackageEntity.tick (PonderLevel is a client level): gravity -0.06, discard below y 0.125, then LivingEntity.aiStep:
+ * lerp step (or the 0.98 drag when not effective AI) and the client-side PackageEntity.travel that moves the box for its
+ * first 20 ticks.  The non-controlled LivingEntity.travel leaves the motion alone.
+ */
+function tickPackage(st: SimState, e: WorldEntity): void {
+  e.vel = [e.vel[0], e.vel[1] - 0.06, e.vel[2]];
+  if (e.pos[1] < 0.125) { e.discarded = true; return; }
+  if (e.lerp && e.lerp.steps > 0) {
+    const s = e.lerp.steps;
+    e.pos = [e.pos[0] + (e.lerp.x - e.pos[0]) / s, e.pos[1] + (e.lerp.y - e.pos[1]) / s, e.pos[2] + (e.lerp.z - e.pos[2]) / s];
+    e.lerp.steps--;
+  } else {
+    e.vel = [e.vel[0] * 0.98, e.vel[1] * 0.98, e.vel[2] * 0.98];
+  }
+  packageTravel(st, e);
+}
+
+/** PackageEntity.travel (client): the motion of this tick, clipped by the blocks, applied through setPos / lerpTo. */
+function packageTravel(st: SimState, e: WorldEntity): void {
+  const [vx, vy, vz] = e.vel;
+  if (Math.hypot(vx, vy, vz) < 1 / 128) return;
+  if (e.age >= 20) return;
+  const { w, h } = packageSize(e.props?.box as { id: string } | undefined);
+  let motion: Vec3 = [vx * 0.75, vy * 0.75, vz * 0.75];
+  motion = clipMotion(st, e.pos, w / 2, h, motion);
+  let cp: Vec3 = [e.pos[0] + motion[0], e.pos[1] + motion[1], e.pos[2] + motion[2]];
+  if (e.lerp && e.lerp.steps !== 0) {
+    const t = Math.min(1, e.age / 20);
+    cp = [cp[0] + (e.lerp.x - cp[0]) * t, cp[1] + (e.lerp.y - cp[1]) * t, cp[2] + (e.lerp.z - cp[2]) * t];
+  }
+  if (e.age < 5) e.pos = cp;
+  if (e.age < 20) {
+    const steps = !e.lerp || e.lerp.steps === 0 ? 3 : e.lerp.steps;
+    e.lerp = { x: cp[0], y: cp[1], z: cp[2], steps };
+  }
+}
+
+/** Axis-by-axis block clipping of a box (half width `hw`, height `h`), Y first like Entity.collideBoundingBox. */
+function clipMotion(st: SimState, pos: Vec3, hw: number, h: number, m: Vec3): Vec3 {
+  let [dx, dy, dz] = m;
+  const x0 = pos[0] - hw, x1 = pos[0] + hw, z0 = pos[2] - hw, z1 = pos[2] + hw;
+  const cells = (ax0: number, ax1: number, az0: number, az1: number) => {
+    const out: Array<[number, number, number, string, Record<string, string>]> = [];
+    for (let bx = Math.floor(ax0); bx <= Math.floor(ax1 - 1e-9); bx++) for (let bz = Math.floor(az0); bz <= Math.floor(az1 - 1e-9); bz++) {
+      for (let by = Math.floor(pos[1] + dy) - 1; by <= Math.floor(pos[1] + h + 1e-9); by++) {
+        const b = st.world.blocks.get(`${bx},${by},${bz}`);
+        if (b) out.push([bx, by, bz, b.state.name, b.state.props]);
+      }
+    }
+    return out;
+  };
+  if (dy < 0) {
+    let limit = pos[1] + dy;
+    for (const [, by, , name, props] of cells(x0 + dx, x1 + dx, z0 + dz, z1 + dz)) {
+      const t = collisionTop(name, props);
+      if (t === null) continue;
+      const top = by + t;
+      if (top <= pos[1] + 1e-6 && top >= limit) limit = top;
+    }
+    dy = limit - pos[1];
+  }
+  if (dx !== 0) {
+    for (const [bx, by, , name, props] of cells(x0 + dx, x1 + dx, z0, z1)) {
+      if (by + 1 <= pos[1] + 1e-6 || by >= pos[1] + h) continue;
+      if (collisionTop(name, props) === null) continue;
+      if (dx > 0 && bx >= x1 - 1e-9) dx = Math.min(dx, bx - x1);
+      if (dx < 0 && bx + 1 <= x0 + 1e-9) dx = Math.max(dx, bx + 1 - x0);
+    }
+  }
+  if (dz !== 0) {
+    for (const [, by, bz, name, props] of cells(x0 + dx, x1 + dx, z0 + dz, z1 + dz)) {
+      if (by + 1 <= pos[1] + 1e-6 || by >= pos[1] + h) continue;
+      if (collisionTop(name, props) === null) continue;
+      if (dz > 0 && bz >= z1 - 1e-9) dz = Math.min(dz, bz - z1);
+      if (dz < 0 && bz + 1 <= z0 + 1e-9) dz = Math.max(dz, bz + 1 - z0);
+    }
+  }
+  return [dx, dy, dz];
 }
 
 function tickItem(st: SimState, e: WorldEntity): void {
