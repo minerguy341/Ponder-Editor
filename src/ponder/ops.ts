@@ -12,6 +12,8 @@ import {
 } from './simCore';
 import { addV, asVec3, cloneJson, DIR_OPPOSITE, keyOf, paletteColor, scaleV } from './util';
 import { insideBounds, restoreBlocks as restoreWorldBlocks, setBlock } from './world';
+import { burstRecord, centerOf, destroyRecord, emitRecord, particleOpts, rgbOf, rotationBurst, superGlueBurst } from './effects';
+import { mixSeed } from '../render/particles/jrandom';
 
 export interface OpDef {
   /** DelayInstruction semantics: the tick pass ends after this instruction */
@@ -249,8 +251,6 @@ function animateBE(o: OpCtx): { get(): number; set(v: number): void } | null {
 
 // ------------------------------------------------------------------------------------------------ the registry
 
-const noop: OpDef = {};
-
 export const OPS: Record<string, OpDef> = {
   // ---- 1. general
   idle: { blocking: true, ticks: (a) => intv(a.ticks) },
@@ -373,13 +373,16 @@ export const OPS: Record<string, OpDef> = {
     tick(o) { const el = resolveLink<Section>(o.st, o.args.link, 'section'); if (el) el.stab = vec(o.args.anchor); },
   },
   'world.setBlocks': {
-    // ReplaceBlocksInstruction(selection, _ -> state, replaceAir = true)
+    // ReplaceBlocksInstruction(selection, _ -> state, replaceAir = true); spawnParticles -> addBlockDestroyEffects(pos, prevState)
     tick(o) {
       const sel = selOf(o, o.args.selection);
       const state = o.args.state as { name: string; props: Record<string, string> };
+      const particles = Boolean(o.args.particles);
+      let n = 0;
       for (const k of sel.keys) {
         const p = k.split(',').map(Number) as Vec3;
         if (!insideBounds(o.st.world, p)) continue;
+        if (particles) destroyEffect(o, n++, p);
         setBlock(o.st.world, p, { name: state.name, props: { ...state.props } });
       }
       queueRedraw(o.st);
@@ -387,8 +390,11 @@ export const OPS: Record<string, OpDef> = {
   },
   'world.modifyBlocks': {
     tick(o) {
+      const particles = Boolean(o.args.particles);
+      let n = 0;
       for (const ch of (o.args.changes ?? []) as Array<{ pos: Vec3; state: { name: string; props: Record<string, string> }; be?: 'keep' | 'new' }>) {
         if (!insideBounds(o.st.world, ch.pos)) continue;
+        if (particles) destroyEffect(o, n++, ch.pos);
         setBlock(o.st.world, ch.pos, { name: ch.state.name, props: { ...ch.state.props } }, { be: ch.be });
       }
       queueRedraw(o.st);
@@ -401,6 +407,7 @@ export const OPS: Record<string, OpDef> = {
       const w = o.st.world;
       const progress = (w.breaking.get(k) ?? -1) + 1;
       if (progress === 9) {
+        destroyEffect(o, 0, pos);
         setBlock(w, pos, { name: 'minecraft:air', props: {} });
         w.breaking.delete(k);
         queueRedraw(o.st);
@@ -506,12 +513,55 @@ export const OPS: Record<string, OpDef> = {
     },
   },
 
-  // ---- 5. effects (particles are not rendered: see NOOP_OPS)
-  'effects.createRedstoneParticles': noop,
-  'effects.emitParticles': noop,
-  'effects.addParticles': noop,
-  'effects.rotationIndicator': noop,
-  'effects.superGlue': noop,
+  // ---- 5. effects: records for the particle system (effects.ts, render/particles)
+  // EffectInstructions.createRedstoneParticles: EmitParticlesInstruction(centre, withinBlock(dust), amount per tick, 2 ticks)
+  'effects.createRedstoneParticles': {
+    ticks: () => 2,
+    first(o) {
+      emitRecord(o.st, o.idx, { cycles: 2, perTick: num(o.args.amount), mode: 'within', at: centerOf(vec(o.args.pos)), motion: [0, 0, 0], particle: { kind: 'dust', color: rgbOf(num(o.args.color)), scale: 1 } });
+    },
+  },
+  // EffectInstructions.emitParticles(location, emitter, amountPerCycle, cycles)
+  'effects.emitParticles': {
+    ticks: (a) => intv(a.cycles),
+    first(o) {
+      const e = (o.args.emitter ?? {}) as { kind?: string; particle?: unknown; motion?: unknown };
+      const particle = particleOpts(e.particle);
+      if (!particle) { noteUnsupported(o.st, `effects.emitParticles:${(e.particle as { type?: string })?.type}`); return; }
+      emitRecord(o.st, o.idx, {
+        cycles: intv(o.args.cycles), perTick: num(o.args.amountPerCycle), mode: e.kind === 'withinBlock' ? 'within' : 'simple',
+        at: vec(o.args.location), motion: vec(e.motion), particle,
+      });
+    },
+  },
+  // scene.addInstruction(s -> s.getWorld().addParticle(...)) for each particle: one instantaneous burst
+  'effects.addParticles': {
+    first(o) {
+      const items: Array<{ particle: NonNullable<ReturnType<typeof particleOpts>>; at: Vec3; motion: Vec3 }> = [];
+      for (const q of (o.args.particles ?? []) as Array<{ particle: unknown; location: Vec3; motion: Vec3 }>) {
+        const particle = particleOpts(q.particle);
+        if (!particle) { noteUnsupported(o.st, `effects.addParticles:${(q.particle as { type?: string })?.type}`); continue; }
+        items.push({ particle, at: vec(q.location), motion: vec(q.motion) });
+      }
+      if (items.length) burstRecord(o.st, o.idx, items);
+    },
+  },
+  // CreateSceneBuilder.rotationIndicator: only kinetic blocks with a block entity speed spawn anything
+  'effects.rotationIndicator': {
+    first(o) {
+      const pos = vec(o.args.pos);
+      const b = o.st.world.blocks.get(keyOf(pos));
+      const items = rotationBurst(b?.state, b?.nbt, pos, Boolean(o.args.direction));
+      if (items) burstRecord(o.st, o.idx, items);
+    },
+  },
+  // SuperGlueItem.spawnParticles(world, pos, side, fullBlock)
+  'effects.superGlue': {
+    first(o) {
+      const pos = vec(o.args.pos);
+      burstRecord(o.st, o.idx, superGlueBurst(pos, o.args.side as Direction, Boolean(o.args.fullBlock), mixSeed(o.idx, o.st.tick)));
+    },
+  },
 
   // ---- 6. special
   'special.movePointOfInterest': {
@@ -573,16 +623,18 @@ export const OPS: Record<string, OpDef> = {
   },
 };
 
+/** a block that is removed with particles (ReplaceBlocksInstruction.spawnParticles): the destroy effect of its previous state */
+function destroyEffect(o: OpCtx, sub: number, pos: Vec3): void {
+  const prev = o.st.world.blocks.get(keyOf(pos));
+  if (!prev || prev.state.name === 'minecraft:air') return;
+  destroyRecord(o.st, o.idx, sub, pos, { name: prev.state.name, props: { ...prev.state.props } });
+}
+
 /**
  * Ops that are executed (timing, links, state bookkeeping) but deliberately render nothing, with the reason.
  * `node tools/c2-opscheck.mjs` prints this table.
  */
 export const NOOP_OPS: Record<string, string> = {
-  'effects.createRedstoneParticles': 'dust particles are a purely visual one-shot effect without influence on any later state',
-  'effects.emitParticles': 'particle emitter (smoke, splash...): visual only',
-  'effects.addParticles': 'explicit particle list (item/dust particles): visual only',
-  'effects.rotationIndicator': 'RotationIndicatorParticle ring: visual only',
-  'effects.superGlue': 'SuperGlueItem.spawnParticles: visual only',
   configureBasePlate: 'build-time op, applied at load (OPS 0.2)',
   scaleSceneView: 'build-time op, applied at load (OPS 0.2)',
   setSceneOffsetY: 'build-time op, applied at load (OPS 0.2)',

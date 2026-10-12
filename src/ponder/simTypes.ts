@@ -121,6 +121,8 @@ export interface InstrRT {
   d?: Record<string, unknown>;
 }
 
+import type { FxRecord } from '../render/particles/emitter';
+
 export interface SimState {
   tick: number;
   finished: boolean;
@@ -141,6 +143,8 @@ export interface SimState {
   beRev: number;
   /** keys of block entities carrying an animated value (`PonderAnim`), advanced once per tick like BlockEntity.tick() */
   animKeys: string[];
+  /** particle effect records (effects.* ops and particle-producing world ops), plain data: see effects.ts */
+  fx: FxRecord[];
   /** ops met at run time that have no implementation (never silently ignored) */
   unsupported: string[];
   errors: string[];

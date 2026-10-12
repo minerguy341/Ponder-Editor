@@ -17,6 +17,9 @@ import { hash32, keyOf, lerpV, parseKey } from './util';
 import { ITEM_TYPE } from './entities';
 import { resolveItemModel } from '../render/itemModel';
 import { maskedLookup } from './world';
+import { ParticleField } from '../render/particles/field';
+import { isSolidState } from '../render/particles/bank';
+import type { SpriteBank } from '../render/particles/emitter';
 
 const DEG = THREE.MathUtils.DEG2RAD;
 const FACE_ALPHA = 0.5; // AABBOutline: faces at half alpha (`alphaMult = highlighted ? 1 : 0.5`)
@@ -176,8 +179,22 @@ export class SceneGraph {
     private readonly lighting: PonderLighting,
     private readonly factory: CreateVisualFactory | null,
     private readonly onError: PlayerErrorSink,
+    particleTexture: THREE.Texture | null = null,
   ) {
     parent.add(this.root);
+    if (particleTexture) {
+      this.particles = new ParticleField(particleTexture, (x, y, z) => isSolidState(this.lookup.getState([x, y, z])));
+      this.root.add(this.particles.object);
+    }
+  }
+
+  /** the particle field of the scene (effect records -> particles, see render/particles); null when the atlas is not available */
+  private particles: ParticleField | null = null;
+  private spriteBank: SpriteBank | null = null;
+
+  /** the resolved sprites of the scene's particle records (prepareSpriteBank) */
+  setSpriteBank(bank: SpriteBank | null): void {
+    this.spriteBank = bank;
   }
 
   /** lookup of the whole world (block entity visuals see neighbours outside their section) */
@@ -469,6 +486,7 @@ export class SceneGraph {
       if (node.visual) node.visual.update(ticks);
     }
     this.frameEntities(st, pt);
+    if (this.particles && this.spriteBank) this.particles.update(st.fx, this.spriteBank, st.tick, pt);
     for (const [slot, node] of this.outlines) {
       const e = st.outlines[slot];
       if (!e) continue;
@@ -496,6 +514,8 @@ export class SceneGraph {
     this.outlines.clear();
     for (const node of this.entities.values()) node.group.removeFromParent();
     this.entities.clear();
+    this.particles?.dispose();
+    this.particles = null;
     this.root.removeFromParent();
     const w = this.waiters; this.waiters = []; w.forEach((f) => f());
   }
