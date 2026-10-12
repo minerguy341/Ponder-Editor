@@ -490,6 +490,8 @@ export class PonderUI implements ProgressSource {
       b.setContent({ node: el }, this.gui);
       b.onClick(() => this.o.onOpenTag?.(id));
       b.tooltip = tag.title;
+      // in the scene the hover streak shows the title (PonderUI); the description goes on the hit area as a hover/long-press tooltip
+      if (tag.description) b.hit.title = tag.description;
       b.fade.startWithValue(this.fadeIn.getValue(1));
       const s = streak(this.chrome, x + 20 + 4, y - 3, 26, 0);
       s.style.display = 'none';
