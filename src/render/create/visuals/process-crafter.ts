@@ -26,6 +26,7 @@ import {
   crafterInitialSlot0, crafterPointingX, crafterTargetDirection, gridSize, stackOf,
 } from '../vanilla/crafterChain';
 import { PoseStack } from '../items/pose';
+import { getLogisticsWorld, registerItemReceiver, type ItemReceiverContext } from '../items/logisticsSim';
 import { type Axis, DIR_STEP, KineticVisual, PARTIAL, axisOf, getPartial, horizontalAngle, readKinetic, rotationOffset, stateDirection } from '../common';
 import type { Nbt } from '../common';
 import { StepSim } from '../common/sim';
@@ -59,6 +60,52 @@ export function crafterPartMatrix(facing: Direction, pointing: string | undefine
 }
 
 const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
+
+/**
+ * Items a belt delivers into a crafter (B2's receiver registry, logisticsSim.ts registerItemReceiver). The arrival is recorded with
+ * the simulation's current tick (LogisticsWorld.now, read at runtime) and the replay applies it as an insertItem call at that tick.
+ * Approximations: the item goes into the crafter the belt ends at (not the connected group's first accepting inventory), it is
+ * taken whenever the crafter is not covered, and a replay that refuses it (crafter not IDLE, another item in slot 0) drops it.
+ */
+interface Arrival { tick: number; stack: ItemStackJson }
+const arrivalLogs = new WeakMap<object, { seen: Set<string>; byPos: Map<string, Arrival[]> }>();
+function logOf(world: object): { seen: Set<string>; byPos: Map<string, Arrival[]> } {
+  let l = arrivalLogs.get(world);
+  if (!l) { l = { seen: new Set(), byPos: new Map() }; arrivalLogs.set(world, l); }
+  return l;
+}
+/** LogisticsWorld.now (the step being simulated), undefined if the sim does not expose it. */
+function simNow(world: object): number | undefined {
+  const n = (world as { now?: unknown }).now;
+  return typeof n === 'number' ? n : undefined;
+}
+registerItemReceiver(CRAFTER, {
+  canInsertFromSide: (_side: Direction, ctx: ItemReceiverContext) => {
+    const st = ctx.world.lookup.getState(ctx.pos);
+    if (!st || st.name !== CRAFTER) return false;
+    return ctx.world.lookup.getBlockEntity(ctx.pos)?.nbt?.Cover !== true;
+  },
+  insert: (stack: ItemStackJson, _side: Direction, ctx: ItemReceiverContext) => {
+    const t = simNow(ctx.world);
+    if (t === undefined) return stack;
+    const log = logOf(ctx.world);
+    const key = `${ctx.pos.join(',')}|${t}|${stack.id}|${stack.count ?? 1}`;
+    if (!log.seen.has(key)) {
+      log.seen.add(key);
+      const k = ctx.pos.join(',');
+      const list = log.byPos.get(k) ?? [];
+      list.push({ tick: t, stack: { id: stack.id, count: stack.count ?? 1 } });
+      log.byPos.set(k, list);
+    }
+    return null;
+  },
+});
+
+/** Recorded belt arrivals into the crafter at `pos` up to `tick`, as insertItem call entries (the replay's own call format). */
+function arrivalCalls(world: object, pos: readonly number[], tick: number): CallEntry[] {
+  const list = logOf(world).byPos.get(pos.join(',')) ?? [];
+  return list.filter((a) => a.tick <= tick).map((a) => ({ t: a.tick, path: [{ m: 'insertItem', a: [0, a.stack, false] }] }));
+}
 
 class CrafterVisual extends KineticVisual {
   private facing: Direction;
@@ -136,6 +183,9 @@ class CrafterVisual extends KineticVisual {
    */
   private chainAt(ticks: number): { state: ChainState; pt: number; speedCd: number } {
     const lookup = this.ctx.lookup;
+    // the belt arrivals of this tick: the logistics simulation brought to `ticks` (pure: any order gives the same states)
+    const lw = getLogisticsWorld(lookup);
+    lw.advance(ticks);
     const stateAt = (p: readonly number[]) => lookup.getState([p[0], p[1], p[2]] as [number, number, number]);
     const topo = chainTopology(stateAt, this.block.pos);
     // one kinetic network: every crafter of the chain turns with this crafter's speed timeline
@@ -156,7 +206,9 @@ class CrafterVisual extends KineticVisual {
         destination: !!dest && dest.name !== 'minecraft:air',
         calls: () => {
           const c = lookup.getBlockEntity(vec)?.nbt?.PonderCalls;
-          return Array.isArray(c) ? (c as CallEntry[]) : [];
+          const own = Array.isArray(c) ? (c as CallEntry[]) : [];
+          const arr = arrivalCalls(lw, vec, ticks);
+          return arr.length ? [...own, ...arr].sort((x, y) => (Number(x.t) || 0) - (Number(y.t) || 0)) : own;
         },
       };
     });
