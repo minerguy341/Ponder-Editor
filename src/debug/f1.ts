@@ -10,7 +10,6 @@ import { PonderViewer } from '../render/viewer';
 import { createVisual, isEntityRendered } from '../render/create';
 import { bindFluidScene, fluidEventsOf, getFluidWorld } from '../render/create/fluidnet/events';
 import type { FluidWorld } from '../render/create/fluidnet/world';
-import * as THREE from 'three';
 import { FLUID_TEXTURE_IDS } from '../render/create/fluidnet/visual';
 
 const qs = new URLSearchParams(location.search);
@@ -31,7 +30,6 @@ interface F1Handle {
   viewer: PonderViewer;
   renderer: typeof renderer;
   info: typeof info;
-  THREE: typeof THREE;
   visuals: { v: BlockVisual; b: BlockInstance }[];
   fluid: () => FluidWorld | null;
   setTicks(t: number): void;
@@ -39,7 +37,7 @@ interface F1Handle {
 }
 
 const handle: F1Handle = {
-  viewer, renderer, info, THREE, visuals: [], fluid: () => null,
+  viewer, renderer, info, visuals: [], fluid: () => null,
   setTicks: () => {},
   lookup: null,
 };
@@ -54,10 +52,6 @@ async function sceneMode(id: string, tick: number): Promise<void> {
   bindFluidScene(lookup, st.blocks, fluidEventsOf(scene.instructions));
   await renderer.prepare(st.blocks.map((b) => b.state));
   await renderer.ensureTextures(FLUID_TEXTURE_IDS);
-  if (qs.get('full')) {
-    (renderer.atlas as unknown as { dirty: unknown[] }).dirty.length = 0;
-    renderer.atlas.texture.needsUpdate = true;
-  }
   const group = renderer.buildSection(st.blocks, { lookup });
   viewer.world.add(group);
   const ctx = { renderer, lookup };
@@ -75,60 +69,6 @@ async function sceneMode(id: string, tick: number): Promise<void> {
     renderer.tick(performance.now());
     viewer.renderFrame();
   };
-  if (qs.get('rawtest')) {
-    // plain MeshBasicMaterial on the atlas texture, UVs over the lava still sprite: what the GPU holds there
-    const sp = renderer.atlas.sprite(qs.get('rawtest')!);
-    const geo = new THREE.PlaneGeometry(1, 1);
-    const uv = geo.attributes.uv as THREE.BufferAttribute;
-    for (let i = 0; i < uv.count; i++) uv.setXY(i, sp.u0 + (sp.u1 - sp.u0) * uv.getX(i), sp.v0 + (sp.v1 - sp.v0) * uv.getY(i));
-    const mat = new THREE.MeshBasicMaterial({ map: renderer.atlas.texture, side: THREE.DoubleSide });
-    const plane = new THREE.Mesh(geo, mat);
-    plane.position.set(5.5, 3.5, 5.5);
-    viewer.world.add(plane);
-  }
-  if (qs.get('clonefluid')) {
-    for (const e of handle.visuals) e.v.object.traverse((o) => {
-      const m = o as THREE.Mesh;
-      if (!m.isMesh || !String(m.name).startsWith('fluid')) return;
-      m.visible = false;
-      setTimeout(() => {}, 0);
-      const c = new THREE.Mesh(m.geometry, new THREE.MeshBasicMaterial({ map: renderer.atlas.texture, side: THREE.DoubleSide }));
-      c.position.copy(m.parent!.position.clone().add(new THREE.Vector3(0, 0, 0)));
-      c.matrixAutoUpdate = true; c.position.set(e.b.pos[0], e.b.pos[1], e.b.pos[2]); (window as unknown as Record<string, unknown>).__cloned = true;
-      viewer.world.add(c);
-    });
-  }
-  if (qs.get('hidefluid')) {
-    let n = 0;
-    for (const e of handle.visuals) e.v.object.traverse((o) => { if ((o as THREE.Mesh).isMesh) n++; });
-    (window as unknown as Record<string, unknown>).__meshCount = n;
-    for (const e of handle.visuals) e.v.object.traverse((o) => {
-      const nm = String(o.name || o.parent?.name || '');
-      if (nm.startsWith('fluid')) o.visible = false;
-    });
-  }
-  if (qs.get('hidesection')) group.visible = false;
-  if (qs.get('hidekind')) {
-    const ks = qs.get('hidekind')!.split(',');
-    for (const e of handle.visuals) if (ks.includes(e.b.state.name)) e.v.object.visible = false;
-  }
-  if (qs.get('nearest')) {
-    const t = renderer.atlas.texture;
-    t.minFilter = THREE.NearestFilter; t.magFilter = THREE.NearestFilter; t.generateMipmaps = false; t.needsUpdate = true;
-  }
-  if (qs.get('hidevisuals')) {
-    for (const e of handle.visuals) e.v.object.visible = false;
-  }
-  if (qs.get('plainfluid')) {
-    for (const e of handle.visuals) e.v.object.traverse((o) => {
-      const m = o as THREE.Mesh;
-      if (!m.isMesh || !String(m.name).startsWith('fluid')) return;
-      const mode = qs.get('plainfluid');
-      const mat = new THREE.MeshBasicMaterial({ map: renderer.atlas.texture, side: THREE.DoubleSide, vertexColors: mode !== 'nocolor' });
-      m.material = mat;
-      (window as unknown as Record<string, unknown>).__swapped = (((window as unknown as Record<string, unknown>).__swapped as number) ?? 0) + 1;
-    });
-  }
   handle.setTicks(tick);
   info.ready = true;
 }

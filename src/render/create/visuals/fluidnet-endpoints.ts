@@ -153,12 +153,18 @@ const HOSE_KIND: Record<string, string> = { HOSE: PARTIAL.HOSE, MAGNET: PARTIAL.
 
 interface Rope { obj: THREE.Object3D; kind: string }
 
+/** AllSpriteShifts.HOSE_PULLEY_COIL: the coil's sprite and the scrolling sprite it is shifted into */
+const COIL_SPRITE = 'create:block/hose_pulley_coil';
+const COIL_SCROLL_SPRITE = 'create:block/hose_pulley_coil_scroll';
+
 class HosePulleyBlockVisual extends KineticVisual {
   private readonly fluidWorld: FluidWorld;
   private ropes: Rope[] = [];
   private shaft: Axis = 'x';
   private coil: THREE.Object3D | null = null;
   private readonly coilBase = new THREE.Matrix4();
+  /** the coil meshes with their own UV geometry and the UVs as the model has them (the scroll rewrites from these) */
+  private coilUv: { mesh: THREE.Mesh; base: Float32Array }[] = [];
 
   constructor(block: BlockInstance, ctx: VisualContext) {
     super(block, ctx);
@@ -176,6 +182,15 @@ class HosePulleyBlockVisual extends KineticVisual {
     this.coilBase.copy(coilMatrix(this.shaft));
     this.coil.matrix.copy(this.coilBase);
     this.object.add(this.coil);
+    // a private geometry per coil: the scroll moves this pulley's UVs only
+    await (this.ctx.renderer as BlockRendererImpl).ensureTextures([COIL_SPRITE, COIL_SCROLL_SPRITE]);
+    this.coil.traverse((o) => {
+      const m = o as THREE.Mesh;
+      if (!m.isMesh) return;
+      m.geometry = m.geometry.clone();
+      const uv = m.geometry.attributes.uv as THREE.BufferAttribute;
+      this.coilUv.push({ mesh: m, base: Float32Array.from(uv.array as ArrayLike<number>) });
+    });
   }
 
   protected override onUpdate(ticks: number): void {
@@ -185,6 +200,30 @@ class HosePulleyBlockVisual extends KineticVisual {
     // HosePulleyBlockEntity.getInterpolatedOffset: max(offset.getValue(pt), 3 / 16)
     const offset = Math.max(prev + (value - prev) * partialOf(ticks), 3 / 16);
     this.placeRopes(offset);
+    this.scrollCoil(offset);
+  }
+
+  /**
+   * AbstractPulleyRenderer.scrollCoil(coil, coilShift, offset, speedModifier = 1): the coil's texture scrolls by a fraction of its
+   * sprite that depends on the rope's offset. SuperByteBuffer.shiftUVScrolling moves each vertex's place in the coil sprite by
+   * that amount inside the scrolling sprite.
+   */
+  private scrollCoil(offset: number): void {
+    const half = offset * 0.5;
+    const scroll = -(half + 3 / 16) - Math.floor((half + 3 / 16) * -2) / 2;
+    const renderer = this.ctx.renderer as BlockRendererImpl;
+    const orig = renderer.atlas.sprite(COIL_SPRITE);
+    const target = renderer.atlas.sprite(COIL_SCROLL_SPRITE);
+    const size = target.v1 - target.v0;
+    const delta = scroll * size;
+    for (const { mesh, base } of this.coilUv) {
+      const uv = mesh.geometry.attributes.uv as THREE.BufferAttribute;
+      for (let i = 0; i < uv.count; i++) {
+        const rel = (base[2 * i + 1] - orig.v0) + delta;
+        uv.setY(i, target.v0 + (((rel % size) + size) % size));
+      }
+      uv.needsUpdate = true;
+    }
   }
 
   /** AbstractPulleyRenderer.renderSafe: the magnet at the end, half segments at the joint, full ropes above it (running = true) */

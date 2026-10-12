@@ -47,7 +47,7 @@ try {
       for (const [tag, t] of [['mid', mid], ['end', end]]) {
         await page.evaluate((h) => { location.hash = h; }, `#/scene/${e.id}?t=${t}`);
         // wait until the player has loaded the scene (the "Loading Ponder..." splash is gone), then let the frame settle
-        await page.waitForFunction(() => !document.body.innerText.includes('Loading Ponder'), null, { timeout: 90000 }).catch(() => {});
+        await page.waitForFunction(() => !/Loading (Ponder|scene)/.test(document.body.innerText), null, { timeout: 90000 }).catch(() => {});
         await page.waitForTimeout(2500);
         await page.screenshot({ path: path.join(outDir, `${slug}-${tag}.png`) });
       }

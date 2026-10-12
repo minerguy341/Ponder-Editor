@@ -17,6 +17,7 @@ import { posKey } from '../common/math';
 import { CreativeTankStore, EMPTY_FLUID, TankStore, isEmptyFluid, type FluidHandler, type FluidStack } from './model';
 import { transportKind, type TransportKind } from './topology';
 import { Flow, TransportNode, tickNode, type FluidLevel } from './sim';
+import { Boiler, type Side } from './boiler';
 
 export type FluidCall = { path: { m: string; a?: unknown[] }[] } | { if: unknown; then: unknown[]; else: unknown[] };
 
@@ -30,6 +31,16 @@ export type FluidEvent = { tick: number } & (
 
 /** A structure block as the scene starts (the initial lookup). */
 export interface InitialBlock { pos: Vec3; state: BlockState; nbt?: Record<string, unknown> }
+
+/** a windowless controller's boiler as the tank renderer reads it (FluidTankRenderer.renderAsBoiler) */
+export interface BoilerView {
+  controller: Vec3;
+  width: number;
+  active: boolean;
+  /** LerpedFloat gauge: prev/value (getValue(pt) = prev + (value - prev) * pt) */
+  gauge: { value: number; prev: number };
+  occluded(side: Side): boolean;
+}
 
 /** Capacity (mB) of one block's fluid store (FluidTankBlockEntity.getCapacityMultiplier = 16 * 1000, SpoutBlockEntity 1000,
  *  ItemDrainBlockEntity 1500, BasinBlockEntity input tank 1000, HosePulleyBlockEntity internal tank 1500). */
@@ -65,16 +76,27 @@ const FLUID_OF_BUCKET: Record<string, string> = {
 
 const AIR = new Set(['minecraft:air', 'minecraft:cave_air', 'minecraft:void_air']);
 
+/** SpoutBlockEntity.processingTicks at which a held item is filled, and the fluid one glass bottle takes */
+const SPOUT_FILL_TICK = 5;
+const SPOUT_BOTTLE_AMOUNT = 250;
+
 /** levelValue/levelPrev: the fluidLevel LerpedFloat (EXP chase of the fill state, `speed` per tick) */
 interface TankEntry { store: TankStore; levelValue: number; levelPrev: number; home: Vec3; speed: number }
 interface HoseState { offset: number; prev: number; isMoving: boolean }
 
-/** FluidTankBlockEntity.Controller: the controller's position (array or {X,Y,Z}), undefined when the block is its own controller */
-function controllerOf(nbt: Record<string, unknown> | undefined): Vec3 | undefined {
+/**
+ * FluidTankBlockEntity.Controller of the tank at `pos`, in scene coordinates. The saved Controller is a world position, and
+ * LastKnownPos is the same block's world position, so the controller's scene position is pos + (Controller - LastKnownPos).
+ * Undefined when the block is its own controller.
+ */
+function controllerOf(pos: Vec3, nbt: Record<string, unknown> | undefined): Vec3 | undefined {
   const c = nbt?.Controller as number[] | { X: number; Y: number; Z: number } | undefined;
   if (!c) return undefined;
-  if (Array.isArray(c)) return [c[0], c[1], c[2]];
-  return [c.X, c.Y, c.Z];
+  const world: Vec3 = Array.isArray(c) ? [c[0], c[1], c[2]] : [c.X, c.Y, c.Z];
+  const known = nbt?.LastKnownPos as number[] | { X: number; Y: number; Z: number } | undefined;
+  if (!known) return world;
+  const k: Vec3 = Array.isArray(known) ? [known[0], known[1], known[2]] : [known.X, known.Y, known.Z];
+  return [pos[0] + world[0] - k[0], pos[1] + world[1] - k[1], pos[2] + world[2] - k[2]];
 }
 
 /** FluidTankBlockEntity.getTotalTankSize * getCapacityMultiplier: Size^2 * Height blocks */
@@ -92,6 +114,8 @@ export class FluidWorld implements FluidLevel {
   private nbts = new Map<string, Record<string, unknown>>();
   private nodes = new Map<string, TransportNode>();
   private stores = new Map<string, TankEntry>();
+  /** BoilerData of the windowless controller tanks */
+  private boilers = new Map<string, Boiler>();
   private hoses = new Map<string, HoseState>();
   /** SpoutBlockEntity.processingTicks (-1 idle) per spout */
   private spouts = new Map<string, number>();
@@ -135,6 +159,13 @@ export class FluidWorld implements FluidLevel {
   handlerAt(pos: Vec3, _side: Direction): FluidHandler | undefined {
     const s = this.stateAt(pos);
     if (!s || STORE_CAPACITY[s.name] === undefined) return undefined;
+    return this.handlerOf(pos);
+  }
+
+  /** FluidTankBlockEntity.handlerForCapability: the BoilerFluidHandler while the boiler is active, else the tank */
+  private handlerOf(pos: Vec3): FluidHandler {
+    const b = this.boilers.get(this.storeKeyOf(pos));
+    if (b?.isActive()) return b.supply;
     return this.storeAt(pos).store;
   }
 
@@ -235,6 +266,7 @@ export class FluidWorld implements FluidLevel {
     this.nbts.clear();
     this.nodes.clear();
     this.stores.clear();
+    this.boilers.clear();
     this.hoses.clear();
     this.spouts.clear();
     this.speeds.clear();
@@ -264,6 +296,7 @@ export class FluidWorld implements FluidLevel {
   private dropEntities(k: string): void {
     this.nodes.delete(k);
     this.stores.delete(k);
+    this.boilers.delete(k);
     this.hoses.delete(k);
     this.spouts.delete(k);
     this.speeds.delete(k);
@@ -296,7 +329,7 @@ export class FluidWorld implements FluidLevel {
     }
     if (STORE_CAPACITY[state.name] !== undefined) {
       // a tank that is not its network's controller has no store of its own (storeKeyOf resolves to the controller)
-      if (state.name === 'create:fluid_tank' && controllerOf(nbt) && posKey(controllerOf(nbt)!) !== k) return;
+      if (state.name === 'create:fluid_tank' && controllerOf(pos, nbt) && posKey(controllerOf(pos, nbt)!) !== k) return;
       this.makeStore(pos, state.name, nbt);
     }
   }
@@ -310,6 +343,10 @@ export class FluidWorld implements FluidLevel {
     const speed = name === 'create:fluid_tank' || name === 'create:creative_fluid_tank' ? 0.5 : 0.25;
     const e: TankEntry = { store, levelValue: store.getFluidAmount() / cap, levelPrev: store.getFluidAmount() / cap, home: pos, speed };
     this.stores.set(posKey(pos), e);
+    // FluidTankBlockEntity.window false: a steam boiler candidate (BoilerData is evaluated on the controller)
+    if (name === 'create:fluid_tank' && nbt.Window !== undefined && Number(nbt.Window) === 0) {
+      this.boilers.set(posKey(pos), new Boiler(pos, Number(nbt.Size ?? 1), Number(nbt.Height ?? 1), nbt));
+    }
     return e;
   }
 
@@ -318,7 +355,7 @@ export class FluidWorld implements FluidLevel {
     const k = posKey(pos);
     const s = this.stateAt(pos);
     if (s?.name === 'create:fluid_tank') {
-      const c = controllerOf(this.nbts.get(k));
+      const c = controllerOf(pos, this.nbts.get(k));
       if (c) return posKey(c);
     }
     return k;
@@ -402,8 +439,14 @@ export class FluidWorld implements FluidLevel {
       if (node.kind === 'valve') this.valveTick(node);
     }
     for (const [k, h] of this.hoses) this.hoseTick(k, h);
-    // SpoutBlockEntity.tick: processingTicks-- while >= 0
-    for (const [k, t] of this.spouts) if (t >= 0) this.spouts.set(k, t - 1);
+    // SpoutBlockEntity.tick: processingTicks-- while >= 0. At 5 the held item is filled (SpoutBlockEntity.whenItemHeld): the fluid
+    // is taken from the spout's tank, 250 mB per glass bottle (PotionFluidHandler.getRequiredAmountForFilledBottle)
+    for (const [k, t] of this.spouts) {
+      if (t < 0) continue;
+      this.spouts.set(k, t - 1);
+      const tank = this.stores.get(k)?.store;
+      if (t - 1 === SPOUT_FILL_TICK && tank && tank.getFluidAmount() >= SPOUT_BOTTLE_AMOUNT) tank.drain(SPOUT_BOTTLE_AMOUNT, false);
+    }
     for (const e of this.stores.values()) {
       // FluidTankBlockEntity.tick: fluidLevel.chase(fillState, .5, EXP)
       e.levelPrev = e.levelValue;
@@ -411,6 +454,26 @@ export class FluidWorld implements FluidLevel {
       if (Math.abs(e.levelValue - target) < 1e-5) e.levelValue = target;
       else e.levelValue += (target - e.levelValue) * e.speed;
     }
+    // FluidTankBlockEntity.tick -> BoilerData.tick (after the fluid level chase, as in the block entity)
+    const at = (p: Vec3) => this.stateAt(p);
+    for (const b of this.boilers.values()) {
+      b.evaluate(at);
+      b.tick(at);
+    }
+  }
+
+  /** the boiler of the network at `pos` (windowless controllers only): activity, gauge, and the sides a block hides */
+  boilerAt(pos: Vec3): BoilerView | undefined {
+    const b = this.boilers.get(this.storeKeyOf(pos));
+    if (!b) return undefined;
+    const at = (p: Vec3) => this.stateAt(p);
+    return {
+      controller: b.controller,
+      width: b.width,
+      active: b.isActive(),
+      gauge: b.gauge,
+      occluded: (side: Side) => b.occluded(side, at),
+    };
   }
 
   /** FluidValveBlockEntity.tick after the transport tick: pointer chaser, then the ENABLED state follows the pointer */
@@ -455,7 +518,7 @@ export class FluidWorld implements FluidLevel {
     if (!('path' in c)) return; // branches are not produced for fluid blocks
     const s = this.stateAt(pos);
     if (!s) return;
-    let cur: { t: 'be' } | { t: 'level' } | { t: 'store'; store: TankStore } | { t: 'void' } = { t: 'be' };
+    let cur: { t: 'be' } | { t: 'level' } | { t: 'store'; store: FluidHandler } | { t: 'void' } = { t: 'be' };
     for (const step of c.path) {
       if (cur.t === 'void') return;
       const a = step.a ?? [];
@@ -471,7 +534,7 @@ export class FluidWorld implements FluidLevel {
           const at = a[1] as Vec3 | undefined;
           if (cur.t !== 'level' || !at) return;
           const h = this.handlerAt(at, 'up');
-          cur = h ? { t: 'store', store: this.storeAt(at).store } : { t: 'void' };
+          cur = h ? { t: 'store', store: h } : { t: 'void' };
           break;
         }
         case 'getBehaviour':
@@ -497,7 +560,7 @@ export class FluidWorld implements FluidLevel {
           return;
         case 'setContainedFluid':
           if (cur.t === 'store' && cur.store instanceof CreativeTankStore) cur.store.setContainedFluid(a[0] as FluidStack);
-          else if (cur.t === 'store') cur.store.setFluid(a[0] as FluidStack);
+          else if (cur.t === 'store' && cur.store instanceof TankStore) cur.store.setFluid(a[0] as FluidStack);
           return;
         case 'onSpeedChanged': {
           const node = this.nodeAt(pos);
