@@ -18,6 +18,9 @@ import { ITEM_TYPE } from './entities';
 import { SceneEntities } from '../render/entities/sceneEntities';
 import { resolveItemModel } from '../render/itemModel';
 import { maskedLookup } from './world';
+import { ParticleField } from '../render/particles/field';
+import { isSolidState } from '../render/particles/bank';
+import type { SpriteBank } from '../render/particles/emitter';
 
 const DEG = THREE.MathUtils.DEG2RAD;
 const FACE_ALPHA = 0.5; // AABBOutline: faces at half alpha (`alphaMult = highlighted ? 1 : 0.5`)
@@ -179,9 +182,14 @@ export class SceneGraph {
     private readonly lighting: PonderLighting,
     private readonly factory: CreateVisualFactory | null,
     private readonly onError: PlayerErrorSink,
+    particleTexture: THREE.Texture | null = null,
   ) {
     parent.add(this.root);
     this.sceneEntities = new SceneEntities(this.root, { lighting, renderer, track: (p) => this.track(p), onError: (m) => onError(m) });
+    if (particleTexture) {
+      this.particles = new ParticleField(particleTexture, (x, y, z) => isSolidState(this.lookup.getState([x, y, z])));
+      this.root.add(this.particles.object);
+    }
   }
 
   /** counts an asynchronous load for idle() */
@@ -191,6 +199,15 @@ export class SceneGraph {
       this.pendingCount--;
       if (this.pendingCount === 0) { const w = this.waiters; this.waiters = []; w.forEach((f) => f()); }
     });
+  }
+
+  /** the particle field of the scene (effect records -> particles, see render/particles); null when the atlas is not available */
+  private particles: ParticleField | null = null;
+  private spriteBank: SpriteBank | null = null;
+
+  /** the resolved sprites of the scene's particle records (prepareSpriteBank) */
+  setSpriteBank(bank: SpriteBank | null): void {
+    this.spriteBank = bank;
   }
 
   /** lookup of the whole world (block entity visuals see neighbours outside their section) */
@@ -488,6 +505,9 @@ export class SceneGraph {
     }
     this.frameEntities(st, pt);
     this.sceneEntities.frame(st, pt);
+    // the particle clock is the world clock: PonderScene keeps ticking the world after the timeline ends (effects queued by the last
+    // instruction pass become live and keep animating), while the scene clock (st.tick) is clamped at the total
+    if (this.particles && this.spriteBank) this.particles.update(st.fx, this.spriteBank, st.worldTick, pt);
     for (const [slot, node] of this.outlines) {
       const e = st.outlines[slot];
       if (!e) continue;
@@ -516,6 +536,8 @@ export class SceneGraph {
     for (const node of this.entities.values()) node.group.removeFromParent();
     this.entities.clear();
     this.sceneEntities.dispose();
+    this.particles?.dispose();
+    this.particles = null;
     this.root.removeFromParent();
     const w = this.waiters; this.waiters = []; w.forEach((f) => f());
   }

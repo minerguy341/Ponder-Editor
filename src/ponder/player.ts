@@ -11,6 +11,8 @@ import { loadStructure } from '../assets/structure';
 import { missingResources } from '../assets/resources';
 import { PonderLighting } from '../render/environment';
 import { preloadVisuals } from '../render/create/index';
+import { effectStates, prepareSpriteBank } from '../render/particles/bank';
+import type { BlockRendererImpl } from '../render/blockRenderer';
 import { controlEvents, lineEvents, outlineEvents, textEvents } from './events';
 import { createRunner, createSimCtx, maxWorldTick, runnerReplay, runnerSeek, runnerStep, type SimRunner } from './sim';
 import type { SimCtx } from './simTypes';
@@ -112,13 +114,17 @@ export class PonderPlayer implements PlayerLike {
       const structure = await loadStructure(scene.schematicNamespace || 'create', scene.schematic);
       if (token !== this.loadToken) return;
       const ctx = createSimCtx(scene, structure);
-      const states = collectStates(scene, structure.blocks);
+      const states = [...collectStates(scene, structure.blocks), ...effectStates(scene)];
       await this.renderer.prepare(states);
       // Create visuals preload before the first section build (connected-texture sheets, bracket partials; registry preloadVisuals)
       await preloadVisuals({ renderer: this.renderer, lookup: { getState: () => undefined, getBlockEntity: () => undefined } });
       if (token !== this.loadToken) return;
       // Create logistics (belts, depots, basins, funnels, chutes, fluids): the simulation of this scene and its textures
       await (this.renderer as unknown as { ensureTextures?: (ids: string[]) => Promise<void> }).ensureTextures?.(LOGISTICS_TEXTURES);
+      if (token !== this.loadToken) return;
+      // effect particles (dust, rotation indicators, emitters, glue, block destroy): the sprites of this scene's particle records
+      const atlasRenderer = this.renderer as unknown as Partial<BlockRendererImpl>;
+      const bank = atlasRenderer.atlas ? await prepareSpriteBank(this.renderer as BlockRendererImpl, scene, structure.blocks.map((b) => b.state)) : null;
       if (token !== this.loadToken) return;
 
       this.ctx = ctx;
@@ -128,7 +134,8 @@ export class PonderPlayer implements PlayerLike {
       this.viewer.setBounds(structure.size[0], structure.size[1], structure.size[2]);
       this.viewer.setBasePlate(ctx.config.basePlate);
       this.viewer.setShadowHidden(ctx.config.hideShadow);
-      this.graph = new SceneGraph(this.viewer.world, this.renderer, this.viewer.lighting, this.visualFactory, (m) => this.playerErrors.push(m));
+      this.graph = new SceneGraph(this.viewer.world, this.renderer, this.viewer.lighting, this.visualFactory, (m) => this.playerErrors.push(m), atlasRenderer.atlas?.texture ?? null);
+      this.graph.setSpriteBank(bank);
       bindLogisticsScene(this.graph.worldLookup, lookupOfBlocks(structure.blocks), logisticsEventsOf(scene.instructions));
       // Create fluid networks (pipes, pumps, valves, tanks, spouts, drains, hose pulleys): the scene's fluid world (F1)
       bindFluidScene(this.graph.worldLookup, structure.blocks, fluidEventsOf(scene.instructions));

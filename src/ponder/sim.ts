@@ -9,6 +9,7 @@ import type { ActorEl, Chaser, InstrRT, Section, SimCtx, SimState } from './simT
 import { lerpAabb, noteUnsupported, makeSelectionOutline, lerped, FADE_TICKS } from './simCore';
 import { keyOf, lerpV } from './util';
 import { createWorld } from './world';
+import { pruneFx } from './effects';
 import { resolveSelection } from './selection';
 import { sin as mthSin } from '../render/entities/mth';
 
@@ -64,7 +65,7 @@ export function initState(ctx: SimCtx): SimState {
     elements: { base }, outlines: {},
     cam: { yaw: chaser(55 + 90), pitch: chaser(-35) },
     poi: { cur: [0, 4, 0], chase: [0, 4, 0] },
-    entities: [], nextEntityId: 1, nextItemId: 1, beRev: 0, animKeys: [], unsupported: [], errors: [],
+    entities: [], nextEntityId: 1, nextItemId: 1, beRev: 0, animKeys: [], fx: [], unsupported: [], errors: [],
   };
 }
 
@@ -216,6 +217,7 @@ export function tickScene(ctx: SimCtx, st: SimState): void {
     if (!done) st.active.push(idx);
     if (isBlocking(instrs[idx].op)) break;
   }
+  pruneFx(st);
   if (st.active.length === 0 && st.next >= instrs.length) st.finished = true;
 }
 
