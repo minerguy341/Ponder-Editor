@@ -80,7 +80,9 @@ Ledger (N of N to be re-measured with gate-check --status):
 - [x] U1-G7: browser test updated for tags.json and the new screens
   CHECK: node tools/d-browser-test.mjs 2>&1 | tail -3
   EXPECT: BROWSER_OK
-  EVIDENCE: ok   browser works without the engine | BROWSER_OK
+  EVIDENCE: ok   browser works without the engine | BROWSER_OK. Final tree (33f21c6): BROWSER_OK in tools/verify/out/final/browser3.txt;
+  an earlier run on the same code under load (load average 21) failed one check, 'deep link ?t= seeks' (tick 93 instead of >=150,
+  tools/verify/out/final/browser2.txt); the isolated deep-link script reaches tick 150 at once. Cause not identified: residual risk.
 
 - [x] U1-G8: ponder api check
   CHECK: node tools/d-ponder-api-check.mjs 2>&1 | tail -2
