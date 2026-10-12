@@ -60,6 +60,17 @@ export interface WorldEntity {
   yaw?: number;
   props?: Record<string, unknown>;
   discarded?: boolean;
+  /** LivingEntity.lerpTo state (lerpX/Y/Z, lerpSteps): steps left and target position */
+  lerp?: { x: number; y: number; z: number; steps: number };
+  /** yRotO (previous body/entity yaw, degrees) */
+  yawPrev?: number;
+  /** head and body yaw (yHeadRot / yBodyRot and their previous values, degrees); body defaults to 0 */
+  headYaw?: number;
+  headYawPrev?: number;
+  bodyYaw?: number;
+  bodyYawPrev?: number;
+  /** LivingEntity.walkAnimation (WalkAnimationState) */
+  walk?: { speedOld: number; speed: number; position: number };
 }
 
 export interface EntityEl {
@@ -94,6 +105,15 @@ export interface ActorEl {
   conductor: boolean;
   /** ticks since creation (parrot animation clock) */
   age: number;
+  /** ParrotElementImpl.location (createBirb) or the cart location (+1/16), scene units */
+  location: Vec3;
+  /** ParrotElementImpl entity.flapSpeed / oFlapSpeed (wing bob); flap stays 0 in Ponder (Parrot.aiStep never runs) */
+  flapSpeed: number;
+  oFlapSpeed: number;
+  /** entity position at the end of the previous element tick (entity.xOld), used by ParrotPose.FlappyPose */
+  lastPos: Vec3;
+  /** createBirb variant (`ChainConveyorParrotElement` = the parrot hanging on a chain conveyor, with its wrench) */
+  variant?: string;
 }
 
 export type El = Section | OverlayEl | OutlinerEl | EntityEl | BeltItemEl | ActorEl;

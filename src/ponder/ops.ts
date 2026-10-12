@@ -3,14 +3,14 @@
 // Pure simulation: no three.js, no DOM.
 
 import type { Direction, Selection, Vec3 } from '../contract';
-import { addEntity, applyEntityCall, entityMatches, ITEM_TYPE, type Call } from './entities';
+import { addEntity, applyEntityCall, entityMatches, ITEM_TYPE, PACKAGE_TYPE, type Call } from './entities';
 import { addSel, copySel, subtractSel } from './selection';
 import type { ActorEl, BeltItemEl, EntityEl, OutlinerEl, OverlayEl, Section } from './simTypes';
 import {
   addElement, aabbOf, baseSection, elementId, fadeVecFor, forceFade, lerped, makeSelectionOutline, newSection, noteUnsupported,
   opposite, outlinerChaseAabb, outlinerShowLine, queueRedraw, resolveLink, selOf, setFade, vec, type Args, type OpCtx,
 } from './simCore';
-import { addV, asVec3, cloneJson, DIR_OPPOSITE, keyOf, paletteColor, scaleV } from './util';
+import { addV, asVec3, cloneJson, DIR_OPPOSITE, hash32, keyOf, paletteColor, scaleV } from './util';
 import { insideBounds, restoreBlocks as restoreWorldBlocks, setBlock } from './world';
 
 export interface OpDef {
@@ -483,6 +483,8 @@ export const OPS: Record<string, OpDef> = {
       const spec = o.args.entity as { type: string; pos?: Vec3; ctor?: Vec3; calls?: Call[] };
       const pos = spec.pos ?? spec.ctor ?? [0, 0, 0];
       const e = addEntity(o.st, { type: spec.type, pos: asVec3(pos), vel: [0, 0, 0] });
+      // PackageEntity's constructor draws its yaw from an unseeded RandomSource: a stable per-entity value stands in
+      if (spec.type === PACKAGE_TYPE) e.yaw = (hash32(String(e.id)) / 0xffffffff) * 360;
       for (const c of spec.calls ?? []) applyEntityCall(o.st, e, c);
       if (!spec.calls?.some((c) => c.path?.[0]?.set === 'xo')) e.prev = [...e.pos] as Vec3;
       if (o.out) addElement(o.st, { kind: 'entity', id: o.out, visible: true, fade: lerped(1), entity: e.id } satisfies EntityEl);
@@ -569,6 +571,8 @@ export const OPS: Record<string, OpDef> = {
       const el: ActorEl = {
         kind: 'parrot', id: elementId(o), visible: true, fade: lerped(0), fadeVec: [0, 0, 0], instr: o.idx,
         pos: { p: [0, 0, 0], c: [0, 0, 0] }, rot: { p: [0, 180, 0], c: [0, 180, 0] }, pose: cloneJson(o.args.pose ?? { type: 'face_poi' }), conductor: false, age: 0,
+        location: vec(o.args.location), flapSpeed: 0, oFlapSpeed: 0, lastPos: [0, 0, 0],
+        ...(o.args.variant ? { variant: String(o.args.variant) } : {}),
       };
       addElement(o.st, el);
       el.visible = true;
@@ -593,6 +597,7 @@ export const OPS: Record<string, OpDef> = {
       const el: ActorEl = {
         kind: 'cart', id: elementId(o), visible: true, fade: lerped(0), fadeVec: [0, 0, 0], instr: o.idx,
         pos: { p: [0, 0, 0], c: [0, 0, 0] }, rot: { p: [0, num(o.args.angle), 0], c: [0, num(o.args.angle), 0] }, pose: { location: [loc[0], loc[1] + 1 / 16, loc[2]], cartType: o.args.cartType }, conductor: false, age: 0,
+        location: [loc[0], loc[1] + 1 / 16, loc[2]], flapSpeed: 0, oFlapSpeed: 0, lastPos: [0, 0, 0],
       };
       addElement(o.st, el);
       el.visible = true;

@@ -15,6 +15,7 @@ import type { Sel } from './selection';
 import type { AABB, OutlineEntry, Section, SimState } from './simTypes';
 import { hash32, keyOf, lerpV, parseKey } from './util';
 import { ITEM_TYPE } from './entities';
+import { SceneEntities } from '../render/entities/sceneEntities';
 import { resolveItemModel } from '../render/itemModel';
 import { maskedLookup } from './world';
 
@@ -169,6 +170,8 @@ export class SceneGraph {
   private waiters: Array<() => void> = [];
   private lastBeRev = -1;
   private disposed = false;
+  /** parrots, minecarts and the non-item world entities (src/render/entities) */
+  private readonly sceneEntities: SceneEntities;
 
   constructor(
     parent: THREE.Object3D,
@@ -178,6 +181,16 @@ export class SceneGraph {
     private readonly onError: PlayerErrorSink,
   ) {
     parent.add(this.root);
+    this.sceneEntities = new SceneEntities(this.root, { lighting, renderer, track: (p) => this.track(p), onError: (m) => onError(m) });
+  }
+
+  /** counts an asynchronous load for idle() */
+  private track<T>(p: Promise<T>): Promise<T> {
+    this.pendingCount++;
+    return p.finally(() => {
+      this.pendingCount--;
+      if (this.pendingCount === 0) { const w = this.waiters; this.waiters = []; w.forEach((f) => f()); }
+    });
   }
 
   /** lookup of the whole world (block entity visuals see neighbours outside their section) */
@@ -209,6 +222,7 @@ export class SceneGraph {
     this.syncVisuals(st);
     this.syncOutlines(st);
     this.syncEntities(st);
+    this.sceneEntities.sync(st);
     this.lastBeRev = st.beRev;
   }
 
@@ -473,6 +487,7 @@ export class SceneGraph {
       if (node.visual) node.visual.update(ticks);
     }
     this.frameEntities(st, pt);
+    this.sceneEntities.frame(st, pt);
     for (const [slot, node] of this.outlines) {
       const e = st.outlines[slot];
       if (!e) continue;
@@ -500,6 +515,7 @@ export class SceneGraph {
     this.outlines.clear();
     for (const node of this.entities.values()) node.group.removeFromParent();
     this.entities.clear();
+    this.sceneEntities.dispose();
     this.root.removeFromParent();
     const w = this.waiters; this.waiters = []; w.forEach((f) => f());
   }

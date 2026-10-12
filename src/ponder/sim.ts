@@ -10,6 +10,7 @@ import { lerpAabb, noteUnsupported, makeSelectionOutline, lerped, FADE_TICKS } f
 import { keyOf, lerpV } from './util';
 import { createWorld } from './world';
 import { resolveSelection } from './selection';
+import { sin as mthSin } from '../render/entities/mth';
 
 export interface StructureLike {
   size: Vec3;
@@ -91,10 +92,18 @@ function tickActor(ctx: SimCtx, st: SimState, el: ActorEl): void {
   if (el.kind === 'parrot') {
     el.rot.p = el.rot.c;
     el.age++;
+    el.oFlapSpeed = el.flapSpeed; // ParrotElementImpl.tick: oFlapSpeed = flapSpeed
     const pose = (el.pose ?? { type: 'face_poi' }) as { type?: string; pos?: Vec3 };
     const loc = (ctx.instrs[el.instr].args?.location ?? [0, 0, 0]) as Vec3;
     if (pose.type === 'dance') {
       el.rot.c = [el.rot.c[0], el.rot.c[1] - 2, el.rot.c[2]];
+    } else if (pose.type === 'flappy') {
+      // ParrotPose.FlappyPose.tick: the wing bob follows how far the parrot moved since the previous tick. PonderUI.ponderTicks
+      // (the UI clock) is replaced by the scene tick: the game's clock offset is not part of the scene.
+      const len = Math.hypot(el.pos.c[0] - el.lastPos[0], el.pos.c[1] - el.lastPos[1], el.pos.c[2] - el.lastPos[2]);
+      const phase = Math.min(len * 15, 8);
+      el.flapSpeed = mthSin(((st.tick % 100) * phase)) + 1;
+      if (len === 0) el.flapSpeed = 0;
     } else if (pose.type === 'face_poi' || pose.type === 'face_cursor') {
       // FaceVecPose.tick (the cursor variant has no mouse in a headless player: it faces the point of interest)
       const eye: Vec3 = [loc[0] + el.pos.c[0], loc[1] + el.pos.c[1] + 0.54, loc[2] + el.pos.c[2]];
@@ -109,6 +118,7 @@ function tickActor(ctx: SimCtx, st: SimState, el: ActorEl): void {
       const rpm = Number(st.world.blocks.get(keyOf(pose.pos))?.nbt?.Speed ?? 0);
       el.rot.c = [el.rot.c[0], el.rot.c[1] + rpm * 0.3, el.rot.c[2]];
     }
+    el.lastPos = [el.pos.c[0], el.pos.c[1], el.pos.c[2]]; // entity.xOld = getX() after pose.tick
   } else {
     el.age++;
   }
