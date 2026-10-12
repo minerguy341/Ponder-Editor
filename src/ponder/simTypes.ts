@@ -94,6 +94,15 @@ export interface ActorEl {
   conductor: boolean;
   /** ticks since creation (parrot animation clock) */
   age: number;
+  /** ParrotElementImpl.location (createBirb) or the cart location (+1/16), scene units */
+  location: Vec3;
+  /** ParrotElementImpl entity.flapSpeed / oFlapSpeed (wing bob); flap stays 0 in Ponder (Parrot.aiStep never runs) */
+  flapSpeed: number;
+  oFlapSpeed: number;
+  /** entity position at the end of the previous element tick (entity.xOld), used by ParrotPose.FlappyPose */
+  lastPos: Vec3;
+  /** createBirb variant (`ChainConveyorParrotElement` = the parrot hanging on a chain conveyor, with its wrench) */
+  variant?: string;
 }
 
 export type El = Section | OverlayEl | OutlinerEl | EntityEl | BeltItemEl | ActorEl;

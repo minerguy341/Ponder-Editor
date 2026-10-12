@@ -528,6 +528,8 @@ export const OPS: Record<string, OpDef> = {
       const el: ActorEl = {
         kind: 'parrot', id: elementId(o), visible: true, fade: lerped(0), fadeVec: [0, 0, 0], instr: o.idx,
         pos: { p: [0, 0, 0], c: [0, 0, 0] }, rot: { p: [0, 180, 0], c: [0, 180, 0] }, pose: cloneJson(o.args.pose ?? { type: 'face_poi' }), conductor: false, age: 0,
+        location: vec(o.args.location), flapSpeed: 0, oFlapSpeed: 0, lastPos: [0, 0, 0],
+        ...(o.args.variant ? { variant: String(o.args.variant) } : {}),
       };
       addElement(o.st, el);
       el.visible = true;
@@ -552,6 +554,7 @@ export const OPS: Record<string, OpDef> = {
       const el: ActorEl = {
         kind: 'cart', id: elementId(o), visible: true, fade: lerped(0), fadeVec: [0, 0, 0], instr: o.idx,
         pos: { p: [0, 0, 0], c: [0, 0, 0] }, rot: { p: [0, num(o.args.angle), 0], c: [0, num(o.args.angle), 0] }, pose: { location: [loc[0], loc[1] + 1 / 16, loc[2]], cartType: o.args.cartType }, conductor: false, age: 0,
+        location: [loc[0], loc[1] + 1 / 16, loc[2]], flapSpeed: 0, oFlapSpeed: 0, lastPos: [0, 0, 0],
       };
       addElement(o.st, el);
       el.visible = true;
