@@ -5,10 +5,12 @@
 import * as THREE from 'three';
 import { setItemCameraSource } from '../render/create/items/cameraFacing';
 import { bindLogisticsScene, lookupOfBlocks, logisticsEventsOf, LOGISTICS_TEXTURES } from '../render/create/items/logisticsSim';
+import { bindFluidScene, fluidEventsOf } from '../render/create/fluidnet/events';
 import type { BlockState, SceneJson, Vec3, BlockRenderer, CreateVisualFactory } from '../contract';
 import { loadStructure } from '../assets/structure';
 import { missingResources } from '../assets/resources';
 import { PonderLighting } from '../render/environment';
+import { preloadVisuals } from '../render/create/index';
 import { controlEvents, lineEvents, outlineEvents, textEvents } from './events';
 import { createRunner, createSimCtx, runnerReplay, runnerSeek, runnerStep, type SimRunner } from './sim';
 import type { SimCtx } from './simTypes';
@@ -97,6 +99,8 @@ export class PonderPlayer implements PlayerLike {
       const ctx = createSimCtx(scene, structure);
       const states = collectStates(scene, structure.blocks);
       await this.renderer.prepare(states);
+      // Create visuals preload before the first section build (connected-texture sheets, bracket partials; registry preloadVisuals)
+      await preloadVisuals({ renderer: this.renderer, lookup: { getState: () => undefined, getBlockEntity: () => undefined } });
       if (token !== this.loadToken) return;
       // Create logistics (belts, depots, basins, funnels, chutes, fluids): the simulation of this scene and its textures
       await (this.renderer as unknown as { ensureTextures?: (ids: string[]) => Promise<void> }).ensureTextures?.(LOGISTICS_TEXTURES);
@@ -110,6 +114,8 @@ export class PonderPlayer implements PlayerLike {
       this.viewer.setShadowHidden(ctx.config.hideShadow);
       this.graph = new SceneGraph(this.viewer.world, this.renderer, this.viewer.lighting, this.visualFactory, (m) => this.playerErrors.push(m));
       bindLogisticsScene(this.graph.worldLookup, lookupOfBlocks(structure.blocks), logisticsEventsOf(scene.instructions));
+      // Create fluid networks (pipes, pumps, valves, tanks, spouts, drains, hose pulleys): the scene's fluid world (F1)
+      bindFluidScene(this.graph.worldLookup, structure.blocks, fluidEventsOf(scene.instructions));
       this.emit('keyframes', scene.keyframes);
       this.syncAndEmit(true);
       await this.settle();

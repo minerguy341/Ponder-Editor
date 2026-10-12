@@ -20,6 +20,8 @@ import { maskedLookup } from './world';
 
 const DEG = THREE.MathUtils.DEG2RAD;
 const FACE_ALPHA = 0.5; // AABBOutline: faces at half alpha (`alphaMult = highlighted ? 1 : 0.5`)
+const AABB_LINE_DIVISOR = 4; // ChasingAABB edges: visible thickness = lineWidth / 4 (matched to ref2)
+const AABB_INFLATE = 1 / 32; // the outline box sits slightly outside the block faces (ref2) so the edges are not hidden by them
 
 export interface PlayerErrorSink {
   (message: string): void;
@@ -510,17 +512,18 @@ function buildOutline(e: OutlineEntry, sig: string): OutlineNode {
   group.name = 'outline';
   const color = new THREE.Color(e.color);
   const faceMat = new THREE.MeshBasicMaterial({ color, transparent: true, opacity: FACE_ALPHA, depthWrite: false, side: THREE.DoubleSide });
-  const edgeMat = new THREE.MeshBasicMaterial({ color, transparent: true, opacity: 1, depthWrite: false });
+  const edgeMat = new THREE.MeshBasicMaterial({ color, transparent: true, opacity: 1, depthWrite: false, side: THREE.DoubleSide });
   let faceBase = FACE_ALPHA;
   if (e.kind === 'aabb' && e.bb) {
-    const bb = e.bb;
-    const faces = cuboidGeometry([[bb[0] - 1 / 256, bb[1] - 1 / 256, bb[2] - 1 / 256, bb[3] + 1 / 256, bb[4] + 1 / 256, bb[5] + 1 / 256]]);
-    const fm = new THREE.Mesh(faces, faceMat);
-    fm.renderOrder = 10;
-    group.add(fm);
-    const edges = new THREE.Mesh(cuboidGeometry(edgeBoxes(bb, e.lineWidth)), edgeMat);
+    // ChasingAABBOutline in the reference (ref2, overlay.chaseBoundingBoxOutline): thin lime wireframe, no fill.
+    // Visible thickness is lineWidth / 4 blocks (1/16 -> ~2.6 px at the reference scale of ~170 px per block).
+    const b0 = e.bb;
+    const g = AABB_INFLATE;
+    const bb: AABB = [b0[0] - g, b0[1] - g, b0[2] - g, b0[3] + g, b0[4] + g, b0[5] + g];
+    const edges = new THREE.Mesh(cuboidGeometry(edgeBoxes(bb, e.lineWidth / AABB_LINE_DIVISOR)), edgeMat);
     edges.renderOrder = 11;
     group.add(edges);
+    faceBase = 0;
   } else if (e.kind === 'cluster' && e.keys) {
     const { quads, edges } = clusterFaces(e.keys);
     const pos: number[] = [];

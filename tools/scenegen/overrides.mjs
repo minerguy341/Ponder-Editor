@@ -1,6 +1,7 @@
 // Native replacements for the few CreateSceneBuilder methods whose Java bodies run *scene runtime* code (belt simulation, particles,
 // block-entity animation). Every other method of CreateSceneBuilder is interpreted from the real source.
 import { Unsupported, num } from './values.mjs';
+import { recordDrop } from './drops.mjs';
 import { HOOKS } from './serialize.mjs';
 import { SPECIAL } from './host/ponder.mjs';
 import { mkList } from './host/lang.mjs';
@@ -20,7 +21,10 @@ export function installOverrides(rt, ctxOf) {
     const cls = ctxOf.beClass(simpleName);
     return !!cls && !!be.entry.cls && rt.isSubclass(be.entry.cls, cls);
   };
-  const note = (r, msg) => r.notes.push(`${r.src()}: ${msg}`);
+  const note = (r, msg) => {
+    r.notes.push(`${r.src()}: ${msg}`);
+    recordDrop('note', 'override', msg.split(':')[0]);
+  };
 
   // ---- train tracks: TrackMaterial.ALL only ever holds Create's own andesite material (addon materials register themselves);
   // evaluating the real TrackMaterial builders drags in the whole recipe datagen layer, so allBlocks() is answered directly.
@@ -119,7 +123,8 @@ export function installOverrides(rt, ctxOf) {
   set('WorldInstructions', 'connectCrafterInvs', (rt2, self, [a, b]) => {
     rec(self).emit('world.connectCrafterInvs', { pos1: bp(a), pos2: bp(b) });
   });
-  set('WorldInstructions', 'markSmartBlockEntityVirtual', () => undefined);
+  // BE rendering flag: Create marks a block entity as rendered by a virtual (Flywheel) visual; no scene state changes
+  set('WorldInstructions', 'markSmartBlockEntityVirtual', () => recordDrop('override', 'WorldInstructions', 'markSmartBlockEntityVirtual', 'no-op by design'));
 
   // ---- EffectInstructions
   set('EffectInstructions', 'superGlue', (rt2, self, [pos, side, full]) => {

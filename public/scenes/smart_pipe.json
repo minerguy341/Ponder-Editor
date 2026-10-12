@@ -92,6 +92,7 @@
         "m": "fill",
         "a": [
          {
+          "fluid": "neoforge:milk",
           "amount": 1000
          },
          {
