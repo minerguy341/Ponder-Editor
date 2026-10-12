@@ -76,6 +76,8 @@ export async function renderOurs(browser, url, sceneId, tick, { settle = 800, ke
   await p.page.goto(url);
   await waitPonder(p.page);
   await ponder.loadScene(p.page, sceneId);
+  // park the pointer on empty sky, away from every GUI button (a hovered Next button changes the Up Next box and the hover text)
+  await p.page.mouse.move(1000, 60);
   await ponder.pause(p.page);
   await ponder.seek(p.page, tick);
   await sleep(settle);
@@ -161,6 +163,7 @@ export async function runCompare({ url, refsDir, only, sweep = 0, settle = 800, 
         await sp.page.goto(url);
         await waitPonder(sp.page);
         await ponder.loadScene(sp.page, ref.sceneId);
+        await sp.page.mouse.move(1000, 60); // pointer parked on empty sky (see renderOurs)
         await ponder.pause(sp.page);
         const rows = [];
         for (let t = lo; t <= hi; t++) {

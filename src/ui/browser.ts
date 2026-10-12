@@ -1,19 +1,19 @@
-// Scene browser: the web counterpart of Ponder's index / tag screens. Search by title, item (id or name), tag (id or title),
-// filter by tag, every scene is a link (`#/scene/<id>`) so that routing, reload and the back button just work.
+// Index page: the web counterpart of Ponder's tag index (PonderTagIndexScreen: "Welcome to Ponder", the description and the
+// "Available Categories" tag buttons; each tag opens its tag screen). Below it the scene search (web addition): search by title,
+// item (id or name) or tag, every scene is a link (`#/scene/<id>?item=<subject>`) so that routing, reload and back just work.
 
 import type { SceneIndexEntry } from '../contract';
-import { itemName, type TagInfo, tagInfoOrDefault, sceneIdToHash } from './data';
+import { itemName, PONDER_UI_FALLBACK, sceneIdToHash, tagInfoOrDefault, type TagMap } from './data';
 import type { ItemIconRenderer } from './itemIcons';
 
 export interface BrowserOptions {
   container: HTMLElement;
   icons: ItemIconRenderer;
   index: SceneIndexEntry[];
-  tags: Map<string, TagInfo>;
+  tags: TagMap;
   getLang: () => Record<string, string> | null;
   query: string;
-  tag: string | null;
-  onFilterChange: (query: string, tag: string | null) => void;
+  onFilterChange: (query: string) => void;
 }
 
 const LOGO_URL = 'https://cdn.jsdelivr.net/gh/Creators-of-Create/Ponder@mc1.21.1/dev/common/src/main/resources/assets/ponder/textures/gui/logo.png';
@@ -29,21 +29,16 @@ function el<K extends keyof HTMLElementTagNameMap>(tag: K, cls?: string, parent?
 export class Browser {
   readonly root: HTMLElement;
   private input: HTMLInputElement;
-  private chips: HTMLElement;
   private list: HTMLElement;
   private count: HTMLElement;
   private empty: HTMLElement;
   private query: string;
-  private tag: string | null;
   private cards = new Map<string, HTMLAnchorElement>();
   private io: IntersectionObserver | null = null;
-  private tagCounts = new Map<string, number>();
-  private chipEls = new Map<string, HTMLButtonElement>();
   private langApplied = false;
 
   constructor(private o: BrowserOptions) {
     this.query = o.query;
-    this.tag = o.tag;
     this.root = el('div', 'pb-screen', o.container);
     this.root.setAttribute('role', 'main');
 
@@ -55,9 +50,11 @@ export class Browser {
     logo.crossOrigin = 'anonymous';
     logo.onerror = () => logo.remove();
     const titles = el('div', 'pb-titles', header);
-    el('h1', 'pb-title', titles, 'Ponder');
-    el('p', 'pb-sub', titles, 'Browse every Create ponder scene. Pick a scene to watch it, rotate it and step through it.');
+    el('h1', 'pb-title', titles, PONDER_UI_FALLBACK['ponder.ui.welcome']);
+    el('p', 'pb-sub', titles, PONDER_UI_FALLBACK['ponder.ui.index_description']);
     this.count = el('p', 'pb-count', titles);
+
+    this.buildCategories();
 
     const bar = el('div', 'pb-searchbar', this.root);
     this.input = el('input', 'pb-search', bar);
@@ -74,10 +71,6 @@ export class Browser {
       if (e.key === 'Escape') { this.input.value = ''; this.query = ''; this.apply(); }
     });
 
-    this.chips = el('div', 'pb-tags', this.root);
-    this.chips.setAttribute('role', 'group');
-    this.chips.setAttribute('aria-label', 'Filter by tag');
-
     this.list = el('div', 'pb-list', this.root);
     this.empty = el('p', 'pb-empty', this.root, 'No scene matches this search.');
     this.empty.hidden = true;
@@ -91,15 +84,32 @@ export class Browser {
     if (e.key === '/' && document.activeElement !== this.input) { e.preventDefault(); this.input.focus(); this.input.select(); }
   };
 
-  private build(): void {
-    const { index, tags, icons } = this.o;
-    // tag chips: registration order first (AllCreatePonderTags), unknown tags afterwards
-    const used = new Set<string>();
-    for (const e of index) for (const t of e.tags) { used.add(t); this.tagCounts.set(t, (this.tagCounts.get(t) ?? 0) + 1); }
-    const ordered = [...tags.keys()].filter((t) => used.has(t)).concat([...used].filter((t) => !tags.has(t)).sort());
-    this.addChip(null, 'All', index.length);
-    for (const t of ordered) this.addChip(t, tagInfoOrDefault(tags, t).title, this.tagCounts.get(t) ?? 0, tagInfoOrDefault(tags, t).icon);
+  /** "Available Categories": every tag registered with addToIndex, in registration order (PonderTagIndexScreen) */
+  private buildCategories(): void {
+    const { tags, icons } = this.o;
+    const cats = el('section', 'pb-cats', this.root);
+    el('h2', 'pb-cats-title', cats, 'Available Categories for Create');
+    const inspect = el('a', 'pb-back pb-items-link', cats, 'Items to inspect →');
+    inspect.href = '#/items';
+    const row = el('div', 'pb-tags', cats);
+    row.setAttribute('role', 'group');
+    row.setAttribute('aria-label', 'Tag categories');
+    for (const t of tags.values()) {
+      if (!t.inIndex) continue;
+      const a = el('a', 'pb-chip', row);
+      a.href = '#/tag/' + sceneIdToHash(t.id);
+      a.title = t.title;
+      a.setAttribute('aria-label', t.title);
+      if (t.icon) {
+        const slot = el('span', 'pb-chip-icon', a);
+        slot.appendChild(icons.element(t.icon, 20));
+      }
+      el('span', 'pb-chip-label', a, t.title);
+    }
+  }
 
+  private build(): void {
+    const { index, icons } = this.o;
     for (const entry of index) {
       const a = el('a', 'pb-card', this.list);
       a.href = '#/scene/' + sceneIdToHash(entry.id);
@@ -115,8 +125,7 @@ export class Browser {
       a.addEventListener('click', () => {
         // pick the subject item the user searched for (Ponder opens scenes per item)
         const item = this.subjectFor(entry);
-        if (item && item !== entry.items[0]) a.href = '#/scene/' + sceneIdToHash(entry.id) + '?item=' + encodeURIComponent(item);
-        else a.href = '#/scene/' + sceneIdToHash(entry.id);
+        a.href = '#/scene/' + sceneIdToHash(entry.id) + (item ? '?item=' + encodeURIComponent(item) : '');
       });
       this.cards.set(entry.id, a);
     }
@@ -136,22 +145,6 @@ export class Browser {
       for (const c of this.cards.values()) { const slot = c.querySelector('.pb-icon') as HTMLElement; if (slot.dataset.item) slot.appendChild(icons.element(slot.dataset.item, 48)); }
     }
     this.apply(false);
-  }
-
-  private addChip(tag: string | null, label: string, count: number, iconItem?: string | null): void {
-    const b = el('button', 'pb-chip', this.chips);
-    b.type = 'button';
-    if (iconItem) {
-      const slot = el('span', 'pb-chip-icon', b);
-      // chip icons are tiny (20 px) and few: render right away
-      slot.appendChild(this.o.icons.element(iconItem, 20));
-    }
-    el('span', 'pb-chip-label', b, label);
-    el('span', 'pb-chip-count', b, String(count));
-    b.setAttribute('aria-pressed', 'false');
-    b.title = tag ? tagInfoOrDefault(this.o.tags, tag).description || label : 'Show all scenes';
-    b.addEventListener('click', () => { this.tag = tag; this.apply(); });
-    this.chipEls.set(tag ?? '', b);
   }
 
   /** Display names become available once the lang files have loaded: update meta lines and search keys. */
@@ -199,23 +192,18 @@ export class Browser {
     let shown = 0;
     for (const entry of this.o.index) {
       const a = this.cards.get(entry.id)!;
-      let ok = !this.tag || entry.tags.includes(this.tag);
-      if (ok && toks.length) { const h = this.hay(entry); ok = toks.every((t) => h.includes(t)); }
+      let ok = true;
+      if (toks.length) { const h = this.hay(entry); ok = toks.every((t) => h.includes(t)); }
       a.hidden = !ok;
       if (ok) shown++;
     }
-    for (const [t, b] of this.chipEls) {
-      const on = (this.tag ?? '') === t;
-      b.classList.toggle('on', on);
-      b.setAttribute('aria-pressed', String(on));
-    }
     this.count.textContent = `${shown} of ${this.o.index.length} scenes`;
     this.empty.hidden = shown !== 0;
-    if (notify) this.o.onFilterChange(this.query, this.tag);
+    if (notify) this.o.onFilterChange(this.query);
   }
 
-  setFilter(query: string, tag: string | null): void {
-    this.query = query; this.tag = tag;
+  setFilter(query: string): void {
+    this.query = query;
     this.input.value = query;
     this.apply(false);
   }
