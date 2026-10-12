@@ -8,9 +8,11 @@ import type { PonderLighting } from '../environment';
 import type { ActorEl, SimState } from '../../ponder/simTypes';
 import { hash32 } from '../../ponder/util';
 import { createVisual } from '../create';
+import { resolveItemModel } from '../itemModel';
 import { PACKAGE_TYPE } from '../../ponder/entities';
 import { lerp } from './mth';
 import { packageEntityMatrix, packageModel } from './package';
+import { LivingVisual } from './living';
 import { ParrotVisual, PARROT_VARIANTS, type ParrotFrame, type ParrotState, type ParrotVariant } from './parrot';
 import { EMPTY_LOOKUP, MinecartVisual, type MinecartFrame } from './minecart';
 
@@ -23,16 +25,28 @@ export interface SceneEntitiesOptions {
   onError: (message: string) => void;
 }
 
-/** A world entity drawn by this layer (create:package). */
+/** A world entity drawn by this layer: a package (box model) or a living mob (LivingVisual). */
 interface WorldNode {
+  kind: 'package' | 'living';
   group: THREE.Group;
   box: string;
   model: THREE.Object3D | null;
+  living: LivingVisual | null;
+  pending?: boolean;
 }
+
+/** entity type -> the living visual kind */
+const LIVING_TYPES: Record<string, 'sheep' | 'blaze' | undefined> = { 'minecraft:sheep': 'sheep', 'minecraft:blaze': 'blaze' };
 
 function boxIdOf(e: { props?: Record<string, unknown> }): string {
   const box = e.props?.box as { id?: string } | undefined;
   return box?.id ?? 'create:cardboard_package_12x12';
+}
+
+/** `setColor(DyeColor.X)` recorded as {enum: "DyeColor.X"}; sheep default is white */
+function dyeOf(v: unknown): string {
+  const e = (v as { enum?: string } | undefined)?.enum;
+  return e ? e.replace(/^DyeColor\./, '') : 'WHITE';
 }
 
 interface ActorNode {
@@ -78,18 +92,35 @@ export class SceneEntities {
     this.syncWorld(st);
   }
 
-  /** World entities that are drawn here: create:package (the item entities stay with the scene graph). */
+  /** World entities that are drawn here: create:package, minecraft:sheep, minecraft:blaze (the item entities stay with the scene graph). */
   private syncWorld(st: SimState): void {
     const live = new Set<number>();
     for (const e of st.entities) {
-      if (e.discarded || e.type !== PACKAGE_TYPE) continue;
+      if (e.discarded) continue;
+      const living = LIVING_TYPES[e.type];
+      if (e.type !== PACKAGE_TYPE && !living) continue;
       live.add(e.id);
       if (this.world.has(e.id)) continue;
-      const node: WorldNode = { group: new THREE.Group(), box: boxIdOf(e), model: null };
-      node.group.name = `package:${node.box}`;
+      const node: WorldNode = { group: new THREE.Group(), box: boxIdOf(e), model: null, living: null, kind: living ? 'living' : 'package' };
       node.group.matrixAutoUpdate = false;
       this.root.add(node.group);
       this.world.set(e.id, node);
+      if (living) {
+        node.group.name = `living:${living}`;
+        node.pending = true;
+        const dye = dyeOf(e.props?.setColor);
+        this.opts.track(LivingVisual.create(living, dye, this.opts.lighting)).then((v) => {
+          node.pending = false;
+          if (!v || node.group.parent === null || this.disposed) { v?.dispose(); return; }
+          node.living = v;
+          node.group.add(v.object);
+        }, (err: unknown) => {
+          node.pending = false;
+          this.opts.onError(`${living}: ${(err as Error).message ?? String(err)}`);
+        });
+        continue;
+      }
+      node.group.name = `package:${node.box}`;
       this.opts.track(packageModel(node.box, this.opts.renderer)).then((m) => {
         if (!m || node.group.parent === null || this.disposed) return;
         node.model = m;
@@ -107,8 +138,20 @@ export class SceneEntities {
     for (const [id, node] of this.world) {
       const e = byId.get(id);
       if (!e) continue;
-      packageEntityMatrix(e.prev, e.pos, pt, e.yaw ?? 0, node.group.matrix);
       node.group.visible = true;
+      if (node.kind === 'living') {
+        if (node.living) {
+          const w = e.walk ?? { speedOld: 0, speed: 0, position: 0 };
+          node.living.update({
+            pt, posPrev: e.prev, pos: e.pos,
+            bodyYawPrev: e.bodyYawPrev ?? 0, bodyYaw: e.bodyYaw ?? 0,
+            headYawPrev: e.headYawPrev ?? e.headYaw ?? 0, headYaw: e.headYaw ?? 0,
+            tickCount: e.age, walkSpeedOld: w.speedOld, walkSpeed: w.speed, walkPosition: w.position, fade: 1,
+          }, this.opts.lighting);
+        }
+        continue;
+      }
+      packageEntityMatrix(e.prev, e.pos, pt, e.yaw ?? 0, node.group.matrix);
     }
   }
 
@@ -122,7 +165,13 @@ export class SceneEntities {
     if (el.kind === 'parrot') {
       node.pending = true;
       const variant = parrotVariantFor(el.id);
-      this.opts.track(ParrotVisual.create(variant, this.opts.lighting)).then((v) => {
+      const chain = el.variant === 'ChainConveyorParrotElement';
+      const load = async (): Promise<ParrotVisual | null> => {
+        // ChainConveyorParrotElement holds a wrench (create:wrench, GROUND display)
+        const wrench = chain ? (await resolveItemModel('create:wrench', this.opts.renderer as never)).object : null;
+        return ParrotVisual.create(variant, this.opts.lighting, wrench ? wrench.clone() : null);
+      };
+      this.opts.track(load()).then((v) => {
         node.pending = false;
         if (!v || node.dead || this.disposed) { v?.dispose(); return; }
         node.parrot = v;
@@ -231,6 +280,7 @@ export function parrotFrame(el: ActorEl, st: SimState, pt: number): ParrotFrame 
     flapSpeedPrev: chain ? 2 : el.oFlapSpeed,
     flapSpeed: chain ? 2 : el.flapSpeed,
     tickCount: el.age,
+    ...(chain ? { chainTime: st.tick + pt } : {}),
     state,
     fade: lerp(pt, el.fade.p, el.fade.c),
     fadeVec: el.fadeVec ? [el.fadeVec[0], el.fadeVec[1], el.fadeVec[2]] : null,

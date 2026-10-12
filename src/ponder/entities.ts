@@ -92,9 +92,21 @@ export function tickEntities(st: SimState): void {
     e.prev = [...e.pos] as Vec3;
     if (e.type === ITEM_TYPE) tickItem(st, e);
     else if (e.type === PACKAGE_TYPE) tickPackage(st, e);
+    else if (e.walk) {
+      // LivingEntity.aiStep -> travel (not controlled) -> calculateEntityAnimation: the horizontal distance moved this tick
+      const dx = e.pos[0] - e.prev[0], dz = e.pos[2] - e.prev[2];
+      walkUpdate(e.walk, Math.min(Math.hypot(dx, dz) * 4, 1), 0.4);
+    }
     if (e.pos[1] <= -0.5) e.discarded = true;
   }
   if (st.entities.some((e) => e.discarded)) st.entities = st.entities.filter((e) => !e.discarded);
+}
+
+/** WalkAnimationState.update(speed, multiplier) */
+export function walkUpdate(w: { speedOld: number; speed: number; position: number }, speed: number, multiplier: number): void {
+  w.speedOld = w.speed;
+  w.speed = w.speed + (speed - w.speed) * multiplier;
+  w.position = w.position + w.speed;
 }
 
 export const PACKAGE_TYPE = 'create:package';
@@ -218,12 +230,25 @@ export function applyEntityCall(st: SimState, e: WorldEntity, call: Call): void 
       if (first.set === 'xo') e.prev[0] = Number(first.v);
       else if (first.set === 'yo') e.prev[1] = Number(first.v);
       else if (first.set === 'zo') e.prev[2] = Number(first.v);
+      else if (first.set === 'yRotO') e.yawPrev = Number(first.v);
+      else if (first.set === 'yHeadRot') e.headYaw = Number(first.v);
+      else if (first.set === 'yHeadRotO') e.headYawPrev = Number(first.v);
+      else if (first.set === 'yBodyRot') e.bodyYaw = Number(first.v);
+      else if (first.set === 'yBodyRotO') e.bodyYawPrev = Number(first.v);
       return;
     }
     (e.props ??= {})[first.set] = first.v;
     return;
   }
-  if (first.f !== undefined) { (e.props ??= {}); return; } // walkAnimation.* etc.: purely cosmetic
+  if (first.f === 'walkAnimation') {
+    // LivingEntity.walkAnimation (WalkAnimationState): setSpeed / update(speed, multiplier)
+    const step = path[1];
+    const w = (e.walk ??= { speedOld: 0, speed: 0, position: 0 });
+    if (step?.m === 'setSpeed') w.speed = Number(step.a?.[0] ?? 0);
+    else if (step?.m === 'update') walkUpdate(w, Number(step.a?.[0] ?? 0), Number(step.a?.[1] ?? 1));
+    return;
+  }
+  if (first.f !== undefined) { (e.props ??= {}); return; }
   const a = first.a ?? [];
   switch (first.m) {
     case 'discard': case 'kill': case 'remove': e.discarded = true; return;

@@ -62,6 +62,15 @@ export interface WorldEntity {
   discarded?: boolean;
   /** LivingEntity.lerpTo state (lerpX/Y/Z, lerpSteps): steps left and target position */
   lerp?: { x: number; y: number; z: number; steps: number };
+  /** yRotO (previous body/entity yaw, degrees) */
+  yawPrev?: number;
+  /** head and body yaw (yHeadRot / yBodyRot and their previous values, degrees); body defaults to 0 */
+  headYaw?: number;
+  headYawPrev?: number;
+  bodyYaw?: number;
+  bodyYawPrev?: number;
+  /** LivingEntity.walkAnimation (WalkAnimationState) */
+  walk?: { speedOld: number; speed: number; position: number };
 }
 
 export interface EntityEl {

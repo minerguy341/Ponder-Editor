@@ -7,7 +7,7 @@
 import * as THREE from 'three';
 import type { PonderLighting } from '../environment';
 import { bakeLayer, CubeListBuilder, layerDefinition, LayerDefinition, MeshDefinition, ModelPart, poseOffset } from './modelPart';
-import { cos, DEG, sin } from './mth';
+import { angleLerp, cos, DEG, sin } from './mth';
 import { elementMaterial, entityBaseMaterial } from './textures';
 
 export type ParrotState = 'flying' | 'standing' | 'sitting' | 'party' | 'on_shoulder';
@@ -182,6 +182,8 @@ export interface ParrotFrame {
   /** flap state: flap = 0 in Ponder (see module comment) */
   flapSpeedPrev: number; flapSpeed: number;
   tickCount: number;
+  /** chain-conveyor parrot: the scene time (tick + partial tick) of its wobble; undefined for other parrots */
+  chainTime?: number;
   state: ParrotState;
   /** AnimatedSceneElementBase: fade (0..1) and fadeVec (applyFade translation scale), location */
   fade: number;
@@ -189,8 +191,14 @@ export interface ParrotFrame {
   location: [number, number, number];
 }
 
-/** ParrotElementImpl.renderLast + LivingEntityRenderer.render for one parrot.  Returns the chain's model matrices. */
-export function parrotTransform(f: ParrotFrame, out: THREE.Matrix4 = new THREE.Matrix4()): THREE.Matrix4 {
+/**
+ * ParrotElementImpl.renderLast + LivingEntityRenderer.render for one parrot, as two chains:
+ *   top  = applyFade * translate(location) * translate(entity pos, lerped) * RotY(yaw, lerped) [* chain wobble]
+ *   body = RotY(180 - bodyYaw) * scale(-1, -1, 1) * translate(0, -1.501, 0)     (the model root follows)
+ * The chain-conveyor parrot's wobble is ChainConveyorParrotElement.renderLast: translate(0, 1.5, 0), RotZ(sin((time + pt) * 0.2) * 10),
+ * translate(0, -1.5, 0), applied before its wrench and before the parrot entity.
+ */
+export function parrotTop(f: ParrotFrame, out: THREE.Matrix4 = new THREE.Matrix4()): THREE.Matrix4 {
   const { pt } = f;
   const fadeT = f.fadeVec ? new THREE.Matrix4().makeTranslation(f.fadeVec[0] * (f.fade - 1), f.fadeVec[1] * (f.fade - 1), f.fadeVec[2] * (f.fade - 1)) : new THREE.Matrix4();
   const loc = new THREE.Matrix4().makeTranslation(f.location[0], f.location[1], f.location[2]);
@@ -198,22 +206,55 @@ export function parrotTransform(f: ParrotFrame, out: THREE.Matrix4 = new THREE.M
   const py = f.posPrev[1] + (f.pos[1] - f.posPrev[1]) * pt;
   const pz = f.posPrev[2] + (f.pos[2] - f.posPrev[2]) * pt;
   const pos = new THREE.Matrix4().makeTranslation(px, py, pz);
-  const yaw = angleLerpDeg(pt, f.yRotPrev, f.yRot);
+  const yaw = angleLerp(pt, f.yRotPrev, f.yRot);
   const rotY = new THREE.Matrix4().makeRotationY(yaw * DEG);
-  // LivingEntityRenderer.setupRotations: mulPose(YP(180 - bodyRot)); bodyRot = rotLerp(yBodyRotO, yBodyRot) = 0 for Ponder parrots
-  const body = new THREE.Matrix4().makeRotationY((180 - 0) * DEG);
-  // scale(-1, -1, 1); translate(0, -1.501, 0)  (applied to the model vertices first)
-  const flip = new THREE.Matrix4().makeScale(-1, -1, 1);
-  const lift = new THREE.Matrix4().makeTranslation(0, -1.501, 0);
-  out.copy(fadeT).multiply(loc).multiply(pos).multiply(rotY).multiply(body).multiply(flip).multiply(lift);
+  out.copy(fadeT).multiply(loc).multiply(pos).multiply(rotY);
+  if (f.chainTime !== undefined) out.multiply(chainWobble(f.chainTime));
   return out;
 }
 
-function angleLerpDeg(pt: number, from: number, to: number): number {
-  let d = (to - from) % 360;
-  if (d >= 180) d -= 360;
-  if (d < -180) d += 360;
-  return from + d * pt;
+/** ChainConveyorParrotElement.renderLast: the swing about (0, 1.5, 0), `time` = scene tick + partial tick */
+export function chainWobble(time: number): THREE.Matrix4 {
+  const angle = sin(time * 0.2) * 10;
+  return new THREE.Matrix4()
+    .makeTranslation(0, 1.5, 0)
+    .multiply(new THREE.Matrix4().makeRotationZ(angle * DEG))
+    .multiply(new THREE.Matrix4().makeTranslation(0, -1.5, 0));
+}
+
+/** LivingEntityRenderer body chain with the parrot's bodyYaw = 0 (RotY(180)), scale(-1,-1,1), translate(0,-1.501,0). */
+export function parrotBody(out: THREE.Matrix4 = new THREE.Matrix4()): THREE.Matrix4 {
+  const body = new THREE.Matrix4().makeRotationY(180 * DEG);
+  const flip = new THREE.Matrix4().makeScale(-1, -1, 1);
+  const lift = new THREE.Matrix4().makeTranslation(0, -1.501, 0);
+  return out.copy(body).multiply(flip).multiply(lift);
+}
+
+/** Full chain of one parrot (top * body). */
+export function parrotTransform(f: ParrotFrame, out: THREE.Matrix4 = new THREE.Matrix4()): THREE.Matrix4 {
+  parrotTop(f, out);
+  return out.multiply(parrotBody());
+}
+
+/**
+ * The wrench of ChainConveyorParrotElement: pushPose; RotY(90) RotX(90) RotZ(90); scale(1.5); translate(-0.1, 0.2, -0.6); then
+ * ItemRenderer with ItemDisplayContext.GROUND.  The ground display of the wrench is block/block's (translation 3/16, scale 0.25).
+ */
+export function wrenchMatrix(out: THREE.Matrix4 = new THREE.Matrix4()): THREE.Matrix4 {
+  return out
+    .makeRotationY(90 * DEG)
+    .multiply(new THREE.Matrix4().makeRotationX(90 * DEG))
+    .multiply(new THREE.Matrix4().makeRotationZ(90 * DEG))
+    .multiply(new THREE.Matrix4().makeScale(1.5, 1.5, 1.5))
+    .multiply(new THREE.Matrix4().makeTranslation(-0.1, 0.2, -0.6));
+}
+
+/** The GROUND display of an item model (block/block): centred model space -> display. */
+export function groundDisplayMatrix(): THREE.Matrix4 {
+  return new THREE.Matrix4()
+    .makeTranslation(0, 3 / 16, 0)
+    .multiply(new THREE.Matrix4().makeScale(0.25, 0.25, 0.25))
+    .multiply(new THREE.Matrix4().makeTranslation(-0.5, -0.5, -0.5));
 }
 
 /** The parrot's wings/head as the renderer computes them for this frame (ParrotRenderer.getBob + LivingEntityRenderer). */
@@ -225,34 +266,46 @@ export function animateParrot(model: ParrotModel, f: ParrotFrame): void {
   model.setupAnim(f.state, f.tickCount, 0, 0, bob, 0, headPitch);
 }
 
-/** A parrot visual: the chain of groups of parrotTransform around the baked ParrotModel. */
+/** A parrot visual: the top chain (fade, location, position, yaw, wobble), the body chain around the ParrotModel, the wrench. */
 export class ParrotVisual {
   readonly object = new THREE.Group();
   readonly model: ParrotModel;
+  private readonly body = new THREE.Group();
   private readonly materials: THREE.Material[] = [];
-  private constructor(root: ModelPart, model: ParrotModel, materials: THREE.Material[]) {
+  private constructor(root: ModelPart, model: ParrotModel, materials: THREE.Material[], wrench: THREE.Object3D | null) {
     this.model = model;
     this.materials = materials;
     this.object.name = 'parrot';
     this.object.matrixAutoUpdate = false;
-    this.object.add(root.object);
+    this.body.matrixAutoUpdate = false;
+    this.body.matrix.copy(parrotBody());
+    this.body.add(root.object);
+    this.object.add(this.body);
+    if (wrench) {
+      const g = new THREE.Group();
+      g.name = 'wrench';
+      g.matrixAutoUpdate = false;
+      g.matrix.copy(wrenchMatrix().multiply(groundDisplayMatrix()));
+      g.add(wrench);
+      this.object.add(g);
+    }
   }
 
-  static async create(variant: ParrotVariant, lighting: PonderLighting): Promise<ParrotVisual | null> {
+  /** `wrench` is the item model of create:wrench (chain-conveyor parrot only), null otherwise. */
+  static async create(variant: ParrotVariant, lighting: PonderLighting, wrench: THREE.Object3D | null = null): Promise<ParrotVisual | null> {
     const base = await entityBaseMaterial(PARROT_TEXTURE[variant], lighting);
     if (!base) return null;
     const mat = elementMaterial(base, lighting);
     const root = bakeLayer(createParrotLayer(), mat);
     const model = new ParrotModel(root);
-    const meshes: THREE.Material[] = [mat];
-    return new ParrotVisual(root, model, meshes);
+    return new ParrotVisual(root, model, [mat], wrench);
   }
 
   update(f: ParrotFrame, lighting: PonderLighting): void {
-    parrotTransform(f, this.object.matrix);
+    parrotTop(f, this.object.matrix);
     animateParrot(this.model, f);
     this.model.root.applyPose();
-    for (const m of this.materials) lighting.setFade(m, lightFade(f));
+    for (const m of this.materials) lighting.setFade(m, f.fade);
   }
 
   dispose(): void {
@@ -260,6 +313,3 @@ export class ParrotVisual {
     this.object.traverse((c) => { (c as THREE.Mesh).geometry?.dispose?.(); });
   }
 }
-
-/** lightCoordsFromFade uses lerp(fade, 5, 15); the fade value itself is passed to the lighting (see environment.ts). */
-function lightFade(f: ParrotFrame): number { return f.fade; }

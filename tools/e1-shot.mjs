@@ -18,6 +18,7 @@ try {
     missing: [...window.__e1.missingResources],
     tick: window.__e1.info.tick,
     entities: window.__e1.viewer.world.getObjectByName('scene-entities') ? 'present' : 'absent',
+    wrench: (() => { const w = window.__e1.viewer.world.getObjectByName('wrench'); return w ? { children: w.children.length, meshes: (() => { let n = 0; w.traverse((c) => { if (c.isMesh) n++; }); return n; })(), pos: w.matrixWorld.elements.slice(12, 15) } : null; })(),
     world: (() => {
       const st = window.__e1.simState();
       return st ? st.entities.map((e) => ({ id: e.id, type: e.type, age: e.age, pos: e.pos, prev: e.prev, vel: e.vel, lerp: e.lerp ?? null, box: e.props?.box?.id ?? null })) : [];
@@ -34,7 +35,7 @@ try {
   await page.waitForTimeout(200);
   await page.evaluate(() => window.__e1.viewer.renderFrame());
   await page.screenshot({ path: out });
-  console.log(`shot ${out} scene=${scene} t=${info.tick} entities=${info.entities}`);
+  console.log(`shot ${out} scene=${scene} t=${info.tick} entities=${info.entities} wrench=${JSON.stringify(info.wrench)}`);
   if (info.missing.length) console.log('MISSING ' + info.missing.join(' '));
   const all = [...errors, ...info.errors];
   if (all.length) console.log('ERRORS ' + all.join(' | '));
