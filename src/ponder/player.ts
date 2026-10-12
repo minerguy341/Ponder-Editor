@@ -15,7 +15,7 @@ import { controlEvents, lineEvents, outlineEvents, textEvents } from './events';
 import { createRunner, createSimCtx, maxWorldTick, runnerReplay, runnerSeek, runnerStep, type SimRunner } from './sim';
 import type { SimCtx } from './simTypes';
 import { SceneGraph } from './scenegraph';
-import { keyOf } from './util';
+import { keyOf, parseKey } from './util';
 import type { PlayerLike, PlayerState } from '../ui/playerApi';
 
 /** the parts of PonderViewer the player drives (the real class satisfies this structurally) */
@@ -212,6 +212,57 @@ export class PonderPlayer implements PlayerLike {
 
   getBlockState(pos: Vec3): { name: string } | undefined {
     return this.getBlockAt(pos);
+  }
+
+  /** Debug accessor (audit): the block keys drawn at the current tick, before any section offset or rotation (sorted "x,y,z"). */
+  visibleKeys(): string[] | null {
+    const st = this.runner?.state;
+    if (!st) return null;
+    const out = new Set<string>();
+    for (const el of Object.values(st.elements)) {
+      if (el.kind !== 'section' || !el.visible || !el.sel) continue;
+      for (const k of el.sel.keys) if (st.world.blocks.has(k)) out.add(k);
+    }
+    return [...out].sort();
+  }
+
+  /** Debug accessor (audit): the section elements of the current tick (id, visibility, fade, offset, key count, world presence). */
+  sectionElements(): { id: string; visible: boolean; fade: number; off: number[]; keys: number; present: number }[] | null {
+    const st = this.runner?.state;
+    if (!st) return null;
+    return Object.values(st.elements)
+      .filter((el) => el.kind === 'section')
+      .map((el) => {
+        const sec = el as typeof el & { sel: { keys: Set<string> } | null; off: { c: number[] }; fade: { c: number } };
+        const keys = sec.sel ? [...sec.sel.keys] : [];
+        return {
+          id: el.id, visible: el.visible, fade: sec.fade.c, off: [...sec.off.c], keys: keys.length,
+          present: keys.filter((k) => st.world.blocks.has(k)).length,
+        };
+      });
+  }
+
+  /**
+   * Debug accessor (audit): the block positions the viewer draws at the current tick. A section element draws its keys (plus its
+   * moved offset) when it is visible and has a selection; a key draws only if the world holds a block there. Sorted "x,y,z" strings
+   * (exact, rounded to 1e-6).
+   */
+  visiblePositions(): string[] | null {
+    const st = this.runner?.state;
+    if (!st) return null;
+    const out = new Set<string>();
+    for (const el of Object.values(st.elements)) {
+      if (el.kind !== 'section' || !el.visible || !el.sel) continue;
+      const o = el.off.c;
+      for (const k of el.sel.keys) {
+        if (!st.world.blocks.has(k)) continue;
+        const p = parseKey(k);
+        // exact positions: a moved section can sit on half blocks (e.g. x = 10.5), kept at 1e-6 resolution
+        const q = (v: number) => String(Math.round(v * 1e6) / 1e6);
+        out.add(`${q(p[0] + o[0])},${q(p[1] + o[1])},${q(p[2] + o[2])}`);
+      }
+    }
+    return [...out].sort();
   }
 
   getState(): PlayerState {
