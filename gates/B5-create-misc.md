@@ -39,3 +39,8 @@ Common rules for all B leaves: implement `VisualModule`s per `src/render/create/
   CHECK: npx vitest run tests/b -t seek 2>&1 | tail -6
   EXPECT: /passed/
   EVIDENCE: Start at  22:22:46 | Duration  3.33s (transform 1.41s, setup 0ms, collect 1.81s, tests 16ms, environment 0ms, prepare 973ms)
+
+- [x] G8: whole-scene visible-position audit from a clean cache: the independent model (tools/visible-model.py, schematics fetched into the converter cache by tools/visible-schematics.mjs; fails loudly on any unreadable schematic) against the app's visible positions at each scene's last tick (tools/visible-audit.mjs)
+  CHECK: python3 tools/visible-model.py && node tools/visible-audit.mjs 2>&1 | tail -3
+  EXPECT: AUDIT 169 audited
+  EVIDENCE: AUDIT 169 audited, 28 skipped (rotateSection), 0 mismatching (cache emptied first; 166 schematics fetched; 141 positions and 28 rotated keys compared; log scratchpad audit-clean.log)

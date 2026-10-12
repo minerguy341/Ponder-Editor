@@ -9,10 +9,22 @@ import { startVite, launchBrowser, newPage, waitPonder, ponder, parseArgs, write
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const args = parseArgs(process.argv.slice(2), { value: ['only'] });
-const expected = JSON.parse(fs.readFileSync(path.join(root, 'tools/.cache/visible-expected.json'), 'utf8'));
+const modelPath = path.join(root, 'tools/.cache/visible-expected.json');
+if (!fs.existsSync(modelPath)) {
+  console.error(`visible-audit: ${modelPath} is missing; run python3 tools/visible-model.py first`);
+  process.exit(1);
+}
+const expected = JSON.parse(fs.readFileSync(modelPath, 'utf8'));
 let ids = Object.keys(expected);
 if (args.only) ids = ids.filter((id) => id.includes(args.only));
-const skipped = Object.keys(expected).filter((id) => expected[id].expected === null).length;
+// only rotateSection scenes may be unmodelled; anything else without positions is a model failure
+const isRotated = (id) => expected[id].expected === null && String(expected[id].skip ?? '').startsWith('rotateSection');
+const unmodelled = Object.keys(expected).filter((id) => expected[id].expected === null && !isRotated(id));
+if (unmodelled.length) {
+  console.error(`visible-audit: model has no positions for ${unmodelled.length} non-rotated scene(s), e.g. ${unmodelled[0]}: ${expected[unmodelled[0]].skip}`);
+  process.exit(1);
+}
+const skipped = Object.keys(expected).filter(isRotated).length;
 
 const srv = await startVite({ mode: 'dev' });
 const browser = await launchBrowser({ args: ['--use-angle=swiftshader'] });
@@ -59,3 +71,4 @@ writeJson(path.join(root, 'tools/.cache/visible-audit.json'), results);
 const mism = results.filter((r) => r.error || r.plus.length || r.minus.length);
 console.log(`AUDIT ${results.length} audited, ${skipped} skipped (rotateSection), ${mism.length} mismatching`);
 for (const r of mism) console.log(`  ${r.id}: +${r.plus.length} -${r.minus.length}${r.error ? ' error ' + r.error : ''}`);
+process.exitCode = mism.length ? 1 : 0;

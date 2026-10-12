@@ -18,6 +18,7 @@ import heapq
 import json
 import os
 import struct
+import subprocess
 import sys
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
@@ -298,27 +299,51 @@ def scene_expected(scene_json, world0):
     return {'keys': sorted(keys_visible), 'positions': sorted(visible), 'skip': None}
 
 
+def fail(msg):
+    print(f'visible-model: {msg}', file=sys.stderr)
+    sys.exit(1)
+
+
+def ensure_schematics(names):
+    """Fetches (once, into the converter cache) every schematic the scenes use; returns {name: path}."""
+    proc = subprocess.run(['node', os.path.join(ROOT, 'tools/visible-schematics.mjs'), *names], capture_output=True, text=True)
+    if proc.returncode != 0:
+        fail(proc.stderr.strip() or f'visible-schematics exited {proc.returncode}')
+    return json.loads(proc.stdout)
+
+
 def main():
     scenes_dir = os.path.join(ROOT, 'public/scenes')
     index = json.load(open(os.path.join(scenes_dir, 'index.json')))
     entries = index if isinstance(index, list) else index.get('scenes', [])
+    if not entries:
+        fail('no scenes in public/scenes/index.json')
+    scenes = [(e['file'], json.load(open(os.path.join(scenes_dir, e['file'])))) for e in entries]
+    paths = ensure_schematics(sorted({sc['schematic'] for _, sc in scenes}))
     out = {}
-    for e in entries:
-        file = e['file']
-        sc = json.load(open(os.path.join(scenes_dir, file)))
-        schem = os.path.join(ROOT, 'tools/.cache/ponder', sc['schematic'].replace('/', '__') + '.nbt')
-        if not os.path.exists(schem):
-            out[sc['id']] = {'file': file, 'expected': None, 'skip': 'no schematic cache ' + sc['schematic']}
-            continue
-        world0 = load_world(schem)
+    for file, sc in scenes:
+        schem = paths.get(sc['schematic'])
+        if not schem or not os.path.exists(schem):
+            fail(f"{sc['id']}: schematic {sc['schematic']} is not in the cache")
+        try:
+            world0 = load_world(schem)
+        except Exception as ex:
+            fail(f"{sc['id']}: cannot read schematic {sc['schematic']}: {ex}")
+        if not world0:
+            fail(f"{sc['id']}: schematic {sc['schematic']} has no blocks")
         res = scene_expected(sc, world0)
+        if res['positions'] is None and not (res['skip'] or '').startswith('rotateSection'):
+            fail(f"{sc['id']}: unexpected skip reason: {res['skip']}")
         out[sc['id']] = {'file': file, 'total': sc.get('totalTicks', 0), 'expected': res['positions'], 'keys': res['keys'], 'skip': res['skip']}
     dst = os.path.join(ROOT, 'tools/.cache/visible-expected.json')
+    os.makedirs(os.path.dirname(dst), exist_ok=True)
     with open(dst, 'w') as f:
         json.dump(out, f)
     n = len(out)
     sk = sum(1 for v in out.values() if v['expected'] is None)
-    print(f'scenes {n}, positions modelled {n - sk}, positions skipped {sk} (rotateSection; keys still compared)')
+    if n - sk == 0:
+        fail('no scene has modelled positions')
+    print(f'scenes {n}, positions modelled {n - sk}, positions skipped {sk} (rotateSection only; keys still compared)')
     return 0
 
 
