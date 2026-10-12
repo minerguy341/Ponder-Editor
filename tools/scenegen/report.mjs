@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 // Verification reports over public/scenes (what the gates run).
 //   node tools/scenegen/report.mjs            registered=N generated=N warnings=N
+//   node tools/scenegen/report.mjs --tags     TAGS_OK (tags.json vs AllCreatePonderTags.java, item membership)
 //   node tools/scenegen/report.mjs --texts    TEXTS_OK
 //   node tools/scenegen/report.mjs --ops      OPS_OK
 //   node tools/scenegen/report.mjs --schema   SCHEMA_OK
@@ -30,6 +31,21 @@ if (args.includes('--dropped')) {
     process.exit(1);
   }
   console.log('DROPPED_OK');
+  process.exit(0);
+}
+if (args.includes('--tags')) {
+  // U1-G1: tags.json equals the AllCreatePonderTags registrations (text reading vs interpreter output); scene items resolve to tags
+  const { setup } = await import('./convert.mjs');
+  const env = await setup();
+  const { runTagsReport } = await import('./tags-check.mjs');
+  const res = await runTagsReport({ dir, env, lang: env.lang });
+  console.log(res.summary);
+  if (res.problems.length) {
+    for (const p of res.problems.slice(0, 30)) console.log('  ' + p);
+    console.log(`TAGS_PROBLEMS ${res.problems.length}`);
+    process.exit(1);
+  }
+  console.log('TAGS_OK');
   process.exit(0);
 }
 if (args.includes('--texts')) {

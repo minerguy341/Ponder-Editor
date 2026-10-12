@@ -19,7 +19,7 @@ const scenes = JSON.parse(fs.readFileSync(path.join(root, 'tools/.cache/b3-scene
 const ids = [...new Set(Object.values(scenes).flat())].sort();
 const list = only ?? ids;
 
-const target = await resolveTarget({});
+const target = await resolveTarget(argv.includes('--dev') ? { dev: true } : {});
 let browser = await launchBrowser();
 const report = [];
 let current = null;

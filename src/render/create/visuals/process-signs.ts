@@ -23,6 +23,18 @@ const MAX_TEXT_LINE_WIDTH = 90; // SignBlockEntity.getMaxTextLineWidth()
 let fontPromise: Promise<McFont> | null = null;
 function font(): Promise<McFont> { return (fontPromise ??= McFont.load()); }
 
+/**
+ * The front-text lines of a sign block entity. 1.20+ stores front_text.messages; the legacy layout (Text1..Text4, what the
+ * scenes store for oak_sign) is upgraded to the same list by the data fixer (SignBlockEntity / DataFixer), so the lines
+ * are the same JSON components. Missing lines are empty.
+ */
+export function signMessages(nbt: Record<string, unknown> | undefined): unknown[] {
+  const ft = nbt?.front_text;
+  if (isNbt(ft) && Array.isArray(ft.messages)) return ft.messages;
+  const legacy = [nbt?.Text1, nbt?.Text2, nbt?.Text3, nbt?.Text4];
+  return legacy.some((t) => t !== undefined) ? legacy.map((t) => t ?? '') : [];
+}
+
 /** Plain text of a JSON text component line (vanilla stores each sign line as a JSON component string). */
 export function signLineText(raw: unknown): string {
   if (typeof raw !== 'string') return '';
@@ -117,10 +129,10 @@ class SignVisual extends BaseVisual {
   private async buildText(pose: THREE.Matrix4): Promise<void> {
     const ft = this.block.nbt?.front_text;
     const bt = this.block.nbt?.back_text;
-    const texts: [boolean, unknown[]][] = [[true, isNbt(ft) && Array.isArray(ft.messages) ? ft.messages : []], [false, isNbt(bt) && Array.isArray(bt.messages) ? bt.messages : []]];
+    const texts: [boolean, unknown[]][] = [[true, signMessages(this.block.nbt)], [false, isNbt(bt) && Array.isArray(bt.messages) ? bt.messages : []]];
     if (texts.every(([, m]) => m.length === 0)) return;
     const f = await font();
-    const colorName = getString(isNbt(ft) ? ft : undefined, 'color', 'black');
+    const colorName = isNbt(ft) ? getString(ft, 'color', 'black') : getString(this.block.nbt, 'Color', 'black'); // legacy: top-level Color
     const color = DYE_RGB[colorName] ?? DYE_RGB.black;
     const s = signTextScale(this.kind);
     const offset: [number, number, number] = this.kind === 'hanging' ? [0, -0.32, 0.073] : [0, 0.33333334, 0.046666667];

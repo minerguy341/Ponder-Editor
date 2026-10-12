@@ -5,7 +5,8 @@
 import './styles.css';
 import type { SceneIndexEntry, SceneJson } from './contract';
 import { Browser } from './ui/browser';
-import { loadLang, loadScene as fetchScene, loadSceneIndex, loadTags, type TagInfo } from './ui/data';
+import { loadLang, loadScene as fetchScene, loadSceneIndex, loadTags, type TagMap } from './ui/data';
+import { ItemIndexScreen, TagScreen } from './ui/tagScreens';
 import { createEngine, type Engine } from './ui/engine';
 import { Gui } from './ui/gui';
 import { ItemIconRenderer } from './ui/itemIcons';
@@ -18,7 +19,7 @@ export interface StartOptions {
   /** replace the real engine (viewer + player) with test doubles */
   engineFactory?: (container: HTMLElement) => Promise<Engine>;
   /** replace the scene source (index.json + scene files) */
-  data?: { loadIndex(): Promise<SceneIndexEntry[]>; loadScene(e: SceneIndexEntry): Promise<SceneJson> };
+  data?: { loadIndex(): Promise<SceneIndexEntry[]>; loadScene(e: SceneIndexEntry): Promise<SceneJson>; loadTags?(): Promise<TagMap> };
 }
 
 /** The verification interface documented in gates/E-verification.md. */
@@ -83,7 +84,7 @@ export async function startApp(opts: StartOptions = {}): Promise<PonderApi> {
   let engine: Engine | null = null;
   let engineError: string | null = null;
   let lang: Record<string, string> | null = null;
-  let tags = new Map<string, TagInfo>();
+  let tags: TagMap = new Map();
   let index: SceneIndexEntry[] = [];
   let indexError: string | null = null;
   let browser: Browser | null = null;
@@ -92,7 +93,9 @@ export async function startApp(opts: StartOptions = {}): Promise<PonderApi> {
   let fatal: HTMLElement | null = null;
   let fromIndex = false;
   let prevKind: Route['kind'] | null = null;
-  let lastIndexRoute: Extract<Route, { kind: 'index' }> = { kind: 'index', q: '', tag: null };
+  let lastIndexRoute: Extract<Route, { kind: 'index' }> = { kind: 'index', q: '' };
+  let tagScreen: TagScreen | null = null;
+  let itemScreen: ItemIndexScreen | null = null;
   let resolveReady!: () => void;
   const ready = new Promise<void>((res) => { resolveReady = res; });
 
@@ -143,47 +146,72 @@ export async function startApp(opts: StartOptions = {}): Promise<PonderApi> {
   const gui = new Gui(root, font);
   await gui.loadSprites().catch((e) => console.warn('[ui] sprite sheet unavailable', e));
   icons = new ItemIconRenderer();
-  const tagsPromise = loadTags().then((t) => { tags = t; });
+  const tagsPromise = (data.loadTags ? data.loadTags() : loadTags()).then((t) => { tags = t; });
   try { index = await data.loadIndex(); } catch (e) { indexError = e instanceof Error ? e.message : String(e); }
   await Promise.all([tagsPromise, enginePromise]);
 
   const closeFatal = () => { fatal?.remove(); fatal = null; };
   const ensureLang = () => loadLang().then((l) => { lang = l; browser?.onLangLoaded(); }).catch(() => { /* names fall back to ids */ });
 
+  /** the index pages (tag index, item index, tag screen) are plain pages: only one is visible, the scene UI is disposed */
+  const hidePages = () => { browser?.hide(); tagScreen?.hide(); itemScreen?.hide(); };
+  const leaveScene = () => { ui?.dispose(); ui = null; uiSubject = ''; engine?.viewer.stop?.(); gui.host.style.display = 'none'; };
+
   const showIndex = (r: Extract<Route, { kind: 'index' }>) => {
     closeFatal();
     lastIndexRoute = r;
-    ui?.dispose(); ui = null; uiSubject = '';
-    engine?.viewer.stop?.();
-    gui.host.style.display = 'none';
+    leaveScene();
     if (indexError) {
       fatal = fatalScreen(root, 'No scenes found', [indexError, 'Run the converter first, or check that scenes/index.json is deployed next to the page.']);
       return;
     }
+    hidePages();
     if (!browser) {
       browser = new Browser({
-        container: root, icons, index, tags, getLang: () => lang, query: r.q, tag: r.tag,
-        onFilterChange: (q, tag) => { lastIndexRoute = { kind: 'index', q, tag }; router.replace(lastIndexRoute); },
+        container: root, icons, index, tags, getLang: () => lang, query: r.q,
+        onFilterChange: (q) => { lastIndexRoute = { kind: 'index', q }; router.replace(lastIndexRoute); },
       });
       void ensureLang();
-    } else browser.setFilter(r.q, r.tag);
+    } else browser.setFilter(r.q);
     browser.show();
     document.title = 'Ponder';
+  };
+
+  const showItems = () => {
+    closeFatal();
+    leaveScene();
+    hidePages();
+    if (!itemScreen) itemScreen = new ItemIndexScreen({ container: root, icons, index, getLang: () => lang });
+    itemScreen.show();
+    void ensureLang();
+    document.title = 'Items to inspect - Ponder';
+  };
+
+  const showTag = (id: string) => {
+    closeFatal();
+    leaveScene();
+    hidePages();
+    if (!tags.has(id)) { fatal = fatalScreen(root, 'Unknown tag', [`There is no Ponder tag called "${id}".`], '#/'); return; }
+    tagScreen?.dispose();
+    tagScreen = new TagScreen({ container: root, icons, index, tags, tagId: id, getLang: () => lang });
+    tagScreen.show();
+    void ensureLang();
+    document.title = `${tags.get(id)?.title ?? id} - Ponder`;
   };
 
   const showScene = (r: Extract<Route, { kind: 'scene' }>) => {
     closeFatal();
     const entry = index.find((e) => e.id === r.id);
-    if (!entry) { browser?.hide(); fatal = fatalScreen(root, 'Unknown scene', [`There is no scene called "${r.id}" in the index.`], '#/'); return; }
+    if (!entry) { hidePages(); fatal = fatalScreen(root, 'Unknown scene', [`There is no scene called "${r.id}" in the index.`], '#/'); return; }
     if (!engine) {
-      browser?.hide();
+      hidePages();
       fatal = fatalScreen(root, 'Cannot play this scene', [engineError ?? 'The 3D engine failed to start.', 'The scene browser and the UI work; the missing parts come from other build leaves.'], '#/');
       return;
     }
     const subject = r.item && entry.items.includes(r.item) ? r.item : entry.items[0] ?? '';
     if (ui && uiSubject === subject && ui.hasEntry(entry.id)) { ui.goToEntry(entry.id, r.t ?? undefined); return; }
     ui?.dispose();
-    browser?.hide();
+    hidePages();
     gui.host.style.display = '';
     engine.viewer.start?.();
     const entries = subject ? index.filter((e) => e.items.includes(subject)) : [entry];
@@ -196,16 +224,19 @@ export async function startApp(opts: StartOptions = {}): Promise<PonderApi> {
       onExit: () => { if (fromIndex && history.length > 1) history.back(); else router.go(lastIndexRoute); },
       onSceneChanged: (e) => { document.title = `${e.title} - Ponder`; router.replace({ kind: 'scene', id: e.id, t: null, item: itemParam(e) }); },
       onLink: (e, tick) => router.replace({ kind: 'scene', id: e.id, t: tick || null, item: itemParam(e) }),
-      onOpenTag: (tag) => router.go({ kind: 'index', q: '', tag }),
+      onOpenTag: (tag) => router.go({ kind: 'tag', id: tag }),
     });
     void ensureLang();
   };
 
   let first = true;
   router.start((r, source) => {
-    if (r.kind === 'scene') { if (source === 'init') fromIndex = false; else if (prevKind === 'index') fromIndex = true; }
+    if (r.kind === 'scene') { if (source === 'init') fromIndex = false; else if (prevKind && prevKind !== 'scene') fromIndex = true; }
     prevKind = r.kind;
-    if (r.kind === 'index') showIndex(r); else showScene(r);
+    if (r.kind === 'index') showIndex(r);
+    else if (r.kind === 'items') showItems();
+    else if (r.kind === 'tag') showTag(r.id);
+    else showScene(r);
     if (first) { first = false; requestAnimationFrame(() => { boot.classList.add('gone'); setTimeout(() => boot.remove(), 500); }); }
   });
   resolveReady();
