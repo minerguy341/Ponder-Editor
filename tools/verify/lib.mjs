@@ -765,3 +765,17 @@ if (process.argv[1] && pathToFileURL(path.resolve(process.argv[1])).href === imp
   if (args.selftest) await selftest();
   else console.log('usage: node tools/verify/lib.mjs --selftest   (this module is a library; see tools/verify/README.md)');
 }
+
+/**
+ * Waits until the page's scene reports ready (every visual attached, frames drawn after the last change; see
+ * player.settle()). Throws with the pending count when that does not happen within `timeout`.
+ */
+export async function waitSceneReady(page, timeout = 120000) {
+  const t0 = Date.now();
+  for (;;) {
+    const st = await ponder.state(page);
+    if (st && st.ready === true) return st;
+    if (Date.now() - t0 > timeout) throw new Error(`scene not ready after ${timeout} ms (pendingAssets=${st?.pendingAssets}, errors=${JSON.stringify(st?.errors ?? []).slice(0, 200)})`);
+    await new Promise((r) => setTimeout(r, 100));
+  }
+}

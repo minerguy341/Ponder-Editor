@@ -53,3 +53,8 @@ ABANDON: G1 the gearbox symptom is not reproduced. The gearbox Core faces are em
   CHECK: npx vitest run tests/r1/cull.test.ts 2>&1 | tail -4
   EXPECT: /Tests\s+\d+ passed/
   EVIDENCE: Start at  23:45:31 | Duration  652ms (transform 234ms, setup 0ms, collect 326ms, tests 32ms, environment 0ms, prepare 55ms)
+
+- [ ] G10: determinism guard: N fresh page loads of each of ref1..ref4 give identical viewer-canvas hashes, both against a warm dev-server cache and cold (node_modules/.vite cleared); the guard prints DETERMINISM_OK
+  CHECK: node tools/r1/determinism.mjs --dev --n 4 2>&1 | tail -1 ; node tools/r1/determinism.mjs --dev --cold --n 4 2>&1 | tail -1
+  EXPECT: DETERMINISM_OK
+  EVIDENCE: NOT MET. Warm run and cold run both print DETERMINISM_FAILED: fresh loads of the same scene differ by 1-11 canvas pixels at geometry edges (ref1-ref3 in both runs; ref4 identical across 4 cold loads, varying in warm runs). Within one page load, four re-seeks to the same tick give one hash (scratchpad exp-reseek), and reloads in one browser differ only between loads. Tried and reverted, no effect on the variation: ordered visual-factory creation, ordered item-model creation, ordered atlas packing. Readiness fix (ready / pendingAssets, seek and load wait for it): cold compare of ref4 gives masked 3.994 / focus 5.142 / meanAbs 9.362, the old fixed-sleep harness at the pre-change commit gave 7.685 masked.

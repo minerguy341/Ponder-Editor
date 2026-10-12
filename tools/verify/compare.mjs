@@ -14,7 +14,7 @@ import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import {
   VERIFY, OUT, FIXTURE, REF_VIEWPORT, REPO, parseArgs, readJson, writeJson, ensureDir, sha256, makeChecker, sleep,
-  launchBrowser, newPage, waitPonder, ponder, resolveTarget, startStaticServer, fetchText,
+  launchBrowser, newPage, waitPonder, waitSceneReady, ponder, resolveTarget, startStaticServer, fetchText,
 } from './lib.mjs';
 import { readPng, writePng, encodePng, diffStats, heatmap, downscale, sideBySide, fillRect, cropImage, newImage } from './imgdiff.mjs';
 import { measureBar, predictMarks, estimateTick, drawSyntheticBar } from './refbar.mjs';
@@ -80,6 +80,9 @@ export async function renderOurs(browser, url, sceneId, tick, { settle = 800, ke
   await p.page.mouse.move(1000, 60);
   await ponder.pause(p.page);
   await ponder.seek(p.page, tick);
+  // the scene is ready when every visual is attached and frames have been drawn after it (ponder getState().ready);
+  // `settle` is only a minimum pause after that, not the readiness signal
+  await waitSceneReady(p.page);
   await sleep(settle);
   const state = await ponder.state(p.page);
   const png = await p.page.screenshot({ type: 'png', clip: { x: 0, y: 0, width: REF_VIEWPORT.width, height: REF_VIEWPORT.height } });
