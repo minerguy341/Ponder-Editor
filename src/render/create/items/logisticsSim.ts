@@ -661,6 +661,10 @@ export class LogisticsWorld {
         diffToEnd += positive ? -MARGIN[ending] : MARGIN[ending];
       }
       const limited = positive ? Math.min(movement, diffToEnd) : Math.max(movement, diffToEnd);
+      // Belt Funnels (BeltFunnelInteractionHandler.checkForFunnels, before the spacing check as in BeltInventory.tick)
+      const funnel = this.funnelInteraction(chain, item, item.beltPosition + limited, positive, mf);
+      if (funnel === 'removed') { removed.push(item); continue; }
+      if (funnel === 'stuck') continue;
       if (noMovement) continue;
       // Belt Tunnels (BeltTunnelInteractionHandler.flapTunnelsAndCheckIfStuck): a junction may split a stack; stuck items wait
       if (this.tunnelInteraction(chain, item, item.beltPosition + limited, positive, mf)) continue;
@@ -796,6 +800,46 @@ export class LogisticsWorld {
     if (speed === 0) return false;
     if (movementFacing(chain.shape.facing, speed) === opposite(side)) return false;
     return this.canInsertAt(this.stateOf(chain), idx, side);
+  }
+
+  /**
+   * BeltFunnelInteractionHandler.checkForFunnels (server path). A belt funnel above a segment the item crosses takes the item into
+   * the block behind it (InvManipulationBehaviour on BlockFace(pos, facing.opposite)) through that block's belt receiver. The funnel
+   * faces against the movement (blocking) or along it. Returns 'removed' (taken whole), 'stuck' (waits at the funnel entry),
+   * or 'pass' (the item moves on).
+   */
+  private funnelInteraction(chain: BeltChain, item: SimItem, nextOffset: number, positive: boolean, mf: Direction): 'removed' | 'stuck' | 'pass' {
+    const length = chain.segments.length;
+    const step = positive ? 1 : -1;
+    const first = Math.min(Math.max(Math.floor(item.beltPosition), 0), length - 1);
+    for (let seg = first; positive ? seg <= nextOffset : seg + 1 >= nextOffset; seg += step) {
+      const segPos = chain.segments[seg];
+      if (!segPos) continue;
+      const funnelPos: Vec3 = [segPos[0], segPos[1] + 1, segPos[2]];
+      const fs = this.lookup.getState(funnelPos);
+      if (!fs || !/belt_funnel$/.test(fs.name)) continue;
+      const facing = fs.props.facing as Direction;
+      if (facing === mf) continue;
+      const blocking = facing === opposite(mf);
+      const shape = fs.props.shape;
+      if (shape === 'pushing') continue;
+      let entry = seg + 0.5;
+      if (shape === 'extended') entry += 0.499 * (positive ? -1 : 1);
+      const crossed = positive ? nextOffset > entry : nextOffset < entry;
+      if (!crossed) return 'pass';
+      if (blocking) item.beltPosition = entry;
+      if (fs.props.powered === 'true') { if (blocking) return 'stuck'; continue; }
+      const recv = this.directReceiverAt(stepFrom(funnelPos, opposite(facing)));
+      if (!recv || !recv.canInsertFromSide(facing)) { if (blocking) return 'stuck'; continue; }
+      const rem = recv.insert(item.stack, facing);
+      const taken = !rem || (rem.id === item.stack.id && (rem.count ?? 1) < (item.stack.count ?? 1));
+      if (!taken) { if (blocking) return 'stuck'; continue; }
+      this.flapAt(funnelPos).target = -1; // FunnelBlockEntity.flap(true): inward
+      if (!rem) return 'removed';
+      item.stack = rem;
+      if (blocking) return 'stuck';
+    }
+    return 'pass';
   }
 
   /** BeltInventory.resolveEnding, for the block one step past the chain end. */
