@@ -94,8 +94,26 @@ export interface BeltReceiver {
   insert(stack: ItemStackJson, side: Direction): ItemStackJson | null;
 }
 
+/**
+ * Item receiver registry (leaf B2). A block that takes items from a belt end (DirectBeltInputBehaviour.canInsertFromSide +
+ * handleInsertion) registers here by block id; the logistics simulation then hands items to it at the chain end. Other leaves
+ * register their receivers (e.g. the mechanical crafter) through this function. Receivers must be pure functions of their
+ * inputs and the simulation state reached at the current tick (the world is replayed, so no hidden state).
+ *
+ * Usage: registerItemReceiver('create:mechanical_crafter', { canInsertFromSide: (side, ctx) => ..., insert: (stack, side, ctx) => remainder })
+ * ctx.world gives the LogisticsWorld; ctx.pos is the receiving block position; insert returns the remainder (null when all taken).
+ */
+export interface ItemReceiverContext { pos: Vec3; world: LogisticsWorld }
+export interface ItemReceiver {
+  canInsertFromSide(side: Direction, ctx: ItemReceiverContext): boolean;
+  insert(stack: ItemStackJson, side: Direction, ctx: ItemReceiverContext): ItemStackJson | null;
+}
+const itemReceivers = new Map<string, ItemReceiver>();
+/** Registers the receiver of a block id (replaces an earlier registration for the same id). */
+export function registerItemReceiver(blockId: string, r: ItemReceiver): void { itemReceivers.set(blockId, r); }
+
 /** Blocks with a DirectBeltInputBehaviour (Ending.INSERT margin). */
-const RECEIVER_BLOCKS = new Set(['create:depot', 'create:basin', 'create:item_drain', 'create:weighted_ejector']);
+const BUILTIN_RECEIVER_BLOCKS = new Set(['create:depot', 'create:basin', 'create:item_drain', 'create:weighted_ejector']);
 /** Blocks that do not make a belt end BLOCKED (approximation of BlockHelper.hasBlockSolidSide). */
 const NOT_SOLID = /^(minecraft:air|minecraft:(water|lava)|create:belt|create:.*funnel|create:.*tunnel|create:.*chute|create:.*pipe|create:.*valve|create:.*pump|create:depot|create:item_drain|create:spout|create:hose_pulley|create:.*fluid_tank|create:.*interface)$/;
 
@@ -683,7 +701,7 @@ export class LogisticsWorld {
   private resolveEnding(chain: BeltChain, positive: boolean): Ending {
     const next = positionForOffset(chain.controller, chain.shape, chain.segments.length, positive ? chain.segments.length : -1);
     const st = this.lookup.getState(next);
-    if (st && RECEIVER_BLOCKS.has(st.name)) return Ending.Insert;
+    if (st && (BUILTIN_RECEIVER_BLOCKS.has(st.name) || itemReceivers.has(st.name))) return Ending.Insert;
     if (st && !NOT_SOLID.test(st.name)) return Ending.Blocked;
     return Ending.Eject;
   }
@@ -697,6 +715,11 @@ export class LogisticsWorld {
     if (name === 'create:basin') {
       const b = this.basinAt(pos);
       return { canInsertFromSide: () => true, insert: (stack) => this.basinInsert(b, stack) };
+    }
+    const reg = name ? itemReceivers.get(name) : undefined;
+    if (reg) {
+      const ctx = { pos, world: this };
+      return { canInsertFromSide: (side) => reg.canInsertFromSide(side, ctx), insert: (stack, side) => reg.insert(stack, side, ctx) };
     }
     return undefined;
   }
