@@ -332,7 +332,6 @@ export class PonderUI implements ProgressSource {
     this.layer.textContent = '';
     this.textViews.clear(); this.controlViews.clear();
     this.build();
-    this.rebuildTags();
   }
 
   private build(): void {
@@ -448,6 +447,8 @@ export class PonderUI implements ProgressSource {
     this.loadingLabel = new Label(root, gui.font, 'center');
     this.errorBox = div('pd-error', root);
     this.errorBox.style.display = 'none';
+    // the left tag column belongs to the subject item, known before the scene loads (PonderUI#init)
+    this.rebuildTags();
   }
 
   private fullscreenIcon(): HTMLElement {

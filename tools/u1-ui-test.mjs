@@ -39,8 +39,8 @@ try {
     ['create:mechanical_press/pressing', 'create:mechanical_press', 'mechanical_press/pressing'],
   ]) {
     await nav(`#/scene/${sceneHash}?item=${item}`);
-    await page.waitForFunction((id) => window.__ponder.ui()?.sceneId === id, `create:${sceneHash.slice('create:'.length)}`, { timeout: 60000 });
-    await sleep(200);
+    // the scene id is set before the scene loads: wait for the load to finish (the tag column is built with the UI)
+    await page.waitForFunction((id) => window.__ponder.ui()?.sceneId === id && window.__ponder.ui()?.loading === false, sceneHash, { timeout: 60000 });
     const want = membership(item);
     const got = await page.evaluate(() => window.__ponder.ui().tagButtons);
     check(`tag column for ${item} = Ponder membership (${file})`, JSON.stringify(got) === JSON.stringify(want), `got ${JSON.stringify(got)} want ${JSON.stringify(want)}`);
