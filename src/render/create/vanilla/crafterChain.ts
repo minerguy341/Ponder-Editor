@@ -172,6 +172,10 @@ interface MemberState {
   before: GridCell[];
   slot0: Stack;
   scripted: Stack;
+  /** Level.hasNeighborSignal as recorded by the scene ('__neighbourSignal' calls); false before the first record */
+  signal: boolean;
+  /** MechanicalCrafterBlockEntity.wasPoweredBefore (true at construction, not serialized) */
+  wasPowered: boolean;
 }
 
 export interface ChainState { m: MemberState[] }
@@ -199,7 +203,7 @@ function mergeOffset(pointing: string): [number, number] {
 export function chainSim(topo: ChainTopology, members: MemberInput[]): StepSim<ChainState> {
   const n = members.length;
   const init = (): ChainState => ({
-    m: members.map((mem) => ({ phase: 'IDLE' as CrafterPhase, countDown: 0, grid: new Map(), before: [], slot0: mem.slot0, scripted: null })),
+    m: members.map((mem) => ({ phase: 'IDLE' as CrafterPhase, countDown: 0, grid: new Map(), before: [], slot0: mem.slot0, scripted: null, signal: false, wasPowered: true })),
   });
   // per member: the next recorded call entry to apply (calls are appended in scene order)
   let next: number[] = members.map(() => 0);
@@ -257,6 +261,13 @@ export function chainSim(topo: ChainTopology, members: MemberInput[]): StepSim<C
     ejectChain(s);
   }
 
+  /** checkCompletedRecipe(true) (powered start): the chain begins when any member holds an item (empty members begin too) */
+  function checkPowered(s: ChainState, i: number): void {
+    if (speedOf(i) === 0 || topo.cyclic) return;
+    if (!s.m.some((m) => m.slot0)) return;
+    for (let j = 0; j < n; j++) begin(s, j);
+  }
+
   /** continueIfAllPrecedingFinished */
   function continueIfAllPreceding(s: ChainState, t: number): void {
     for (const p of topo.preceding[t]) if (s.m[p].phase !== 'WAITING') return;
@@ -269,6 +280,11 @@ export function chainSim(topo: ChainTopology, members: MemberInput[]): StepSim<C
     const me = s.m[i];
     const target = topo.target[i];
     if (me.phase === 'ACCEPTING') return;
+    // if (wasPoweredBefore != level.hasNeighborSignal) { wasPoweredBefore = signal; if (signal) checkCompletedRecipe(true) }
+    if (me.wasPowered !== me.signal) {
+      me.wasPowered = me.signal;
+      if (me.signal) checkPowered(s, i);
+    }
     if (me.phase === 'ASSEMBLING') {
       me.countDown -= speedCd(i);
       if (me.countDown < 0) {
@@ -317,6 +333,7 @@ export function chainSim(topo: ChainTopology, members: MemberInput[]): StepSim<C
           if (step.m === 'insertItem' && a[0] === 0 && a[2] !== true) insert(s, i, stackOf(a[1]));
           else if (step.m === 'setItem' && a[0] === 0) s.m[i].slot0 = stackOf(a[1]);
           else if (step.m === 'setScriptedResult') s.m[i].scripted = stackOf(a[0]);
+          else if (step.m === '__neighbourSignal') s.m[i].signal = a[0] === true;
         }
       }
     }
