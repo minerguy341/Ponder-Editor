@@ -91,7 +91,9 @@ try {
   await page.waitForFunction(() => window.__ponder.getState().tick >= 150, null, { timeout: 10000 }).catch(() => {});
   const tick = await page.evaluate(() => window.__ponder.getState().tick);
   check('deep link ?t= seeks', tick >= 150 && tick < 200, `tick=${tick}`);
-  // 'a' goes to the previous scene of the subject (mechanical press has two scenes: pressing, compacting)
+  // 'a' goes to the previous scene of the subject (mechanical press has two scenes: pressing, compacting); the key needs the
+  // button visible, i.e. faded in (as in the game the buttons fade in after the scene starts)
+  await sleep(1500);
   await page.keyboard.press('a');
   await page.waitForFunction(() => window.__ponder.ui().sceneId === 'create:press/pressing', null, { timeout: 10000 });
   check('previous scene key switches scene and updates URL', (await page.evaluate(() => location.hash)).startsWith('#/scene/create:press/pressing'));
