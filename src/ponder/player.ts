@@ -34,7 +34,19 @@ type Listener = (payload: any) => void;
 
 const TICKS_PER_SECOND = 20;
 const MAX_FRAME_MS = 250;
-const SETTLE_CAP_MS = 4000;
+/** upper bound for a scene to become ready (headless software rendering can take many seconds on a cold cache) */
+const SETTLE_CAP_MS = 60000;
+
+/** Resolves after `n` animation frames: the viewer's loop runs in requestAnimationFrame, so each wait covers one full frame. */
+function nextRenderedFrames(n: number): Promise<void> {
+  const once = () => new Promise<void>((res) => {
+    if (typeof requestAnimationFrame === 'function') requestAnimationFrame(() => res());
+    else setTimeout(res, 16);
+  });
+  let p = Promise.resolve();
+  for (let i = 0; i < n; i++) p = p.then(once);
+  return p;
+}
 
 /** every BlockState the scene can show, so that the renderer prepares them before the first frame */
 function collectStates(scene: SceneJson, blocks: Iterable<{ state: BlockState }>): BlockState[] {
@@ -68,7 +80,8 @@ export class PonderPlayer implements PlayerLike {
   private playerErrors: string[] = [];
   private lastSig = { tick: '', text: '', controls: '', lines: '', outlines: '' };
   private unsubFrame: (() => void) | null = null;
-  private frameWaiters: Array<() => void> = [];
+  /** true once the current scene is fully built (see settle()); false while loading or when the cap was hit */
+  private ready = false;
 
   constructor(
     private readonly viewer: PlayerViewer,
@@ -127,6 +140,7 @@ export class PonderPlayer implements PlayerLike {
   }
 
   private disposeScene(): void {
+    this.ready = false;
     this.graph?.dispose();
     this.graph = null;
     this.runner = null;
@@ -155,6 +169,7 @@ export class PonderPlayer implements PlayerLike {
   seek(tick: number): Promise<void> {
     if (!this.runner || !this.ctx) return Promise.resolve();
     this.acc = 0;
+    this.ready = false;
     runnerSeek(this.runner, tick);
     this.syncAndEmit(true);
     return this.settle();
@@ -204,6 +219,8 @@ export class PonderPlayer implements PlayerLike {
       errors: [...(st?.errors ?? []), ...this.playerErrors],
       unsupportedOps: [...(st?.unsupported ?? [])],
       missingAssets: [...missingResources],
+      ready: this.ready,
+      pendingAssets: this.graph?.pending ?? 0,
       keyframes: this.scene?.keyframes ?? [],
       visibleTextKeys: st && this.scene ? textEvents(st, this.scene, 1).filter((t) => t.fade >= 0.1 && t.key).map((t) => t.key as string) : [],
     };
@@ -312,23 +329,32 @@ export class PonderPlayer implements PlayerLike {
       this.graph.sync(runner.state);
       this.graph.frame(runner.state, pt);
     }
-    if (this.frameWaiters.length) {
-      const w = this.frameWaiters;
-      this.frameWaiters = [];
-      w.forEach((f) => f());
-    }
   }
 
-  /** resolves once every visual requested for the current state exists and one more frame has been drawn */
+  /**
+   * Resolves when the scene is ready: every requested visual exists and is attached, and at least two frames have been
+   * drawn after the last one of them finished (the viewer calls the frame callbacks before it renders, so one frame can
+   * still miss the attachment). `ready` stays false (and the reason goes to playerErrors) when that does not happen in time.
+   */
   private settle(): Promise<void> {
     const g = this.graph;
-    const frame = new Promise<void>((res) => {
-      if (!this.viewer.onFrame) { res(); return; }
-      this.frameWaiters.push(res);
-    });
-    // a viewer that is not running must not hang the caller forever
+    const token = this.loadToken;
+    const run = (async () => {
+      if (!g) return;
+      for (let round = 0; round < 10000; round++) {
+        await g.idle();
+        await nextRenderedFrames(2);
+        if (!this.graph || g !== this.graph || token !== this.loadToken) return;
+        if (g.pending === 0) { this.ready = true; return; }
+      }
+    })();
+    // a viewer that never renders must not hang the caller forever; the scene then reports ready = false
     const cap = new Promise<void>((res) => setTimeout(res, SETTLE_CAP_MS));
-    return Promise.race([Promise.all([g ? g.idle() : Promise.resolve(), frame]).then(() => undefined), cap]);
+    return Promise.race([run, cap]).then(() => {
+      if (!this.ready && token === this.loadToken && this.graph) {
+        this.playerErrors.push(`scene not ready after ${SETTLE_CAP_MS} ms: ${this.graph.pending} visual(s) pending`);
+      }
+    });
   }
 
   dispose(): void {

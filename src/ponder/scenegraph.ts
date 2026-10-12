@@ -192,6 +192,9 @@ export class SceneGraph {
   /** the lookup the block entity visuals receive (their VisualContext.lookup); logistics scenes are bound to it */
   get worldLookup(): WorldLookup { return this.lookup; }
 
+  /** visuals and item models still being created (readiness: the harness waits for this to reach 0) */
+  get pending(): number { return this.pendingCount; }
+
   /** resolves once every block entity visual requested so far has been created (or failed) */
   idle(): Promise<void> {
     if (this.pendingCount === 0) return Promise.resolve();

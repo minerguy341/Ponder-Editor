@@ -28,6 +28,10 @@ export interface PlayerState {
   errors?: string[];
   unsupportedOps?: string[];
   missingAssets?: string[];
+  /** the scene is fully built: every visual attached and two frames drawn after the last change */
+  ready?: boolean;
+  /** visuals still being created (0 when ready) */
+  pendingAssets?: number;
   [k: string]: unknown;
 }
 
