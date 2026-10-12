@@ -250,3 +250,16 @@ describe('java.util.Random = LegacyRandomSource (RandomSource.create(seed) in MC
     expect(new JavaRandom(0).nextInt(16)).toBe(11); // (next(31) = 1569741360) * 16 >> 31
   });
 });
+
+describe('item flow past the scene end (world clock, leaf B2)', () => {
+  it('an item on a belt that keeps running leaves the belt end; it is still on the belt while the chain carries it', () => {
+    const { lookup } = beltLine(3, -32); // negative speed on an east belt moves items east, towards the end
+    const w = new LogisticsWorld(lookup);
+    w.apply({ tick: 0, op: 'createItemOnBelt', pos: [0, 0, 0], insertionSide: 'west', item: ITEM, link: 'a' });
+    w.advance(0);
+    const chain = w.chainAt([0, 0, 0])!;
+    expect(w.itemsOf(chain, 0)).toHaveLength(1);
+    expect(w.itemsOf(chain, 10)).toHaveLength(1);
+    expect(w.itemsOf(chain, 1000)).toHaveLength(0);
+  });
+});

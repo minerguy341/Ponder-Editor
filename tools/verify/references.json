@@ -1,22 +1,57 @@
 {
   "schema": 1,
   "about": "Which scene and which timeline tick each of the four acceptance screenshots (user screenshots of the real game, 1920x1009) shows. Determined from the screenshots plus the Create scene Java sources (tag mc1.21.1-6.0.10) and the Ponder library (1.0.82, branch mc1.21.1/dev). Reproduce/verify with: node tools/verify/compare.mjs --verify-refs [--refs <dir with ref1..4.png>]. The screenshots themselves are never committed (default lookup: --refs <dir>, $PONDER_REFS, tools/verify/refs/).",
-  "viewport": { "width": 1920, "height": 1009, "deviceScaleFactor": 1 },
+  "viewport": {
+    "width": 1920,
+    "height": 1009,
+    "deviceScaleFactor": 1
+  },
   "ui": {
     "guiScale": 4,
     "guiScaleRule": "Minecraft auto GUI scale = largest integer s with 320*s <= width and 240*s <= height (here min(6, 4.2 -> 4) = 4): one GUI pixel = 4 screen pixels, GUI size 480 x 252.25",
     "progressBar": {
       "source": "PonderUI.java: pX = width/2 - 110, pW = width - 2*pX (GUI px); PonderProgressBar.java draws the fill from (pX-2) with width (pW+4)*progress and keyframe marks at (pX-2 + int(t/total*(pW+2)))",
-      "guiX": 130, "guiW": 220, "fillLeftPx": 512, "fillRightPx": 1408, "fillRowsPx": [900, 911], "markRowsPx": [900, 915],
-      "fillColors": ["rgb(85,86,111) upper band", "rgb(53,53,67) lower band"], "markColor": "rgb(112,112,112)",
+      "guiX": 130,
+      "guiW": 220,
+      "fillLeftPx": 512,
+      "fillRightPx": 1408,
+      "fillRowsPx": [
+        900,
+        911
+      ],
+      "markRowsPx": [
+        900,
+        915
+      ],
+      "fillColors": [
+        "rgb(85,86,111) upper band",
+        "rgb(53,53,67) lower band"
+      ],
+      "markColor": "rgb(112,112,112)",
       "progressLag": "the shown progress chases the real one (LerpedFloat EXP .5) so it lags ~1 tick, plus 0..1 tick of partial-tick interpolation: tick ~= progress*total + 1.5 (+-1)"
     }
   },
   "ignoreRegions": {
     "why": "parts of the screenshots that cannot be reproduced by a web viewer: the OS mouse cursor, the blurred Minecraft hotbar and the blurred player hand/item in the world behind the Ponder GUI. Metrics are reported with and without them; the world background (sky/grass) is NOT masked, it is judged by eye.",
     "common": [
-      { "name": "hotbar", "rect": [590, 925, 745, 84] },
-      { "name": "player-hand", "rect": [1320, 690, 600, 319] }
+      {
+        "name": "hotbar",
+        "rect": [
+          590,
+          925,
+          745,
+          84
+        ]
+      },
+      {
+        "name": "player-hand",
+        "rect": [
+          1320,
+          690,
+          600,
+          319
+        ]
+      }
     ]
   },
   "refs": [
@@ -26,15 +61,47 @@
       "sceneId": "create:cog/small",
       "title": "Relaying rotational force using Cogwheels",
       "registration": "AllCreatePonderScenes.java: HELPER.forComponents(AllBlocks.COGWHEEL).addStoryBoard(\"cog/small\", KineticsScenes::cogAsRelay, AllCreatePonderTags.KINETIC_RELAYS)",
-      "source": { "file": "KineticsScenes.java", "method": "cogAsRelay" },
-      "timeline": { "totalTicks": 205, "keyframes": [141] },
+      "source": {
+        "file": "KineticsScenes.java",
+        "method": "cogAsRelay"
+      },
+      "timeline": {
+        "totalTicks": 205,
+        "keyframes": [
+          141
+        ]
+      },
       "tick": 63,
-      "tickRange": [62, 64],
-      "anchor": { "after": "scene start", "plusTicks": 63 },
-      "visibleTextKeys": ["text_1"],
-      "bar": { "fillEndPx": 781, "progress": 0.3002, "marksPx": [1120] },
-      "cursorRect": [1640, 398, 26, 36],
-      "focusRect": [520, 100, 880, 720],
+      "tickRange": [
+        62,
+        64
+      ],
+      "anchor": {
+        "after": "scene start",
+        "plusTicks": 63
+      },
+      "visibleTextKeys": [
+        "text_1"
+      ],
+      "bar": {
+        "fillEndPx": 781,
+        "progress": 0.3002,
+        "marksPx": [
+          1120
+        ]
+      },
+      "cursorRect": [
+        1640,
+        398,
+        26,
+        36
+      ],
+      "focusRect": [
+        520,
+        100,
+        880,
+        720
+      ],
       "reasoning": [
         "Title 'Relaying rotational force using Cogwheels' + cogwheel item = scene cog/small (KineticsScenes.cogAsRelay).",
         "Idle sum = 5+10+4*5+10+60+10+20+70 = 205 ticks; the only attachKeyFrame() is on text_2 (shown at idle-sum 135) => keyframe 135+6 = 141. Predicted mark x = 512 + 4*int(141/205*222) = 1120; measured mark at 1120 (the only mark).",
@@ -48,15 +115,54 @@
       "sceneId": "create:high_logistics/chain_conveyor",
       "title": "Relaying rotational force using Chain Conveyors",
       "registration": "AllCreatePonderScenes.java: HELPER.forComponents(AllBlocks.CHAIN_CONVEYOR).addStoryBoard(\"high_logistics/chain_conveyor\", FrogAndConveyorScenes::conveyor)",
-      "source": { "file": "highLogistics/FrogAndConveyorScenes.java", "method": "conveyor" },
-      "timeline": { "totalTicks": 674, "keyframes": [74, 211, 319, 404, 543] },
+      "source": {
+        "file": "highLogistics/FrogAndConveyorScenes.java",
+        "method": "conveyor"
+      },
+      "timeline": {
+        "totalTicks": 674,
+        "keyframes": [
+          74,
+          211,
+          319,
+          404,
+          543
+        ]
+      },
       "tick": 69,
-      "tickRange": [68, 70],
-      "anchor": { "after": "scene start", "plusTicks": 69, "note": "= idle-sum 68 (the instant of connection(conv1, conv2, true) + setKineticSpeed(conv2, -32) + showText #1) + 1 tick" },
+      "tickRange": [
+        68,
+        70
+      ],
+      "anchor": {
+        "after": "scene start",
+        "plusTicks": 69,
+        "note": "= idle-sum 68 (the instant of connection(conv1, conv2, true) + setKineticSpeed(conv2, -32) + showText #1) + 1 tick"
+      },
       "visibleTextKeys": [],
-      "bar": { "fillEndPx": 601, "progress": 0.0993, "marksPx": [608, 788, 932, 1044, 1224] },
-      "cursorRect": [376, 672, 26, 36],
-      "focusRect": [380, 90, 1160, 890],
+      "bar": {
+        "fillEndPx": 601,
+        "progress": 0.0993,
+        "marksPx": [
+          608,
+          788,
+          932,
+          1044,
+          1224
+        ]
+      },
+      "cursorRect": [
+        376,
+        672,
+        26,
+        36
+      ],
+      "focusRect": [
+        380,
+        90,
+        1160,
+        890
+      ],
       "reasoning": [
         "Title 'Relaying rotational force using Chain Conveyors' + chain conveyor item = high_logistics/chain_conveyor (FrogAndConveyorScenes.conveyor).",
         "Idle sum = 674; 5 attachKeyFrame() at idle-sums 68, 205, 313, 398, 537 => keyframes 74, 211, 319, 404, 543. Predicted mark xs 608, 788, 932, 1044, 1224 = the five measured marks exactly (a unique fingerprint of this scene).",
@@ -70,20 +176,60 @@
       "sceneId": "create:mechanical_press/pressing",
       "title": "Processing Items with the Mechanical Press",
       "registration": "AllCreatePonderScenes.java: HELPER.forComponents(AllBlocks.MECHANICAL_PRESS).addStoryBoard(\"mechanical_press/pressing\", ProcessingScenes::pressing)",
-      "source": { "file": "ProcessingScenes.java", "method": "pressing" },
-      "timeline": { "totalTicks": 471, "keyframes": [47, 312, 372] },
-      "tick": 471,
-      "tickRange": [471, 471],
-      "anchor": { "after": "scene end", "plusTicks": 0, "note": "currentTime == totalTime: the scene is finished" },
+      "source": {
+        "file": "ProcessingScenes.java",
+        "method": "pressing"
+      },
+      "timeline": {
+        "totalTicks": 471,
+        "keyframes": [
+          47,
+          312,
+          372
+        ]
+      },
+      "tick": 511,
+      "tickRange": [
+        471,
+        560
+      ],
+      "anchor": {
+        "after": "scene end",
+        "plusTicks": 0,
+        "note": "currentTime == totalTime: the scene is finished"
+      },
       "visibleTextKeys": [],
-      "bar": { "fillEndPx": 1408, "progress": 1.0, "marksPx": [600, 1100, 1212] },
-      "cursorRect": [1628, 734, 26, 36],
-      "focusRect": [520, 100, 880, 720],
+      "bar": {
+        "fillEndPx": 1408,
+        "progress": 1,
+        "marksPx": [
+          600,
+          1100,
+          1212
+        ]
+      },
+      "cursorRect": [
+        1628,
+        734,
+        26,
+        36
+      ],
+      "focusRect": [
+        520,
+        100,
+        880,
+        720
+      ],
       "reasoning": [
         "Title 'Processing Items with the Mechanical Press' + press item = mechanical_press/pressing (ProcessingScenes.pressing); mechanical_press/compacting has its own title ('Compacting items ...', ref4).",
         "Idle sum = 471; attachKeyFrame() at idle-sums 41, 306, 366 => keyframes 47, 312, 372 => predicted mark xs 600, 1100, 1212 = measured marks exactly.",
         "The bar is completely full (fill reaches x=1408, progress 1.0000) => currentTime == totalTime => tick 471 (end of the scene). No text window is visible (the last showText(50) at idle-sum 366 ends at tick 366+1+60 = 427) and the 'next scene' button carries the white next-up highlight (PonderUI.nextUp is armed 50 ticks after the scene finished, so the screenshot was taken at the end state, not mid-scene); the depot was hidden at idle-sum 276 and the belt line with the press is the final layout."
-      ]
+      ],
+      "beyondEnd": {
+        "ticks": 40,
+        "maxTicks": 600,
+        "why": "the reference shows the belt empty: Ponder keeps ticking the world after the scene timeline ends (PonderUI.tick -> PonderScene.tick, no finished guard); the sheet unstalled at 471 leaves the belt end near tick 510. Find the smallest N with an empty belt (sweep)."
+      }
     },
     {
       "id": "ref4",
@@ -91,15 +237,52 @@
       "sceneId": "create:mechanical_press/compacting",
       "title": "Compacting items with the Mechanical Press",
       "registration": "AllCreatePonderScenes.java: HELPER.forComponents(AllBlocks.MECHANICAL_PRESS).addStoryBoard(\"mechanical_press/compacting\", ProcessingScenes::compacting) (also registered for BASIN)",
-      "source": { "file": "ProcessingScenes.java", "method": "compacting" },
-      "timeline": { "totalTicks": 503, "keyframes": [51, 185, 429] },
+      "source": {
+        "file": "ProcessingScenes.java",
+        "method": "compacting"
+      },
+      "timeline": {
+        "totalTicks": 503,
+        "keyframes": [
+          51,
+          185,
+          429
+        ]
+      },
       "tick": 93,
-      "tickRange": [91, 95],
-      "anchor": { "after": "keyframe 0", "plusTicks": 42, "note": "keyframe 0 is tick 51" },
-      "visibleTextKeys": ["text_1"],
-      "bar": { "fillEndPx": 675, "progress": 0.1819, "marksPx": [600, 836, 1268] },
-      "cursorRect": [1469, 697, 26, 36],
-      "focusRect": [520, 100, 880, 720],
+      "tickRange": [
+        91,
+        95
+      ],
+      "anchor": {
+        "after": "keyframe 0",
+        "plusTicks": 42,
+        "note": "keyframe 0 is tick 51"
+      },
+      "visibleTextKeys": [
+        "text_1"
+      ],
+      "bar": {
+        "fillEndPx": 675,
+        "progress": 0.1819,
+        "marksPx": [
+          600,
+          836,
+          1268
+        ]
+      },
+      "cursorRect": [
+        1469,
+        697,
+        26,
+        36
+      ],
+      "focusRect": [
+        520,
+        100,
+        880,
+        720
+      ],
       "reasoning": [
         "Title 'Compacting items with the Mechanical Press' = mechanical_press/compacting (ProcessingScenes.compacting).",
         "Idle sum = 503; attachKeyFrame() at idle-sums 45, 179, 423 => keyframes 51, 185, 429 => predicted mark xs 600, 836, 1268 = measured marks exactly.",

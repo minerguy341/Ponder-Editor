@@ -4,10 +4,13 @@
 //       PostboxBlockEntity.tick, PostboxBlockEntity.flag}, foundation/utility Catnip LerpedFloat.linear().chase(.., 0.1, LINEAR).
 
 import * as THREE from 'three';
-import type { ItemStackJson } from '../../../contract';
+import type { BlockInstance, Direction, ItemStackJson, VisualContext } from '../../../contract';
 import type { VisualModule } from '../registry';
 import { BaseVisual, PARTIAL, getBool, getCompound, getItemStack, getItemList, getList, getPartial, horizontalAngle, stateDirection, toYRot, type Nbt } from '../common';
 import { PoseStack } from '../items/pose';
+import { uprightYaw } from '../items/cameraFacing';
+import { setVisible } from '../trains/util';
+import { DIR_STEP } from '../common';
 import { createItemObject, prepareItem } from '../items';
 import { GatedChase } from '../trains/timeline';
 import { SceneVisual, type SceneDataKeys, setMatrix, withMatrix } from '../trains/util';
@@ -96,38 +99,128 @@ const postboxModule = (blocks: string[]): VisualModule => ({
 });
 
 
-// ------------------------------------------------------------------------------------------------ table cloth (manual items)
+// ------------------------------------------------------------------------------------------------ table cloth
 //
-// Java: content/logistics/tableCloth/TableClothRenderer.renderSafe (manual item branch), DepotRenderer.renderItem (alwaysUpright).
-// Items are placed on the cloth: rotateCentered(DEG(180 - facing.toYRot())), then per item translate(.5, 3/16, .5) and, for several
-// items, a ring at 360/n degrees with radius 5/16. Non-block items are turned by (-rotation + PI). Residuals: the camera billboard that
-// DepotRenderer applies to upright items (it depends on the view, not on ticks) and the shop price tags (RequestData shop branch).
+// Java: content/logistics/tableCloth/{TableClothRenderer.renderSafe (shop price tags, items), TableClothBlockEntity
+//       (manuallyAddedItems, requestData / isShop / getItemsForRender, sideOccluded in lazyTick)}, DepotRenderer.renderItem
+// (alwaysUpright: non-block items are turned to face the camera, yRot = atan2(diff.x, diff.z) + PI, diff from the block centre).
+// The scene edits the block entity through PonderCalls: [{f:'manuallyAddedItems'}, {m:'add', a:[stack]}] and [{set:'requestData', v}].
+// Residuals: the shop filter (diamond price tag value box, FilteringRenderer) is not drawn.
 
-class TableClothVisual extends BaseVisual {
-  protected async build(): Promise<void> {
-    const nbt = this.block.nbt as Nbt | undefined;
-    const stacks = getItemList(nbt, 'Items');
-    if (!stacks.length) return;
-    const facing = stateDirection(this.block.state, 'facing') ?? 'north';
-    const rotDeg = 180 - toYRot(facing); // rotationInRadians (degrees here)
-    const base = new PoseStack().translate(0.5, 0.5, 0.5).rotateYDegrees(rotDeg).translate(-0.5, -0.5, -0.5);
-    const ps = new PoseStack();
-    for (let i = 0; i < stacks.length; i++) {
-      const stack = stacks[i];
-      const info = await prepareItem(stack);
-      const obj = await createItemObject(stack, { context: 'fixed' });
-      ps.reset().mulMatrix(base.matrix).translate(0.5, 3 / 16, 0.5);
-      if (stacks.length > 1) {
-        const a = (i * 360) / stacks.length + 45;
-        ps.rotateYDegrees(a).translate(0, i % 2 === 0 ? -0.005 : 0, 5 / 16).rotateYDegrees(-(i * 360) / stacks.length - 45);
-      }
-      if (!info.blockItem) ps.rotateYDegrees(-rotDeg + 180);
-      // DepotRenderer.renderItem: non-block items with alwaysUpright are drawn upright (billboard omitted, see the header)
-      if (!info.blockItem) ps.translate(0, 3 / 32, -1 / 16);
-      this.object.add(withMatrix(obj, ps.matrix.clone()));
+const TC_SLOTS = 8;
+
+/** The items the cloth shows at `ticks`: TableClothBlockEntity.getItemsForRender (shop stacks, at most 4, else manual items). */
+export function tableClothItemsAt(nbt: Nbt, calls: { t: number; path: { f?: string; m?: string; set?: string; a?: unknown[]; v?: unknown }[] }[], ticks: number): { items: ItemStackJson[]; shop: boolean; sideOccluded: boolean } {
+  let manual: ItemStackJson[] = [...getItemList(nbt, 'Items')];
+  let request: ItemStackJson[] = [];
+  let shop = false;
+  for (const c of calls) {
+    if (c.t > ticks) continue;
+    const p = c.path;
+    if (p.length === 2 && p[0].f === 'manuallyAddedItems' && p[1].m === 'add') manual = [...manual, p[1].a?.[0] as ItemStackJson];
+    if (p.length === 1 && p[0].set === 'requestData') {
+      const v = p[0].v as { encodedRequest?: { orderedStacks?: { stacks?: { stack?: ItemStackJson }[] } } } | null;
+      const stacks = (v?.encodedRequest?.orderedStacks?.stacks ?? []).map((b) => b.stack).filter((x): x is ItemStackJson => !!x);
+      request = stacks;
+      shop = stacks.length > 0;
     }
   }
-  protected onUpdate(): void { /* static */ }
+  return { items: shop ? request.slice(0, 4) : manual, shop, sideOccluded: false };
+}
+
+class TableClothVisual extends BaseVisual {
+  private readonly rot: number; // rotationInRadians in degrees
+  private readonly facing: Direction;
+  private readonly ps = new PoseStack();
+  private slotGroups: { key: string; p: number; g: THREE.Group; billboard: boolean; blockItem: boolean }[] = [];
+  private readonly base = new THREE.Matrix4();
+  private priceTags: { g: THREE.Group; partialSide: boolean }[] = [];
+  private calls: { t: number; path: { f?: string; m?: string; set?: string; a?: unknown[]; v?: unknown }[] }[] = [];
+
+  constructor(block: BlockInstance, ctx: VisualContext) {
+    super(block, ctx);
+    this.facing = stateDirection(this.block.state, 'facing') ?? 'north';
+    this.rot = 180 - toYRot(this.facing);
+    this.calls = [];
+  }
+
+  protected async build(): Promise<void> {
+    const ps = new PoseStack();
+    const keys = new Set<string>();
+    // every stack that can be shown: manual items, shop stacks, and the nbt items (prepared before the first frame)
+    const stacks: ItemStackJson[] = [...getItemList(this.data, 'Items')];
+    this.calls = ((this.block.nbt as { PonderCalls?: unknown[] } | undefined)?.PonderCalls ?? []) as typeof this.calls;
+    for (const c of this.calls) {
+      const p = c.path;
+      if (p.length === 2 && p[0].f === 'manuallyAddedItems' && p[1].m === 'add') stacks.push(p[1].a?.[0] as ItemStackJson);
+      if (p.length === 1 && p[0].set === 'requestData') {
+        const v = p[0].v as { encodedRequest?: { orderedStacks?: { stacks?: { stack?: ItemStackJson }[] } } } | null;
+        for (const b of v?.encodedRequest?.orderedStacks?.stacks ?? []) if (b.stack) stacks.push(b.stack);
+      }
+    }
+    const distinct = new Map<string, ItemStackJson>();
+    for (const st of stacks) if (st && st.id !== 'minecraft:air') distinct.set(stackKey(st), st);
+    // TableClothRenderer: rotateCentered(DEG(180 - facing.toYRot()), UP) around the block centre
+    this.base.copy(ps.reset().translate(0.5, 0.5, 0.5).rotateYDegrees(this.rot).translate(-0.5, -0.5, -0.5).matrix);
+    for (const [key, stack] of distinct) {
+      const info = await prepareItem(stack);
+      for (let p = 0; p < TC_SLOTS; p++) {
+        const obj = await createItemObject(stack, { context: 'fixed' });
+        const g = withMatrix(obj, new THREE.Matrix4());
+        g.visible = false;
+        this.object.add(g);
+        this.slotGroups.push({ key, p, g, billboard: !info.blockItem, blockItem: info.blockItem });
+        keys.add(key);
+      }
+    }
+    // price tags (TableClothRenderer: rotateCentered(rotation, UP)); drawn for shops, side or top by sideOccluded
+    for (const side of [true, false]) {
+      const tag = await getPartial(this.ctx, side ? PARTIAL.TABLE_CLOTH_PRICE_SIDE : PARTIAL.TABLE_CLOTH_PRICE_TOP);
+      const g = withMatrix(tag, this.base.clone());
+      g.visible = false;
+      this.object.add(g);
+      this.priceTags.push({ g, partialSide: side });
+    }
+  }
+
+  protected onUpdate(ticks: number): void {
+    const { items, shop } = tableClothItemsAt(this.data, this.calls, ticks);
+    const shown = items.slice(0, TC_SLOTS);
+    for (const pt of this.priceTags) setVisible(pt.g, shop && pt.partialSide === this.sideOccluded());
+    const n = shown.length;
+    const cam = uprightYaw(this.object, [0.5, 0.5, 0.5]); // DepotRenderer: yRot = atan2(diff.x, diff.z) + PI, diff = centre - camera
+    for (const sg of this.slotGroups) {
+      const on = sg.p < n && stackKey(shown[sg.p]) === sg.key;
+      setVisible(sg.g, on);
+      if (!on) continue;
+      // DepotRenderer.renderItem chain (per item i of n): translate(.5, 3/16, .5); ring for n > 1; non-block turn; billboard
+      const i = sg.p;
+      const ps = this.ps.reset().mulMatrix(this.base).translate(0.5, 3 / 16, 0.5);
+      if (n > 1) {
+        ps.rotateYDegrees((i * 360) / n + 45).translate(0, i % 2 === 0 ? -0.005 : 0, 5 / 16).rotateYDegrees((-i * 360) / n - 45);
+      }
+      if (!sg.blockItem) {
+        ps.rotateYDegrees(-this.rot + 180);
+        ps.rotateY(cam).translate(0, 3 / 32, -1 / 16);
+      }
+      setMatrix(sg.g, ps.matrix);
+    }
+  }
+
+  /** TableClothBlockEntity.lazyTick: the cloth beside the block (in front of it) or a solid face below it. */
+  private sideOccluded(): boolean {
+    const rel: [number, number, number] = [this.block.pos[0], this.block.pos[1], this.block.pos[2]];
+    const d = DIR_STEP[this.facing];
+    const front: [number, number, number] = [rel[0] + d[0], rel[1] + d[1], rel[2] + d[2]];
+    const st = this.ctx.lookup.getState(front);
+    if (st && /table_cloth/.test(st.name)) return true;
+    const below = this.ctx.lookup.getState([front[0], front[1] - 1, front[2]]);
+    return !!below && below.name !== 'minecraft:air';
+  }
+}
+
+function stackKey(st: ItemStackJson): string {
+  return `${st.id}|${st.count ?? 1}|${JSON.stringify(st.nbt ?? null)}`;
 }
 
 const tableClothModule: VisualModule = {

@@ -4,8 +4,10 @@
 //       NixieTubeBlockEntity.getDisplayedStrings / updateDisplayedStrings / updateRedstoneStrength, NixieTubeBlock.colorOf},
 //       foundation/utility/DyeHelper DYE_TABLE (ORANGE 0xEE9246 / 0xD94927), Minecraft font default.json + ascii.png (BitmapProvider).
 // The text is drawn in font pixels scaled by (1/20, -1/20, 1/20) like Create's ms.scale(scale, -scale, scale).
-// Residuals: the random flicker of the bright colour (drawTube uses RandomSource per frame; here it is 0 so the frames are pure),
-// the signal (renderAsSignal) mode, and JSON text components beyond the `text` field and the two daytime keys.
+// Flicker: drawTube draws random.nextFloat() per tube per frame from the level RandomSource (not reproducible). Here it is a
+// deterministic per-tick draw (LegacyRandom seeded by block position, tube index and the whole scene tick), so frames are pure
+// functions of the scene time with the same distribution. Residuals: the renderAsSignal mode (no scene sets its state, see the
+// ledger), and JSON text components beyond the `text` field and the daytime translate keys (the only extra form in the scenes).
 
 import * as THREE from 'three';
 import type { BlockInstance, VisualContext } from '../../../contract';
@@ -151,10 +153,29 @@ export function flattenComponent(json: string): string {
 
 // ------------------------------------------------------------------------------------------------ visual
 
+const MASK48 = (1n << 48n) - 1n;
+
+/** NixieTubeRenderer.drawTube: `random.nextFloat()` (LegacyRandom: next(24) / 2^24) drawn once per tube per tick. */
+export function flickerAt(pos: readonly number[], tube: number, tick: number): number {
+  const seed = (BigInt(Math.trunc(pos[0])) * 3129871n) ^ (BigInt(Math.trunc(pos[2])) * 116129781n) ^ BigInt(Math.trunc(pos[1]));
+  const mixed = seed * 31n + BigInt(tube) * 1000003n + BigInt(tick) * 6364136223846793005n;
+  let s = (mixed ^ 0x5deece66dn) & MASK48;
+  s = (s * 0x5deece66dn + 0xbn) & MASK48;
+  return Number(s >> 24n) / (1 << 24);
+}
+
+/** Color.mixColors(a, b, f): channel-wise lerp from a (f = 0) to b (f = 1). */
+export function mixColorsInt(a: number, b: number, f: number): number {
+  const ch = (sh: number) => Math.round(((a >> sh) & 0xff) * (1 - f) + ((b >> sh) & 0xff) * f) & 0xff;
+  return (ch(16) << 16) | (ch(8) << 8) | ch(0);
+}
+
 class NixieVisual extends BaseVisual {
   private font!: VanillaFont;
   private readonly bright: number;
   private readonly dark: number;
+  /** the bright (flickering) pass of each tube, by tube index */
+  private readonly brightMats: (THREE.MeshBasicMaterial | undefined)[] = [];
 
   constructor(block: BlockInstance, ctx: VisualContext) {
     super(block, ctx);
@@ -172,12 +193,12 @@ class NixieVisual extends BaseVisual {
     // msr.center().rotateYDegrees(yRot).rotateZDegrees(xRot).uncenter(); then msr.center()
     const base = new PoseStack().translate(0.5, 0.5, 0.5).rotateYDegrees(yRot).rotateZDegrees(xRot).translate(-0.5, -0.5, -0.5).translate(0.5, 0.5, 0.5);
     const bm = base.matrix.clone();
-    this.object.add(this.tube(a, -4 / 16, bm, height));
-    this.object.add(this.tube(b, 4 / 16, bm, height));
+    this.object.add(this.tube(a, -4 / 16, bm, height, 0));
+    this.object.add(this.tube(b, 4 / 16, bm, height, 1));
   }
 
   /** NixieTubeRenderer.renderSafe: translate(x, 0, 0), scale(s, -s, s), then drawTube (bright text and its shadow, mirrored dark copy). */
-  private tube(text: string, x: number, base: THREE.Matrix4, height: number): THREE.Group {
+  private tube(text: string, x: number, base: THREE.Matrix4, height: number, index: number): THREE.Group {
     const group = new THREE.Group();
     const ps = new PoseStack();
     const tubeM = ps.reset().mulMatrix(base).translate(x, 0, 0).scale(TUBE_SCALE, -TUBE_SCALE, TUBE_SCALE).matrix.clone();
@@ -197,13 +218,21 @@ class NixieVisual extends BaseVisual {
       if (!text) continue;
       const mat = markOwned(new THREE.MeshBasicMaterial({ map: this.font.texture, transparent: true, alphaTest: 0.5, side: THREE.DoubleSide }));
       mat.color.setHex(p.color);
+      if (p === passes[0]) this.brightMats[index] = mat;
       const mesh = new THREE.Mesh(markOwned(textGeometry(this.font, text)), mat);
       group.add(withMatrix(mesh, p.m));
     }
     return group;
   }
 
-  protected onUpdate(): void { /* static */ }
+  protected onUpdate(ticks: number): void {
+    // drawTube: the bright pass is mixColors(bright, dark, flicker / 4), flicker drawn per tube for this tick
+    const tick = Math.floor(ticks);
+    for (let i = 0; i < 2; i++) {
+      const m = this.brightMats[i];
+      if (m) m.color.setHex(mixColorsInt(this.bright, this.dark, flickerAt(this.block.pos, i, tick) / 4));
+    }
+  }
 }
 
 /** Color.mixColors(darkColor, 0, .35): the dark colour pulled towards black. */

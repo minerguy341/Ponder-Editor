@@ -8,7 +8,8 @@ import type { BlockInstance, VisualContext } from '../../../contract';
 import type { VisualModule } from '../registry';
 import { PARTIAL, StepSim, chaseValueAt, getNumber, getPartial, horizontalAngle, markOwned, stateBool, stateDirection } from '../common';
 import { PoseStack } from '../items/pose';
-import { SceneVisual, type SceneDataKeys, setMatrix, withMatrix } from '../trains/util';
+import { SceneVisual, type SceneDataKeys, setMatrix, setVisible, withMatrix } from '../trains/util';
+import { resources } from '../../../assets/resources';
 import type { Nbt } from '../common';
 
 /** LerpedFloat.chase speed used by AnalogLeverBlockEntity.loadAdditional (Chaser.EXP, 0.2). */
@@ -168,6 +169,11 @@ class DiodeVisual extends SceneVisual {
   private sim!: StepSim<DiodeSim>;
   private initialMax = 2;
   private initialPowered = false;
+  /** body variants keyed by `${powered}|${powering}`: the blockstate model of each combination (the chunk mesh skips this block) */
+  private bodies = new Map<string, THREE.Group>();
+  private readonly ps = new PoseStack();
+  private lastState: number | undefined;
+  private lastMax: number | undefined;
 
   constructor(block: BlockInstance, ctx: VisualContext, private readonly kind: DiodeKind) {
     super(block, ctx);
@@ -187,7 +193,37 @@ class DiodeVisual extends SceneVisual {
     this.initialPowered = stateBool(this.block.state, 'powered');
     this.maxEv = [{ tick: 0, v: this.initialMax }];
     this.poweredEv = [{ tick: 0, v: this.initialPowered }];
+    this.lastState = getNumber(this.data, 'State', 0);
+    this.lastMax = this.initialMax;
     this.makeSim();
+    await this.buildBody();
+  }
+
+  /**
+   * The diode body: blockstate variant model for facing/inverted/powered/powering (variant rotation about the block centre,
+   * y applied after x). Built for all four powered/powering combinations; update() shows the one the simulation is in.
+   */
+  private async buildBody(): Promise<void> {
+    const name = this.block.state.name.replace(/^create:/, '');
+    const bs = (await resources.blockstate({ ns: 'create', path: name })) as { variants?: Record<string, unknown> } | null;
+    if (!bs?.variants) return;
+    const facing = this.block.state.props.facing ?? 'north';
+    const inverted = this.block.state.props.inverted ?? 'false';
+    for (const p of [false, true]) {
+      for (const q of [false, true]) {
+        const key = `facing=${facing},inverted=${inverted},powered=${p},powering=${q}`;
+        let v = bs.variants[key] as { model: string; x?: number; y?: number } | { model: string; x?: number; y?: number }[] | undefined;
+        if (Array.isArray(v)) v = v[0];
+        if (!v?.model) continue;
+        const modelId = v.model.includes(':') ? v.model : `create:${v.model}`;
+        const obj = await getPartial(this.ctx, modelId);
+        const m = this.ps.reset().translate(0.5, 0.5, 0.5).rotateYDegrees(v.y ?? 0).rotateXDegrees(v.x ?? 0).translate(-0.5, -0.5, -0.5).matrix.clone();
+        const g = withMatrix(obj, m);
+        g.visible = false;
+        this.object.add(g);
+        this.bodies.set(`${p}|${q}`, g);
+      }
+    }
   }
 
   private makeSim(): void {
@@ -205,11 +241,19 @@ class DiodeVisual extends SceneVisual {
       this.poweredEv = this.poweredEv.filter((e) => e.tick < tick);
       this.poweredEv.push({ tick, v: keys.__state.powered === 'true' });
     }
+    // setData receives the whole block-entity nbt: only real changes are scene edits (a changed value restarts the machine)
     if ('ScrollValue' in rest) {
-      this.maxEv = this.maxEv.filter((e) => e.tick < tick);
-      this.maxEv.push({ tick, v: getNumber(rest, 'ScrollValue', this.initialMax) });
+      const v = getNumber(rest, 'ScrollValue', this.initialMax);
+      if (v !== this.lastMax) {
+        this.maxEv = this.maxEv.filter((e) => e.tick < tick);
+        this.maxEv.push({ tick, v });
+        this.lastMax = v;
+      }
     }
-    if ('State' in rest) this.makeSim(); // a state patch restarts the machine from the patched state
+    if ('State' in rest) {
+      const st = getNumber(rest, 'State', 0);
+      if (st !== this.lastState) { this.lastState = st; this.makeSim(); }
+    }
     this.sim.reset();
   }
 
@@ -220,13 +264,18 @@ class DiodeVisual extends SceneVisual {
     const progress = Math.min(Math.max(cur.state, 0), max) / max; // BrassDiodeBlockEntity.getProgress
     this.tint.setHex(mixColor(0x2c0300, 0xcd0000, progress));
     for (const m of this.indMats) (m as THREE.Material & { color?: THREE.Color }).color?.copy(this.tint);
+    if (this.bodies.size) {
+      const powered = timedAt(this.poweredEv, Math.floor(ticks), this.initialPowered);
+      const key = `${powered}|${cur.powering}`;
+      for (const [k, g] of this.bodies) setVisible(g, k === key);
+    }
   }
 }
 
 function diodeModule(blocks: string[], kind: DiodeKind): VisualModule {
   return {
     blocks,
-    entityRendered: () => false, // the static diode model draws the body; the lit indicator is drawn here
+    entityRendered: () => true, // the visual draws the body variant that matches the simulated POWERING, so the chunk mesh skips it
     create: (block, ctx) => new DiodeVisual(block, ctx, kind).init(),
     async preload(ctx) { await getPartial(ctx, PARTIAL.FLEXPEATER_INDICATOR); },
   };

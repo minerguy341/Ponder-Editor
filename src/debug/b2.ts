@@ -110,7 +110,7 @@ async function sceneMode() {
   const ent = qs.get('plate');
   void ent;
   setTicks(Number(qs.get('t') ?? 0));
-  Object.assign(w.__b2 as object, { visuals, setTicks, structure: st, lookup, ctx });
+  Object.assign(w.__b2 as object, { visuals, setTicks, structure: st, lookup, ctx, lw: getLogisticsWorld(lookup) });
   // probe(ticks): simulated logistics state (belt items, depot held items, basin slots) for verification
   (w.__b2 as Record<string, unknown>).rawNbt = (name: string) => st.blocks.filter((b) => b.state.name === name).map((b) => ({ pos: b.pos, props: b.state.props, nbt: b.nbt }));
   (w.__b2 as Record<string, unknown>).probe = (t: number) => {
