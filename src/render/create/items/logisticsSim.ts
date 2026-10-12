@@ -187,6 +187,25 @@ function stepFlap(fl: FlapState): void {
 }
 
 /** Scene belts, depots and basins, advanced one tick at a time. */
+/** The horizontal directions, in the order Iterate.horizontalDirections gives them. */
+const HORIZONTAL_SIDES: Direction[] = ['north', 'south', 'west', 'east'];
+type TunnelBlock = { name: string; pos: Vec3; props: Record<string, string> };
+/** The tunnel above a belt segment (BeltTunnelInteractionHandler.getTunnelOnPosition: pos.above()). */
+function tunnelAbove(lookup: WorldLookup, seg: Vec3): TunnelBlock | undefined {
+  const pos: Vec3 = [seg[0], seg[1] + 1, seg[2]];
+  const st = lookup.getState(pos);
+  if (!st || !/tunnel/.test(st.name)) return undefined;
+  return { name: st.name, pos, props: st.props as Record<string, string> };
+}
+/** The position one step from a segment in direction d (d = 1 block, or `n` blocks). */
+function stepFrom(p: Vec3, d: Direction, n = 1): Vec3 {
+  const s = axisDirectionStep(d) * n;
+  const a = axisOf(d);
+  return a === 'x' ? [p[0] + s, p[1], p[2]] : a === 'y' ? [p[0], p[1] + s, p[2]] : [p[0], p[1], p[2] + s];
+}
+function isJunctionShape(shape: string | undefined): boolean { return shape === 'cross' || shape === 't_left' || shape === 't_right'; }
+function isStraightShape(shape: string | undefined): boolean { return shape === 'straight'; }
+
 export class LogisticsWorld {
   private chainsByKey = new Map<string, BeltChain>();
   private byPos = new Map<string, BeltChain | null>();
@@ -642,7 +661,13 @@ export class LogisticsWorld {
         diffToEnd += positive ? -MARGIN[ending] : MARGIN[ending];
       }
       const limited = positive ? Math.min(movement, diffToEnd) : Math.max(movement, diffToEnd);
+      // Belt Funnels (BeltFunnelInteractionHandler.checkForFunnels, before the spacing check as in BeltInventory.tick)
+      const funnel = this.funnelInteraction(chain, item, item.beltPosition + limited, positive, mf);
+      if (funnel === 'removed') { removed.push(item); continue; }
+      if (funnel === 'stuck') continue;
       if (noMovement) continue;
+      // Belt Tunnels (BeltTunnelInteractionHandler.flapTunnelsAndCheckIfStuck): a junction may split a stack; stuck items wait
+      if (this.tunnelInteraction(chain, item, item.beltPosition + limited, positive, mf)) continue;
       item.beltPosition += limited;
       const target = targetSideOffset(item.angle);
       const diffToMiddle = target - item.sideOffset;
@@ -695,6 +720,126 @@ export class LogisticsWorld {
     if (r === 'remove') return true;
     if (r === 'hold') { item.locked = true; item.processHeld = true; }
     return false;
+  }
+
+  /**
+   * BeltTunnelInteractionHandler.flapTunnelsAndCheckIfStuck (server path). When the item enters the next segment, a tunnel above
+   * it flaps; an andesite junction (CROSS / T_LEFT / T_RIGHT on the item's axis) splits a stack of more than one: one copy per
+   * flapped side goes to the block beside the tunnel (DirectBeltInputBehaviour), while the rest stays. Returns true when the
+   * item is stuck (its insertion target refuses it) and must not move this tick.
+   */
+  private tunnelInteraction(chain: BeltChain, item: SimItem, nextOffset: number, positive: boolean, mf: Direction): boolean {
+    const currentSegment = Math.trunc(item.beltPosition);
+    let upcoming = Math.trunc(nextOffset);
+    if (!positive && nextOffset === 0) upcoming = -1;
+    if (currentSegment === upcoming) return false;
+    if (chain.shape.slope !== 'horizontal') return false;
+    const upSeg = chain.segments[upcoming];
+    const curSeg = chain.segments[currentSegment];
+    const upTunnel = upSeg ? tunnelAbove(this.lookup, upSeg) : undefined;
+    if (upTunnel && (item.stack.count ?? 1) > 1 && upTunnel.name === 'create:andesite_tunnel' && isJunctionShape(upTunnel.props.shape) && axisOf(mf) === upTunnel.props.axis) {
+      const flapped = this.tunnelFlapSides(upTunnel);
+      for (const d of HORIZONTAL_SIDES) {
+        if (axisOf(d) === upTunnel.props.axis) continue;
+        if (!flapped.includes(d)) continue;
+        const outpos = stepFrom(upSeg!, d);
+        const recv = this.directReceiverAt(outpos);
+        if (!recv || !recv.canInsertFromSide(d)) continue;
+        const rem = recv.insert({ ...item.stack, count: 1 }, d);
+        if (rem) return true;
+        this.flapAt(upTunnel.pos, d).target = 1; // flapTunnel(upcoming, d, inward=false)
+        item.stack = { ...item.stack, count: (item.stack.count ?? 1) - 1 };
+        if ((item.stack.count ?? 1) <= 1) break;
+      }
+    }
+    // flapTunnel(current, movementFacing, false); flapTunnel(upcoming, movementFacing.opposite, true)
+    const curTunnel = curSeg ? tunnelAbove(this.lookup, curSeg) : undefined;
+    if (curTunnel) this.flapAt(curTunnel.pos, mf).target = 1;
+    if (upTunnel) this.flapAt(upTunnel.pos, opposite(mf)).target = -1;
+    return false;
+  }
+
+  /** BeltTunnelBlockEntity.updateTunnelConnections: the sides a tunnel has flaps on (occluded sides have none). */
+  private tunnelFlapSides(tunnel: TunnelBlock): Direction[] {
+    const out: Direction[] = [];
+    const positiveOf = (d: Direction) => axisDirectionStep(d) > 0 !== (axisOf(d) === 'z');
+    for (const d of HORIZONTAL_SIDES) {
+      if (axisOf(d) === tunnel.props.axis) continue;
+      if (isStraightShape(tunnel.props.shape)) continue;
+      const positive = positiveOf(d);
+      if (positive && tunnel.props.shape === 't_left') continue;
+      if (!positive && tunnel.props.shape === 't_right') continue;
+      const near = this.lookup.getState(stepFrom(tunnel.pos, d));
+      if (near && /tunnel/.test(near.name)) continue;
+      if (near && /funnel/.test(near.name) && near.props.shape === 'extended' && near.props.facing === opposite(d)) continue;
+      out.push(d);
+    }
+    return out;
+  }
+
+  /** A block that takes single items from a side (DirectBeltInputBehaviour): belts, depots, basins, registered receivers. */
+  private directReceiverAt(pos: Vec3): BeltReceiver | undefined {
+    if (this.chainAt(pos) && this.lookup.getState(pos)?.name === 'create:belt') {
+      return {
+        canInsertFromSide: (side) => this.canInsertOnBelt(pos, side),
+        insert: (stack, side) => { this.insertOnBelt(pos, side, stack, undefined, false); return null; },
+      };
+    }
+    return this.receiverAt(pos);
+  }
+
+  /** BeltBlockEntity.canInsertFromSide: the belt takes items from this side (speed, opposite of movement, free segment). */
+  private canInsertOnBelt(pos: Vec3, side: Direction): boolean {
+    const chain = this.chainAt(pos);
+    if (!chain) return false;
+    const belt = this.lookup.getState(pos)!;
+    if (!canTransportObjects(belt)) return false;
+    const idx = chain.index.get(posKey(pos));
+    if (idx === undefined) return false;
+    const speed = this.speedOf(chain);
+    if (speed === 0) return false;
+    if (movementFacing(chain.shape.facing, speed) === opposite(side)) return false;
+    return this.canInsertAt(this.stateOf(chain), idx, side);
+  }
+
+  /**
+   * BeltFunnelInteractionHandler.checkForFunnels (server path). A belt funnel above a segment the item crosses takes the item into
+   * the block behind it (InvManipulationBehaviour on BlockFace(pos, facing.opposite)) through that block's belt receiver. The funnel
+   * faces against the movement (blocking) or along it. Returns 'removed' (taken whole), 'stuck' (waits at the funnel entry),
+   * or 'pass' (the item moves on).
+   */
+  private funnelInteraction(chain: BeltChain, item: SimItem, nextOffset: number, positive: boolean, mf: Direction): 'removed' | 'stuck' | 'pass' {
+    const length = chain.segments.length;
+    const step = positive ? 1 : -1;
+    const first = Math.min(Math.max(Math.floor(item.beltPosition), 0), length - 1);
+    for (let seg = first; positive ? seg <= nextOffset : seg + 1 >= nextOffset; seg += step) {
+      const segPos = chain.segments[seg];
+      if (!segPos) continue;
+      const funnelPos: Vec3 = [segPos[0], segPos[1] + 1, segPos[2]];
+      const fs = this.lookup.getState(funnelPos);
+      if (!fs || !/belt_funnel$/.test(fs.name)) continue;
+      const facing = fs.props.facing as Direction;
+      if (facing === mf) continue;
+      const blocking = facing === opposite(mf);
+      const shape = fs.props.shape;
+      if (shape === 'pushing') continue;
+      let entry = seg + 0.5;
+      if (shape === 'extended') entry += 0.499 * (positive ? -1 : 1);
+      const crossed = positive ? nextOffset > entry : nextOffset < entry;
+      if (!crossed) return 'pass';
+      if (blocking) item.beltPosition = entry;
+      if (fs.props.powered === 'true') { if (blocking) return 'stuck'; continue; }
+      const recv = this.directReceiverAt(stepFrom(funnelPos, opposite(facing)));
+      if (!recv || !recv.canInsertFromSide(facing)) { if (blocking) return 'stuck'; continue; }
+      const rem = recv.insert(item.stack, facing);
+      const taken = !rem || (rem.id === item.stack.id && (rem.count ?? 1) < (item.stack.count ?? 1));
+      if (!taken) { if (blocking) return 'stuck'; continue; }
+      this.flapAt(funnelPos).target = -1; // FunnelBlockEntity.flap(true): inward
+      if (!rem) return 'removed';
+      item.stack = rem;
+      if (blocking) return 'stuck';
+    }
+    return 'pass';
   }
 
   /** BeltInventory.resolveEnding, for the block one step past the chain end. */
