@@ -486,7 +486,9 @@ export class SceneGraph {
       if (node.visual) node.visual.update(ticks);
     }
     this.frameEntities(st, pt);
-    if (this.particles && this.spriteBank) this.particles.update(st.fx, this.spriteBank, st.tick, pt);
+    // after the last tick the scene stops advancing, but the instruction pass of that tick still queued particles (PonderScene keeps
+    // the world ticking): they become live on the next tick, so the particle clock is one tick ahead of a finished scene
+    if (this.particles && this.spriteBank) this.particles.update(st.fx, this.spriteBank, st.finished ? st.tick + 1 : st.tick, pt);
     for (const [slot, node] of this.outlines) {
       const e = st.outlines[slot];
       if (!e) continue;
