@@ -277,11 +277,19 @@ export class PonderUI implements ProgressSource {
     host.addEventListener('pointerdown', onDown);
     const key = (e: KeyboardEvent) => this.onKey(e);
     window.addEventListener('keydown', key);
+    // the rotation hint goes at the first interaction anywhere (drag, tap, wheel, key)
+    const dismiss = () => { this.hintDismissed = true; };
+    window.addEventListener('wheel', dismiss, { passive: true });
+    window.addEventListener('pointerdown', dismiss);
+    window.addEventListener('touchstart', dismiss, { passive: true });
     this.cleanup.push(() => {
       host.removeEventListener('pointermove', onMove);
       host.removeEventListener('pointerleave', onLeave);
       host.removeEventListener('pointerdown', onDown);
       window.removeEventListener('keydown', key);
+      window.removeEventListener('wheel', dismiss);
+      window.removeEventListener('pointerdown', dismiss);
+      window.removeEventListener('touchstart', dismiss);
     });
     // the mouse position in client coordinates is needed for picking
     const track = (e: PointerEvent) => { this.lastPick = [e.clientX, e.clientY]; };
@@ -406,7 +414,6 @@ export class PonderUI implements ProgressSource {
     // NavigatableSimiScreen back-track button (flat background, ICON_DISABLE, "Exit")
     this.back = compact ? mk(12, compactY, { flat: true }) : mk(31, H - 31 - 20, { flat: true });
     this.back.setContent({ sprite: 'ICON_DISABLE' }, gui).onClick(() => this.o.onExit());
-    this.back.tooltip = 'Exit';
     // additions for the web: reset camera + fullscreen, top right
     const topY = 19 + 2;
     const fsX = W - 31 - 20 + (compact ? 19 : 0);
@@ -524,7 +531,8 @@ export class PonderUI implements ProgressSource {
     const anyText = [...this.texts.values()].some((t) => t.fade > 0);
     const speed = this.comfy && anyText ? 1 / 3 : 1;
     if (speed !== this.lastSpeed) { this.lastSpeed = speed; this.o.player.setSpeed(speed); }
-    if (!this.hintDismissed && this.uiTicks > 20 * 9) this.hintDismissed = true;
+    // the hint is gone after 4 seconds at the latest (80 ticks), or at the first interaction
+    if (!this.hintDismissed && this.uiTicks > 20 * 4) this.hintDismissed = true;
   }
   /** PonderScene#isFinished: set by markAsFinished, or when the schedule has run out (sim.ts); reaching the total alone is not enough */
   private isFinished(): boolean {
@@ -597,9 +605,10 @@ export class PonderUI implements ProgressSource {
     const showHint = !this.hintDismissed && !this.loading && fade > 0.9;
     if (showHint) {
       const touch = matchMedia?.('(pointer: coarse)').matches;
-      const alpha = Math.min(1, (this.uiTicks - 20) / 20) * Math.max(0, Math.min(1, (20 * 9 - this.uiTicks) / 20));
+      // fades in over 0.5 s, out over the last 0.5 s of its 4 s; sits in the top margin, clear of the title card and the button row
+      const alpha = Math.min(1, (this.uiTicks - 10) / 10) * Math.max(0, Math.min(1, (20 * 4 - this.uiTicks) / 10));
       this.hintLabel.el.style.display = alpha > 0.02 ? '' : 'none';
-      this.hintLabel.set(touch ? 'Drag to rotate - pinch to zoom' : 'Drag to rotate - scroll to zoom', scaleAlpha(COLOR_TEXT[1], Math.max(0, alpha))).at(Math.trunc(W / 2), H - 51 - 22);
+      this.hintLabel.set(touch ? 'Drag to rotate - pinch to zoom' : 'Drag to rotate - scroll to zoom', scaleAlpha(COLOR_TEXT[1], Math.max(0, alpha))).at(Math.trunc(W / 2), 2);
     } else this.hintLabel.el.style.display = 'none';
 
     // --- overlay
@@ -770,6 +779,7 @@ export class PonderUI implements ProgressSource {
       error: this.loadError, texts: this.texts.size, controls: this.controls.size, scale: this.gui.scale, width: this.gui.width, height: this.gui.height,
       /** titles of the left tag buttons (drawn on canvases; the test reads them here) */
       tagButtons: this.tagButtons.map((t) => t.tag.title), finished: this.isFinished(), nextUpShown: this.nextUpBox.el.style.display !== 'none',
+      hintShown: this.hintLabel.el.style.display !== 'none' && !this.hintDismissed,
     };
   }
 }

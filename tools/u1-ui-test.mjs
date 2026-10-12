@@ -87,6 +87,20 @@ try {
   await sleep(300);
   check('category chip opens the tag screen', (await page.evaluate(() => location.hash)) === '#/tag/create:kinetic_relays');
 
+  // --- rotation hint: shown on load, gone after 4 s at the latest, or at the first interaction (wheel here)
+  await nav('#/scene/create:high_logistics/chain_conveyor?item=create:chain_conveyor');
+  await page.waitForFunction(() => window.__ponder.ui()?.hintShown === true, null, { timeout: 8000 }).catch(() => {});
+  check('hint shown after load', (await page.evaluate(() => window.__ponder.ui()?.hintShown)) === true);
+  await page.waitForFunction(() => window.__ponder.ui()?.hintShown === false, null, { timeout: 8000 }).catch(() => {});
+  check('hint gone after 4 s', (await page.evaluate(() => window.__ponder.ui()?.hintShown)) === false);
+  await nav('#/');
+  await nav('#/scene/create:high_logistics/chain_conveyor?item=create:chain_conveyor');
+  await page.waitForFunction(() => window.__ponder.ui()?.hintShown === true, null, { timeout: 8000 }).catch(() => {});
+  await page.mouse.move(600, 500);
+  await page.mouse.wheel(0, -120);
+  await sleep(300);
+  check('hint gone at the first interaction', (await page.evaluate(() => window.__ponder.ui()?.hintShown)) === false);
+
   check('no page errors', problems.length === 0 && bad.length === 0, [...problems.slice(0, 2), ...bad.slice(0, 3)].join(' | '));
 } catch (e) {
   failures++;
