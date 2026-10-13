@@ -16,7 +16,7 @@ import type { BlockRendererImpl } from '../render/blockRenderer';
 import { controlEvents, lineEvents, outlineEvents, textEvents } from './events';
 import { createRunner, createSimCtx, maxWorldTick, runnerReplay, runnerSeek, runnerStep, type SimRunner } from './sim';
 import type { SimCtx } from './simTypes';
-import { SceneGraph } from './scenegraph';
+import { SceneGraph, type RenderAudit } from './scenegraph';
 import { keyOf, parseKey } from './util';
 import type { PlayerLike, PlayerState } from '../ui/playerApi';
 
@@ -273,6 +273,13 @@ export class PonderPlayer implements PlayerLike {
       }
     }
     return [...out].sort();
+  }
+
+  /** Debug accessor (audit): what the scene graph draws at the current tick (SceneGraph.renderAudit); no sync, so it shows the last rendered state. */
+  renderAudit(): RenderAudit | null {
+    const st = this.runner?.state;
+    if (!st || !this.graph) return null;
+    return this.graph.renderAudit(st);
   }
 
   getState(): PlayerState {

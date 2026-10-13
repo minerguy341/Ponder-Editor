@@ -27,6 +27,12 @@ const FACE_ALPHA = 0.5; // AABBOutline: faces at half alpha (`alphaMult = highli
 const AABB_LINE_DIVISOR = 4; // ChasingAABB edges: visible thickness = lineWidth / 4 (matched to ref2)
 const AABB_INFLATE = 1 / 32; // the outline box sits slightly outside the block faces (ref2) so the edges are not hidden by them
 
+/** SceneGraph.renderAudit: one section element as drawn (see SceneGraph.renderAudit) */
+export interface RenderAuditSection { id: string; shown: boolean; groupVisible: boolean; keys: number; meshQuads: number; sumQuads: number }
+/** SceneGraph.renderAudit: one block of a section element (its world block, not its drawn state) */
+export interface RenderAuditBlock { key: string; name: string; section: string; quads: number; sameSectionNeighbours: number; visual: boolean }
+export interface RenderAudit { sections: RenderAuditSection[]; blocks: RenderAuditBlock[]; visualKeys: string[]; ghostVisuals: string[]; orphans: number }
+
 export interface PlayerErrorSink {
   (message: string): void;
 }
@@ -523,6 +529,68 @@ export class SceneGraph {
       node.faceMat.opacity = node.faceBase * alpha;
       node.edgeMat.opacity = alpha;
     }
+  }
+
+  /**
+   * Audit (read-only): what the scene graph actually draws at `st`, per block key. A block of a visible section is rendered when
+   * its static geometry has quads (the section chunk mesh, built from exactly these blocks with the section's masked lookup, so
+   * the per-block quad count is additive) or when a block entity visual is attached under its section group.
+   * Sections: `meshQuads` is the chunk mesh's quad count, `sumQuads` the sum of the per-block counts (they must be equal).
+   * Used by tools/verify/world-audit.mjs through window.__ponder.renderAudit().
+   */
+  renderAudit(st: SimState): RenderAudit {
+    const sections: RenderAuditSection[] = [];
+    const blocks: RenderAuditBlock[] = [];
+    const visualKeys = new Set<string>();
+    let orphans = 0;
+    const visualObjects = new Set<THREE.Object3D>();
+    for (const node of this.visuals.values()) if (node.visual) visualObjects.add(node.visual.object);
+    for (const el of Object.values(st.elements)) {
+      if (el.kind !== 'section') continue;
+      const node = this.sections.get(el.id);
+      const shown = el.visible && el.sel !== null;
+      const keys = el.sel ? [...el.sel.keys].filter((k) => st.world.blocks.has(k)) : [];
+      const lookup = el.sel ? maskedLookup(st.world, el.sel) : null;
+      let sumQuads = 0;
+      for (const k of keys) {
+        const block = st.world.blocks.get(k)!;
+        const g = lookup ? this.renderer.buildSection([block], { lookup }) : null;
+        const quads = Number(g?.userData.quadCount ?? 0);
+        if (g) disposeTree(g);
+        sumQuads += quads;
+        const n = [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]].filter(([dx, dy, dz]) => {
+          const [x, y, z] = parseKey(k);
+          return el.sel!.keys.has(keyOf([x + dx, y + dy, z + dz]));
+        }).length;
+        blocks.push({ key: k, name: block.state.name, section: el.id, quads, sameSectionNeighbours: n, visual: false });
+      }
+      const meshQuads = Number(node?.mesh?.userData.quadCount ?? 0);
+      if (node) {
+        for (const c of node.group.children) if (c !== node.mesh && !visualObjects.has(c)) orphans++;
+      }
+      sections.push({ id: el.id, shown, groupVisible: node?.group.visible ?? false, keys: keys.length, meshQuads, sumQuads });
+    }
+    // a visual is drawn when it hangs under the group of a section element (its owner section); (section, key) identifies a block
+    const drawnBy = new Set<string>();
+    const ghostVisuals: string[] = [];
+    for (const [k, node] of this.visuals) {
+      if (!node.visual) continue;
+      const parent = node.visual.object.parent;
+      const sid = parent?.name.startsWith('section:') ? parent.name.slice('section:'.length) : null;
+      if (!sid) continue;
+      // drawn only when the visual has vertices to draw (an attached visual with empty geometry draws nothing)
+      let vertices = 0;
+      node.visual.object.traverse((c) => {
+        const m = c as THREE.Mesh;
+        if (m.isMesh && m.visible) vertices += m.geometry.attributes.position?.count ?? 0;
+      });
+      if (vertices === 0) continue;
+      visualKeys.add(k);
+      drawnBy.add(`${sid}|${k}`);
+      if (!blocks.some((b) => b.key === k && b.section === sid)) ghostVisuals.push(`${k}:${node.name} under ${sid}`);
+    }
+    for (const b of blocks) b.visual = drawnBy.has(`${b.section}|${b.key}`);
+    return { sections, blocks, visualKeys: [...visualKeys].sort(), ghostVisuals, orphans };
   }
 
   dispose(): void {

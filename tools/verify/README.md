@@ -37,6 +37,7 @@ Common target flags (run-all, compare, interaction): `--fixture` (serve `tools/v
 | `compare.mjs --seed-review` | creates `review.json` with `pending` entries if missing (runs also seed it) | | `review.json` |
 | `readme-check.mjs [--refs]` | checks this README covers every script/topic (gate G7b); `--refs` prints the reference summary | `README_COMPLETE` | |
 | `interaction.mjs [--scene ID] [--query q]` | mouse drag, touch drag, wheel, pinch, replay, next/prev, progress-bar seek, scene browser, mobile overflow | `INTERACTION_OK` | `out/interaction-mobile.png` |
+| `world-audit.mjs [--filter S] [--ticks mid,end] [--url U] [--out F]` | per scene at mid (floor(total/2)) and end: the sim's visible block keys (`visibleKeys`) against what the scene graph draws (`renderAudit`: per-block chunk-mesh quads or an attached, non-empty block entity visual); reports INVISIBLE (exposed face, nothing drawn), GHOST, STALE mesh, ORPHAN children; `GAME_INVISIBLE` blocks (RenderShape.INVISIBLE) are not defects | `WORLD_AUDIT_OK` only if no defect (else `WORLD_AUDIT_NOT_OK`, exit 1) | `out/world-audit.json` |
 | `subpath.mjs [--base /Ponder-Editor/] [--fixture] [--dist D]` | builds with the sub-path base (and with `./`), serves it like GitHub Pages, loads and plays a scene | `SUBPATH_OK` | `out/subpath-{abs,relative}/` |
 
 Suggested npm scripts (the driver adds them; E does not touch package.json):

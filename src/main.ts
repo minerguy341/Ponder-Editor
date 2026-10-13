@@ -4,6 +4,7 @@
 
 import './styles.css';
 import type { SceneIndexEntry, SceneJson } from './contract';
+import type { RenderAudit } from './ponder/scenegraph';
 import { Browser } from './ui/browser';
 import { loadLang, loadScene as fetchScene, loadSceneIndex, loadTags, type TagMap } from './ui/data';
 import { ItemIndexScreen, TagScreen } from './ui/tagScreens';
@@ -44,6 +45,8 @@ export interface PonderApi {
   visibleKeys(): string[] | null;
   /** audit: section elements of the current tick (ScenePlayer.sectionElements) */
   sectionElements(): { id: string; visible: boolean; fade: number; off: number[]; keys: number; present: number }[] | null;
+  /** audit: what the scene graph draws at the current tick (SceneGraph.renderAudit), null without an engine */
+  renderAudit(): RenderAudit | null;
 }
 
 declare global { interface Window { __ponder?: PonderApi; __PONDER_MANUAL_START__?: boolean } }
@@ -143,6 +146,7 @@ export async function startApp(opts: StartOptions = {}): Promise<PonderApi> {
     visibleKeys: () => (engine?.player as { visibleKeys?: () => string[] | null } | undefined)?.visibleKeys?.() ?? null,
     sectionElements: () => (engine?.player as { sectionElements?: () => unknown } | undefined)?.sectionElements?.() as ReturnType<PonderApi['sectionElements']> ?? null,
     visiblePositions: () => (engine?.player as { visiblePositions?: () => string[] | null } | undefined)?.visiblePositions?.() ?? null,
+    renderAudit: () => (engine?.player as { renderAudit?: () => RenderAudit | null } | undefined)?.renderAudit?.() ?? null,
   };
   window.__ponder = api;
 
