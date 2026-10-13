@@ -5,8 +5,8 @@
     "ref1": {
       "verdict": "differences",
       "reviewedBy": "driver",
-      "reviewedAt": "2026-10-13T03:40:38.443096Z",
-      "oursSha256": "9fb2f08f6fec6d321dd6f264f8b7bcd4b670fdff21ddfb00770db8e6cae1efac",
+      "reviewedAt": "2026-10-13T04:39:45.039349+00:00",
+      "oursSha256": "ab4e7d6710a48a3342a20dba884d3c58b647e9dcf31478baca4b18c08a7a76a8",
       "lookedAt": [
         "/home/user/Ponder-Editor/tools/verify/out/ref1-side-by-side-small.png"
       ],
@@ -24,13 +24,13 @@
           "status": "accepted:game backdrop is not scene content; region masked in the diff"
         }
       ],
-      "notes": "Geometry, cogs/shafts, speed-controller block, base plate, text box, leader line, title card, buttons and progress bar all line up; remaining diff is anti-aliasing and the cog rotation phase/edge pixels."
+      "notes": "Geometry, cogs/shafts, speed-controller block, base plate, text box, leader line, title card, buttons and progress bar all line up; remaining diff is anti-aliasing and the cog rotation phase/edge pixels. Re-reviewed after later merges (particles, parrots, fluids, bogeys): geometry unchanged."
     },
     "ref2": {
       "verdict": "differences",
       "reviewedBy": "driver",
-      "reviewedAt": "2026-10-13T03:40:38.443096Z",
-      "oursSha256": "9ec982cf6648390c40d45c4788b9876a2ad142eb571d8dcb70128f8fc6271160",
+      "reviewedAt": "2026-10-13T04:39:45.039349+00:00",
+      "oursSha256": "bf00a62608440a782b2cd8267942cd0e38b3b4ce0ee95dd1744911d1d678b508",
       "lookedAt": [
         "/home/user/Ponder-Editor/tools/verify/out/ref2-side-by-side-small.png"
       ],
@@ -48,13 +48,13 @@
           "status": "accepted:game backdrop is not scene content; region masked in the diff"
         }
       ],
-      "notes": "Chain conveyors, chains, green outlines, item-icon popups, shaft, cog and plate match. Residual diff is sub-pixel chain/outline edges."
+      "notes": "Chain conveyors, chains, green outlines, item-icon popups, shaft, cog and plate match. Residual diff is sub-pixel chain/outline edges. Re-reviewed after later merges (particles, parrots, fluids, bogeys): geometry unchanged."
     },
     "ref3": {
       "verdict": "differences",
       "reviewedBy": "driver",
-      "reviewedAt": "2026-10-13T03:40:38.443096Z",
-      "oursSha256": "f52ad177050f787957e0afcb8dd59078640a90d0ae5aaef0f64bbb864b25e6a3",
+      "reviewedAt": "2026-10-13T04:39:45.039349+00:00",
+      "oursSha256": "89fa8fb27e974063850144163af5041266ca9fddc1552f01372d9bac6ccdcd91",
       "lookedAt": [
         "/home/user/Ponder-Editor/tools/verify/out/ref3-side-by-side-small.png"
       ],
@@ -70,9 +70,15 @@
           "aspect": "background",
           "description": "Reference includes the game's blurred world backdrop details, hotbar, mouse cursor and a purple/red object (blue ignored region in the diff); our sky/grass gradient is an approximation.",
           "status": "accepted:game backdrop is not scene content; region masked in the diff"
+        },
+        {
+          "id": "next-button-highlight",
+          "aspect": "chrome",
+          "description": "The reference shows the 'next' button with a white highlight frame at scene end (hover/pulse); ours is unhighlighted.",
+          "status": "accepted:transient hover/pulse state, not scene content"
         }
       ],
-      "notes": "Belt, press, basin/depot, chest-like blocks, cog and plate match at world tick 511 (scene end + 0 in the reference)."
+      "notes": "Belt, press, basin/depot, chest-like blocks, cog and plate match at world tick 511 (scene end + 0 in the reference). Re-reviewed after later merges (particles, parrots, fluids, bogeys): geometry unchanged."
     },
     "ref4": {
       "verdict": "differences",
