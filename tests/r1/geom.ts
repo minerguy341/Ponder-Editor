@@ -47,7 +47,12 @@ export function rotX(v: number[], deg: number): number[] {
  * Each quad faces where its boundary plane says. `rot` is the blockstate rotation (a function of a vector, about the block centre):
  * the box bounds lo..hi (model units, 0..16) are rotated with it, so the plane and its outward normal are both in the baked frame.
  */
-export function expectFacesOut(quads: BakedQuad[], lo: number[], hi: number[], rot: (v: number[]) => number[] = (v) => v) {
+/** Quads of a box's walls face into the box (its hollow interior, as a reversed from/to box is baked). */
+export function expectFacesIn(quads: BakedQuad[], lo: number[], hi: number[], rot: (v: number[]) => number[] = (v) => v) {
+  expectFacesOut(quads, lo, hi, rot, true);
+}
+
+export function expectFacesOut(quads: BakedQuad[], lo: number[], hi: number[], rot: (v: number[]) => number[] = (v) => v, inward = false) {
   const corners: number[][] = [];
   for (const x of [lo[0], hi[0]]) for (const y of [lo[1], hi[1]]) for (const z of [lo[2], hi[2]]) {
     corners.push(rot([x / 16 - 0.5, y / 16 - 0.5, z / 16 - 0.5]).map((v) => v + 0.5));
@@ -57,7 +62,8 @@ export function expectFacesOut(quads: BakedQuad[], lo: number[], hi: number[], r
   for (const q of quads) {
     const [a, sign] = planeOf(q, rlo, rhi);
     // the plane is already in baked space (its bounds were rotated), so its outward normal is the plain axis direction
-    const want = AXIS_VEC[a].map((x) => x * sign);
+    const outward = AXIS_VEC[a].map((x) => x * sign);
+    const want = inward ? outward.map((x) => -x) : outward;
     const n = frontNormal(q);
     expect(dot(n, want), `quad on plane axis ${a} sign ${sign}: front normal ${n.map((v) => v.toFixed(2))}, expected ${want.map((v) => v.toFixed(2))}`).toBeGreaterThan(0);
     const nearest = Object.keys(DIR_VEC).reduce((b, d) => (dot(want, DIR_VEC[d]) > dot(want, DIR_VEC[b]) ? d : b));

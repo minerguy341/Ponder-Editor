@@ -61,6 +61,17 @@ export function matMul(a, b) {
   return a.map((row, i) => [0, 1, 2].map((j) => row[0] * b[0][j] + row[1] * b[1][j] + row[2] * b[2][j]));
 }
 export function matVec(m, v) { return [0, 1, 2].map((i) => m[i][0] * v[0] + m[i][1] * v[1] + m[i][2] * v[2]); }
+/** net.minecraft.client.renderer.FaceInfo: the corner order of a face (min/max of the box per axis), as FaceBakery uses it. */
+const VANILLA_FACE_INFO = {
+  down: [['min', 'min', 'max'], ['min', 'min', 'min'], ['max', 'min', 'min'], ['max', 'min', 'max']],
+  up: [['min', 'max', 'min'], ['min', 'max', 'max'], ['max', 'max', 'max'], ['max', 'max', 'min']],
+  north: [['max', 'max', 'min'], ['max', 'min', 'min'], ['min', 'min', 'min'], ['min', 'max', 'min']],
+  south: [['min', 'max', 'max'], ['min', 'min', 'max'], ['max', 'min', 'max'], ['max', 'max', 'max']],
+  west: [['min', 'max', 'min'], ['min', 'min', 'min'], ['min', 'min', 'max'], ['min', 'max', 'max']],
+  east: [['max', 'max', 'max'], ['max', 'min', 'max'], ['max', 'min', 'min'], ['max', 'max', 'min']],
+};
+const sub = (a, b) => [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
+const cross = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
 
 /** Blockstate rotation matrix, R = Ry(-y) * Rx(-x). */
 export function blockstateMatrix(x, y) { return matMul(rotMatrix('y', -y), rotMatrix('x', -x)); }
@@ -238,13 +249,22 @@ export function expectedFaces(flat, rot = { x: 0, y: 0, uvlock: false }) {
         const block = matVec(R, p.map((v) => v / 16 - 0.5)).map((v) => v + 0.5);
         return { pos: block, uv: [uv[0], uv[1]] };
       });
-      let n = VEC[dir];
-      if (erot) n = matVec(erot.m, n);
-      n = matVec(R, n);
+      // FaceBakery.bakeQuad: the facing is the geometric normal of the baked corners (calculateFacing on the vertices after the
+      // element and blockstate rotation), not the exported face name. A box whose from/to are reversed on an axis has its
+      // corners in the reversed order, so its faces point into the box (Blockbench's hollow interiors, e.g. the basin).
+      // vanilla corner order (FaceInfo for the face name): vertex i = (xFace, yFace, zFace) over MIN/MAX of the element box
+      const P = VANILLA_FACE_INFO[dir].map(([xs, ys, zs]) => {
+        let p = [xs === 'max' ? to[0] : from[0], ys === 'max' ? to[1] : from[1], zs === 'max' ? to[2] : from[2]];
+        if (erot) p = applyElement(erot, p);
+        return matVec(R, p.map((v) => v / 16 - 0.5)).map((v) => v + 0.5);
+      });
+      const gn = cross(sub(P[2], P[1]), sub(P[0], P[1]));
+      const gl = Math.hypot(gn[0], gn[1], gn[2]);
+      const nrm = gl > 0 ? gn.map((v) => v / gl) : [0, 1, 0];
       const cull = face.cullface && VEC[face.cullface] ? nearestAxisDir(matVec(R, VEC[face.cullface])) : null;
       out.push({
-        dir: nearestAxisDir(n), faceName: dir, tex: resolveTex(part.textures, face.texture), tint: face.tintindex ?? -1,
-        cull, shade: el.shade !== false, uvlock: !!rot.uvlock, verts, normal: n.map((v) => (Math.abs(v) < 1e-9 ? 0 : v)),
+        dir: nearestAxisDir(nrm), faceName: dir, tex: resolveTex(part.textures, face.texture), tint: face.tintindex ?? -1,
+        cull, shade: el.shade !== false, uvlock: !!rot.uvlock, verts, normal: nrm.map((v) => (Math.abs(v) < 1e-9 ? 0 : v)),
         uvRect: rect, rotSteps: rotSteps * 90, element: el,
       });
     }
