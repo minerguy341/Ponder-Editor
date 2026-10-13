@@ -53,6 +53,8 @@ export class ItemPool {
     }
     slot.group.visible = true;
     slot.group.matrix.copy(matrix);
+    // matrixAutoUpdate is off: the world matrix is recomputed only when flagged (the app renderer does not update it otherwise)
+    slot.group.matrixWorldNeedsUpdate = true;
     return true;
   }
 
