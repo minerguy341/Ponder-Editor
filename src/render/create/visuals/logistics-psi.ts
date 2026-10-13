@@ -13,14 +13,14 @@ import { PoseStack } from '../items/pose';
 import type { VisualModule } from '../registry';
 
 const ANIMATION = 4;
-/** PortableStorageInterfaceBlockEntity.getTransferTimeout unit (residual: constant assumed) */
-const TIME_UNIT = 20;
+/** PortableStorageInterfaceBlockEntity.getTransferTimeout: AllConfigs.server().logistics.psiTimeout, default 60 (CLogistics.java:9) */
+const TIME_UNIT = 60;
 
-/** The connection progress of tick() for a transfer timer that is not connected. */
+/** PortableStorageInterfaceBlockEntity.tick: the connection progress for a transfer timer (connected = 1 in [ANIMATION, TIME_UNIT+ANIMATION]). */
 export function psiProgress(timer: number): number {
+  if (timer >= ANIMATION && timer <= TIME_UNIT + ANIMATION) return 1;
   if (timer >= TIME_UNIT + ANIMATION) return lerp((timer - TIME_UNIT - ANIMATION) / ANIMATION, 1, 0);
-  if (timer < ANIMATION) return lerp(timer / ANIMATION, 0, 1);
-  return 0;
+  return lerp(timer / ANIMATION, 0, 1);
 }
 
 function lerp(t: number, a: number, b: number): number { return a + (b - a) * t; }
@@ -55,7 +55,7 @@ class PsiBlockVisual extends BaseVisual {
     if (!this.middle || !this.top) return;
     const world = getLogisticsWorld(this.ctx.lookup);
     world.advance(ticks);
-    const timer = Number(world.nbtValueAt(this.block.pos, 'Timer', ticks) ?? 0);
+    const timer = world.psiTimerAt(this.block.pos, ticks);
     const distance = Number(world.nbtValueAt(this.block.pos, 'Distance', ticks) ?? 0);
     const progress = psiProgress(timer);
     const extension = progress * progress * distance / 2;

@@ -450,6 +450,28 @@ export class LogisticsWorld {
     return v;
   }
 
+  /**
+   * PortableStorageInterfaceBlockEntity.transferTimer at scene time `ticks` (virtual block: Ponder schematic). The last Timer patch
+   * sets it; each tick it is capped at 2*ANIMATION + psiTimeout, and it counts down while above ANIMATION and while in 1..3, and
+   * stops at ANIMATION (the virtual block never leaves that state) and at 0.
+   */
+  psiTimerAt(pos: Vec3, ticks: number, timeout = 60): number {
+    const k = posKey(pos);
+    let v = Number(this.lookup.getBlockEntity(pos)?.nbt?.Timer ?? 0);
+    let from = 0;
+    for (const e of this.events) {
+      if ((e.tick ?? 0) > ticks) break;
+      if (e.op === 'nbt' && posKey(e.pos) === k && 'Timer' in e.patch) { v = Number(e.patch.Timer); from = e.tick ?? 0; }
+    }
+    let t = v;
+    for (let i = 0; i < Math.max(0, Math.floor(ticks) - from); i++) {
+      t = Math.min(t, 2 * 4 + timeout);
+      if (t === 4 || t <= 0) continue;
+      t--;
+    }
+    return t;
+  }
+
   /** Chute state (created from the block entity nbt on first use). */
   chuteAt(pos: Vec3): ChuteState {
     const k = posKey(pos);
