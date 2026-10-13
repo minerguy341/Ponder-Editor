@@ -206,6 +206,30 @@ function stepFrom(p: Vec3, d: Direction, n = 1): Vec3 {
 function isJunctionShape(shape: string | undefined): boolean { return shape === 'cross' || shape === 't_left' || shape === 't_right'; }
 function isStraightShape(shape: string | undefined): boolean { return shape === 'straight'; }
 
+/** SelectionMode ordinals (BrassTunnelBlockEntity.SelectionMode) */
+const SPLIT = 0, FORCED_SPLIT = 1, ROUND_ROBIN = 2, FORCED_ROUND_ROBIN = 3, PREFER_NEAREST = 4, RANDOMIZE = 5, SYNCHRONIZE = 6;
+/** Iterate.horizontalDirections = Direction.Plane.HORIZONTAL order (north, east, south, west) */
+const PLANE_ORDER: Direction[] = ['north', 'east', 'south', 'west'];
+/** BrassTunnelBlockEntity.tick: distributionProgress reset (config brassTunnelTimer default, CLogistics.java:16) */
+const BRASS_TIMER = 10;
+
+/** BrassTunnelBlockEntity state. filters: item id per side (absent or null = no filter). */
+export interface BrassState {
+  pos: Vec3;
+  key: string;
+  stack: ItemStackJson | null;
+  enteredFrom: Direction | null;
+  progress: number;
+  newItemArrived: boolean;
+  syncedOutputActive: boolean;
+  previousOutputIndex: number;
+  mode: number;
+  filters: Map<Direction, string | null>;
+}
+type Out = [BrassState, Direction];
+/** insertIntoTunnel result: null (refused), the remainder count (0 = nothing left: taken, or dropped as an item entity) */
+type InsertRet = number | null;
+
 export class LogisticsWorld {
   private chainsByKey = new Map<string, BeltChain>();
   private byPos = new Map<string, BeltChain | null>();
@@ -215,6 +239,8 @@ export class LogisticsWorld {
   private depots = new Map<string, DepotState>();
   private basins = new Map<string, BasinState>();
   private flaps = new Map<string, FlapState>();
+  /** brass tunnels by key (BrassTunnelBlockEntity state: the stack being distributed, the output selection and the timer) */
+  private brass = new Map<string, BrassState>();
   private chutes = new Map<string, ChuteState>();
   private events: LogisticsEvent[] = [];
   private cursor = 0;
@@ -308,6 +334,7 @@ export class LogisticsWorld {
       for (const d of this.depots.values()) if (d.held) easeToCentre(d.held);
       for (const fl of this.flaps.values()) stepFlap(fl);
       for (const c of this.chutes.values()) stepChute(c);
+      for (const b of this.brass.values()) this.stepBrass(b);
       this.now++;
     }
   }
@@ -424,7 +451,7 @@ export class LogisticsWorld {
   /** Every item stack referenced by the event log (so renderers can prepare their models ahead of time). */
   stacksInEvents(): ItemStackJson[] {
     const out: ItemStackJson[] = [];
-    for (const e of this.events) if ('item' in e && e.item) out.push(e.item);
+    for (const e of this.events) if ('item' in e && e.item && typeof e.item !== 'string') out.push(e.item);
     return out;
   }
 
@@ -470,6 +497,16 @@ export class LogisticsWorld {
       case 'flapTunnel':
         this.flapAt(ev.pos, ev.side).target = ev.inward ? -1 : 1;
         break;
+      case 'tunnelFilter':
+        this.brassAt(ev.pos).filters.set(ev.side, ev.item);
+        break;
+      case 'tunnelMode': {
+        // SelectionMode is propagated to the connected tunnels (BrassTunnelBlockEntity.addBehaviours callback)
+        const b = this.brassAt(ev.pos);
+        b.mode = ev.mode;
+        for (const left of [true, false]) if (this.brassConnected(b, left)) { const adj = this.brassAdjacent(b.pos, left); if (adj) adj.mode = ev.mode; }
+        break;
+      }
     }
   }
 
@@ -667,7 +704,9 @@ export class LogisticsWorld {
       if (funnel === 'stuck') continue;
       if (noMovement) continue;
       // Belt Tunnels (BeltTunnelInteractionHandler.flapTunnelsAndCheckIfStuck): a junction may split a stack; stuck items wait
-      if (this.tunnelInteraction(chain, item, item.beltPosition + limited, positive, mf)) continue;
+      const tunnel = this.tunnelInteraction(chain, item, item.beltPosition + limited, positive, mf);
+      if (tunnel === 'removed') { removed.push(item); continue; }
+      if (tunnel === 'stuck') continue;
       item.beltPosition += limited;
       const target = targetSideOffset(item.angle);
       const diffToMiddle = target - item.sideOffset;
@@ -728,16 +767,30 @@ export class LogisticsWorld {
    * flapped side goes to the block beside the tunnel (DirectBeltInputBehaviour), while the rest stays. Returns true when the
    * item is stuck (its insertion target refuses it) and must not move this tick.
    */
-  private tunnelInteraction(chain: BeltChain, item: SimItem, nextOffset: number, positive: boolean, mf: Direction): boolean {
+  private tunnelInteraction(chain: BeltChain, item: SimItem, nextOffset: number, positive: boolean, mf: Direction): 'removed' | 'stuck' | 'pass' {
     const currentSegment = Math.trunc(item.beltPosition);
     let upcoming = Math.trunc(nextOffset);
     if (!positive && nextOffset === 0) upcoming = -1;
-    if (currentSegment === upcoming) return false;
-    if (chain.shape.slope !== 'horizontal') return false;
+    if (currentSegment === upcoming) return 'pass';
+    if (chain.shape.slope !== 'horizontal') return 'pass';
     const upSeg = chain.segments[upcoming];
     const curSeg = chain.segments[currentSegment];
     const upTunnel = upSeg ? tunnelAbove(this.lookup, upSeg) : undefined;
-    if (upTunnel && (item.stack.count ?? 1) > 1 && upTunnel.name === 'create:andesite_tunnel' && isJunctionShape(upTunnel.props.shape) && axisOf(mf) === upTunnel.props.axis) {
+    let removedHere = false;
+    if (upTunnel && upTunnel.name === 'create:brass_tunnel' && upSeg) {
+      // BeltTunnelInteractionHandler.stuckAtTunnel: a tunnel that refuses the stack holds the item at the segment edge
+      const b = this.brassAt(upTunnel.pos);
+      if (!this.brassCanInsert(b, opposite(mf), item.stack)) {
+        item.beltPosition = currentSegment + (positive ? 0.99 : 0.01);
+        return 'stuck';
+      }
+      if (this.brassHasDistribution(b)) {
+        if (!this.brassCanTake(b)) return 'stuck';
+        this.brassSet(b, item.stack, opposite(mf)); // setStackToDistribute(stack, movementFacing.opposite); the stack is emptied
+        removedHere = true;
+      }
+    }
+    if (upTunnel && !removedHere && (item.stack.count ?? 1) > 1 && upTunnel.name === 'create:andesite_tunnel' && isJunctionShape(upTunnel.props.shape) && axisOf(mf) === upTunnel.props.axis) {
       const flapped = this.tunnelFlapSides(upTunnel);
       for (const d of HORIZONTAL_SIDES) {
         if (axisOf(d) === upTunnel.props.axis) continue;
@@ -746,7 +799,7 @@ export class LogisticsWorld {
         const recv = this.directReceiverAt(outpos);
         if (!recv || !recv.canInsertFromSide(d)) continue;
         const rem = recv.insert({ ...item.stack, count: 1 }, d);
-        if (rem) return true;
+        if (rem) return 'stuck';
         this.flapAt(upTunnel.pos, d).target = 1; // flapTunnel(upcoming, d, inward=false)
         item.stack = { ...item.stack, count: (item.stack.count ?? 1) - 1 };
         if ((item.stack.count ?? 1) <= 1) break;
@@ -756,7 +809,7 @@ export class LogisticsWorld {
     const curTunnel = curSeg ? tunnelAbove(this.lookup, curSeg) : undefined;
     if (curTunnel) this.flapAt(curTunnel.pos, mf).target = 1;
     if (upTunnel) this.flapAt(upTunnel.pos, opposite(mf)).target = -1;
-    return false;
+    return removedHere ? 'removed' : 'pass';
   }
 
   /** BeltTunnelBlockEntity.updateTunnelConnections: the sides a tunnel has flaps on (occluded sides have none). */
@@ -861,6 +914,17 @@ export class LogisticsWorld {
       const b = this.basinAt(pos);
       return { canInsertFromSide: () => true, insert: (stack) => this.basinInsert(b, stack) };
     }
+    if (name === 'create:brass_tunnel') {
+      const b = this.brassAt(pos);
+      return {
+        canInsertFromSide: (side) => this.brassCanInsert(b, side, null),
+        insert: (stack, side) => {
+          if (!this.brassCanInsert(b, side, stack) || (this.brassHasDistribution(b) && b.stack)) return stack;
+          this.brassSet(b, stack, side);
+          return null;
+        },
+      };
+    }
     const reg = name ? itemReceivers.get(name) : undefined;
     if (reg) {
       const ctx = { pos, world: this };
@@ -868,6 +932,328 @@ export class LogisticsWorld {
     }
     return undefined;
   }
+
+  // ----------------------------------------------------------------- BrassTunnelBlockEntity
+
+  /** The brass tunnel state at pos (undefined when no brass tunnel was touched by the scene). */
+  brassState(pos: Vec3): BrassState | undefined { return this.brass.get(posKey(pos)); }
+
+  private brassAt(pos: Vec3): BrassState {
+    const k = posKey(pos);
+    let b = this.brass.get(k);
+    if (!b) {
+      b = { pos, key: k, stack: null, enteredFrom: null, progress: 0, newItemArrived: false, syncedOutputActive: false, previousOutputIndex: 0, mode: SPLIT, filters: new Map() };
+      this.brass.set(k, b);
+    }
+    return b;
+  }
+
+  /** BrassTunnelBlockEntity.getAdjacent: left = counter-clockwise, right = clockwise of the positive axis direction */
+  private brassAdjacent(pos: Vec3, left: boolean): BrassState | undefined {
+    const st = this.lookup.getState(pos);
+    if (!st || st.name !== 'create:brass_tunnel') return undefined;
+    const axis = st.props.axis;
+    const direction: Direction = axis === 'x' ? (left ? 'north' : 'south') : (left ? 'east' : 'west');
+    const adj = stepFrom(pos, direction);
+    const ast = this.lookup.getState(adj);
+    if (!ast || ast.name !== 'create:brass_tunnel' || ast.props.axis !== axis) return undefined;
+    return this.brassAt(adj);
+  }
+
+  /** BrassTunnelBlockEntity.determineIfConnected */
+  private brassConnected(b: BrassState, left: boolean): boolean {
+    if (this.tunnelFlapSides({ name: 'create:brass_tunnel', pos: b.pos, props: this.lookup.getState(b.pos)?.props as Record<string, string> ?? {} }).length === 0) return false;
+    const adj = this.brassAdjacent(b.pos, left);
+    return !!adj && this.tunnelFlapSides({ name: 'create:brass_tunnel', pos: adj.pos, props: this.lookup.getState(adj.pos)?.props as Record<string, string> }).length > 0;
+  }
+
+  /** BrassTunnelBlockEntity.hasDistributionBehaviour */
+  private brassHasDistribution(b: BrassState): boolean {
+    const tun = { name: 'create:brass_tunnel', pos: b.pos, props: this.lookup.getState(b.pos)?.props as Record<string, string> ?? {} };
+    const flaps = this.tunnelFlapSides(tun);
+    if (flaps.length === 0) return false;
+    if (this.brassConnected(b, true) || this.brassConnected(b, false)) return true;
+    return flaps.some((d) => axisOf(d) !== tun.props.axis);
+  }
+
+  /** BrassTunnelBlockEntity.canTakeItems */
+  private brassCanTake(b: BrassState): boolean { return !b.stack && !b.syncedOutputActive; }
+
+  /** BrassTunnelBlockEntity.canInsert(side, stack) for a stack that is not yet known: the side filter only (no stack check). */
+  private brassCanInsert(b: BrassState, side: Direction, stack: ItemStackJson | null): boolean {
+    const f = b.filters.get(side);
+    if (f && stack && stack.id !== f) return false;
+    if (!this.brassHasDistribution(b)) return true;
+    return !b.stack;
+  }
+
+  /** BrassTunnelBlockEntity.setStackToDistribute */
+  private brassSet(b: BrassState, stack: ItemStackJson | null, enteredFrom: Direction | null): void {
+    b.stack = stack && (stack.count ?? 1) > 0 ? stack : null;
+    b.enteredFrom = enteredFrom;
+    b.progress = -1;
+    if (b.stack) b.newItemArrived = true;
+  }
+
+  /** The belt segment under a tunnel (BeltHelper.getSegmentBE(level, pos.below())), with its speed and movement facing. */
+  private segmentBelow(pos: Vec3): { chain: BeltChain; index: number; speed: number; mf: Direction; seg: Vec3 } | undefined {
+    const seg: Vec3 = [pos[0], pos[1] - 1, pos[2]];
+    if (this.lookup.getState(seg)?.name !== 'create:belt') return undefined;
+    const chain = this.chainAt(seg);
+    if (!chain) return undefined;
+    const index = chain.index.get(posKey(seg));
+    if (index === undefined) return undefined;
+    const speed = this.speedOf(chain);
+    return { chain, index, speed, mf: movementFacing(chain.shape.facing, speed), seg };
+  }
+
+  /** BlockHelper.hasBlockSolidSide approximated by the non-solid block list used for belt ends. */
+  private isSolidAt(pos: Vec3): boolean {
+    const name = this.lookup.getState(pos)?.name;
+    return !!name && !NOT_SOLID.test(name);
+  }
+
+  /** The sides a tunnel has (BeltTunnelBlockEntity.updateTunnelConnections before the occlusion check). */
+  private tunnelSideList(tunnel: TunnelBlock): Direction[] {
+    const out: Direction[] = [];
+    for (const d of PLANE_ORDER) {
+      if (axisOf(d) === tunnel.props.axis) continue;
+      if (isStraightShape(tunnel.props.shape)) continue;
+      const positive = (axisDirectionStep(d) > 0) !== (axisOf(d) === 'z');
+      if (positive && tunnel.props.shape === 't_left') continue;
+      if (!positive && tunnel.props.shape === 't_right') continue;
+      out.push(d);
+    }
+    return out;
+  }
+
+  /** BrassTunnelBlockEntity.testFlapFilter (adjacent filters are not simulated: they pass). */
+  private brassTestFilter(b: BrassState, side: Direction, stack: ItemStackJson): boolean {
+    if (!b.filters.has(side) || !b.filters.get(side)) return true;
+    return b.filters.get(side) === stack.id;
+  }
+
+  /** BrassTunnelBlockEntity.flapFilterEmpty */
+  private brassFlapFilterEmpty(b: BrassState, side: Direction): boolean {
+    return !b.filters.get(side);
+  }
+
+  /** BrassTunnelBlockEntity.gatherValidOutputs (null while synchronising and the group is not active). */
+  private brassGather(b: BrassState, syncSet: Set<BrassState>): Out[] | null {
+    const out: Out[] = [];
+    this.brassAddOutputs(b, b, out, syncSet);
+    for (const left of [true, false]) {
+      let cur: BrassState | undefined = b;
+      while (cur) {
+        cur = this.brassAdjacent(cur.pos, left);
+        if (!cur) break;
+        this.brassAddOutputs(b, cur, out, syncSet);
+      }
+    }
+    if (!b.syncedOutputActive && b.mode === SYNCHRONIZE) return null;
+    return out;
+  }
+
+  /** BrassTunnelBlockEntity.addValidOutputsOf */
+  private brassAddOutputs(self: BrassState, t: BrassState, out: Out[], syncSet: Set<BrassState>): void {
+    syncSet.add(t);
+    const below = this.segmentBelow(t.pos);
+    if (!below) return;
+    const prioritizeSides = t === self;
+    const mf = below.mf;
+    const tun = { name: 'create:brass_tunnel', pos: t.pos, props: this.lookup.getState(t.pos)?.props as Record<string, string> ?? {} };
+    const sides = this.tunnelSideList(tun);
+    for (const sidePass of [true, false]) {
+      if (!prioritizeSides && sidePass) continue;
+      for (const dir of PLANE_ORDER) {
+        if (dir === mf && below.speed === 0) continue;
+        if (prioritizeSides && sidePass === (axisOf(dir) === axisOf(mf))) continue;
+        if (dir === opposite(mf)) continue;
+        if (!sides.includes(dir)) continue;
+        const offset = stepFrom(below.seg, dir);
+        const above = this.lookup.getState([offset[0], offset[1] + 1, offset[2]]);
+        if (above && /belt_funnel$/.test(above.name) && above.props.shape === 'pulling' && above.props.facing === dir) continue;
+        const recv = this.directReceiverAt(offset);
+        if (!recv) {
+          if (dir === mf && !this.isSolidAt(offset)) out.push([t, dir]);
+          continue;
+        }
+        if (recv.canInsertFromSide(dir)) out.push([t, dir]);
+      }
+    }
+  }
+
+  /** BrassTunnelBlockEntity.insertIntoTunnel. simulate: nothing is changed. */
+  private brassInsertInto(t: BrassState, side: Direction, stack: ItemStackJson, simulate: boolean): InsertRet {
+    const count = stack.count ?? 1;
+    if (count === 0) return 0;
+    if (!this.brassTestFilter(t, side, stack)) return null;
+    const below = this.segmentBelow(t.pos);
+    if (!below) return null;
+    const offset = stepFrom(below.seg, side);
+    const recv = this.directReceiverAt(offset);
+    if (recv) {
+      if (!recv.canInsertFromSide(side)) return null;
+      if (simulate) return this.simulateRemainder(offset, side, stack);
+      const rem = recv.insert(stack, side);
+      const left = rem ? rem.count ?? 1 : 0;
+      if (left === 0) this.flapAt(t.pos, side).target = 1; // flap(side, false)
+      return left;
+    }
+    if (side === below.mf && !this.isSolidAt(stepFrom(offset, opposite(side)))) {
+      if (!simulate) {
+        this.flapAt(t.pos, side).target = -1; // flap(side, true): the stack leaves as an item entity onto the belt
+      }
+      return 0;
+    }
+    return null;
+  }
+
+  /**
+   * Remainder of a stack a receiver would take, without changing it. Belts take a stack when they can take items from the side;
+   * depots and basins take what has room (depot: free and empty output; basin: any free or matching slot); registered receivers
+   * are asked through canInsertFromSide only (their insert is not simulated).
+   */
+  private simulateRemainder(pos: Vec3, side: Direction, stack: ItemStackJson): number {
+    const count = stack.count ?? 1;
+    const name = this.lookup.getState(pos)?.name;
+    if (name === 'create:belt') return this.canInsertOnBelt(pos, side) ? 0 : count;
+    if (name === 'create:depot' || name === 'create:item_drain' || name === 'create:weighted_ejector') {
+      const d = this.depotAt(pos);
+      return !d.held && !d.output.some((x) => x) ? 0 : count;
+    }
+    if (name === 'create:basin') {
+      const b = this.basinAt(pos);
+      const room = b.inputs.some((x) => !x || (x.id === stack.id && (x.count ?? 1) < STACK_LIMIT));
+      return room ? 0 : count;
+    }
+    return 0;
+  }
+
+  /** BrassTunnelBlockEntity.distribute: one distribution cycle over the valid outputs of the group. */
+  private brassDistribute(b: BrassState, valid: Out[]): void {
+    const amount = valid.length;
+    if (amount === 0 || !b.stack) return;
+    const distributed = new Map<string, { t: BrassState; side: Direction; count: number }>();
+    const full = new Set<string>();
+    const keyOf = (t: BrassState, side: Direction) => t.key + '|' + side;
+    let indexStart = b.previousOutputIndex % amount;
+    const mode = b.mode;
+    const force = mode === FORCED_SPLIT || mode === FORCED_ROUND_ROBIN;
+    const split = mode === FORCED_SPLIT || mode === SPLIT;
+    const robin = mode === FORCED_ROUND_ROBIN || mode === ROUND_ROBIN;
+    if (mode === RANDOMIZE) indexStart = this.rng.nextInt(amount);
+    if (mode === PREFER_NEAREST || mode === SYNCHRONIZE) indexStart = 0;
+
+    const toDistribute = { count: b.stack.count ?? 1 };
+    for (const distributeAgain of [true, false]) {
+      let thisCycle = 0;
+      let remainingOutputs = amount;
+      let leftovers = 0;
+      for (const simulate of [true, false]) {
+        if (remainingOutputs === 0) break;
+        leftovers = 0;
+        let index = indexStart;
+        const stackSize = toDistribute.count;
+        let splitStackSize = Math.floor(stackSize / remainingOutputs);
+        let splitRemainder = stackSize % remainingOutputs;
+        let visited = 0;
+        thisCycle = toDistribute.count;
+        if (!(force || split) && simulate) continue;
+        while (visited < amount) {
+          const [t, side] = valid[index];
+          index = (index + 1) % amount;
+          visited++;
+          const key = keyOf(t, side);
+          if (full.has(key)) {
+            if (split && simulate) remainingOutputs--;
+            continue;
+          }
+          const count = split ? splitStackSize + (splitRemainder > 0 ? 1 : 0) : stackSize;
+          const prev = distributed.get(key);
+          const testWithIncreasedCount = !!prev;
+          const increased = prev ? prev.count : 0;
+          const toOutput = { ...b.stack, count: count + increased };
+          const rem = this.brassInsertInto(t, side, toOutput, true);
+          const want = testWithIncreasedCount ? count + 1 : count;
+          if (rem === null || rem === want) {
+            if (force) return;
+            if (split && simulate) remainingOutputs--;
+            if (!simulate) full.add(key);
+            if (robin) break;
+            continue;
+          } else if (rem > 0 && !simulate) {
+            full.add(key);
+          }
+          if (!simulate) {
+            distributed.set(key, { t, side, count: count + increased - (rem as number) });
+          }
+          leftovers += rem as number;
+          thisCycle -= count;
+          if (thisCycle <= 0) break;
+          splitRemainder--;
+          if (!split) break;
+        }
+      }
+      toDistribute.count = thisCycle + leftovers;
+      if (leftovers === 0 && distributeAgain) break;
+      if (!split) break;
+    }
+
+    let failed = 0;
+    for (const entry of distributed.values()) {
+      const left = this.brassInsertInto(entry.t, entry.side, { ...b.stack, count: entry.count }, false);
+      failed += left ?? 0;
+    }
+    toDistribute.count += failed;
+    b.stack = toDistribute.count > 0 ? { ...b.stack, count: toDistribute.count } : null;
+    if (!b.stack) b.enteredFrom = null;
+    b.previousOutputIndex = (b.previousOutputIndex + 1) % amount;
+  }
+
+  /** BrassTunnelBlockEntity.tick (server path): the distribution state machine, one call per world tick. */
+  private stepBrass(b: BrassState): void {
+    if (b.progress > 0) b.progress--;
+    const below = this.segmentBelow(b.pos);
+    if (!below || below.speed === 0) return;
+    if (!b.stack && !b.syncedOutputActive) return;
+    if (b.progress === -1) {
+      const syncSet = new Set<BrassState>();
+      const valid = this.brassGather(b, syncSet);
+      if (b.mode === SYNCHRONIZE) {
+        let allEmpty = true, allFull = true;
+        for (const m of syncSet) { const has = !!m.stack; allEmpty = allEmpty && !has; allFull = allFull && has; }
+        const notify = !allEmpty;
+        if (allFull || allEmpty) for (const m of syncSet) m.syncedOutputActive = notify;
+      }
+      if (valid === null) return;
+      if (!b.stack) return;
+      const lists: [Out[], Out[]] = [[], []]; // [non-filtered, filtered] (Couple: get(filtered))
+      for (const [t, out] of valid) {
+        if (this.brassInsertInto(t, out, b.stack, true) === null) continue;
+        lists[this.brassFlapFilterEmpty(t, out) ? 0 : 1].push([t, out]);
+      }
+      if (lists[0].length === 0 && lists[1].length === 0) return;
+      if (b.newItemArrived) {
+        b.newItemArrived = false;
+        b.progress = 2;
+      } else {
+        if (b.mode !== SYNCHRONIZE || b.syncedOutputActive) b.progress = BRASS_TIMER;
+        return;
+      }
+      this.brassPending = lists;
+    }
+    if (b.progress !== 0) return;
+    const lists = this.brassPending ?? [[], []];
+    this.brassPending = null;
+    for (const list of lists) {
+      if (!b.stack) return;
+      const targets = list.filter(([t, out]) => !(t === b && out === b.enteredFrom));
+      this.brassDistribute(b, targets);
+      b.progress = -1;
+    }
+  }
+  private brassPending: [Out[], Out[]] | null = null;
 
   // ----------------------------------------------------------------- DepotBehaviour
 
@@ -1056,6 +1442,18 @@ export function logisticsEventsOf(instructions: { op: string; args?: Record<stri
       case 'world.modifyBlockEntity':
         // FunnelBlockEntity.flap(inward) / BeltTunnelBlockEntity.flap(side, inward) as modifyBlockEntity calls
         for (const call of (a.calls as { path?: { m: string; a: unknown[] }[] }[] | undefined) ?? []) {
+          // BrassTunnelBlockEntity: getBehaviour(FilteringBehaviour).setFilter(side, stack) and getBehaviour(ScrollValueBehaviour).setValue(mode)
+          const p0 = call.path?.[0], p1 = call.path?.[1];
+          if (p0?.m === 'getBehaviour' && p1?.m === 'setFilter') {
+            const stack = p1.a[1] as { id?: string } | undefined;
+            const item = stack && stack.id && stack.id !== 'minecraft:air' ? stack.id : null;
+            out.push({ tick: t, op: 'tunnelFilter', pos: a.pos as Vec3, side: enumName(p1.a[0]) as Direction, item });
+            continue;
+          }
+          if (p0?.m === 'getBehaviour' && p1?.m === 'setValue' && (p0.a[0] as { behaviour?: string } | undefined)?.behaviour === 'ScrollValueBehaviour') {
+            out.push({ tick: t, op: 'tunnelMode', pos: a.pos as Vec3, mode: Number(p1.a[0]) });
+            continue;
+          }
           const m = call.path?.[0];
           if (!m || m.m !== 'flap') continue;
           if (m.a.length >= 2) out.push({ tick: t, op: 'flapTunnel', pos: a.pos as Vec3, side: enumName(m.a[0]) as Direction, inward: !!m.a[1] });

@@ -38,4 +38,6 @@ export type LogisticsEvent = { tick?: number } & (
   | { op: 'nbt'; pos: Vec3; patch: Record<string, unknown> }
   | { op: 'flap'; pos: Vec3; inward: boolean }
   | { op: 'flapTunnel'; pos: Vec3; side: Direction; inward: boolean }
+  | { op: 'tunnelFilter'; pos: Vec3; side: Direction; item: string | null }
+  | { op: 'tunnelMode'; pos: Vec3; mode: number }
 );
