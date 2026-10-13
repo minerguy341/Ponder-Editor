@@ -26,11 +26,17 @@ class EjectorBlockVisual extends KineticVisual {
   /** upright items face the camera (cameraFacing.ts), anchored at the block centre */
   private yaw = Math.PI;
   private itemRoot = new THREE.Group();
+  /** launched stacks in flight are drawn in the block frame (EjectorRenderer: launchedItems at getLaunchedItemLocation) */
+  private flightRoot = new THREE.Group();
+  private flightPool!: ItemPool;
 
   constructor(block: BlockInstance, ctx: VisualContext) {
     super(block, ctx);
     this.pool = new ItemPool(this.itemRoot);
     this.object.add(this.itemRoot);
+    this.flightRoot.matrixAutoUpdate = false;
+    this.flightPool = new ItemPool(this.flightRoot);
+    this.object.add(this.flightRoot);
   }
 
   private facing(): Direction { return (this.block.state.props.horizontal_facing ?? this.block.state.props.facing ?? 'north') as Direction; }
@@ -83,6 +89,15 @@ class EjectorBlockVisual extends KineticVisual {
     if (view.held) this.drawHeld(view.held, pt);
     this.ms.popPose();
     this.pool.end();
+    // in flight (EntityLauncher trajectory): block frame, one copy per launched stack
+    const bp = this.block.pos;
+    this.flightPool.begin();
+    for (const fl of world.ejectorFlights(ticks)) {
+      this.ms.reset();
+      this.ms.translate(fl.pos[0] - bp[0], fl.pos[1] - bp[1], fl.pos[2] - bp[2]);
+      renderDepotItem(this.ms, this.flightPool, fl.item, 0, new JavaRandom(0), this.yaw);
+    }
+    this.flightPool.end();
   }
 
   /** DepotRenderer.renderItemsOf: the held item moves from its insertion side to the centre. */
@@ -104,6 +119,7 @@ class EjectorBlockVisual extends KineticVisual {
   }
 
   dispose(): void {
+    this.flightPool.dispose();
     this.pool.dispose();
     super.dispose();
   }

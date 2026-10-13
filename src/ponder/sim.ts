@@ -2,7 +2,7 @@
 // nothing here reads clocks or random numbers, which is what makes seek() deterministic.
 
 import type { BlockInstance, SceneJson, Vec3 } from '../contract';
-import { tickEntities } from './entities';
+import { addEntity, ITEM_TYPE, tickEntities } from './entities';
 import { isBlocking, OPS } from './ops';
 import type { Bounds } from './selection';
 import type { ActorEl, Chaser, InstrRT, Section, SimCtx, SimState } from './simTypes';
@@ -139,6 +139,9 @@ export function tickScene(ctx: SimCtx, st: SimState): void {
   }
 
   tickEntities(st);
+  // spawned entities (weighted ejector launches): an ItemEntity appears at the end of its tick, as EjectorBlockEntity places it
+  const spawns = ctx.entitySpawns?.get(st.worldTick);
+  if (spawns) for (const s of spawns) addEntity(st, { type: ITEM_TYPE, pos: s.pos, vel: s.vel, item: { ...s.item } });
   tickChaser(st.cam.yaw);
   tickChaser(st.cam.pitch);
 

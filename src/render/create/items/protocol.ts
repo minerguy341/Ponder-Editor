@@ -40,4 +40,5 @@ export type LogisticsEvent = { tick?: number } & (
   | { op: 'flapTunnel'; pos: Vec3; side: Direction; inward: boolean }
   | { op: 'tunnelFilter'; pos: Vec3; side: Direction; item: string | null }
   | { op: 'tunnelMode'; pos: Vec3; mode: number }
+  | { op: 'ejectorLaunch'; pos: Vec3 }
 );

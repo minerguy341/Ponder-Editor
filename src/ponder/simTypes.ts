@@ -182,6 +182,11 @@ export interface SimCtx {
   bounds: Bounds;
   /** build-time configuration (OPS 0.2) */
   config: { basePlate: { x: number; z: number; size: number }; scale: number; yOffset: number; hideShadow: boolean };
+  /**
+   * item entities that appear at a world tick (weighted ejector launches, render/create/items/logisticsSim ejectorSpawns). Pure
+   * data derived from the scene, set by the player after the logistics simulation is bound; not part of the snapshot state.
+   */
+  entitySpawns?: Map<number, { pos: Vec3; vel: Vec3; item: { id: string; count: number; nbt?: unknown } }[]>;
   /** `Selection` values resolved once per args object */
   selCache: WeakMap<object, Sel>;
 }

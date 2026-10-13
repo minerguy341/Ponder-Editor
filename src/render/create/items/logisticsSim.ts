@@ -22,6 +22,7 @@ import { axisDirectionStep, axisOf, isVertical, opposite } from '../common/dirs'
 import { posKey } from '../common/math';
 import { beltShape, canTransportObjects, directionAwareSpeed, movementFacing, nextSegmentPosition, positionForOffset, type BeltShape } from './beltMath';
 import { JavaRandom } from './random';
+import { EntityLauncher, launchedLocation, launchedMotion, spawnDelay } from './ejector';
 import { isItemUpright } from './upright';
 import type { LogisticsEvent } from './protocol';
 
@@ -214,6 +215,9 @@ const PLANE_ORDER: Direction[] = ['north', 'east', 'south', 'west'];
 const BRASS_TIMER = 10;
 
 /** BrassTunnelBlockEntity state. filters: item id per side (absent or null = no filter). */
+/** A weighted ejector launch: the stacks it threw (EjectorBlockEntity.launchedItems) and when. */
+export interface EjectorLaunch { pos: Vec3; facing: Direction; launcher: EntityLauncher; tick: number; items: ItemStackJson[] }
+
 export interface BrassState {
   pos: Vec3;
   key: string;
@@ -239,6 +243,8 @@ export class LogisticsWorld {
   private depots = new Map<string, DepotState>();
   private basins = new Map<string, BasinState>();
   private flaps = new Map<string, FlapState>();
+  /** launches of weighted ejectors in this scene, in tick order (EjectorBlockEntity.launchedItems) */
+  private launches: EjectorLaunch[] = [];
   /** brass tunnels by key (BrassTunnelBlockEntity state: the stack being distributed, the output selection and the timer) */
   private brass = new Map<string, BrassState>();
   private chutes = new Map<string, ChuteState>();
@@ -537,6 +543,9 @@ export class LogisticsWorld {
         break;
       case 'tunnelFilter':
         this.brassAt(ev.pos).filters.set(ev.side, ev.item);
+        break;
+      case 'ejectorLaunch':
+        this.ejectorLaunch(ev.pos, ev.tick ?? this.now);
         break;
       case 'tunnelMode': {
         // SelectionMode is propagated to the connected tunnels (BrassTunnelBlockEntity.addBehaviours callback)
@@ -972,6 +981,59 @@ export class LogisticsWorld {
   }
 
   // ----------------------------------------------------------------- BrassTunnelBlockEntity
+
+  /**
+   * EjectorBlockEntity.activateDeferred -> launchItems: the held item and the output items leave the depot and fly. The launcher is
+   * the ejector's HorizontalDistance / VerticalDistance (block nbt, clamped to maxEjectorDistance 32, CKinetics.java:22).
+   */
+  private ejectorLaunch(pos: Vec3, tick: number): void {
+    const st = this.lookup.getState(pos);
+    if (!st || st.name !== 'create:weighted_ejector') return;
+    const d = this.depotAt(pos);
+    const items: ItemStackJson[] = [];
+    if (d.held) { items.push(d.held.stack); d.held = null; }
+    for (let i = 0; i < d.output.length; i++) { const s = d.output[i]; if (s) items.push(s); d.output[i] = null; }
+    if (items.length === 0) return;
+    const nbt = this.lookup.getBlockEntity(pos)?.nbt ?? {};
+    const hd = Math.min(32, Number(nbt.HorizontalDistance ?? 0));
+    const vd = Number(nbt.VerticalDistance ?? 0);
+    const launcher = new EntityLauncher(Math.max(1, hd), vd);
+    launcher.clamp(32);
+    this.launches.push({ pos, facing: (st.props.facing as Direction) ?? 'up', launcher, tick, items });
+  }
+
+  /**
+   * The item entities the launches create (EjectorBlockEntity.placeItemAtTarget): one per launched stack, at the trajectory end
+   * (getLaunchedItemLocation / Motion at maxTime) on tick + spawnDelay. Pure: derived from the launch events only.
+   */
+  ejectorSpawns(): Map<number, { pos: Vec3; vel: Vec3; item: { id: string; count: number; nbt?: unknown } }[]> {
+    this.advance(Math.max(0, ...this.events.filter((e) => e.op === 'ejectorLaunch').map((e) => e.tick ?? 0)));
+    const out = new Map<number, { pos: Vec3; vel: Vec3; item: { id: string; count: number; nbt?: unknown } }[]>();
+    for (const l of this.launches) {
+      const maxTime = Math.max(3, l.launcher.totalFlyingTicks);
+      const at = l.tick + spawnDelay(l.launcher);
+      const pos = launchedLocation(l.launcher, maxTime, l.facing, l.pos);
+      const vel = launchedMotion(l.launcher, maxTime, l.facing);
+      const list = out.get(at) ?? [];
+      for (const item of l.items) list.push({ pos, vel, item: { id: item.id, count: item.count ?? 1, nbt: item.nbt } });
+      out.set(at, list);
+    }
+    return out;
+  }
+
+  /** The stacks in flight at scene time `ticks`: position and motion as EjectorRenderer draws them (launched, not yet placed). */
+  ejectorFlights(ticks: number): { pos: Vec3; item: ItemStackJson; time: number }[] {
+    this.advance(ticks);
+    const out: { pos: Vec3; item: ItemStackJson; time: number }[] = [];
+    const now = Math.floor(ticks);
+    for (const l of this.launches) {
+      const time = now - l.tick;
+      const maxTime = Math.max(3, l.launcher.totalFlyingTicks);
+      if (time < 0 || time > Math.floor(maxTime)) continue;
+      for (const item of l.items) out.push({ pos: launchedLocation(l.launcher, time, l.facing, l.pos), item, time });
+    }
+    return out;
+  }
 
   /** The brass tunnel state at pos (undefined when no brass tunnel was touched by the scene). */
   brassState(pos: Vec3): BrassState | undefined { return this.brass.get(posKey(pos)); }
@@ -1493,6 +1555,8 @@ export function logisticsEventsOf(instructions: { op: string; args?: Record<stri
             continue;
           }
           const m = call.path?.[0];
+          // EjectorBlockEntity.activateDeferred: the launch of the held and output items (EjectorBlockEntity.launchItems)
+          if (m?.m === 'activateDeferred') { out.push({ tick: t, op: 'ejectorLaunch', pos: a.pos as Vec3 }); continue; }
           if (!m || m.m !== 'flap') continue;
           if (m.a.length >= 2) out.push({ tick: t, op: 'flapTunnel', pos: a.pos as Vec3, side: enumName(m.a[0]) as Direction, inward: !!m.a[1] });
           else out.push({ tick: t, op: 'flap', pos: a.pos as Vec3, inward: !!m.a[0] });
