@@ -43,6 +43,8 @@ export type LogisticsEvent = { tick?: number } & (
   | { op: 'ejectorLaunch'; pos: Vec3 }
   /** the block at pos becomes state (null: air) from this tick (world.setBlocks / world.modifyBlocks) */
   | { op: 'setBlock'; pos: Vec3; state: BlockState | null }
+  /** the block at pos is the schematic block again (world.restoreBlocks) */
+  | { op: 'restoreBlock'; pos: Vec3 }
   /** an item entity dropped at pos with vel (createItemEntity); key = its scene instruction (`ins<index>`) */
   | { op: 'entityDrop'; key: string; pos: Vec3; vel: Vec3; item: { id: string; count?: number; nbt?: unknown } }
   /** an item entity lands on the block at pos (the receiver takes it or not, decided here) */

@@ -579,6 +579,9 @@ export class LogisticsWorld {
       case 'setBlock':
         this.overrides.set(posKey(ev.pos), ev.state ?? { name: 'minecraft:air', props: {} });
         break;
+      case 'restoreBlock':
+        this.overrides.delete(posKey(ev.pos));
+        break;
       case 'entityDrop': {
         // the drop’s landing: the same physics as the entity pass of C2 (itemPhysics.landingOf), on the scene’s blocks
         const at = this.landingAt(ev.pos, ev.vel, ev.tick ?? this.now);
@@ -1664,6 +1667,18 @@ export function logisticsEventsOf(instructions: { op: string; args?: Record<stri
     if (ins.op === 'idle') { t += Number((ins.args as { ticks?: number } | undefined)?.ticks ?? 0); continue; }
     const a = (ins.args ?? {}) as Record<string, unknown>;
     switch (ins.op) {
+      case 'world.restoreBlocks': {
+        const sel = a.selection as { t?: string; pos?: Vec3; from?: Vec3; to?: Vec3 } | undefined;
+        const cells: Vec3[] = [];
+        if (sel?.t === 'pos' && sel.pos) cells.push(sel.pos);
+        if (sel?.t === 'box' && sel.from && sel.to) {
+          for (let x = Math.min(sel.from[0], sel.to[0]); x <= Math.max(sel.from[0], sel.to[0]); x++)
+            for (let y = Math.min(sel.from[1], sel.to[1]); y <= Math.max(sel.from[1], sel.to[1]); y++)
+              for (let z = Math.min(sel.from[2], sel.to[2]); z <= Math.max(sel.from[2], sel.to[2]); z++) cells.push([x, y, z]);
+        }
+        for (const c of cells) out.push({ tick: t, op: 'restoreBlock', pos: c });
+        break;
+      }
       case 'world.setBlocks':
       case 'world.modifyBlocks': {
         // setBlocks: one selection and one state; modifyBlocks: a list of { pos, state }
