@@ -23,6 +23,13 @@ import { posKey } from '../common/math';
 import { beltShape, canTransportObjects, directionAwareSpeed, movementFacing, nextSegmentPosition, positionForOffset, type BeltShape } from './beltMath';
 import { JavaRandom } from './random';
 import { EntityLauncher, launchedLocation, launchedMotion, spawnDelay } from './ejector';
+import { landingOf, type BlockReader } from '../../../ponder/itemPhysics';
+
+/** how long after the last scene event the replay keeps running, so every drop and launch has landed (ticks) */
+const LANDING_WINDOW = 400;
+
+/** An ejector state (EjectorBlockEntity.State) and its lid (lidProgress: 0 closed .. 1 open). */
+export interface EjectorState { key: string; pos: Vec3; state: 'CHARGED' | 'LAUNCHING' | 'RETRACTING'; lid: number }
 import { isItemUpright } from './upright';
 import type { LogisticsEvent } from './protocol';
 
@@ -216,7 +223,13 @@ const BRASS_TIMER = 10;
 
 /** BrassTunnelBlockEntity state. filters: item id per side (absent or null = no filter). */
 /** A weighted ejector launch: the stacks it threw (EjectorBlockEntity.launchedItems) and when. */
-export interface EjectorLaunch { pos: Vec3; facing: Direction; launcher: EntityLauncher; tick: number; items: ItemStackJson[] }
+export interface EjectorLaunch {
+  pos: Vec3; facing: Direction; launcher: EntityLauncher; tick: number; items: ItemStackJson[];
+  /** the entity keys of the stacks (src) */
+  keys: string[];
+  /** the item entity spawn: tick, position and motion (EjectorBlockEntity.placeItemAtTarget) */
+  at: number; spawnPos: Vec3; spawnVel: Vec3;
+}
 
 export interface BrassState {
   pos: Vec3;
@@ -245,6 +258,9 @@ export class LogisticsWorld {
   private flaps = new Map<string, FlapState>();
   /** launches of weighted ejectors in this scene, in tick order (EjectorBlockEntity.launchedItems) */
   private launches: EjectorLaunch[] = [];
+  private ejectors = new Map<string, EjectorState>();
+  /** item entities taken by a receiver: key -> the tick of the landing */
+  private consumed = new Map<string, number>();
   /** brass tunnels by key (BrassTunnelBlockEntity state: the stack being distributed, the output selection and the timer) */
   private brass = new Map<string, BrassState>();
   private chutes = new Map<string, ChuteState>();
@@ -336,6 +352,7 @@ export class LogisticsWorld {
     while (this.now <= target) {
       this.applyDue(this.now);
       if (this.now === target) break;
+      this.stepEjectors(this.now);
       for (const st of this.states.values()) this.stepChain(st);
       for (const d of this.depots.values()) if (d.held) easeToCentre(d.held);
       for (const fl of this.flaps.values()) stepFlap(fl);
@@ -408,6 +425,8 @@ export class LogisticsWorld {
         readSlots(nbt.OutputBuffer, d.output);
       }
       this.depots.set(k, d);
+      // an ejector’s depot is the ejector’s state too (its lid and ejectIfTriggered run every tick)
+      if (this.lookup.getState(pos)?.name === 'create:weighted_ejector') this.ejectorAt(pos);
     }
     return d;
   }
@@ -547,6 +566,15 @@ export class LogisticsWorld {
       case 'ejectorLaunch':
         this.ejectorLaunch(ev.pos, ev.tick ?? this.now);
         break;
+      case 'entityDrop': {
+        // the drop’s landing: the same physics as the entity pass of C2 (itemPhysics.landingOf), on the scene’s blocks
+        const at = this.landingAt(ev.pos, ev.vel, ev.tick ?? this.now);
+        if (at) this.apply({ tick: at.tick, op: 'entityLand', key: ev.key, pos: at.pos, item: ev.item });
+        break;
+      }
+      case 'entityLand':
+        this.entityLanded(ev.key, ev.pos, ev.item, ev.tick ?? this.now);
+        break;
       case 'tunnelMode': {
         // SelectionMode is propagated to the connected tunnels (BrassTunnelBlockEntity.addBehaviours callback)
         const b = this.brassAt(ev.pos);
@@ -559,6 +587,12 @@ export class LogisticsWorld {
 
   /** modifyBlockEntityNBT on the blocks this simulation owns (belt speed, depot and basin contents). */
   private patchNbt(pos: Vec3, patch: Record<string, unknown>): void {
+    if (this.lookup.getState(pos)?.name === 'create:weighted_ejector') {
+      // EjectorBlockEntity.read: State and ForceAngle (the lid) are set by the scene
+      const e = this.ejectorAt(pos);
+      if (typeof patch.State === 'string') e.state = patch.State as EjectorState['state'];
+      if (typeof patch.ForceAngle === 'number') e.lid = patch.ForceAngle;
+    }
     if (typeof patch.Speed === 'number') {
       const chain = this.chainAt(pos);
       if (chain) this.speeds.set(chain.key, patch.Speed as number);
@@ -989,6 +1023,10 @@ export class LogisticsWorld {
   private ejectorLaunch(pos: Vec3, tick: number): void {
     const st = this.lookup.getState(pos);
     if (!st || st.name !== 'create:weighted_ejector') return;
+    const ej = this.ejectorAt(pos);
+    // EjectorBlockEntity.cannotLaunch: only from CHARGED
+    if (ej.state !== 'CHARGED') return;
+    ej.state = 'LAUNCHING';
     const d = this.depotAt(pos);
     const items: ItemStackJson[] = [];
     if (d.held) { items.push(d.held.stack); d.held = null; }
@@ -999,26 +1037,122 @@ export class LogisticsWorld {
     const vd = Number(nbt.VerticalDistance ?? 0);
     const launcher = new EntityLauncher(Math.max(1, hd), vd);
     launcher.clamp(32);
-    this.launches.push({ pos, facing: (st.props.facing as Direction) ?? 'up', launcher, tick, items });
+    const facing = (st.props.facing as Direction) ?? 'up';
+    const n = this.launches.length;
+    const maxTime = Math.max(3, launcher.totalFlyingTicks);
+    const at = tick + spawnDelay(launcher);
+    const spawnPos = launchedLocation(launcher, maxTime, facing, pos);
+    const spawnVel = launchedMotion(launcher, maxTime, facing);
+    const keys = items.map((_, j) => `launch${n}_${j}`);
+    this.launches.push({ pos, facing, launcher, tick, items, keys, spawnPos, spawnVel, at });
+    // each stack is placed as an item entity at the flight end; its landing is the same physics as a dropped entity
+    items.forEach((item, j) => {
+      const land = this.landingAt(spawnPos, spawnVel, at);
+      if (land) this.apply({ tick: land.tick, op: 'entityLand', key: keys[j], pos: land.pos, item });
+    });
+  }
+
+  /** The landing tick and block of an item entity spawned at `tick` with pos/vel (itemPhysics.landingOf on the scene’s blocks). */
+  private landingAt(pos: Vec3, vel: Vec3, tick: number): { tick: number; pos: Vec3 } | null {
+    const at = landingOf(this.blockReader(), pos, vel);
+    if (!at) return null;
+    return { tick: tick + at.ticks, pos: [Math.floor(at.pos[0]), Math.floor(at.pos[1]), Math.floor(at.pos[2])] };
+  }
+
+  private blockReader(): BlockReader {
+    return (x, y, z) => {
+      const s = this.lookup.getState([x, y, z]);
+      return s ? { name: s.name, props: s.props as Record<string, string> } : undefined;
+    };
+  }
+
+  /**
+   * An item entity lands on the block at pos (SharedDepotBlockMethods.onLanded): a DirectBeltInput block takes the stack from
+   * below; the entity is consumed when the whole stack is taken (C2 then removes it: ctx.entityConsumed).
+   */
+  private entityLanded(key: string, pos: Vec3, item: ItemStackJson, tick: number): void {
+    const rec = this.directReceiverAt(pos);
+    if (!rec || !rec.canInsertFromSide('down')) return;
+    const rem = rec.insert(item, 'down');
+    if (!rem) this.consumed.set(key, tick);
+  }
+
+  /** The ejector a block position holds (created on first use; a fresh ejector is CHARGED with its lid down). */
+  private ejectorAt(pos: Vec3): EjectorState {
+    const k = posKey(pos);
+    let e = this.ejectors.get(k);
+    if (!e) {
+      const nbt = this.lookup.getBlockEntity(pos)?.nbt ?? {};
+      e = { key: k, pos, state: typeof nbt.State === 'string' ? (nbt.State as EjectorState['state']) : 'CHARGED', lid: Number(nbt.ForceAngle ?? 0) };
+      this.ejectors.set(k, e);
+    }
+    return e;
+  }
+
+  /**
+   * EjectorBlockEntity.tick: the lid state machine (LAUNCHING chases the lid open, RETRACTING closes it by the wind-up speed,
+   * CHARGED ejects by itself when unpowered and holding the stack size of the scroll value: ejectIfTriggered).
+   */
+  private stepEjectors(now: number): void {
+    for (const e of [...this.ejectors.values()]) {
+      const nbt = this.lookup.getBlockEntity(e.pos)?.nbt ?? {};
+      const hd = Number(nbt.HorizontalDistance ?? 0), vd = Number(nbt.VerticalDistance ?? 0);
+      const speed = Math.abs(Number(this.nbtValueAt(e.pos, 'Speed', now) ?? 0));
+      const dist = hd === 0 && vd === 0 ? 1 : Math.sqrt(hd * hd + vd * vd);
+      const windUp = speed / 256 / dist;
+      if (e.state === 'LAUNCHING') {
+        e.lid += (1 - e.lid) * 0.8; // lidProgress.chase(1, .8, EXP)
+        if (e.lid > 1 - 1 / 16) { e.state = 'RETRACTING'; e.lid = 1; }
+      } else if (e.state === 'RETRACTING') {
+        if (e.lid === 0) e.state = 'CHARGED';
+        else e.lid = Math.max(0, e.lid - windUp);
+      } else {
+        e.lid = 0;
+        const powered = !!this.nbtValueAt(e.pos, 'Powered', now);
+        const d = this.depots.get(posKey(e.pos));
+        const present = d ? (d.held ? 1 : 0) + d.output.filter(Boolean).length : 0;
+        const maxStack = Number(this.nbtValueAt(e.pos, 'ScrollValue', now) ?? 0);
+        if (!powered && present > 0 && present >= maxStack && !(d?.held && d.held.beltPosition < 0.49)) this.ejectorLaunch(e.pos, now);
+      }
+    }
   }
 
   /**
    * The item entities the launches create (EjectorBlockEntity.placeItemAtTarget): one per launched stack, at the trajectory end
    * (getLaunchedItemLocation / Motion at maxTime) on tick + spawnDelay. Pure: derived from the launch events only.
    */
-  ejectorSpawns(): Map<number, { pos: Vec3; vel: Vec3; item: { id: string; count: number; nbt?: unknown } }[]> {
-    this.advance(Math.max(0, ...this.events.filter((e) => e.op === 'ejectorLaunch').map((e) => e.tick ?? 0)));
-    const out = new Map<number, { pos: Vec3; vel: Vec3; item: { id: string; count: number; nbt?: unknown } }[]>();
+  ejectorSpawns(): Map<number, { pos: Vec3; vel: Vec3; item: { id: string; count: number; nbt?: unknown }; src?: string }[]> {
+    this.advance(this.replayEnd());
+    const out = new Map<number, { pos: Vec3; vel: Vec3; item: { id: string; count: number; nbt?: unknown }; src?: string }[]>();
     for (const l of this.launches) {
       const maxTime = Math.max(3, l.launcher.totalFlyingTicks);
       const at = l.tick + spawnDelay(l.launcher);
       const pos = launchedLocation(l.launcher, maxTime, l.facing, l.pos);
       const vel = launchedMotion(l.launcher, maxTime, l.facing);
       const list = out.get(at) ?? [];
-      for (const item of l.items) list.push({ pos, vel, item: { id: item.id, count: item.count ?? 1, nbt: item.nbt } });
+      l.items.forEach((item, j) => list.push({ pos, vel, item: { id: item.id, count: item.count ?? 1, nbt: item.nbt }, src: l.keys[j] }));
       out.set(at, list);
     }
     return out;
+  }
+
+  /** The last tick the replay must reach so that every scene event and its landing is decided. */
+  private replayEnd(): number {
+    let last = 0;
+    for (const e of this.events) last = Math.max(last, e.tick ?? 0);
+    return last + LANDING_WINDOW;
+  }
+
+  /** The item entities that a receiver takes, with the landing tick (C2 removes them then: ctx.entityConsumed). */
+  consumedEntities(): Map<string, number> {
+    this.advance(this.replayEnd());
+    return new Map(this.consumed);
+  }
+
+  /** The lid of the weighted ejector at pos at scene time `ticks` (0 closed .. 1 open), undefined when it has no state. */
+  ejectorLid(pos: Vec3, ticks: number): number | undefined {
+    this.advance(ticks);
+    return this.ejectors.get(posKey(pos))?.lid;
   }
 
   /** The stacks in flight at scene time `ticks`: position and motion as EjectorRenderer draws them (launched, not yet placed). */
@@ -1512,10 +1646,14 @@ export function logisticsEventsOf(instructions: { op: string; args?: Record<stri
   const out: LogisticsEvent[] = [];
   let t = 0;
   const linkId = (v: unknown): string => (v && typeof v === 'object' ? (v as { link?: string }).link ?? '' : String(v ?? ''));
-  for (const ins of instructions) {
+  for (let ii = 0; ii < instructions.length; ii++) {
+    const ins = instructions[ii];
     if (ins.op === 'idle') { t += Number((ins.args as { ticks?: number } | undefined)?.ticks ?? 0); continue; }
     const a = (ins.args ?? {}) as Record<string, unknown>;
     switch (ins.op) {
+      case 'world.createItemEntity':
+        out.push({ tick: t, op: 'entityDrop', key: `ins${ii}`, pos: a.location as Vec3, vel: a.motion as Vec3, item: a.item as ItemStackJson });
+        break;
       case 'world.createItemOnBelt':
         out.push({ tick: t, op: 'createItemOnBelt', pos: a.pos as Vec3, insertionSide: a.insertionSide as Direction, item: a.item as ItemStackJson, link: ins.out });
         break;

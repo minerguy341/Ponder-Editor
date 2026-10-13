@@ -62,7 +62,9 @@ class EjectorBlockVisual extends KineticVisual {
     const pt = Math.max(0, ticks) - Math.floor(Math.max(0, ticks));
     // lidProgress: 1 when closed (startWithValue(1)), angle = progress * 70 (EjectorRenderer.renderSafe)
     const lidV = world.nbtValueAt(this.block.pos, 'Lid', ticks) as { Value?: number } | number | undefined;
-    const progress = typeof lidV === 'number' ? lidV : Number(lidV?.Value ?? 1);
+    // the lid of the replayed state machine (LAUNCHING / RETRACTING / CHARGED); the scene's Lid NBT when there is no state
+    const simLid = world.ejectorLid(this.block.pos, ticks);
+    const progress = simLid !== undefined ? simLid : typeof lidV === 'number' ? lidV : Number(lidV?.Value ?? 1);
     const angle = progress * 70;
     const h = horizontalAngle(this.facing());
     // applyLidAngle: center, rotateY(180 + h), uncenter, translate(pivot), rotateX(-angle), translateBack(pivot)

@@ -480,7 +480,7 @@ export const OPS: Record<string, OpDef> = {
   'world.createItemEntity': {
     tick(o) {
       const it = o.args.item as { id: string; count?: number; nbt?: unknown };
-      const e = addEntity(o.st, { type: ITEM_TYPE, pos: vec(o.args.location), vel: vec(o.args.motion), item: { id: it.id, count: it.count ?? 1, nbt: it.nbt } });
+      const e = addEntity(o.st, { type: ITEM_TYPE, pos: vec(o.args.location), vel: vec(o.args.motion), item: { id: it.id, count: it.count ?? 1, nbt: it.nbt }, src: `ins${o.idx}` });
       if (o.out) addElement(o.st, { kind: 'entity', id: o.out, visible: true, fade: lerped(1), entity: e.id } satisfies EntityEl);
     },
   },

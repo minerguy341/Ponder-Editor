@@ -60,6 +60,8 @@ export interface WorldEntity {
   yaw?: number;
   props?: Record<string, unknown>;
   discarded?: boolean;
+  /** the scene instruction that created the entity (`ins<index>`, or a launch key): keys ctx.entityConsumed */
+  src?: string;
   /** LivingEntity.lerpTo state (lerpX/Y/Z, lerpSteps): steps left and target position */
   lerp?: { x: number; y: number; z: number; steps: number };
   /** yRotO (previous body/entity yaw, degrees) */
@@ -186,7 +188,9 @@ export interface SimCtx {
    * item entities that appear at a world tick (weighted ejector launches, render/create/items/logisticsSim ejectorSpawns). Pure
    * data derived from the scene, set by the player after the logistics simulation is bound; not part of the snapshot state.
    */
-  entitySpawns?: Map<number, { pos: Vec3; vel: Vec3; item: { id: string; count: number; nbt?: unknown } }[]>;
+  entitySpawns?: Map<number, { pos: Vec3; vel: Vec3; item: { id: string; count: number; nbt?: unknown }; src?: string }[]>;
+  /** item entities that a receiving block takes at a world tick (src key -> landing tick): removed from the entity pass then */
+  entityConsumed?: Map<string, number>;
   /** `Selection` values resolved once per args object */
   selCache: WeakMap<object, Sel>;
 }

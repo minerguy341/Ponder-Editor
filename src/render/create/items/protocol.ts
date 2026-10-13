@@ -41,4 +41,8 @@ export type LogisticsEvent = { tick?: number } & (
   | { op: 'tunnelFilter'; pos: Vec3; side: Direction; item: string | null }
   | { op: 'tunnelMode'; pos: Vec3; mode: number }
   | { op: 'ejectorLaunch'; pos: Vec3 }
+  /** an item entity dropped at pos with vel (createItemEntity); key = its scene instruction (`ins<index>`) */
+  | { op: 'entityDrop'; key: string; pos: Vec3; vel: Vec3; item: { id: string; count?: number; nbt?: unknown } }
+  /** an item entity lands on the block at pos (the receiver takes it or not, decided here) */
+  | { op: 'entityLand'; key: string; pos: Vec3; item: { id: string; count?: number; nbt?: unknown } }
 );

@@ -139,6 +139,7 @@ export class PonderPlayer implements PlayerLike {
       // weighted ejector launches become item entities (C2 entity system); the spawns are pure data of the logistics replay
       const logistics = bindLogisticsScene(this.graph.worldLookup, lookupOfBlocks(structure.blocks), logisticsEventsOf(scene.instructions));
       ctx.entitySpawns = logistics.ejectorSpawns();
+      ctx.entityConsumed = logistics.consumedEntities();
       // Create fluid networks (pipes, pumps, valves, tanks, spouts, drains, hose pulleys): the scene's fluid world (F1)
       bindFluidScene(this.graph.worldLookup, structure.blocks, fluidEventsOf(scene.instructions));
       this.emit('keyframes', scene.keyframes);

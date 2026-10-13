@@ -141,7 +141,12 @@ export function tickScene(ctx: SimCtx, st: SimState): void {
   tickEntities(st);
   // spawned entities (weighted ejector launches): an ItemEntity appears at the end of its tick, as EjectorBlockEntity places it
   const spawns = ctx.entitySpawns?.get(st.worldTick);
-  if (spawns) for (const s of spawns) addEntity(st, { type: ITEM_TYPE, pos: s.pos, vel: s.vel, item: { ...s.item } });
+  if (spawns) for (const s of spawns) addEntity(st, { type: ITEM_TYPE, pos: s.pos, vel: s.vel, item: { ...s.item }, src: s.src });
+  // item entities taken by a receiving block at their landing tick (the receiver decided it in the logistics replay)
+  const taken = ctx.entityConsumed;
+  if (taken && st.entities.some((e) => e.src !== undefined && (taken.get(e.src) ?? Infinity) <= st.worldTick)) {
+    st.entities = st.entities.filter((e) => e.src === undefined || (taken.get(e.src) ?? Infinity) > st.worldTick);
+  }
   tickChaser(st.cam.yaw);
   tickChaser(st.cam.pitch);
 
