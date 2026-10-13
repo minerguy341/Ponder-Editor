@@ -333,9 +333,25 @@ export class LogisticsWorld {
       for (const st of this.states.values()) this.stepChain(st);
       for (const d of this.depots.values()) if (d.held) easeToCentre(d.held);
       for (const fl of this.flaps.values()) stepFlap(fl);
+      this.updateChuteFans();
       for (const c of this.chutes.values()) stepChute(c);
       for (const b of this.brass.values()) this.stepBrass(b);
       this.now++;
+    }
+  }
+
+  /**
+   * ChuteBlockEntity.calculatePull / calculatePush: a chute with an encased fan above it facing down pulls with the fan's speed;
+   * a chute with a fan below facing up pushes with it. The fan speed is read at the current tick (scene Speed patches).
+   */
+  private updateChuteFans(): void {
+    for (const c of this.chutes.values()) {
+      const below: Vec3 = [c.pos[0], c.pos[1] - 1, c.pos[2]];
+      const above: Vec3 = [c.pos[0], c.pos[1] + 1, c.pos[2]];
+      const bs = this.lookup.getState(below);
+      if (bs && bs.name === 'create:encased_fan' && bs.props.facing === 'up') c.push = Number(this.nbtValueAt(below, 'Speed', this.now) ?? 0);
+      const as = this.lookup.getState(above);
+      if (as && as.name === 'create:encased_fan' && as.props.facing === 'down') c.pull = Number(this.nbtValueAt(above, 'Speed', this.now) ?? 0);
     }
   }
 
