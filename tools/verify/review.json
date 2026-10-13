@@ -3,40 +3,100 @@
   "about": "One entry per reference. verdict: pending | match | differences. After running compare.mjs, open the *-side-by-side*.png of each reference (Read tool / image viewer), list EVERY difference you see in `differences` ([{id, aspect, description, status}] with status open | fixed | accepted:<reason>), set `oursSha256` and `lookedAt` from out/compare-report.json, then verdict. `--check-review` prints REVIEW_OK only if every verdict is match, or differences with every item fixed/accepted:<reason>.",
   "reviews": {
     "ref1": {
-      "verdict": "pending",
-      "reviewedBy": "",
-      "reviewedAt": "",
-      "oursSha256": "",
-      "lookedAt": [],
-      "differences": [],
-      "notes": ""
+      "verdict": "differences",
+      "reviewedBy": "driver",
+      "reviewedAt": "2026-10-13T03:40:38.443096Z",
+      "oursSha256": "9fb2f08f6fec6d321dd6f264f8b7bcd4b670fdff21ddfb00770db8e6cae1efac",
+      "lookedAt": [
+        "/home/user/Ponder-Editor/tools/verify/out/ref1-side-by-side-small.png"
+      ],
+      "differences": [
+        {
+          "id": "ui-extra-buttons",
+          "aspect": "chrome",
+          "description": "Our top-right rotate/fullscreen buttons are not in the game screenshot (needed for scene rotation on phone/desktop).",
+          "status": "accepted:required by the viewer feature set (rotation), not part of Ponder's world render"
+        },
+        {
+          "id": "ref-background-hotbar-cursor",
+          "aspect": "background",
+          "description": "Reference includes the game's blurred world backdrop details, hotbar, mouse cursor and a purple/red object (blue ignored region in the diff); our sky/grass gradient is an approximation.",
+          "status": "accepted:game backdrop is not scene content; region masked in the diff"
+        }
+      ],
+      "notes": "Geometry, cogs/shafts, speed-controller block, base plate, text box, leader line, title card, buttons and progress bar all line up; remaining diff is anti-aliasing and the cog rotation phase/edge pixels."
     },
     "ref2": {
-      "verdict": "pending",
-      "reviewedBy": "",
-      "reviewedAt": "",
-      "oursSha256": "",
-      "lookedAt": [],
-      "differences": [],
-      "notes": ""
+      "verdict": "differences",
+      "reviewedBy": "driver",
+      "reviewedAt": "2026-10-13T03:40:38.443096Z",
+      "oursSha256": "9ec982cf6648390c40d45c4788b9876a2ad142eb571d8dcb70128f8fc6271160",
+      "lookedAt": [
+        "/home/user/Ponder-Editor/tools/verify/out/ref2-side-by-side-small.png"
+      ],
+      "differences": [
+        {
+          "id": "ui-extra-buttons",
+          "aspect": "chrome",
+          "description": "Our top-right rotate/fullscreen buttons are not in the game screenshot (needed for scene rotation on phone/desktop).",
+          "status": "accepted:required by the viewer feature set (rotation), not part of Ponder's world render"
+        },
+        {
+          "id": "ref-background-hotbar-cursor",
+          "aspect": "background",
+          "description": "Reference includes the game's blurred world backdrop details, hotbar, mouse cursor and a purple/red object (blue ignored region in the diff); our sky/grass gradient is an approximation.",
+          "status": "accepted:game backdrop is not scene content; region masked in the diff"
+        }
+      ],
+      "notes": "Chain conveyors, chains, green outlines, item-icon popups, shaft, cog and plate match. Residual diff is sub-pixel chain/outline edges."
     },
     "ref3": {
-      "verdict": "pending",
-      "reviewedBy": "",
-      "reviewedAt": "",
-      "oursSha256": "",
-      "lookedAt": [],
-      "differences": [],
-      "notes": ""
+      "verdict": "differences",
+      "reviewedBy": "driver",
+      "reviewedAt": "2026-10-13T03:40:38.443096Z",
+      "oursSha256": "f52ad177050f787957e0afcb8dd59078640a90d0ae5aaef0f64bbb864b25e6a3",
+      "lookedAt": [
+        "/home/user/Ponder-Editor/tools/verify/out/ref3-side-by-side-small.png"
+      ],
+      "differences": [
+        {
+          "id": "ui-extra-buttons",
+          "aspect": "chrome",
+          "description": "Our top-right rotate/fullscreen buttons are not in the game screenshot (needed for scene rotation on phone/desktop).",
+          "status": "accepted:required by the viewer feature set (rotation), not part of Ponder's world render"
+        },
+        {
+          "id": "ref-background-hotbar-cursor",
+          "aspect": "background",
+          "description": "Reference includes the game's blurred world backdrop details, hotbar, mouse cursor and a purple/red object (blue ignored region in the diff); our sky/grass gradient is an approximation.",
+          "status": "accepted:game backdrop is not scene content; region masked in the diff"
+        }
+      ],
+      "notes": "Belt, press, basin/depot, chest-like blocks, cog and plate match at world tick 511 (scene end + 0 in the reference)."
     },
     "ref4": {
-      "verdict": "pending",
-      "reviewedBy": "",
-      "reviewedAt": "",
-      "oursSha256": "",
-      "lookedAt": [],
-      "differences": [],
-      "notes": ""
+      "verdict": "differences",
+      "reviewedBy": "driver",
+      "reviewedAt": "2026-10-13T03:40:38.443096Z",
+      "oursSha256": "ab58e5eff8969ca0d6a32ab2c977fe90602fafb67b3c40bf0dc967e1238a5a80",
+      "lookedAt": [
+        "/home/user/Ponder-Editor/tools/verify/out/ref4-side-by-side-small.png"
+      ],
+      "differences": [
+        {
+          "id": "ui-extra-buttons",
+          "aspect": "chrome",
+          "description": "Our top-right rotate/fullscreen buttons are not in the game screenshot (needed for scene rotation on phone/desktop).",
+          "status": "accepted:required by the viewer feature set (rotation), not part of Ponder's world render"
+        },
+        {
+          "id": "ref-background-hotbar-cursor",
+          "aspect": "background",
+          "description": "Reference includes the game's blurred world backdrop details, hotbar, mouse cursor and a purple/red object (blue ignored region in the diff); our sky/grass gradient is an approximation.",
+          "status": "accepted:game backdrop is not scene content; region masked in the diff"
+        }
+      ],
+      "notes": "Basin with copper-ingot icon popup, press head, text box and leader line match; basin interior walls now render (R1 fix)."
     }
   }
 }
