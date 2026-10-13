@@ -124,7 +124,8 @@ export class PonderPlayer implements PlayerLike {
       if (token !== this.loadToken) return;
       // effect particles (dust, rotation indicators, emitters, glue, block destroy): the sprites of this scene's particle records
       const atlasRenderer = this.renderer as unknown as Partial<BlockRendererImpl>;
-      const bank = atlasRenderer.atlas ? await prepareSpriteBank(this.renderer as BlockRendererImpl, scene, structure.blocks.map((b) => b.state)) : null;
+      // every state the scene can remove with particles: the schematic and the states its ops place (water placed by setBlocks is not in the schematic)
+      const bank = atlasRenderer.atlas ? await prepareSpriteBank(this.renderer as BlockRendererImpl, scene, states) : null;
       if (token !== this.loadToken) return;
 
       this.ctx = ctx;

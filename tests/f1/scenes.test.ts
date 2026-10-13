@@ -54,12 +54,16 @@ describe.skipIf(!haveCache)('fluid scenes', () => {
 });
 
 describe.skipIf(!haveCache)('fluid scene: mechanical_pump/flow', () => {
-  it('the tanks of this scene are empty in the schematic (TankContent {}), so the pump moves no fluid; pressures are set', async () => {
+  it('the schematic tank at (4,1,3) holds 9000 water (TankContent.Fluid {id, amount}, Create 6.0.10); the pump moves it once it runs; pressures are set', async () => {
     const { world } = await runScene('mechanical_pump/flow');
-    world.advance(160);
-    // schematic: fluid_tank TankContent {} at (0,1,3) and (4,1,3)
-    expect(Object.values(world.debugStores()).every((v) => v === 0)).toBe(true);
+    // schematic: fluid_tank TankContent {} at (0,1,3) and TankContent {Fluid: {id: minecraft:water, amount: 9000}} at (4,1,3)
+    world.advance(0);
+    expect(world.debugStores()).toEqual({ '0,1,3': 0, '4,1,3': 9000 });
     expect(world.debugFlows()).toEqual([]);
+    world.advance(160);
+    const stores = world.debugStores();
+    expect(stores['4,1,3']).toBeLessThan(9000);
+    expect(world.debugFlows().some((f) => f.includes('minecraft:water'))).toBe(true);
     // PumpBlockEntity.distributePressureTo after onSpeedChanged(0) at t=130 with Speed 64 (facing west): the pipe (1,1,1)
     // receives 64 inbound on its east face (the pump's west face is the start) and 64 outward on its south face
     const pipe = world.nodeAt([1, 1, 1])!;

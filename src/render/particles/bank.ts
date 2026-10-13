@@ -6,7 +6,7 @@ import type { BlockState, SceneJson } from '../../contract';
 import type { BlockRendererImpl } from '../blockRenderer';
 import { resolveItemModel } from '../itemModel';
 import { fluidSprites } from '../fluids';
-import { fluidTint } from '../tints';
+import { blockTint, fluidTint } from '../tints';
 import { chooseVariants, parseBlockstate, selectModels } from '../blockstate';
 import { parseLoc, resources } from '../../assets/resources';
 import type { Atlas } from '../atlas';
@@ -161,7 +161,11 @@ export async function prepareSpriteBank(renderer: BlockRendererImpl, scene: Scen
     glitter,
     wifi,
     item: (id) => atlas.sprite(itemIcon.get(id) ?? 'minecraft:missingno'),
-    block: (id, props) => ({ sprite: blockOf(id, props).sprite, tint: [1, 1, 1] as V3 }),
+    // TerrainParticle multiplies its colour by BlockColors.getColor(state): water, grass and leaves are tinted, the rest white
+    block: (id, props) => {
+      const c = blockTint({ name: id, props }, 0) ?? 0xffffff;
+      return { sprite: blockOf(id, props).sprite, tint: [((c >> 16) & 255) / 255, ((c >> 8) & 255) / 255, (c & 255) / 255] as V3 };
+    },
     fluid: (id) => {
       const t = fluidTint(id);
       const tint: V3 = [((t >> 16) & 0xff) / 255, ((t >> 8) & 0xff) / 255, (t & 0xff) / 255];
