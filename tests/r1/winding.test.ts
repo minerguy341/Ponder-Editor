@@ -1,30 +1,32 @@
 import { describe, expect, it } from 'vitest';
 import { bakeById, NO_ROT } from '../a1/helpers';
 import type { RawModel } from '../../src/render/models';
-import { DIR_VEC, dot, expectFacesOut, frontNormal, rotX, rotY } from './geom';
+import { DIR_VEC, dot, expectFacesIn, expectFacesOut, frontNormal, rotX, rotY } from './geom';
 
 const faces = { east: { texture: '#t' }, west: { texture: '#t' }, up: { texture: '#t' }, down: { texture: '#t' } };
 
 describe('winding: reversed boxes (from > to on an axis, as Blockbench exports them)', () => {
-  // Create's andesite funnel has elements like this: a box written from z=6 to z=0 that carries east/west/up/down faces only.
-  // The reversed axis swaps the corner order; the planes of those faces are unaffected, so only the winding can go wrong.
+  // Blockbench writes hollow interiors as reversed boxes: the basin's "Basin Interior" (y 16 -> 2), Create's funnels and
+  // packagers. FaceBakery.bakeQuad takes the facing from the baked corners (calculateFacing), so the walls of a reversed
+  // box face INTO the box: they are the inner surfaces, visible from the cavity. Forcing the exported direction hid them
+  // (ref4: the basin's back wall showed the base plate through it).
   const reversedZ: Record<string, RawModel> = {
     'a:rev': { textures: { t: 'a:t' }, elements: [{ from: [0, 0, 16], to: [16, 16, 0], faces }] },
   };
 
-  it('each quad of a reversed box faces outward from the box (identity)', async () => {
+  it('each quad of a reversed box faces into the box (identity)', async () => {
     const b = await bakeById(reversedZ, 'a:rev');
     expect(b.quads.length).toBe(4);
-    expectFacesOut(b.quads, [0, 0, 0], [16, 16, 16]);
+    expectFacesIn(b.quads, [0, 0, 0], [16, 16, 16]);
   });
 
-  it('the same reversed box under a blockstate y=90 keeps its quads facing outward', async () => {
+  it('the same reversed box under a blockstate y=90 keeps its quads facing into the box', async () => {
     const b = await bakeById(reversedZ, 'a:rev', { x: 0, y: 90, uvlock: false });
     expect(b.quads.length).toBe(4);
-    expectFacesOut(b.quads, [0, 0, 0], [16, 16, 16], (v) => rotY(v, 90));
+    expectFacesIn(b.quads, [0, 0, 0], [16, 16, 16], (v) => rotY(v, 90));
   });
 
-  it('a reversed box with an element rotation keeps its quads facing outward', async () => {
+  it('a reversed box with an element rotation keeps its quads facing into the box', async () => {
     const m: Record<string, RawModel> = {
       'a:revrot': { textures: { t: 'a:t' }, elements: [{ from: [0, 0, 16], to: [16, 16, 0], rotation: { origin: [8, 8, 8], axis: 'x', angle: 22.5 }, faces }] },
     };
@@ -40,7 +42,7 @@ describe('winding: reversed boxes (from > to on an axis, as Blockbench exports t
       const own = outward.reduce((bst, w) => (dot(w, c) > dot(bst, c) ? w : bst));
       const n = frontNormal(q);
       const len = Math.hypot(n[0], n[1], n[2]);
-      expect(dot(n, own) / len, `rotated quad dir=${q.dir} front normal ${n.map((v) => v.toFixed(3))}`).toBeGreaterThan(0.999);
+      expect(dot(n, own) / len, `rotated quad dir=${q.dir} front normal ${n.map((v) => v.toFixed(3))}`).toBeLessThan(-0.999);
     }
   });
 });
