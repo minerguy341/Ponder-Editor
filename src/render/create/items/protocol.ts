@@ -27,7 +27,7 @@
 // Plain NBT patches to B2 blocks (e.g. {Speed: 32} through BlockVisual.setData, from world.modifyBlockEntityNBT) are forwarded
 // automatically into the log as { op: 'nbt' } with the tick of the last update().
 
-import type { Direction, ItemStackJson, Vec3 } from '../../../contract';
+import type { BlockState, Direction, ItemStackJson, Vec3 } from '../../../contract';
 
 export type LogisticsEvent = { tick?: number } & (
   | { op: 'createItemOnBelt'; pos: Vec3; insertionSide: Direction; item: ItemStackJson; link?: string }
@@ -41,6 +41,8 @@ export type LogisticsEvent = { tick?: number } & (
   | { op: 'tunnelFilter'; pos: Vec3; side: Direction; item: string | null }
   | { op: 'tunnelMode'; pos: Vec3; mode: number }
   | { op: 'ejectorLaunch'; pos: Vec3 }
+  /** the block at pos becomes state (null: air) from this tick (world.setBlocks / world.modifyBlocks) */
+  | { op: 'setBlock'; pos: Vec3; state: BlockState | null }
   /** an item entity dropped at pos with vel (createItemEntity); key = its scene instruction (`ins<index>`) */
   | { op: 'entityDrop'; key: string; pos: Vec3; vel: Vec3; item: { id: string; count?: number; nbt?: unknown } }
   /** an item entity lands on the block at pos (the receiver takes it or not, decided here) */

@@ -274,7 +274,17 @@ export class LogisticsWorld {
   private rng = new JavaRandom(0x2f6f_3c1d);
   private linkOf = new Map<string, SimItem>();
 
-  constructor(readonly lookup: WorldLookup) {}
+  /** the blocks as the scene changed them (setBlock events), over the schematic lookup */
+  private overrides = new Map<string, BlockState>();
+  /** the world lookup the replay sees: the overrides first, then the schematic */
+  readonly lookup: WorldLookup;
+
+  constructor(base: WorldLookup) {
+    this.lookup = {
+      getState: (p) => this.overrides.get(posKey(p)) ?? base.getState(p),
+      getBlockEntity: (p) => (this.overrides.has(posKey(p)) ? undefined : base.getBlockEntity(p)),
+    };
+  }
 
   // ----------------------------------------------------------------- belt chains
 
@@ -565,6 +575,9 @@ export class LogisticsWorld {
         break;
       case 'ejectorLaunch':
         this.ejectorLaunch(ev.pos, ev.tick ?? this.now);
+        break;
+      case 'setBlock':
+        this.overrides.set(posKey(ev.pos), ev.state ?? { name: 'minecraft:air', props: {} });
         break;
       case 'entityDrop': {
         // the drop’s landing: the same physics as the entity pass of C2 (itemPhysics.landingOf), on the scene’s blocks
@@ -1651,6 +1664,24 @@ export function logisticsEventsOf(instructions: { op: string; args?: Record<stri
     if (ins.op === 'idle') { t += Number((ins.args as { ticks?: number } | undefined)?.ticks ?? 0); continue; }
     const a = (ins.args ?? {}) as Record<string, unknown>;
     switch (ins.op) {
+      case 'world.setBlocks':
+      case 'world.modifyBlocks': {
+        // setBlocks: one selection and one state; modifyBlocks: a list of { pos, state }
+        const sel = a.selection as { t?: string; pos?: Vec3; from?: Vec3; to?: Vec3 } | undefined;
+        const st = (a.state as BlockState | undefined) ?? null;
+        const cells: Vec3[] = [];
+        if (ins.op === 'world.setBlocks' && sel?.t === 'pos' && sel.pos) cells.push(sel.pos);
+        if (ins.op === 'world.setBlocks' && sel?.t === 'box' && sel.from && sel.to) {
+          for (let x = Math.min(sel.from[0], sel.to[0]); x <= Math.max(sel.from[0], sel.to[0]); x++)
+            for (let y = Math.min(sel.from[1], sel.to[1]); y <= Math.max(sel.from[1], sel.to[1]); y++)
+              for (let z = Math.min(sel.from[2], sel.to[2]); z <= Math.max(sel.from[2], sel.to[2]); z++) cells.push([x, y, z]);
+        }
+        for (const c of cells) out.push({ tick: t, op: 'setBlock', pos: c, state: st });
+        if (ins.op === 'world.modifyBlocks') {
+          for (const ch of (a.changes as { pos: Vec3; state: BlockState | null }[] | undefined) ?? []) out.push({ tick: t, op: 'setBlock', pos: ch.pos, state: ch.state ?? null });
+        }
+        break;
+      }
       case 'world.createItemEntity':
         out.push({ tick: t, op: 'entityDrop', key: `ins${ii}`, pos: a.location as Vec3, vel: a.motion as Vec3, item: a.item as ItemStackJson });
         break;
