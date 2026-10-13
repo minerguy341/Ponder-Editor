@@ -19,7 +19,7 @@ ABANDON: G1 the gearbox symptom is not reproduced. The gearbox Core faces are em
 - [x] G2: independent differential checker (tools/r1/indep/, no import from src/render) computes the expected faces per Minecraft FaceBakery rules (count, texture, tintindex, shade, cullface, direction, vertex position, uv per vertex, winding) for every variant of all 643 Create blockstates and all vanilla blockstates of the 178 ponder schematics; every real mismatch fixed in A1
   CHECK: node tools/r1/diff-all.mjs 2>&1 | tail -4
   EXPECT: R1_DIFF_OK
-  EVIDENCE: top (kind, model) groups: | R1_DIFF_OK
+  EVIDENCE: top (kind, model) groups: | R1_DIFF_OK (rerun after the facing rule change: "mismatches: 0 {}", R1_DIFF_OK; the checker now takes the facing from the vanilla FaceInfo corner order)
 
 - [x] G3: culling audit: cullface quads dropped only when the neighbour hides them (opaque full cube on the boundary); cullface-less quads never dropped; glass / stained glass / ice / leaves / iron bars / slab rules tested
   CHECK: npx vitest run tests/r1 -t "cull" 2>&1 | tail -6
@@ -29,7 +29,7 @@ ABANDON: G1 the gearbox symptom is not reproduced. The gearbox Core faces are em
 - [x] G4: backface check (criterion amended by the driver, evidence-based): FrontSide is the game's behaviour for every block layer (no double-sided flag in the cached model data, all block render types cull back faces); on the bare canvas, for OPAQUE closed blocks (all meshes in the solid layer) a view with materials as shipped vs the same view drawn two-sided differs by at most 40 edge pixels per view (anti-aliasing); cut-out blocks are informational because their holes expose far-wall back faces by design
   CHECK: node tools/r1/side-check.mjs 2>&1 | tail -3
   EXPECT: R1_SIDE_OK
-  EVIDENCE: opaque closed blocks: 7, worst single-view diff: 5px (limit 40) | R1_SIDE_OK
+  EVIDENCE: opaque closed blocks: 7, worst single-view diff: 5px (limit 40) | R1_SIDE_OK (rerun after the facing rule change: views compared 204, views with differing pixels 107, worst 5px | R1_SIDE_OK)
 
 - [x] G5: full-app proof: gearbox, encased shaft, cogwheel and the 12 most complex schematic blocks (by element count, tools/r1/complexity.mjs) rendered in the real viewer (PonderViewer + visuals) from 4 yaws; the 16 toolbox colours from 4 yaws; screenshots READ; findings listed (missing / inside-out faces)
   EVIDENCE: READ the grids in scratchpad r1/app16/gridA.png .. gridD.png (16 blocks x 4 yaws each: gearbox, andesite_encased_shaft, cogwheel, track | large_cogwheel, fluid_tank, creative_fluid_tank, rope_pulley | creative_motor, elevator_pulley, andesite_encased_cogwheel, rotation_speed_controller | mechanical_crafter, stock_ticker, hose_pulley, comparator) and r1/toolbox16/grid_y45/135/225/315.png (16 colours). Findings: no missing or inside-out body faces at any yaw in any of the 16 blocks. Open: the rotation speed controller's shape is not verified against a reference. Red toolbox: at yaws 135 and 225 the north face shows background through a transparent slot of its texture under the model UV (48 of 84 texels transparent in the north UV rectangle of toolbox/red.png; all other faces 0 transparent). Create registers the toolbox with cutoutMipped (AllBlocks.java), which discards alpha 0 in the game too, so the slot is texture content under the model UV, not a face missing from the mesh; the same hole appears for all 16 colours. Needs a game reference of the toolbox's north side to confirm.
@@ -39,10 +39,10 @@ ABANDON: G1 the gearbox symptom is not reproduced. The gearbox Core faces are em
   EXPECT: /built in/
   EVIDENCE: Tests  343 passed (343) | ✓ built in 3.80s
 
-- [x] G7: winding regression (reversed boxes: from > to on an axis, as in Create's funnels, belts, ladders, fluid valves, packagers, clutches, gearshifts, water wheels and vanilla spawner): the facing comes from the rotated face direction; three of the tests fail on the previous baker and pass after
+- [x] G7 (amended by the driver's basin finding; the earlier rule was wrong): winding of reversed boxes (from > to on an axis, as Blockbench exports hollow interiors: the basin's "Basin Interior", Create's funnels, packagers, belts). The facing is calculateFacing of the baked corners, as FaceBakery.bakeQuad does (decompiled source in the scratchpad a1/mc/FaceBakery.java lines 53-57), so a reversed box's walls face INTO the box. The rule from 3803bf4 forced the exported direction and hid the basin's inner walls in ref4; it is removed. The reversed-box tests in tests/r1/winding.test.ts and tests/r1/basin.test.ts fail on the forced rule and pass on the vanilla rule
   CHECK: npx vitest run tests/r1/winding.test.ts 2>&1 | tail -4
   EXPECT: /Tests\s+\d+ passed/
-  EVIDENCE: Start at  23:45:28 | Duration  632ms (transform 245ms, setup 0ms, collect 330ms, tests 12ms, environment 0ms, prepare 58ms)
+  EVIDENCE: tests/r1/winding.test.ts 6 passed and tests/r1/basin.test.ts 2 passed on the vanilla rule; tests/r1/basin.test.ts 1 failed on the HEAD baker (forced direction), the basin walls hidden | R1 directory 23 of 23 passed
 
 - [x] G8: red toolbox regression (B6): six quads per blockstate variant y=0/90/180/270, each facing outward; north face samples the model's uv rectangle
   CHECK: npx vitest run tests/r1/toolbox.test.ts 2>&1 | tail -4
