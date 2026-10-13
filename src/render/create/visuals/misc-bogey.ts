@@ -2,12 +2,18 @@
 //
 // Java: content/trains/bogey/{BogeyBlockEntityRenderer, BogeyBlockEntityVisual, StandardBogeyRenderer (+Small/Large),
 //       StandardBogeyVisual, AbstractBogeyBlockEntity.animate/getVirtualAngle, StandardBogeyBlock.getWheelRadius, BogeySizes},
+//       content/trains/entity/CarriageContraptionVisual (the same drop for moving carriages),
 //       foundation/ponder/instruction/AnimateBlockEntityInstruction.bogey.
 // The static blockstate model of the block is the bogey "top" plate (chunk mesh); the style draws everything else, so the
 // visual keeps entityRendered: () => false and draws the frame, shafts, wheels, drive parts only.
 //
-// Geometry follows StandardBogeyRenderer exactly: the block origin is moved to the block centre (ms.translate(.5)), the
-// X-axis variant is turned 90 degrees around Y, each part is a SuperByteBuffer transform chain (first call applied last).
+// Pose: the block origin is moved to the block centre (ms.translate(.5)), the X-axis variant is turned 90 degrees around Y,
+// then BogeyBlockEntityVisual and CarriageContraptionVisual both drop the whole bogey by 1.5 + 1/128 blocks
+// (poseStack.translate(0, -1.5 - 1 / 128f, 0)). That drop is what puts the wheel contact on the rail (checked in
+// tests/b/misc/bogey-pose.test.ts). BogeyBlockEntityRenderer (the BER path, which Ponder's own level calls directly) has no
+// drop, so Ponder's BER output floats the wheels 1.5 blocks above the rails; the in-game Flywheel visual is the one that
+// matches the rails and the authored train layout, so the viewer follows it.
+// Each part is a SuperByteBuffer transform chain (first call applied last).
 
 import * as THREE from 'three';
 import type { BlockInstance, VisualContext } from '../../../contract';
@@ -21,6 +27,19 @@ const SMALL_RADIUS = 6.5 / 16; // StandardBogeyBlock.getWheelRadius: size == LAR
 const LARGE_RADIUS = 12.5 / 16;
 const SHRINK = 1 - 1 / 512; // scale(1 - 1 / 512f) on the drive / frame / belt partials
 const DEG = Math.PI / 180;
+/** BogeyBlockEntityVisual (and CarriageContraptionVisual): poseStack.translate(0, -1.5 - 1 / 128f, 0) after the centring. */
+export const BOGEY_VISUAL_DROP = -1.5 - 1 / 128;
+
+/**
+ * The pose every bogey part is drawn in, before its own part transform: block centre, X-axis turn, then the visual drop.
+ * Shared by the visual below; the regression test drives it directly.
+ */
+export function bogeyBasePose(axisX: boolean, ps: PoseStack = new PoseStack()): PoseStack {
+  ps.reset().translate(0.5, 0.5, 0.5);
+  if (axisX) ps.rotateYDegrees(90);
+  ps.translate(0, BOGEY_VISUAL_DROP, 0);
+  return ps;
+}
 
 /** BlockState variant rotations of create:shaft around the block centre: axis=z (x 90, y 180), axis=x (x 90, y 90). */
 function shaftVariant(axis: 'x' | 'z'): THREE.Matrix4 {
@@ -58,11 +77,9 @@ class BogeyVisual extends SceneVisual {
     this.axisX = stateAxis(block.state, 'axis') === 'x';
   }
 
-  /** ms.translate(.5) and the X-axis turn of BogeyBlockEntityRenderer, shared by every part. */
+  /** Block centre, X-axis turn and the visual drop (bogeyBasePose), shared by every part. */
   private base(ps: PoseStack): PoseStack {
-    ps.reset().translate(0.5, 0.5, 0.5);
-    if (this.axisX) ps.rotateYDegrees(90);
-    return ps;
+    return bogeyBasePose(this.axisX, ps);
   }
 
   protected async build(): Promise<void> {
