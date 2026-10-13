@@ -18,8 +18,11 @@ const filter = opt('--filter');
 const index = JSON.parse(fs.readFileSync(path.join(ROOT, 'public/scenes/index.json'), 'utf8'));
 let scenes = (index.scenes || index).filter((_, i) => i % shardN === shardK);
 if (filter) scenes = scenes.filter((s) => s.id.includes(filter));
-const report = JSON.parse(fs.readFileSync(path.join(ROOT, 'tools/verify/out/run-all-report.json'), 'utf8')).results;
-const totals = Object.fromEntries(report.map((r) => [r.id, r.total]));
+// Totals come from the run-all report when it exists, otherwise from each scene file's totalTicks.
+const reportPath = path.join(ROOT, 'tools/verify/out/run-all-report.json');
+const totals = fs.existsSync(reportPath)
+  ? Object.fromEntries(JSON.parse(fs.readFileSync(reportPath, 'utf8')).results.map((r) => [r.id, r.total]))
+  : Object.fromEntries(scenes.map((s) => [s.id, JSON.parse(fs.readFileSync(path.join(ROOT, 'public/scenes', s.file), 'utf8')).totalTicks]));
 
 const server = await createServer({ root: ROOT, logLevel: 'error', server: { port: 0, host: '127.0.0.1', watch: null } });
 await server.listen();

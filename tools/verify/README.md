@@ -38,6 +38,7 @@ Common target flags (run-all, compare, interaction): `--fixture` (serve `tools/v
 | `readme-check.mjs [--refs]` | checks this README covers every script/topic (gate G7b); `--refs` prints the reference summary | `README_COMPLETE` | |
 | `interaction.mjs [--scene ID] [--query q]` | mouse drag, touch drag, wheel, pinch, replay, next/prev, progress-bar seek, scene browser, mobile overflow | `INTERACTION_OK` | `out/interaction-mobile.png` |
 | `subpath.mjs [--base /Ponder-Editor/] [--fixture] [--dist D]` | builds with the sub-path base (and with `./`), serves it like GitHub Pages, loads and plays a scene | `SUBPATH_OK` | `out/subpath-{abs,relative}/` |
+| `magenta-scan.mjs <dir\|file.png>... [--min N] [--json F]` (`--selftest`) | missing-texture scan of rendered frames: flags a frame with at least N (default 8) magenta-hue pixels touching near-black pixels (the vanilla 2x2 magenta/black checker); dye pink and shaded magenta without black are not flagged | `MAGENTA_SCAN_OK` / `MAGENTA_SCAN_OFFENDERS n`, `MAGENTA_SELFTEST_OK` | optional `--json` rows |
 
 Suggested npm scripts (the driver adds them; E does not touch package.json):
 

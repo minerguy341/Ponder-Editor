@@ -41,7 +41,8 @@ export const ownHeight = (f: FluidInfo) => fluidAmount(f) / 9;
 
 /** Sprites per fluid: [still, flowing, overlay]. */
 export function fluidSprites(fluid: string): { still: string; flowing: string; overlay: string | null } {
-  switch (fluid) {
+  // flowing_water / flowing_lava are the flowing Fluids of the same FluidType: they use the textures of the source fluid
+  switch (fluid.replace(/^minecraft:flowing_/, 'minecraft:')) {
     case 'minecraft:water': return { still: 'minecraft:block/water_still', flowing: 'minecraft:block/water_flow', overlay: 'minecraft:block/water_overlay' };
     case 'minecraft:lava': return { still: 'minecraft:block/lava_still', flowing: 'minecraft:block/lava_flow', overlay: null };
     case 'create:honey': return { still: 'create:fluid/honey_still', flowing: 'create:fluid/honey_flow', overlay: null };

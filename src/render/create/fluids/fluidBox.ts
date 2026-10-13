@@ -21,7 +21,7 @@ export interface FluidBoxOptions {
 
 /** Default tints (FluidType.getTintColor / IClientFluidTypeExtensions): water uses the plains biome colour. */
 export function defaultFluidTint(fluid: string): number {
-  if (fluid === 'minecraft:water') return 0x3f76e4;
+  if (fluid === 'minecraft:water' || fluid === 'minecraft:flowing_water') return 0x3f76e4;
   return 0xffffff;
 }
 

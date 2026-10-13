@@ -594,15 +594,23 @@ function isExecute(action: unknown): boolean {
   return e.endsWith('EXECUTE') || e === '';
 }
 
+/** One saved fluid tank: NeoForge FluidTank.writeToNBT (Create 6.0.10) = { Fluid: { id, amount } }; `{ FluidName, Amount }` is the older layout. */
+type TankNbt = { Fluid?: { id?: string; amount?: number }; FluidName?: string; Amount?: number };
+function fluidOfTank(c: TankNbt | undefined): FluidStack | null {
+  if (!c || typeof c !== 'object') return null;
+  const id = c.Fluid ? c.Fluid.id : c.FluidName;
+  const amount = Number(c.Fluid ? c.Fluid.amount ?? 0 : c.Amount ?? 0);
+  if (!id || id === 'minecraft:empty' || amount <= 0) return null;
+  return { fluid: id, amount };
+}
+
 /** FluidTankBlockEntity: TankContent; SmartFluidTankBehaviour (spout, drain, basin): Tanks[0].TankContent; hose pulley: Tank */
 function tankContentOf(nbt: Record<string, unknown>): FluidStack | null {
-  const direct = (nbt.TankContent ?? nbt.Tank) as { FluidName?: string; Amount?: number } | undefined;
+  const direct = fluidOfTank((nbt.TankContent ?? nbt.Tank) as TankNbt | undefined);
+  if (direct) return direct;
   // BasinBlockEntity: InputTanks (the input tank holds what capability fills put in)
   const tankList = Array.isArray(nbt.Tanks) ? nbt.Tanks : Array.isArray(nbt.InputTanks) ? nbt.InputTanks : undefined;
-  const list = tankList ? (tankList as { TankContent?: { FluidName?: string; Amount?: number } }[])[0]?.TankContent : undefined;
-  const c = direct && direct.FluidName !== undefined ? direct : list;
-  if (!c || !c.FluidName || c.FluidName === 'minecraft:empty' || Number(c.Amount ?? 0) <= 0) return null;
-  return { fluid: c.FluidName, amount: Number(c.Amount) };
+  return fluidOfTank(tankList ? (tankList as { TankContent?: TankNbt }[])[0]?.TankContent : undefined);
 }
 
 function filterItemOf(v: unknown): string | null {

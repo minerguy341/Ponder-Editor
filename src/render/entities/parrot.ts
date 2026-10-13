@@ -12,12 +12,14 @@ import { elementMaterial, entityBaseMaterial } from './textures';
 
 export type ParrotState = 'flying' | 'standing' | 'sitting' | 'party' | 'on_shoulder';
 
-/** Parrot.Variant: the five entity textures (ParrotRenderer.getVariantTexture); Ponder picks one at random per parrot. */
-export const PARROT_VARIANTS = ['red_blue', 'blue', 'green', 'yellow_blue', 'grey'] as const;
+/**
+ * The variants a Ponder parrot can get: ParrotPose.VARIANTS = RED_BLUE, GREEN, YELLOW_BLUE, GRAY ("blue parrots are kinda hard to
+ * see"), chosen with Ponder.RANDOM per parrot. Parrot.Variant.BLUE is never used by a scene, so it is not in this list.
+ */
+export const PARROT_VARIANTS = ['red_blue', 'green', 'yellow_blue', 'grey'] as const;
 export type ParrotVariant = (typeof PARROT_VARIANTS)[number];
 export const PARROT_TEXTURE: Record<ParrotVariant, string> = {
   red_blue: 'minecraft:entity/parrot/parrot_red_blue',
-  blue: 'minecraft:entity/parrot/parrot_blue',
   green: 'minecraft:entity/parrot/parrot_green',
   yellow_blue: 'minecraft:entity/parrot/parrot_yellow_blue',
   grey: 'minecraft:entity/parrot/parrot_grey',
