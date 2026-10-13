@@ -33,3 +33,17 @@ Common rules for all B leaves: implement `VisualModule`s per `src/render/create/
   CHECK: npx vitest run tests/b -t seek 2>&1 | tail -6
   EXPECT: /passed/
   EVIDENCE: Start at  22:29:00 | Duration  4.55s (transform 2.39s, setup 0ms, collect 5.58s, tests 482ms, environment 1ms, prepare 1.55s)
+
+## Round status (B2, latest)
+
+Gate status: G1-G4 and G7 PASS. G5 and G6 are NOT met. The ledger is not ALL MET.
+
+G6 evidence so far (app, paused and seeked; frames in scratchpad/g6/ and scratchpad/ej-*): weighted_ejector/redstone end+mid (386, 193), weighted_ejector/split end (582), weighted_ejector/eject (1125, 1134, 1145, 1200), chute/upward end (242), chute/downward and chute/smart end+mid (563, 281, 427, 213), fan/direction (198, 99), fan/processing end (1150), funnels/brass end (465), tunnels/brass end+mid (1148, 574). Read: redstone mid+end, split end, chute/upward end, fan/processing end, eject frames. Defects found: (a) ejector flight invisible in the app was a playback-timing artefact (the app keeps playing after a hash navigation); fixed by pause+seek, flight visible at 1125. (b) chute/upward end frame: the copper block was missing from the chute because restoreBlocks was not replayed; fixed (cc963ca); the item is now in the replay at 242, but it is hard to see in the window frame (residual, not fixed). (c) ItemPool slot groups did not refresh their world matrix (matrixAutoUpdate off); fixed (b2a83d9).
+Not read yet: the remaining mid frames and the other scenes in the 94-scene set. Reason: budget; the frames exist under scratchpad/g6 and must be read one by one.
+
+ABANDON lines (with evidence):
+- chute tick port (ChuteBlockEntity.tick, outputs, chute-to-chute pull): ABANDON for this round. ChuteBlockEntity.java is 819 lines (tools/.cache/create/.../logistics/chute/ChuteBlockEntity.java); the scenes chute/upward and chute/downward end with the item in the chute (upward: one item at 242; downward: items at 563). The fan push/pull link (ChuteBlockEntity.calculatePull/Push) is done; the simplified stepChute is kept.
+- adjacent funnel filters (BrassTunnelBlockEntity.testFlapFilter / flapFilterEmpty adjacent branch): ABANDON. No B2 scene sets a filter on a neighbour through ops: setFilter appears only in tunnels/brass (own side), high_logistics/factory_gauge_recipe, factory_gauge_restocker and table_cloth (not B2 blocks). The eject funnel NBT Filter is air. Own-side filters are implemented and tested (tests/b/logistics/brass.test.ts).
+- depot 4x crop: ABANDON. tools/verify/refs holds only ref1..ref4 (cog, chain conveyor, press, compacting); none shows a depot. The basin crop (ref4) was done earlier and handed to R1 for the basin body.
+- side-dropped item entities on belts: implemented as landings on receivers (drops and ejector flights, tests/b/logistics/drops.test.ts). Not verified in an app frame.
+- whole-repo gates: npx vitest run: 678 passed, 25 skipped (48 files passed, 3 skipped). npm run build: tsc clean and vite build succeeded.
