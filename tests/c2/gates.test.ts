@@ -372,6 +372,67 @@ describe('kinetic: BE data from the schematic reaches the visuals; speed patches
     graph.dispose();
   });
 
+  it('a block that two sections select gets one visual per section (belt/connect first selected shaft)', async () => {
+    const shaft: BlockInstance = { pos: [1, 1, 1], state: st('create:shaft', { axis: 'z' }), nbt: { Speed: 0 } };
+    const s = scene([
+      { op: 'world.showSection', args: { selection: box([0, 0, 0], [2, 2, 2]), direction: null } },
+      idle(3),
+      { op: 'world.showIndependentSection', args: { selection: box([1, 1, 1], [1, 1, 1]), direction: null }, out: 'e1' },
+      { op: 'world.moveSection', args: { link: { link: 'e1' }, offset: [0, 0, -1], duration: 0 } },
+      idle(3),
+      { op: 'markAsFinished', args: {} },
+    ]);
+    const r = runner(s, [shaft]);
+    const made: BlockVisual[] = [];
+    const factory = async (block: BlockInstance): Promise<BlockVisual | null> => {
+      if (block.state.name !== 'create:shaft') return null;
+      const v = { object: new THREE.Group(), update: vi.fn(), setData: vi.fn(), dispose: vi.fn() } as unknown as BlockVisual;
+      made.push(v);
+      return v;
+    };
+    const graph = new SceneGraph(new THREE.Group(), fakeRenderer(), fakeLighting(), factory, () => {});
+    runnerSeek(r, 6);
+    graph.sync(r.state);
+    await graph.idle();
+    graph.sync(r.state);
+    expect(made).toHaveLength(2);
+    expect(made.every((v) => v.object.parent !== null)).toBe(true);
+    expect(new Set(made.map((v) => v.object.parent)).size).toBe(2); // one under the base section group, one under the independent one
+    graph.dispose();
+  });
+
+  it('a visual is rebuilt when a scene patch changes its block state (belt part middle -> pulley)', async () => {
+    const belt1: BlockInstance = { pos: [1, 1, 1], state: st('create:belt', { facing: 'west', part: 'middle', slope: 'horizontal', casing: 'false' }), nbt: { Speed: 32 } };
+    const s = scene([
+      { op: 'world.showSection', args: { selection: box([0, 0, 0], [2, 2, 2]), direction: null } },
+      idle(3),
+      { op: 'world.modifyBlocks', args: { changes: [{ pos: [1, 1, 1], state: { name: 'create:belt', props: { facing: 'west', part: 'pulley', slope: 'horizontal', casing: 'false' } } }], particles: false } },
+      idle(3),
+      { op: 'markAsFinished', args: {} },
+    ]);
+    const r = runner(s, [belt1]);
+    const parts: string[] = [];
+    const disposed = vi.fn();
+    const factory = async (block: BlockInstance): Promise<BlockVisual | null> => {
+      if (block.state.name !== 'create:belt') return null;
+      parts.push(String(block.state.props.part));
+      return { object: new THREE.Group(), update: vi.fn(), setData: vi.fn(), dispose: disposed } as unknown as BlockVisual;
+    };
+    const graph = new SceneGraph(new THREE.Group(), fakeRenderer(), fakeLighting(), factory, () => {});
+    runnerSeek(r, 2);
+    graph.sync(r.state);
+    await graph.idle();
+    graph.sync(r.state);
+    runnerStep(r);
+    runnerSeek(r, 5);
+    graph.sync(r.state);
+    await graph.idle();
+    graph.sync(r.state);
+    expect(parts).toEqual(['middle', 'pulley']);
+    expect(disposed).toHaveBeenCalledTimes(1);
+    graph.dispose();
+  });
+
   it('a visual whose factory throws is reported in the error sink and the scene keeps running', async () => {
     const shaft: BlockInstance = { pos: [1, 1, 1], state: st('create:shaft', { axis: 'x' }), nbt: { Speed: 0 } };
     const s = scene([{ op: 'world.showSection', args: { selection: box([0, 0, 0], [2, 2, 2]), direction: null } }, idle(2), { op: 'markAsFinished', args: {} }]);

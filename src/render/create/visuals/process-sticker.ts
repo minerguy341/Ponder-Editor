@@ -52,6 +52,8 @@ export function stickerHeadMatrix(facing: Direction, extended: boolean): THREE.M
 class StickerVisual extends BaseVisual {
   private head!: THREE.Group;
   private facing = stateDirection(this.block.state, 'facing') ?? 'north';
+  /** the scene graph rebuilds visuals on a state change unless they take `__stateProps` events themselves */
+  readonly handlesStateProps = true;
   private startExtended = stateBool(this.block.state, 'extended');
   private changes: { tick: number; extended: boolean }[] = [];
   private m = new THREE.Matrix4();

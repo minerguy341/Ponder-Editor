@@ -56,8 +56,12 @@ interface VisualNode {
   rev: number;
   /** key of the section element this visual is attached to */
   section: string | null;
+  /** world position key of the block (the visuals map is keyed by section + position: one block can sit in several sections) */
+  pos: string;
   /** JSON of the block state properties last seen (a change is sent to the visual as a `__stateProps` event) */
   propsKey?: string;
+  /** JSON of the block state properties the visual was built from */
+  createdProps: string;
 }
 
 interface EntityNode {
@@ -305,11 +309,15 @@ export class SceneGraph {
     if (node.mesh) { disposeTree(node.mesh); node.mesh = null; }
   }
 
-  private membership(st: SimState): Map<string, string> {
-    const m = new Map<string, string>();
+  /**
+   * (section, position) pairs of every visible section. A position can belong to several sections at once (Ponder does not erase
+   * a block from the base section when an independent section selects it again), and each section draws its own copy.
+   */
+  private membership(st: SimState): Map<string, { sid: string; k: string }> {
+    const m = new Map<string, { sid: string; k: string }>();
     for (const el of Object.values(st.elements)) {
       if (el.kind !== 'section' || !el.visible || !el.sel) continue;
-      for (const k of el.sel.keys) if (!m.has(k)) m.set(k, el.id);
+      for (const k of el.sel.keys) m.set(`${el.id}|${k}`, { sid: el.id, k });
     }
     return m;
   }
@@ -319,28 +327,37 @@ export class SceneGraph {
     const owner = this.membership(st);
     const beChanged = st.beRev !== this.lastBeRev;
     // blocks that carry block entity data (or that a factory may want to draw) inside any section
-    for (const [k, block] of world.blocks) {
-      if (!this.factory) continue;
-      if (!owner.has(k)) continue;
-      let node = this.visuals.get(k);
-      if (node && (node.name !== block.state.name || node.dead)) { this.disposeVisual(node); this.visuals.delete(k); node = undefined; }
-      if (!node) {
-        node = { name: block.state.name, block, visual: null, pending: true, dead: false, parent: null, rev: st.beRev, section: null };
-        this.visuals.set(k, node);
-        this.createVisual(k, node, block);
+    if (this.factory) {
+      for (const [vk, { k }] of owner) {
+        const block = world.blocks.get(k);
+        if (!block) continue;
+        let node = this.visuals.get(vk);
+        const props = JSON.stringify(block.state.props);
+        if (node && (node.name !== block.state.name || node.dead)) { this.disposeVisual(node); this.visuals.delete(vk); node = undefined; }
+        // A visual is built from the block state (belt part, casing, facing...): when a scene patch changes the state while the visual
+        // lives, it is rebuilt, unless the visual consumes the change itself (`__stateProps` events, e.g. the sticker).
+        if (node && !node.pending && node.visual && node.createdProps !== props && !(node.visual as { handlesStateProps?: boolean }).handlesStateProps) {
+          this.disposeVisual(node); this.visuals.delete(vk); node = undefined;
+        }
+        if (!node) {
+          node = { name: block.state.name, block, visual: null, pending: true, dead: false, parent: null, rev: st.beRev, section: null, pos: k, createdProps: props };
+          this.visuals.set(vk, node);
+          this.createVisual(k, node, block);
+        }
+        node.block = block;
       }
-      node.block = block;
     }
-    for (const [k, node] of this.visuals) {
-      const block = world.blocks.get(k);
-      if (!block || !owner.has(k)) {
+    for (const [vk, node] of this.visuals) {
+      const own = owner.get(vk);
+      const block = own ? world.blocks.get(own.k) : undefined;
+      if (!own || !block) {
         this.disposeVisual(node);
-        this.visuals.delete(k);
+        this.visuals.delete(vk);
         continue;
       }
       node.block = block;
-      const sid = owner.get(k) ?? null;
-      if (node.section !== sid || (node.visual && !node.parent)) this.attach(node, sid, k);
+      const sid = own.sid;
+      if (node.section !== sid || (node.visual && !node.parent)) this.attach(node, sid, own.k);
       if (node.visual && beChanged) node.visual.setData((block.nbt ?? {}) as Record<string, unknown>);
       // block state property changes (e.g. a sticker's `extended`, scene modifyBlocks) reach the visual at the scene tick
       const pk = JSON.stringify(block.state.props);
@@ -573,8 +590,9 @@ export class SceneGraph {
     // a visual is drawn when it hangs under the group of a section element (its owner section); (section, key) identifies a block
     const drawnBy = new Set<string>();
     const ghostVisuals: string[] = [];
-    for (const [k, node] of this.visuals) {
+    for (const node of this.visuals.values()) {
       if (!node.visual) continue;
+      const k = node.pos;
       const parent = node.visual.object.parent;
       const sid = parent?.name.startsWith('section:') ? parent.name.slice('section:'.length) : null;
       if (!sid) continue;
