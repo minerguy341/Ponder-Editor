@@ -1,6 +1,10 @@
 // ChuteBlockEntity.tick, handleDownwardOutput / handleUpwardOutput / handleInput and the smart chute (SmartChuteBlockEntity) on
 // the simulation: the item moves by getItemMotion (LerpedFloat itemPosition), leaves into the inventory or the chute it leads to,
 // is dropped when nothing takes it, and is held at the middle when the end cannot take it.
+// Java (tools/.cache/src/ChuteBlockEntity.java): tick 150-193; handleInput 345-364; handleDownwardOutput 366-420;
+// handleUpwardOutput 422-484; setItem 529-541; getItemMotion 583-592; calculatePull 650-668; calculatePush 670-687;
+// getTargetChute 689-706; getInputChutes 708-718. SmartChuteBlockEntity.java canAcceptItem 36-38, getExtractionAmount 41-43,
+// canActivate 52-55. ChuteItemHandler.insertItem: at most 64 at a time, then setItem.
 import { describe, expect, it } from 'vitest';
 import type { BlockState, Vec3, WorldLookup } from '../../../src/contract';
 import { LogisticsWorld } from '../../../src/render/create/items/logisticsSim';
