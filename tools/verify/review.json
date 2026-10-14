@@ -5,8 +5,8 @@
     "ref1": {
       "verdict": "differences",
       "reviewedBy": "driver",
-      "reviewedAt": "2026-10-14T03:01:01.211779+00:00",
-      "oursSha256": "08d4273066cb7009d63f56e1dff4cae5a53c51e63c39f3fc6edcb5e9d3b8afeb",
+      "reviewedAt": "2026-10-14T22:05:53.190825+00:00",
+      "oursSha256": "6e70fea89e3e94720426a6da7ae8310c14d94f0299609e073bb788c4339d5ed8",
       "lookedAt": [
         "/home/user/Ponder-Editor/tools/verify/out/ref1-side-by-side-small.png"
       ],
@@ -29,8 +29,8 @@
     "ref2": {
       "verdict": "differences",
       "reviewedBy": "driver",
-      "reviewedAt": "2026-10-14T03:01:01.211779+00:00",
-      "oursSha256": "3e5a36bb71a68e581d71b21bae6172010771200901a907a8c950623df7894555",
+      "reviewedAt": "2026-10-14T22:05:53.190825+00:00",
+      "oursSha256": "7e4daad079ae054207c47ce138726107f553cc0373a4cbe575feaecc7d0df716",
       "lookedAt": [
         "/home/user/Ponder-Editor/tools/verify/out/ref2-side-by-side-small.png"
       ],
@@ -53,8 +53,8 @@
     "ref3": {
       "verdict": "differences",
       "reviewedBy": "driver",
-      "reviewedAt": "2026-10-14T03:01:01.211779+00:00",
-      "oursSha256": "56b7ad216855062d03d492b95274c2eb3a350d705b736a5210f8e8342c11c203",
+      "reviewedAt": "2026-10-14T22:05:53.190825+00:00",
+      "oursSha256": "1a94df500007dab03fd91b20d494c8efdbfcb8d32b191c2e7ce1e8410e889b47",
       "lookedAt": [
         "/home/user/Ponder-Editor/tools/verify/out/ref3-side-by-side-small.png"
       ],
@@ -83,8 +83,8 @@
     "ref4": {
       "verdict": "differences",
       "reviewedBy": "driver",
-      "reviewedAt": "2026-10-14T03:01:01.211779+00:00",
-      "oursSha256": "11a0f3970a29177d79af730ec4e0334d9c051f303e722dec67ae02013c1d5009",
+      "reviewedAt": "2026-10-14T22:05:53.190825+00:00",
+      "oursSha256": "4d4f37cbb4c32408d242de9adbe21e756227b01943b81bdc8a54738e3d12ec56",
       "lookedAt": [
         "/home/user/Ponder-Editor/tools/verify/out/ref4-side-by-side-small.png"
       ],

@@ -104,6 +104,28 @@ export function sectionMatrix(s: Section, pt: number, fade: number): THREE.Matri
   return m;
 }
 
+const maxYCache = new WeakMap<Set<string>, { size: number; maxY: number }>();
+/**
+ * Create scenes dispose of a section by moving it down below the base plate (BeltScenes: `moveSection(shafts, (0,-2,0))`), which
+ * relies on the plate hiding it. A section whose every block ended up under the plate (top of its highest block at or below y = 0,
+ * not rotated) is not drawn: seen from the side, or while the user orbits, it would stick out under the floor.
+ */
+function isBelowFloor(el: Section, pt: number): boolean {
+  if (!el.sel) return false;
+  const rot = lerpV(pt, el.rot.p, el.rot.c);
+  if (rot[0] !== 0 || rot[1] !== 0 || rot[2] !== 0) return false;
+  let c = maxYCache.get(el.sel.keys);
+  if (!c || c.size !== el.sel.keys.size) {
+    let maxY = -Infinity;
+    for (const k of el.sel.keys) maxY = Math.max(maxY, parseKey(k)[1]);
+    c = { size: el.sel.keys.size, maxY };
+    maxYCache.set(el.sel.keys, c);
+  }
+  if (c.maxY === -Infinity) return false;
+  const off = lerpV(pt, el.off.p, el.off.c);
+  return c.maxY + 1 + off[1] <= 1e-6;
+}
+
 /** Ponder LerpedFloat.getValue(pt): previous value at pt=0, current at pt=1 */
 const lerpF = (pt: number, p: number, c: number): number => p + (c - p) * pt;
 
@@ -518,7 +540,7 @@ export class SceneGraph {
       const node = this.sections.get(el.id);
       if (!node) continue;
       const fade = lerpF(pt, el.fade.p, el.fade.c);
-      node.group.visible = el.visible && el.sel !== null;
+      node.group.visible = el.visible && el.sel !== null && !isBelowFloor(el, pt);
       node.group.matrix.copy(sectionMatrix(el, pt, fade));
       node.group.matrixWorldNeedsUpdate = true;
       for (const m of node.mats) this.lighting.setFade(m, fade);

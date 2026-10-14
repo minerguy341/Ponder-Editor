@@ -9,7 +9,11 @@ import { markOwned } from '../common/visual';
 
 const textures = new Map<string, Promise<THREE.Texture>>();
 
-/** The scroll sprite `create:block/<name>` (16 px frame, the image is taller for animation frames): top frame, repeat-wrapped. */
+/**
+ * The scroll sprite `create:block/<name>`, whole image, repeat-wrapped. The belt scroll sprites are not animated (no .mcmeta): the
+ * 16x32 image is ONE sprite whose pattern repeats every 16 rows, so Create's scroll of up to half the sprite height (one
+ * period) loops seamlessly. Taking only a square top "frame" scrolled half as far and snapped back each cycle (a visible hitch).
+ */
 export function loadBeltScrollTexture(spriteId: string): Promise<THREE.Texture> {
   let p = textures.get(spriteId);
   if (!p) {
@@ -18,9 +22,7 @@ export function loadBeltScrollTexture(spriteId: string): Promise<THREE.Texture> 
       const buf = (await resources.file({ ns: 'create', path: `textures/${name}.png` }, 'buffer')) as ArrayBuffer | null;
       if (!buf) throw new Error(`${spriteId} not found`);
       const full = await createImageBitmap(new Blob([buf], { type: 'image/png' }), { premultiplyAlpha: 'none' });
-      const frame = Math.min(full.width, full.height);
-      const top = await createImageBitmap(full, 0, 0, frame, frame, { premultiplyAlpha: 'none' });
-      const t = new THREE.Texture(top as unknown as HTMLImageElement);
+      const t = new THREE.Texture(full as unknown as HTMLImageElement);
       t.wrapS = THREE.RepeatWrapping;
       t.wrapT = THREE.RepeatWrapping;
       t.magFilter = THREE.NearestFilter;
