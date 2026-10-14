@@ -8,9 +8,10 @@
 //                                          full block/sky light; the ONLY directional shading is the eye-space diffuse below
 //   ponder/foundation/element/AnimatedSceneElementBase.java L88-L95  lightCoordsFromFade (fade-in light 5..15)
 //
-// The background is not rendered by Ponder at all: it is vanilla's blurred menu background over the player's world
-// (blurred terrain: sky + grass).  There is no source to port, so it is reproduced from the four reference
-// screenshots (mean of the left/right screen edges of ref1..ref4, rows 0..1008 of a 1009 px high frame).
+// The background is not rendered by Ponder at all: it is vanilla's blurred menu background over the player's world.
+// The sky part is reproduced from the four reference screenshots (mean of the left/right screen edges of ref1..ref4,
+// rows 0..1008 of a 1009 px high frame); the green terrain band of those screenshots (a Superflat world seen through the
+// menu transparency) is intentionally left out.
 
 import * as THREE from 'three';
 import { ponderNormalMatrix, type BasePlate } from './camera';
@@ -183,24 +184,18 @@ export class PonderLighting {
 
 // ---------------------------------------------------------------------------------------------- sky
 
-/** (row fraction of the frame, sRGB colour) measured from ref1..ref4 (mean of edge columns). Horizon at 0.502. */
+/**
+ * (row fraction of the frame, sRGB colour).  Top part measured from ref1..ref4 (mean of edge columns).  The reference
+ * screenshots show a green band below the horizon: that is the Superflat world seen through the translucent Ponder
+ * menu, not part of Ponder itself, so it is deliberately not reproduced: the sky simply continues to the bottom.
+ */
 const SKY_STOPS: [number, [number, number, number]][] = [
   [0 / 1009, [65, 89, 131]],
   [120 / 1009, [68, 91, 133]],
   [240 / 1009, [73, 96, 136]],
   [320 / 1009, [80, 100, 136]],
-  [360 / 1009, [86, 105, 137]],
-  [400 / 1009, [95, 111, 138]],
-  [440 / 1009, [96, 110, 132]],
-  [480 / 1009, [98, 109, 128]],
-  [500 / 1009, [98, 109, 125]],
-  [504 / 1009, [94, 105, 118]],
-  [508 / 1009, [84, 95, 100]],
-  [512 / 1009, [69, 80, 73]],
-  [516 / 1009, [55, 67, 50]],
-  [520 / 1009, [46, 59, 32]],
-  [524 / 1009, [42, 56, 27]],
-  [1, [43, 57, 27]],
+  [400 / 1009, [88, 106, 137]],
+  [1, [96, 112, 139]],
 ];
 
 export function skyColorAt(frac: number): [number, number, number] {

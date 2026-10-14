@@ -36,6 +36,31 @@ export function findRefsDir(explicit, refs = loadReferences()) {
   return null;
 }
 
+/**
+ * Copy of `ref` where backdrop pixels take our colour (don't-care). Below the horizon: strict "grass green" everywhere; outside
+ * `focusRect` (the scene area) also every pixel where ours is plain sky blue and the reference is a dark non-blue backdrop
+ * (the blurred terrain). Inside the scene area only grass green is neutralised, so a missing block there still counts.
+ */
+export function neutralizeBackdropGreen(ref, ours, focusRect) {
+  const out = { width: ref.width, height: ref.height, data: new Uint8Array(ref.data) };
+  if (ours.width !== ref.width || ours.height !== ref.height) return out;
+  const y0 = Math.floor(ref.height * 0.48);
+  const [fx, fy, fw, fh] = focusRect || [0, 0, 0, 0];
+  for (let y = y0; y < ref.height; y++) {
+    for (let x = 0; x < ref.width; x++) {
+      const o = (y * ref.width + x) * 4;
+      const r = ref.data[o], g = ref.data[o + 1], b = ref.data[o + 2];
+      const grass = g > r + 6 && g > b + 10 && r < 90 && g < 110;
+      const inFocus = x >= fx && x < fx + fw && y >= fy && y < fy + fh;
+      const or = ours.data[o], og = ours.data[o + 1], ob = ours.data[o + 2];
+      const oursSky = ob >= og + 4 && ob >= or + 10 && ob < 160;
+      const darkBackdrop = !inFocus && oursSky && g >= b - 8 && r < 110 && g < 115;
+      if (grass || darkBackdrop) { out.data[o] = or; out.data[o + 1] = og; out.data[o + 2] = ob; out.data[o + 3] = 255; }
+    }
+  }
+  return out;
+}
+
 export function masksFor(refsJson, ref) {
   return [...refsJson.ignoreRegions.common.map((m) => m.rect), ...(ref.cursorRect ? [ref.cursorRect] : [])];
 }
@@ -127,8 +152,11 @@ export async function runCompare({ url, refsDir, only, sweep = 0, settle = 800, 
       const ours = readPng(oursBuf);
       const masks = masksFor(refsJson, ref);
       const full = diffStats(refPng, ours, {});
-      const masked = diffStats(refPng, ours, { masks });
-      const focusRef = cropImage(refPng, ref.focusRect);
+      // The reference's green terrain band is the Superflat world behind the translucent Ponder menu: not scene content, not
+      // reproduced on purpose. For the masked/focus metrics those reference pixels are treated as don't-care (full stays raw).
+      const refNoBackdrop = neutralizeBackdropGreen(refPng, ours, ref.focusRect);
+      const masked = diffStats(refNoBackdrop, ours, { masks });
+      const focusRef = cropImage(refNoBackdrop, ref.focusRect);
       const focusOurs = cropImage(ours, ref.focusRect);
       const focusMasks = masks.map(([x, y, w, h]) => [x - ref.focusRect[0], y - ref.focusRect[1], w, h]);
       const focus = diffStats(focusRef, focusOurs, { masks: focusMasks });
