@@ -5,6 +5,8 @@
 import * as THREE from 'three';
 import { setItemCameraSource } from '../render/create/items/cameraFacing';
 import { bindLogisticsScene, lookupOfBlocks, logisticsEventsOf, LOGISTICS_TEXTURES } from '../render/create/items/logisticsSim';
+/** The chute block entities the logistics simulation ticks (ChuteBlockEntity, SmartChuteBlockEntity). */
+const CHUTE_BLOCKS = new Set(['create:chute', 'create:smart_chute']);
 import { bindFluidScene, fluidEventsOf } from '../render/create/fluidnet/events';
 import type { BlockState, SceneJson, Vec3, BlockRenderer, CreateVisualFactory } from '../contract';
 import { loadStructure } from '../assets/structure';
@@ -139,6 +141,7 @@ export class PonderPlayer implements PlayerLike {
       this.graph.setSpriteBank(bank);
       // weighted ejector launches become item entities (C2 entity system); the spawns are pure data of the logistics replay
       const logistics = bindLogisticsScene(this.graph.worldLookup, lookupOfBlocks(structure.blocks), logisticsEventsOf(scene.instructions));
+      logistics.registerChutes(structure.blocks.filter((b) => CHUTE_BLOCKS.has(b.state.name)).map((b) => b.pos));
       ctx.entitySpawns = logistics.ejectorSpawns();
       ctx.entityConsumed = logistics.consumedEntities();
       // Create fluid networks (pipes, pumps, valves, tanks, spouts, drains, hose pulleys): the scene's fluid world (F1)

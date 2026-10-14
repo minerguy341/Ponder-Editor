@@ -158,7 +158,11 @@ export interface FlapState { key: string; pos: Vec3; side?: Direction; prev: num
 const FLAP_START = 0.25;
 const FLAP_SPEED = 0.05;
 
-/** ChuteBlockEntity: one item moving along the chute (itemPosition linear, item motion from pull/push). */
+/**
+ * ChuteBlockEntity / SmartChuteBlockEntity: the item in the chute and its itemPosition (LerpedFloat linear: prev and cur).
+ * pull and push are the air-flow values the fans set (calculatePull / calculatePush, refreshed every tick from the live fan
+ * speeds); bottomPull is BottomAirFlowDistance. filter and filterAmount belong to the smart chute (FilteringBehaviour).
+ */
 export interface ChuteState {
   key: string;
   pos: Vec3;
@@ -169,23 +173,43 @@ export interface ChuteState {
   push: number;
   /** BottomAirFlowDistance (ChuteBlockEntity.bottomPullDistance) */
   bottomPull: number;
+  filter: ItemStackJson | null;
+  filterAmount: number;
 }
+
+/** Iterate.directions order (Direction.values(): DOWN, UP, NORTH, SOUTH, WEST, EAST); bestOutput ties keep the first. */
+const JAVA_DIRECTIONS: Direction[] = ['down', 'up', 'north', 'south', 'west', 'east'];
+/** IItemHandler stack limit used for the chest and chute inserts (copper and iron stack to 64). */
+const CHUTE_STACK_LIMIT = 64;
+/** A chest holds 27 stacks (ChestBlockEntity, single). */
+const CHEST_SLOTS = 27;
+const INVENTORY_BLOCKS = new Set(['minecraft:chest', 'minecraft:trapped_chest', 'minecraft:barrel']);
+/** A chute or smart chute in the scene (AbstractChuteBlock.isChute). */
+function isChuteName(name: string | undefined): boolean { return name === 'create:chute' || name === 'create:smart_chute'; }
+/** AbstractChuteBlock.getChuteFacing: the chute's FACING (a smart chute is always DOWN); null for anything else. */
+function chuteFacingOf(st: BlockState | undefined): Direction | null {
+  if (!st || !isChuteName(st.name)) return null;
+  return st.name === 'create:smart_chute' ? 'down' : ((st.props.facing as Direction) ?? 'down');
+}
+/** AbstractChuteBlock.isOpen: ChuteBlock is open when facing DOWN or INTERSECTION; the smart chute is always open. */
+function isOpenChuteState(st: BlockState | undefined): boolean {
+  if (!st || !isChuteName(st.name)) return false;
+  if (st.name === 'create:smart_chute') return true;
+  return st.props.facing === 'down' || st.props.shape === 'intersection';
+}
+/** A stack split off a stack count: the item and count to insert (ChuteItemHandler.insertItem: at most 64 at a time). */
+function withCount(stack: ItemStackJson, count: number): ItemStackJson { return { ...stack, count }; }
+/** FunnelBlock.getFunnelFacing: the facing of a funnel (null for other blocks). */
+function funnelFacingOf(st: BlockState | undefined): Direction | null {
+  if (!st || !/funnel$/.test(st.name)) return null;
+  return (st.props.facing as Direction | undefined) ?? null;
+}
+/** What a chute hands items to: the slots of an inventory block, or a smart chute (ChuteItemHandler). */
+type ChuteHandler = { kind: 'inv'; slots: (ItemStackJson | null)[] } | { kind: 'chute'; pos: Vec3 };
 
 const DEPOT_SLOTS = 8;
 const BASIN_SLOTS = 9;
 const STACK_LIMIT = 64;
-
-/** ChuteBlockEntity.tick (no outputs): the item moves by getItemMotion() and rests at the middle when it cannot leave. */
-function stepChute(c: ChuteState): void {
-  if (!c.item) return;
-  const motion0 = (c.push + c.pull) / 64;
-  const motion = (clamp(motion0, -20, 20) + (motion0 <= 0 ? -4 : 0)) / 20;
-  let next = c.cur + motion;
-  if (motion < 0 && next < 0.5) next = 0.5;
-  else if (motion > 0 && next > 0.5) next = 0.5;
-  c.prev = c.cur;
-  c.cur = next;
-}
 
 /** LerpedFloat.tickChaser with Chaser.EXP(speed): c + (t - c) * speed, snapping when equal (Mth.equal: |a-b| < 1e-5). */
 function stepFlap(fl: FlapState): void {
@@ -264,6 +288,12 @@ export class LogisticsWorld {
   /** brass tunnels by key (BrassTunnelBlockEntity state: the stack being distributed, the output selection and the timer) */
   private brass = new Map<string, BrassState>();
   private chutes = new Map<string, ChuteState>();
+  /** chest and barrel inventories by key (the Items NBT, 27 slots); scene changes and chute outputs write them */
+  private inventories = new Map<string, (ItemStackJson | null)[]>();
+  /** item entities dropped by chutes (ChuteBlockEntity.handleDownwardOutput / handleUpwardOutput), spawned next tick */
+  private drops: { key: string; pos: Vec3; vel: Vec3; item: ItemStackJson; tick: number }[] = [];
+  /** the chutes of the scene: every replay starts with them in the simulation, so each one ticks whether or not it was touched */
+  private chuteSeeds: Vec3[] = [];
   private events: LogisticsEvent[] = [];
   private cursor = 0;
   /** scene tick the state corresponds to */
@@ -346,10 +376,24 @@ export class LogisticsWorld {
     this.basins.clear();
     this.flaps.clear();
     this.chutes.clear();
+    this.inventories.clear();
+    this.drops = [];
+    // the block changes are replayed from the event log (setBlock / restoreBlock), so the overlay starts from the schematic
+    this.overrides.clear();
     this.cursor = 0;
     this.now = 0;
     this.rng.setSeed(0x2f6f_3c1d);
     this.nextId = 1;
+    for (const p of this.chuteSeeds) this.chuteAt(p);
+  }
+
+  /**
+   * Registers the scene's chutes and smart chutes (their positions from the structure): every replay ticks them from the start,
+   * so a chest above a chute is read whether or not a visual has asked for the chute.
+   */
+  registerChutes(positions: Vec3[]): void {
+    this.chuteSeeds = positions.map((p) => [p[0], p[1], p[2]] as Vec3);
+    this.reset();
   }
 
   // ----------------------------------------------------------------- time
@@ -367,24 +411,307 @@ export class LogisticsWorld {
       for (const d of this.depots.values()) if (d.held) easeToCentre(d.held);
       for (const fl of this.flaps.values()) stepFlap(fl);
       this.updateChuteFans();
-      for (const c of this.chutes.values()) stepChute(c);
+      // a snapshot: chutes first reached by an output are ticked from the next tick on
+      for (const c of [...this.chutes.values()]) this.tickChute(c);
       for (const b of this.brass.values()) this.stepBrass(b);
       this.now++;
     }
   }
 
   /**
-   * ChuteBlockEntity.calculatePull / calculatePush: a chute with an encased fan above it facing down pulls with the fan's speed;
-   * a chute with a fan below facing up pushes with it. The fan speed is read at the current tick (scene Speed patches).
+   * ChuteBlockEntity.calculatePull: the encased fan above facing down gives its speed; otherwise the pull of the input chutes.
+   * Pure over the blocks and the live fan speeds (the stored values Java keeps are refreshed on every change, see
+   * EncasedFanBlockEntity.updateChute, so reading them live is the same).
    */
+  private pullOf(pos: Vec3): number {
+    const fan = this.fanSpeedAt(stepFrom(pos, 'up'), 'down');
+    if (fan !== undefined) return fan;
+    let total = 0;
+    for (const p of this.chuteInputPositions(pos)) total += this.pullOf(p);
+    return total;
+  }
+
+  /** ChuteBlockEntity.calculatePush: the encased fan below facing up gives its speed; otherwise the target's push split by its inputs. */
+  private pushOf(pos: Vec3): number {
+    const fan = this.fanSpeedAt(stepFrom(pos, 'down'), 'up');
+    if (fan !== undefined) return fan;
+    const target = this.chuteTargetPos(pos);
+    if (!target) return 0;
+    return this.pushOf(target) / this.chuteInputPositions(target).length;
+  }
+
+  /** The speed of an encased fan at pos facing `facing` (EncasedFanBlockEntity.getSpeed at the current tick), undefined otherwise. */
+  private fanSpeedAt(pos: Vec3, facing: Direction): number | undefined {
+    const st = this.lookup.getState(pos);
+    if (!st || st.name !== 'create:encased_fan' || st.props.facing !== facing) return undefined;
+    return Number(this.nbtValueAt(pos, 'Speed', this.now) ?? 0);
+  }
+
+  /** ChuteBlockEntity.getItemMotion: (push + pull) / 64 clamped to +-20, minus gravity 4 when not positive, over 20. */
+  private chuteMotion(pos: Vec3): number {
+    const m0 = (this.pushOf(pos) + this.pullOf(pos)) / 64;
+    return (clamp(m0, -20, 20) + (m0 <= 0 ? -4 : 0)) / 20;
+  }
+
+  /** ChuteBlockEntity.getTargetChute: the chute the item leaves to (below, or below the side it faces). */
+  private chuteTargetPos(pos: Vec3): Vec3 | null {
+    const facing = chuteFacingOf(this.lookup.getState(pos));
+    if (!facing) return null;
+    let p = stepFrom(pos, 'down');
+    if (!isVertical(facing)) p = stepFrom(p, opposite(facing));
+    return isChuteName(this.lookup.getState(p)?.name) ? p : null;
+  }
+
+  /** ChuteBlockEntity.getInputChutes (Iterate.directions order): the chutes that feed this one from above (or above the side). */
+  private chuteInputPositions(pos: Vec3): Vec3[] {
+    const out: Vec3[] = [];
+    for (const d of JAVA_DIRECTIONS) {
+      if (d === 'down') continue;
+      const dir = opposite(d);
+      let p = stepFrom(pos, 'up');
+      if (!isVertical(dir)) p = stepFrom(p, dir);
+      const st = this.lookup.getState(p);
+      if (chuteFacingOf(st) !== dir || !isChuteName(st?.name)) continue;
+      out.push(p);
+    }
+    return out;
+  }
+
+  /** ChuteBlockEntity.canAcceptItem: an empty chute; a smart chute also needs to be active and to pass its filter. */
+  private chuteCanAccept(c: ChuteState, stack: ItemStackJson): boolean {
+    if (c.item) return false;
+    if (this.lookup.getState(c.pos)?.name !== 'create:smart_chute') return true;
+    return this.chuteCanActivate(c.pos) && (!c.filter || c.filter.id === stack.id);
+  }
+
+  /** ChuteBlockEntity.canActivate: a smart chute does nothing while powered (SmartChuteBlock.POWERED). */
+  private chuteCanActivate(pos: Vec3): boolean {
+    const st = this.lookup.getState(pos);
+    return !(st?.name === 'create:smart_chute' && st.props.powered === 'true');
+  }
+
+  /** The item handler a chute reaches on a side (ChuteBlockEntity.grabCapability); a smart chute below only while the item falls. */
+  private chuteHandler(pos: Vec3, side: Direction): ChuteHandler | null {
+    const p = stepFrom(pos, side);
+    const st = this.lookup.getState(p);
+    if (!st) return null;
+    if (isChuteName(st.name)) {
+      if (!(side === 'down' && st.name === 'create:smart_chute' && this.chuteMotion(pos) <= 0)) return null;
+      return { kind: 'chute', pos: p };
+    }
+    if (INVENTORY_BLOCKS.has(st.name)) return { kind: 'inv', slots: this.inventoryAt(p) };
+    return null;
+  }
+
+  /** The slots of a chest or barrel (created from the block entity Items on first use). */
+  private inventoryAt(pos: Vec3): (ItemStackJson | null)[] {
+    const k = posKey(pos);
+    let slots = this.inventories.get(k);
+    if (!slots) {
+      slots = new Array<ItemStackJson | null>(CHEST_SLOTS).fill(null);
+      readSlots(this.lookup.getBlockEntity(pos)?.nbt?.Items, slots, true);
+      this.inventories.set(k, slots);
+    }
+    return slots;
+  }
+
+  /** ItemHandlerHelper.insertItemStacked: the remainder (null when all of it went in). Simulated, the handler is not changed. */
+  private insertStacked(h: ChuteHandler, stack: ItemStackJson, simulate: boolean): ItemStackJson | null {
+    let left = stack.count ?? 1;
+    if (h.kind === 'chute') {
+      const target = this.chuteAt(h.pos);
+      if (!this.chuteCanAccept(target, stack)) return stack;
+      // ChuteItemHandler.insertItem: at most a stack limit at a time, then setItem(stack) at the default position
+      const put = Math.min(left, CHUTE_STACK_LIMIT);
+      if (!simulate) this.setChuteItem(target, withCount(stack, put), this.chuteDefaultPos(h.pos));
+      left -= put;
+      return left > 0 ? withCount(stack, left) : null;
+    }
+    for (let i = 0; i < h.slots.length && left > 0; i++) {
+      const s = h.slots[i];
+      if (s && s.id !== stack.id) continue;
+      const have = s ? s.count ?? 1 : 0;
+      const put = Math.min(left, CHUTE_STACK_LIMIT - have);
+      if (put <= 0) continue;
+      if (!simulate) h.slots[i] = withCount(stack, have + put);
+      left -= put;
+    }
+    return left > 0 ? withCount(stack, left) : null;
+  }
+
+  /** ItemHelper.extract (UPTO): from the first slot the predicate accepts, up to `amount` of it. */
+  private extractFrom(h: ChuteHandler, accept: (s: ItemStackJson) => boolean, amount: number): ItemStackJson | null {
+    if (h.kind !== 'inv') return null;
+    for (let i = 0; i < h.slots.length; i++) {
+      const s = h.slots[i];
+      if (!s || !accept(s)) continue;
+      const have = s.count ?? 1;
+      const n = Math.min(amount, have);
+      if (n <= 0) continue;
+      h.slots[i] = have - n > 0 ? withCount(s, have - n) : null;
+      return withCount(s, n);
+    }
+    return null;
+  }
+
+  /** ChuteBlockEntity.setItem(stack, insertionPos): the item and its position (LerpedFloat.startWithValue). */
+  private setChuteItem(c: ChuteState, stack: ItemStackJson | null, pos: number): void {
+    c.item = stack;
+    c.prev = pos;
+    c.cur = pos;
+  }
+
+  /** ChuteBlockEntity.setItem(stack) with the default position: 1 for a falling chute, else 0. */
+  private chuteDefaultPos(pos: Vec3): number {
+    return this.chuteMotion(pos) < 0 ? 1 : 0;
+  }
+
+  /** The extraction count of a chute (ChuteBlockEntity.getExtractionAmount 16; a smart chute its filter amount or 64). */
+  private chuteExtractionAmount(c: ChuteState): number {
+    if (this.lookup.getState(c.pos)?.name !== 'create:smart_chute') return 16;
+    return c.filter && c.filterAmount > 0 ? c.filterAmount : 64;
+  }
+
+  /** ChuteBlockEntity.handleInput: an empty chute takes an item from the inventory on `side` (startLocation 1 from above, 0 below). */
+  private chuteHandleInput(c: ChuteState, side: Direction, startLocation: number): void {
+    const h = this.chuteHandler(c.pos, side);
+    if (!h || !this.chuteCanActivate(c.pos)) return;
+    const ext = this.extractFrom(h, (s) => this.chuteCanAccept(c, s), this.chuteExtractionAmount(c));
+    if (ext) this.setChuteItem(c, ext, startLocation);
+  }
+
+  /**
+   * ChuteBlockEntity.handleDownwardOutput: the inventory below takes the item, else the chute it leads to (a horizontal chute
+   * or the chute below), else it drops from a vertical chute on a block that cannot support it. Simulated, nothing changes.
+   */
+  private chuteDownward(c: ChuteState, simulate: boolean): boolean {
+    const facing = chuteFacingOf(this.lookup.getState(c.pos));
+    if (!facing || !this.chuteCanActivate(c.pos) || !c.item) return false;
+    const held = c.item;
+    const capBelow = this.chuteHandler(c.pos, 'down');
+    if (capBelow) {
+      const rem = this.insertStacked(capBelow, held, simulate);
+      if (!simulate) this.setChuteItem(c, rem, c.prev); // setItem(remainder, itemPosition.getValue(0))
+      if ((rem?.count ?? 0) !== (held.count ?? 1)) return true;
+      if (facing === 'down') return false;
+    }
+    const item = c.item ?? held;
+    const target = this.chuteTargetPos(c.pos);
+    if (target) {
+      const t = this.chuteAt(target);
+      const canInsert = this.chuteCanAccept(t, item);
+      if (!simulate && canInsert) {
+        this.setChuteItem(t, item, facing === 'down' ? 1 : 0.51);
+        this.setChuteItem(c, null, this.chuteDefaultPos(c.pos));
+      }
+      return canInsert;
+    }
+    // diagonal chutes cannot drop items
+    if (!isVertical(facing)) return false;
+    const below = stepFrom(c.pos, 'down');
+    if (funnelFacingOf(this.lookup.getState(below)) === 'down') return false;
+    if (this.isSolidAt(below)) return false;
+    if (!simulate) {
+      this.dropEntity([c.pos[0] + 0.5, c.pos[1] + 0.5 - 12 / 16, c.pos[2] + 0.5], [0, -0.25, 0], item);
+      this.setChuteItem(c, null, this.chuteDefaultPos(c.pos));
+    }
+    return true;
+  }
+
+  /**
+   * ChuteBlockEntity.handleUpwardOutput: an open chute gives the item to the inventory above; else to the input chute with the
+   * fastest upward motion; else it is thrown out of the top (not when another chute feeds it, nor into a solid block).
+   */
+  private chuteUpward(c: ChuteState, simulate: boolean): boolean {
+    if (!this.chuteCanActivate(c.pos)) return false;
+    const item = c.item;
+    if (!item) return false;
+    if (isOpenChuteState(this.lookup.getState(c.pos))) {
+      const capAbove = this.chuteHandler(c.pos, 'up');
+      if (capAbove) {
+        const before = item.count ?? 1;
+        const rem = this.insertStacked(capAbove, item, simulate);
+        if (!simulate) c.item = rem;
+        return before !== (rem?.count ?? 0) ? true : false;
+      }
+    }
+    let best: ChuteState | null = null;
+    const inputs = this.chuteInputPositions(c.pos);
+    for (const p of inputs) {
+      const t = this.chuteAt(p);
+      if (!this.chuteCanAccept(t, item)) continue;
+      const m = this.chuteMotion(p);
+      if (m < 0) continue;
+      if (!best || this.chuteMotion(best.pos) < m) best = t;
+    }
+    if (best) {
+      if (!simulate) {
+        this.setChuteItem(best, item, 0);
+        this.setChuteItem(c, null, this.chuteDefaultPos(c.pos));
+      }
+      return true;
+    }
+    const above = stepFrom(c.pos, 'up');
+    if (funnelFacingOf(this.lookup.getState(above)) === 'up') return false;
+    if (this.isSolidAt(above)) return false;
+    if (inputs.length) return false;
+    if (!simulate) {
+      this.dropEntity([c.pos[0] + 0.5, c.pos[1] + 0.5 + 8 / 16, c.pos[2] + 0.5], [0, this.chuteMotion(c.pos) * 2, 0], item);
+      this.setChuteItem(c, null, this.chuteDefaultPos(c.pos));
+    }
+    return true;
+  }
+
+  /** An item entity spawned by a chute (level.addFreshEntity): it exists from the next tick and lands like any dropped entity. */
+  private dropEntity(at: Vec3, vel: Vec3, item: ItemStackJson): void {
+    const tick = this.now + 1;
+    const key = `drop${this.drops.length + 1}`;
+    this.drops.push({ key, pos: at, vel, item, tick });
+    const land = this.landingAt(at, vel, tick);
+    if (land) this.apply({ tick: land.tick, op: 'entityLand', key, pos: land.pos, item });
+  }
+
+  /**
+   * ChuteBlockEntity.tick (server side): an empty chute takes items from the inventory in the direction it moves; a chute with an
+   * item moves it by getItemMotion and outputs it when it passes an end (handleDownwardOutput below 0, handleUpwardOutput above 1).
+   * An end that cannot take the item holds the item at the middle (0.5).
+   */
+  private tickChute(c: ChuteState): void {
+    // a chute replaced by another block (scene setBlock) has no block entity to tick
+    if (!isChuteName(this.lookup.getState(c.pos)?.name)) return;
+    const motion = this.chuteMotion(c.pos);
+    if (!c.item) {
+      if (motion < 0) this.chuteHandleInput(c, 'up', 1);
+      if (motion > 0) this.chuteHandleInput(c, 'down', 0);
+      return;
+    }
+    let next = c.cur + motion;
+    if (motion < 0) {
+      if (next < 0.5) {
+        if (!this.chuteDownward(c, true)) next = 0.5;
+        else if (next < 0) {
+          this.chuteDownward(c, false);
+          next = c.cur;
+        }
+      }
+    } else if (motion > 0) {
+      if (next > 0.5) {
+        if (!this.chuteUpward(c, true)) next = 0.5;
+        else if (next > 1) {
+          this.chuteUpward(c, false);
+          next = c.cur;
+        }
+      }
+    }
+    c.prev = c.cur;
+    c.cur = next;
+  }
+
+  /** The chutes' pull and push (for the goggles and the renderers); the motion itself reads the live fan speeds. */
   private updateChuteFans(): void {
     for (const c of this.chutes.values()) {
-      const below: Vec3 = [c.pos[0], c.pos[1] - 1, c.pos[2]];
-      const above: Vec3 = [c.pos[0], c.pos[1] + 1, c.pos[2]];
-      const bs = this.lookup.getState(below);
-      if (bs && bs.name === 'create:encased_fan' && bs.props.facing === 'up') c.push = Number(this.nbtValueAt(below, 'Speed', this.now) ?? 0);
-      const as = this.lookup.getState(above);
-      if (as && as.name === 'create:encased_fan' && as.props.facing === 'down') c.pull = Number(this.nbtValueAt(above, 'Speed', this.now) ?? 0);
+      c.pull = this.pullOf(c.pos);
+      c.push = this.pushOf(c.pos);
     }
   }
 
@@ -515,7 +842,10 @@ export class LogisticsWorld {
       const nbt = this.lookup.getBlockEntity(pos)?.nbt ?? {};
       const item = nonEmptyStack(nbt.Item);
       const p = typeof nbt.ItemPosition === 'number' ? (nbt.ItemPosition as number) : item ? 0 : 0;
-      c = { key: k, pos, item, prev: p, cur: p, pull: Number(nbt.Pull ?? 0), push: Number(nbt.Push ?? 0), bottomPull: Number(nbt.BottomAirFlowDistance ?? 0) };
+      c = {
+        key: k, pos, item, prev: p, cur: p, pull: Number(nbt.Pull ?? 0), push: Number(nbt.Push ?? 0), bottomPull: Number(nbt.BottomAirFlowDistance ?? 0),
+        filter: nonEmptyStack(nbt.Filter), filterAmount: Number(nbt.FilterAmount ?? 0),
+      };
       this.chutes.set(k, c);
     }
     return c;
@@ -628,8 +958,10 @@ export class LogisticsWorld {
         const had = c.item !== null;
         c.item = nonEmptyStack(patch.Item);
         // ChuteBlockEntity.setItem(stack): insertion point 1 when falling, else 0
-        if (c.item && !had && !('ItemPosition' in patch)) c.prev = c.cur = c.pull + c.push < 0 ? 1 : 0;
+        if (c.item && !had && !('ItemPosition' in patch)) c.prev = c.cur = this.chuteDefaultPos(pos);
       }
+      if ('Filter' in patch) c.filter = nonEmptyStack(patch.Filter);
+      if (typeof patch.FilterAmount === 'number') c.filterAmount = patch.FilterAmount;
       if (typeof patch.ItemPosition === 'number') c.prev = c.cur = patch.ItemPosition as number;
       if (typeof patch.Pull === 'number') c.pull = patch.Pull as number;
       if (typeof patch.Push === 'number') c.push = patch.Push as number;
@@ -1140,6 +1472,11 @@ export class LogisticsWorld {
   ejectorSpawns(): Map<number, { pos: Vec3; vel: Vec3; item: { id: string; count: number; nbt?: unknown }; src?: string }[]> {
     this.advance(this.replayEnd());
     const out = new Map<number, { pos: Vec3; vel: Vec3; item: { id: string; count: number; nbt?: unknown }; src?: string }[]>();
+    for (const d of this.drops) {
+      const list = out.get(d.tick) ?? [];
+      list.push({ pos: d.pos, vel: d.vel, item: { id: d.item.id, count: d.item.count ?? 1, nbt: d.item.nbt }, src: d.key });
+      out.set(d.tick, list);
+    }
     for (const l of this.launches) {
       const maxTime = Math.max(3, l.launcher.totalFlyingTicks);
       const at = l.tick + spawnDelay(l.launcher);
@@ -1520,6 +1857,16 @@ export class LogisticsWorld {
   }
 
   /** Items of a depot as DepotRenderer draws them: the held item and the output slots. */
+  /** The slots of a chest or barrel as the chute outputs left them (ChuteBlockEntity.handleDownwardOutput). */
+  inventoryView(pos: Vec3): (ItemStackJson | null)[] {
+    return this.inventoryAt(pos);
+  }
+
+  /** The chute state at pos as the simulation holds it (the item, its position and the air-flow values). */
+  chuteView(pos: Vec3): ChuteState {
+    return this.chuteAt(pos);
+  }
+
   depotView(pos: Vec3): { held: SimItem | null; output: (ItemStackJson | null)[] } {
     const d = this.depotAt(pos);
     return { held: d.held, output: d.output };
@@ -1548,14 +1895,9 @@ export class LogisticsWorld {
     return count > 0 ? { ...stack, count } : null;
   }
 
-  /** ChuteBlockEntity.setItem(stack) via the chute's DirectBeltInput: only into an empty chute; falling chutes insert at the top. */
+  /** The chute's DirectBeltInput / ItemHandler insert (ChuteItemHandler.insertItem): into an empty chute, falling ones at the top. */
   private chuteInsert(c: ChuteState, stack: ItemStackJson): ItemStackJson | null {
-    if (c.item) return stack;
-    c.item = stack;
-    const p = c.pull + c.push <= 0 ? 1 : 0;
-    c.prev = p;
-    c.cur = p;
-    return null;
+    return this.insertStacked({ kind: 'chute', pos: c.pos }, stack, false);
   }
 
   /** Items of a basin in CombinedInvWrapper order (inputs, then outputs). */
