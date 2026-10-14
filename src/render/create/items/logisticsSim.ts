@@ -266,6 +266,8 @@ export interface BrassState {
   previousOutputIndex: number;
   mode: number;
   filters: Map<Direction, string | null>;
+  /** the outputs gathered for the next distribution (distributionTargets), held by this tunnel until its timer runs out */
+  pending: [Out[], Out[]] | null;
 }
 type Out = [BrassState, Direction];
 /** insertIntoTunnel result: null (refused), the remainder count (0 = nothing left: taken, or dropped as an item entity) */
@@ -1012,6 +1014,19 @@ export class LogisticsWorld {
     }
     const belt = this.lookup.getState(pos)!;
     if (!canTransportObjects(belt)) return;
+    // BeltBlockEntity.tryInsertingFromSide: a brass tunnel above the segment with a distribution takes the stack into its
+    // distribution (setStackToDistribute, the flap on the side it came from) when it is empty and its filter lets it through
+    const above = tunnelAbove(this.lookup, pos);
+    if (above?.name === 'create:brass_tunnel') {
+      const t = this.brassAt(above.pos);
+      if (this.brassHasDistribution(t)) {
+        if (!t.stack && this.brassTestFilter(t, opposite(side), stack)) {
+          this.flapAt(t.pos, opposite(side)).target = -1; // flapTunnel(..., side.opposite, inward = true)
+          this.brassSet(t, stack, opposite(side));
+        }
+        return;
+      }
+    }
     const idx = chain.index.get(posKey(pos));
     if (idx === undefined) return;
     const speed = this.speedOf(chain);
@@ -1245,12 +1260,14 @@ export class LogisticsWorld {
   private tunnelFlapSides(tunnel: TunnelBlock): Direction[] {
     const out: Direction[] = [];
     const positiveOf = (d: Direction) => axisDirectionStep(d) > 0 !== (axisOf(d) === 'z');
-    for (const d of HORIZONTAL_SIDES) {
-      if (axisOf(d) === tunnel.props.axis) continue;
-      if (isStraightShape(tunnel.props.shape)) continue;
-      const positive = positiveOf(d);
-      if (positive && tunnel.props.shape === 't_left') continue;
-      if (!positive && tunnel.props.shape === 't_right') continue;
+    // BeltTunnelBlockEntity.updateTunnelConnections: the axis sides always get a flap; the perpendicular ones unless straight or closed
+    for (const d of PLANE_ORDER) {
+      if (axisOf(d) !== tunnel.props.axis) {
+        if (isStraightShape(tunnel.props.shape)) continue;
+        const positive = positiveOf(d);
+        if (positive && tunnel.props.shape === 't_left') continue;
+        if (!positive && tunnel.props.shape === 't_right') continue;
+      }
       const near = this.lookup.getState(stepFrom(tunnel.pos, d));
       if (near && /tunnel/.test(near.name)) continue;
       if (near && /funnel/.test(near.name) && near.props.shape === 'extended' && near.props.facing === opposite(d)) continue;
@@ -1311,6 +1328,9 @@ export class LogisticsWorld {
       if (!crossed) return 'pass';
       if (blocking) item.beltPosition = entry;
       if (fs.props.powered === 'true') { if (blocking) return 'stuck'; continue; }
+      // FilteringBehaviour of the funnel: a non-matching item is not taken (filtering.test fails)
+      const filter = this.filterItemOf(funnelPos);
+      if (filter && filter !== item.stack.id) { if (blocking) return 'stuck'; continue; }
       const recv = this.directReceiverAt(stepFrom(funnelPos, opposite(facing)));
       if (!recv || !recv.canInsertFromSide(facing)) { if (blocking) return 'stuck'; continue; }
       const rem = recv.insert(item.stack, facing);
@@ -1529,7 +1549,7 @@ export class LogisticsWorld {
     const k = posKey(pos);
     let b = this.brass.get(k);
     if (!b) {
-      b = { pos, key: k, stack: null, enteredFrom: null, progress: 0, newItemArrived: false, syncedOutputActive: false, previousOutputIndex: 0, mode: SPLIT, filters: new Map() };
+      b = { pos, key: k, stack: null, enteredFrom: null, progress: 0, newItemArrived: false, syncedOutputActive: false, previousOutputIndex: 0, mode: SPLIT, filters: new Map(), pending: null };
       this.brass.set(k, b);
     }
     return b;
@@ -1601,28 +1621,70 @@ export class LogisticsWorld {
   }
 
   /** The sides a tunnel has (BeltTunnelBlockEntity.updateTunnelConnections before the occlusion check). */
+  /**
+   * BeltTunnelBlockEntity.updateTunnelConnections: the tunnel's sides before the occlusion check (the sides on the tunnel's axis are
+   * always sides; the perpendicular ones unless the tunnel is straight or its shape closes them). Outputs and slots use this set.
+   */
   private tunnelSideList(tunnel: TunnelBlock): Direction[] {
     const out: Direction[] = [];
     for (const d of PLANE_ORDER) {
-      if (axisOf(d) === tunnel.props.axis) continue;
-      if (isStraightShape(tunnel.props.shape)) continue;
-      const positive = (axisDirectionStep(d) > 0) !== (axisOf(d) === 'z');
-      if (positive && tunnel.props.shape === 't_left') continue;
-      if (!positive && tunnel.props.shape === 't_right') continue;
+      if (axisOf(d) !== tunnel.props.axis) {
+        if (isStraightShape(tunnel.props.shape)) continue;
+        const positive = (axisDirectionStep(d) > 0) !== (axisOf(d) === 'z');
+        if (positive && tunnel.props.shape === 't_left') continue;
+        if (!positive && tunnel.props.shape === 't_right') continue;
+      }
       out.push(d);
     }
     return out;
   }
 
-  /** BrassTunnelBlockEntity.testFlapFilter (adjacent filters are not simulated: they pass). */
+  /**
+   * Whether the tunnel has a filter slot on this side (SidedFilteringBehaviour.get(side) != null: the side is one of its sides,
+   * BeltTunnelBlockEntity.updateTunnelConnections: the two sides on the tunnel's axis are always sides; the perpendicular ones
+   * are sides unless the tunnel is straight or its shape closes them).
+   */
+  private brassHasSideFilter(b: BrassState, side: Direction): boolean {
+    const tun = { name: 'create:brass_tunnel', pos: b.pos, props: (this.lookup.getState(b.pos)?.props ?? {}) as Record<string, string> };
+    return this.tunnelSideList(tun).includes(side);
+  }
+
+  /**
+   * BrassTunnelBlockEntity.testFlapFilter. A side without a filter slot of its own (not one of the tunnel's sides) takes the
+   * FilteringBehaviour of the block beside it (BlockEntityBehaviour.get at worldPosition.relative(side)): no such block passes
+   * everything; a block with a filter (funnel, smart chute) passes what matches it (an empty filter passes everything).
+   */
   private brassTestFilter(b: BrassState, side: Direction, stack: ItemStackJson): boolean {
+    if (!this.brassHasSideFilter(b, side)) {
+      const adjacent = this.filterOfNeighbour(stepFrom(b.pos, side));
+      if (adjacent === undefined) return true;
+      return !adjacent || adjacent === stack.id;
+    }
     if (!b.filters.has(side) || !b.filters.get(side)) return true;
     return b.filters.get(side) === stack.id;
   }
 
-  /** BrassTunnelBlockEntity.flapFilterEmpty */
+  /** BrassTunnelBlockEntity.flapFilterEmpty: the own slot, else the adjacent block's filter (true when there is none). */
   private brassFlapFilterEmpty(b: BrassState, side: Direction): boolean {
+    if (!this.brassHasSideFilter(b, side)) {
+      const adjacent = this.filterOfNeighbour(stepFrom(b.pos, side));
+      return adjacent === undefined ? true : !adjacent;
+    }
     return !b.filters.get(side);
+  }
+
+  /** The item id of the FilteringBehaviour of a block: null for an empty filter, undefined when the block has no filter. */
+  private filterOfNeighbour(pos: Vec3): string | null | undefined {
+    const st = this.lookup.getState(pos);
+    if (!st) return undefined;
+    if (!/funnel$/.test(st.name) && st.name !== 'create:smart_chute') return undefined;
+    return this.filterItemOf(pos) ?? null;
+  }
+
+  /** The item id a funnel or smart chute filters for (its Filter NBT), null when empty. */
+  private filterItemOf(pos: Vec3): string | null {
+    const f = nonEmptyStack(this.lookup.getBlockEntity(pos)?.nbt?.Filter);
+    return f ? f.id : null;
   }
 
   /** BrassTunnelBlockEntity.gatherValidOutputs (null while synchronising and the group is not active). */
@@ -1828,11 +1890,11 @@ export class LogisticsWorld {
         if (b.mode !== SYNCHRONIZE || b.syncedOutputActive) b.progress = BRASS_TIMER;
         return;
       }
-      this.brassPending = lists;
+      b.pending = lists;
     }
     if (b.progress !== 0) return;
-    const lists = this.brassPending ?? [[], []];
-    this.brassPending = null;
+    const lists = b.pending ?? [[], []];
+    b.pending = null;
     for (const list of lists) {
       if (!b.stack) return;
       const targets = list.filter(([t, out]) => !(t === b && out === b.enteredFrom));
@@ -1840,7 +1902,6 @@ export class LogisticsWorld {
       b.progress = -1;
     }
   }
-  private brassPending: [Out[], Out[]] | null = null;
 
   // ----------------------------------------------------------------- DepotBehaviour
 
