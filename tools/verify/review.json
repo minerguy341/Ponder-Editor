@@ -5,8 +5,8 @@
     "ref1": {
       "verdict": "differences",
       "reviewedBy": "driver",
-      "reviewedAt": "2026-10-13T04:39:45.039349+00:00",
-      "oursSha256": "ab4e7d6710a48a3342a20dba884d3c58b647e9dcf31478baca4b18c08a7a76a8",
+      "reviewedAt": "2026-10-14T02:40:19.206476+00:00",
+      "oursSha256": "e51ff4ae04a0638c84e065eaf264089fa674c9484808e3082ccfa34bd10f34e3",
       "lookedAt": [
         "/home/user/Ponder-Editor/tools/verify/out/ref1-side-by-side-small.png"
       ],
@@ -20,17 +20,17 @@
         {
           "id": "ref-background-hotbar-cursor",
           "aspect": "background",
-          "description": "Reference includes the game's blurred world backdrop details, hotbar, mouse cursor and a purple/red object (blue ignored region in the diff); our sky/grass gradient is an approximation.",
-          "status": "accepted:game backdrop is not scene content; region masked in the diff"
+          "description": "Reference shows the game's blurred Superflat world (green terrain band) through the translucent Ponder menu, plus hotbar, cursor and a purple/red object; ours is a plain sky gradient by decision (the green band is not scene content and was deliberately removed). The compare tool treats those backdrop pixels as don't-care for the masked/focus metrics.",
+          "status": "accepted:backdrop is not Ponder scene content (user decision: remove the green backdrop)"
         }
       ],
-      "notes": "Geometry, cogs/shafts, speed-controller block, base plate, text box, leader line, title card, buttons and progress bar all line up; remaining diff is anti-aliasing and the cog rotation phase/edge pixels. Re-reviewed after later merges (particles, parrots, fluids, bogeys): geometry unchanged."
+      "notes": "Geometry, cogs/shafts, speed-controller block, base plate, text box, leader line, title card, buttons and progress bar all line up; remaining diff is anti-aliasing and the cog rotation phase/edge pixels. Re-reviewed after later merges (particles, parrots, fluids, bogeys): geometry unchanged. Backdrop green band removed on purpose; re-reviewed after the change."
     },
     "ref2": {
       "verdict": "differences",
       "reviewedBy": "driver",
-      "reviewedAt": "2026-10-13T04:39:45.039349+00:00",
-      "oursSha256": "bf00a62608440a782b2cd8267942cd0e38b3b4ce0ee95dd1744911d1d678b508",
+      "reviewedAt": "2026-10-14T02:40:19.206476+00:00",
+      "oursSha256": "ab99bd5a37e7acdb95762721342385c84cb9f3b22e269ebed1df86fcbe5d7c2f",
       "lookedAt": [
         "/home/user/Ponder-Editor/tools/verify/out/ref2-side-by-side-small.png"
       ],
@@ -44,17 +44,17 @@
         {
           "id": "ref-background-hotbar-cursor",
           "aspect": "background",
-          "description": "Reference includes the game's blurred world backdrop details, hotbar, mouse cursor and a purple/red object (blue ignored region in the diff); our sky/grass gradient is an approximation.",
-          "status": "accepted:game backdrop is not scene content; region masked in the diff"
+          "description": "Reference shows the game's blurred Superflat world (green terrain band) through the translucent Ponder menu, plus hotbar, cursor and a purple/red object; ours is a plain sky gradient by decision (the green band is not scene content and was deliberately removed). The compare tool treats those backdrop pixels as don't-care for the masked/focus metrics.",
+          "status": "accepted:backdrop is not Ponder scene content (user decision: remove the green backdrop)"
         }
       ],
-      "notes": "Chain conveyors, chains, green outlines, item-icon popups, shaft, cog and plate match. Residual diff is sub-pixel chain/outline edges. Re-reviewed after later merges (particles, parrots, fluids, bogeys): geometry unchanged."
+      "notes": "Chain conveyors, chains, green outlines, item-icon popups, shaft, cog and plate match. Residual diff is sub-pixel chain/outline edges. Re-reviewed after later merges (particles, parrots, fluids, bogeys): geometry unchanged. Backdrop green band removed on purpose; re-reviewed after the change."
     },
     "ref3": {
       "verdict": "differences",
       "reviewedBy": "driver",
-      "reviewedAt": "2026-10-13T04:39:45.039349+00:00",
-      "oursSha256": "89fa8fb27e974063850144163af5041266ca9fddc1552f01372d9bac6ccdcd91",
+      "reviewedAt": "2026-10-14T02:40:19.206476+00:00",
+      "oursSha256": "1b2880458a6fee9165257ea9aa63c4aaec8e30f87730d13f0f24088e581d5d2e",
       "lookedAt": [
         "/home/user/Ponder-Editor/tools/verify/out/ref3-side-by-side-small.png"
       ],
@@ -68,8 +68,8 @@
         {
           "id": "ref-background-hotbar-cursor",
           "aspect": "background",
-          "description": "Reference includes the game's blurred world backdrop details, hotbar, mouse cursor and a purple/red object (blue ignored region in the diff); our sky/grass gradient is an approximation.",
-          "status": "accepted:game backdrop is not scene content; region masked in the diff"
+          "description": "Reference shows the game's blurred Superflat world (green terrain band) through the translucent Ponder menu, plus hotbar, cursor and a purple/red object; ours is a plain sky gradient by decision (the green band is not scene content and was deliberately removed). The compare tool treats those backdrop pixels as don't-care for the masked/focus metrics.",
+          "status": "accepted:backdrop is not Ponder scene content (user decision: remove the green backdrop)"
         },
         {
           "id": "next-button-highlight",
@@ -78,13 +78,13 @@
           "status": "accepted:transient hover/pulse state, not scene content"
         }
       ],
-      "notes": "Belt, press, basin/depot, chest-like blocks, cog and plate match at world tick 511 (scene end + 0 in the reference). Re-reviewed after later merges (particles, parrots, fluids, bogeys): geometry unchanged."
+      "notes": "Belt, press, basin/depot, chest-like blocks, cog and plate match at world tick 511 (scene end + 0 in the reference). Re-reviewed after later merges (particles, parrots, fluids, bogeys): geometry unchanged. Backdrop green band removed on purpose; re-reviewed after the change."
     },
     "ref4": {
       "verdict": "differences",
       "reviewedBy": "driver",
-      "reviewedAt": "2026-10-13T03:40:38.443096Z",
-      "oursSha256": "ab58e5eff8969ca0d6a32ab2c977fe90602fafb67b3c40bf0dc967e1238a5a80",
+      "reviewedAt": "2026-10-14T02:40:19.206476+00:00",
+      "oursSha256": "48bf9037c2cd4498643f3fa718945d40d8c9d5cb164c4532e350af7332c12885",
       "lookedAt": [
         "/home/user/Ponder-Editor/tools/verify/out/ref4-side-by-side-small.png"
       ],
@@ -98,11 +98,11 @@
         {
           "id": "ref-background-hotbar-cursor",
           "aspect": "background",
-          "description": "Reference includes the game's blurred world backdrop details, hotbar, mouse cursor and a purple/red object (blue ignored region in the diff); our sky/grass gradient is an approximation.",
-          "status": "accepted:game backdrop is not scene content; region masked in the diff"
+          "description": "Reference shows the game's blurred Superflat world (green terrain band) through the translucent Ponder menu, plus hotbar, cursor and a purple/red object; ours is a plain sky gradient by decision (the green band is not scene content and was deliberately removed). The compare tool treats those backdrop pixels as don't-care for the masked/focus metrics.",
+          "status": "accepted:backdrop is not Ponder scene content (user decision: remove the green backdrop)"
         }
       ],
-      "notes": "Basin with copper-ingot icon popup, press head, text box and leader line match; basin interior walls now render (R1 fix)."
+      "notes": "Basin with copper-ingot icon popup, press head, text box and leader line match; basin interior walls now render (R1 fix). Backdrop green band removed on purpose; re-reviewed after the change."
     }
   }
 }
