@@ -23,8 +23,13 @@ for (const dir of srcDirs) {
     }
   }
 }
-// belt sprites (beltRender.ts beltSprites) and the dyed variants are sprite ids too
+// belt sprites (beltRender.ts beltSprites) and the dyed variants are sprite ids too (logistics-belt.ts builds the dyed ids from
+// BELT_DYE_NAMES, so the static scan sees only the prefix 'create:block/belt/': the variants are listed here explicitly)
 for (const id of ['create:block/belt', 'create:block/belt_offset', 'create:block/belt_diagonal', 'create:block/belt_scroll', 'create:block/belt_diagonal_scroll']) sprites.add(id);
+const dyeSrc = fs.readFileSync(path.join(ROOT, 'src/render/create/items/beltScroll.ts'), 'utf8');
+const dyes = [...dyeSrc.match(/BELT_DYE_NAMES = \[([^\]]+)\]/)[1].matchAll(/'([a-z_]+)'/g)].map((m) => m[1]);
+for (const d of dyes) for (const id of ['create:block/belt/' + d + '_scroll', 'create:block/belt/' + d + '_diagonal_scroll']) sprites.add(id);
+for (const id of [...sprites]) if (id.endsWith('/')) sprites.delete(id); // a prefix from a concatenation, not a sprite
 for (const id of ['minecraft:block/water_still', 'minecraft:block/water_flow', 'minecraft:block/water_overlay', 'minecraft:block/lava_still', 'minecraft:block/lava_flow', 'create:fluid/honey_still', 'create:fluid/honey_flow', 'create:fluid/chocolate_still', 'create:fluid/chocolate_flow']) sprites.add(id);
 
 if (process.argv.includes('--negative-control')) partials.add('create:block/no_such_model_b2');

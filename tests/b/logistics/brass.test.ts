@@ -57,7 +57,9 @@ describe('brass tunnel distribution (BrassTunnelBlockEntity)', () => {
     w.apply({ tick: 0, op: 'createItemOnBelt', pos: [2, 0, 0], insertionSide: 'east', item: ITEM, link: 'a' });
     w.advance(0);
     w.advance(120);
+    // the north flap refuses it, but the forward output (west, along the belt) is a side of the tunnel with no filter of its own
+    // (BrassTunnelBlockEntity.gatherValidOutputs over the tunnel's sides, which include both axis sides): the stack goes on
     expect(got).toEqual([]);
-    expect(w.brassState([1, 1, 0])?.stack?.id).toBe('minecraft:oak_planks');
+    expect(w.brassState([1, 1, 0])?.stack ?? null).toBeNull();
   });
 });
